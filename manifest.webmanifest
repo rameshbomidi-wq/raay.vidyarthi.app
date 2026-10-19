@@ -1,0 +1,25 @@
+{
+  "name": "రాయ్ విద్యార్థి లెర్నింగ్ యాప్",
+  "short_name": "రాయ్ విద్యార్థి",
+  "description": "1 నుండి 5 తరగతుల విద్యార్థుల కోసం – పాఠాలు, టెస్టులు, ఆటలు, హోంవర్క్, షెడ్యూల్ | రాయ్ ఎడ్యుకేషన్",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eef5f6",
+  "theme_color": "#063a5b",
+  "lang": "te",
+  "dir": "ltr",
+  "categories": ["education", "kids"],
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ],
+  "shortcuts": [
+    {"name": "హోంవర్క్", "url": "./#go=homework", "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]},
+    {"name": "టెస్ట్", "url": "./#go=test", "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]},
+    {"name": "ఆటలు", "url": "./#go=games", "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]}
+  ]
+}

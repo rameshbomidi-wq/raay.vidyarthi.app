@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#063a5b">
+<meta name="description" content="1 నుండి 5 తరగతుల విద్యార్థుల లెర్నింగ్ యాప్ – రాయ్ ఎడ్యుకేషన్">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="రాయ్ విద్యార్థి">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>రాయ్ విద్యార్థి లెర్నింగ్ యాప్ – 1 నుండి 5 తరగతులు</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6ZG763KFGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-6ZG763KFGF');</script>
+<style>
+:root{--navy:#063a5b;--teal:#2aa6a6;--teal2:#1d8c8c;--ink:#1f2937;--mut:#6b7280;--bg:#eef5f6;--card:#fff;--line:#e5e7eb;--red:#e5484d;--green:#16a34a;--amber:#f59e0b}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:#dfe9eb}
+body{font-family:'Poppins','Noto Sans Telugu',system-ui,sans-serif;color:var(--ink);font-size:15px;line-height:1.45}
+#app{max-width:520px;margin:0 auto;min-height:100vh;background:var(--bg);padding-bottom:86px;position:relative}
+button{font:inherit;cursor:pointer}
+input,select,textarea{font:inherit;width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--teal)}
+label{display:block;font-size:13px;font-weight:600;margin:12px 0 6px;color:#374151}
+a{color:#2563eb;cursor:pointer}
+main{padding:14px}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:8px;padding:12px 14px;background:var(--navy);color:#fff}
+.top .who{flex:1;line-height:1.25;min-width:0}
+.top .who b{font-size:15px;letter-spacing:.6px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .who small{opacity:.75;font-size:12px}
+.ib{border:0;background:rgba(255,255,255,.14);color:inherit;width:40px;height:40px;border-radius:12px;font-size:18px;position:relative;flex:none;display:grid;place-items:center}
+.bell i{position:absolute;top:-5px;right:-5px;background:var(--red);color:#fff;font-style:normal;font-size:10px;min-width:19px;height:19px;border-radius:10px;display:grid;place-items:center;padding:0 4px;font-weight:700}
+.bar{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.bar .ib{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.bar h2{font-size:19px;flex:1}
+.hero{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#fff;border-radius:22px;padding:18px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 8px 20px rgba(42,166,166,.25)}
+.hero small{opacity:.9}.hero h2{font-size:23px;line-height:1.2}.hero p{opacity:.9;font-size:13px;margin-top:2px}.mascot{font-size:54px}
+.perf{background:#fdeaa8;border-radius:22px;padding:16px 16px 14px;display:flex;gap:10px;align-items:center;margin-top:14px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.06)}
+.perf>div{flex:1}.perf h3{font-size:18px}.perf p{font-size:13px;color:#4b5563;margin:4px 0 10px}.more{font-size:12px;letter-spacing:1.5px}
+.sec{margin:20px 2px 10px;font-size:13px;letter-spacing:.9px;color:#374151;font-weight:700}
+.mut{color:var(--mut);font-size:13px}
+.hscroll{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none}.hscroll::-webkit-scrollbar{display:none}
+.ecard{flex:0 0 68%;max-width:230px;background:#fff;border:1.5px solid #1f2937;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:6px}
+.ecard b{font-size:15px;line-height:1.3}.ecard small{color:var(--mut)}
+.ecard .lk2{border-top:1.5px solid #1f2937;padding-top:8px;margin-top:auto;font-size:12px;font-weight:700;letter-spacing:1px;background:none;border-left:0;border-right:0;border-bottom:0;text-align:left;color:var(--ink)}
+.tag{display:inline-block;background:#fde047;font-size:11px;padding:2px 9px;border-radius:7px;font-weight:600;align-self:flex-start}
+.tag.t{background:#bfdbfe}.tag.h{background:#fecaca}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tile{border:0;border-radius:18px;padding:14px 6px;text-align:center;color:var(--ink);box-shadow:0 2px 6px rgba(0,0,0,.05);transition:transform .15s}
+.tile:active{transform:scale(.95)}
+.tile span{font-size:30px;display:block;line-height:1.2}.tile b{font-size:13px;display:block;margin-top:5px}.tile small{font-size:11px;color:#4b5563}
+.doubt{background:#f7d4d6;border-radius:22px;padding:18px;position:relative;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.06)}
+.doubt h3{font-size:20px}.doubt p{color:#4b5563;font-size:14px;margin-top:6px;max-width:78%}
+.doubt .bub{position:absolute;right:18px;top:14px;font-size:38px}
+.doubt .play{position:absolute;right:16px;bottom:14px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.75);display:grid;place-items:center;font-size:14px}
+.subs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sub{border:0;border-radius:16px;padding:14px 12px 12px;display:flex;flex-wrap:wrap;align-items:center;gap:10px;text-align:left;color:var(--ink);box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.si{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.7);display:grid;place-items:center;font-size:20px;font-weight:700;flex:none}
+.sub b{font-size:14px;display:block;line-height:1.25}.sub small{font-size:11px;color:#4b5563}
+.pb{flex-basis:100%;height:6px;background:rgba(255,255,255,.7);border-radius:4px;overflow:hidden;display:block}.pb i{display:block;height:100%;background:var(--teal);border-radius:4px}
+.card{background:#fff;border-radius:18px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:12px}
+.card h3{font-size:16px;margin-bottom:6px}
+.btn{border:0;background:var(--teal);color:#fff;padding:12px 16px;border-radius:14px;font-weight:600;width:100%;margin-top:14px;font-size:15px}
+.btn:disabled{opacity:.45}
+.btn.ghost{background:#fff;color:var(--teal2);border:1.5px solid var(--teal)}
+.btn.dark{background:#111827;width:auto;padding:11px 20px;border-radius:30px;letter-spacing:1px;font-size:13px}
+.btn.sm{width:auto;padding:8px 14px;font-size:13px;margin-top:10px}
+.btn.red{background:var(--red)}
+.row2{display:flex;gap:10px}.row2 .btn{flex:1}
+.les{background:#fff;border-radius:16px;margin-bottom:10px;box-shadow:0 2px 6px rgba(0,0,0,.05);overflow:hidden;border-left:5px solid var(--teal)}
+.les.done{border-left-color:var(--green)}
+.les summary{padding:14px;font-weight:600;display:flex;justify-content:space-between;align-items:center;list-style:none;cursor:pointer}
+.les summary::-webkit-details-marker{display:none}
+.les summary em{font-style:normal;color:var(--green);font-weight:700}
+.les ul{padding:0 16px 0 34px}.les li{margin:6px 0;font-size:14.5px}
+.les .lfoot{display:flex;gap:8px;padding:0 14px 14px;flex-wrap:wrap}
+.spk{border:0;background:#e0f2f1;border-radius:10px;padding:8px 12px;margin-top:10px;font-size:13px}
+.tabs{display:flex;background:#fff;border-radius:14px;padding:4px;margin:14px 0;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.tabs button{flex:1;border:0;background:none;padding:10px 4px;border-radius:10px;color:var(--mut);font-size:13.5px;font-weight:500}
+.tabs button.on{background:var(--teal);color:#fff;font-weight:600}
+.tcard{background:#fff;border-radius:16px;margin-bottom:10px;overflow:hidden;border:1.5px solid #d1e7e7}
+.tcard .th{padding:10px 14px;display:flex;align-items:center;gap:10px;font-weight:600}
+.tcard .tb{padding:10px 14px;font-size:13.5px;border-top:1px solid #eef2f2}
+.tcard .tb .r{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:6px}
+.badge{background:#2563eb;color:#fff;font-size:11px;padding:3px 10px;border-radius:8px 0 0 8px;margin-right:-14px}
+.pct{font-weight:700;padding:3px 10px;border-radius:20px;font-size:13px}
+.pct.g{background:#dcfce7;color:#166534}.pct.y{background:#fef3c7;color:#92400e}.pct.r{background:#fee2e2;color:#991b1b}
+.lk{border:0;background:none;font-weight:700;font-size:12.5px;letter-spacing:.8px;color:var(--ink);padding:4px 0}
+.lk.b{background:var(--ink);color:#fff;padding:7px 12px;border-radius:20px;letter-spacing:.3px}
+.sbar{display:flex;align-items:center;gap:8px;margin:8px 0;font-size:13px}.sbar span:first-child{width:120px;flex:none}
+.sbar .tr{flex:1;height:10px;background:#eef2f2;border-radius:6px;overflow:hidden}.sbar .tr i{display:block;height:100%;border-radius:6px}
+.sbar b{width:42px;text-align:right}
+.trbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--navy);color:#fff}
+.trbar b{flex:1}.trbar>span{background:rgba(255,255,255,.15);padding:5px 10px;border-radius:10px;font-size:13px}
+.prog{height:6px;background:#cfe3e3}.prog i{display:block;height:100%;background:var(--amber);transition:width .3s}
+.qcard{background:#fff;border-radius:20px;padding:18px;margin:14px;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+.qcard small{color:var(--mut);font-weight:600}.qcard h3{font-size:20px;margin:8px 0 14px;line-height:1.5;word-break:break-word}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:12px;text-align:left;display:flex;align-items:center;gap:12px;font-size:16px;color:var(--ink)}
+.opt span{width:30px;height:30px;border-radius:50%;background:#eef2f2;display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+.opt.sel{border-color:var(--teal);background:#e6f6f6}.opt.sel span{background:var(--teal);color:#fff}
+.qnav{padding:0 14px}
+.rv{background:#fff;border-radius:14px;padding:12px;margin-bottom:8px;border-left:5px solid var(--green);font-size:14px}
+.rv.x{border-left-color:var(--red)}.rv p{font-weight:600;margin-bottom:4px}.rv small{display:block;color:#4b5563}
+.center{text-align:center}
+.big{font-size:44px;font-weight:700}
+.month{display:flex;justify-content:space-between;align-items:center;margin:4px 2px 10px}
+.month b{font-size:14px;letter-spacing:.8px}
+.strip{display:flex;align-items:center;gap:4px}
+.strip .ar{border:0;background:#fff;width:30px;height:56px;border-radius:10px;flex:none;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.days{display:flex;gap:5px;flex:1;justify-content:space-between}
+.day{border:1.5px solid #9ca3af;background:#fff;border-radius:50%;width:44px;height:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;line-height:1.1;color:#4b5563;position:relative;flex:none}
+.day b{font-size:14px;color:var(--ink)}
+.day.on{background:#111827;border-color:#111827;color:#d1d5db}.day.on b{color:#fff}
+.day.td::after{content:'';position:absolute;bottom:-7px;width:6px;height:6px;border-radius:50%;background:var(--teal)}
+.day.ev::before{content:'';position:absolute;top:1px;right:3px;width:7px;height:7px;border-radius:50%;background:var(--red)}
+.period{display:flex;gap:10px;margin-bottom:8px}
+.period .tm{width:66px;font-size:12px;color:#4b5563;padding-top:12px;flex:none}
+.period .pc{flex:1;background:#fff;border-radius:12px;padding:10px 12px;border-left:4px solid var(--teal);box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.period .pc small{color:#2563eb;font-weight:600;font-size:11px;letter-spacing:.8px}
+.period .pc b{display:block;font-size:15px}.period .pc span{font-size:12px;color:var(--mut)}
+.period .pc.brk{background:#f3f4f6;border-left-color:#9ca3af}
+.period .pc.now{background:#dbeafe;border-left-color:#2563eb;box-shadow:0 4px 12px rgba(37,99,235,.2)}
+.now-tag{float:right;background:#2563eb;color:#fff;font-size:10px;padding:2px 8px;border-radius:8px}
+.holiday{background:#fff;border-radius:18px;padding:30px;text-align:center;font-size:18px}
+.task{display:flex;align-items:center;gap:10px;background:#fff;padding:12px;border-radius:14px;margin-bottom:8px}
+.task div{flex:1}.task small{display:block;color:var(--mut);font-size:12px}
+.concept{background:#cdeee3;border-radius:20px;padding:18px;margin-top:14px;position:relative}
+.concept h3{font-size:18px}.concept p{font-size:13px;color:#4b5563;max-width:70%;margin:4px 0 8px}
+.concept>span{position:absolute;right:18px;bottom:18px;font-size:50px}
+.gtiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.gt{border:0;border-radius:20px;padding:16px;text-align:left;min-height:130px;display:flex;flex-direction:column;justify-content:space-between;color:var(--ink);position:relative;box-shadow:0 4px 12px rgba(0,0,0,.07)}
+.gt b{font-size:17px;line-height:1.25}.gt small{font-size:12px;color:#374151}.gt em{font-style:normal;font-weight:700;font-size:16px}
+.gt i{position:absolute;right:12px;bottom:10px;font-size:40px;font-style:normal}
+.gt.wide{grid-column:span 2;min-height:100px}
+.lb{background:#fff;border-radius:16px;padding:6px 12px}
+.lbr{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #f1f5f9}
+.lbr:last-child{border:0}.lbr .rk{width:28px;height:28px;border-radius:50%;background:#eef2f2;display:grid;place-items:center;font-weight:700;font-size:13px}
+.lbr .nm{flex:1}.lbr.me{background:#ecfeff;border-radius:10px;padding-left:6px}
+.gscore{text-align:center;margin:14px;font-size:16px}
+.gq{background:#fff;margin:0 14px;border-radius:22px;padding:30px 10px;text-align:center;font-size:40px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+.gemo{font-size:90px;text-align:center;line-height:1.2}
+.gopts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 14px}
+.gopts button{border:0;border-radius:18px;padding:18px 6px;font-size:26px;font-weight:700;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.08);color:var(--ink)}
+.gopts button:active{transform:scale(.95)}
+.gmsg{text-align:center;min-height:26px;font-weight:600;margin:8px}
+.gmsg.ok{color:var(--green)}.gmsg.no{color:var(--red)}
+.slots{display:flex;justify-content:center;gap:6px;margin:12px;flex-wrap:wrap}
+.slots span{width:40px;height:46px;border-bottom:3px solid var(--navy);display:grid;place-items:center;font-size:26px;font-weight:700;text-transform:lowercase}
+.ltiles{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:14px}
+.ltiles button{width:50px;height:54px;border:0;border-radius:14px;background:#c9c3f7;font-size:24px;font-weight:700;box-shadow:0 3px 0 #9d94e8;color:var(--ink)}
+.ltiles button:disabled{opacity:.25}
+.shake{animation:sh .35s}@keyframes sh{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.hw{border-radius:16px;padding:14px;margin-bottom:10px;box-shadow:0 2px 6px rgba(0,0,0,.05);border:1.5px solid rgba(0,0,0,.06)}
+.hwt{font-size:15px;display:flex;gap:8px;align-items:flex-start}
+.hw p{font-size:13px;color:#374151;margin:4px 0 0 28px}
+.hw .st{display:block;margin:6px 0 0 28px;font-size:13px;font-weight:500}
+.late{color:var(--red)}.due{color:#c2410c}.okc{color:#166534}
+.hwa{display:flex;justify-content:flex-end;gap:14px;align-items:center;margin-top:8px}
+.dline{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:13px;color:#374151}.dline::after{content:'';flex:1;height:1px;background:#d1d5db}
+.dq{background:#fff;border-radius:14px;padding:12px;margin-bottom:10px}
+.dq small{color:var(--mut)}.dq p{margin:4px 0;font-weight:500}
+.ans{background:#ecfdf5;border-radius:10px;padding:8px 10px;font-size:14px;color:#065f46}
+.wait{font-size:13px;color:#92400e}
+.empty{text-align:center;color:var(--mut);padding:30px 10px;background:#fff;border-radius:16px}
+.list{display:flex;flex-direction:column;gap:8px}
+.li{border:0;background:#fff;border-radius:14px;padding:15px;text-align:left;font-size:15px;display:flex;justify-content:space-between;align-items:center;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.li span{color:var(--mut);font-size:13px}
+.pt{font-size:20px;margin:6px 0 14px}
+.login{padding:28px 18px;text-align:center}
+.login .logo{font-size:64px}.login h1{font-size:23px;margin-top:6px}.login>p{color:var(--mut);margin:4px 0 18px}
+.login .card{text-align:left}
+.clsrow{display:flex;gap:8px}
+.cb{flex:1;border:2px solid var(--line);background:#fff;border-radius:14px;height:54px;font-size:22px;font-weight:700;color:var(--ink)}
+.cb.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:7px 12px;margin:4px 4px 0 0;font-size:13px;color:var(--ink)}
+.link{border:0;background:none;color:var(--teal2);font-weight:600;margin-top:10px;padding:10px}
+.bn{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:#fff;display:flex;border-top:1px solid var(--line);z-index:30;padding-bottom:env(safe-area-inset-bottom)}
+.bn button{flex:1;border:0;background:none;padding:8px 0 9px;font-size:11px;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:1px}
+.bn button span{font-size:21px;filter:grayscale(1);opacity:.7}
+.bn button.on{color:var(--teal2);font-weight:700}.bn button.on span{filter:none;opacity:1}
+.ft{text-align:center;padding:18px 10px 8px;font-size:13px;color:var(--mut)}
+.ft a{color:var(--teal2);font-weight:700;text-decoration:none}
+.tchips{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;margin-bottom:10px;scrollbar-width:none}
+.tchips button{flex:none;border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:8px 13px;font-size:13px;color:var(--ink)}
+.tchips button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.titem{background:#fff;border-radius:12px;padding:10px 12px;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start;font-size:13.5px}
+.titem div{flex:1}.titem small{color:var(--mut);display:block}
+.del{border:0;background:#fee2e2;color:#b91c1c;border-radius:8px;padding:6px 10px;font-size:12px;flex:none}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;background:#fff;border-radius:12px;overflow:hidden}
+.tbl th{background:var(--navy);color:#fff;padding:8px 6px;text-align:left;font-weight:600}
+.tbl td{padding:8px 6px;border-bottom:1px solid #f1f5f9}
+.tscroll{overflow-x:auto;border-radius:12px}
+.inst{background:linear-gradient(135deg,#063a5b,#1d8c8c);color:#fff;border-radius:18px;padding:14px 16px;margin-top:14px;display:flex;align-items:center;gap:12px}
+.inst img{width:46px;height:46px;border-radius:12px;flex:none}.inst div{flex:1;font-size:13px}.inst b{font-size:15px;display:block}
+.inst button{border:0;background:#fde047;color:#111827;font-weight:700;padding:9px 14px;border-radius:20px;font-size:13px}
+.warn{background:#fef3c7;border-radius:12px;padding:10px 12px;font-size:13px;color:#92400e}
+.steps{padding-left:20px;margin:8px 0}.steps li{margin:6px 0;font-size:13.5px}
+.lnk{word-break:break-all;font-size:12px;background:#f1f5f9;padding:8px 10px;border-radius:10px;margin:8px 0}
+details summary{cursor:pointer}
+a.lk2{display:block;text-decoration:none}
+.tag.l{background:#fecaca;color:#b91c1c}
+#toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);background:#111827;color:#fff;padding:10px 18px;border-radius:24px;font-size:14px;opacity:0;transition:.25s;z-index:99;pointer-events:none;max-width:90%;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.trophy{font-size:80px;text-align:center;margin-top:10px}
+@media(max-width:360px){.tiles{grid-template-columns:1fr 1fr}.day{width:38px;height:38px}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast"></div>
+<script type="text/plain" id="gs-code">
+/******************************************************************
+ * రాయ్ ఎడ్యుకేషన్ – విద్యార్థి లెర్నింగ్ యాప్ సర్వర్ (Google Apps Script)
+ * Google Sheet → Extensions → Apps Script లో ఈ కోడ్ పేస్ట్ చేసి
+ * Deploy → New deployment → Web app
+ *   Execute as: Me   |   Who has access: Anyone
+ ******************************************************************/
+var SCHOOL_KEY  = '__SCHOOL_KEY__';   // విద్యార్థుల కీ (జాయిన్ లింక్‌లో వెళ్తుంది)
+var TEACHER_KEY = '__TEACHER_KEY__';  // ఉపాధ్యాయుల కీ – ఎవరికీ ఇవ్వకండి
+var ALL_COLS = ['students','hw','events','doubts','notes','results','games','subs'];
+var TEACHER_COLS = ['hw','events','notes'];
+var SUBJ = {tel:'తెలుగు', eng:'English', mat:'గణితం', evs:'పరిసరాల విజ్ఞానం'};
+
+function db_() {
+  var ss = SpreadsheetApp.getActive(), sh = ss.getSheetByName('DB');
+  if (!sh) {
+    sh = ss.insertSheet('DB');
+    sh.getRange('A:F').setNumberFormat('@');
+    sh.appendRow(['key','col','id','srv','upd','json']);
+    sh.setFrozenRows(1);
+  }
+  return sh;
+}
+function json_(o) {
+  return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);
+}
+
+/* డేటా చదవడం (pull) */
+function doGet(e) {
+  var p = (e && e.parameter) || {};
+  var isT = p.k === TEACHER_KEY;
+  if (!isT && p.k !== SCHOOL_KEY) return json_({ok:false, err:'key'});
+  var lock = LockService.getScriptLock(); lock.waitLock(20000);
+  try {
+    var sh = db_(), n = sh.getLastRow(), since = Number(p.since || 0), max = since, rows = [];
+    if (n > 1) {
+      var v = sh.getRange(2, 1, n - 1, 6).getValues();
+      for (var i = 0; i < v.length; i++) {
+        var srv = Number(v[i][3]);
+        if (srv > max) max = srv;
+        if (srv > since) rows.push([v[i][1], String(v[i][2]), v[i][5]]);
+      }
+    }
+    return json_({ok:true, now:max, rows:rows, teacher:isT});
+  } finally { lock.releaseLock(); }
+}
+
+/* డేటా పంపడం (push) */
+function doPost(e) {
+  var b;
+  try { b = JSON.parse(e.postData.contents); } catch (x) { return json_({ok:false, err:'bad'}); }
+  var isT = b.k === TEACHER_KEY;
+  if (!isT && b.k !== SCHOOL_KEY) return json_({ok:false, err:'key'});
+  var lock = LockService.getScriptLock(); lock.waitLock(20000);
+  try {
+    var sh = db_(), n = sh.getLastRow(), idx = {};
+    if (n > 1) sh.getRange(2, 1, n - 1, 1).getValues().forEach(function (r, i) { idx[r[0]] = i + 2; });
+    var srv = Date.now(), done = [], rej = [], add = [], uniq = {};
+    (b.recs || []).forEach(function (r) { if (r && r.col && r.id != null) uniq[r.col + '|' + r.id] = r; });
+    Object.keys(uniq).forEach(function (key) {
+      var r = uniq[key], d = r.data || {};
+      if (ALL_COLS.indexOf(r.col) < 0 || (TEACHER_COLS.indexOf(r.col) >= 0 && !isT)) { rej.push(key); return; }
+      var row = idx[key];
+      if (row) {
+        var old = {};
+        try { old = JSON.parse(sh.getRange(row, 6).getValue() || '{}'); } catch (x) {}
+        if (Number(old.upd || 0) > Number(d.upd || 0)) { done.push(key); return; }
+        if (r.col === 'doubts' && !isT) { d.r = old.r || ''; d.ra = old.ra || 0; }
+        sh.getRange(row, 1, 1, 6).setValues([[key, r.col, String(r.id), String(srv), String(d.upd || 0), JSON.stringify(d)]]);
+      } else {
+        if (r.col === 'doubts' && !isT) d.r = '';
+        add.push([key, r.col, String(r.id), String(srv), String(d.upd || 0), JSON.stringify(d)]);
+      }
+      done.push(key);
+    });
+    if (add.length) sh.getRange(sh.getLastRow() + 1, 1, add.length, 6).setValues(add);
+    return json_({ok:true, done:done, rej:rej, teacher:isT});
+  } finally { lock.releaseLock(); }
+}
+
+/* Sheet మెనూ – చదవడానికి సులభమైన రిపోర్ట్ షీట్లు */
+function onOpen() {
+  SpreadsheetApp.getUi().createMenu('రాయ్ ఎడ్యుకేషన్')
+    .addItem('📊 రిపోర్ట్ షీట్లు అప్డేట్ చేయి', 'buildReports').addToUi();
+}
+function buildReports() {
+  var sh = db_(), n = sh.getLastRow(), all = [];
+  if (n > 1) all = sh.getRange(2, 2, n - 1, 5).getValues().map(function (r) {
+    var d = {}; try { d = JSON.parse(r[4]); } catch (x) {}
+    return {col:r[0], d:d};
+  }).filter(function (x) { return !x.d.del; });
+  function by(c) { return all.filter(function (x) { return x.col === c; }).map(function (x) { return x.d; }); }
+  function fd(x) { return x ? Utilities.formatDate(new Date(x), 'Asia/Kolkata', 'dd-MM-yyyy HH:mm') : ''; }
+  var subs = by('subs');
+  put_('టెస్ట్ ఫలితాలు', ['పేరు','తరగతి','సబ్జెక్ట్','స్కోరు','మొత్తం','శాతం %','సమయం (సె.)','తేదీ'],
+    by('results').map(function (r) { return [r.n, r.c, SUBJ[r.sb] || r.sb, r.s, r.t, Math.round(r.s * 100 / r.t), r.sec, fd(r.d)]; }));
+  put_('విద్యార్థులు', ['పేరు','తరగతి','చివరిసారి వాడింది'],
+    by('students').map(function (r) { return [r.n, r.c, fd(r.upd)]; }));
+  put_('హోంవర్క్', ['తరగతి','సబ్జెక్ట్','శీర్షిక','గడువు','సమర్పించినవారు','సంఖ్య'],
+    by('hw').map(function (h) {
+      var who = subs.filter(function (s) { return s.hw === h.id; }).map(function (s) { return s.n; });
+      return [h.c, SUBJ[h.s] || h.s, h.t, h.due, who.join(', '), who.length];
+    }));
+  put_('సందేహాలు', ['పేరు','తరగతి','సబ్జెక్ట్','సందేహం','జవాబు','తేదీ'],
+    by('doubts').map(function (d) { return [d.n, d.c, SUBJ[d.s] || d.s, d.q, d.r || '', fd(d.d)]; }));
+  var GN = {mm:'Mental Maths', ew:'English Words', tl:'తెలుగు అక్షరాలు'};
+  put_('ఆటలు', ['పేరు','తరగతి','ఆట','స్కోరు','తేదీ'],
+    by('games').map(function (g) { return [g.n, g.c, GN[g.g] || g.g, g.s, fd(g.d)]; }));
+}
+function put_(name, head, rows) {
+  var ss = SpreadsheetApp.getActive(), sh = ss.getSheetByName(name) || ss.insertSheet(name);
+  sh.clear();
+  sh.getRange(1, 1, 1, head.length).setValues([head]).setFontWeight('bold');
+  if (rows.length) sh.getRange(2, 1, rows.length, head.length).setValues(rows);
+  sh.setFrozenRows(1);
+}
+</script>
+<script type="text/plain" id="fb-rules">
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isTeacher() {
+      return request.auth != null && request.auth.token.email == "__EMAIL__";
+    }
+    match /schools/{school}/{col}/{id} {
+      allow read: if school == "__SCHOOL__";
+      allow create, update: if school == "__SCHOOL__" && (
+        isTeacher() ||
+        col in ["students", "results", "games", "subs"] ||
+        (col == "doubts" &&
+          request.resource.data.get("r", "") == (resource == null ? "" : resource.data.get("r", "")))
+      );
+      allow delete: if isTeacher();
+    }
+  }
+}
+</script>
+<script>
+/* ============ రాయ్ ఎడ్యుకేషన్ – విద్యార్థి లెర్నింగ్ యాప్ (1–5 తరగతులు) ============ */
+const SITE='https://raayeducation.in';
+const LS='raiVidyarthiApp_v1';
+const SUBJ={
+ tel:{n:'తెలుగు',ic:'అ',bg:'#fde2e4',col:'#e11d48'},
+ eng:{n:'English',ic:'Aa',bg:'#e0e7ff',col:'#4f46e5'},
+ mat:{n:'గణితం',ic:'➗',bg:'#dbeafe',col:'#2563eb'},
+ evs:{n:'పరిసరాల విజ్ఞానం',ic:'🌱',bg:'#d1fae5',col:'#059669'}
+};
+function subjectsFor(c){return c<=2?['tel','eng','mat']:['tel','eng','mat','evs'];}
+
+/* ---------- పాఠాలు (Self Learn) ---------- */
+const L={
+1:{tel:[['అచ్చులు','అ ఆ ఇ ఈ ఉ ఊ ఋ ౠ|ఎ ఏ ఐ ఒ ఓ ఔ అం అః|అ – అమ్మ, ఆ – ఆవు, ఇ – ఇల్లు, ఈ – ఈక|రోజూ బిగ్గరగా చదివి, రాసి సాధన చేయండి'],
+ ['హల్లులు','క ఖ గ ఘ ఙ|చ ఛ జ ఝ ఞ|ట ఠ డ ఢ ణ|త థ ద ధ న|ప ఫ బ భ మ|య ర ల వ శ ష స హ ళ క్ష ఱ'],
+ ['బొమ్మ – పదం','🐄 ఆవు, 🐘 ఏనుగు, 🐿️ ఉడుత|🏠 ఇల్లు, 🌳 చెట్టు, 🌸 పువ్వు|బొమ్మను చూసి పదం చెప్పండి, మొదటి అక్షరం గుర్తించండి']],
+ eng:[['Alphabet A – Z','Capital: A B C D E F G H I J K L M|N O P Q R S T U V W X Y Z|Small: a b c d e f g h i j k l m n o p q r s t u v w x y z|ఇంగ్లీష్‌లో మొత్తం 26 అక్షరాలు'],
+ ['Vowels','a, e, i, o, u – ఇవి 5 vowels|మిగిలిన 21 అక్షరాలు consonants|ఉదా: apple, egg, ink, owl, umbrella'],
+ ['Picture Words','🍎 Apple, ⚽ Ball, 🐱 Cat, 🐶 Dog|🥚 Egg, 🐟 Fish, 🐐 Goat, 🎩 Hat|బొమ్మ చూసి పదం చెప్పి, స్పెల్లింగ్ రాయండి']],
+ mat:[['అంకెలు 1 – 20','1 ఒకటి, 2 రెండు, 3 మూడు ... 10 పది|11 నుండి 20 వరకు లెక్కించండి|వస్తువులు లెక్కించి సంఖ్య రాయండి: 🍎🍎🍎 = 3'],
+ ['కూడిక (+)','రెండు గుంపులు కలిపితే కూడిక|🍎🍎 + 🍎 = 🍎🍎🍎 → 2 + 1 = 3|ఉదా: 4 + 5 = 9, 7 + 3 = 10'],
+ ['తీసివేత (−)','ఉన్నవాటిలో కొన్ని తీసేస్తే తీసివేత|5 బంతులు ఉన్నాయి, 2 తీసేస్తే మిగిలేవి 3|ఉదా: 9 − 4 = 5, 10 − 6 = 4'],
+ ['ఆకారాలు','⚪ వృత్తం (Circle), 🔺 త్రిభుజం (Triangle)|⬜ చతురస్రం (Square), ▭ దీర్ఘచతురస్రం (Rectangle)|మీ చుట్టూ ఉన్న వస్తువుల్లో ఆకారాలు గుర్తించండి']]},
+2:{tel:[['గుణింతాలు','క కా కి కీ కు కూ కృ కౄ కె కే కై కొ కో కౌ కం కః|అచ్చు గుర్తులు హల్లుకు చేరితే గుణింతం అవుతుంది|ఉదా: కాకి, కోతి, గుడి, పాలు'],
+ ['ఒత్తులు','ఒకే అక్షరం ఒత్తు: అమ్మ, అక్క, పిల్లి|వేరే అక్షర ఒత్తు: పద్యం (ద + య), చక్రం (క + ర)|చదివి, రాసి సాధన చేయండి'],
+ ['వ్యతిరేక పదాలు','పెద్ద × చిన్న, పగలు × రాత్రి|వేడి × చల్లని, ముందు × వెనుక|పైన × కింద, లోపల × బయట']],
+ eng:[['Naming Words','పేర్లను తెలిపే పదాలు – Naming words (Nouns)|Person: Ravi, mother; Place: school, Nellore|Thing: book, pen; Animal: cow, dog'],
+ ['Opposites','big × small, hot × cold|day × night, up × down|happy × sad, open × close'],
+ ['One – Many','one cat → two cats, one pen → many pens|one box → two boxes, one bus → two buses|one man → two men, one child → two children']],
+ mat:[['స్థాన విలువ','రెండంకెల సంఖ్యలో – పదులు, ఒకట్లు|47 = 4 పదులు + 7 ఒకట్లు = 40 + 7|100 = వంద (మూడంకెల మొదటి సంఖ్య)'],
+ ['రెండంకెల కూడిక, తీసివేత','ముందు ఒకట్లు, తర్వాత పదులు కలపాలి|36 + 25 = 61 (6 + 5 = 11 → 1 పదిని పదుల స్థానంలో కలపాలి)|54 − 23 = 31'],
+ ['గుణకారం పరిచయం','గుణకారం అంటే మళ్ళీ మళ్ళీ కూడిక|3 × 4 = 4 + 4 + 4 = 12|2, 3, 4, 5 ఎక్కాలు నేర్చుకోండి']]},
+3:{tel:[['పర్యాయ పదాలు','ఒకే అర్థం ఇచ్చే పదాలు|సూర్యుడు – భానుడు, రవి|అమ్మ – తల్లి, మాత; నీరు – జలం, ఉదకం'],
+ ['ఏకవచనం – బహువచనం','ఒకటి అయితే ఏకవచనం, ఎక్కువ అయితే బహువచనం|చెట్టు → చెట్లు, ఏనుగు → ఏనుగులు|ఇల్లు → ఇళ్లు, పిల్లవాడు → పిల్లలు'],
+ ['వ్యతిరేక పదాలు','మంచి × చెడు, కొత్త × పాత|తీపి × చేదు, గెలుపు × ఓటమి|సుఖం × దుఃఖం, ముందు × వెనుక']],
+ eng:[['A / An','a, e, i, o, u శబ్దంతో మొదలయ్యే పదాలకు “an”|an apple, an egg, an owl|మిగిలినవాటికి “a”: a ball, a cat'],
+ ['Pronouns','Nounకు బదులు వాడే పదాలు|boy → he, girl → she, thing → it|many → they; నేను → I; మనం → we'],
+ ['Action Words','పనిని తెలిపే పదాలు (Verbs)|run, jump, eat, read, write, sing|Ravi reads a book. Sita sings a song.']],
+ mat:[['మూడంకెల సంఖ్యలు','వందలు, పదులు, ఒకట్లు|352 = 3 వందలు + 5 పదులు + 2 ఒకట్లు|అతి పెద్ద మూడంకెల సంఖ్య 999, అతి చిన్నది 100'],
+ ['ఎక్కాలు & గుణకారం','2 నుండి 10 వరకు ఎక్కాలు|6 × 7 = 42, 8 × 9 = 72|క్రమం మారినా జవాబు మారదు: 3 × 5 = 5 × 3'],
+ ['భాగహారం పరిచయం','సమానంగా పంచడమే భాగహారం|12 మిఠాయిలు 3 మందికి → ఒక్కొక్కరికి 4 (12 ÷ 3 = 4)|భాగహారం గుణకారానికి వ్యతిరేకం'],
+ ['భిన్నాలు','ఒక వస్తువును సమాన భాగాలు చేయడం|సగం = 1/2, పావు = 1/4|8 లో సగం = 4']],
+ evs:[['మన శరీరం','జ్ఞానేంద్రియాలు 5: కన్ను, చెవి, ముక్కు, నాలుక, చర్మం|కళ్ళతో చూస్తాం, చెవులతో వింటాం|రోజూ స్నానం, రెండుసార్లు పళ్ళు తోముకోవడం మంచి అలవాట్లు'],
+ ['మొక్కలు','మొక్క భాగాలు: వేరు, కాండం, ఆకు, పువ్వు, కాయ|వేర్లు నేల నుండి నీటిని పీలుస్తాయి|ఆకులు ఆహారాన్ని తయారు చేస్తాయి'],
+ ['జంతువులు','పెంపుడు జంతువులు: ఆవు, కుక్క, పిల్లి, మేక|అడవి జంతువులు: సింహం, పులి, ఏనుగు|నీటిలో నివసించేవి: చేప; కప్ప నీటిలోనూ నేలపైనా ఉంటుంది']]},
+4:{tel:[['పర్యాయ పదాలు','ఆకాశం – గగనం, నింగి|కమలం – తామర, పద్మం|పాఠశాల – బడి, విద్యాలయం'],
+ ['లింగాలు','పుంలింగం – స్త్రీలింగం|రాజు → రాణి, తండ్రి → తల్లి|అన్న → అక్క, బాలుడు → బాలిక'],
+ ['సామెతలు','కృషితో నాస్తి దుర్భిక్షం – కష్టపడితే కరువు ఉండదు|ఆరోగ్యమే మహాభాగ్యం|సామెతలు సేకరించి అర్థం రాయండి']],
+ eng:[['Adjectives','Nounను వర్ణించే పదాలు|a red ball, a tall tree, a big elephant|happy, small, beautiful, brave'],
+ ['Tenses','Present: I play. She plays.|Past: I played. He went. They ate.|Future: I will play tomorrow.'],
+ ['Punctuation','Full stop (.) – వాక్యం చివర|Question mark (?) – ప్రశ్న చివర|Capital letter – వాక్యం మొదట, పేర్లకు']],
+ mat:[['పెద్ద సంఖ్యలు','4,725 = 4 వేలు + 7 వందలు + 2 పదులు + 5 ఒకట్లు|అతి పెద్ద నాలుగంకెల సంఖ్య 9999|సంఖ్యలను పోల్చడం: >, <, ='],
+ ['గుణకారం & భాగహారం','24 × 6 = 144|156 ÷ 4 = 39|సరిచూడటం: భాగఫలం × భాజకం + శేషం = భాజ్యం'],
+ ['చుట్టుకొలత','చుట్టుకొలత = అన్ని భుజాల మొత్తం|చతురస్రం: 4 × భుజం|దీర్ఘచతురస్రం: 2 × (పొడవు + వెడల్పు)']],
+ evs:[['ఆహారం – పోషకాలు','శక్తినిచ్చేవి: అన్నం, గోధుమలు, బెల్లం|పెరుగుదలకు: పప్పులు, పాలు, గుడ్లు (మాంసకృత్తులు)|రోగనిరోధకానికి: పండ్లు, కూరగాయలు – నిమ్మలో విటమిన్ C ఎక్కువ'],
+ ['నీరు','నీటి వనరులు: వర్షం, నది, చెరువు, బావి|తాగే నీటిని మరిగించి లేదా వడపోసి తాగాలి|నీటిని వృథా చేయకూడదు, వర్షపు నీటిని సంరక్షించాలి'],
+ ['రవాణా – సమాచారం','నేలపై: బస్సు, రైలు, సైకిల్|నీటిపై: ఓడ, పడవ; ఆకాశంలో: విమానం|సమాచార సాధనాలు: ఫోన్, ఉత్తరం, టీవీ, ఇంటర్నెట్']]},
+5:{tel:[['సంధులు','సవర్ణదీర్ఘ సంధి: విద్య + ఆలయం = విద్యాలయం|దేవ + ఆలయం = దేవాలయం|గుణ సంధి: సూర్య + ఉదయం = సూర్యోదయం'],
+ ['పర్యాయ పదాలు','చంద్రుడు – శశి, చందమామ|సముద్రం – జలధి, సాగరం|సూర్యుడు – రవి, భానుడు'],
+ ['తెలుగు భాష – కవులు','తెలుగు భాషా దినోత్సవం – ఆగస్టు 29 (గిడుగు రామమూర్తి జయంతి)|వేమన పద్యాలు సులభంగా నీతిని బోధిస్తాయి|“దేశ భాషలందు తెలుగు లెస్స” – శ్రీకృష్ణదేవరాయలు']],
+ eng:[['Parts of Speech','Noun – name: Ravi, school|Verb – action: run, write|Adjective – describes: tall, red; Preposition: in, on, under'],
+ ['Irregular Verbs','go → went, eat → ate|write → wrote, come → came|see → saw, run → ran'],
+ ['Articles & Prepositions','a / an / the|an honest man (h పలకదు), a university (యూ శబ్దం)|in the box, on the table, under the chair']],
+ mat:[['కారణాంకాలు & గుణిజాలు','12 కారణాంకాలు: 1, 2, 3, 4, 6, 12|3 గుణిజాలు: 3, 6, 9, 12, 15 ...|ప్రధాన సంఖ్యలు: 2, 3, 5, 7, 11, 13 ...'],
+ ['భిన్నాలు & దశాంశాలు','ఒకే హారం గల భిన్నాల కూడిక: 2/7 + 3/7 = 5/7|1/2 = 0.5, 1/4 = 0.25|దశాంశ కూడిక: 2.5 + 1.3 = 3.8'],
+ ['వైశాల్యం','దీర్ఘచతురస్ర వైశాల్యం = పొడవు × వెడల్పు|చతురస్ర వైశాల్యం = భుజం × భుజం|యూనిట్లు: చ.సెం.మీ, చ.మీ']],
+ evs:[['సౌర కుటుంబం','సూర్యుని చుట్టూ 8 గ్రహాలు తిరుగుతాయి|బుధుడు సూర్యునికి దగ్గరగా ఉంటుంది|భూమి తన చుట్టూ – 24 గంటలు, సూర్యుని చుట్టూ – 365 రోజులు'],
+ ['మన శరీర వ్యవస్థలు','గుండె రక్తాన్ని శరీరమంతా పంపిస్తుంది|ఊపిరితిత్తులు – శ్వాసక్రియ|జీర్ణాశయం – ఆహారం జీర్ణం'],
+ ['శక్తి వనరులు','పునరుత్పాదక: సౌర శక్తి, పవన శక్తి, జల శక్తి|తరిగిపోయేవి: బొగ్గు, పెట్రోలు, డీజిల్|మొక్కలు సూర్యరశ్మితో ఆహారం తయారీ – కిరణజన్య సంయోగక్రియ']]}
+};
+
+/* ---------- ప్రశ్నల బ్యాంక్ (మొదటి ఆప్షన్ = సరైన జవాబు; యాప్‌లో కలగలుపుతుంది) ---------- */
+const Q={
+1:{tel:[["'అమ్మ' పదం ఏ అక్షరంతో మొదలవుతుంది?",'అ|ఆ|ఇ|ఉ'],["'ఆవు' మొదటి అక్షరం ఏది?",'ఆ|అ|ఈ|ఊ'],["'అ' తర్వాత వచ్చే అచ్చు?",'ఆ|ఇ|ఉ|ఎ'],["'క' తర్వాత వచ్చే హల్లు?",'ఖ|గ|చ|ట'],
+ ['🐄 ఈ బొమ్మ పేరు?','ఆవు|మేక|కుక్క|పిల్లి'],['🏠 ఇది ఏమిటి?','ఇల్లు|బడి|గుడి|చెట్టు'],["'ఇల్లు' మొదటి అక్షరం?",'ఇ|ఈ|ఉ|ఎ'],["'ఉడుత' మొదటి అక్షరం?",'ఉ|ఊ|ఒ|అ']],
+ eng:[['🍎 A for ___','Apple|Ball|Cat|Dog'],['Which letter comes after B?','C|A|D|E'],["Small letter of 'G'?",'g|q|j|p'],['🐱 What is this?','Cat|Dog|Rat|Cow'],
+ ['Which is a vowel?','e|b|k|t'],["Letter before 'M'?",'L|N|K|O'],['🐶 Correct spelling?','dog|dgo|god|odg'],['How many letters in the English alphabet?','26|24|25|27']]},
+2:{tel:[["'క' గుణింతంలో 'కా' తర్వాత వచ్చేది?",'కి|కీ|కు|కె'],["'పాలు' పదంలో ఎన్ని అక్షరాలు?",'2|1|3|4'],["'అమ్మ' లో ఏ ఒత్తు ఉంది?",'మ ఒత్తు|న ఒత్తు|క ఒత్తు|ల ఒత్తు'],["'పెద్ద' వ్యతిరేక పదం?",'చిన్న|పొడవు|ఎత్తు|లావు'],
+ ["'పగలు' వ్యతిరేక పదం?",'రాత్రి|ఉదయం|సాయంత్రం|ఎండ'],['🌳 దీని పేరు?','చెట్టు|పువ్వు|ఆకు|కాయ'],["'కోతి' మొదటి అక్షరం?",'కో|కొ|కౌ|కా'],['ఆవు మనకు ఏమి ఇస్తుంది?','పాలు|గుడ్లు|తేనె|ఉన్ని']],
+ eng:[["Opposite of 'big'",'small|tall|long|fat'],["Opposite of 'hot'",'cold|warm|wet|dry'],['One cat, two ___','cats|cat|cates|caties'],['Which is a naming word?','book|run|happy|quickly'],
+ ['🍌 Correct spelling?','banana|bananna|banan|bannana'],['I ___ a boy.','am|is|are|be'],['How many days are in a week?','7|5|6|8'],['The sun rises in the ___','east|west|north|south']]},
+3:{tel:[["'సూర్యుడు' పర్యాయ పదం?",'భానుడు|చంద్రుడు|నక్షత్రం|మేఘం'],["'చెట్టు' బహువచనం?",'చెట్లు|చెట్టులు|చెట్టెలు|చెట్టాలు'],["'మంచి' వ్యతిరేక పదం?",'చెడు|గొప్ప|తీపి|పెద్ద'],["'ఇల్లు' బహువచనం?",'ఇళ్లు|ఇల్లులు|ఇల్లాలు|ఇల్లెలు'],
+ ["'అమ్మ' పర్యాయ పదం?",'తల్లి|అక్క|చెల్లి|అత్త'],["'కొత్త' వ్యతిరేక పదం?",'పాత|మంచి|చిన్న|ఎరుపు'],["'ఏనుగు' బహువచనం?",'ఏనుగులు|ఏనుగ్లు|ఏనుగాలు|ఏనుగెలు'],["'నీరు' పర్యాయ పదం?",'జలం|పాలు|గాలి|నిప్పు']],
+ eng:[['___ apple','an|a|any|many'],['___ ball','a|an|any|many'],["Pronoun for 'Ravi'",'he|she|it|they'],["Pronoun for 'Sita'",'she|he|it|we'],
+ ['Which is an action word?','run|chair|red|tree'],["Plural of 'box'",'boxes|boxs|boxies|box'],["Opposite of 'early'",'late|soon|fast|before'],['How many months are in a year?','12|10|11|13']],
+ evs:[['మనం దేనితో చూస్తాం?','కళ్ళు|చెవులు|ముక్కు|నాలుక'],['మొక్క వేర్లు ఏమి చేస్తాయి?','నేల నుండి నీటిని పీలుస్తాయి|ఆహారం తయారు చేస్తాయి|పూలు పూస్తాయి|కాయలు కాస్తాయి'],['పాలు ఇచ్చే జంతువు?','ఆవు|కోడి|చేప|పాము'],['గుడ్లు పెట్టేది ఏది?','కోడి|ఆవు|మేక|గేదె'],
+ ['ఆకులు సాధారణంగా ఏ రంగులో ఉంటాయి?','ఆకుపచ్చ|ఎరుపు|నీలం|నలుపు'],['మనం గాలిని దేనితో పీలుస్తాం?','ముక్కు|చెవి|కన్ను|చేయి'],['నీటిలో నివసించే జంతువు?','చేప|పిల్లి|కోతి|ఆవు'],['పళ్ళు ఎన్నిసార్లు తోముకోవాలి?','రోజుకు రెండుసార్లు|వారానికి ఒకసారి|నెలకు ఒకసారి|అవసరం లేదు']]},
+4:{tel:[["'కమలం' అంటే?",'తామర పువ్వు|గులాబీ|మల్లె|చామంతి'],["'ఆకాశం' పర్యాయ పదం?",'గగనం|భూమి|సముద్రం|పర్వతం'],["'ధైర్యం' వ్యతిరేక పదం?",'భయం|బలం|సంతోషం|కోపం'],["సామెత పూర్తి చేయండి: 'కృషితో నాస్తి ___'",'దుర్భిక్షం|సంపద|విద్య|ధనం'],
+ ["'పిల్లి' బహువచనం?",'పిల్లులు|పిల్లిలు|పిల్లెలు|పిల్లాలు'],["'రాజు' స్త్రీలింగం?",'రాణి|రాజి|రాజమ్మ|రాజిత'],["'పాఠశాల' కు మరో పేరు?",'బడి|గుడి|ఇల్లు|తోట'],["'సంతోషం' వ్యతిరేక పదం?",'దుఃఖం|ఆనందం|నవ్వు|ప్రేమ']],
+ eng:[["Past tense of 'go'",'went|goed|gone|going'],["Past tense of 'eat'",'ate|eated|eaten|eats'],["Adjective in 'The red ball'",'red|The|ball|none'],["Plural of 'child'",'children|childs|childrens|childes'],
+ ["Opposite of 'brave'",'coward|strong|bold|kind'],['Choose the correct sentence','She goes to school.|She go to school.|She going school.|She gone to school.'],["Synonym of 'big'",'large|tiny|small|thin'],['Which mark ends a question?','?|.|,|!']],
+ evs:[['శక్తినిచ్చే ఆహారం ఏది?','అన్నం|ఉప్పు|నీరు|పసుపు'],['పప్పుల్లో ఎక్కువగా ఉండేవి?','మాంసకృత్తులు|కొవ్వులు|విటమిన్ C|నీరు'],['నీటిని మరిగించి ఎందుకు తాగాలి?','సూక్ష్మజీవులు చనిపోతాయి|రుచి పెరుగుతుంది|రంగు మారుతుంది|బరువు పెరుగుతుంది'],['ఆకాశంలో ప్రయాణించే వాహనం?','విమానం|బస్సు|రైలు|ఓడ'],
+ ['నీటిపై ప్రయాణించే వాహనం?','ఓడ|సైకిల్|రైలు|లారీ'],['విటమిన్ C ఎక్కువగా ఉండేది?','నిమ్మకాయ|అన్నం|పాలు|బెల్లం'],['సమాచారం పంపే సాధనం?','మొబైల్ ఫోన్|సైకిల్|కుర్చీ|బల్ల'],['చెత్తను ఎక్కడ వేయాలి?','చెత్తబుట్టలో|రోడ్డుపై|కాలువలో|చెరువులో']]},
+5:{tel:[['విద్య + ఆలయం = ?','విద్యాలయం|విద్యఆలయం|విద్యోలయం|విద్యేలయం'],['దేవ + ఆలయం = ?','దేవాలయం|దేవఆలయం|దేవోలయం|దేవేలయం'],["'సూర్యోదయం' విడదీయండి",'సూర్య + ఉదయం|సూర్యో + దయం|సూర్యు + ఉదయం|సూర్య + ఓదయం'],['తెలుగు భాషా దినోత్సవం ఎప్పుడు?','ఆగస్టు 29|సెప్టెంబర్ 5|నవంబర్ 14|జనవరి 26'],
+ ['వేమన దేనికి ప్రసిద్ధి?','పద్యాలు|నవలలు|నాటకాలు|సినిమాలు'],["'జలధి' అంటే?",'సముద్రం|నది|చెరువు|బావి'],["'చంద్రుడు' పర్యాయ పదం?",'శశి|రవి|భానుడు|అగ్ని'],["'అనుకూలం' వ్యతిరేక పదం?",'ప్రతికూలం|సానుకూలం|అనుమానం|అనుభవం']],
+ eng:[['The cat is ___ the table.','on|run|happy|cat'],["Past tense of 'write'",'wrote|writed|written|writes'],["Plural of 'mouse'",'mice|mouses|mices|mouse'],["Opposite of 'ancient'",'modern|old|past|aged'],
+ ['___ honest man','an|a|the|no article'],["Synonym of 'happy'",'glad|sad|angry|tired'],["Verb in 'Ravi plays cricket.'",'plays|Ravi|cricket|none'],['I ___ go to the market tomorrow.','will|was|did|had']],
+ evs:[['సూర్యునికి దగ్గరగా ఉండే గ్రహం?','బుధుడు|శుక్రుడు|భూమి|అంగారకుడు'],['భూమి తన చుట్టూ తాను తిరగడానికి పట్టే సమయం?','24 గంటలు|365 రోజులు|30 రోజులు|12 గంటలు'],['రక్తాన్ని పంప్ చేసే అవయవం?','గుండె|ఊపిరితిత్తులు|కాలేయం|మెదడు'],['శ్వాసక్రియలో ముఖ్యమైన అవయవం?','ఊపిరితిత్తులు|గుండె|మూత్రపిండాలు|జీర్ణాశయం'],
+ ['పునరుత్పాదక శక్తి వనరు?','సౌర శక్తి|బొగ్గు|పెట్రోలు|డీజిల్'],['మొక్కలు ఆహారం తయారు చేసుకునే ప్రక్రియ?','కిరణజన్య సంయోగక్రియ|శ్వాసక్రియ|జీర్ణక్రియ|బాష్పోత్సేకం'],['భారతదేశ జాతీయ పక్షి?','నెమలి|చిలుక|కాకి|పావురం'],['భూమి సహజ ఉపగ్రహం?','చంద్రుడు|సూర్యుడు|అంగారకుడు|శుక్రుడు']]}
+};
+
+/* ---------- ఆటల డేటా ---------- */
+const WORDS=[['🐱','cat'],['🐶','dog'],['☀️','sun'],['🚌','bus'],['🥚','egg'],['🐄','cow'],['🎩','hat'],['🐀','rat'],['🐝','bee'],['🐜','ant'],['🐷','pig'],['🐔','hen'],
+ ['🐟','fish'],['🌳','tree'],['⭐','star'],['🌙','moon'],['🚗','car'],['🦁','lion'],['🐐','goat'],['📚','book'],['🐸','frog'],['🦆','duck'],['⛵','boat'],
+ ['🍋','lemon'],['🥭','mango'],['🍎','apple'],['🏠','house'],['🚂','train'],['🍇','grapes'],['🐢','turtle'],['🌸','flower'],['✏️','pencil'],['🍌','banana'],['🐒','monkey'],['🦜','parrot'],
+ ['🎈','balloon'],['🐘','elephant'],['🦋','butterfly'],['🍉','watermelon']];
+const TEL=[['🐄','ఆవు','ఆ'],['🏠','ఇల్లు','ఇ'],['🐿️','ఉడుత','ఉ'],['🐘','ఏనుగు','ఏ'],['🐒','కోతి','కో'],['🐟','చేప','చే'],['🐱','పిల్లి','పి'],['🐶','కుక్క','కు'],['🐐','మేక','మే'],['🦜','చిలుక','చి'],
+ ['🦚','నెమలి','నె'],['🐎','గుర్రం','గు'],['🐍','పాము','పా'],['🐭','ఎలుక','ఎ'],['🌳','చెట్టు','చె'],['🌸','పువ్వు','పు'],['⚽','బంతి','బం'],['⛵','పడవ','ప'],['🚌','బస్సు','బ'],['🚂','రైలు','రై'],
+ ['☀️','సూర్యుడు','సూ'],['🌙','చంద్రుడు','చం'],['⭐','నక్షత్రం','న'],['🍌','అరటిపండు','అ'],['🥭','మామిడి','మా'],['🍋','నిమ్మకాయ','ని'],['🐸','కప్ప','క'],['🦋','సీతాకోకచిలుక','సీ'],['🐔','కోడి','కో'],['🥚','గుడ్డు','గు']];
+const GAMES={mm:{n:'Mental Maths',t:'మనసులో లెక్కలు',ic:'🧮',bg:'#ffad94',sec:60},ew:{n:'English Words',t:'పదాన్ని కూర్చు',ic:'🔤',bg:'#cdc6fb',sec:90},tl:{n:'తెలుగు అక్షరాలు',t:'మొదటి అక్షరం గుర్తించు',ic:'అ',bg:'#a8e6c8',sec:60}};
+
+/* ---------- తేదీలు & ఉపకరణాలు ---------- */
+const DAYS=['ఆది','సోమ','మంగళ','బుధ','గురు','శుక్ర','శని'];
+const DAYF=['ఆదివారం','సోమవారం','మంగళవారం','బుధవారం','గురువారం','శుక్రవారం','శనివారం'];
+const MON=['జనవరి','ఫిబ్రవరి','మార్చి','ఏప్రిల్','మే','జూన్','జూలై','ఆగస్టు','సెప్టెంబర్','అక్టోబర్','నవంబర్','డిసెంబర్'];
+const $=s=>document.querySelector(s);
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function ymd(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function parseD(s){const p=s.split('-').map(Number);return new Date(p[0],p[1]-1,p[2]);}
+function todayS(){return ymd(new Date());}
+function addDays(s,n){const d=parseD(s);d.setDate(d.getDate()+n);return ymd(d);}
+function diffDays(a,b){return Math.round((parseD(a)-parseD(b))/864e5);}
+function fmtD(s){if(!s)return '';const d=s.length===10?parseD(s):new Date(s);return d.getDate()+' '+MON[d.getMonth()]+' '+d.getFullYear();}
+function fmtLong(s){const d=parseD(s);return DAYF[d.getDay()]+', '+d.getDate()+' '+MON[d.getMonth()]+' '+d.getFullYear();}
+function to12(t){if(!t)return '';let [h,m]=t.split(':').map(Number);const ap=h>=12?'PM':'AM';h=h%12||12;return h+':'+String(m).padStart(2,'0')+' '+ap;}
+function mmss(s){s=Math.max(0,Math.floor(s));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2000);}
+function speak(txt){try{if(!('speechSynthesis' in window))return toast('ఈ ఫోన్‌లో వాయిస్ సపోర్ట్ లేదు');speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(txt.replace(/[|×→–]/g,', '));const isTe=/[\u0C00-\u0C7F]/.test(txt);u.lang=isTe?'te-IN':'en-IN';u.rate=.85;const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.toLowerCase().startsWith(isTe?'te':'en-in'));if(v)u.voice=v;speechSynthesis.speak(u);}catch(e){}}
+function ring(p,sz,col){sz=sz||96;col=col||'#f59e0b';const r=sz/2-8,C=2*Math.PI*r,off=C*(1-p/100);return `<svg width="${sz}" height="${sz}" viewBox="0 0 ${sz} ${sz}" style="flex:none"><circle cx="${sz/2}" cy="${sz/2}" r="${r}" fill="none" stroke="#fff7e0" stroke-width="9"/><circle cx="${sz/2}" cy="${sz/2}" r="${r}" fill="none" stroke="${col}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 ${sz/2} ${sz/2})"/><text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="${Math.round(sz/4.6)}" font-weight="700" fill="#1f2937">${p}%</text></svg>`;}
+function pctCls(p){return p>=80?'g':p>=50?'y':'r';}
+
+/* ---------- డేటా నిల్వ (ఆఫ్లైన్ + ఆన్‌లైన్ సింక్) ---------- */
+const COLS=['students','hw','events','doubts','notes','results','games','subs'];
+function def(){return {pin:'1234',local:[],cur:null,students:[],results:[],games:[],hw:[],events:[],doubts:[],notes:[],subs:[],read:{},seeded:false,cfg:{type:''},q:{},last:{},lastSync:0};}
+function load(){try{const d=JSON.parse(localStorage.getItem(LS));if(d)return migrate(Object.assign(def(),d));}catch(e){}return def();}
+function migrate(d){
+ if(!d.cfg)d.cfg={type:''};
+ if(d.students.length&&!d.students[0].id){d.local=d.students.map(s=>({n:s.n,c:s.c}));d.students=d.students.map(s=>({id:sid(s.n),n:s.n,c:s.c,upd:Date.now()}));}
+ d.hw.forEach(h=>{if(h.sub){Object.entries(h.sub).forEach(([n,dt])=>d.subs.push({id:h.id+'|'+sid(n),hw:h.id,n,c:h.c,d:dt,upd:Date.now()}));delete h.sub;}});
+ COLS.forEach(c=>d[c].forEach(r=>{if(!r.id)r.id=uid();if(!r.upd)r.upd=1;}));
+ return d;}
+function save(){try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){toast('సేవ్ కాలేదు – స్టోరేజ్ నిండింది');}}
+function sid(n){return String(n).trim().toLowerCase().replace(/[\/\s.#$\[\]|]+/g,'_');}
+function live(col){const on=!!S.cfg.type;return S[col].filter(r=>!r.del&&!(on&&r.seed));}
+function put(col,rec){rec.upd=Math.max(Date.now(),(rec.upd||0)+1);const a=S[col];const i=a.findIndex(x=>x.id===rec.id);if(i>=0)a[i]=rec;else a.push(rec);
+ if(S.cfg.type&&!rec.seed){S.q[col+'|'+rec.id]=rec.upd;Sync.later();}save();return rec;}
+function remove(col,id){const r=S[col].find(x=>x.id===id);if(r)put(col,Object.assign({},r,{del:true}));}
+function dropLocal(k){const i=k.indexOf('|');const col=k.slice(0,i),id=k.slice(i+1);if(S[col])S[col]=S[col].filter(x=>x.id!==id);}
+function queueAll(){COLS.forEach(col=>S[col].forEach(r=>{if(!r.seed)S.q[col+'|'+r.id]=r.upd||1;}));}
+let S=load();
+function seed(){if(S.seeded)return;const t=todayS();
+ for(let c=1;c<=5;c++){
+  S.hw.push({id:'seed_hw'+c+'a',seed:true,upd:1,c,s:'mat',t:'గణితం – అభ్యాసం లెక్కలు చేయండి',x:'పాఠ్యపుస్తకంలోని అభ్యాసం 1 లోని లెక్కలు నోట్‌బుక్‌లో చేయండి.',due:addDays(t,1)});
+  S.hw.push({id:'seed_hw'+c+'b',seed:true,upd:1,c,s:'tel',t:'తెలుగు – పాఠం చదివి కొత్త పదాలు రాయండి',x:'ఈ వారం పాఠం బిగ్గరగా చదివి, 5 కొత్త పదాలు రాయండి.',due:addDays(t,-2)});
+  S.hw.push({id:'seed_hw'+c+'c',seed:true,upd:1,c,s:'eng',t:'English – Write 10 new words',x:'Write 10 new English words with Telugu meanings.',due:addDays(t,3)});
+ }
+ const y=new Date().getFullYear();let cd=y+'-11-14';if(cd<t)cd=(y+1)+'-11-14';
+ S.events.push({id:'seed_ev1',seed:true,upd:1,t:'తల్లిదండ్రులు – ఉపాధ్యాయుల సమావేశం',d:addDays(t,2),tm:'15:30',c:0,ty:'ev'});
+ S.events.push({id:'seed_ev2',seed:true,upd:1,t:'యూనిట్ టెస్ట్ – గణితం',d:addDays(t,5),tm:'10:00',c:0,ty:'test'});
+ S.events.push({id:'seed_ev3',seed:true,upd:1,t:'బాలల దినోత్సవం 🎈',d:cd,tm:'09:30',c:0,ty:'ev'});
+ S.seeded=true;save();}
+seed();
+
+/* ---------- సింక్ ఇంజిన్ ---------- */
+const Sync={st:'off',msg:'',timer:null,poll:null,primed:false,running:false,
+ later(){clearTimeout(this.timer);this.timer=setTimeout(()=>this.run(),1200);},
+ set(st,msg){this.st=st;this.msg=msg||'';const b=document.getElementById('syncb');if(b)b.textContent=syncIcon();const s=document.getElementById('syncst');if(s)s.innerHTML=syncLine();},
+ async run(){if(!S.cfg.type||this.running)return;if(typeof navigator!=='undefined'&&navigator.onLine===false){this.set('offline');return;}
+  this.running=true;try{this.set('busy');
+   if(S.cfg.type==='gs'){await GS.push();await GS.pull();this.primed=true;}
+   else{if(!FBK.ready){await FBK.start();}else await FBK.push();}
+   S.lastSync=Date.now();save();this.set('ok');}catch(e){this.set('err',String((e&&e.message)||e));}finally{this.running=false;}},
+ start(){if(!S.cfg.type)return;this.run();clearInterval(this.poll);if(S.cfg.type==='gs')this.poll=setInterval(()=>{if(document.visibilityState!=='hidden')this.run();},45000);}
+};
+function syncIcon(){return {ok:'☁️',busy:'⏳',err:'⚠️',offline:'📴'}[Sync.st]||'☁️';}
+function syncLine(){const c=S.cfg;if(!c.type)return '📴 ఆఫ్లైన్ మాత్రమే – డేటా ఈ ఫోన్‌లోనే ఉంటుంది';
+ const lbl={ok:'✅ కనెక్ట్ అయింది',busy:'⏳ సింక్ అవుతోంది...',err:'⚠️ లోపం',offline:'📴 ఇంటర్నెట్ లేదు',off:'—'}[Sync.st];
+ const p=Object.keys(S.q).length;
+ return `<b>${c.type==='gs'?'Google Sheets':'Firebase'}</b> • ${lbl}<br><small class="mut">చివరి సింక్: ${S.lastSync?new Date(S.lastSync).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}):'ఇంకా లేదు'} • పంపాల్సినవి: ${p}${Sync.msg?' • '+esc(Sync.msg):''}</small>`;}
+function applyIncoming(ch){if(!ch.length)return;const notes=[];
+ ch.forEach(([col,d])=>{if(!S[col]||!d||d.id==null)return;const a=S[col];const i=a.findIndex(x=>x.id===d.id);const old=i>=0?a[i]:null;
+  if(old&&(old.upd||0)>(d.upd||0))return;if(i>=0)a[i]=d;else a.push(d);
+  if(!S.cur||d.del)return;
+  if(!old&&col==='hw'&&d.c===S.cur.c)notes.push('📒 కొత్త హోంవర్క్: '+d.t);
+  if(!old&&col==='events'&&(d.c===0||d.c===S.cur.c))notes.push('📅 '+d.t+' – '+fmtD(d.d));
+  if(col==='doubts'&&d.n===me()&&d.r&&(!old||old.r!==d.r))notes.push('💬 నీ సందేహానికి జవాబు వచ్చింది');});
+ save();if(notes.length&&Sync.primed)notify(notes);softRender();}
+function notify(list){toast(list[0]+(list.length>1?` (+${list.length-1})`:''));
+ try{if(window.Notification&&Notification.permission==='granted'){const body=list.join('\n');
+  if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration){navigator.serviceWorker.getRegistration().then(r=>{if(r)r.showNotification('రాయ్ విద్యార్థి యాప్',{body});else new Notification('రాయ్ విద్యార్థి యాప్',{body});}).catch(()=>{});}
+  else new Notification('రాయ్ విద్యార్థి యాప్',{body});}}catch(e){}}
+function softRender(){if(view==='testrun'||view==='gamerun')return;const ae=document.activeElement;if(ae&&/^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName))return;const y=window.scrollY||0;render();try{window.scrollTo(0,y);}catch(e){}}
+
+/* Google Sheets (Apps Script) */
+const GS={
+ key(){return S.cfg.tkey||S.cfg.key;},
+ async pull(){const u=S.cfg.url+'?a=pull&k='+encodeURIComponent(this.key())+'&since='+(S.last.gs||0)+'&_='+Date.now();
+  const j=await (await fetch(u)).json();if(!j.ok)throw new Error(j.err==='key'?'కీ తప్పు':j.err);
+  S.cfg.isT=!!j.teacher;if(j.now)S.last.gs=Math.max(S.last.gs||0,Number(j.now));
+  applyIncoming((j.rows||[]).map(([col,id,js])=>{try{return [col,JSON.parse(js)];}catch(e){return [col,null];}}));},
+ async push(){const ks=Object.keys(S.q);if(!ks.length)return;const sent={};
+  const recs=ks.map(k=>{const i=k.indexOf('|');const col=k.slice(0,i),id=k.slice(i+1);const d=(S[col]||[]).find(x=>x.id===id);sent[k]=S.q[k];return d?{col,id,data:d}:null;}).filter(Boolean);
+  if(!recs.length){ks.forEach(k=>delete S.q[k]);return;}
+  const j=await (await fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'push',k:this.key(),recs})})).json();
+  if(!j.ok)throw new Error(j.err==='key'?'కీ తప్పు':j.err);
+  (j.done||[]).forEach(k=>{if(S.q[k]===sent[k])delete S.q[k];});
+  if(j.rej&&j.rej.length){j.rej.forEach(k=>{delete S.q[k];dropLocal(k);});S.last.gs=0;toast('కొన్ని మార్పులకు ఉపాధ్యాయ అనుమతి లేదు');}
+  ks.forEach(k=>{if(!recs.find(r=>r.col+'|'+r.id===k))delete S.q[k];});save();}
+};
+
+/* Firebase (Firestore) */
+const FBB='https://www.gstatic.com/firebasejs/10.12.2/';
+const FBK={ready:false,user:null,
+ async init(){if(this.ready)return;
+  const [A,F,U]=await Promise.all([import(FBB+'firebase-app.js'),import(FBB+'firebase-firestore.js'),import(FBB+'firebase-auth.js')]);
+  this.F=F;this.U=U;const app=A.initializeApp(S.cfg.fb);this.db=F.getFirestore(app);this.auth=U.getAuth(app);
+  U.onAuthStateChanged(this.auth,u=>{this.user=u;S.cfg.isT=!!(u&&u.email&&S.cfg.temail&&u.email.toLowerCase()===S.cfg.temail.toLowerCase());save();if(u)this.push().catch(()=>{});if(view==='teacher')softRender();});
+  this.ready=true;},
+ async start(){await this.init();this.listen();await this.push();setTimeout(()=>{Sync.primed=true;},5000);},
+ listen(){const F=this.F;COLS.forEach(col=>{
+  const q=F.query(F.collection(this.db,'schools',S.cfg.school,col),F.where('srv','>',F.Timestamp.fromMillis(S.last[col]||0)));
+  F.onSnapshot(q,snap=>{const ch=[];snap.docChanges().forEach(c=>{if(c.type==='removed')return;const x=c.doc.data();const ms=x.srv&&x.srv.toMillis?x.srv.toMillis():0;if(ms>(S.last[col]||0))S.last[col]=ms;delete x.srv;ch.push([col,x]);});
+   S.lastSync=Date.now();applyIncoming(ch);save();Sync.set('ok');},e=>Sync.set('err',e.message));});},
+ async push(){if(!this.ready)return;const F=this.F;
+  for(const k of Object.keys(S.q)){const i=k.indexOf('|');const col=k.slice(0,i),id=k.slice(i+1);const d=(S[col]||[]).find(x=>x.id===id);const sent=S.q[k];
+   if(!d){delete S.q[k];continue;}
+   try{await F.setDoc(F.doc(this.db,'schools',S.cfg.school,col,id),Object.assign(JSON.parse(JSON.stringify(d)),{srv:F.serverTimestamp()}));if(S.q[k]===sent)delete S.q[k];}
+   catch(e){if(e&&e.code==='permission-denied'){delete S.q[k];dropLocal(k);toast('అనుమతి లేదు: '+col);}else throw e;}}
+  save();},
+ async login(email,pw){await this.init();await this.U.signInWithEmailAndPassword(this.auth,email,pw);},
+ async logout(){if(this.ready)await this.U.signOut(this.auth);}
+};
+
+/* ---------- సహాయక ఫంక్షన్లు ---------- */
+let view='home',param={},tick=null,T=null,G=null,tAuth=false;
+const PARENT={sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
+function me(){return S.cur.n;}
+function lessonsOf(c,s){const b=((L[c]||{})[s]||[]).map((x,i)=>({k:'b'+i,t:x[0],b:x[1].split('|')}));
+ const n=live('notes').filter(x=>x.c===c&&x.s===s).map(x=>({k:'n'+x.id,t:x.t,b:x.x.split('\n').filter(Boolean),tn:1}));return b.concat(n);}
+function readMap(){return S.read[me()]||(S.read[me()]={});}
+function isRead(k){return !!readMap()[k];}
+function readPct(s){const c=S.cur.c,ls=lessonsOf(c,s);if(!ls.length)return 0;return Math.round(ls.filter(l=>isRead(c+'-'+s+'-'+l.k)).length*100/ls.length);}
+function myRes(){return live('results').filter(r=>r.n===me()&&r.c===S.cur.c);}
+function avgOf(rs){return rs.length?Math.round(rs.reduce((a,x)=>a+x.s*100/x.t,0)/rs.length):0;}
+function stats(){const r=myRes();const by={};subjectsFor(S.cur.c).forEach(s=>{const rs=r.filter(x=>x.sb===s);by[s]=rs.length?avgOf(rs):null;});return {avg:avgOf(r),n:r.length,by};}
+function perfMsg(a,n){if(!n)return 'ఇంకా టెస్ట్ రాయలేదు. మొదటి టెస్ట్ రాసి నీ ప్రదర్శన చూడు!';if(a>=80)return 'అద్భుతం! ఇలాగే కొనసాగించు 🌟';if(a>=60)return 'బాగుంది! ఇంకా మెరుగ్గా చేయగలవు. శుభాకాంక్షలు!';return 'పర్వాలేదు! రోజూ సాధన చేస్తే తప్పకుండా మెరుగవుతావు 💪';}
+function myHw(){return live('hw').filter(h=>h.c===S.cur.c).sort((a,b)=>a.due<b.due?-1:1);}
+function subOf(h){const x=live('subs').find(s=>s.hw===h.id&&s.n===me());return x&&x.d;}
+function pendingHw(){return myHw().filter(h=>!subOf(h));}
+function eventsOn(d){return live('events').filter(e=>e.d===d&&(e.c===0||e.c===S.cur.c)).sort((a,b)=>(a.tm||'')<(b.tm||'')?-1:1);}
+function upcoming(n){const t=todayS();return live('events').filter(e=>e.d>=t&&(e.c===0||e.c===S.cur.c)).sort((a,b)=>(a.d+a.tm)<(b.d+b.tm)?-1:1).slice(0,n);}
+function dueText(h){const sd=subOf(h);const d=diffDays(h.due,todayS());
+ if(sd)return `<span class="st okc">✓ సమర్పించారు: ${fmtD(sd)}</span>`;
+ if(d<0)return `<span class="st late">${-d} రోజులు ఆలస్యం (గడువు: ${fmtD(h.due)})</span>`;
+ if(d===0)return `<span class="st late">ఈరోజే గడువు</span>`;
+ if(d===1)return `<span class="st due">రేపే గడువు</span>`;
+ return `<span class="st due">ఇంకా ${d} రోజుల గడువు</span>`;}
+
+/* ---------- నావిగేషన్ ---------- */
+function go(v,p){clearInterval(tick);tick=null;try{speechSynthesis.cancel();}catch(e){}view=v;param=p||{};render();window.scrollTo(0,0);}
+function render(){const app=$('#app');
+ if(view==='teacher'){app.innerHTML='<main>'+V.teacher()+'</main>'+footer();return;}
+ if(!S.cur){app.innerHTML=V.login()+footer();return;}
+ const full=view==='testrun'||view==='gamerun';
+ app.innerHTML=(full?'':header())+(full?'':'<main>')+(V[view]||V.home)()+(full?'':'</main>')+footer()+(full?'':nav());}
+function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి • ${fmtD(todayS())}</small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
+function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
+ return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
+function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a></footer>`;}
+const V={};
+
+/* ---------- లాగిన్ ---------- */
+let selCls=null;
+V.login=()=>`<div class="login"><div class="logo">📚</div><h1>విద్యార్థి లెర్నింగ్ యాప్</h1><p>1 నుండి 5 తరగతులు • ఎప్పుడైనా, ఎక్కడైనా నేర్చుకో!</p>
+<div class="card"><label>నీ పేరు</label><input id="ln" placeholder="ఉదా: రవి" maxlength="30">
+<label>తరగతి ఎంచుకో</label><div class="clsrow">${[1,2,3,4,5].map(c=>`<button class="cb ${selCls===c?'on':''}" data-c="${c}" onclick="pickCls(${c})">${c}</button>`).join('')}</div>
+<button class="btn" onclick="doLogin()">ప్రారంభించు ▶</button></div>
+${S.local.length?`<div class="card"><h3>ఈ ఫోన్‌లో వాడిన విద్యార్థులు</h3>${S.local.map((s,i)=>`<button class="chip" onclick="quick(${i})">👤 ${esc(s.n)} • ${s.c}వ</button>`).join('')}</div>`:''}
+${S.cfg.type?'':`<button class="link" onclick="loginJoin()">🔗 పాఠశాల జాయిన్ కోడ్ ఉందా?</button><br>`}<button class="link" onclick="go('teacher')">👩‍🏫 ఉపాధ్యాయుల ప్యానెల్</button></div>`;
+function loginJoin(){const c=prompt('ఉపాధ్యాయులు పంపిన జాయిన్ కోడ్ / లింక్ పేస్ట్ చేయండి');if(c&&joinWith(c))render();}
+function pickCls(c){selCls=c;document.querySelectorAll('.cb').forEach(b=>b.classList.toggle('on',+b.dataset.c===c));}
+function doLogin(){const n=$('#ln').value.trim();if(!n)return toast('నీ పేరు రాయి');if(!selCls)return toast('తరగతి ఎంచుకో');setStudent(n,selCls);}
+function setStudent(n,c){S.cur={n,c};const ex=S.local.find(s=>s.n===n);if(ex)ex.c=c;else S.local.push({n,c});put('students',{id:sid(n),n,c});go('home');toast('స్వాగతం, '+n+'! 🎉');}
+function quick(i){const s=S.local[i];setStudent(s.n,s.c);}
+function logout(){S.cur=null;selCls=null;save();go('home');}
+
+/* ---------- మెనూ & తరగతి ---------- */
+V.menu=()=>`<h2 class="pt">మెనూ</h2><div class="list">
+<button class="li" onclick="go('cls')">🎓 తరగతి మార్చు <span>${S.cur.c}వ తరగతి</span></button>
+<button class="li" onclick="go('doubts')">💬 సందేహం అడుగు</button>
+<button class="li" onclick="go('schedule')">📅 షెడ్యూల్ & ఈవెంట్లు</button>
+<button class="li" onclick="go('test',{tab:'done'})">📊 నా రిపోర్ట్</button>
+${isStandalone()?'':`<button class="li" onclick="installApp()">📲 యాప్‌గా ఇన్‌స్టాల్ చేయి</button>`}
+<button class="li" onclick="go('sync')">☁️ ఆన్‌లైన్ సింక్ <span>${S.cfg.type?(S.cfg.type==='gs'?'Google Sheets':'Firebase')+' '+syncIcon():'ఆఫ్'}</span></button>
+<button class="li" onclick="logout()">🔄 విద్యార్థిని మార్చు</button>
+<button class="li" onclick="go('teacher')">👩‍🏫 ఉపాధ్యాయుల ప్యానెల్</button></div>`;
+V.cls=()=>`<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>తరగతి ఎంచుకో</h2></div><div class="card"><div class="clsrow">${[1,2,3,4,5].map(c=>`<button class="cb ${S.cur.c===c?'on':''}" onclick="setCls(${c})">${c}</button>`).join('')}</div></div>`;
+function setCls(c){S.cur.c=c;const ex=S.local.find(s=>s.n===me());if(ex)ex.c=c;put('students',{id:sid(me()),n:me(),c});go('learn');toast(c+'వ తరగతి ఎంచుకున్నావు');}
+
+/* ---------- హోమ్ ---------- */
+function tile(v,ic,t,s,bg,p){return `<button class="tile" style="background:${bg}" onclick="go('${v}'${p?','+p:''})"><span>${ic}</span><b>${t}</b><small>${s}</small></button>`;}
+const EVT={ev:'ఈవెంట్',test:'టెస్ట్',hol:'సెలవు',live:'లైవ్ క్లాస్'};
+function evCard(e){const t=todayS();const lbl=e.d===t?'ఈరోజు':e.d===addDays(t,1)?'రేపు':fmtD(e.d);const tc={test:'t',hol:'h',live:'l'}[e.ty]||'';const ok=/^https:\/\//.test(e.link||'');
+ return `<div class="ecard"><span class="tag ${tc}">${e.ty==='live'?'🔴 LIVE • ':''}${lbl}</span><b>${esc(e.t)}</b><small>${e.tm?to12(e.tm):''} ${e.ty!=='ev'?'• '+EVT[e.ty]:''}</small>${ok?`<a class="lk2" href="${esc(e.link)}" target="_blank" rel="noopener">ఇప్పుడే చేరండి ▶</a>`:`<button class="lk2" onclick="go('schedule',{d:'${e.d}'})">వివరాలు చూడు ▸</button>`}</div>`;}
+V.home=()=>{const st=stats();const up=upcoming(6);const pend=pendingHw();
+ return `<section class="hero"><div><small>నమస్తే 👋</small><h2>${esc(S.cur.n)}</h2><p>నేర్చుకో ఎప్పుడైనా, ఎక్కడైనా!</p></div><div class="mascot">🎒</div></section>
+${installBanner()}<div class="perf" onclick="go('test',{tab:'done'})"><div><h3>మొత్తం ప్రదర్శన</h3><p>${perfMsg(st.avg,st.n)}</p><b class="more">మరిన్ని వివరాలు ▸</b></div>${ring(st.avg)}</div>
+<h4 class="sec">రాబోయే ఈవెంట్లు</h4><div class="hscroll">${up.length?up.map(evCard).join(''):`<div class="ecard"><span class="tag">ఈరోజు</span><b>కొత్త ఈవెంట్లు లేవు</b><small>షెడ్యూల్‌లో పీరియడ్లు చూడు</small><button class="lk2" onclick="go('schedule')">షెడ్యూల్ ▸</button></div>`}</div>
+<h4 class="sec">అన్ని విభాగాలు</h4><div class="tiles">
+${tile('learn','📖','సెల్ఫ్ లెర్న్','పాఠాలు చదువు','#dbeafe')}${tile('doubts','💬','సందేహం','టీచర్‌ని అడుగు','#fde2e4')}${tile('test','📝','టెస్ట్','రాసి రిపోర్ట్ చూడు','#fdeaa8')}
+${tile('schedule','📅','షెడ్యూల్','పీరియడ్లు, ఈవెంట్లు','#ccf0ee')}${tile('games','🎮','ఆటలు','ఆడుతూ నేర్చుకో','#e0dcfd')}${tile('homework','📒','హోంవర్క్',pend.length+' పెండింగ్','#d1fae5')}</div>
+${pend.length?`<h4 class="sec">పెండింగ్ హోంవర్క్</h4>${pend.slice(0,2).map(hwCard).join('')}`:''}`;};
+
+/* ---------- సెల్ఫ్ లెర్న్ ---------- */
+function recommend(){const c=S.cur.c;for(const s of subjectsFor(c)){const ls=lessonsOf(c,s);const i=ls.findIndex(l=>!isRead(c+'-'+s+'-'+l.k));if(i>=0){const l=ls[i];
+ return `<div class="tcard"><div class="th" style="background:${SUBJ[s].bg}"><span class="si" style="width:34px;height:34px;font-size:16px">${SUBJ[s].ic}</span>${SUBJ[s].n}</div><div class="tb"><b>${esc(l.t)}</b><div class="r"><small class="mut">${l.b.length} ముఖ్యాంశాలు</small><button class="lk b" onclick="go('subject',{s:'${s}',open:${i}})">చదువు ▶</button></div></div></div>`;}}
+ return `<div class="empty">🎉 అన్ని పాఠాలు చదివావు! ఇప్పుడు టెస్ట్ రాయి.</div>`;}
+V.learn=()=>{const c=S.cur.c;return `<div class="doubt" onclick="go('doubts')"><h3>సందేహం అడుగు</h3><p>నీ సందేహాలను ఉపాధ్యాయులకు పంపి, త్వరగా జవాబులు పొందు.</p><span class="bub">💬</span><span class="play">▶</span></div>
+<h4 class="sec">అన్ని సబ్జెక్టులు</h4><p class="mut" style="margin:-4px 2px 10px">ప్రస్తుతం చూస్తున్నది: <b>${c}వ తరగతి</b> (<a onclick="go('cls')">మార్చు</a>)</p>
+<div class="subs">${subjectsFor(c).map(s=>{const p=readPct(s);return `<button class="sub" style="background:${SUBJ[s].bg}" onclick="go('subject',{s:'${s}'})"><span class="si" style="color:${SUBJ[s].col}">${SUBJ[s].ic}</span><span><b>${SUBJ[s].n}</b><small>${p}% పూర్తి</small></span><i class="pb"><i style="width:${p}%"></i></i></button>`;}).join('')}</div>
+<h4 class="sec">నీ కోసం సూచన</h4>${recommend()}`;};
+V.subject=()=>{const c=S.cur.c,s=param.s,ls=lessonsOf(c,s);
+ return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>${SUBJ[s].ic} ${SUBJ[s].n} • ${c}వ తరగతి</h2></div>
+<p class="mut" style="margin:-6px 2px 12px">చదివిన పాఠాలు: ${readPct(s)}%</p>
+${ls.map((l,i)=>{const k=c+'-'+s+'-'+l.k;const d=isRead(k);return `<details class="les ${d?'done':''}" ${i===param.open?'open':''}><summary><span>${i+1}. ${esc(l.t)}${l.tn?' <small class="mut">(టీచర్ నోట్)</small>':''}</span>${d?'<em>✓</em>':'<em style="color:#9ca3af">▾</em>'}</summary><ul>${l.b.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><div class="lfoot"><button class="spk" onclick="speakLesson('${s}',${i})">🔊 వినండి</button><button class="btn sm ${d?'ghost':''}" onclick="toggleRead('${k}','${s}',${i})">${d?'↺ మళ్ళీ చదవాలి':'✓ చదివాను'}</button></div></details>`;}).join('')||'<div class="empty">పాఠాలు లేవు</div>'}
+<div class="row2"><button class="btn" onclick="startTest('${s}')">📝 టెస్ట్ రాయి</button><button class="btn ghost" onclick="go('doubts',{s:'${s}'})">💬 సందేహం</button></div>`;};
+function speakLesson(s,i){const l=lessonsOf(S.cur.c,s)[i];speak(l.t+'. '+l.b.join('. '));}
+function toggleRead(k,s,i){const m=readMap();if(m[k])delete m[k];else{m[k]=1;toast('బాగుంది! పాఠం పూర్తయింది ✓');}save();go('subject',{s,open:i});}
+
+/* ---------- సందేహాలు ---------- */
+V.doubts=()=>{const mine=live('doubts').filter(d=>d.n===me()).slice().reverse();const sel=param.s||subjectsFor(S.cur.c)[0];
+ return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>💬 సందేహం అడుగు</h2></div>
+<div class="card"><label>సబ్జెక్ట్</label><select id="dsub">${subjectsFor(S.cur.c).map(s=>`<option value="${s}" ${s===sel?'selected':''}>${SUBJ[s].n}</option>`).join('')}</select>
+<label>నీ సందేహం రాయి</label><textarea id="dtx" rows="3" placeholder="ఉదా: భిన్నాలు ఎలా కలపాలి?"></textarea><button class="btn" onclick="askDoubt()">పంపు ➤</button></div>
+<h4 class="sec">నా సందేహాలు (${mine.length})</h4>${mine.length?mine.map(d=>`<div class="dq"><small>${SUBJ[d.s].n} • ${fmtD(d.d)}</small><p>❓ ${esc(d.q)}</p>${d.r?`<div class="ans">👩‍🏫 ${esc(d.r)}</div>`:'<div class="wait">⏳ ఉపాధ్యాయుల జవాబు కోసం వేచి ఉంది</div>'}</div>`).join(''):'<div class="empty">ఇంకా సందేహాలు అడగలేదు</div>'}`;};
+function askDoubt(){const q=$('#dtx').value.trim();if(!q)return toast('సందేహం రాయి');put('doubts',{id:uid(),n:me(),c:S.cur.c,s:$('#dsub').value,q,d:new Date().toISOString(),r:''});toast('సందేహం ఉపాధ్యాయులకు పంపబడింది ✓');go('doubts');}
+
+/* ---------- ప్రశ్నల తయారీ ---------- */
+function numOpts(ans,sp){const set=new Set([ans]);let g=0;while(set.size<4&&g<80){g++;const v=ans+R(1,sp)*(Math.random()<.5?-1:1);if(v>=0)set.add(v);}let k=1;while(set.size<4)set.add(ans+sp*k++);return shuffle([...set]).map(String);}
+function mk(q,a,sp){return {q,a:String(a),o:numOpts(a,sp||4)};}
+function genMath(c){const g=[];
+ if(c===1){g.push(()=>{const a=R(1,10),b=R(1,10);return mk(`${a} + ${b} = ?`,a+b,3);},()=>{const a=R(5,20),b=R(1,a);return mk(`${a} − ${b} = ?`,a-b,3);},
+  ()=>{const n=R(2,9);return mk(`ఎన్ని ఉన్నాయి?  ${'🍎'.repeat(n)}`,n,2);},()=>{const n=R(1,98);return mk(`${n} తర్వాత వచ్చే సంఖ్య?`,n+1,2);},
+  ()=>{let a=R(1,50),b=R(1,50);if(a===b)b++;return {q:`ఏది పెద్ద సంఖ్య?  ${a}  లేదా  ${b}`,a:String(Math.max(a,b)),o:shuffle([String(a),String(b)])};});}
+ if(c===2){g.push(()=>{const a=R(10,60),b=R(10,39);return mk(`${a} + ${b} = ?`,a+b,10);},()=>{const a=R(30,99),b=R(10,a-5);return mk(`${a} − ${b} = ?`,a-b,10);},
+  ()=>{const a=R(2,5),b=R(1,10);return mk(`${a} × ${b} = ?`,a*b,a);},()=>{const n=R(11,99);const t=Math.floor(n/10);const o=new Set([t]);while(o.size<4)o.add(R(0,9));return {q:`${n} లో పదుల స్థానంలోని అంకె?`,a:String(t),o:shuffle([...o]).map(String)};},
+  ()=>{const n=R(2,98);return mk(`${n} ముందు వచ్చే సంఖ్య?`,n-1,2);});}
+ if(c===3){g.push(()=>{const a=R(100,500),b=R(100,499);return mk(`${a} + ${b} = ?`,a+b,10);},()=>{const a=R(300,999),b=R(100,a-50);return mk(`${a} − ${b} = ?`,a-b,10);},
+  ()=>{const a=R(2,10),b=R(2,10);return mk(`${a} × ${b} = ?`,a*b,a);},()=>{const d=R(2,10),k=R(2,10);return mk(`${d*k} ÷ ${d} = ?`,k,3);},
+  ()=>{const n=R(2,50)*2;return mk(`${n} లో సగం ఎంత?`,n/2,4);});}
+ if(c===4){g.push(()=>{const a=R(1000,5000),b=R(1000,4999);return mk(`${a} + ${b} = ?`,a+b,100);},()=>{const a=R(3000,9999),b=R(1000,a-500);return mk(`${a} − ${b} = ?`,a-b,100);},
+  ()=>{const a=R(12,99),b=R(2,9);return mk(`${a} × ${b} = ?`,a*b,b*2);},()=>{const d=R(2,9),k=R(12,99);return mk(`${d*k} ÷ ${d} = ?`,k,5);},
+  ()=>{const s=R(3,20);return mk(`భుజం ${s} సెం.మీ గల చతురస్రం చుట్టుకొలత? (సెం.మీ)`,4*s,4);},()=>{const l=R(5,20),w=R(2,l-1);return mk(`పొడవు ${l}, వెడల్పు ${w} సెం.మీ గల దీర్ఘచతురస్రం చుట్టుకొలత?`,2*(l+w),4);});}
+ if(c===5){g.push(()=>{const a=R(11,50),b=R(11,30);return mk(`${a} × ${b} = ?`,a*b,20);},()=>{const d=R(11,25),k=R(5,30);return mk(`${d*k} ÷ ${d} = ?`,k,4);},
+  ()=>{const d=R(5,12),a=R(1,d-2),b=R(1,d-1-a);const o=new Set([a+b]);while(o.size<4){const v=R(1,d+3);o.add(v);}return {q:`${a}/${d} + ${b}/${d} = ?`,a:`${a+b}/${d}`,o:shuffle([...o]).map(v=>v+'/'+d)};},
+  ()=>{const x=R(11,89)/10,y=R(11,59)/10;const a=+(x+y).toFixed(1);const o=new Set([a.toFixed(1)]);[0.1,-0.1,1,-1,0.2].forEach(dd=>{if(o.size<4&&a+dd>0)o.add((a+dd).toFixed(1));});return {q:`${x.toFixed(1)} + ${y.toFixed(1)} = ?`,a:a.toFixed(1),o:shuffle([...o])};},
+  ()=>{const l=R(5,20),w=R(3,15);return mk(`పొడవు ${l} మీ, వెడల్పు ${w} మీ గల దీర్ఘచతురస్ర వైశాల్యం? (చ.మీ)`,l*w,8);},
+  ()=>{const P=[2,3,5,7,11,13,17,19,23,29],Cm=[4,6,8,9,10,12,14,15,16,18,20,21,22,25,27];const p=P[R(0,P.length-1)];const o=new Set([String(p)]);while(o.size<4)o.add(String(Cm[R(0,Cm.length-1)]));return {q:'కింది వాటిలో ప్రధాన సంఖ్య ఏది?',a:String(p),o:shuffle([...o])};});}
+ return g[R(0,g.length-1)]();}
+function buildQs(c,s){if(s==='mat'){const out=[],seen=new Set();let g=0;while(out.length<10&&g<200){g++;const q=genMath(c);if(!seen.has(q.q)){seen.add(q.q);out.push(q);}}return out;}
+ return shuffle((Q[c]||{})[s]||[]).map(([q,o])=>{const op=o.split('|');return {q,a:op[0],o:shuffle(op)};});}
+
+/* ---------- టెస్ట్ ---------- */
+V.test=()=>{const tab=param.tab||'new';const st=stats();const c=S.cur.c;
+ let body='';
+ if(tab==='new')body=subjectsFor(c).map(s=>{const rs=myRes().filter(r=>r.sb===s);const best=rs.length?Math.max(...rs.map(r=>Math.round(r.s*100/r.t))):null;const n=s==='mat'?10:((Q[c]||{})[s]||[]).length;
+  return `<div class="tcard"><div class="th" style="background:${SUBJ[s].bg}"><span class="si" style="width:34px;height:34px;font-size:16px;color:${SUBJ[s].col}">${SUBJ[s].ic}</span>${SUBJ[s].n} టెస్ట్</div><div class="tb">${n} ప్రశ్నలు • ${rs.length} సార్లు రాశావు${best!=null?` • ఉత్తమం <span class="pct ${pctCls(best)}">${best}%</span>`:''}<div class="r"><small class="mut">${s==='mat'?'ప్రతిసారీ కొత్త లెక్కలు':'ప్రశ్నలు కలగలుపుగా'}</small><button class="lk b" onclick="startTest('${s}')">ప్రారంభించు ▶</button></div></div></div>`;}).join('');
+ if(tab==='done'){const rs=myRes().slice().reverse();
+  body=`<div class="card"><h3>సబ్జెక్టుల వారీ ప్రదర్శన</h3>${subjectsFor(c).map(s=>{const p=st.by[s];return `<div class="sbar"><span>${SUBJ[s].n}</span><span class="tr"><i style="width:${p||0}%;background:${SUBJ[s].col}"></i></span><b>${p==null?'–':p+'%'}</b></div>`;}).join('')}</div>`+
+  (rs.length?rs.map(r=>{const p=Math.round(r.s*100/r.t);return `<div class="tcard"><div class="th" style="background:${SUBJ[r.sb].bg}">${SUBJ[r.sb].ic} ${SUBJ[r.sb].n} టెస్ట్</div><div class="tb">${fmtD(r.d)} • ${new Date(r.d).toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'})} • ${r.t} ప్రశ్నలు<div class="r"><span>సమయం: <b>${mmss(r.sec)}</b> &nbsp; స్కోరు: <b>${r.s}/${r.t}</b></span><span class="pct ${pctCls(p)}">${p}%</span></div><div class="r"><span></span><button class="lk" onclick="go('result',{id:'${r.id}'})">వివరాలు చూడు ▸</button></div></div></div>`;}).join(''):'<div class="empty">ఇంకా టెస్టులు రాయలేదు</div>');}
+ if(tab==='sch'){const t=todayS();const ev=live('events').filter(e=>e.ty==='test'&&e.d>=t&&(e.c===0||e.c===c)).sort((a,b)=>a.d<b.d?-1:1);
+  body=ev.length?ev.map(e=>`<div class="tcard"><div class="th" style="background:#dbeafe">📝 ${esc(e.t)}</div><div class="tb">${fmtLong(e.d)} • ${to12(e.tm)}<div class="r"><small class="mut">${diffDays(e.d,t)===0?'ఈరోజే!':'ఇంకా '+diffDays(e.d,t)+' రోజులు'}</small><span class="badge">షెడ్యూల్డ్</span></div></div></div>`).join(''):'<div class="empty">షెడ్యూల్ చేసిన టెస్టులు లేవు</div>';}
+ return `<div class="perf"><div><h3>మొత్తం ప్రదర్శన</h3><p>${perfMsg(st.avg,st.n)}</p><b class="more">${st.n} టెస్టులు రాశావు</b></div>${ring(st.avg)}</div>
+<div class="tabs">${[['new','టెస్ట్ రాయి'],['done','పూర్తయినవి'],['sch','షెడ్యూల్డ్']].map(([k,n])=>`<button class="${tab===k?'on':''}" onclick="go('test',{tab:'${k}'})">${n}</button>`).join('')}</div>${body}`;};
+function startTest(s){const qs=buildQs(S.cur.c,s);if(!qs.length)return toast('ఈ సబ్జెక్టుకు ప్రశ్నలు లేవు');T={s,qs,i:0,ans:[],start:Date.now()};go('testrun');
+ tick=setInterval(()=>{const e=$('#ttime');if(e)e.textContent=mmss((Date.now()-T.start)/1000);},1000);}
+V.testrun=()=>{const q=T.qs[T.i],sel=T.ans[T.i];
+ return `<div class="trbar"><button class="ib" onclick="quitTest()">✕</button><b>${SUBJ[T.s].n} టెస్ట్</b><span>⏱ <span id="ttime">${mmss((Date.now()-T.start)/1000)}</span></span></div>
+<div class="prog"><i style="width:${(T.i+1)/T.qs.length*100}%"></i></div>
+<div class="qcard"><small>ప్రశ్న ${T.i+1} / ${T.qs.length}</small><h3>${esc(q.q)}</h3><div class="opts">${q.o.map((o,j)=>`<button class="opt ${sel===j?'sel':''}" onclick="pickAns(${j})"><span>${'ABCD'[j]}</span>${esc(o)}</button>`).join('')}</div>
+<button class="spk" onclick="speak(T.qs[T.i].q)">🔊 ప్రశ్న వినండి</button></div>
+<div class="row2 qnav"><button class="btn ghost" ${T.i?'':'disabled'} onclick="T.i--;render()">◀ వెనుకకు</button><button class="btn" ${sel==null?'disabled':''} onclick="nextQ()">${T.i===T.qs.length-1?'సమర్పించు ✓':'తర్వాత ▶'}</button></div>`;};
+function pickAns(j){T.ans[T.i]=j;render();}
+function nextQ(){if(T.i<T.qs.length-1){T.i++;render();}else finishTest();}
+function quitTest(){if(confirm('టెస్ట్ మధ్యలో ఆపేయాలా? జవాబులు సేవ్ కావు.'))go('test');}
+function finishTest(){const sec=Math.round((Date.now()-T.start)/1000);let sc=0;
+ const rv=T.qs.map((q,i)=>{const y=q.o[T.ans[i]];if(y===q.a)sc++;return {q:q.q,y:y||'',a:q.a};});
+ const r={id:uid(),n:me(),c:S.cur.c,sb:T.s,s:sc,t:T.qs.length,sec,d:new Date().toISOString(),rv};put('results',r);go('result',{id:r.id});}
+V.result=()=>{const r=live('results').find(x=>x.id===param.id);if(!r)return '<div class="empty">ఫలితం దొరకలేదు</div>';const p=Math.round(r.s*100/r.t);
+ const msg=p>=80?'🌟 అద్భుతం!':p>=60?'👏 బాగుంది!':p>=40?'🙂 పర్వాలేదు, ఇంకా సాధన చేయి':'💪 మళ్ళీ ప్రయత్నించు!';
+ return `<div class="bar"><button class="ib" onclick="go('test',{tab:'done'})">←</button><h2>${SUBJ[r.sb].n} – ఫలితం</h2></div>
+<div class="card center">${ring(p,130,p>=80?'#16a34a':p>=50?'#f59e0b':'#e5484d')}<h3 style="margin-top:8px">${msg}</h3><p>సరైనవి: <b>${r.s} / ${r.t}</b> &nbsp;•&nbsp; సమయం: <b>${mmss(r.sec)}</b></p><p class="mut">${fmtD(r.d)}</p>
+<div class="row2"><button class="btn" onclick="startTest('${r.sb}')">↻ మళ్ళీ రాయి</button><button class="btn ghost" onclick="go('subject',{s:'${r.sb}'})">📖 పాఠాలు</button></div></div>
+<h4 class="sec">జవాబుల సమీక్ష</h4>${(r.rv||[]).map((x,i)=>{const ok=x.y===x.a;return `<div class="rv ${ok?'':'x'}"><p>${i+1}. ${esc(x.q)}</p><small>నీ జవాబు: <b>${esc(x.y||'—')}</b> ${ok?'✅':'❌'}</small>${ok?'':`<small>సరైన జవాబు: <b style="color:#166534">${esc(x.a)}</b></small>`}</div>`;}).join('')}`;};
+
+/* ---------- షెడ్యూల్ ---------- */
+const SLOTS=[[540,30,'ప్రార్థన & హాజరు'],[570,45,0],[615,45,1],[660,15,'విరామం'],[675,45,2],[720,45,3],[765,60,'మధ్యాహ్న భోజనం'],[825,45,4],[870,45,5],[915,30,'ఆటలు / కథలు']];
+const TEACH={tel:'తెలుగు ఉపాధ్యాయులు',eng:'English టీచర్',mat:'గణిత ఉపాధ్యాయులు',evs:'EVS ఉపాధ్యాయులు'};
+function periodSubj(c,wd,k){const base=c<=2?['tel','eng','mat','tel','mat','eng']:['tel','eng','mat','evs','mat','tel'];return base[(k+wd)%base.length];}
+function minTo12(m){const h=Math.floor(m/60),mm=m%60;return ((h%12)||12)+':'+String(mm).padStart(2,'0')+(h>=12?' PM':' AM');}
+V.schedule=()=>{const t=todayS();const sel=param.d||t;const base=param.w||sel;const d=parseD(sel);const wd=d.getDay();
+ const days=[];for(let i=-3;i<=3;i++)days.push(addDays(base,i));
+ const hol=live('events').find(e=>e.d===sel&&e.ty==='hol'&&(e.c===0||e.c===S.cur.c));
+ const ev=eventsOn(sel);const now=new Date();const nm=now.getHours()*60+now.getMinutes();
+ let tt='';
+ if(wd===0)tt=`<div class="holiday">🎉 ఆదివారం – సెలవు దినం<br><small class="mut">విశ్రాంతి తీసుకో, కొంచెం చదువు, ఆటలు ఆడు!</small></div>`;
+ else if(hol)tt=`<div class="holiday">🏖️ ${esc(hol.t)}<br><small class="mut">ఈరోజు సెలవు</small></div>`;
+ else tt=SLOTS.map(([st,du,x])=>{const isNow=sel===t&&nm>=st&&nm<st+du;
+  if(typeof x==='string')return `<div class="period"><div class="tm">${minTo12(st)}</div><div class="pc brk ${isNow?'now':''}">${isNow?'<span class="now-tag">ఇప్పుడు</span>':''}<b>${x}</b><span>${du} ని.</span></div></div>`;
+  const s=periodSubj(S.cur.c,wd,x);return `<div class="period"><div class="tm">${minTo12(st)}</div><div class="pc ${isNow?'now':''}" style="border-left-color:${SUBJ[s].col}">${isNow?'<span class="now-tag">ఇప్పుడు</span>':''}<small>పీరియడ్ ${x+1}</small><b>${SUBJ[s].ic} ${SUBJ[s].n}</b><span>${du} ని. • ${TEACH[s]} • తరగతి గదిలో</span></div></div>`;}).join('');
+ return `<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>📅 నా షెడ్యూల్</h2></div>
+<div class="month"><b>${MON[d.getMonth()]}, ${d.getFullYear()}</b>${sel!==t?`<button class="lk" onclick="go('schedule')">ఈరోజుకు ▸</button>`:''}</div>
+<div class="strip"><button class="ar" onclick="go('schedule',{d:'${sel}',w:'${addDays(base,-7)}'})">‹</button><div class="days">${days.map(x=>{const dd=parseD(x);const hasEv=live('events').some(e=>e.d===x&&(e.c===0||e.c===S.cur.c));
+  return `<button class="day ${x===sel?'on':''} ${x===t?'td':''} ${hasEv?'ev':''}" onclick="go('schedule',{d:'${x}',w:'${base}'})">${DAYS[dd.getDay()]}<b>${dd.getDate()}</b></button>`;}).join('')}</div><button class="ar" onclick="go('schedule',{d:'${sel}',w:'${addDays(base,7)}'})">›</button></div>
+<h4 class="sec">${fmtLong(sel)}</h4>
+${ev.length?`<div class="hscroll">${ev.map(evCard).join('')}</div>`:''}
+<h4 class="sec">టైమ్ టేబుల్</h4>${tt}`;};
+
+/* ---------- ఆటలు ---------- */
+V.games=()=>{const pend=pendingHw();const lb=param.lb||'mm';
+ const best={};live('games').filter(x=>x.g===lb&&x.c===S.cur.c).forEach(x=>{if(!best[x.n]||x.s>best[x.n])best[x.n]=x.s;});
+ const rows=Object.entries(best).sort((a,b)=>b[1]-a[1]).slice(0,10);
+ return `${pend.slice(0,2).map(h=>`<div class="task"><span class="si" style="background:${SUBJ[h.s].bg};color:${SUBJ[h.s].col}">${SUBJ[h.s].ic}</span><div><b>${esc(h.t)}</b><small>${diffDays(h.due,todayS())<0?'గడువు దాటింది':'గడువు: '+fmtD(h.due)}</small></div><span>›</span></div>`).join('')}
+${pend.length?`<button class="btn dark" style="width:100%;margin-top:4px" onclick="go('homework')">అన్ని పనులు చూడు</button>`:''}
+<div class="concept"><h3>కాన్సెప్ట్స్ బలపరచుకో</h3><p>ఎంపిక చేసిన పాఠాల నుండి నేర్చుకుని, నీ అవగాహన పెంచుకో.</p><button class="btn dark" onclick="go('learn')">నేర్చుకోవడం ప్రారంభించు</button><span>📄</span></div>
+<h4 class="sec">ఆటలతో నేర్చుకో</h4><div class="gtiles">${Object.entries(GAMES).map(([k,g],i)=>`<button class="gt ${i===2?'wide':''}" style="background:${g.bg}" onclick="startGame('${k}')"><div><b>${g.n}</b><br><small>${g.t} • ${g.sec} సెకన్లు</small></div><em>ఆడు ▶</em><i>${g.ic}</i></button>`).join('')}</div>
+<h4 class="sec">🏆 స్నేహితులతో పోల్చు (${S.cur.c}వ తరగతి)</h4>
+<div class="tabs">${Object.entries(GAMES).map(([k,g])=>`<button class="${lb===k?'on':''}" onclick="go('games',{lb:'${k}'})">${g.n}</button>`).join('')}</div>
+<div class="lb">${rows.length?rows.map(([n,s],i)=>`<div class="lbr ${n===me()?'me':''}"><span class="rk">${['🥇','🥈','🥉'][i]||i+1}</span><span class="nm">${esc(n)}${n===me()?' (నువ్వు)':''}</span><b>${s}</b></div>`).join(''):'<p class="mut" style="padding:14px 0;text-align:center">ఇంకా ఎవరూ ఆడలేదు – మొదటివాడివి నువ్వే అవ్వు!</p>'}</div>
+${S.cfg.type?'<p class="mut" style="margin-top:8px">☁️ నీ తరగతిలోని అందరి స్కోర్లు ఆన్‌లైన్‌లో పోల్చబడతాయి.</p>':'<p class="mut" style="margin-top:8px">ఆఫ్లైన్‌లో ఈ ఫోన్‌లో ఆడినవారే కనిపిస్తారు. అందరితో పోల్చడానికి ఆన్‌లైన్ సింక్ ఆన్ చేయాలి.</p>'}`;};
+function genMental(c){let q,a;const k=R(0,2);
+ if(c===1){if(k<2){const x=R(1,9),y=R(1,9);q=`${x} + ${y}`;a=x+y;}else{const x=R(5,18),y=R(1,x);q=`${x} − ${y}`;a=x-y;}}
+ else if(c===2){if(k===0){const x=R(10,50),y=R(5,30);q=`${x} + ${y}`;a=x+y;}else if(k===1){const x=R(20,60),y=R(5,x-1);q=`${x} − ${y}`;a=x-y;}else{const x=R(2,5),y=R(1,10);q=`${x} × ${y}`;a=x*y;}}
+ else if(c===3){if(k===0){const x=R(20,80),y=R(10,60);q=`${x} + ${y}`;a=x+y;}else if(k===1){const x=R(2,10),y=R(2,10);q=`${x} × ${y}`;a=x*y;}else{const d=R(2,10),y=R(2,10);q=`${d*y} ÷ ${d}`;a=y;}}
+ else if(c===4){if(k===0){const x=R(11,30),y=R(2,9);q=`${x} × ${y}`;a=x*y;}else if(k===1){const d=R(2,9),y=R(5,20);q=`${d*y} ÷ ${d}`;a=y;}else{const x=R(100,500),y=R(50,99);q=`${x} − ${y}`;a=x-y;}}
+ else{if(k===0){const x=R(11,20),y=R(3,9);q=`${x} × ${y}`;a=x*y;}else if(k===1){const d=R(11,20),y=R(3,12);q=`${d*y} ÷ ${d}`;a=y;}else{const x=R(2,15);q=`${x} × ${x}`;a=x*x;}}
+ return {q:q+' = ?',a:String(a),o:numOpts(a,a>40?10:4)};}
+function startGame(g){G={g,score:0,left:GAMES[g].sec,done:false,used:[],msg:'',mc:''};nextRound();go('gamerun');
+ tick=setInterval(()=>{G.left--;const e=$('#gleft');if(e)e.textContent=G.left;if(G.left<=0)endGame();},1000);}
+function nextRound(){const c=S.cur.c;
+ if(G.g==='mm')G.cur=genMental(c);
+ else if(G.g==='tl'){let pool=TEL.filter(x=>!G.used.includes(x[1]));if(!pool.length){G.used=[];pool=TEL;}const it=pool[R(0,pool.length-1)];G.used.push(it[1]);
+  const o=new Set([it[2]]);while(o.size<4)o.add(TEL[R(0,TEL.length-1)][2]);G.cur={e:it[0],w:it[1],a:it[2],o:shuffle([...o])};}
+ else{const max={1:3,2:4,3:5,4:7,5:99}[c];let pool=WORDS.filter(w=>w[1].length<=max&&!G.used.includes(w[1]));if(!pool.length){G.used=[];pool=WORDS.filter(w=>w[1].length<=max);}
+  const it=pool[R(0,pool.length-1)];G.used.push(it[1]);let tl=shuffle(it[1].split(''));let g2=0;while(tl.join('')===it[1]&&g2++<10)tl=shuffle(tl);
+  G.cur={e:it[0],w:it[1],tiles:tl.map(l=>({l,u:false})),typed:[]};}}
+function gameArea(){const c=G.cur;const m=`<div class="gmsg ${G.mc}">${G.msg}</div>`;
+ if(G.g==='mm')return `<div class="gq">${c.q}</div>${m}<div class="gopts">${c.o.map((o,j)=>`<button onclick="mmPick(${j})">${o}</button>`).join('')}</div>`;
+ if(G.g==='tl')return `<div class="gemo">${c.e}</div><p class="center">ఈ బొమ్మ పేరు ఏ అక్షరంతో మొదలవుతుంది?</p>${m}<div class="gopts">${c.o.map((o,j)=>`<button onclick="tlPick(${j})">${o}</button>`).join('')}</div>`;
+ return `<div class="gemo">${c.e}</div><p class="center">అక్షరాలను సరైన క్రమంలో నొక్కి పదం తయారు చేయి</p><div class="slots" id="slots">${c.w.split('').map((_,i)=>`<span>${c.typed[i]!=null?c.tiles[c.typed[i]].l:''}</span>`).join('')}</div>${m}
+<div class="ltiles">${c.tiles.map((t,i)=>`<button ${t.u?'disabled':''} onclick="ewTap(${i})">${t.l}</button>`).join('')}</div>
+<div class="row2 qnav"><button class="btn ghost" onclick="ewBack()">⌫ తొలగించు</button><button class="btn ghost" onclick="ewSkip()">దాటవేయి ⏭</button></div>`;}
+function upd(shake){const a=$('#garea');if(!a)return;a.innerHTML=gameArea();$('#gsc').textContent=G.score;if(shake){const s=$('#slots');if(s)s.classList.add('shake');}}
+function mmPick(j){const c=G.cur;if(c.o[j]===c.a){G.score++;G.msg='✓ సరైనది!';G.mc='ok';}else{G.msg=`✗ సరైన జవాబు: ${c.q.replace('?',c.a)}`;G.mc='no';}nextRound();upd();}
+function tlPick(j){const c=G.cur;if(c.o[j]===c.a){G.score++;G.msg=`✓ సరైనది! ${c.e} ${c.w}`;G.mc='ok';}else{G.msg=`✗ ${c.e} ${c.w} – మొదటి అక్షరం "${c.a}"`;G.mc='no';}speak(c.w);nextRound();upd();}
+function ewTap(i){const c=G.cur;if(c.tiles[i].u)return;c.tiles[i].u=true;c.typed.push(i);
+ if(c.typed.length===c.w.length){const s=c.typed.map(k=>c.tiles[k].l).join('');
+  if(s===c.w){G.score++;G.msg=`✓ సరైనది! ${c.w}`;G.mc='ok';speak(c.w);nextRound();upd();}
+  else{G.msg='✗ మళ్ళీ ప్రయత్నించు';G.mc='no';c.typed=[];c.tiles.forEach(t=>t.u=false);upd(true);}}
+ else{G.msg='';upd();}}
+function ewBack(){const c=G.cur;const k=c.typed.pop();if(k!=null)c.tiles[k].u=false;upd();}
+function ewSkip(){G.msg=`➡ సరైన పదం: ${G.cur.w}`;G.mc='no';nextRound();upd();}
+function endGame(){clearInterval(tick);tick=null;if(G.done)return;G.done=true;put('games',{id:uid(),n:me(),c:S.cur.c,g:G.g,s:G.score,d:new Date().toISOString()});render();}
+function quitGame(){if(G.done||confirm('ఆట ఆపేయాలా?'))go('games',{lb:G.g});}
+V.gamerun=()=>{const g=GAMES[G.g];
+ if(G.done){const mine=live('games').filter(x=>x.n===me()&&x.g===G.g&&x.c===S.cur.c).map(x=>x.s);const best=Math.max(...mine);
+  const bests={};live('games').filter(x=>x.g===G.g&&x.c===S.cur.c).forEach(x=>{if(!bests[x.n]||x.s>bests[x.n])bests[x.n]=x.s;});const rank=Object.values(bests).filter(v=>v>best).length+1;
+  return `<div class="trbar"><button class="ib" onclick="go('games',{lb:'${G.g}'})">✕</button><b>${g.n}</b></div><div class="trophy">${G.score>=best&&G.score>0?'🏆':'⭐'}</div>
+<div class="card center" style="margin:14px"><h3>సమయం అయిపోయింది!</h3><p class="big">${G.score}</p><p>నీ ఉత్తమ స్కోరు: <b>${best}</b> • తరగతిలో ర్యాంక్: <b>${rank}</b></p>${G.score>=best&&G.score>0?'<p style="color:#16a34a;font-weight:700">🎉 కొత్త రికార్డు!</p>':''}
+<div class="row2"><button class="btn" onclick="startGame('${G.g}')">↻ మళ్ళీ ఆడు</button><button class="btn ghost" onclick="go('games',{lb:'${G.g}'})">🏆 లీడర్‌బోర్డ్</button></div></div>`;}
+ return `<div class="trbar"><button class="ib" onclick="quitGame()">✕</button><b>${g.ic} ${g.n}</b><span>⏱ <span id="gleft">${G.left}</span>s</span></div>
+<div class="gscore">⭐ స్కోరు: <b id="gsc">${G.score}</b></div><div id="garea">${gameArea()}</div>`;};
+
+/* ---------- హోంవర్క్ ---------- */
+function hwCard(h){const sd=subOf(h);
+ return `<div class="hw" style="background:${SUBJ[h.s].bg}"><div class="hwt"><span>${SUBJ[h.s].ic}</span><b>${esc(h.t)}</b></div>${h.x?`<p>${esc(h.x)}</p>`:''}${dueText(h)}
+<div class="hwa">${sd?`<button class="lk" onclick="unsubHw('${h.id}')">↺ రద్దు</button><button class="lk" onclick="go('subject',{s:'${h.s}'})">పాఠం చూడు ▸</button>`:`<button class="lk" onclick="go('subject',{s:'${h.s}'})">పాఠం ▸</button><button class="lk b" onclick="subHw('${h.id}')">పూర్తి చేశాను ✓</button>`}</div></div>`;}
+V.homework=()=>{const tab=param.tab||'all';const all=myHw();const pend=all.filter(h=>!subOf(h)),done=all.filter(h=>subOf(h));const list=tab==='all'?all:tab==='pend'?pend:done;
+ return `<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>నా హోంవర్క్‌లు</h2></div>
+<div class="tabs">${[['all','అన్నీ ('+all.length+')'],['pend','పెండింగ్ ('+pend.length+')'],['done','సమర్పించినవి ('+done.length+')']].map(([k,n])=>`<button class="${tab===k?'on':''}" onclick="go('homework',{tab:'${k}'})">${n}</button>`).join('')}</div>
+<div class="dline">${fmtLong(todayS())}</div>${list.map(hwCard).join('')||'<div class="empty">ఇక్కడ హోంవర్క్‌లు లేవు 🎉</div>'}`;};
+function subHw(id){const h=live('hw').find(x=>x.id===id);if(!h)return;put('subs',{id:h.id+'|'+sid(me()),hw:h.id,n:me(),c:S.cur.c,d:new Date().toISOString()});toast('శభాష్! హోంవర్క్ సమర్పించావు ✓');render();}
+function unsubHw(id){remove('subs',id+'|'+sid(me()));render();}
+
+/* ---------- ఉపాధ్యాయుల ప్యానెల్ ---------- */
+function tLogin(){if($('#tpin').value===S.pin){tAuth=true;go('teacher');}else toast('PIN తప్పు');}
+function tBack(){tAuth=false;go(S.cur?'home':'home');}
+const TSEC=[['sy','☁️ ఆన్‌లైన్ సింక్'],['hw','📒 హోంవర్క్'],['ev','📅 ఈవెంట్/టెస్ట్'],['dq','💬 సందేహాలు'],['nt','📖 పాఠం నోట్స్'],['rp','📊 రిపోర్ట్'],['st','⚙️ సెట్టింగ్స్']];
+function clsSel(id,all){return `<select id="${id}" onchange="fillSubj('${id}','${id}s')">${all?'<option value="0">అన్ని తరగతులు</option>':''}${[1,2,3,4,5].map(c=>`<option value="${c}">${c}వ తరగతి</option>`).join('')}</select>`;}
+function subjOpts(c){return subjectsFor(+c||5).map(s=>`<option value="${s}">${SUBJ[s].n}</option>`).join('');}
+function fillSubj(cid,sid){const s=document.getElementById(sid);if(s)s.innerHTML=subjOpts(document.getElementById(cid).value);}
+V.teacher=()=>{if(!tAuth)return `<div class="login"><div class="logo">👩‍🏫</div><h1>ఉపాధ్యాయుల ప్యానెల్</h1><p>హోంవర్క్, ఈవెంట్లు, సందేహాలు, రిపోర్టులు</p><div class="card"><label>PIN నమోదు చేయండి</label><input id="tpin" type="password" inputmode="numeric" maxlength="8" onkeydown="if(event.key==='Enter')tLogin()"><button class="btn" onclick="tLogin()">ప్రవేశించు</button><p class="mut" style="margin-top:10px">మొదటి PIN: 1234 (సెట్టింగ్స్‌లో మార్చుకోండి)</p></div><button class="link" onclick="tBack()">← వెనుకకు</button></div>`;
+ const sec=param.t||'hw';const un=live('doubts').filter(d=>!d.r).length;
+ return `<div class="bar"><button class="ib" onclick="tBack()">←</button><h2>👩‍🏫 ఉపాధ్యాయుల ప్యానెల్</h2></div>
+${sec!=='sy'&&!S.cfg.type?`<div class="warn" style="margin-bottom:10px">📴 ఆఫ్లైన్ మోడ్ – మీరు ఇచ్చే హోంవర్క్ ఈ ఫోన్‌లోనే ఉంటుంది. విద్యార్థుల ఫోన్లకు చేరాలంటే <a onclick="go('teacher',{t:'sy'})">☁️ ఆన్‌లైన్ సింక్</a> సెటప్ చేయండి.</div>`:''}${sec!=='sy'&&S.cfg.type&&!S.cfg.isT?`<div class="warn" style="margin-bottom:10px">⚠️ సర్వర్‌లో ఉపాధ్యాయ అనుమతి లేదు – <a onclick="go('teacher',{t:'sy'})">సింక్ సెట్టింగ్స్</a> చూడండి.</div>`:''}
+<div class="tchips">${TSEC.map(([k,n])=>`<button class="${sec===k?'on':''}" onclick="go('teacher',{t:'${k}'})">${n}${k==='dq'&&un?' ('+un+')':''}</button>`).join('')}</div>${TP[sec]()}`;};
+const TP={};
+TP.hw=()=>`<div class="card"><h3>కొత్త హోంవర్క్ ఇవ్వండి</h3><div class="g2"><div><label>తరగతి</label>${clsSel('hc')}</div><div><label>సబ్జెక్ట్</label><select id="hcs">${subjOpts(1)}</select></div></div>
+<label>శీర్షిక</label><input id="ht" placeholder="ఉదా: ఎక్కాలు 2 నుండి 5 రాయండి"><label>వివరాలు (ఐచ్ఛికం)</label><textarea id="hx" rows="2"></textarea>
+<label>గడువు తేదీ</label><input id="hd" type="date" value="${addDays(todayS(),1)}"><button class="btn" onclick="addHw()">➕ జోడించు</button></div>
+<h4 class="sec">ఇచ్చిన హోంవర్క్‌లు (${live('hw').length})</h4>${live('hw').sort((a,b)=>a.due<b.due?1:-1).map(h=>{const who=live('subs').filter(x=>x.hw===h.id).map(x=>x.n);return `<div class="titem"><div><b>${esc(h.t)}</b><small>${h.c}వ తరగతి • ${SUBJ[h.s].n} • గడువు ${fmtD(h.due)}${h.seed?' • (నమూనా)':''}</small><small>✓ ${who.length} మంది సమర్పించారు${who.length?': '+who.map(esc).join(', '):''}</small></div><button class="del" onclick="delItem('hw','${h.id}')">తొలగించు</button></div>`;}).join('')||'<div class="empty">లేవు</div>'}`;
+function addHw(){const t=$('#ht').value.trim();if(!t)return toast('శీర్షిక రాయండి');put('hw',{id:uid(),c:+$('#hc').value,s:$('#hcs').value,t,x:$('#hx').value.trim(),due:$('#hd').value||addDays(todayS(),1)});toast('హోంవర్క్ జోడించబడింది ✓');go('teacher',{t:'hw'});}
+TP.ev=()=>`<div class="card"><h3>ఈవెంట్ / టెస్ట్ / సెలవు</h3><label>శీర్షిక</label><input id="et" placeholder="ఉదా: తల్లిదండ్రుల సమావేశం">
+<div class="g2"><div><label>తేదీ</label><input id="ed" type="date" value="${todayS()}"></div><div><label>సమయం</label><input id="etm" type="time" value="10:00"></div></div>
+<div class="g2"><div><label>తరగతి</label>${clsSel('ec',true)}</div><div><label>రకం</label><select id="ety"><option value="ev">ఈవెంట్</option><option value="test">టెస్ట్</option><option value="hol">సెలవు</option><option value="live">లైవ్ క్లాస్</option></select></div></div>
+<label>లైవ్ క్లాస్ లింక్ (Google Meet / YouTube) – ఐచ్ఛికం</label><input id="elk" placeholder="https://meet.google.com/...">
+<button class="btn" onclick="addEv()">➕ జోడించు</button></div>
+<h4 class="sec">ఈవెంట్లు (${live('events').length})</h4>${live('events').sort((a,b)=>a.d<b.d?-1:1).map(e=>`<div class="titem"><div><b>${esc(e.t)}</b><small>${fmtD(e.d)} • ${to12(e.tm)} • ${e.c?e.c+'వ తరగతి':'అన్ని తరగతులు'} • ${EVT[e.ty]}${e.link?' • 🔗':''}${e.seed?' • (నమూనా)':''}</small></div><button class="del" onclick="delItem('events','${e.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}`;
+function addEv(){const t=$('#et').value.trim();if(!t)return toast('శీర్షిక రాయండి');const lk=$('#elk').value.trim();if(lk&&!/^https:\/\//.test(lk))return toast('లింక్ https:// తో మొదలవ్వాలి');put('events',{id:uid(),t,d:$('#ed').value||todayS(),tm:$('#etm').value,c:+$('#ec').value,ty:$('#ety').value,link:lk});toast('ఈవెంట్ జోడించబడింది ✓');go('teacher',{t:'ev'});}
+TP.dq=()=>{const ds=live('doubts').sort((a,b)=>(!!a.r)-(!!b.r)||(a.d<b.d?1:-1));
+ return ds.length?ds.map(d=>`<div class="card"><small class="mut">👤 ${esc(d.n)} • ${d.c}వ తరగతి • ${SUBJ[d.s].n} • ${fmtD(d.d)}</small><p style="margin:6px 0;font-weight:600">❓ ${esc(d.q)}</p>
+<textarea id="r_${d.id}" rows="2" placeholder="జవాబు రాయండి...">${esc(d.r)}</textarea><div class="row2"><button class="btn sm" onclick="replyD('${d.id}')">${d.r?'జవాబు మార్చు':'జవాబు పంపు'}</button><button class="del" style="margin-top:10px" onclick="delItem('doubts','${d.id}')">తొలగించు</button></div></div>`).join(''):'<div class="empty">సందేహాలు లేవు</div>';};
+function replyD(id){const d=live('doubts').find(x=>x.id===id);const v=document.getElementById('r_'+id).value.trim();if(!v)return toast('జవాబు రాయండి');put('doubts',Object.assign({},d,{r:v,ra:Date.now()}));toast('జవాబు సేవ్ అయింది ✓');go('teacher',{t:'dq'});}
+TP.nt=()=>`<div class="card"><h3>పాఠం నోట్ జోడించండి</h3><p class="mut">విద్యార్థుల “సెల్ఫ్ లెర్న్” లో కొత్త పాఠంగా కనిపిస్తుంది.</p><div class="g2"><div><label>తరగతి</label>${clsSel('nc')}</div><div><label>సబ్జెక్ట్</label><select id="ncs">${subjOpts(1)}</select></div></div>
+<label>పాఠం పేరు</label><input id="ntt" placeholder="ఉదా: మన గ్రామం"><label>ముఖ్యాంశాలు (ఒక్కో లైన్ = ఒక పాయింట్)</label><textarea id="ntx" rows="5"></textarea><button class="btn" onclick="addNote()">➕ జోడించు</button></div>
+<h4 class="sec">టీచర్ నోట్స్ (${live('notes').length})</h4>${live('notes').map(n=>`<div class="titem"><div><b>${esc(n.t)}</b><small>${n.c}వ తరగతి • ${SUBJ[n.s].n}</small></div><button class="del" onclick="delItem('notes','${n.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}`;
+function addNote(){const t=$('#ntt').value.trim(),x=$('#ntx').value.trim();if(!t||!x)return toast('పేరు, ముఖ్యాంశాలు రాయండి');put('notes',{id:uid(),c:+$('#nc').value,s:$('#ncs').value,t,x});toast('పాఠం జోడించబడింది ✓');go('teacher',{t:'nt'});}
+TP.rp=()=>{const f=param.f||0;const st=live('students').filter(s=>!f||s.c===f);
+ const rows=st.map(s=>{const rs=live('results').filter(r=>r.n===s.n&&r.c===s.c);const avg=avgOf(rs);const by=subjectsFor(s.c).map(sb=>{const x=rs.filter(r=>r.sb===sb);return x.length?avgOf(x)+'%':'–';});
+  const hw=live('hw').filter(h=>h.c===s.c);const sub=hw.filter(h=>live('subs').some(x=>x.hw===h.id&&x.n===s.n)).length;const rd=Object.keys(S.read[s.n]||{}).filter(k=>k.startsWith(s.c+'-')).length;
+  const gb=Object.keys(GAMES).map(g=>{const v=live('games').filter(x=>x.n===s.n&&x.g===g&&x.c===s.c).map(x=>x.s);return v.length?Math.max(...v):'–';});
+  return `<tr><td><b>${esc(s.n)}</b></td><td>${s.c}</td><td>${rs.length}</td><td>${rs.length?`<span class="pct ${pctCls(avg)}">${avg}%</span>`:'–'}</td><td>${by.join(' / ')}</td><td>${rd}</td><td>${sub}/${hw.length}</td><td>${gb.join(' / ')}</td></tr>`;}).join('');
+ return `<div class="tchips">${[0,1,2,3,4,5].map(c=>`<button class="${f===c?'on':''}" onclick="go('teacher',{t:'rp',f:${c}})">${c?c+'వ తరగతి':'అన్నీ'}</button>`).join('')}</div>
+${st.length?`<div class="tscroll"><table class="tbl"><tr><th>పేరు</th><th>తర.</th><th>టెస్టులు</th><th>సగటు</th><th>తెలుగు/Eng/గణితం/EVS</th><th>చదివిన పాఠాలు</th><th>హోంవర్క్</th><th>ఆటలు MM/EW/తెలుగు</th></tr>${rows}</table></div>`:'<div class="empty">విద్యార్థులు లేరు</div>'}
+<p class="mut" style="margin-top:10px">${S.cfg.type?'☁️ అన్ని ఫోన్ల నుండి సింక్ అయిన డేటా. “చదివిన పాఠాలు” ఆ విద్యార్థి ఫోన్‌లోనే ఉంటుంది.':'📴 ఈ ఫోన్‌లో లాగిన్ అయిన విద్యార్థుల డేటా మాత్రమే.'}</p>`;};
+TP.st=()=>`<div class="card"><h3>🔐 PIN మార్చండి</h3><input id="np" type="password" inputmode="numeric" maxlength="8" placeholder="కొత్త PIN (4–8 అంకెలు)"><button class="btn" onclick="chPin()">మార్చు</button></div>
+<div class="card"><h3>💾 బ్యాకప్ & పునరుద్ధరణ</h3><p class="mut">డేటా కాపీ ఈ బ్రౌజర్‌లో ఉంటుంది. వేరే ఫోన్‌కు మార్చడానికి బ్యాకప్ వాడండి.</p><button class="btn" onclick="exportData()">⬇ బ్యాకప్ డౌన్‌లోడ్ (.json)</button><label>బ్యాకప్ ఫైల్ నుండి పునరుద్ధరించు</label><input type="file" accept=".json,application/json" onchange="importData(this)"></div>
+<div class="card"><h3>⚠️ మొత్తం డేటా తొలగించు</h3><p class="mut">ఈ ఫోన్‌లోని విద్యార్థులు, ఫలితాలు, హోంవర్క్, సింక్ సెట్టింగ్స్ అన్నీ పోతాయి. (ఆన్‌లైన్ సర్వర్‌లోని డేటా అలాగే ఉంటుంది.)</p><button class="btn red" onclick="resetAll()">అన్నీ తొలగించు</button></div>`;
+function chPin(){const v=$('#np').value.trim();if(!/^\d{4,8}$/.test(v))return toast('4–8 అంకెల PIN ఇవ్వండి');S.pin=v;save();toast('PIN మార్చబడింది ✓');go('teacher',{t:'st'});}
+function delItem(k,id){if(!confirm('తొలగించాలా?'))return;remove(k,id);go('teacher',{t:{hw:'hw',events:'ev',doubts:'dq',notes:'nt'}[k]});}
+function exportData(){const b=new Blob([JSON.stringify(S,null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='Rai_Vidyarthi_App_Backup_'+todayS()+'.json';document.body.appendChild(a);a.click();a.remove();}
+function importData(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||typeof d!=='object')throw 0;S=migrate(Object.assign(def(),d));save();toast('బ్యాకప్ పునరుద్ధరించబడింది ✓');go('teacher',{t:'st'});}catch(e){toast('ఫైల్ సరిగా లేదు');}};r.readAsText(f);}
+function resetAll(){if(!confirm('నిజంగా మొత్తం డేటా తొలగించాలా?'))return;if(!confirm('మళ్ళీ అడుగుతున్నాం – ఇది తిరిగి రాదు. కొనసాగించాలా?'))return;try{localStorage.removeItem(LS);}catch(e){}S=def();seed();tAuth=false;go('home');toast('డేటా తొలగించబడింది');}
+
+/* ---------- ఆన్‌లైన్ సింక్ – సెట్టింగ్స్ ---------- */
+function rnd(n){const a='abcdefghjkmnpqrstuvwxyz23456789';let s='';for(let i=0;i<n;i++)s+=a[R(0,a.length-1)];return s;}
+let draft=null;
+function getDraft(){const c=S.cfg;if(!draft)draft={key:c.key||('sch-'+rnd(6)),tkey:c.tkey||('tch-'+rnd(8)),school:c.school||('school-'+rnd(8)),url:c.url||'',fb:c.fb?JSON.stringify(c.fb,null,1):'',temail:c.temail||''};return draft;}
+function keepDraft(){const g=id=>{const e=document.getElementById(id);return e?e.value.trim():null;};const d=getDraft();
+ [['gsu','url'],['gsk','key'],['gstk','tkey'],['fbc','fb'],['fbs','school'],['fbe','temail']].forEach(([i,k])=>{const v=g(i);if(v!=null)d[k]=v;});}
+function copyText(t){const done=()=>toast('కాపీ అయింది ✓');
+ try{if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(done,()=>fallback());return;}}catch(e){}
+ fallback();function fallback(){const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){toast('కాపీ కాలేదు');}ta.remove();}}
+function dl(name,text){const b=new Blob([text],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();a.remove();}
+function gsCode(){keepDraft();const d=getDraft();return document.getElementById('gs-code').textContent.trim().replace('__SCHOOL_KEY__',d.key).replace('__TEACHER_KEY__',d.tkey);}
+function fbRules(){keepDraft();const d=getDraft();return document.getElementById('fb-rules').textContent.trim().split('__SCHOOL__').join(d.school).split('__EMAIL__').join((d.temail||'').toLowerCase());}
+function parseFbCfg(t){t=String(t||'');const a=t.indexOf('{'),b=t.lastIndexOf('}');if(a<0||b<a)return null;let s=t.slice(a,b+1);
+ s=s.replace(/\/\/[^\n]*/g,'').replace(/([{,]\s*)([A-Za-z_]\w*)\s*:/g,'$1"$2":').replace(/'/g,'"').replace(/,\s*}/g,'}');
+ try{const o=JSON.parse(s);return o.apiKey&&o.projectId?o:null;}catch(e){return null;}}
+function b64e(o){return btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+function b64d(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return JSON.parse(decodeURIComponent(escape(atob(s))));}
+function joinCode(){const c=S.cfg;return b64e(c.type==='gs'?{t:'gs',u:c.url,k:c.key}:{t:'fb',c:c.fb,s:c.school});}
+function appBase(){return /^https?:$/.test(location.protocol)?location.origin+location.pathname:(S.cfg.appUrl||'');}
+function joinLink(){const b=appBase();return b?b+'#join='+joinCode():'';}
+function shareWA(){const l=joinLink();if(!l)return toast('ముందు యాప్ వెబ్ లింక్ ఇవ్వండి');window.open('https://wa.me/?text='+encodeURIComponent('📚 రాయ్ విద్యార్థి లెర్నింగ్ యాప్ – మన పాఠశాల కోసం. ఈ లింక్ ఓపెన్ చేసి నీ పేరు, తరగతి ఇవ్వు:\n'+l),'_blank');}
+function setAppUrl(){const v=$('#appu').value.trim();if(!/^https:\/\//.test(v))return toast('https:// తో మొదలయ్యే లింక్ ఇవ్వండి');S.cfg.appUrl=v;save();toast('సేవ్ అయింది ✓');go('teacher',{t:'sy'});}
+function connectFresh(cfg){const keepApp=S.cfg.appUrl;S.cfg=Object.assign(cfg,{appUrl:cfg.appUrl||keepApp});S.q={};S.last={};S.lastSync=0;Sync.primed=false;queueAll();save();
+ if(FBK.ready){location.reload();return;}Sync.start();}
+function saveGS(){keepDraft();const d=getDraft();
+ if(!/^https:\/\/script\.google\.com\/.+\/exec$/.test(d.url))return toast('సరైన Web app URL ఇవ్వండి (…/exec)');
+ if(d.key.length<4||d.tkey.length<4)return toast('కీలు కనీసం 4 అక్షరాలు');if(d.key===d.tkey)return toast('రెండు కీలు వేర్వేరుగా ఉండాలి');
+ connectFresh({type:'gs',url:d.url,key:d.key,tkey:d.tkey});toast('కనెక్ట్ అవుతోంది...');go('teacher',{t:'sy',m:'gs'});}
+function saveFB(){keepDraft();const d=getDraft();const fb=parseFbCfg(d.fb);if(!fb)return toast('firebaseConfig సరిగా లేదు');
+ if(!/^[a-z0-9-]{6,}$/i.test(d.school))return toast('స్కూల్ కోడ్: కనీసం 6 అక్షరాలు (a-z, 0-9, -)');if(!/@/.test(d.temail))return toast('ఉపాధ్యాయ ఇమెయిల్ ఇవ్వండి');
+ connectFresh({type:'fb',fb,school:d.school,temail:d.temail.toLowerCase()});toast('కనెక్ట్ అవుతోంది...');go('teacher',{t:'sy',m:'fb'});}
+async function fbLogin(){const e=$('#fle').value.trim(),p=$('#flp').value;if(!e||!p)return toast('ఇమెయిల్, పాస్‌వర్డ్ ఇవ్వండి');
+ try{toast('లాగిన్ అవుతోంది...');await FBK.login(e,p);queueAll();save();Sync.run();toast('ఉపాధ్యాయ లాగిన్ ✓');go('teacher',{t:'sy',m:'fb'});}catch(x){toast('లాగిన్ విఫలం: '+((x&&x.code)||x));}}
+async function fbLogout(){await FBK.logout();S.cfg.isT=false;save();go('teacher',{t:'sy',m:'fb'});}
+function disconnect(){if(!confirm('ఆన్‌లైన్ సింక్ ఆపేయాలా? (ఈ ఫోన్‌లోని డేటా అలాగే ఉంటుంది)'))return;clearInterval(Sync.poll);const a=S.cfg.appUrl;S.cfg={type:'',appUrl:a};S.q={};S.last={};save();location.reload();}
+function joinWith(code,quiet){try{const p=b64d(String(code).trim().replace(/^.*#join=/,''));
+  if(p.t==='gs'&&/^https:\/\/script\.google\.com\//.test(p.u)&&p.k)connectFresh({type:'gs',url:p.u,key:p.k});
+  else if(p.t==='fb'&&p.c&&p.c.apiKey&&p.s)connectFresh({type:'fb',fb:p.c,school:p.s});
+  else throw 0;
+  setTimeout(()=>toast('✅ పాఠశాలకు కనెక్ట్ అయింది'),300);return true;}catch(e){if(!quiet)toast('జాయిన్ కోడ్ సరిగా లేదు');return false;}}
+function askNotif(){try{if(!window.Notification)return toast('ఈ బ్రౌజర్‌లో నోటిఫికేషన్లు లేవు');Notification.requestPermission().then(p=>{toast(p==='granted'?'నోటిఫికేషన్లు ఆన్ ✓':'అనుమతి ఇవ్వలేదు');render();});}catch(e){}}
+
+const GS_STEPS=`<ol class="steps">
+<li>Google Drive లో కొత్త <b>Google Sheet</b> తెరవండి (పేరు: రాయ్ విద్యార్థి యాప్ డేటా).</li>
+<li>పై మెనూలో <b>Extensions → Apps Script</b> నొక్కండి.</li>
+<li>అక్కడ ఉన్న కోడ్ మొత్తం తొలగించి, కింద <b>“📋 కోడ్ కాపీ”</b> తో కాపీ చేసి పేస్ట్ చేయండి (మీ కీలు కోడ్‌లో ఆటోగా ఉంటాయి) → 💾 Save.</li>
+<li><b>Deploy → New deployment</b> → ⚙️ లో <b>Web app</b> → Execute as: <b>Me</b> → Who has access: <b>Anyone</b> → <b>Deploy</b>.</li>
+<li><b>Authorize access</b> → మీ Gmail → <b>Advanced → Go to ... (unsafe)</b> → <b>Allow</b>. (మీ సొంత స్క్రిప్ట్ కాబట్టి సురక్షితం.)</li>
+<li>వచ్చిన <b>Web app URL</b> (…/exec) కాపీ చేసి కింద పేస్ట్ చేసి <b>“సేవ్ & కనెక్ట్”</b> నొక్కండి.</li>
+<li>కింద వచ్చే <b>జాయిన్ లింక్</b>ను విద్యార్థుల WhatsApp గ్రూప్‌లో పంపండి.</li></ol>
+<p class="mut">Sheet లో <b>రాయ్ ఎడ్యుకేషన్ → 📊 రిపోర్ట్ షీట్లు అప్డేట్</b> మెనూతో టెస్ట్ ఫలితాలు, హోంవర్క్, సందేహాలు, ఆటలు వేర్వేరు షీట్లలో చూడవచ్చు. కోడ్ మారిస్తే: Deploy → Manage deployments → ✏️ → Version: <b>New version</b> → Deploy.</p>`;
+const FB_STEPS=`<ol class="steps">
+<li><b>console.firebase.google.com</b> లో Gmail తో లాగిన్ → <b>Create a project</b> (Google Analytics అవసరం లేదు).</li>
+<li><b>Build → Firestore Database → Create database</b> → Location: <b>asia-south1 (Mumbai)</b> → <b>Production mode</b>.</li>
+<li><b>Build → Authentication → Get started → Email/Password</b> → Enable → <b>Users → Add user</b> తో మీ ఇమెయిల్, పాస్‌వర్డ్ సృష్టించండి.</li>
+<li>⚙️ <b>Project settings → Your apps → &lt;/&gt; (Web)</b> → పేరు ఇచ్చి Register → వచ్చే <b>firebaseConfig</b> మొత్తం కాపీ చేసి కింద పేస్ట్ చేయండి.</li>
+<li>స్కూల్ కోడ్, మీ ఇమెయిల్ ఇచ్చి <b>“📋 రూల్స్ కాపీ”</b> → Firestore → <b>Rules</b> ట్యాబ్‌లో పాతవి తొలగించి పేస్ట్ → <b>Publish</b>.</li>
+<li><b>“సేవ్ & కనెక్ట్”</b> → తర్వాత కింద <b>ఉపాధ్యాయ లాగిన్</b> (అదే ఇమెయిల్/పాస్‌వర్డ్).</li>
+<li><b>జాయిన్ లింక్</b> విద్యార్థులకు పంపండి.</li></ol>
+<p class="mut">ఉచిత Spark ప్లాన్: రోజుకు 50,000 రీడ్‌లు, 20,000 రైట్‌లు – ఒక పాఠశాలకు సరిపోతుంది. యాప్ తెరిచి ఉన్నప్పుడు మార్పులు వెంటనే (live) వస్తాయి.</p>`;
+
+TP.sy=()=>{const c=S.cfg,d=getDraft();const m=param.m||c.type||'gs';
+ const status=`<div class="card"><h3>☁️ సింక్ స్థితి</h3><div id="syncst">${syncLine()}</div>
+${c.type?`<div class="row2"><button class="btn sm" onclick="Sync.run()">🔄 ఇప్పుడే సింక్</button><button class="btn sm red" onclick="disconnect()">సింక్ ఆపు</button></div>`:''}
+${c.type&&!c.isT?`<div class="warn" style="margin-top:10px">⚠️ ఈ ఫోన్‌కు సర్వర్‌లో ఉపాధ్యాయ అనుమతి లేదు. ${c.type==='gs'?'టీచర్ కీతో సేవ్ చేయండి.':'కింద ఉపాధ్యాయ లాగిన్ చేయండి.'} అప్పటివరకు హోంవర్క్/ఈవెంట్లు/నోట్స్ విద్యార్థులకు చేరవు.</div>`:''}</div>`;
+ const tabs=`<div class="tabs">${[['gs','📗 Google Sheets'],['fb','🔥 Firebase']].map(([k,n])=>`<button class="${m===k?'on':''}" onclick="keepDraft();go('teacher',{t:'sy',m:'${k}'})">${n}${c.type===k?' ✓':''}</button>`).join('')}</div>`;
+ let form='';
+ if(m==='gs')form=`<div class="card"><h3>📗 Google Sheets సెటప్</h3><details ${c.type==='gs'?'':'open'}><summary><b>ఎలా సెటప్ చేయాలి? (7 స్టెప్స్)</b></summary>${GS_STEPS}</details>
+<div class="g2"><div><label>విద్యార్థుల కీ</label><input id="gsk" value="${esc(d.key)}"></div><div><label>టీచర్ కీ (రహస్యం)</label><input id="gstk" value="${esc(d.tkey)}"></div></div>
+<div class="row2"><button class="btn sm ghost" onclick="copyText(gsCode())">📋 కోడ్ కాపీ</button><button class="btn sm ghost" onclick="dl('Rai_Vidyarthi_App_AppsScript.gs',gsCode())">⬇ .gs ఫైల్</button></div>
+<label>Web app URL</label><input id="gsu" value="${esc(d.url)}" placeholder="https://script.google.com/macros/s/.../exec">
+<button class="btn" onclick="saveGS()">✓ సేవ్ & కనెక్ట్</button></div>`;
+ else form=`<div class="card"><h3>🔥 Firebase సెటప్</h3><details ${c.type==='fb'?'':'open'}><summary><b>ఎలా సెటప్ చేయాలి? (7 స్టెప్స్)</b></summary>${FB_STEPS}</details>
+<label>firebaseConfig (Firebase నుండి కాపీ చేసినది మొత్తం)</label><textarea id="fbc" rows="6" placeholder="const firebaseConfig = { apiKey: '...', projectId: '...', ... };">${esc(d.fb)}</textarea>
+<div class="g2"><div><label>స్కూల్ కోడ్</label><input id="fbs" value="${esc(d.school)}"></div><div><label>ఉపాధ్యాయ ఇమెయిల్</label><input id="fbe" type="email" value="${esc(d.temail)}" placeholder="you@gmail.com"></div></div>
+<button class="btn sm ghost" onclick="copyText(fbRules())">📋 రూల్స్ కాపీ</button>
+<button class="btn" onclick="saveFB()">✓ సేవ్ & కనెక్ట్</button></div>
+${c.type==='fb'?`<div class="card"><h3>👩‍🏫 ఉపాధ్యాయ లాగిన్ (Firebase)</h3>${FBK.user?`<p>లాగిన్: <b>${esc(FBK.user.email||'')}</b> ${c.isT?'✅':'⚠️ ఈ ఇమెయిల్ రూల్స్‌లోది కాదు'}</p><button class="btn sm ghost" onclick="fbLogout()">లాగౌట్</button>`:`<label>ఇమెయిల్</label><input id="fle" type="email" value="${esc(c.temail||'')}"><label>పాస్‌వర్డ్</label><input id="flp" type="password"><button class="btn" onclick="fbLogin()">లాగిన్</button>`}</div>`:''}`;
+ const join=c.type?`<div class="card"><h3>📲 విద్యార్థుల జాయిన్ లింక్</h3>
+${!/^https?:$/.test(location.protocol)?`<p class="mut">ఈ యాప్ ఫైల్‌గా తెరిచారు. GitHub Pages లో పెట్టిన లింక్ ఇవ్వండి:</p><input id="appu" value="${esc(c.appUrl||'')}" placeholder="https://rameshbomidi-wq.github.io/..."><button class="btn sm ghost" onclick="setAppUrl()">లింక్ సేవ్</button>`:''}
+${joinLink()?`<div class="lnk">${esc(joinLink())}</div><div class="row2"><button class="btn sm" onclick="copyText(joinLink())">📋 లింక్ కాపీ</button><button class="btn sm" style="background:#25d366" onclick="shareWA()">WhatsApp</button></div>`:''}
+<details style="margin-top:10px"><summary class="mut">జాయిన్ కోడ్ (లింక్ పనిచేయకపోతే)</summary><div class="lnk">${esc(joinCode())}</div><button class="btn sm ghost" onclick="copyText(joinCode())">📋 కోడ్ కాపీ</button></details>
+<p class="mut" style="margin-top:8px">లింక్ ఓపెన్ చేసిన ఫోన్ ఆటోగా మీ పాఠశాలకు కనెక్ట్ అవుతుంది. కోడ్ అయితే: విద్యార్థి యాప్‌లో <b>మెనూ → ఆన్‌లైన్ సింక్</b> లో పేస్ట్ చేయాలి. టీచర్ కీ/పాస్‌వర్డ్ లింక్‌లో ఉండవు.</p></div>`:'';
+ return status+tabs+form+join;};
+
+V.sync=()=>{const c=S.cfg;const np=window.Notification?Notification.permission:'na';
+ return `<div class="bar"><button class="ib" onclick="go('menu')">←</button><h2>☁️ ఆన్‌లైన్ సింక్</h2></div>
+<div class="card"><div id="syncst">${syncLine()}</div>${c.type?`<button class="btn sm" onclick="Sync.run()">🔄 ఇప్పుడే సింక్</button>`:''}</div>
+${c.type?`<div class="card"><h3>🔔 నోటిఫికేషన్లు</h3><p class="mut">కొత్త హోంవర్క్, ఈవెంట్, సందేహానికి జవాబు వచ్చినప్పుడు తెలియజేస్తుంది (యాప్ తెరిచి ఉన్నప్పుడు).</p>${np==='granted'?'<p>✅ ఆన్ అయ్యాయి</p>':np==='na'?'<p class="mut">ఈ బ్రౌజర్‌లో లేవు</p>':'<button class="btn sm" onclick="askNotif()">నోటిఫికేషన్లు అనుమతించు</button>'}</div>
+<button class="link" onclick="disconnect()">సింక్ ఆపు</button>`:
+`<div class="card"><h3>పాఠశాలకు కనెక్ట్ అవ్వు</h3><p class="mut">ఉపాధ్యాయులు పంపిన జాయిన్ లింక్ ఓపెన్ చేస్తే ఆటోగా కనెక్ట్ అవుతుంది. లేదా జాయిన్ కోడ్ ఇక్కడ పేస్ట్ చేయి:</p><textarea id="jc" rows="3"></textarea><button class="btn" onclick="if(joinWith($('#jc').value))go('sync')">కనెక్ట్</button></div>`}`;};
+
+/* ---------- PWA: ఇన్‌స్టాల్ & ఆఫ్లైన్ ---------- */
+let instEvt=null;
+function isStandalone(){try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true||document.referrer.startsWith('android-app://');}catch(e){return false;}}
+function installBanner(){if(isStandalone()||!/^https?:$/.test(location.protocol))return '';let hide=false;try{hide=localStorage.getItem('raiInstHide')===todayS();}catch(e){}if(hide)return '';
+ return `<div class="inst"><img src="icons/icon-192.png" alt=""><div><b>యాప్‌గా ఇన్‌స్టాల్ చేయి</b>హోమ్ స్క్రీన్‌పై ఐకాన్, ఇంటర్నెట్ లేకున్నా పనిచేస్తుంది</div><button onclick="installApp()">ఇన్‌స్టాల్</button><button style="background:none;color:#fff;padding:4px" onclick="try{localStorage.setItem('raiInstHide',todayS())}catch(e){};render()">✕</button></div>`;}
+async function installApp(){if(instEvt){instEvt.prompt();const r=await instEvt.userChoice;instEvt=null;if(r.outcome==='accepted')toast('ఇన్‌స్టాల్ అవుతోంది ✓');render();}
+ else alert(/iphone|ipad/i.test(navigator.userAgent)?'Safari లో Share ⬆️ → “Add to Home Screen” నొక్కండి.':'Chrome మెనూ ⋮ → “Install app” లేదా “Add to Home screen” నొక్కండి.');}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();instEvt=e;});
+window.addEventListener('appinstalled',()=>{instEvt=null;toast('🎉 యాప్ ఇన్‌స్టాల్ అయింది');});
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){navigator.serviceWorker.register('sw.js').catch(()=>{});}
+
+/* ---------- ప్రారంభం ---------- */
+try{speechSynthesis.getVoices();}catch(e){}
+(function(){const h=location.hash||'';const m=h.match(/join=([A-Za-z0-9_\-]+)/);if(m)joinWith(m[1]);const g=h.match(/go=(\w+)/);if(g&&V[g[1]])view=g[1];if(m||g){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}})();
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')Sync.run();});
+window.addEventListener('online',()=>Sync.run());
+render();
+if(S.cfg.type)Sync.start();
+</script>
+</body>
+</html>
