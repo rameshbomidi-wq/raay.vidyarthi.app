@@ -897,7 +897,7 @@ function resetAll(){if(!confirm('నిజంగా మొత్తం డేట
 /* ---------- ఆన్‌లైన్ సింక్ – సెట్టింగ్స్ ---------- */
 function rnd(n){const a='abcdefghjkmnpqrstuvwxyz23456789';let s='';for(let i=0;i<n;i++)s+=a[R(0,a.length-1)];return s;}
 let draft=null;
-function getDraft(){const c=S.cfg;if(!draft)draft={key:c.key||('sch-'+rnd(6)),tkey:c.tkey||('tch-'+rnd(8)),school:c.school||('school-'+rnd(8)),url:c.url||'',fb:c.fb?JSON.stringify(c.fb,null,1):'',temail:c.temail||''};return draft;}
+function getDraft(){const c=S.cfg;if(!draft)draft={key:c.key||('sch-'+rnd(6)),tkey:c.tkey||(c.type?'':('tch-'+rnd(8))),school:c.school||('school-'+rnd(8)),url:c.url||'',fb:c.fb?JSON.stringify(c.fb,null,1):'',temail:c.temail||''};return draft;}
 function keepDraft(){const g=id=>{const e=document.getElementById(id);return e?e.value.trim():null;};const d=getDraft();
  [['gsu','url'],['gsk','key'],['gstk','tkey'],['fbc','fb'],['fbs','school'],['fbe','temail']].forEach(([i,k])=>{const v=g(i);if(v!=null)d[k]=v;});}
 function copyText(t){const done=()=>toast('కాపీ అయింది ✓');
@@ -920,7 +920,7 @@ function connectFresh(cfg){const keepApp=S.cfg.appUrl;S.cfg=Object.assign(cfg,{a
  if(FBK.ready){location.reload();return;}Sync.start();}
 function saveGS(){keepDraft();const d=getDraft();
  if(!/^https:\/\/script\.google\.com\/.+\/exec$/.test(d.url))return toast('సరైన Web app URL ఇవ్వండి (…/exec)');
- if(d.key.length<4||d.tkey.length<4)return toast('కీలు కనీసం 4 అక్షరాలు');if(d.key===d.tkey)return toast('రెండు కీలు వేర్వేరుగా ఉండాలి');
+ if(d.key.length<4||d.tkey.length<4)return toast('Apps Script లోని SCHOOL_KEY, TEACHER_KEY రెండూ ఇవ్వండి');if(d.key===d.tkey)return toast('రెండు కీలు వేర్వేరుగా ఉండాలి');
  connectFresh({type:'gs',url:d.url,key:d.key,tkey:d.tkey});toast('కనెక్ట్ అవుతోంది...');go('teacher',{t:'sy',m:'gs'});}
 function saveFB(){keepDraft();const d=getDraft();const fb=parseFbCfg(d.fb);if(!fb)return toast('firebaseConfig సరిగా లేదు');
  if(!/^[a-z0-9-]{6,}$/i.test(d.school))return toast('స్కూల్ కోడ్: కనీసం 6 అక్షరాలు (a-z, 0-9, -)');if(!/@/.test(d.temail))return toast('ఉపాధ్యాయ ఇమెయిల్ ఇవ్వండి');
@@ -930,7 +930,10 @@ async function fbLogin(){const e=$('#fle').value.trim(),p=$('#flp').value;if(!e|
 async function fbLogout(){await FBK.logout();S.cfg.isT=false;save();go('teacher',{t:'sy',m:'fb'});}
 function disconnect(){if(!confirm('ఆన్‌లైన్ సింక్ ఆపేయాలా? (ఈ ఫోన్‌లోని డేటా అలాగే ఉంటుంది)'))return;clearInterval(Sync.poll);const a=S.cfg.appUrl;S.cfg={type:'',appUrl:a};S.q={};S.last={};save();location.reload();}
 function joinWith(code,quiet){try{const p=b64d(String(code).trim().replace(/^.*#join=/,''));
-  if(p.t==='gs'&&/^https:\/\/script\.google\.com\//.test(p.u)&&p.k)connectFresh({type:'gs',url:p.u,key:p.k});
+  const c=S.cfg||{};
+  if(c.type&&c.isT&&((p.t==='gs'&&c.url===p.u)||(p.t==='fb'&&c.school===p.s))){setTimeout(()=>toast('ఈ ఫోన్ ఇప్పటికే ఉపాధ్యాయ సెటప్‌తో కనెక్ట్ అయి ఉంది ✓'),300);return true;}
+  if(c.type&&c.isT&&!confirm('ఈ ఫోన్‌లో ఉపాధ్యాయ సింక్ సెటప్ ఉంది. జాయిన్ లింక్ వాడితే అది పోతుంది. కొనసాగించాలా?'))return false;
+  if(p.t==='gs'&&/^https:\/\/script\.google\.com\//.test(p.u)&&p.k)connectFresh({type:'gs',url:p.u,key:p.k,tkey:(c.url===p.u&&c.tkey)||undefined});
   else if(p.t==='fb'&&p.c&&p.c.apiKey&&p.s)connectFresh({type:'fb',fb:p.c,school:p.s});
   else throw 0;
   setTimeout(()=>toast('✅ పాఠశాలకు కనెక్ట్ అయింది'),300);return true;}catch(e){if(!quiet)toast('జాయిన్ కోడ్ సరిగా లేదు');return false;}}
@@ -958,7 +961,7 @@ const FB_STEPS=`<ol class="steps">
 TP.sy=()=>{const c=S.cfg,d=getDraft();const m=param.m||c.type||'gs';
  const status=`<div class="card"><h3>☁️ సింక్ స్థితి</h3><div id="syncst">${syncLine()}</div>
 ${c.type?`<div class="row2"><button class="btn sm" onclick="Sync.run()">🔄 ఇప్పుడే సింక్</button><button class="btn sm red" onclick="disconnect()">సింక్ ఆపు</button></div>`:''}
-${c.type&&!c.isT?`<div class="warn" style="margin-top:10px">⚠️ ఈ ఫోన్‌కు సర్వర్‌లో ఉపాధ్యాయ అనుమతి లేదు. ${c.type==='gs'?'టీచర్ కీతో సేవ్ చేయండి.':'కింద ఉపాధ్యాయ లాగిన్ చేయండి.'} అప్పటివరకు హోంవర్క్/ఈవెంట్లు/నోట్స్ విద్యార్థులకు చేరవు.</div>`:''}</div>`;
+${c.type&&!c.isT?`<div class="warn" style="margin-top:10px">⚠️ ఈ ఫోన్‌కు సర్వర్‌లో ఉపాధ్యాయ అనుమతి లేదు. ${c.type==='gs'?'కింద టీచర్ కీ బాక్స్‌లో Apps Script లోని <b>TEACHER_KEY</b> పెట్టి “సేవ్ & కనెక్ట్” నొక్కండి.':'కింద ఉపాధ్యాయ లాగిన్ చేయండి.'} అప్పటివరకు హోంవర్క్/ఈవెంట్లు/నోట్స్ విద్యార్థులకు చేరవు.</div>`:''}</div>`;
  const tabs=`<div class="tabs">${[['gs','📗 Google Sheets'],['fb','🔥 Firebase']].map(([k,n])=>`<button class="${m===k?'on':''}" onclick="keepDraft();go('teacher',{t:'sy',m:'${k}'})">${n}${c.type===k?' ✓':''}</button>`).join('')}</div>`;
  let form='';
  if(m==='gs')form=`<div class="card"><h3>📗 Google Sheets సెటప్</h3><details ${c.type==='gs'?'':'open'}><summary><b>ఎలా సెటప్ చేయాలి? (7 స్టెప్స్)</b></summary>${GS_STEPS}</details>
