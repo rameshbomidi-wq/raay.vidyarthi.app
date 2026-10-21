@@ -9,8 +9,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="రాయ్ విద్యార్థి">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" type="image/png" href="icons/icon-192.png">
-<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>రాయ్ విద్యార్థి లెర్నింగ్ యాప్ – 1 నుండి 5 తరగతులు</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -985,7 +985,7 @@ ${c.type?`<div class="card"><h3>🔔 నోటిఫికేషన్లు</h3
 let instEvt=null;
 function isStandalone(){try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true||document.referrer.startsWith('android-app://');}catch(e){return false;}}
 function installBanner(){if(isStandalone()||!/^https?:$/.test(location.protocol))return '';let hide=false;try{hide=localStorage.getItem('raiInstHide')===todayS();}catch(e){}if(hide)return '';
- return `<div class="inst"><img src="icons/icon-192.png" alt=""><div><b>యాప్‌గా ఇన్‌స్టాల్ చేయి</b>హోమ్ స్క్రీన్‌పై ఐకాన్, ఇంటర్నెట్ లేకున్నా పనిచేస్తుంది</div><button onclick="installApp()">ఇన్‌స్టాల్</button><button style="background:none;color:#fff;padding:4px" onclick="try{localStorage.setItem('raiInstHide',todayS())}catch(e){};render()">✕</button></div>`;}
+ return `<div class="inst"><img src="icon-192.png" alt=""><div><b>యాప్‌గా ఇన్‌స్టాల్ చేయి</b>హోమ్ స్క్రీన్‌పై ఐకాన్, ఇంటర్నెట్ లేకున్నా పనిచేస్తుంది</div><button onclick="installApp()">ఇన్‌స్టాల్</button><button style="background:none;color:#fff;padding:4px" onclick="try{localStorage.setItem('raiInstHide',todayS())}catch(e){};render()">✕</button></div>`;}
 async function installApp(){if(instEvt){instEvt.prompt();const r=await instEvt.userChoice;instEvt=null;if(r.outcome==='accepted')toast('ఇన్‌స్టాల్ అవుతోంది ✓');render();}
  else alert(/iphone|ipad/i.test(navigator.userAgent)?'Safari లో Share ⬆️ → “Add to Home Screen” నొక్కండి.':'Chrome మెనూ ⋮ → “Install app” లేదా “Add to Home screen” నొక్కండి.');}
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();instEvt=e;});
