@@ -14,8 +14,6 @@
 <title>రాయ్ విద్యార్థి లెర్నింగ్ యాప్ – 1 నుండి 5 తరగతులు</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6ZG763KFGF"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-6ZG763KFGF');</script>
 <style>
 :root{--navy:#063a5b;--teal:#2aa6a6;--teal2:#1d8c8c;--ink:#1f2937;--mut:#6b7280;--bg:#eef5f6;--card:#fff;--line:#e5e7eb;--red:#e5484d;--green:#16a34a;--amber:#f59e0b}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -238,6 +236,7 @@ var SCHOOL_KEY  = '__SCHOOL_KEY__';   // విద్యార్థుల క�
 var TEACHER_KEY = '__TEACHER_KEY__';  // ఉపాధ్యాయుల కీ – ఎవరికీ ఇవ్వకండి
 var ALL_COLS = ['students','hw','events','doubts','notes','results','games','subs'];
 var TEACHER_COLS = ['hw','events','notes'];
+var PRIV = ['students','results','doubts','subs'];  // విద్యార్థికి తన డేటా మాత్రమే
 var SUBJ = {tel:'తెలుగు', eng:'English', mat:'గణితం', evs:'పరిసరాల విజ్ఞానం'};
 
 function db_() {
@@ -267,7 +266,9 @@ function doGet(e) {
       for (var i = 0; i < v.length; i++) {
         var srv = Number(v[i][3]);
         if (srv > max) max = srv;
-        if (srv > since) rows.push([v[i][1], String(v[i][2]), v[i][5]]);
+        if (srv <= since) continue;
+        if (!isT && PRIV.indexOf(v[i][1]) >= 0) { var o = ''; try { o = JSON.parse(v[i][5]).o || ''; } catch (x) {} if (!o || o !== p.dev) continue; }
+        rows.push([v[i][1], String(v[i][2]), v[i][5]]);
       }
     }
     return json_({ok:true, now:max, rows:rows, teacher:isT});
@@ -294,6 +295,7 @@ function doPost(e) {
         var old = {};
         try { old = JSON.parse(sh.getRange(row, 6).getValue() || '{}'); } catch (x) {}
         if (Number(old.upd || 0) > Number(d.upd || 0)) { done.push(key); return; }
+        if (!isT && old.o && old.o !== b.dev) { rej.push(key); return; }
         if (r.col === 'doubts' && !isT) { d.r = old.r || ''; d.ra = old.ra || 0; }
         sh.getRange(row, 1, 1, 6).setValues([[key, r.col, String(r.id), String(srv), String(d.upd || 0), JSON.stringify(d)]]);
       } else {
@@ -353,6 +355,7 @@ function put_(name, head, rows) {
  ******************************************************************/
 var COLS = ['students','hw','events','doubts','notes','results','games','subs'];
 var TCOLS = ['hw','events','notes'];
+var PRIV = ['students','results','doubts','subs'];  // విద్యార్థికి తన డేటా మాత్రమే
 var MAX_REG_PER_HOUR = 40;
 var SUBJ = {tel:'తెలుగు', eng:'English', mat:'గణితం', evs:'పరిసరాల విజ్ఞానం'};
 
@@ -421,7 +424,11 @@ function doGet(e) {
   var sh = db_(a.sc.id), n = sh.getLastRow(), since = Number(p.since || 0), rows = [];
   if (n > 1) {
     var v = sh.getRange(2, 1, n - 1, 6).getValues();
-    for (var i = 0; i < v.length; i++) if (Number(v[i][3]) > since) rows.push([v[i][1], String(v[i][2]), v[i][5]]);
+    for (var i = 0; i < v.length; i++) {
+      if (Number(v[i][3]) <= since) continue;
+      if (!a.isT && PRIV.indexOf(v[i][1]) >= 0) { var o = ''; try { o = JSON.parse(v[i][5]).o || ''; } catch (x) {} if (!o || o !== p.dev) continue; }
+      rows.push([v[i][1], String(v[i][2]), v[i][5]]);
+    }
   }
   // 30 సెకన్లు వెనక్కి – అప్పుడే రాస్తున్న మార్పులు మిస్ కాకుండా
   var now = Math.max(since, Date.now() - 30000);
@@ -449,6 +456,7 @@ function doPost(e) {
         var old = {};
         try { old = JSON.parse(sh.getRange(row, 6).getValue() || '{}'); } catch (x) {}
         if (Number(old.upd || 0) > Number(d.upd || 0)) { done.push(key); return; }
+        if (!a.isT && old.o && old.o !== b.dev) { rej.push(key); return; }
         if (r.col === 'doubts' && !a.isT) { d.r = old.r || ''; d.ra = old.ra || 0; }
         sh.getRange(row, 1, 1, 6).setValues([[key, r.col, String(r.id), String(srv), String(d.upd || 0), JSON.stringify(d)]]);
       } else {
@@ -664,24 +672,29 @@ function pctCls(p){return p>=80?'g':p>=50?'y':'r';}
 
 /* ---------- డేటా నిల్వ (ఆఫ్లైన్ + ఆన్‌లైన్ సింక్) ---------- */
 const COLS=['students','hw','events','doubts','notes','results','games','subs'];
-function def(){return {offline:false,pub:'',pin:'1234',local:[],cur:null,students:[],results:[],games:[],hw:[],events:[],doubts:[],notes:[],subs:[],read:{},seeded:false,cfg:{type:''},q:{},last:{},lastSync:0};}
+function def(){return {dev:'',offline:false,pub:'',pin:'1234',local:[],cur:null,students:[],results:[],games:[],hw:[],events:[],doubts:[],notes:[],subs:[],read:{},seeded:false,cfg:{type:''},q:{},last:{},lastSync:0};}
 function load(){try{const d=JSON.parse(localStorage.getItem(LS));if(d)return migrate(Object.assign(def(),d));}catch(e){}return def();}
 function migrate(d){
+ if(!d.dev){d.dev=newDev();const mine=new Set((d.local||[]).map(x=>x.n));if(d.cur)mine.add(d.cur.n);d.q=d.q||{};
+  ['students','results','doubts','subs'].forEach(c=>(d[c]||[]).forEach(r=>{if(!r.o&&mine.has(r.n)){r.o=d.dev;r.upd=(r.upd||1)+1;if(d.cfg&&d.cfg.type)d.q[c+'|'+r.id]=r.upd;}}));}
  if(d.cur&&!d.cfg.type&&d.offline===undefined)d.offline=true;
  if(!d.cfg)d.cfg={type:''};
  if(d.students.length&&!d.students[0].id){d.local=d.students.map(s=>({n:s.n,c:s.c}));d.students=d.students.map(s=>({id:sid(s.n),n:s.n,c:s.c,upd:Date.now()}));}
  d.hw.forEach(h=>{if(h.sub){Object.entries(h.sub).forEach(([n,dt])=>d.subs.push({id:h.id+'|'+sid(n),hw:h.id,n,c:h.c,d:dt,upd:Date.now()}));delete h.sub;}});
  COLS.forEach(c=>d[c].forEach(r=>{if(!r.id)r.id=uid();if(!r.upd)r.upd=1;}));
  return d;}
+const PRIV=['students','results','doubts','subs'];
+function newDev(){const a='abcdefghijkmnpqrstuvwxyz23456789';let s='';const r=(window.crypto&&crypto.getRandomValues)?crypto.getRandomValues(new Uint8Array(20)):Array.from({length:20},()=>Math.floor(Math.random()*256));for(let i=0;i<20;i++)s+=a[r[i]%a.length];return s;}
 function save(){try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){toast('సేవ్ కాలేదు – స్టోరేజ్ నిండింది');}}
 function sid(n){return String(n).trim().toLowerCase().replace(/[\/\s.#$\[\]|]+/g,'_');}
 function live(col){const on=!!S.cfg.type;return S[col].filter(r=>!r.del&&!(on&&r.seed));}
-function put(col,rec){rec.upd=Math.max(Date.now(),(rec.upd||0)+1);const a=S[col];const i=a.findIndex(x=>x.id===rec.id);if(i>=0)a[i]=rec;else a.push(rec);
+function put(col,rec){if(PRIV.includes(col)&&!rec.o)rec.o=S.dev;rec.upd=Math.max(Date.now(),(rec.upd||0)+1);const a=S[col];const i=a.findIndex(x=>x.id===rec.id);if(i>=0)a[i]=rec;else a.push(rec);
  if(S.cfg.type&&!rec.seed){S.q[col+'|'+rec.id]=rec.upd;Sync.later();}save();return rec;}
 function remove(col,id){const r=S[col].find(x=>x.id===id);if(r)put(col,Object.assign({},r,{del:true}));}
 function dropLocal(k){const i=k.indexOf('|');const col=k.slice(0,i),id=k.slice(i+1);if(S[col])S[col]=S[col].filter(x=>x.id!==id);}
 function queueAll(){COLS.forEach(col=>S[col].forEach(r=>{if(!r.seed)S.q[col+'|'+r.id]=r.upd||1;}));}
 let S=load();
+if(!S.dev){S.dev=newDev();save();}
 function seed(){if(S.seeded)return;const t=todayS();
  for(let c=1;c<=5;c++){
   S.hw.push({id:'seed_hw'+c+'a',seed:true,upd:1,c,s:'mat',t:'గణితం – అభ్యాసం లెక్కలు చేయండి',x:'పాఠ్యపుస్తకంలోని అభ్యాసం 1 లోని లెక్కలు నోట్‌బుక్‌లో చేయండి.',due:addDays(t,1)});
@@ -729,14 +742,15 @@ function softRender(){if(view==='testrun'||view==='gamerun')return;const ae=docu
 function gsErr(e){return {key:'కీ తప్పు',school:'పాఠశాల కోడ్ తప్పు',busy:'సర్వర్ బిజీ – కాసేపటి తర్వాత ప్రయత్నించండి'}[e]||e;}
 const GS={
  key(){return S.cfg.tkey||S.cfg.key;},
- async pull(){const u=S.cfg.url+'?a=pull'+(S.cfg.sid?'&s='+encodeURIComponent(S.cfg.sid):'')+'&k='+encodeURIComponent(this.key())+'&since='+(S.last.gs||0)+'&_='+Date.now();
+ async pull(){const u=S.cfg.url+'?a=pull'+(S.cfg.sid?'&s='+encodeURIComponent(S.cfg.sid):'')+'&k='+encodeURIComponent(this.key())+'&dev='+encodeURIComponent(S.dev)+'&since='+(S.last.gs||0)+'&_='+Date.now();
   const j=await (await fetch(u)).json();if(!j.ok)throw new Error(gsErr(j.err));
-  S.cfg.isT=!!j.teacher;if(j.school)S.cfg.sname=j.school;if(j.skey)S.cfg.key=j.skey;if(j.now)S.last.gs=Math.max(S.last.gs||0,Number(j.now));
+  S.cfg.isT=!!j.teacher;if(j.school)S.cfg.sname=j.school;if(j.skey)S.cfg.key=j.skey;
+  if(!j.teacher)PRIV.forEach(c=>{S[c]=S[c].filter(r=>!r.o||r.o===S.dev||S.q[c+'|'+r.id]);S[c]=S[c].filter(r=>r.o===S.dev||!r.n||S.local.some(l=>l.n===r.n));});if(j.now)S.last.gs=Math.max(S.last.gs||0,Number(j.now));
   applyIncoming((j.rows||[]).map(([col,id,js])=>{try{return [col,JSON.parse(js)];}catch(e){return [col,null];}}));},
  async push(){const ks=Object.keys(S.q);if(!ks.length)return;const sent={};
   const recs=ks.map(k=>{const i=k.indexOf('|');const col=k.slice(0,i),id=k.slice(i+1);const d=(S[col]||[]).find(x=>x.id===id);sent[k]=S.q[k];return d?{col,id,data:d}:null;}).filter(Boolean);
   if(!recs.length){ks.forEach(k=>delete S.q[k]);return;}
-  const j=await (await fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'push',s:S.cfg.sid,k:this.key(),recs})})).json();
+  const j=await (await fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'push',s:S.cfg.sid,k:this.key(),dev:S.dev,recs})})).json();
   if(!j.ok)throw new Error(gsErr(j.err));
   (j.done||[]).forEach(k=>{if(S.q[k]===sent[k])delete S.q[k];});
   if(j.rej&&j.rej.length){j.rej.forEach(k=>{delete S.q[k];dropLocal(k);});S.last.gs=0;toast('కొన్ని మార్పులకు ఉపాధ్యాయ అనుమతి లేదు');}
@@ -768,7 +782,7 @@ const FBK={ready:false,user:null,
 
 /* ---------- సహాయక ఫంక్షన్లు ---------- */
 let view='home',param={},tick=null,T=null,G=null,tAuth=false;
-const PARENT={sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
+const PARENT={privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
 function me(){return S.cur.n;}
 function lessonsOf(c,s){const b=((L[c]||{})[s]||[]).map((x,i)=>({k:'b'+i,t:x[0],b:x[1].split('|')}));
  const n=live('notes').filter(x=>x.c===c&&x.s===s).map(x=>({k:'n'+x.id,t:x.t,b:x.x.split('\n').filter(Boolean),tn:1}));return b.concat(n);}
@@ -780,7 +794,7 @@ function avgOf(rs){return rs.length?Math.round(rs.reduce((a,x)=>a+x.s*100/x.t,0)
 function stats(){const r=myRes();const by={};subjectsFor(S.cur.c).forEach(s=>{const rs=r.filter(x=>x.sb===s);by[s]=rs.length?avgOf(rs):null;});return {avg:avgOf(r),n:r.length,by};}
 function perfMsg(a,n){if(!n)return 'ఇంకా టెస్ట్ రాయలేదు. మొదటి టెస్ట్ రాసి నీ ప్రదర్శన చూడు!';if(a>=80)return 'అద్భుతం! ఇలాగే కొనసాగించు 🌟';if(a>=60)return 'బాగుంది! ఇంకా మెరుగ్గా చేయగలవు. శుభాకాంక్షలు!';return 'పర్వాలేదు! రోజూ సాధన చేస్తే తప్పకుండా మెరుగవుతావు 💪';}
 function myHw(){return live('hw').filter(h=>h.c===S.cur.c).sort((a,b)=>a.due<b.due?-1:1);}
-function subOf(h){const x=live('subs').find(s=>s.hw===h.id&&s.n===me());return x&&x.d;}
+function subOf(h){const x=live('subs').find(s=>s.hw===h.id&&s.n===me()&&(!s.o||s.o===S.dev));return x&&x.d;}
 function pendingHw(){return myHw().filter(h=>!subOf(h));}
 function eventsOn(d){return live('events').filter(e=>e.d===d&&(e.c===0||e.c===S.cur.c)).sort((a,b)=>(a.tm||'')<(b.tm||'')?-1:1);}
 function upcoming(n){const t=todayS();return live('events').filter(e=>e.d>=t&&(e.c===0||e.c===S.cur.c)).sort((a,b)=>(a.d+a.tm)<(b.d+b.tm)?-1:1).slice(0,n);}
@@ -795,6 +809,7 @@ function dueText(h){const sd=subOf(h);const d=diffDays(h.due,todayS());
 function go(v,p){clearInterval(tick);tick=null;try{speechSynthesis.cancel();}catch(e){}view=v;param=p||{};render();window.scrollTo(0,0);}
 function render(){const app=$('#app');
  if(view==='teacher'){app.innerHTML='<main>'+V.teacher()+'</main>'+footer();return;}
+ if(view==='privacy'&&!S.cur){app.innerHTML='<main>'+V.privacy()+'</main>'+footer();return;}
  if(view==='welcome'||(!S.cur&&!S.cfg.type&&!S.offline)){app.innerHTML=V.welcome()+footer();return;}
  if(!S.cur){app.innerHTML=V.login()+footer();return;}
  const full=view==='testrun'||view==='gamerun';
@@ -809,13 +824,35 @@ const V={};
 let selCls=null;
 V.login=()=>`<div class="login"><div class="logo">📚</div><h1>విద్యార్థి లెర్నింగ్ యాప్</h1><p>1 నుండి 5 తరగతులు • ఎప్పుడైనా, ఎక్కడైనా నేర్చుకో!</p>
 ${S.cfg.sname?`<div class="sbadge">🏫 ${esc(S.cfg.sname)}</div>`:''}
-<div class="card"><label>నీ పేరు</label><input id="ln" placeholder="ఉదా: రవి" maxlength="30">
+<div class="card"><label>నీ మొదటి పేరు</label><input id="ln" placeholder="ఉదా: రవి" maxlength="30"><small class="mut">మొదటి పేరు మాత్రమే – ఇంటిపేరు అవసరం లేదు</small>
 <label>తరగతి ఎంచుకో</label><div class="clsrow">${[1,2,3,4,5].map(c=>`<button class="cb ${selCls===c?'on':''}" data-c="${c}" onclick="pickCls(${c})">${c}</button>`).join('')}</div>
 <button class="btn" onclick="doLogin()">ప్రారంభించు ▶</button></div>
 ${S.local.length?`<div class="card"><h3>ఈ ఫోన్‌లో వాడిన విద్యార్థులు</h3>${S.local.map((s,i)=>`<button class="chip" onclick="quick(${i})">👤 ${esc(s.n)} • ${s.c}వ</button>`).join('')}</div>`:''}
 ${S.cfg.type?'':`<button class="link" onclick="S.offline=false;save();go('welcome',{w:'s'})">🏫 పాఠశాల కోడ్‌తో చేరు</button><br>`}<button class="link" onclick="go('teacher')">👩‍🏫 ఉపాధ్యాయుల ప్యానెల్${S.cfg.type?'':' – పాఠశాల నమోదు'}</button></div>`;
 /* ---------- మొదటి స్క్రీన్: పాఠశాల వివరాలు ముందుగానే ---------- */
 
+V.privacy=()=>`<div class="bar"><button class="ib" onclick="history.length>1&&view==='privacy'?go(S.cur?'menu':'welcome'):go('welcome')">←</button><h2>🔒 గోప్యత & నిబంధనలు</h2></div>
+<div class="card"><h3>ఈ యాప్ ఎవరిది?</h3><p>రాయ్ ఎడ్యుకేషన్ వ్యక్తిగత విద్యా ప్రయత్నం. ఇది <b>ప్రభుత్వ యాప్ కాదు</b>. ఉచితం, ప్రకటనలు లేవు, డబ్బు అడగదు.</p></div>
+<div class="card"><h3>ఏ వివరాలు తీసుకుంటాం?</h3><ul class="steps">
+<li><b>విద్యార్థి:</b> మొదటి పేరు, తరగతి, టెస్ట్ మార్కులు, హోంవర్క్ పూర్తి చేసిన సమాచారం, అడిగిన సందేహాలు, ఆటల స్కోర్లు.</li>
+<li><b>ఉపాధ్యాయులు:</b> పాఠశాల పేరు, మండలం/జిల్లా, ఉపాధ్యాయుల పేరు, ఫోన్ (ఐచ్ఛికం).</li>
+<li>ఫోటోలు, ఆధార్, చిరునామా, తల్లిదండ్రుల ఫోన్, లొకేషన్ – <b>ఏవీ తీసుకోము</b>.</li></ul>
+<p class="mut">పిల్లల <b>మొదటి పేరు మాత్రమే</b> రాయండి (పూర్తి పేరు, ఇంటిపేరు అవసరం లేదు).</p></div>
+<div class="card"><h3>డేటా ఎక్కడ ఉంటుంది?</h3><ul class="steps">
+<li><b>ఆఫ్లైన్‌లో వాడితే:</b> ఆ ఫోన్‌లోనే – ఎక్కడికీ వెళ్ళదు.</li>
+<li><b>పాఠశాలకు కనెక్ట్ అయితే:</b> Google సర్వర్లలో (Google Sheets) – పాఠశాల సొంత షీట్‌లో లేదా రాయ్ ఎడ్యుకేషన్ పబ్లిక్ సర్వర్‌లో. ప్రతి పాఠశాల డేటా వేరు.</li>
+<li>డేటాను <b>ఎవరికీ అమ్మము, ఇవ్వము</b>. ప్రకటనలు, ట్రాకింగ్ (Analytics) లేవు.</li></ul></div>
+<div class="card"><h3>ఎవరు ఏమి చూడగలరు?</h3><ul class="steps">
+<li><b>విద్యార్థి / తల్లిదండ్రులు:</b> తమ మార్కులు, సందేహాలు మాత్రమే + పాఠశాల హోంవర్క్, ఈవెంట్లు.</li>
+<li><b>తరగతి లీడర్‌బోర్డ్:</b> ఆటల స్కోర్లు, పేర్లు అదే పాఠశాల/తరగతి వారికి కనిపిస్తాయి.</li>
+<li><b>ఆ పాఠశాల ఉపాధ్యాయులు:</b> తమ పాఠశాల విద్యార్థుల వివరాలు మాత్రమే.</li>
+<li>వేరే పాఠశాలల వారికి మీ డేటా కనిపించదు.</li></ul></div>
+<div class="card"><h3>తల్లిదండ్రుల అనుమతి</h3><p>పిల్లల వివరాలు నమోదు చేసే ముందు ఉపాధ్యాయులు తల్లిదండ్రులకు తెలియజేసి అనుమతి తీసుకోవాలి.</p></div>
+<div class="card"><h3>డేటా తొలగించాలంటే?</h3><ul class="steps">
+<li>మీ పాఠశాల ఉపాధ్యాయులను అడగండి – టీచర్ ప్యానెల్ → 📊 రిపోర్ట్ → 🗑️ తో ఆ విద్యార్థి డేటా మొత్తం తొలగించవచ్చు.</li>
+<li>ఈ ఫోన్‌లోని డేటా: ఫోన్ సెట్టింగ్స్ → యాప్ → Storage → Clear data.</li>
+<li>ఇతర సందేహాలకు: <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్ వెబ్‌సైట్</a>.</li></ul></div>
+<p class="mut center">చివరి మార్పు: అక్టోబర్ 2026</p>`;
 V.welcome=()=>{const w=param.w||'';const ps=pubServer();const back=`<button class="link" onclick="go('welcome')">← వెనుకకు</button>`;
  if(w==='t'){if(!ps)return `<div class="wel"><div class="logo">⏳</div><h1>సర్వర్ లోడ్ అవుతోంది...</h1><p>ఇంటర్నెట్ ఆన్‌లో ఉందో చూసి, కాసేపటి తర్వాత మళ్ళీ ప్రయత్నించండి.</p>${back}</div>`;
   return `<div class="wel"><div class="logo">🏫</div><h1>పాఠశాల వివరాలు</h1><p>ఒక్కసారి నమోదు చేస్తే చాలు</p><div class="card" style="text-align:left">
@@ -823,6 +860,7 @@ V.welcome=()=>{const w=param.w||'';const ps=pubServer();const back=`<button clas
 <label>మండలం, జిల్లా *</label><input id="rgp" maxlength="80" placeholder="ఉదా: గూడూరు, తిరుపతి">
 <label>ఉపాధ్యాయుల పేరు *</label><input id="rgt" maxlength="60">
 <div class="g2"><div><label>ఫోన్ (ఐచ్ఛికం)</label><input id="rgph" inputmode="tel" maxlength="15"></div><div><label>ఈ ఫోన్ PIN (4 అంకెలు) *</label><input id="rgpin" inputmode="numeric" maxlength="8" type="password"></div></div>
+<label style="display:flex;gap:10px;align-items:flex-start;font-weight:500"><input type="checkbox" id="rgok" style="width:22px;height:22px;flex:none;margin-top:2px"><span>తల్లిదండ్రులకు తెలియజేసి, వారి అనుమతితో మాత్రమే పిల్లల పేర్లు నమోదు చేయిస్తాను. <a onclick="go('privacy')">గోప్యత & నిబంధనలు</a> చదివాను.</span></label>
 <button class="btn" id="rgbtn" onclick="regSchool(true)">💾 సేవ్ చేసి నమోదు చేయి</button></div>
 <button class="link" onclick="go('welcome',{w:'tl'})">🔑 ఇప్పటికే నమోదు చేశాను – టీచర్ లాగిన్</button><br>${back}</div>`;}
  if(w==='tl')return `<div class="wel"><div class="logo">🔑</div><h1>టీచర్ లాగిన్</h1><p>సేవ్ నోట్‌లోని కోడ్, టీచర్ కీ ఇవ్వండి</p><div class="card" style="text-align:left">
@@ -840,7 +878,7 @@ V.welcome=()=>{const w=param.w||'';const ps=pubServer();const back=`<button clas
  return `<div class="wel"><div class="logo">📚</div><h1>రాయ్ విద్యార్థి లెర్నింగ్ యాప్</h1><p>1 నుండి 5 తరగతులు • పాఠాలు, టెస్టులు, ఆటలు, హోంవర్క్</p>
 <button class="role" style="background:#ccf0ee" onclick="go('welcome',{w:'t'})"><span>👩‍🏫</span><div><b>నేను ఉపాధ్యాయుడు / ఉపాధ్యాయురాలు</b><small>పాఠశాల వివరాలు నమోదు చేసి, పిల్లలకు కోడ్ ఇవ్వండి</small></div></button>
 <button class="role" style="background:#fdeaa8" onclick="go('welcome',{w:'s'})"><span>🧒</span><div><b>నేను విద్యార్థి</b><small>టీచర్ ఇచ్చిన పాఠశాల కోడ్‌తో చేరు</small></div></button>
-<button class="link" onclick="S.offline=true;save();go('home')">పాఠశాల లేకుండా సొంతంగా వాడుకో →</button></div>`;};
+<button class="link" onclick="S.offline=true;save();go('home')">పాఠశాల లేకుండా సొంతంగా వాడుకో →</button><br><button class="link" onclick="go('privacy')">🔒 గోప్యత & నిబంధనలు</button></div>`;};
 function noteData(){const c=S.cfg;return {name:c.sname||'',place:c.place||'',teacher:c.tname||'',sid:c.sid||'',tkey:c.tkey||'',join:joinLink(),app:appBase()};}
 function noteHtml(){const d=noteData();return `<div class="note"><h3>🏫 ${esc(d.name)}</h3>${d.place?`<small>📍 ${esc(d.place)}${d.teacher?' • 👩‍🏫 '+esc(d.teacher):''}</small>`:''}
 <div class="row"><small>పాఠశాల కోడ్ (విద్యార్థులకు ఇవ్వండి)</small><div class="big">${esc(d.sid)}</div></div>
@@ -876,7 +914,7 @@ async function joinByCode(){const code=$('#jsc').value.trim().toUpperCase();if(c
 function loginJoin(){const c=prompt('ఉపాధ్యాయులు పంపిన జాయిన్ కోడ్ / లింక్ పేస్ట్ చేయండి');if(c&&joinWith(c))render();}
 function pickCls(c){selCls=c;document.querySelectorAll('.cb').forEach(b=>b.classList.toggle('on',+b.dataset.c===c));}
 function doLogin(){const n=$('#ln').value.trim();if(!n)return toast('నీ పేరు రాయి');if(!selCls)return toast('తరగతి ఎంచుకో');setStudent(n,selCls);}
-function setStudent(n,c){S.cur={n,c};const ex=S.local.find(s=>s.n===n);if(ex)ex.c=c;else S.local.push({n,c});put('students',{id:sid(n),n,c});go('home');toast('స్వాగతం, '+n+'! 🎉');}
+function setStudent(n,c){S.cur={n,c};const ex=S.local.find(s=>s.n===n);if(ex)ex.c=c;else S.local.push({n,c});put('students',{id:sid(n)+'@'+S.dev.slice(0,8),n,c});go('home');toast('స్వాగతం, '+n+'! 🎉');}
 function quick(i){const s=S.local[i];setStudent(s.n,s.c);}
 function logout(){S.cur=null;selCls=null;save();go(S.cfg.type||S.offline?'home':'welcome');}
 
@@ -890,9 +928,10 @@ ${isStandalone()?'':`<button class="li" onclick="installApp()">📲 యాప్
 ${S.cfg.type?'':`<button class="li" onclick="go('welcome',{w:'s'})">🏫 పాఠశాల కోడ్‌తో చేరు</button>`}
 <button class="li" onclick="go('sync')">☁️ ఆన్‌లైన్ సింక్ <span>${S.cfg.type?(S.cfg.type==='gs'?'Google Sheets':'Firebase')+' '+syncIcon():'ఆఫ్'}</span></button>
 <button class="li" onclick="logout()">🔄 విద్యార్థిని మార్చు</button>
-<button class="li" onclick="go('teacher')">👩‍🏫 ఉపాధ్యాయుల ప్యానెల్</button></div>`;
+<button class="li" onclick="go('teacher')">👩‍🏫 ఉపాధ్యాయుల ప్యానెల్</button>
+<button class="li" onclick="go('privacy')">🔒 గోప్యత & నిబంధనలు</button></div>`;
 V.cls=()=>`<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>తరగతి ఎంచుకో</h2></div><div class="card"><div class="clsrow">${[1,2,3,4,5].map(c=>`<button class="cb ${S.cur.c===c?'on':''}" onclick="setCls(${c})">${c}</button>`).join('')}</div></div>`;
-function setCls(c){S.cur.c=c;const ex=S.local.find(s=>s.n===me());if(ex)ex.c=c;put('students',{id:sid(me()),n:me(),c});go('learn');toast(c+'వ తరగతి ఎంచుకున్నావు');}
+function setCls(c){S.cur.c=c;const ex=S.local.find(s=>s.n===me());if(ex)ex.c=c;put('students',{id:sid(me())+'@'+S.dev.slice(0,8),n:me(),c});go('learn');toast(c+'వ తరగతి ఎంచుకున్నావు');}
 
 /* ---------- హోమ్ ---------- */
 function tile(v,ic,t,s,bg,p){return `<button class="tile" style="background:${bg}" onclick="go('${v}'${p?','+p:''})"><span>${ic}</span><b>${t}</b><small>${s}</small></button>`;}
@@ -1076,8 +1115,8 @@ V.homework=()=>{const tab=param.tab||'all';const all=myHw();const pend=all.filte
  return `<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>నా హోంవర్క్‌లు</h2></div>
 <div class="tabs">${[['all','అన్నీ ('+all.length+')'],['pend','పెండింగ్ ('+pend.length+')'],['done','సమర్పించినవి ('+done.length+')']].map(([k,n])=>`<button class="${tab===k?'on':''}" onclick="go('homework',{tab:'${k}'})">${n}</button>`).join('')}</div>
 <div class="dline">${fmtLong(todayS())}</div>${list.map(hwCard).join('')||'<div class="empty">ఇక్కడ హోంవర్క్‌లు లేవు 🎉</div>'}`;};
-function subHw(id){const h=live('hw').find(x=>x.id===id);if(!h)return;put('subs',{id:h.id+'|'+sid(me()),hw:h.id,n:me(),c:S.cur.c,d:new Date().toISOString()});toast('శభాష్! హోంవర్క్ సమర్పించావు ✓');render();}
-function unsubHw(id){remove('subs',id+'|'+sid(me()));render();}
+function subHw(id){const h=live('hw').find(x=>x.id===id);if(!h)return;put('subs',{id:h.id+'|'+sid(me())+'@'+S.dev.slice(0,8),hw:h.id,n:me(),c:S.cur.c,d:new Date().toISOString()});toast('శభాష్! హోంవర్క్ సమర్పించావు ✓');render();}
+function unsubHw(id){live('subs').filter(x=>x.hw===id&&x.n===me()).forEach(x=>remove('subs',x.id));render();}
 
 /* ---------- ఉపాధ్యాయుల ప్యానెల్ ---------- */
 function tLogin(){if($('#tpin').value===S.pin){tAuth=true;go('teacher');}else toast('PIN తప్పు');}
@@ -1112,17 +1151,20 @@ TP.nt=()=>`<div class="card"><h3>పాఠం నోట్ జోడించం
 <label>పాఠం పేరు</label><input id="ntt" placeholder="ఉదా: మన గ్రామం"><label>ముఖ్యాంశాలు (ఒక్కో లైన్ = ఒక పాయింట్)</label><textarea id="ntx" rows="5"></textarea><button class="btn" onclick="addNote()">➕ జోడించు</button></div>
 <h4 class="sec">టీచర్ నోట్స్ (${live('notes').length})</h4>${live('notes').map(n=>`<div class="titem"><div><b>${esc(n.t)}</b><small>${n.c}వ తరగతి • ${SUBJ[n.s].n}</small></div><button class="del" onclick="delItem('notes','${n.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}`;
 function addNote(){const t=$('#ntt').value.trim(),x=$('#ntx').value.trim();if(!t||!x)return toast('పేరు, ముఖ్యాంశాలు రాయండి');put('notes',{id:uid(),c:+$('#nc').value,s:$('#ncs').value,t,x});toast('పాఠం జోడించబడింది ✓');go('teacher',{t:'nt'});}
-TP.rp=()=>{const f=param.f||0;const st=live('students').filter(s=>!f||s.c===f);
+TP.rp=()=>{const f=param.f||0;const seen={};const st=live('students').filter(s=>(!f||s.c===f)&&!seen[s.n+'|'+s.c]&&(seen[s.n+'|'+s.c]=1));
  const rows=st.map(s=>{const rs=live('results').filter(r=>r.n===s.n&&r.c===s.c);const avg=avgOf(rs);const by=subjectsFor(s.c).map(sb=>{const x=rs.filter(r=>r.sb===sb);return x.length?avgOf(x)+'%':'–';});
   const hw=live('hw').filter(h=>h.c===s.c);const sub=hw.filter(h=>live('subs').some(x=>x.hw===h.id&&x.n===s.n)).length;const rd=Object.keys(S.read[s.n]||{}).filter(k=>k.startsWith(s.c+'-')).length;
   const gb=Object.keys(GAMES).map(g=>{const v=live('games').filter(x=>x.n===s.n&&x.g===g&&x.c===s.c).map(x=>x.s);return v.length?Math.max(...v):'–';});
-  return `<tr><td><b>${esc(s.n)}</b></td><td>${s.c}</td><td>${rs.length}</td><td>${rs.length?`<span class="pct ${pctCls(avg)}">${avg}%</span>`:'–'}</td><td>${by.join(' / ')}</td><td>${rd}</td><td>${sub}/${hw.length}</td><td>${gb.join(' / ')}</td></tr>`;}).join('');
+  return `<tr><td><b>${esc(s.n)}</b></td><td>${s.c}</td><td>${rs.length}</td><td>${rs.length?`<span class="pct ${pctCls(avg)}">${avg}%</span>`:'–'}</td><td>${by.join(' / ')}</td><td>${rd}</td><td>${sub}/${hw.length}</td><td>${gb.join(' / ')}</td><td><button class="del" onclick="delStudent('${esc(s.n).replace(/'/g,'')}',${s.c})">🗑️</button></td></tr>`;}).join('');
  return `<div class="tchips">${[0,1,2,3,4,5].map(c=>`<button class="${f===c?'on':''}" onclick="go('teacher',{t:'rp',f:${c}})">${c?c+'వ తరగతి':'అన్నీ'}</button>`).join('')}</div>
-${st.length?`<div class="tscroll"><table class="tbl"><tr><th>పేరు</th><th>తర.</th><th>టెస్టులు</th><th>సగటు</th><th>తెలుగు/Eng/గణితం/EVS</th><th>చదివిన పాఠాలు</th><th>హోంవర్క్</th><th>ఆటలు MM/EW/తెలుగు</th></tr>${rows}</table></div>`:'<div class="empty">విద్యార్థులు లేరు</div>'}
+${st.length?`<div class="tscroll"><table class="tbl"><tr><th>పేరు</th><th>తర.</th><th>టెస్టులు</th><th>సగటు</th><th>తెలుగు/Eng/గణితం/EVS</th><th>చదివిన పాఠాలు</th><th>హోంవర్క్</th><th>ఆటలు MM/EW/తెలుగు</th><th>తొలగించు</th></tr>${rows}</table></div>`:'<div class="empty">విద్యార్థులు లేరు</div>'}
 <p class="mut" style="margin-top:10px">${S.cfg.type?'☁️ అన్ని ఫోన్ల నుండి సింక్ అయిన డేటా. “చదివిన పాఠాలు” ఆ విద్యార్థి ఫోన్‌లోనే ఉంటుంది.':'📴 ఈ ఫోన్‌లో లాగిన్ అయిన విద్యార్థుల డేటా మాత్రమే.'}</p>`;};
-TP.st=()=>`<div class="card"><h3>🔐 PIN మార్చండి</h3><input id="np" type="password" inputmode="numeric" maxlength="8" placeholder="కొత్త PIN (4–8 అంకెలు)"><button class="btn" onclick="chPin()">మార్చు</button></div>
+TP.st=()=>`<div class="card"><h3>🔒 గోప్యత</h3><p class="mut">తల్లిదండ్రులకు చూపించడానికి.</p><button class="btn sm ghost" onclick="tAuth=false;go('privacy')">గోప్యత & నిబంధనలు చూడు</button></div><div class="card"><h3>🔐 PIN మార్చండి</h3><input id="np" type="password" inputmode="numeric" maxlength="8" placeholder="కొత్త PIN (4–8 అంకెలు)"><button class="btn" onclick="chPin()">మార్చు</button></div>
 <div class="card"><h3>💾 బ్యాకప్ & పునరుద్ధరణ</h3><p class="mut">డేటా కాపీ ఈ బ్రౌజర్‌లో ఉంటుంది. వేరే ఫోన్‌కు మార్చడానికి బ్యాకప్ వాడండి.</p><button class="btn" onclick="exportData()">⬇ బ్యాకప్ డౌన్‌లోడ్ (.json)</button><label>బ్యాకప్ ఫైల్ నుండి పునరుద్ధరించు</label><input type="file" accept=".json,application/json" onchange="importData(this)"></div>
 <div class="card"><h3>⚠️ మొత్తం డేటా తొలగించు</h3><p class="mut">ఈ ఫోన్‌లోని విద్యార్థులు, ఫలితాలు, హోంవర్క్, సింక్ సెట్టింగ్స్ అన్నీ పోతాయి. (ఆన్‌లైన్ సర్వర్‌లోని డేటా అలాగే ఉంటుంది.)</p><button class="btn red" onclick="resetAll()">అన్నీ తొలగించు</button></div>`;
+function delStudent(n,c){if(!confirm(n+' ('+c+'వ తరగతి) – ఈ విద్యార్థి పేరు, మార్కులు, సందేహాలు, హోంవర్క్ సమర్పణలు, ఆటల స్కోర్లు అన్నీ తొలగించాలా?'))return;
+ let k=0;['students','results','doubts','subs','games'].forEach(col=>live(col).filter(r=>r.n===n&&(r.c===c||r.c==null||col==='subs')).forEach(r=>{remove(col,r.id);k++;}));
+ toast(k+' రికార్డులు తొలగించబడ్డాయి ✓');go('teacher',{t:'rp',f:param.f||0});}
 function chPin(){const v=$('#np').value.trim();if(!/^\d{4,8}$/.test(v))return toast('4–8 అంకెల PIN ఇవ్వండి');S.pin=v;save();toast('PIN మార్చబడింది ✓');go('teacher',{t:'st'});}
 function delItem(k,id){if(!confirm('తొలగించాలా?'))return;remove(k,id);go('teacher',{t:{hw:'hw',events:'ev',doubts:'dq',notes:'nt'}[k]});}
 function exportData(){const b=new Blob([JSON.stringify(S,null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='Rai_Vidyarthi_App_Backup_'+todayS()+'.json';document.body.appendChild(a);a.click();a.remove();}
@@ -1159,7 +1201,7 @@ function pubServer(){return PUB.server||S.pub||'';}
 async function loadPubCfg(){try{const r=await fetch('config.json?_='+Date.now(),{cache:'no-store'});if(!r.ok)return;const j=await r.json();
  const u=String(j.publicServer||'').trim();if(/^https:\/\/script\.google\.com\/.+\/exec$/.test(u)){PUB.server=u;if(S.pub!==u){S.pub=u;save();}if(view==='teacher'||view==='welcome'||!S.cfg.type)softRender();}}catch(e){}}
 async function regSchool(fromWel){const name=$('#rgn').value.trim(),place=$('#rgp').value.trim(),teacher=$('#rgt').value.trim(),phone=$('#rgph').value.trim();const pin=fromWel?$('#rgpin').value.trim():'';
- if(name.length<3)return toast('పాఠశాల పేరు రాయండి');if(!place)return toast('మండలం/జిల్లా రాయండి');if(!teacher)return toast('మీ పేరు రాయండి');if(fromWel&&!/^\d{4,8}$/.test(pin))return toast('4 అంకెల PIN పెట్టండి');
+ if(name.length<3)return toast('పాఠశాల పేరు రాయండి');if(!place)return toast('మండలం/జిల్లా రాయండి');if(!teacher)return toast('మీ పేరు రాయండి');if(fromWel&&!/^\d{4,8}$/.test(pin))return toast('4 అంకెల PIN పెట్టండి');if(fromWel&&!$('#rgok').checked)return toast('అనుమతి బాక్స్ టిక్ చేయండి');
  const b=$('#rgbtn');if(b){b.disabled=true;b.textContent='నమోదు అవుతోంది...';}
  try{const j=await (await fetch(pubServer(),{method:'POST',body:JSON.stringify({a:'reg',name,place,teacher,phone})})).json();
   if(!j.ok)throw new Error(gsErr(j.err)==='name'?'పాఠశాల పేరు సరిగా లేదు':gsErr(j.err));
