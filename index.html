@@ -336,6 +336,162 @@ function put_(name, head, rows) {
   sh.setFrozenRows(1);
 }
 </script>
+<script type="text/plain" id="ms-code">
+/******************************************************************
+ * రాయ్ ఎడ్యుకేషన్ – విద్యార్థి యాప్ పబ్లిక్ సర్వర్ (అన్ని పాఠశాలల కోసం)
+ * కొత్త Google Sheet → Extensions → Apps Script లో పేస్ట్ చేసి
+ * Deploy → New deployment → Web app → Execute as: Me → Anyone → Deploy
+ * ప్రతి పాఠశాలకు వేరే షీట్ (S_కోడ్) – ఒకరి డేటా మరొకరికి కనిపించదు.
+ ******************************************************************/
+var COLS = ['students','hw','events','doubts','notes','results','games','subs'];
+var TCOLS = ['hw','events','notes'];
+var MAX_REG_PER_HOUR = 40;
+var SUBJ = {tel:'తెలుగు', eng:'English', mat:'గణితం', evs:'పరిసరాల విజ్ఞానం'};
+
+function ss_() { return SpreadsheetApp.getActive(); }
+function json_(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
+function rnd_(n) { var a = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789', s = ''; for (var i = 0; i < n; i++) s += a.charAt(Math.floor(Math.random() * a.length)); return s; }
+function clean_(v, n) { return String(v == null ? '' : v).replace(/[<>]/g, '').trim().slice(0, n); }
+
+function schoolsSh_() {
+  var sh = ss_().getSheetByName('Schools');
+  if (!sh) {
+    sh = ss_().insertSheet('Schools');
+    sh.getRange('A:H').setNumberFormat('@');
+    sh.appendRow(['కోడ్', 'పాఠశాల', 'ప్రాంతం', 'ఉపాధ్యాయులు', 'నమోదు', 'విద్యార్థుల కీ', 'టీచర్ కీ', 'ఫోన్']);
+    sh.setFrozenRows(1);
+  }
+  return sh;
+}
+function findSchool_(id) {
+  if (!/^[A-Z0-9]{4,10}$/.test(id)) return null;
+  var c = CacheService.getScriptCache(), hit = c.get('sc_' + id);
+  if (hit) return JSON.parse(hit);
+  var sh = schoolsSh_(), n = sh.getLastRow();
+  if (n < 2) return null;
+  var v = sh.getRange(2, 1, n - 1, 7).getValues();
+  for (var i = 0; i < v.length; i++) {
+    if (String(v[i][0]) === id) {
+      var o = {id: id, name: String(v[i][1]), skey: String(v[i][5]), tkey: String(v[i][6])};
+      c.put('sc_' + id, JSON.stringify(o), 21600);
+      return o;
+    }
+  }
+  return null;
+}
+function db_(id) {
+  var name = 'S_' + id, sh = ss_().getSheetByName(name);
+  if (!sh) {
+    sh = ss_().insertSheet(name);
+    sh.getRange('A:F').setNumberFormat('@');
+    sh.appendRow(['key','col','id','srv','upd','json']);
+    sh.setFrozenRows(1);
+  }
+  return sh;
+}
+function auth_(p) {
+  var sc = findSchool_(String(p.s || '').toUpperCase());
+  if (!sc) return {err: 'school'};
+  if (p.k && p.k === sc.tkey) return {sc: sc, isT: true};
+  if (p.k && p.k === sc.skey) return {sc: sc, isT: false};
+  return {err: 'key'};
+}
+
+/* డేటా చదవడం */
+function doGet(e) {
+  var p = (e && e.parameter) || {};
+  if (p.a === 'ping') return json_({ok: true, multi: true});
+  var a = auth_(p);
+  if (a.err) return json_({ok: false, err: a.err});
+  var sh = db_(a.sc.id), n = sh.getLastRow(), since = Number(p.since || 0), rows = [];
+  if (n > 1) {
+    var v = sh.getRange(2, 1, n - 1, 6).getValues();
+    for (var i = 0; i < v.length; i++) if (Number(v[i][3]) > since) rows.push([v[i][1], String(v[i][2]), v[i][5]]);
+  }
+  // 30 సెకన్లు వెనక్కి – అప్పుడే రాస్తున్న మార్పులు మిస్ కాకుండా
+  var now = Math.max(since, Date.now() - 30000);
+  return json_({ok: true, now: now, rows: rows, teacher: a.isT, school: a.sc.name, skey: a.isT ? a.sc.skey : undefined});
+}
+
+/* నమోదు & డేటా పంపడం */
+function doPost(e) {
+  var b;
+  try { b = JSON.parse(e.postData.contents); } catch (x) { return json_({ok: false, err: 'bad'}); }
+  if (b.a === 'reg') return reg_(b);
+  var a = auth_(b);
+  if (a.err) return json_({ok: false, err: a.err});
+  var lock = LockService.getScriptLock(); lock.waitLock(25000);
+  try {
+    var sh = db_(a.sc.id), n = sh.getLastRow(), idx = {};
+    if (n > 1) sh.getRange(2, 1, n - 1, 1).getValues().forEach(function (r, i) { idx[r[0]] = i + 2; });
+    var srv = Date.now(), done = [], rej = [], add = [], uniq = {};
+    (b.recs || []).slice(0, 300).forEach(function (r) { if (r && r.col && r.id != null) uniq[r.col + '|' + r.id] = r; });
+    Object.keys(uniq).forEach(function (key) {
+      var r = uniq[key], d = r.data || {}, js = JSON.stringify(d);
+      if (COLS.indexOf(r.col) < 0 || (TCOLS.indexOf(r.col) >= 0 && !a.isT) || js.length > 20000) { rej.push(key); return; }
+      var row = idx[key];
+      if (row) {
+        var old = {};
+        try { old = JSON.parse(sh.getRange(row, 6).getValue() || '{}'); } catch (x) {}
+        if (Number(old.upd || 0) > Number(d.upd || 0)) { done.push(key); return; }
+        if (r.col === 'doubts' && !a.isT) { d.r = old.r || ''; d.ra = old.ra || 0; }
+        sh.getRange(row, 1, 1, 6).setValues([[key, r.col, String(r.id), String(srv), String(d.upd || 0), JSON.stringify(d)]]);
+      } else {
+        if (r.col === 'doubts' && !a.isT) d.r = '';
+        add.push([key, r.col, String(r.id), String(srv), String(d.upd || 0), JSON.stringify(d)]);
+      }
+      done.push(key);
+    });
+    if (add.length) sh.getRange(sh.getLastRow() + 1, 1, add.length, 6).setValues(add);
+    return json_({ok: true, done: done, rej: rej, teacher: a.isT});
+  } finally { lock.releaseLock(); }
+}
+
+function reg_(b) {
+  var name = clean_(b.name, 80), place = clean_(b.place, 80), teacher = clean_(b.teacher, 60), phone = clean_(b.phone, 15);
+  if (name.length < 3) return json_({ok: false, err: 'name'});
+  var c = CacheService.getScriptCache(), cnt = Number(c.get('regcount') || 0);
+  if (cnt >= MAX_REG_PER_HOUR) return json_({ok: false, err: 'busy'});
+  c.put('regcount', String(cnt + 1), 3600);
+  var lock = LockService.getScriptLock(); lock.waitLock(25000);
+  try {
+    var id; do { id = rnd_(6); } while (findSchool_(id));
+    var skey = 's' + rnd_(10), tkey = 't' + rnd_(14);
+    schoolsSh_().appendRow([id, name, place, teacher, new Date().toISOString(), skey, tkey, phone]);
+    db_(id);
+    return json_({ok: true, id: id, skey: skey, tkey: tkey, name: name});
+  } finally { lock.releaseLock(); }
+}
+
+/* యజమాని మెనూ */
+function onOpen() {
+  SpreadsheetApp.getUi().createMenu('రాయ్ ఎడ్యుకేషన్')
+    .addItem('📊 ఒక పాఠశాల రిపోర్ట్', 'schoolReport').addToUi();
+}
+function schoolReport() {
+  var ui = SpreadsheetApp.getUi(), r = ui.prompt('పాఠశాల కోడ్ ఇవ్వండి (Schools షీట్‌లో ఉంది)');
+  if (r.getSelectedButton() !== ui.Button.OK) return;
+  var id = r.getResponseText().trim().toUpperCase(), sc = findSchool_(id);
+  if (!sc) { ui.alert('కోడ్ దొరకలేదు'); return; }
+  var sh = db_(id), n = sh.getLastRow(), all = [];
+  if (n > 1) all = sh.getRange(2, 2, n - 1, 5).getValues().map(function (x) { var d = {}; try { d = JSON.parse(x[4]); } catch (e) {} return {col: x[0], d: d}; }).filter(function (x) { return !x.d.del; });
+  function by(c) { return all.filter(function (x) { return x.col === c; }).map(function (x) { return x.d; }); }
+  function fd(x) { return x ? Utilities.formatDate(new Date(x), 'Asia/Kolkata', 'dd-MM-yyyy HH:mm') : ''; }
+  var subs = by('subs');
+  put_(id + ' ఫలితాలు', ['పేరు','తరగతి','సబ్జెక్ట్','స్కోరు','మొత్తం','శాతం %','తేదీ'],
+    by('results').map(function (x) { return [x.n, x.c, SUBJ[x.sb] || x.sb, x.s, x.t, Math.round(x.s * 100 / x.t), fd(x.d)]; }));
+  put_(id + ' హోంవర్క్', ['తరగతి','సబ్జెక్ట్','శీర్షిక','గడువు','సమర్పించినవారు'],
+    by('hw').map(function (h) { return [h.c, SUBJ[h.s] || h.s, h.t, h.due, subs.filter(function (s) { return s.hw === h.id; }).map(function (s) { return s.n; }).join(', ')]; }));
+  ui.alert(sc.name + ' – రిపోర్ట్ షీట్లు తయారయ్యాయి');
+}
+function put_(name, head, rows) {
+  var ss = ss_(), sh = ss.getSheetByName(name) || ss.insertSheet(name);
+  sh.clear();
+  sh.getRange(1, 1, 1, head.length).setValues([head]).setFontWeight('bold');
+  if (rows.length) sh.getRange(2, 1, rows.length, head.length).setValues(rows);
+  sh.setFrozenRows(1);
+}
+</script>
 <script type="text/plain" id="fb-rules">
 rules_version = '2';
 service cloud.firestore {
@@ -493,7 +649,7 @@ function pctCls(p){return p>=80?'g':p>=50?'y':'r';}
 
 /* ---------- డేటా నిల్వ (ఆఫ్లైన్ + ఆన్‌లైన్ సింక్) ---------- */
 const COLS=['students','hw','events','doubts','notes','results','games','subs'];
-function def(){return {pin:'1234',local:[],cur:null,students:[],results:[],games:[],hw:[],events:[],doubts:[],notes:[],subs:[],read:{},seeded:false,cfg:{type:''},q:{},last:{},lastSync:0};}
+function def(){return {pub:'',pin:'1234',local:[],cur:null,students:[],results:[],games:[],hw:[],events:[],doubts:[],notes:[],subs:[],read:{},seeded:false,cfg:{type:''},q:{},last:{},lastSync:0};}
 function load(){try{const d=JSON.parse(localStorage.getItem(LS));if(d)return migrate(Object.assign(def(),d));}catch(e){}return def();}
 function migrate(d){
  if(!d.cfg)d.cfg={type:''};
@@ -532,13 +688,13 @@ const Sync={st:'off',msg:'',timer:null,poll:null,primed:false,running:false,
    if(S.cfg.type==='gs'){await GS.push();await GS.pull();this.primed=true;}
    else{if(!FBK.ready){await FBK.start();}else await FBK.push();}
    S.lastSync=Date.now();save();this.set('ok');}catch(e){this.set('err',String((e&&e.message)||e));}finally{this.running=false;}},
- start(){if(!S.cfg.type)return;this.run();clearInterval(this.poll);if(S.cfg.type==='gs')this.poll=setInterval(()=>{if(document.visibilityState!=='hidden')this.run();},45000);}
+ start(){if(!S.cfg.type)return;this.run();clearInterval(this.poll);if(S.cfg.type==='gs')this.poll=setInterval(()=>{if(document.visibilityState!=='hidden')this.run();},S.cfg.sid?60000:45000);}
 };
 function syncIcon(){return {ok:'☁️',busy:'⏳',err:'⚠️',offline:'📴'}[Sync.st]||'☁️';}
 function syncLine(){const c=S.cfg;if(!c.type)return '📴 ఆఫ్లైన్ మాత్రమే – డేటా ఈ ఫోన్‌లోనే ఉంటుంది';
  const lbl={ok:'✅ కనెక్ట్ అయింది',busy:'⏳ సింక్ అవుతోంది...',err:'⚠️ లోపం',offline:'📴 ఇంటర్నెట్ లేదు',off:'—'}[Sync.st];
  const p=Object.keys(S.q).length;
- return `<b>${c.type==='gs'?'Google Sheets':'Firebase'}</b> • ${lbl}<br><small class="mut">చివరి సింక్: ${S.lastSync?new Date(S.lastSync).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}):'ఇంకా లేదు'} • పంపాల్సినవి: ${p}${Sync.msg?' • '+esc(Sync.msg):''}</small>`;}
+ return `<b>${c.sid?'🏫 '+esc(c.sname||c.sid):c.type==='gs'?'Google Sheets':'Firebase'}</b> • ${lbl}<br><small class="mut">చివరి సింక్: ${S.lastSync?new Date(S.lastSync).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}):'ఇంకా లేదు'} • పంపాల్సినవి: ${p}${Sync.msg?' • '+esc(Sync.msg):''}</small>`;}
 function applyIncoming(ch){if(!ch.length)return;const notes=[];
  ch.forEach(([col,d])=>{if(!S[col]||!d||d.id==null)return;const a=S[col];const i=a.findIndex(x=>x.id===d.id);const old=i>=0?a[i]:null;
   if(old&&(old.upd||0)>(d.upd||0))return;if(i>=0)a[i]=d;else a.push(d);
@@ -554,17 +710,18 @@ function notify(list){toast(list[0]+(list.length>1?` (+${list.length-1})`:''));
 function softRender(){if(view==='testrun'||view==='gamerun')return;const ae=document.activeElement;if(ae&&/^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName))return;const y=window.scrollY||0;render();try{window.scrollTo(0,y);}catch(e){}}
 
 /* Google Sheets (Apps Script) */
+function gsErr(e){return {key:'కీ తప్పు',school:'పాఠశాల కోడ్ తప్పు',busy:'సర్వర్ బిజీ – కాసేపటి తర్వాత ప్రయత్నించండి'}[e]||e;}
 const GS={
  key(){return S.cfg.tkey||S.cfg.key;},
- async pull(){const u=S.cfg.url+'?a=pull&k='+encodeURIComponent(this.key())+'&since='+(S.last.gs||0)+'&_='+Date.now();
-  const j=await (await fetch(u)).json();if(!j.ok)throw new Error(j.err==='key'?'కీ తప్పు':j.err);
-  S.cfg.isT=!!j.teacher;if(j.now)S.last.gs=Math.max(S.last.gs||0,Number(j.now));
+ async pull(){const u=S.cfg.url+'?a=pull'+(S.cfg.sid?'&s='+encodeURIComponent(S.cfg.sid):'')+'&k='+encodeURIComponent(this.key())+'&since='+(S.last.gs||0)+'&_='+Date.now();
+  const j=await (await fetch(u)).json();if(!j.ok)throw new Error(gsErr(j.err));
+  S.cfg.isT=!!j.teacher;if(j.school)S.cfg.sname=j.school;if(j.skey)S.cfg.key=j.skey;if(j.now)S.last.gs=Math.max(S.last.gs||0,Number(j.now));
   applyIncoming((j.rows||[]).map(([col,id,js])=>{try{return [col,JSON.parse(js)];}catch(e){return [col,null];}}));},
  async push(){const ks=Object.keys(S.q);if(!ks.length)return;const sent={};
   const recs=ks.map(k=>{const i=k.indexOf('|');const col=k.slice(0,i),id=k.slice(i+1);const d=(S[col]||[]).find(x=>x.id===id);sent[k]=S.q[k];return d?{col,id,data:d}:null;}).filter(Boolean);
   if(!recs.length){ks.forEach(k=>delete S.q[k]);return;}
-  const j=await (await fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'push',k:this.key(),recs})})).json();
-  if(!j.ok)throw new Error(j.err==='key'?'కీ తప్పు':j.err);
+  const j=await (await fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'push',s:S.cfg.sid,k:this.key(),recs})})).json();
+  if(!j.ok)throw new Error(gsErr(j.err));
   (j.done||[]).forEach(k=>{if(S.q[k]===sent[k])delete S.q[k];});
   if(j.rej&&j.rej.length){j.rej.forEach(k=>{delete S.q[k];dropLocal(k);});S.last.gs=0;toast('కొన్ని మార్పులకు ఉపాధ్యాయ అనుమతి లేదు');}
   ks.forEach(k=>{if(!recs.find(r=>r.col+'|'+r.id===k))delete S.q[k];});save();}
@@ -638,7 +795,7 @@ V.login=()=>`<div class="login"><div class="logo">📚</div><h1>విద్య�
 <label>తరగతి ఎంచుకో</label><div class="clsrow">${[1,2,3,4,5].map(c=>`<button class="cb ${selCls===c?'on':''}" data-c="${c}" onclick="pickCls(${c})">${c}</button>`).join('')}</div>
 <button class="btn" onclick="doLogin()">ప్రారంభించు ▶</button></div>
 ${S.local.length?`<div class="card"><h3>ఈ ఫోన్‌లో వాడిన విద్యార్థులు</h3>${S.local.map((s,i)=>`<button class="chip" onclick="quick(${i})">👤 ${esc(s.n)} • ${s.c}వ</button>`).join('')}</div>`:''}
-${S.cfg.type?'':`<button class="link" onclick="loginJoin()">🔗 పాఠశాల జాయిన్ కోడ్ ఉందా?</button><br>`}<button class="link" onclick="go('teacher')">👩‍🏫 ఉపాధ్యాయుల ప్యానెల్</button></div>`;
+${S.cfg.type?'':`<button class="link" onclick="loginJoin()">🔗 పాఠశాల జాయిన్ కోడ్ ఉందా?</button><br>`}<button class="link" onclick="go('teacher')">👩‍🏫 ఉపాధ్యాయుల ప్యానెల్${S.cfg.type?'':' – పాఠశాల నమోదు'}</button></div>`;
 function loginJoin(){const c=prompt('ఉపాధ్యాయులు పంపిన జాయిన్ కోడ్ / లింక్ పేస్ట్ చేయండి');if(c&&joinWith(c))render();}
 function pickCls(c){selCls=c;document.querySelectorAll('.cb').forEach(b=>b.classList.toggle('on',+b.dataset.c===c));}
 function doLogin(){const n=$('#ln').value.trim();if(!n)return toast('నీ పేరు రాయి');if(!selCls)return toast('తరగతి ఎంచుకో');setStudent(n,selCls);}
@@ -911,13 +1068,52 @@ function parseFbCfg(t){t=String(t||'');const a=t.indexOf('{'),b=t.lastIndexOf('}
  try{const o=JSON.parse(s);return o.apiKey&&o.projectId?o:null;}catch(e){return null;}}
 function b64e(o){return btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
 function b64d(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return JSON.parse(decodeURIComponent(escape(atob(s))));}
-function joinCode(){const c=S.cfg;return b64e(c.type==='gs'?{t:'gs',u:c.url,k:c.key}:{t:'fb',c:c.fb,s:c.school});}
+function joinCode(){const c=S.cfg;return b64e(c.type==='gs'?(c.sid?{t:'gs',u:c.url,k:c.key,s:c.sid}:{t:'gs',u:c.url,k:c.key}):{t:'fb',c:c.fb,s:c.school});}
 function appBase(){return /^https?:$/.test(location.protocol)?location.origin+location.pathname:(S.cfg.appUrl||'');}
 function joinLink(){const b=appBase();return b?b+'#join='+joinCode():'';}
-function shareWA(){const l=joinLink();if(!l)return toast('ముందు యాప్ వెబ్ లింక్ ఇవ్వండి');window.open('https://wa.me/?text='+encodeURIComponent('📚 రాయ్ విద్యార్థి లెర్నింగ్ యాప్ – మన పాఠశాల కోసం. ఈ లింక్ ఓపెన్ చేసి నీ పేరు, తరగతి ఇవ్వు:\n'+l),'_blank');}
+function shareWA(){const l=joinLink();if(!l)return toast('ముందు యాప్ వెబ్ లింక్ ఇవ్వండి');window.open('https://wa.me/?text='+encodeURIComponent('📚 రాయ్ విద్యార్థి లెర్నింగ్ యాప్ – '+(S.cfg.sname?S.cfg.sname+' ':'మన పాఠశాల ')+'కోసం. ఈ లింక్ ఓపెన్ చేసి నీ పేరు, తరగతి ఇవ్వు:\n'+l),'_blank');}
 function setAppUrl(){const v=$('#appu').value.trim();if(!/^https:\/\//.test(v))return toast('https:// తో మొదలయ్యే లింక్ ఇవ్వండి');S.cfg.appUrl=v;save();toast('సేవ్ అయింది ✓');go('teacher',{t:'sy'});}
 function connectFresh(cfg){const keepApp=S.cfg.appUrl;S.cfg=Object.assign(cfg,{appUrl:cfg.appUrl||keepApp});S.q={};S.last={};S.lastSync=0;Sync.primed=false;queueAll();save();
  if(FBK.ready){location.reload();return;}Sync.start();}
+/* ---------- పబ్లిక్ సర్వర్: ఏ పాఠశాల అయినా నమోదు ---------- */
+const PUB={server:''};
+function pubServer(){return PUB.server||S.pub||'';}
+async function loadPubCfg(){try{const r=await fetch('config.json?_='+Date.now(),{cache:'no-store'});if(!r.ok)return;const j=await r.json();
+ const u=String(j.publicServer||'').trim();if(/^https:\/\/script\.google\.com\/.+\/exec$/.test(u)){PUB.server=u;if(S.pub!==u){S.pub=u;save();}if(view==='teacher')softRender();}}catch(e){}}
+async function regSchool(){const name=$('#rgn').value.trim(),place=$('#rgp').value.trim(),teacher=$('#rgt').value.trim(),phone=$('#rgph').value.trim();
+ if(name.length<3)return toast('పాఠశాల పేరు రాయండి');if(!place)return toast('మండలం/జిల్లా రాయండి');if(!teacher)return toast('మీ పేరు రాయండి');
+ const b=$('#rgbtn');if(b){b.disabled=true;b.textContent='నమోదు అవుతోంది...';}
+ try{const j=await (await fetch(pubServer(),{method:'POST',body:JSON.stringify({a:'reg',name,place,teacher,phone})})).json();
+  if(!j.ok)throw new Error(gsErr(j.err)==='name'?'పాఠశాల పేరు సరిగా లేదు':gsErr(j.err));
+  connectFresh({type:'gs',url:pubServer(),sid:j.id,key:j.skey,tkey:j.tkey,sname:j.name,isT:true,pub:true});
+  toast('🎉 '+j.name+' నమోదు అయింది');go('teacher',{t:'sy',newreg:1});}
+ catch(e){toast('నమోదు కాలేదు: '+((e&&e.message)||'ఇంటర్నెట్ చూడండి'));if(b){b.disabled=false;b.textContent='🏫 పాఠశాల నమోదు చేయి';}}}
+async function loginSchool(){const sid=$('#lgs').value.trim().toUpperCase(),tk=$('#lgk').value.trim();if(!sid||!tk)return toast('పాఠశాల కోడ్, టీచర్ కీ ఇవ్వండి');
+ try{const j=await (await fetch(pubServer()+'?a=pull&s='+encodeURIComponent(sid)+'&k='+encodeURIComponent(tk)+'&since='+Date.now()+'&_='+Date.now())).json();
+  if(!j.ok)throw new Error(gsErr(j.err));if(!j.teacher)throw new Error('ఇది టీచర్ కీ కాదు');
+  connectFresh({type:'gs',url:pubServer(),sid,key:j.skey||'',tkey:tk,sname:j.school,isT:true,pub:true});toast('✅ '+j.school);go('teacher',{t:'sy'});}
+ catch(e){toast('లాగిన్ కాలేదు: '+((e&&e.message)||'ఇంటర్నెట్ చూడండి'));}}
+function schoolCard(){const c=S.cfg;const show=param.newreg||param.showk;
+ return `<div class="card" style="border:2px solid #2aa6a6"><h3>🏫 ${esc(c.sname||'మీ పాఠశాల')}</h3>
+${param.newreg?'<div class="warn" style="margin:6px 0 10px">📝 కింది <b>పాఠశాల కోడ్</b>, <b>టీచర్ కీ</b> తప్పకుండా రాసి పెట్టుకోండి / స్క్రీన్‌షాట్ తీసుకోండి. వేరే ఫోన్/కంప్యూటర్‌లో టీచర్‌గా లాగిన్ అవ్వడానికి ఇవే కావాలి. పోతే తిరిగి రావు.</div>':''}
+<p>పాఠశాల కోడ్: <b style="font-size:20px;letter-spacing:2px">${esc(c.sid)}</b></p>
+${c.tkey?`<p>టీచర్ కీ (రహస్యం): <b>${show?esc(c.tkey):'••••••••••'}</b> ${show?'':`<button class="lk" onclick="go('teacher',{t:'sy',showk:1})">చూపించు</button>`}</p>
+<button class="btn sm ghost" onclick="copyText('రాయ్ విద్యార్థి యాప్\\nపాఠశాల: ${esc(c.sname||'').replace(/'/g,'')}\\nపాఠశాల కోడ్: ${esc(c.sid)}\\nటీచర్ కీ: ${esc(c.tkey)}')">📋 కోడ్ + కీ కాపీ</button>`:''}</div>`;}
+function pubCards(){const c=S.cfg;const ps=pubServer();
+ if(!ps)return '';
+ if(c.type==='gs'&&c.sid)return schoolCard()+(!c.isT?`<div class="card"><h3>🔑 టీచర్ లాగిన్</h3><div class="g2"><div><label>పాఠశాల కోడ్</label><input id="lgs" value="${esc(c.sid)}"></div><div><label>టీచర్ కీ</label><input id="lgk"></div></div><button class="btn" onclick="loginSchool()">లాగిన్</button></div>`:'');
+ if(c.type)return '';
+ return `<div class="card" style="border:2px solid #2aa6a6"><h3>🏫 కొత్త పాఠశాల నమోదు (1 నిమిషం)</h3><p class="mut">Google Sheet, కోడ్ ఏమీ అవసరం లేదు. నమోదు చేయగానే మీ పాఠశాలకు ప్రత్యేక కోడ్, టీచర్ కీ, విద్యార్థుల జాయిన్ లింక్ వస్తాయి. మీ పాఠశాల డేటా వేరుగా ఉంటుంది.</p>
+<label>పాఠశాల పేరు</label><input id="rgn" maxlength="80" placeholder="ఉదా: MPPS రామాపురం">
+<label>మండలం, జిల్లా</label><input id="rgp" maxlength="80" placeholder="ఉదా: గూడూరు, తిరుపతి">
+<div class="g2"><div><label>ఉపాధ్యాయుల పేరు</label><input id="rgt" maxlength="60"></div><div><label>ఫోన్ (ఐచ్ఛికం)</label><input id="rgph" inputmode="tel" maxlength="15"></div></div>
+<button class="btn" id="rgbtn" onclick="regSchool()">🏫 పాఠశాల నమోదు చేయి</button></div>
+<div class="card"><h3>🔑 ఇప్పటికే నమోదైన పాఠశాల – టీచర్ లాగిన్</h3><p class="mut">వేరే ఫోన్/కంప్యూటర్‌లో వాడటానికి.</p><div class="g2"><div><label>పాఠశాల కోడ్</label><input id="lgs" maxlength="10" style="text-transform:uppercase"></div><div><label>టీచర్ కీ</label><input id="lgk"></div></div><button class="btn" onclick="loginSchool()">లాగిన్</button></div>`;}
+function msCode(){return document.getElementById('ms-code').textContent.trim();}
+async function savePubOwner(){const v=$('#pubu').value.trim();if(!/^https:\/\/script\.google\.com\/.+\/exec$/.test(v))return toast('సరైన Web app URL ఇవ్వండి (…/exec)');
+ try{const j=await (await fetch(v+'?a=ping&_='+Date.now())).json();if(!j.multi)throw 0;}catch(e){return toast('ఈ URL పబ్లిక్ సర్వర్ కాదు / పనిచేయడం లేదు');}
+ S.pub=v;save();toast('✅ పబ్లిక్ సర్వర్ పనిచేస్తోంది');go('teacher',{t:'sy'});}
+function cfgJson(){return JSON.stringify({publicServer:S.pub||''},null,1);}
 function saveGS(){keepDraft();const d=getDraft();
  if(!/^https:\/\/script\.google\.com\/.+\/exec$/.test(d.url))return toast('సరైన Web app URL ఇవ్వండి (…/exec)');
  if(d.key.length<4||d.tkey.length<4)return toast('Apps Script లోని SCHOOL_KEY, TEACHER_KEY రెండూ ఇవ్వండి');if(d.key===d.tkey)return toast('రెండు కీలు వేర్వేరుగా ఉండాలి');
@@ -928,12 +1124,12 @@ function saveFB(){keepDraft();const d=getDraft();const fb=parseFbCfg(d.fb);if(!f
 async function fbLogin(){const e=$('#fle').value.trim(),p=$('#flp').value;if(!e||!p)return toast('ఇమెయిల్, పాస్‌వర్డ్ ఇవ్వండి');
  try{toast('లాగిన్ అవుతోంది...');await FBK.login(e,p);queueAll();save();Sync.run();toast('ఉపాధ్యాయ లాగిన్ ✓');go('teacher',{t:'sy',m:'fb'});}catch(x){toast('లాగిన్ విఫలం: '+((x&&x.code)||x));}}
 async function fbLogout(){await FBK.logout();S.cfg.isT=false;save();go('teacher',{t:'sy',m:'fb'});}
-function disconnect(){if(!confirm('ఆన్‌లైన్ సింక్ ఆపేయాలా? (ఈ ఫోన్‌లోని డేటా అలాగే ఉంటుంది)'))return;clearInterval(Sync.poll);const a=S.cfg.appUrl;S.cfg={type:'',appUrl:a};S.q={};S.last={};save();location.reload();}
+function disconnect(){if(!confirm('ఆన్‌లైన్ సింక్ ఆపేయాలా? (ఈ ఫోన్‌లోని డేటా అలాగే ఉంటుంది)'))return;clearInterval(Sync.poll);const a=S.cfg.appUrl;S.cfg={type:'',appUrl:a};draft=null;S.q={};S.last={};save();location.reload();}
 function joinWith(code,quiet){try{const p=b64d(String(code).trim().replace(/^.*#join=/,''));
   const c=S.cfg||{};
-  if(c.type&&c.isT&&((p.t==='gs'&&c.url===p.u)||(p.t==='fb'&&c.school===p.s))){setTimeout(()=>toast('ఈ ఫోన్ ఇప్పటికే ఉపాధ్యాయ సెటప్‌తో కనెక్ట్ అయి ఉంది ✓'),300);return true;}
+  if(c.type&&c.isT&&((p.t==='gs'&&c.url===p.u&&(c.sid||'')===(p.s||''))||(p.t==='fb'&&c.school===p.s))){setTimeout(()=>toast('ఈ ఫోన్ ఇప్పటికే ఉపాధ్యాయ సెటప్‌తో కనెక్ట్ అయి ఉంది ✓'),300);return true;}
   if(c.type&&c.isT&&!confirm('ఈ ఫోన్‌లో ఉపాధ్యాయ సింక్ సెటప్ ఉంది. జాయిన్ లింక్ వాడితే అది పోతుంది. కొనసాగించాలా?'))return false;
-  if(p.t==='gs'&&/^https:\/\/script\.google\.com\//.test(p.u)&&p.k)connectFresh({type:'gs',url:p.u,key:p.k,tkey:(c.url===p.u&&c.tkey)||undefined});
+  if(p.t==='gs'&&/^https:\/\/script\.google\.com\//.test(p.u)&&p.k)connectFresh({type:'gs',url:p.u,key:p.k,sid:p.s||undefined,tkey:(c.url===p.u&&(c.sid||'')===(p.s||'')&&c.tkey)||undefined});
   else if(p.t==='fb'&&p.c&&p.c.apiKey&&p.s)connectFresh({type:'fb',fb:p.c,school:p.s});
   else throw 0;
   setTimeout(()=>toast('✅ పాఠశాలకు కనెక్ట్ అయింది'),300);return true;}catch(e){if(!quiet)toast('జాయిన్ కోడ్ సరిగా లేదు');return false;}}
@@ -958,10 +1154,10 @@ const FB_STEPS=`<ol class="steps">
 <li><b>జాయిన్ లింక్</b> విద్యార్థులకు పంపండి.</li></ol>
 <p class="mut">ఉచిత Spark ప్లాన్: రోజుకు 50,000 రీడ్‌లు, 20,000 రైట్‌లు – ఒక పాఠశాలకు సరిపోతుంది. యాప్ తెరిచి ఉన్నప్పుడు మార్పులు వెంటనే (live) వస్తాయి.</p>`;
 
-TP.sy=()=>{const c=S.cfg,d=getDraft();const m=param.m||c.type||'gs';
+TP.sy=()=>{const c=S.cfg,d=getDraft();const m=param.m||c.type||'gs';const pubMode=c.type==='gs'&&!!c.sid;
  const status=`<div class="card"><h3>☁️ సింక్ స్థితి</h3><div id="syncst">${syncLine()}</div>
 ${c.type?`<div class="row2"><button class="btn sm" onclick="Sync.run()">🔄 ఇప్పుడే సింక్</button><button class="btn sm red" onclick="disconnect()">సింక్ ఆపు</button></div>`:''}
-${c.type&&!c.isT?`<div class="warn" style="margin-top:10px">⚠️ ఈ ఫోన్‌కు సర్వర్‌లో ఉపాధ్యాయ అనుమతి లేదు. ${c.type==='gs'?'కింద టీచర్ కీ బాక్స్‌లో Apps Script లోని <b>TEACHER_KEY</b> పెట్టి “సేవ్ & కనెక్ట్” నొక్కండి.':'కింద ఉపాధ్యాయ లాగిన్ చేయండి.'} అప్పటివరకు హోంవర్క్/ఈవెంట్లు/నోట్స్ విద్యార్థులకు చేరవు.</div>`:''}</div>`;
+${c.type&&!c.isT?`<div class="warn" style="margin-top:10px">⚠️ ఈ ఫోన్‌కు సర్వర్‌లో ఉపాధ్యాయ అనుమతి లేదు. ${pubMode?'కింద పాఠశాల కోడ్, టీచర్ కీతో లాగిన్ అవ్వండి.':c.type==='gs'?'కింద టీచర్ కీ బాక్స్‌లో Apps Script లోని <b>TEACHER_KEY</b> పెట్టి “సేవ్ & కనెక్ట్” నొక్కండి.':'కింద ఉపాధ్యాయ లాగిన్ చేయండి.'} అప్పటివరకు హోంవర్క్/ఈవెంట్లు/నోట్స్ విద్యార్థులకు చేరవు.</div>`:''}</div>`;
  const tabs=`<div class="tabs">${[['gs','📗 Google Sheets'],['fb','🔥 Firebase']].map(([k,n])=>`<button class="${m===k?'on':''}" onclick="keepDraft();go('teacher',{t:'sy',m:'${k}'})">${n}${c.type===k?' ✓':''}</button>`).join('')}</div>`;
  let form='';
  if(m==='gs')form=`<div class="card"><h3>📗 Google Sheets సెటప్</h3><details ${c.type==='gs'?'':'open'}><summary><b>ఎలా సెటప్ చేయాలి? (7 స్టెప్స్)</b></summary>${GS_STEPS}</details>
@@ -980,7 +1176,14 @@ ${!/^https?:$/.test(location.protocol)?`<p class="mut">ఈ యాప్ ఫై�
 ${joinLink()?`<div class="lnk">${esc(joinLink())}</div><div class="row2"><button class="btn sm" onclick="copyText(joinLink())">📋 లింక్ కాపీ</button><button class="btn sm" style="background:#25d366" onclick="shareWA()">WhatsApp</button></div>`:''}
 <details style="margin-top:10px"><summary class="mut">జాయిన్ కోడ్ (లింక్ పనిచేయకపోతే)</summary><div class="lnk">${esc(joinCode())}</div><button class="btn sm ghost" onclick="copyText(joinCode())">📋 కోడ్ కాపీ</button></details>
 <p class="mut" style="margin-top:8px">లింక్ ఓపెన్ చేసిన ఫోన్ ఆటోగా మీ పాఠశాలకు కనెక్ట్ అవుతుంది. కోడ్ అయితే: విద్యార్థి యాప్‌లో <b>మెనూ → ఆన్‌లైన్ సింక్</b> లో పేస్ట్ చేయాలి. టీచర్ కీ/పాస్‌వర్డ్ లింక్‌లో ఉండవు.</p></div>`:'';
- return status+tabs+form+join;};
+ const owner=`<div class="card"><h3>🛠️ యాప్ యజమాని: అన్ని పాఠశాలల కోసం పబ్లిక్ సర్వర్</h3><p class="mut">ఇది ఒక్కసారి మాత్రమే – యాప్ యజమాని చేయాలి. ఇది పెడితే ఏ టీచర్ అయినా పైన “పాఠశాల నమోదు” తో సెటప్ లేకుండా వాడుకోవచ్చు.</p>
+<ol class="steps"><li><b>కొత్త</b> Google Sheet → Extensions → Apps Script → కింది కోడ్ పేస్ట్ → Save → Deploy (Web app, Me, Anyone).</li><li>Web app URL కింద పేస్ట్ చేసి “పరీక్షించి సేవ్” నొక్కండి.</li><li>“config.json కాపీ” నొక్కి, GitHub లో యాప్ రిపోలో <b>config.json</b> ఫైల్‌గా పెట్టండి (Add file → Create new file).</li></ol>
+<div class="row2"><button class="btn sm ghost" onclick="copyText(msCode())">📋 పబ్లిక్ సర్వర్ కోడ్</button><button class="btn sm ghost" onclick="dl('Raay_Vidyarthi_Public_Server.gs',msCode())">⬇ .gs ఫైల్</button></div>
+<label>పబ్లిక్ సర్వర్ Web app URL</label><input id="pubu" value="${esc(S.pub||'')}" placeholder="https://script.google.com/macros/s/.../exec">
+<div class="row2"><button class="btn sm" onclick="savePubOwner()">✓ పరీక్షించి సేవ్</button>${S.pub?`<button class="btn sm ghost" onclick="copyText(cfgJson())">📋 config.json కాపీ</button>`:''}</div>
+${PUB.server?'<p style="margin-top:8px">✅ config.json లో పబ్లిక్ సర్వర్ ఉంది – అందరికీ “పాఠశాల నమోదు” కనిపిస్తుంది.</p>':'<p class="mut" style="margin-top:8px">config.json ఇంకా GitHub లో లేదు / లోడ్ కాలేదు.</p>'}</div>`;
+ const adv=`<details class="card" ${(!pubServer()||(c.type&&!pubMode))?'open':''}><summary><b>⚙️ అధునాతనం: సొంత సర్వర్ (Google Sheets / Firebase)</b></summary><div style="margin-top:10px">${pubMode?'<p class="mut">మీరు పబ్లిక్ సర్వర్‌తో కనెక్ట్ అయి ఉన్నారు. సొంత సర్వర్‌కు మారాలంటే ముందు “సింక్ ఆపు” నొక్కండి.</p>':tabs+form}</div></details>`;
+ return status+pubCards()+join+adv+`<details class="card"><summary><b>🛠️ యాప్ యజమాని సెట్టింగ్</b></summary><div style="margin-top:10px">${owner}</div></details>`;};
 
 V.sync=()=>{const c=S.cfg;const np=window.Notification?Notification.permission:'na';
  return `<div class="bar"><button class="ib" onclick="go('menu')">←</button><h2>☁️ ఆన్‌లైన్ సింక్</h2></div>
@@ -1007,6 +1210,7 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 window.addEventListener('online',()=>Sync.run());
 render();
 if(S.cfg.type)Sync.start();
+if(/^https?:$/.test(location.protocol))loadPubCfg();
 </script>
 </body>
 </html>

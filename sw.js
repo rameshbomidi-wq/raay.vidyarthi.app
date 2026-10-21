@@ -1,5 +1,5 @@
 /* రాయ్ విద్యార్థి యాప్ – Service Worker (ఆఫ్లైన్ పనిచేయడానికి) */
-const VER = 'rai-vidyarthi-v2';
+const VER = 'rai-vidyarthi-v3';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-96.png', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
@@ -13,6 +13,7 @@ self.addEventListener('fetch', e => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   // సింక్, Analytics – ఎప్పుడూ నెట్‌వర్క్ నుండే
+  if (url.pathname.endsWith('/config.json')) return;
   if (/script\.google(usercontent)?\.com|firestore\.googleapis|identitytoolkit|securetoken|google-analytics|googletagmanager/.test(url.host)) return;
   // యాప్ పేజీ: ముందు నెట్‌వర్క్ (కొత్త వెర్షన్ కోసం), లేకపోతే కాష్
   if (req.mode === 'navigate' || (url.origin === location.origin && /\/(index\.html)?$/.test(url.pathname))) {
