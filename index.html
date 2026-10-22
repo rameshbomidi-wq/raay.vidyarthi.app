@@ -19,6 +19,8 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{background:#dfe9eb;overflow-x:hidden;max-width:100%}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,body{overscroll-behavior-y:none}
+.car-in,.hscroll,.tchips,.bbox{overscroll-behavior:contain}
 body{font-family:'Poppins','Noto Sans Telugu',system-ui,sans-serif;color:var(--ink);font-size:15px;line-height:1.45}
 #app{max-width:520px;margin:0 auto;min-height:100vh;background:var(--bg);padding-bottom:86px;position:relative}
 button{font:inherit;cursor:pointer}
@@ -1573,7 +1575,8 @@ try{speechSynthesis.getVoices();}catch(e){}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')Sync.run();});
 window.addEventListener('online',()=>Sync.run());
 markDay();render();
-setTimeout(()=>{const sp=document.getElementById('splash');if(sp){sp.classList.add('out');setTimeout(()=>sp.remove(),500);}},900);
+(function(){const sp=document.getElementById('splash');if(!sp)return;let seen=false;try{seen=sessionStorage.getItem('raiSplash')==='1';sessionStorage.setItem('raiSplash','1');}catch(e){}
+ if(seen){sp.remove();return;}setTimeout(()=>{sp.classList.add('out');setTimeout(()=>sp.remove(),500);},900);})();
 if(S.cfg.type)Sync.start();
 if(/^https?:$/.test(location.protocol))loadPubCfg();
 </script>
