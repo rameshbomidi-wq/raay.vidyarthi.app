@@ -215,6 +215,33 @@ main{padding:14px}
 .bvbot button{border:0;background:rgba(255,255,255,.16);color:#fff;min-width:44px;height:42px;border-radius:12px;font-size:18px}
 .bvbot input{width:56px;text-align:center;padding:8px 4px;border-radius:10px;border:0;font-size:15px}
 .bframe{flex:1;width:100%;border:0;background:#fff}
+.starb{display:inline-block;margin-top:8px;background:rgba(255,255,255,.22);border-radius:20px;padding:4px 12px;font-size:13px;font-weight:600;cursor:pointer}
+.bob{animation:bob 3s ease-in-out infinite}@keyframes bob{50%{transform:translateY(-6px) rotate(-4deg)}}
+.ticker{display:flex;align-items:center;gap:8px;background:#111827;color:#fff;border-radius:14px;margin-top:12px;padding:8px 10px;overflow:hidden;cursor:pointer;user-select:none}
+.tlab{flex:none;background:#e5484d;color:#fff;font-size:12px;padding:4px 9px;border-radius:8px;animation:blink 1.6s infinite}@keyframes blink{50%{opacity:.55}}
+.tview{flex:1;overflow:hidden;white-space:nowrap;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.tin{display:inline-block;padding-left:100%;animation:marq linear infinite;font-size:14px}.tin .sep{color:#fde047;margin:0 14px}
+.ticker:hover .tin,.ticker.paused .tin,.ticker:active .tin{animation-play-state:paused}@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tpp{flex:none;font-size:13px;opacity:.85}
+.car{position:relative;margin-top:12px;border-radius:20px;overflow:hidden;box-shadow:0 6px 16px rgba(0,0,0,.1);background:#e5e7eb}
+.car-in{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}.car-in::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:start;height:190px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;cursor:pointer}
+.slide img{width:100%;height:100%;object-fit:cover;display:block}.slide.noimg::after{content:'🖼️';font-size:50px;position:absolute}
+.slide.def span{font-size:52px;line-height:1.1}.slide.def b{font-size:20px;margin-top:6px}.slide.def small{opacity:.9;font-size:13px;margin-top:2px}
+.cap{position:absolute;left:0;right:0;bottom:0;padding:22px 14px 26px;background:linear-gradient(transparent,rgba(0,0,0,.65));font-weight:600;font-size:15px;text-align:left}
+.dots{position:absolute;bottom:8px;left:0;right:0;display:flex;justify-content:center;gap:6px}.dots i{width:7px;height:7px;border-radius:5px;background:rgba(255,255,255,.55);cursor:pointer;transition:.3s}.dots i.on{width:20px;background:#fff}
+.carp{position:absolute;top:8px;right:8px;border:0;background:rgba(0,0,0,.35);color:#fff;width:32px;height:32px;border-radius:50%;font-size:13px}
+.daily{margin-top:16px}.dcard{border-radius:18px;padding:14px;position:relative;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.dcard small{display:block;color:#6b7280;font-size:12px;font-weight:600;margin-bottom:4px}.dcard b{font-size:15px;line-height:1.4;display:block}.dcard em{font-style:normal;color:#4f46e5;font-size:14px}
+.dcard i{font-style:normal;font-size:22px}.dcard span{position:absolute;top:10px;right:12px;font-size:14px}
+.phgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}.phi{background:#fff;border-radius:12px;overflow:hidden;position:relative}
+.phi img{width:100%;height:80px;object-fit:cover;display:block}.phi small{display:block;padding:4px 6px;font-size:11px}.phi .del{position:absolute;top:4px;right:4px;padding:3px 6px}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:99;overflow:hidden}.confetti span{position:absolute;top:-40px;animation:fall 2.6s ease-in forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+.tiles .tile{animation:pop .45s both}.tiles .tile:nth-child(2){animation-delay:.04s}.tiles .tile:nth-child(3){animation-delay:.08s}.tiles .tile:nth-child(4){animation-delay:.12s}.tiles .tile:nth-child(5){animation-delay:.16s}.tiles .tile:nth-child(6){animation-delay:.2s}.tiles .tile:nth-child(7){animation-delay:.24s}.tiles .tile:nth-child(8){animation-delay:.28s}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.96)}}
+@media(prefers-reduced-motion:reduce){.bob,.tlab,.tiles .tile{animation:none}.tin{animation-duration:60s!important}}
+@media(max-width:340px){.daily{grid-template-columns:1fr}.slide{height:160px}}
 .warn{background:#fef3c7;border-radius:12px;padding:10px 12px;font-size:13px;color:#92400e}
 .steps{padding-left:20px;margin:8px 0}.steps li{margin:6px 0;font-size:13.5px}
 .lnk{word-break:break-all;font-size:12px;background:#f1f5f9;padding:8px 10px;border-radius:10px;margin:8px 0}
@@ -948,13 +975,15 @@ function tile(v,ic,t,s,bg,p){return `<button class="tile" style="background:${bg
 const EVT={ev:'ఈవెంట్',test:'టెస్ట్',hol:'సెలవు',live:'లైవ్ క్లాస్'};
 function evCard(e){const t=todayS();const lbl=e.d===t?'ఈరోజు':e.d===addDays(t,1)?'రేపు':fmtD(e.d);const tc={test:'t',hol:'h',live:'l'}[e.ty]||'';const ok=/^https:\/\//.test(e.link||'');
  return `<div class="ecard"><span class="tag ${tc}">${e.ty==='live'?'🔴 LIVE • ':''}${lbl}</span><b>${esc(e.t)}</b><small>${e.tm?to12(e.tm):''} ${e.ty!=='ev'?'• '+EVT[e.ty]:''}</small>${ok?`<a class="lk2" href="${esc(e.link)}" target="_blank" rel="noopener">ఇప్పుడే చేరండి ▶</a>`:`<button class="lk2" onclick="go('schedule',{d:'${e.d}'})">వివరాలు చూడు ▸</button>`}</div>`;}
-V.home=()=>{const st=stats();const up=upcoming(6);const pend=pendingHw();
- return `<section class="hero"><div><small>నమస్తే 👋</small><h2>${esc(S.cur.n)}</h2><p>నేర్చుకో ఎప్పుడైనా, ఎక్కడైనా!</p></div><div class="mascot">🎒</div></section>
+V.home=()=>{const st=stats();const up=upcoming(6);const pend=pendingHw();const g=greet(),stc=stars();
+ return `<section class="hero"><div><small>${g[0]} ${g[1]}</small><h2>${esc(S.cur.n)}</h2><p>${S.cfg.sname?'🏫 '+esc(S.cfg.sname):'నేర్చుకో ఎప్పుడైనా, ఎక్కడైనా!'}</p><span class="starb" onclick="event.stopPropagation();toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐ ${stc} స్టార్లు</span></div><div class="mascot bob">🎒</div></section>
+${tickerHtml()}${slidesHtml()}
 ${installBanner()}<div class="perf" onclick="go('test',{tab:'done'})"><div><h3>మొత్తం ప్రదర్శన</h3><p>${perfMsg(st.avg,st.n)}</p><b class="more">మరిన్ని వివరాలు ▸</b></div>${ring(st.avg)}</div>
 <h4 class="sec">రాబోయే ఈవెంట్లు</h4><div class="hscroll">${up.length?up.map(evCard).join(''):`<div class="ecard"><span class="tag">ఈరోజు</span><b>కొత్త ఈవెంట్లు లేవు</b><small>షెడ్యూల్‌లో పీరియడ్లు చూడు</small><button class="lk2" onclick="go('schedule')">షెడ్యూల్ ▸</button></div>`}</div>
 <h4 class="sec">అన్ని విభాగాలు</h4><div class="tiles">
 ${tile('learn','📖','సెల్ఫ్ లెర్న్','పాఠాలు చదువు','#dbeafe')}${tile('doubts','💬','సందేహం','టీచర్‌ని అడుగు','#fde2e4')}${tile('test','📝','టెస్ట్','రాసి రిపోర్ట్ చూడు','#fdeaa8')}
 ${tile('schedule','📅','షెడ్యూల్','పీరియడ్లు, ఈవెంట్లు','#ccf0ee')}${tile('games','🎮','ఆటలు','ఆడుతూ నేర్చుకో','#e0dcfd')}${tile('homework','📒','హోంవర్క్',pend.length+' పెండింగ్','#d1fae5')}${tile('library','📚','పుస్తకాలు','పాఠ్య, వర్క్‌బుక్స్','#fde2e4',"{tab:'books'}")}${tile('library','🧰','టూల్స్','లెర్నింగ్ టూల్స్','#e0e7ff',"{tab:'tools'}")}</div>
+${dailyCards()}
 ${pend.length?`<h4 class="sec">పెండింగ్ హోంవర్క్</h4>${pend.slice(0,2).map(hwCard).join('')}`:''}`;};
 
 /* ---------- సెల్ఫ్ లెర్న్ ---------- */
@@ -1031,7 +1060,7 @@ function nextQ(){if(T.i<T.qs.length-1){T.i++;render();}else finishTest();}
 function quitTest(){if(confirm('టెస్ట్ మధ్యలో ఆపేయాలా? జవాబులు సేవ్ కావు.'))go('test');}
 function finishTest(){const sec=Math.round((Date.now()-T.start)/1000);let sc=0;
  const rv=T.qs.map((q,i)=>{const y=q.o[T.ans[i]];if(y===q.a)sc++;return {q:q.q,y:y||'',a:q.a};});
- const r={id:uid(),n:me(),c:S.cur.c,sb:T.s,s:sc,t:T.qs.length,sec,d:new Date().toISOString(),rv};put('results',r);go('result',{id:r.id});}
+ const r={id:uid(),n:me(),c:S.cur.c,sb:T.s,s:sc,t:T.qs.length,sec,d:new Date().toISOString(),rv};put('results',r);go('result',{id:r.id});if(sc*100/T.qs.length>=80)setTimeout(confetti,200);}
 V.result=()=>{const r=live('results').find(x=>x.id===param.id);if(!r)return '<div class="empty">ఫలితం దొరకలేదు</div>';const p=Math.round(r.s*100/r.t);
  const msg=p>=80?'🌟 అద్భుతం!':p>=60?'👏 బాగుంది!':p>=40?'🙂 పర్వాలేదు, ఇంకా సాధన చేయి':'💪 మళ్ళీ ప్రయత్నించు!';
  return `<div class="bar"><button class="ib" onclick="go('test',{tab:'done'})">←</button><h2>${SUBJ[r.sb].n} – ఫలితం</h2></div>
@@ -1131,7 +1160,7 @@ function unsubHw(id){live('subs').filter(x=>x.hw===id&&x.n===me()).forEach(x=>re
 /* ---------- ఉపాధ్యాయుల ప్యానెల్ ---------- */
 function tLogin(){if($('#tpin').value===S.pin){tAuth=true;go('teacher');}else toast('PIN తప్పు');}
 function tBack(){tAuth=false;go(S.cur||S.cfg.type||S.offline?'home':'welcome');}
-const TSEC=[['sy','☁️ ఆన్‌లైన్ సింక్'],['hw','📒 హోంవర్క్'],['ev','📅 ఈవెంట్/టెస్ట్'],['dq','💬 సందేహాలు'],['nt','📖 పాఠం నోట్స్'],['lb','📚 పుస్తకాలు/టూల్స్'],['rp','📊 రిపోర్ట్'],['st','⚙️ సెట్టింగ్స్']];
+const TSEC=[['sy','☁️ ఆన్‌లైన్ సింక్'],['hw','📒 హోంవర్క్'],['ev','📅 ఈవెంట్/టెస్ట్'],['dq','💬 సందేహాలు'],['nt','📖 పాఠం నోట్స్'],['lb','📚 పుస్తకాలు/టూల్స్'],['fl','📢 ఫ్లాష్/ఫోటోలు'],['rp','📊 రిపోర్ట్'],['st','⚙️ సెట్టింగ్స్']];
 function clsSel(id,all){return `<select id="${id}" onchange="fillSubj('${id}','${id}s')">${all?'<option value="0">అన్ని తరగతులు</option>':''}${[1,2,3,4,5].map(c=>`<option value="${c}">${c}వ తరగతి</option>`).join('')}</select>`;}
 function subjOpts(c){return subjectsFor(+c||5).map(s=>`<option value="${s}">${SUBJ[s].n}</option>`).join('');}
 function fillSubj(cid,sid){const s=document.getElementById(sid);if(s)s.innerHTML=subjOpts(document.getElementById(cid).value);}
@@ -1176,7 +1205,7 @@ function delStudent(n,c){if(!confirm(n+' ('+c+'వ తరగతి) – ఈ వ�
  let k=0;['students','results','doubts','subs','games'].forEach(col=>live(col).filter(r=>r.n===n&&(r.c===c||r.c==null||col==='subs')).forEach(r=>{remove(col,r.id);k++;}));
  toast(k+' రికార్డులు తొలగించబడ్డాయి ✓');go('teacher',{t:'rp',f:param.f||0});}
 function chPin(){const v=$('#np').value.trim();if(!/^\d{4,8}$/.test(v))return toast('4–8 అంకెల PIN ఇవ్వండి');S.pin=v;save();toast('PIN మార్చబడింది ✓');go('teacher',{t:'st'});}
-function delItem(k,id){if(!confirm('తొలగించాలా?'))return;const was=(S[k]||[]).find(x=>x.id===id);remove(k,id);if(was&&was.kind){go('teacher',{t:'lb'});return;}go('teacher',{t:{hw:'hw',events:'ev',doubts:'dq',notes:'nt'}[k]});}
+function delItem(k,id){if(!confirm('తొలగించాలా?'))return;const was=(S[k]||[]).find(x=>x.id===id);remove(k,id);if(was&&was.kind){go('teacher',{t:was.kind==='flash'||was.kind==='photo'?'fl':'lb'});return;}go('teacher',{t:{hw:'hw',events:'ev',doubts:'dq',notes:'nt'}[k]});}
 function exportData(){const b=new Blob([JSON.stringify(S,null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='Rai_Vidyarthi_App_Backup_'+todayS()+'.json';document.body.appendChild(a);a.click();a.remove();}
 function importData(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||typeof d!=='object')throw 0;S=migrate(Object.assign(def(),d));save();toast('బ్యాకప్ పునరుద్ధరించబడింది ✓');go('teacher',{t:'st'});}catch(e){toast('ఫైల్ సరిగా లేదు');}};r.readAsText(f);}
 function resetAll(){if(!confirm('నిజంగా మొత్తం డేటా తొలగించాలా?'))return;if(!confirm('మళ్ళీ అడుగుతున్నాం – ఇది తిరిగి రాదు. కొనసాగించాలా?'))return;try{localStorage.removeItem(LS);}catch(e){}S=def();seed();tAuth=false;go('home');toast('డేటా తొలగించబడింది');}
@@ -1417,6 +1446,76 @@ function addLib(kind){const isB=kind==='book';const t=$(isB?'#bkt':'#tlt').value
  if(!t)return toast('పేరు రాయండి');if(!/^https:\/\//.test(u))return toast('https:// తో మొదలయ్యే లింక్ ఇవ్వండి');
  if(isB&&!driveId(u)&&!/\.pdf(\?|#|$)/i.test(u))return toast('Google Drive లింక్ / .pdf లింక్ ఇవ్వండి');
  put('notes',{id:uid(),kind,c:+$(isB?'#bkc':'#tlc').value,s:isB?$('#bkcs').value:'',t,url:u,x:''});toast('జోడించబడింది ✓');go('teacher',{t:'lb'});}
+
+/* ---------- ✨ హోమ్ ఆకర్షణ: ఫ్లాష్ న్యూస్, ఫోటో స్లైడర్, సూక్తి, పదం ---------- */
+const SUKTI=['చదువు లేని వాడు వింత పశువు','విద్య లేని వాడు వింత పశువు – రోజూ కొంచెం చదువు','కృషితో నాస్తి దుర్భిక్షం','ఆరోగ్యమే మహాభాగ్యం','మాట్లాడే ముందు ఆలోచించు','చిన్న చిన్న అడుగులే పెద్ద గమ్యానికి చేరుస్తాయి',
+ 'పెద్దలను గౌరవించు, చిన్నవారిని ప్రేమించు','నీరు పొదుపు చేయి – ప్రాణం కాపాడు','చెట్లు నాటు – నీడ పొందు','శుభ్రతే దైవం','నిజం చెప్పడం ధైర్యం','తప్పు చేస్తే “క్షమించండి” అనడం గొప్పతనం',
+ 'పుస్తకం మంచి స్నేహితుడు','ప్రతి రోజూ ఒక కొత్త పదం నేర్చుకో','సాధన చేస్తే ఏదైనా సాధ్యమే','ఇతరులకు సహాయం చేయి','సమయం విలువైనది – వృథా చేయకు','ఆడుతూ పాడుతూ నేర్చుకో',
+ 'కలిసి ఉంటే కలదు సుఖం','చేతులు కడుక్కుని తిను','అమ్మా నాన్నల మాట వినడం మంచిది','ప్రశ్న అడగడానికి భయపడకు','ఓడిపోయినా మళ్ళీ ప్రయత్నించు','మంచి అలవాట్లే మంచి భవిష్యత్తు'];
+const WOTD=[['🍎','apple','ఆపిల్ పండు'],['📚','book','పుస్తకం'],['🌳','tree','చెట్టు'],['☀️','sun','సూర్యుడు'],['🌙','moon','చంద్రుడు'],['💧','water','నీరు'],['🏠','house','ఇల్లు'],['🐄','cow','ఆవు'],
+ ['🌸','flower','పువ్వు'],['✏️','pencil','పెన్సిల్'],['🏫','school','బడి'],['👩‍🏫','teacher','ఉపాధ్యాయురాలు'],['🤝','friend','స్నేహితుడు'],['😊','happy','సంతోషం'],['🌧️','rain','వర్షం'],['🐟','fish','చేప'],
+ ['🚌','bus','బస్సు'],['🥭','mango','మామిడి పండు'],['🦚','peacock','నెమలి'],['🌾','rice','వరి / బియ్యం'],['🍋','lemon','నిమ్మకాయ'],['⭐','star','నక్షత్రం'],['🎨','colour','రంగు'],['🕐','time','సమయం'],
+ ['👂','listen','విను'],['🗣️','speak','మాట్లాడు'],['📖','read','చదువు'],['✍️','write','రాయి'],['🏃','run','పరుగెత్తు'],['🙏','thank you','ధన్యవాదాలు']];
+function dayNo(){const d=new Date();return Math.floor((d-new Date(d.getFullYear(),0,0))/864e5);}
+function greet(){const h=new Date().getHours();return h<5?['🌙','శుభ రాత్రి']:h<12?['🌅','శుభోదయం']:h<16?['☀️','శుభ మధ్యాహ్నం']:h<20?['🌇','శుభ సాయంత్రం']:['🌙','శుభ రాత్రి'];}
+function stars(){const r=myRes().filter(x=>x.s*100/x.t>=80).length;const h=myHw().filter(x=>subOf(x)).length;const g=live('games').filter(x=>x.n===me()&&x.c===S.cur.c&&x.s>=10).length;return r*3+h+g;}
+function imgSrc(u){const id=driveId(u);return id?'https://drive.google.com/thumbnail?id='+id+'&sz=w1000':u;}
+const DEF_SLIDES=[['📚','రోజూ కొంచెం చదువు','నేర్చుకో విభాగంలో పాఠాలు','learn','linear-gradient(135deg,#4f46e5,#06b6d4)'],['🎮','ఆడుతూ నేర్చుకో','Mental Maths, English Words','games','linear-gradient(135deg,#f97316,#f43f5e)'],
+ ['📝','టెస్ట్ రాసి ⭐ గెలుచుకో','80% పైన వస్తే 3 స్టార్లు','test','linear-gradient(135deg,#16a34a,#84cc16)'],['💬','సందేహమా? టీచర్‌ని అడుగు','జవాబు నీ ఫోన్‌కే వస్తుంది','doubts','linear-gradient(135deg,#9333ea,#ec4899)']];
+function slidesHtml(){const ph=live('notes').filter(n=>n.kind==='photo'&&(!n.c||n.c===S.cur.c)).sort((a,b)=>(b.upd||0)-(a.upd||0)).slice(0,12);
+ const sl=ph.map(p=>`<div class="slide"><img src="${esc(p.img||imgSrc(p.url))}" alt="${esc(p.t||'')}" loading="lazy" onerror="this.parentNode.classList.add('noimg')">${p.t?`<div class="cap">${esc(p.t)}</div>`:''}</div>`)
+  .concat(DEF_SLIDES.map(([i,t,s,v,bg])=>`<div class="slide def" style="background:${bg}" onclick="go('${v}')"><span>${i}</span><b>${t}</b><small>${s}</small></div>`));
+ return `<div class="car" id="car"><div class="car-in" id="carIn">${sl.join('')}</div><div class="dots" id="dots">${sl.map((_,i)=>`<i class="${i?'':'on'}" onclick="carTo(${i})"></i>`).join('')}</div><button class="carp" id="carP" onclick="carToggle()" aria-label="ఆపు / నడుపు">⏸</button></div>`;}
+function flashItems(){const t=todayS(),out=[];
+ live('notes').filter(n=>n.kind==='flash'&&(!n.c||n.c===S.cur.c)&&(!n.until||n.until>=t)).sort((a,b)=>(b.upd||0)-(a.upd||0)).forEach(n=>out.push('📢 '+n.t));
+ eventsOn(t).forEach(e=>out.push('📅 ఈరోజు: '+e.t+(e.tm?' – '+to12(e.tm):'')));
+ upcoming(5).filter(e=>e.d!==t).slice(0,2).forEach(e=>out.push('🗓️ '+fmtD(e.d)+': '+e.t));
+ myHw().filter(h=>!subOf(h)&&diffDays(h.due,t)>=0&&diffDays(h.due,t)<=1).forEach(h=>out.push('📒 హోంవర్క్: '+h.t+(h.due===t?' (ఈరోజే గడువు)':' (రేపు గడువు)')));
+ if(!out.length)out.push('🌟 '+SUKTI[dayNo()%SUKTI.length],'📚 రోజూ ఒక పాఠం చదువు – ఒక టెస్ట్ రాయి');return out;}
+function tickerHtml(){const it=flashItems();const txt=it.map(esc).join('<span class="sep">✦</span>');const dur=Math.max(14,Math.round(it.join('').length*0.28));
+ return `<div class="ticker" id="tkr" onclick="tkrToggle()"><b class="tlab">ఫ్లాష్ న్యూస్</b><div class="tview"><div class="tin" style="animation-duration:${dur}s"><span>${txt}</span><span class="sep">✦</span><span>${txt}</span><span class="sep">✦</span></div></div><span class="tpp" id="tpp">⏸</span></div>`;}
+function tkrToggle(){const t=document.getElementById('tkr');if(!t)return;t.classList.toggle('paused');const p=document.getElementById('tpp');if(p)p.textContent=t.classList.contains('paused')?'▶':'⏸';}
+/* స్లైడర్ కదలిక – తాకితే ఆగుతుంది */
+const CAR={i:0,hold:0,stop:false};
+function carTo(i){const c=document.getElementById('carIn');if(!c)return;const n=c.children.length;if(!n)return;CAR.i=(i+n)%n;c.scrollTo({left:CAR.i*c.clientWidth,behavior:'smooth'});carDots();}
+function carDots(){const d=document.getElementById('dots');if(d)[...d.children].forEach((x,k)=>x.classList.toggle('on',k===CAR.i));}
+function carToggle(){CAR.stop=!CAR.stop;const b=document.getElementById('carP');if(b)b.textContent=CAR.stop?'▶':'⏸';if(!CAR.stop)CAR.hold=0;}
+setInterval(()=>{const c=document.getElementById('carIn');if(!c||CAR.stop||Date.now()<CAR.hold||document.visibilityState==='hidden')return;carTo(CAR.i+1);},4500);
+['touchstart','pointerdown','mouseenter'].forEach(ev=>document.addEventListener(ev,e=>{if(e.target&&e.target.closest&&e.target.closest('#car'))CAR.hold=Date.now()+8000;},{passive:true,capture:true}));
+document.addEventListener('scroll',e=>{const c=e.target;if(c&&c.id==='carIn'){const i=Math.round(c.scrollLeft/Math.max(1,c.clientWidth));if(i!==CAR.i){CAR.i=i;carDots();}}},{passive:true,capture:true});
+function sayWord(){const w=WOTD[dayNo()%WOTD.length];speak(w[1]);setTimeout(()=>speak(w[2]),1300);}
+function dailyCards(){const s=SUKTI[dayNo()%SUKTI.length],w=WOTD[dayNo()%WOTD.length];
+ return `<div class="g2 daily"><div class="dcard" style="background:#fff7ed" onclick="speak('${esc(s).replace(/'/g,'')}')"><small>💡 నేటి సూక్తి</small><b>${esc(s)}</b><span>🔊</span></div>
+<div class="dcard" style="background:#eef2ff" onclick="sayWord()"><small>🔤 నేటి ఇంగ్లీష్ పదం</small><b><i>${w[0]}</i> ${esc(w[1])}</b><em>${esc(w[2])}</em><span>🔊</span></div></div>`;}
+function confetti(){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;const box=document.createElement('div');box.className='confetti';
+ const em=['🎉','⭐','🌟','🎊','✨','🏆'];for(let i=0;i<26;i++){const s=document.createElement('span');s.textContent=em[i%em.length];s.style.left=Math.random()*100+'%';s.style.animationDelay=(Math.random()*0.8)+'s';s.style.fontSize=(18+Math.random()*18)+'px';box.appendChild(s);}
+ document.body.appendChild(box);setTimeout(()=>box.remove(),3500);}
+/* టీచర్: ఫ్లాష్ న్యూస్ & ఫోటోలు */
+TP.fl=()=>{const fl=live('notes').filter(n=>n.kind==='flash'),ph=live('notes').filter(n=>n.kind==='photo');
+ return `<div class="card"><h3>📢 ఫ్లాష్ న్యూస్ జోడించు</h3><p class="mut">విద్యార్థుల హోమ్ స్క్రీన్‌పై రోల్ అవుతుంది (తాకితే ఆగుతుంది).</p>
+<label>వార్త</label><input id="flt" maxlength="140" placeholder="ఉదా: రేపు సెలవు – దీపావళి శుభాకాంక్షలు 🪔">
+<div class="g2"><div><label>తరగతి</label>${clsSel('flc',true)}</div><div><label>ఎప్పటి వరకు (ఐచ్ఛికం)</label><input id="flu" type="date"></div></div>
+<button class="btn" onclick="addFlash()">➕ జోడించు</button></div>
+${fl.map(n=>`<div class="titem"><div><b>📢 ${esc(n.t)}</b><small>${n.c?n.c+'వ తరగతి':'అందరికీ'}${n.until?' • '+fmtD(n.until)+' వరకు':''}</small></div><button class="del" onclick="delItem('notes','${n.id}')">తొలగించు</button></div>`).join('')}
+<div class="card"><h3>📷 ఫోటో జోడించు (స్లైడర్)</h3><p class="mut">ఫోన్ నుండి ఎంచుకోండి – యాప్ ఆటోగా చిన్నదిగా చేసి సేవ్ చేస్తుంది. లేదా Google Drive / వెబ్ ఫోటో లింక్ ఇవ్వండి. (గరిష్టం 12 ఫోటోలు)</p>
+<label>ఫోటో (ఫోన్ నుండి)</label><input id="php" type="file" accept="image/*">
+<label>లేదా ఫోటో లింక్</label><input id="phu" placeholder="https://drive.google.com/file/d/.../view">
+<div class="g2"><div><label>శీర్షిక (ఐచ్ఛికం)</label><input id="pht" maxlength="60" placeholder="ఉదా: స్వాతంత్ర్య దినోత్సవం"></div><div><label>తరగతి</label>${clsSel('phc',true)}</div></div>
+<button class="btn" id="phbtn" onclick="addPhoto()">➕ ఫోటో జోడించు</button></div>
+<div class="phgrid">${ph.map(n=>`<div class="phi"><img src="${esc(n.img||imgSrc(n.url))}" alt=""><small>${esc(n.t||'')}${n.c?' • '+n.c+'వ':''}</small><button class="del" onclick="delItem('notes','${n.id}')">🗑️</button></div>`).join('')}</div>`;};
+function addFlash(){const t=$('#flt').value.trim();if(!t)return toast('వార్త రాయండి');put('notes',{id:uid(),kind:'flash',c:+$('#flc').value,t,until:$('#flu').value||'',x:''});toast('జోడించబడింది ✓');go('teacher',{t:'fl'});}
+function shrinkImage(file){return new Promise((res,rej)=>{const fr=new FileReader();fr.onerror=rej;fr.onload=()=>{const im=new Image();im.onerror=rej;im.onload=()=>{
+ let w=Math.min(720,im.width),q=0.72,out='';const cv=document.createElement('canvas'),cx=cv.getContext('2d');
+ for(let k=0;k<14;k++){const h=Math.round(im.height*w/im.width);cv.width=w;cv.height=h;cx.fillStyle='#fff';cx.fillRect(0,0,w,h);cx.drawImage(im,0,0,w,h);out=cv.toDataURL('image/jpeg',q);
+  if(out.length<=17500)break;if(q>0.42)q-=0.1;else w=Math.round(w*0.82);}
+ out.length<=17500?res(out):rej(new Error('big'));};im.src=fr.result;};fr.readAsDataURL(file);});}
+async function addPhoto(){const f=$('#php').files&&$('#php').files[0],u=$('#phu').value.trim(),t=$('#pht').value.trim(),c=+$('#phc').value;
+ if(live('notes').filter(n=>n.kind==='photo').length>=12)return toast('12 ఫోటోలు ఉన్నాయి – పాతవి తొలగించండి');
+ if(f){const b=$('#phbtn');if(b){b.disabled=true;b.textContent='చిన్నదిగా చేస్తోంది...';}
+  try{const img=await shrinkImage(f);put('notes',{id:uid(),kind:'photo',c,t,img,x:''});toast('ఫోటో జోడించబడింది ✓');go('teacher',{t:'fl'});}
+  catch(e){toast('ఫోటో తీసుకోలేకపోయాం – వేరే ఫోటో ప్రయత్నించండి');if(b){b.disabled=false;b.textContent='➕ ఫోటో జోడించు';}}return;}
+ if(!/^https:\/\//.test(u))return toast('ఫోటో ఎంచుకోండి లేదా https లింక్ ఇవ్వండి');
+ put('notes',{id:uid(),kind:'photo',c,t,url:u,x:''});toast('ఫోటో జోడించబడింది ✓');go('teacher',{t:'fl'});}
 
 /* ---------- PWA: ఇన్‌స్టాల్ & ఆఫ్లైన్ ---------- */
 let instEvt=null;
