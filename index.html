@@ -206,6 +206,15 @@ main{padding:14px}
 .note .row{padding:9px 0;border-bottom:1px dashed #e5d39a}.note .row:last-child{border:0}.note small{color:#6b7280;display:block}
 .note .lnk{background:#fff;margin:4px 0 0}
 .sbadge{display:inline-block;background:#e0f2f1;color:#0f766e;border-radius:20px;padding:6px 14px;font-size:13px;font-weight:600;margin-bottom:10px}
+.bview{position:fixed;inset:0;display:flex;flex-direction:column;background:#3f4447;z-index:40}
+.bvtop{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--navy);color:#fff}.bvtop b{flex:1;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bvtop a.ib{text-decoration:none;color:#fff}
+.bbox{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding:6px;text-align:center;position:relative}.bbox canvas{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.4);display:inline-block}
+.bmsg{color:#fff;padding:40px 16px;font-size:15px}.bmsg a{color:#fff}
+.bvbot{display:flex;align-items:center;justify-content:space-around;gap:6px;padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:var(--navy);color:#fff}
+.bvbot button{border:0;background:rgba(255,255,255,.16);color:#fff;min-width:44px;height:42px;border-radius:12px;font-size:18px}
+.bvbot input{width:56px;text-align:center;padding:8px 4px;border-radius:10px;border:0;font-size:15px}
+.bframe{flex:1;width:100%;border:0;background:#fff}
 .warn{background:#fef3c7;border-radius:12px;padding:10px 12px;font-size:13px;color:#92400e}
 .steps{padding-left:20px;margin:8px 0}.steps li{margin:6px 0;font-size:13.5px}
 .lnk{word-break:break-all;font-size:12px;background:#f1f5f9;padding:8px 10px;border-radius:10px;margin:8px 0}
@@ -736,7 +745,7 @@ function notify(list){toast(list[0]+(list.length>1?` (+${list.length-1})`:''));
  try{if(window.Notification&&Notification.permission==='granted'){const body=list.join('\n');
   if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration){navigator.serviceWorker.getRegistration().then(r=>{if(r)r.showNotification('రాయ్ విద్యార్థి యాప్',{body});else new Notification('రాయ్ విద్యార్థి యాప్',{body});}).catch(()=>{});}
   else new Notification('రాయ్ విద్యార్థి యాప్',{body});}}catch(e){}}
-function softRender(){if(view==='testrun'||view==='gamerun')return;const ae=document.activeElement;if(ae&&/^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName))return;const y=window.scrollY||0;render();try{window.scrollTo(0,y);}catch(e){}}
+function softRender(){if(view==='testrun'||view==='gamerun'||view==='book')return;const ae=document.activeElement;if(ae&&/^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName))return;const y=window.scrollY||0;render();try{window.scrollTo(0,y);}catch(e){}}
 
 /* Google Sheets (Apps Script) */
 function gsErr(e){return {key:'కీ తప్పు',school:'పాఠశాల కోడ్ తప్పు',busy:'సర్వర్ బిజీ – కాసేపటి తర్వాత ప్రయత్నించండి'}[e]||e;}
@@ -782,10 +791,10 @@ const FBK={ready:false,user:null,
 
 /* ---------- సహాయక ఫంక్షన్లు ---------- */
 let view='home',param={},tick=null,T=null,G=null,tAuth=false;
-const PARENT={privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
+const PARENT={library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
 function me(){return S.cur.n;}
 function lessonsOf(c,s){const b=((L[c]||{})[s]||[]).map((x,i)=>({k:'b'+i,t:x[0],b:x[1].split('|')}));
- const n=live('notes').filter(x=>x.c===c&&x.s===s).map(x=>({k:'n'+x.id,t:x.t,b:x.x.split('\n').filter(Boolean),tn:1}));return b.concat(n);}
+ const n=live('notes').filter(x=>!x.kind&&x.c===c&&x.s===s).map(x=>({k:'n'+x.id,t:x.t,b:x.x.split('\n').filter(Boolean),tn:1}));return b.concat(n);}
 function readMap(){return S.read[me()]||(S.read[me()]={});}
 function isRead(k){return !!readMap()[k];}
 function readPct(s){const c=S.cur.c,ls=lessonsOf(c,s);if(!ls.length)return 0;return Math.round(ls.filter(l=>isRead(c+'-'+s+'-'+l.k)).length*100/ls.length);}
@@ -806,13 +815,13 @@ function dueText(h){const sd=subOf(h);const d=diffDays(h.due,todayS());
  return `<span class="st due">ఇంకా ${d} రోజుల గడువు</span>`;}
 
 /* ---------- నావిగేషన్ ---------- */
-function go(v,p){clearInterval(tick);tick=null;try{speechSynthesis.cancel();}catch(e){}view=v;param=p||{};render();window.scrollTo(0,0);}
+function go(v,p){clearInterval(tick);tick=null;try{speechSynthesis.cancel();}catch(e){}view=v;param=p||{};render();window.scrollTo(0,0);if(v==='library')libLoad();}
 function render(){const app=$('#app');
  if(view==='teacher'){app.innerHTML='<main>'+V.teacher()+'</main>'+footer();return;}
  if(view==='privacy'&&!S.cur){app.innerHTML='<main>'+V.privacy()+'</main>'+footer();return;}
  if(view==='welcome'||(!S.cur&&!S.cfg.type&&!S.offline)){app.innerHTML=V.welcome()+footer();return;}
  if(!S.cur){app.innerHTML=V.login()+footer();return;}
- const full=view==='testrun'||view==='gamerun';
+ const full=view==='testrun'||view==='gamerun'||view==='book';
  app.innerHTML=(full?'':header())+(full?'':'<main>')+(V[view]||V.home)()+(full?'':'</main>')+footer()+(full?'':nav());}
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
@@ -922,6 +931,7 @@ function logout(){S.cur=null;selCls=null;save();go(S.cfg.type||S.offline?'home':
 V.menu=()=>`<h2 class="pt">మెనూ</h2><div class="list">
 <button class="li" onclick="go('cls')">🎓 తరగతి మార్చు <span>${S.cur.c}వ తరగతి</span></button>
 <button class="li" onclick="go('doubts')">💬 సందేహం అడుగు</button>
+<button class="li" onclick="go('library',{tab:'books'})">📚 పుస్తకాలు & టూల్స్</button>
 <button class="li" onclick="go('schedule')">📅 షెడ్యూల్ & ఈవెంట్లు</button>
 <button class="li" onclick="go('test',{tab:'done'})">📊 నా రిపోర్ట్</button>
 ${isStandalone()?'':`<button class="li" onclick="installApp()">📲 యాప్‌గా ఇన్‌స్టాల్ చేయి</button>`}
@@ -944,14 +954,14 @@ ${installBanner()}<div class="perf" onclick="go('test',{tab:'done'})"><div><h3>�
 <h4 class="sec">రాబోయే ఈవెంట్లు</h4><div class="hscroll">${up.length?up.map(evCard).join(''):`<div class="ecard"><span class="tag">ఈరోజు</span><b>కొత్త ఈవెంట్లు లేవు</b><small>షెడ్యూల్‌లో పీరియడ్లు చూడు</small><button class="lk2" onclick="go('schedule')">షెడ్యూల్ ▸</button></div>`}</div>
 <h4 class="sec">అన్ని విభాగాలు</h4><div class="tiles">
 ${tile('learn','📖','సెల్ఫ్ లెర్న్','పాఠాలు చదువు','#dbeafe')}${tile('doubts','💬','సందేహం','టీచర్‌ని అడుగు','#fde2e4')}${tile('test','📝','టెస్ట్','రాసి రిపోర్ట్ చూడు','#fdeaa8')}
-${tile('schedule','📅','షెడ్యూల్','పీరియడ్లు, ఈవెంట్లు','#ccf0ee')}${tile('games','🎮','ఆటలు','ఆడుతూ నేర్చుకో','#e0dcfd')}${tile('homework','📒','హోంవర్క్',pend.length+' పెండింగ్','#d1fae5')}</div>
+${tile('schedule','📅','షెడ్యూల్','పీరియడ్లు, ఈవెంట్లు','#ccf0ee')}${tile('games','🎮','ఆటలు','ఆడుతూ నేర్చుకో','#e0dcfd')}${tile('homework','📒','హోంవర్క్',pend.length+' పెండింగ్','#d1fae5')}${tile('library','📚','పుస్తకాలు','పాఠ్య, వర్క్‌బుక్స్','#fde2e4',"{tab:'books'}")}${tile('library','🧰','టూల్స్','లెర్నింగ్ టూల్స్','#e0e7ff',"{tab:'tools'}")}</div>
 ${pend.length?`<h4 class="sec">పెండింగ్ హోంవర్క్</h4>${pend.slice(0,2).map(hwCard).join('')}`:''}`;};
 
 /* ---------- సెల్ఫ్ లెర్న్ ---------- */
 function recommend(){const c=S.cur.c;for(const s of subjectsFor(c)){const ls=lessonsOf(c,s);const i=ls.findIndex(l=>!isRead(c+'-'+s+'-'+l.k));if(i>=0){const l=ls[i];
  return `<div class="tcard"><div class="th" style="background:${SUBJ[s].bg}"><span class="si" style="width:34px;height:34px;font-size:16px">${SUBJ[s].ic}</span>${SUBJ[s].n}</div><div class="tb"><b>${esc(l.t)}</b><div class="r"><small class="mut">${l.b.length} ముఖ్యాంశాలు</small><button class="lk b" onclick="go('subject',{s:'${s}',open:${i}})">చదువు ▶</button></div></div></div>`;}}
  return `<div class="empty">🎉 అన్ని పాఠాలు చదివావు! ఇప్పుడు టెస్ట్ రాయి.</div>`;}
-V.learn=()=>{const c=S.cur.c;return `<div class="doubt" onclick="go('doubts')"><h3>సందేహం అడుగు</h3><p>నీ సందేహాలను ఉపాధ్యాయులకు పంపి, త్వరగా జవాబులు పొందు.</p><span class="bub">💬</span><span class="play">▶</span></div>
+V.learn=()=>{const c=S.cur.c;return `<div class="row2" style="margin-bottom:12px"><button class="btn" style="margin:0;background:#4f46e5" onclick="go('library',{tab:'books'})">📚 పుస్తకాలు</button><button class="btn" style="margin:0;background:#0f766e" onclick="go('library',{tab:'tools'})">🧰 టూల్స్</button></div><div class="doubt" onclick="go('doubts')"><h3>సందేహం అడుగు</h3><p>నీ సందేహాలను ఉపాధ్యాయులకు పంపి, త్వరగా జవాబులు పొందు.</p><span class="bub">💬</span><span class="play">▶</span></div>
 <h4 class="sec">అన్ని సబ్జెక్టులు</h4><p class="mut" style="margin:-4px 2px 10px">ప్రస్తుతం చూస్తున్నది: <b>${c}వ తరగతి</b> (<a onclick="go('cls')">మార్చు</a>)</p>
 <div class="subs">${subjectsFor(c).map(s=>{const p=readPct(s);return `<button class="sub" style="background:${SUBJ[s].bg}" onclick="go('subject',{s:'${s}'})"><span class="si" style="color:${SUBJ[s].col}">${SUBJ[s].ic}</span><span><b>${SUBJ[s].n}</b><small>${p}% పూర్తి</small></span><i class="pb"><i style="width:${p}%"></i></i></button>`;}).join('')}</div>
 <h4 class="sec">నీ కోసం సూచన</h4>${recommend()}`;};
@@ -1121,7 +1131,7 @@ function unsubHw(id){live('subs').filter(x=>x.hw===id&&x.n===me()).forEach(x=>re
 /* ---------- ఉపాధ్యాయుల ప్యానెల్ ---------- */
 function tLogin(){if($('#tpin').value===S.pin){tAuth=true;go('teacher');}else toast('PIN తప్పు');}
 function tBack(){tAuth=false;go(S.cur||S.cfg.type||S.offline?'home':'welcome');}
-const TSEC=[['sy','☁️ ఆన్‌లైన్ సింక్'],['hw','📒 హోంవర్క్'],['ev','📅 ఈవెంట్/టెస్ట్'],['dq','💬 సందేహాలు'],['nt','📖 పాఠం నోట్స్'],['rp','📊 రిపోర్ట్'],['st','⚙️ సెట్టింగ్స్']];
+const TSEC=[['sy','☁️ ఆన్‌లైన్ సింక్'],['hw','📒 హోంవర్క్'],['ev','📅 ఈవెంట్/టెస్ట్'],['dq','💬 సందేహాలు'],['nt','📖 పాఠం నోట్స్'],['lb','📚 పుస్తకాలు/టూల్స్'],['rp','📊 రిపోర్ట్'],['st','⚙️ సెట్టింగ్స్']];
 function clsSel(id,all){return `<select id="${id}" onchange="fillSubj('${id}','${id}s')">${all?'<option value="0">అన్ని తరగతులు</option>':''}${[1,2,3,4,5].map(c=>`<option value="${c}">${c}వ తరగతి</option>`).join('')}</select>`;}
 function subjOpts(c){return subjectsFor(+c||5).map(s=>`<option value="${s}">${SUBJ[s].n}</option>`).join('');}
 function fillSubj(cid,sid){const s=document.getElementById(sid);if(s)s.innerHTML=subjOpts(document.getElementById(cid).value);}
@@ -1149,7 +1159,7 @@ TP.dq=()=>{const ds=live('doubts').sort((a,b)=>(!!a.r)-(!!b.r)||(a.d<b.d?1:-1));
 function replyD(id){const d=live('doubts').find(x=>x.id===id);const v=document.getElementById('r_'+id).value.trim();if(!v)return toast('జవాబు రాయండి');put('doubts',Object.assign({},d,{r:v,ra:Date.now()}));toast('జవాబు సేవ్ అయింది ✓');go('teacher',{t:'dq'});}
 TP.nt=()=>`<div class="card"><h3>పాఠం నోట్ జోడించండి</h3><p class="mut">విద్యార్థుల “సెల్ఫ్ లెర్న్” లో కొత్త పాఠంగా కనిపిస్తుంది.</p><div class="g2"><div><label>తరగతి</label>${clsSel('nc')}</div><div><label>సబ్జెక్ట్</label><select id="ncs">${subjOpts(1)}</select></div></div>
 <label>పాఠం పేరు</label><input id="ntt" placeholder="ఉదా: మన గ్రామం"><label>ముఖ్యాంశాలు (ఒక్కో లైన్ = ఒక పాయింట్)</label><textarea id="ntx" rows="5"></textarea><button class="btn" onclick="addNote()">➕ జోడించు</button></div>
-<h4 class="sec">టీచర్ నోట్స్ (${live('notes').length})</h4>${live('notes').map(n=>`<div class="titem"><div><b>${esc(n.t)}</b><small>${n.c}వ తరగతి • ${SUBJ[n.s].n}</small></div><button class="del" onclick="delItem('notes','${n.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}`;
+<h4 class="sec">టీచర్ నోట్స్ (${live('notes').filter(n=>!n.kind).length})</h4>${live('notes').filter(n=>!n.kind).map(n=>`<div class="titem"><div><b>${esc(n.t)}</b><small>${n.c}వ తరగతి • ${SUBJ[n.s].n}</small></div><button class="del" onclick="delItem('notes','${n.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}`;
 function addNote(){const t=$('#ntt').value.trim(),x=$('#ntx').value.trim();if(!t||!x)return toast('పేరు, ముఖ్యాంశాలు రాయండి');put('notes',{id:uid(),c:+$('#nc').value,s:$('#ncs').value,t,x});toast('పాఠం జోడించబడింది ✓');go('teacher',{t:'nt'});}
 TP.rp=()=>{const f=param.f||0;const seen={};const st=live('students').filter(s=>(!f||s.c===f)&&!seen[s.n+'|'+s.c]&&(seen[s.n+'|'+s.c]=1));
  const rows=st.map(s=>{const rs=live('results').filter(r=>r.n===s.n&&r.c===s.c);const avg=avgOf(rs);const by=subjectsFor(s.c).map(sb=>{const x=rs.filter(r=>r.sb===sb);return x.length?avgOf(x)+'%':'–';});
@@ -1166,7 +1176,7 @@ function delStudent(n,c){if(!confirm(n+' ('+c+'వ తరగతి) – ఈ వ�
  let k=0;['students','results','doubts','subs','games'].forEach(col=>live(col).filter(r=>r.n===n&&(r.c===c||r.c==null||col==='subs')).forEach(r=>{remove(col,r.id);k++;}));
  toast(k+' రికార్డులు తొలగించబడ్డాయి ✓');go('teacher',{t:'rp',f:param.f||0});}
 function chPin(){const v=$('#np').value.trim();if(!/^\d{4,8}$/.test(v))return toast('4–8 అంకెల PIN ఇవ్వండి');S.pin=v;save();toast('PIN మార్చబడింది ✓');go('teacher',{t:'st'});}
-function delItem(k,id){if(!confirm('తొలగించాలా?'))return;remove(k,id);go('teacher',{t:{hw:'hw',events:'ev',doubts:'dq',notes:'nt'}[k]});}
+function delItem(k,id){if(!confirm('తొలగించాలా?'))return;const was=(S[k]||[]).find(x=>x.id===id);remove(k,id);if(was&&was.kind){go('teacher',{t:'lb'});return;}go('teacher',{t:{hw:'hw',events:'ev',doubts:'dq',notes:'nt'}[k]});}
 function exportData(){const b=new Blob([JSON.stringify(S,null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='Rai_Vidyarthi_App_Backup_'+todayS()+'.json';document.body.appendChild(a);a.click();a.remove();}
 function importData(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||typeof d!=='object')throw 0;S=migrate(Object.assign(def(),d));save();toast('బ్యాకప్ పునరుద్ధరించబడింది ✓');go('teacher',{t:'st'});}catch(e){toast('ఫైల్ సరిగా లేదు');}};r.readAsText(f);}
 function resetAll(){if(!confirm('నిజంగా మొత్తం డేటా తొలగించాలా?'))return;if(!confirm('మళ్ళీ అడుగుతున్నాం – ఇది తిరిగి రాదు. కొనసాగించాలా?'))return;try{localStorage.removeItem(LS);}catch(e){}S=def();seed();tAuth=false;go('home');toast('డేటా తొలగించబడింది');}
@@ -1311,6 +1321,102 @@ V.sync=()=>{const c=S.cfg;const np=window.Notification?Notification.permission:'
 ${c.type?`<div class="card"><h3>🔔 నోటిఫికేషన్లు</h3><p class="mut">కొత్త హోంవర్క్, ఈవెంట్, సందేహానికి జవాబు వచ్చినప్పుడు తెలియజేస్తుంది (యాప్ తెరిచి ఉన్నప్పుడు).</p>${np==='granted'?'<p>✅ ఆన్ అయ్యాయి</p>':np==='na'?'<p class="mut">ఈ బ్రౌజర్‌లో లేవు</p>':'<button class="btn sm" onclick="askNotif()">నోటిఫికేషన్లు అనుమతించు</button>'}</div>
 <button class="link" onclick="disconnect()">సింక్ ఆపు</button>`:
 `<div class="card"><h3>పాఠశాలకు కనెక్ట్ అవ్వు</h3><p class="mut">ఉపాధ్యాయులు పంపిన జాయిన్ లింక్ ఓపెన్ చేస్తే ఆటోగా కనెక్ట్ అవుతుంది. లేదా జాయిన్ కోడ్ ఇక్కడ పేస్ట్ చేయి:</p><textarea id="jc" rows="3"></textarea><button class="btn" onclick="if(joinWith($('#jc').value))go('sync')">కనెక్ట్</button></div>`}`;};
+
+/* ---------- 📚 లైబ్రరీ: పుస్తకాలు (PDF) & HTML టూల్స్ ---------- */
+const PDFJS=[{b:'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/',m:'pdf.min.js',w:'pdf.worker.min.js',c:'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/'},
+ {b:'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/',m:'pdf.min.js',w:'pdf.worker.min.js',c:'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/cmaps/'}];
+let pdfjsP=null,BV={};
+function loadPdfjs(){if(window.pdfjsLib)return Promise.resolve(window.pdfjsLib);if(pdfjsP)return pdfjsP;
+ pdfjsP=(async()=>{for(const p of PDFJS){try{await new Promise((res,rej)=>{const sc=document.createElement('script');sc.src=p.b+p.m;sc.onload=res;sc.onerror=rej;document.head.appendChild(sc);});
+  if(window.pdfjsLib){pdfjsLib.GlobalWorkerOptions.workerSrc=p.b+p.w;PDFJS.cmap=p.c;return pdfjsLib;}}catch(e){}}pdfjsP=null;throw new Error('pdfjs');})();return pdfjsP;}
+function ghRepo(){const h=location.hostname;if(!/\.github\.io$/i.test(h))return null;const seg=location.pathname.split('/').filter(Boolean)[0];
+ const repo=(seg&&!/\.html?$/i.test(seg))?seg:h;return {owner:h.split('.')[0],repo};}
+async function listDir(path,force){S.lib=S.lib||{};const key='dir:'+path,cached=S.lib[key];
+ if(!force&&cached&&Date.now()-cached.t<6*3600e3)return cached.v;
+ try{let v;const g=ghRepo();
+  if(g){const r=await fetch(`https://api.github.com/repos/${g.owner}/${g.repo}/contents/${path}`,{headers:{Accept:'application/vnd.github+json'}});
+   if(r.status===404)v=[];else{if(!r.ok)throw new Error(r.status);const j=await r.json();v=(Array.isArray(j)?j:[]).filter(x=>x.type==='file').map(x=>({name:x.name,size:x.size||0}));}}
+  else{const r=await fetch(path+'/index.json?_='+Date.now());v=r.ok?(await r.json()).map(x=>typeof x==='string'?{name:x,size:0}:x):[];}
+  S.lib[key]={t:Date.now(),v};save();return v;}
+ catch(e){return cached?cached.v:null;}}
+const TOK={telugu:'తెలుగు',english:'English',maths:'గణితం',math:'గణితం',mathematics:'గణితం',evs:'పరిసరాల విజ్ఞానం',science:'సైన్స్',hindi:'హిందీ',
+ textbook:'పాఠ్యపుస్తకం',text:'పాఠ్యపుస్తకం',workbook:'వర్క్‌బుక్',work:'వర్క్‌బుక్',book:'పుస్తకం',quiz:'క్విజ్',game:'ఆట',games:'ఆటలు',tool:'టూల్',practice:'అభ్యాసం',vocabulary:'పదజాలం',words:'పదాలు',stories:'కథలు',story:'కథ',readiness:'రెడీనెస్',fln:'FLN',tet:'TET'};
+function prettyName(n){return String(n).replace(/\.(pdf|html?)$/i,'').split(/[-_\s]+/).filter(Boolean).map(t=>{const l=t.toLowerCase();let m;
+ if(TOK[l])return TOK[l];if((m=l.match(/^sem(?:ester)?(\d)$/)))return 'సెమిస్టర్ '+m[1];if((m=l.match(/^(?:part|p)(\d)$/)))return 'భాగం '+m[1];if((m=l.match(/^(?:class|cls|c)(\d{1,2})$/)))return m[1]+'వ తరగతి';return t;}).join(' ');}
+function bookIcon(n){const l=String(n).toLowerCase();return /work/.test(l)?'📗':/text/.test(l)?'📘':'📄';}
+function mb(b){return b?(b/1048576).toFixed(b>10485760?0:1)+' MB':'';}
+function driveId(u){const m=String(u).match(/\/d\/([\w-]{20,})/)||String(u).match(/[?&]id=([\w-]{20,})/);return m?m[1]:'';}
+function tKind(u){return driveId(u)?'drive':/\.pdf(\?|#|$)/i.test(u)?'pdf':'tool';}
+V.library=()=>{const tab=param.tab||'books';const c=param.c||S.cur.c;
+ return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>📚 లైబ్రరీ</h2><button class="ib" style="background:#fff" onclick="libLoad(true)" aria-label="రిఫ్రెష్">🔄</button></div>
+<div class="tabs">${[['books','📘 పుస్తకాలు'],['tools','🧰 లెర్నింగ్ టూల్స్']].map(([k,n])=>`<button class="${tab===k?'on':''}" onclick="go('library',{tab:'${k}',c:${c}})">${n}</button>`).join('')}</div>
+${tab==='books'?`<div class="tchips">${[1,2,3,4,5].map(k=>`<button class="${k===c?'on':''}" onclick="go('library',{tab:'books',c:${k}})">${k}వ తరగతి</button>`).join('')}</div>`:''}
+<div id="libList"><div class="empty">⏳ లోడ్ అవుతోంది...</div></div>`;};
+async function libLoad(force){if(view!=='library')return;const tab=param.tab||'books',c=param.c||S.cur.c;const box=document.getElementById('libList');if(!box)return;
+ if(force)box.innerHTML='<div class="empty">⏳ లోడ్ అవుతోంది...</div>';
+ let items=[];
+ if(tab==='books'){const files=await listDir('books/'+c,force);
+  (files||[]).filter(f=>/\.pdf$/i.test(f.name)).sort((a,b)=>a.name.localeCompare(b.name)).forEach(f=>items.push({t:prettyName(f.name),u:'books/'+c+'/'+encodeURIComponent(f.name),k:'pdf',ic:bookIcon(f.name),sub:mb(f.size)}));
+  live('notes').filter(n=>n.kind==='book'&&n.c===c).forEach(n=>items.push({t:n.t,u:n.url,k:tKind(n.url),ic:'🔗',sub:(SUBJ[n.s]?SUBJ[n.s].n+' • ':'')+'టీచర్ జోడించింది'}));
+  if(files===null&&!items.length){box.innerHTML='<div class="empty">📴 ఇంటర్నెట్ లేదు – నెట్ ఆన్ చేసి 🔄 నొక్కు</div>';return;}}
+ else{const files=await listDir('tools',force);
+  (files||[]).filter(f=>/\.html?$/i.test(f.name)).sort((a,b)=>a.name.localeCompare(b.name)).forEach(f=>items.push({t:prettyName(f.name),u:'tools/'+encodeURIComponent(f.name),k:'tool',ic:'🧰',sub:'అందరికీ'}));
+  live('notes').filter(n=>n.kind==='tool'&&(!n.c||n.c===S.cur.c)).forEach(n=>items.push({t:n.t,u:n.url,k:tKind(n.url),ic:'🔗',sub:(n.c?n.c+'వ తరగతి • ':'')+'టీచర్ జోడించింది'}));
+  if(files===null&&!items.length){box.innerHTML='<div class="empty">📴 ఇంటర్నెట్ లేదు – నెట్ ఆన్ చేసి 🔄 నొక్కు</div>';return;}}
+ if(view!=='library')return;
+ LIB=items;const pos=S.bookPos||{};
+ box.innerHTML=items.length?`<div class="list">${items.map((it,i)=>`<button class="li" onclick="openItem(${i})"><span style="display:flex;gap:12px;align-items:center;text-align:left"><span style="font-size:30px">${it.ic}</span><span><b style="display:block">${esc(it.t)}</b><small class="mut">${esc(it.sub||'')}${pos[it.u]?' • పేజీ '+pos[it.u]+' దగ్గర ఆపావు':''}</small></span></span><span>▶</span></button>`).join('')}</div>`
+  :`<div class="empty">${tab==='books'?'ఈ తరగతికి పుస్తకాలు ఇంకా జోడించలేదు 📚':'టూల్స్ ఇంకా జోడించలేదు 🧰'}</div>`;}
+let LIB=[];
+function openItem(i){const it=LIB[i];if(!it)return;go('book',{u:it.u,t:it.t,k:it.k,back:{tab:param.tab||'books',c:param.c||S.cur.c}});if(it.k==='pdf')pdfInit();}
+V.book=()=>{const p=param,k=p.k;const ext=/^https?:/i.test(p.u);
+ const top=`<div class="bvtop"><button class="ib" onclick="closeBook()" aria-label="మూసివేయి">✕</button><b>${esc(p.t||'')}</b>${k!=='pdf'?`<a class="ib" href="${esc(k==='drive'?'https://drive.google.com/file/d/'+driveId(p.u)+'/view':p.u)}" target="_blank" rel="noopener" aria-label="కొత్త ట్యాబ్">↗</a>`:`<a class="ib" href="${esc(p.u)}" target="_blank" rel="noopener" download aria-label="డౌన్‌లోడ్">⬇</a>`}</div>`;
+ if(k==='drive')return `<div class="bview">${top}<iframe class="bframe" src="https://drive.google.com/file/d/${esc(driveId(p.u))}/preview" allow="autoplay; fullscreen" referrerpolicy="no-referrer"></iframe></div>`;
+ if(k==='tool')return `<div class="bview">${top}<iframe class="bframe" src="${esc(p.u)}" allow="autoplay; fullscreen; clipboard-write; microphone; camera" ${ext?'referrerpolicy="no-referrer"':''}></iframe></div>`;
+ return `<div class="bview">${top}<div id="bbox" class="bbox"><div id="bmsg" class="bmsg">⏳ పుస్తకం తెరుస్తోంది...</div><canvas id="bcv"></canvas></div>
+<div class="bvbot"><button onclick="pdfGo(-1)" aria-label="వెనుక పేజీ">◀</button><span><input id="bpg" inputmode="numeric" value="" onchange="pdfTo(this.value)"> <span id="bpn"></span></span><button onclick="pdfGo(1)" aria-label="తర్వాతి పేజీ">▶</button><button onclick="pdfZoom(0.8)">−</button><button onclick="pdfZoom(1.25)">+</button></div></div>`;};
+function bmsg(h){const m=document.getElementById('bmsg');if(m){m.innerHTML=h;m.style.display=h?'block':'none';}}
+async function pdfInit(){const u=param.u;BV={url:u,page:(S.bookPos||{})[u]||1,zoom:1,doc:null,tok:0};
+ try{const lib=await loadPdfjs();const task=lib.getDocument({url:u,disableRange:true,disableStream:true,cMapUrl:PDFJS.cmap,cMapPacked:true});
+  task.onProgress=(p)=>{if(p&&p.total)bmsg('⏳ లోడ్ అవుతోంది '+Math.min(100,Math.round(p.loaded*100/p.total))+'%');};BV.task0=task;
+  const doc=await task.promise;if(view!=='book'||param.u!==u){try{doc.destroy();}catch(e){}return;}
+  BV.doc=doc;BV.n=doc.numPages;BV.page=Math.min(Math.max(1,BV.page),BV.n);bmsg('');pdfDraw();}
+ catch(e){if(view==='book'&&param.u===u)bmsg(`😕 పుస్తకం తెరవలేకపోయాం (ఇంటర్నెట్ చూడండి).<br><br><a class="btn sm" href="${esc(u)}" target="_blank" rel="noopener" download>⬇ డౌన్‌లోడ్ చేసి తెరువు</a>`);}}
+async function pdfDraw(){if(!BV.doc)return;const tok=++BV.tok,n=BV.page;const pg=document.getElementById('bpg'),pn=document.getElementById('bpn');if(pg)pg.value=n;if(pn)pn.textContent='/ '+BV.n;
+ try{const page=await BV.doc.getPage(n);if(tok!==BV.tok||view!=='book')return;
+  const box=document.getElementById('bbox'),cv=document.getElementById('bcv');if(!box||!cv)return;
+  const cw=Math.max(200,box.clientWidth-12),v1=page.getViewport({scale:1}),vp=page.getViewport({scale:cw/v1.width*BV.zoom}),dpr=Math.min(window.devicePixelRatio||1,2);
+  if(BV.rt){try{BV.rt.cancel();}catch(e){}}
+  cv.width=Math.floor(vp.width*dpr);cv.height=Math.floor(vp.height*dpr);cv.style.width=Math.floor(vp.width)+'px';cv.style.height=Math.floor(vp.height)+'px';
+  BV.rt=page.render({canvasContext:cv.getContext('2d'),viewport:vp,transform:dpr!==1?[dpr,0,0,dpr,0,0]:null});
+  await BV.rt.promise.catch(()=>{});if(tok!==BV.tok)return;box.scrollTop=0;S.bookPos=S.bookPos||{};S.bookPos[BV.url]=n;save();}catch(e){}}
+function pdfGo(d){if(!BV.doc)return;const n=Math.min(BV.n,Math.max(1,BV.page+d));if(n!==BV.page){BV.page=n;pdfDraw();}}
+function pdfTo(v){if(!BV.doc)return;const n=parseInt(v,10);if(n>=1&&n<=BV.n){BV.page=n;pdfDraw();}else{const pg=document.getElementById('bpg');if(pg)pg.value=BV.page;}}
+function pdfZoom(f){if(!BV.doc)return;BV.zoom=Math.min(4,Math.max(0.6,BV.zoom*f));pdfDraw();}
+function closeBook(){try{BV.rt&&BV.rt.cancel();}catch(e){}try{BV.doc&&BV.doc.destroy();}catch(e){}try{BV.task0&&BV.task0.destroy();}catch(e){}const b=param.back||{};BV={};go('library',b);}
+document.addEventListener('keydown',e=>{if(view!=='book'||param.k!=='pdf'||(e.target&&e.target.tagName==='INPUT'))return;
+ if(e.key==='ArrowRight'||e.key==='PageDown'){pdfGo(1);e.preventDefault();}else if(e.key==='ArrowLeft'||e.key==='PageUp'){pdfGo(-1);e.preventDefault();}
+ else if(e.key==='+'||e.key==='='){pdfZoom(1.25);}else if(e.key==='-'){pdfZoom(0.8);}else if(e.key==='Escape'||e.key==='Backspace'){closeBook();}});
+let tsx=null,tsy=null;
+document.addEventListener('touchstart',e=>{if(view==='book'&&param.k==='pdf'&&e.touches.length===1&&BV.zoom<=1){tsx=e.touches[0].clientX;tsy=e.touches[0].clientY;}else tsx=null;},{passive:true});
+document.addEventListener('touchend',e=>{if(tsx==null)return;const t=e.changedTouches[0],dx=t.clientX-tsx,dy=t.clientY-tsy;tsx=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)pdfGo(dx<0?1:-1);},{passive:true});
+/* టీచర్: పుస్తకం / టూల్ లింక్ జోడించడం */
+TP.lb=()=>{const bk=live('notes').filter(n=>n.kind==='book'),tl=live('notes').filter(n=>n.kind==='tool');
+ return `<div class="card"><h3>📘 పుస్తకం లింక్ జోడించు (Google Drive)</h3><p class="mut">పెద్ద PDF లు: Google Drive లో అప్‌లోడ్ చేసి → Share → <b>Anyone with the link</b> → Copy link → ఇక్కడ పేస్ట్. మీ పాఠశాల పిల్లలకు మాత్రమే కనిపిస్తుంది.</p>
+<div class="g2"><div><label>తరగతి</label>${clsSel('bkc')}</div><div><label>సబ్జెక్ట్</label><select id="bkcs">${subjOpts(1)}</select></div></div>
+<label>పుస్తకం పేరు</label><input id="bkt" placeholder="ఉదా: తెలుగు వర్క్‌బుక్ – సెమిస్టర్ 1"><label>లింక్</label><input id="bku" placeholder="https://drive.google.com/file/d/.../view"><button class="btn" onclick="addLib('book')">➕ పుస్తకం జోడించు</button></div>
+<div class="card"><h3>🧰 లెర్నింగ్ టూల్ లింక్ జోడించు</h3><p class="mut">మీ HTML టూల్ వెబ్ లింక్ (ఉదా: GitHub Pages). అదే తరగతి లేదా అందరికీ.</p>
+<label>తరగతి</label>${clsSel('tlc',true)}<label>టూల్ పేరు</label><input id="tlt" placeholder="ఉదా: A–Z ఇంగ్లీష్ పదాలు"><label>లింక్</label><input id="tlu" placeholder="https://rameshbomidi-wq.github.io/..."><button class="btn" onclick="addLib('tool')">➕ టూల్ జోడించు</button></div>
+<h4 class="sec">జోడించినవి (${bk.length+tl.length})</h4>${bk.concat(tl).map(n=>`<div class="titem"><div><b>${n.kind==='book'?'📘':'🧰'} ${esc(n.t)}</b><small>${n.c?n.c+'వ తరగతి':'అందరికీ'}${SUBJ[n.s]?' • '+SUBJ[n.s].n:''}</small><small style="word-break:break-all">${esc(n.url)}</small></div><button class="del" onclick="delItem('notes','${n.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}
+<details class="card"><summary><b>📂 యాప్ యజమాని: GitHub ఫోల్డర్‌లో పెట్టడం (అన్ని పాఠశాలలకు)</b></summary><ol class="steps">
+<li>యాప్ రిపోలో <b>books/1 … books/5</b> ఫోల్డర్లలో ఆ తరగతి PDF లు, <b>tools/</b> ఫోల్డర్‌లో HTML టూల్స్ అప్‌లోడ్ చేయండి.</li>
+<li>ఫైల్ పేర్లు ఇంగ్లీష్‌లో: <code>telugu-textbook-sem1.pdf</code>, <code>maths-workbook-sem1.pdf</code>, <code>a-z-english-words.html</code> – యాప్ తెలుగులో చూపిస్తుంది.</li>
+<li>ఒక్కో ఫైల్ <b>25 MB లోపు</b> (ilovepdf.com → Compress PDF). మొత్తం 1 GB లోపు ఉంచండి.</li>
+<li>అప్‌లోడ్ చేసిన 2–3 నిమిషాల తర్వాత యాప్‌లో 🔄 నొక్కితే కనిపిస్తాయి.</li></ol></details>`;};
+function addLib(kind){const isB=kind==='book';const t=$(isB?'#bkt':'#tlt').value.trim(),u=$(isB?'#bku':'#tlu').value.trim();
+ if(!t)return toast('పేరు రాయండి');if(!/^https:\/\//.test(u))return toast('https:// తో మొదలయ్యే లింక్ ఇవ్వండి');
+ if(isB&&!driveId(u)&&!/\.pdf(\?|#|$)/i.test(u))return toast('Google Drive లింక్ / .pdf లింక్ ఇవ్వండి');
+ put('notes',{id:uid(),kind,c:+$(isB?'#bkc':'#tlc').value,s:isB?$('#bkcs').value:'',t,url:u,x:''});toast('జోడించబడింది ✓');go('teacher',{t:'lb'});}
 
 /* ---------- PWA: ఇన్‌స్టాల్ & ఆఫ్లైన్ ---------- */
 let instEvt=null;
