@@ -242,6 +242,14 @@ main{padding:14px}
 @keyframes pop{from{opacity:0;transform:translateY(10px) scale(.96)}}
 @media(prefers-reduced-motion:reduce){.bob,.tlab,.tiles .tile{animation:none}.tin{animation-duration:60s!important}}
 @media(max-width:340px){.daily{grid-template-columns:1fr}.slide{height:160px}}
+#splash{position:fixed;inset:0;z-index:200;background:linear-gradient(160deg,#063a5b,#2aa6a6);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;gap:6px;transition:opacity .45s}
+#splash img{width:96px;height:96px;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,.3);animation:sp 1s ease}#splash b{font-size:24px;margin-top:10px}#splash small{opacity:.85}#splash.out{opacity:0}
+@keyframes sp{from{transform:scale(.6);opacity:0}}
+.mascot{position:relative;cursor:pointer}.mascot .edit{position:absolute;right:-6px;bottom:-2px;font-size:14px;font-style:normal;background:#fff;border-radius:50%;width:24px;height:24px;display:grid;place-items:center}
+.avgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:10px}.avgrid button{border:2px solid var(--line);background:#fff;border-radius:14px;font-size:28px;aspect-ratio:1;padding:0}.avgrid button.on{border-color:var(--teal);background:#e6f6f6}
+.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.bdg{background:#f3f4f6;border-radius:16px;padding:12px 6px;text-align:center;opacity:.6}.bdg.got{background:#fff7d6;opacity:1;box-shadow:0 2px 8px rgba(245,158,11,.25)}
+.bdg span{font-size:34px;display:block}.bdg b{font-size:12.5px;display:block;margin-top:4px}.bdg small{font-size:10.5px;color:#6b7280}
+@media(max-width:340px){.bgrid{grid-template-columns:1fr 1fr}.avgrid{grid-template-columns:repeat(4,1fr)}}
 .warn{background:#fef3c7;border-radius:12px;padding:10px 12px;font-size:13px;color:#92400e}
 .steps{padding-left:20px;margin:8px 0}.steps li{margin:6px 0;font-size:13.5px}
 .lnk{word-break:break-all;font-size:12px;background:#f1f5f9;padding:8px 10px;border-radius:10px;margin:8px 0}
@@ -259,6 +267,7 @@ main,.card,.qcard{overflow-wrap:anywhere}
 </style>
 </head>
 <body>
+<div id="splash"><img src="icon-192.png" alt=""><b>రాయ్ విద్యార్థి</b><small>లెర్నింగ్ యాప్ • రాయ్ ఎడ్యుకేషన్</small></div>
 <div id="app"></div>
 <div id="toast"></div>
 <script type="text/plain" id="gs-code">
@@ -818,7 +827,7 @@ const FBK={ready:false,user:null,
 
 /* ---------- సహాయక ఫంక్షన్లు ---------- */
 let view='home',param={},tick=null,T=null,G=null,tAuth=false;
-const PARENT={library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
+const PARENT={avatar:'home',badges:'home',library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
 function me(){return S.cur.n;}
 function lessonsOf(c,s){const b=((L[c]||{})[s]||[]).map((x,i)=>({k:'b'+i,t:x[0],b:x[1].split('|')}));
  const n=live('notes').filter(x=>!x.kind&&x.c===c&&x.s===s).map(x=>({k:'n'+x.id,t:x.t,b:x.x.split('\n').filter(Boolean),tn:1}));return b.concat(n);}
@@ -863,7 +872,7 @@ ${S.cfg.sname?`<div class="sbadge">🏫 ${esc(S.cfg.sname)}</div>`:''}
 <div class="card"><label>నీ మొదటి పేరు</label><input id="ln" placeholder="ఉదా: రవి" maxlength="30"><small class="mut">మొదటి పేరు మాత్రమే – ఇంటిపేరు అవసరం లేదు</small>
 <label>తరగతి ఎంచుకో</label><div class="clsrow">${[1,2,3,4,5].map(c=>`<button class="cb ${selCls===c?'on':''}" data-c="${c}" onclick="pickCls(${c})">${c}</button>`).join('')}</div>
 <button class="btn" onclick="doLogin()">ప్రారంభించు ▶</button></div>
-${S.local.length?`<div class="card"><h3>ఈ ఫోన్‌లో వాడిన విద్యార్థులు</h3>${S.local.map((s,i)=>`<button class="chip" onclick="quick(${i})">👤 ${esc(s.n)} • ${s.c}వ</button>`).join('')}</div>`:''}
+${S.local.length?`<div class="card"><h3>ఈ ఫోన్‌లో వాడిన విద్యార్థులు</h3>${S.local.map((s,i)=>`<button class="chip" onclick="quick(${i})">${(S.av||{})[s.n]||'👤'} ${esc(s.n)} • ${s.c}వ</button>`).join('')}</div>`:''}
 ${S.cfg.type?'':`<button class="link" onclick="S.offline=false;save();go('welcome',{w:'s'})">🏫 పాఠశాల కోడ్‌తో చేరు</button><br>`}<button class="link" onclick="go('teacher')">👩‍🏫 ఉపాధ్యాయుల ప్యానెల్${S.cfg.type?'':' – పాఠశాల నమోదు'}</button></div>`;
 /* ---------- మొదటి స్క్రీన్: పాఠశాల వివరాలు ముందుగానే ---------- */
 
@@ -950,7 +959,7 @@ async function joinByCode(){const code=$('#jsc').value.trim().toUpperCase();if(c
 function loginJoin(){const c=prompt('ఉపాధ్యాయులు పంపిన జాయిన్ కోడ్ / లింక్ పేస్ట్ చేయండి');if(c&&joinWith(c))render();}
 function pickCls(c){selCls=c;document.querySelectorAll('.cb').forEach(b=>b.classList.toggle('on',+b.dataset.c===c));}
 function doLogin(){const n=$('#ln').value.trim();if(!n)return toast('నీ పేరు రాయి');if(!selCls)return toast('తరగతి ఎంచుకో');setStudent(n,selCls);}
-function setStudent(n,c){S.cur={n,c};const ex=S.local.find(s=>s.n===n);if(ex)ex.c=c;else S.local.push({n,c});put('students',{id:sid(n)+'@'+S.dev.slice(0,8),n,c});go('home');toast('స్వాగతం, '+n+'! 🎉');}
+function setStudent(n,c){S.cur={n,c};setTimeout(markDay,0);const ex=S.local.find(s=>s.n===n);if(ex)ex.c=c;else S.local.push({n,c});put('students',{id:sid(n)+'@'+S.dev.slice(0,8),n,c});go('home');toast('స్వాగతం, '+n+'! 🎉');}
 function quick(i){const s=S.local[i];setStudent(s.n,s.c);}
 function logout(){S.cur=null;selCls=null;save();go(S.cfg.type||S.offline?'home':'welcome');}
 
@@ -966,6 +975,9 @@ ${S.cfg.type?'':`<button class="li" onclick="go('welcome',{w:'s'})">🏫 పా�
 <button class="li" onclick="go('sync')">☁️ ఆన్‌లైన్ సింక్ <span>${S.cfg.type?(S.cfg.type==='gs'?'Google Sheets':'Firebase')+' '+syncIcon():'ఆఫ్'}</span></button>
 <button class="li" onclick="logout()">🔄 విద్యార్థిని మార్చు</button>
 <button class="li" onclick="go('teacher')">👩‍🏫 ఉపాధ్యాయుల ప్యానెల్</button>
+<button class="li" onclick="go('badges')">🏅 నా బ్యాడ్జీలు <span>${badgeCount()}</span></button>
+<button class="li" onclick="go('avatar')">${avOf(S.cur.n)} నా బొమ్మ మార్చు</button>
+<button class="li" onclick="toggleSound()">${S.sound===false?'🔇':'🔊'} శబ్దాలు <span>${S.sound===false?'ఆఫ్':'ఆన్'}</span></button>
 <button class="li" onclick="go('privacy')">🔒 గోప్యత & నిబంధనలు</button></div>`;
 V.cls=()=>`<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>తరగతి ఎంచుకో</h2></div><div class="card"><div class="clsrow">${[1,2,3,4,5].map(c=>`<button class="cb ${S.cur.c===c?'on':''}" onclick="setCls(${c})">${c}</button>`).join('')}</div></div>`;
 function setCls(c){S.cur.c=c;const ex=S.local.find(s=>s.n===me());if(ex)ex.c=c;put('students',{id:sid(me())+'@'+S.dev.slice(0,8),n:me(),c});go('learn');toast(c+'వ తరగతి ఎంచుకున్నావు');}
@@ -975,8 +987,8 @@ function tile(v,ic,t,s,bg,p){return `<button class="tile" style="background:${bg
 const EVT={ev:'ఈవెంట్',test:'టెస్ట్',hol:'సెలవు',live:'లైవ్ క్లాస్'};
 function evCard(e){const t=todayS();const lbl=e.d===t?'ఈరోజు':e.d===addDays(t,1)?'రేపు':fmtD(e.d);const tc={test:'t',hol:'h',live:'l'}[e.ty]||'';const ok=/^https:\/\//.test(e.link||'');
  return `<div class="ecard"><span class="tag ${tc}">${e.ty==='live'?'🔴 LIVE • ':''}${lbl}</span><b>${esc(e.t)}</b><small>${e.tm?to12(e.tm):''} ${e.ty!=='ev'?'• '+EVT[e.ty]:''}</small>${ok?`<a class="lk2" href="${esc(e.link)}" target="_blank" rel="noopener">ఇప్పుడే చేరండి ▶</a>`:`<button class="lk2" onclick="go('schedule',{d:'${e.d}'})">వివరాలు చూడు ▸</button>`}</div>`;}
-V.home=()=>{const st=stats();const up=upcoming(6);const pend=pendingHw();const g=greet(),stc=stars();
- return `<section class="hero"><div><small>${g[0]} ${g[1]}</small><h2>${esc(S.cur.n)}</h2><p>${S.cfg.sname?'🏫 '+esc(S.cfg.sname):'నేర్చుకో ఎప్పుడైనా, ఎక్కడైనా!'}</p><span class="starb" onclick="event.stopPropagation();toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐ ${stc} స్టార్లు</span></div><div class="mascot bob">🎒</div></section>
+V.home=()=>{setTimeout(checkBadges,50);const st=stats();const up=upcoming(6);const pend=pendingHw();const g=greet(),stc=stars();
+ return `<section class="hero"><div><small>${g[0]} ${g[1]}</small><h2>${esc(S.cur.n)}</h2><p>${S.cfg.sname?'🏫 '+esc(S.cfg.sname):'నేర్చుకో ఎప్పుడైనా, ఎక్కడైనా!'}</p><span class="starb" onclick="event.stopPropagation();toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐ ${stc} స్టార్లు</span> <span class="starb" onclick="event.stopPropagation();toast('వరుసగా ఎన్ని రోజులు యాప్ వాడావో')">🔥 ${streak()}</span> <span class="starb" onclick="event.stopPropagation();go('badges')">🏅 ${badgeCount()}</span></div><div class="mascot bob" onclick="go('avatar')" title="బొమ్మ మార్చు">${avOf(S.cur.n)}<i class="edit">✏️</i></div></section>
 ${tickerHtml()}${slidesHtml()}
 ${installBanner()}<div class="perf" onclick="go('test',{tab:'done'})"><div><h3>మొత్తం ప్రదర్శన</h3><p>${perfMsg(st.avg,st.n)}</p><b class="more">మరిన్ని వివరాలు ▸</b></div>${ring(st.avg)}</div>
 <h4 class="sec">రాబోయే ఈవెంట్లు</h4><div class="hscroll">${up.length?up.map(evCard).join(''):`<div class="ecard"><span class="tag">ఈరోజు</span><b>కొత్త ఈవెంట్లు లేవు</b><small>షెడ్యూల్‌లో పీరియడ్లు చూడు</small><button class="lk2" onclick="go('schedule')">షెడ్యూల్ ▸</button></div>`}</div>
@@ -1060,7 +1072,7 @@ function nextQ(){if(T.i<T.qs.length-1){T.i++;render();}else finishTest();}
 function quitTest(){if(confirm('టెస్ట్ మధ్యలో ఆపేయాలా? జవాబులు సేవ్ కావు.'))go('test');}
 function finishTest(){const sec=Math.round((Date.now()-T.start)/1000);let sc=0;
  const rv=T.qs.map((q,i)=>{const y=q.o[T.ans[i]];if(y===q.a)sc++;return {q:q.q,y:y||'',a:q.a};});
- const r={id:uid(),n:me(),c:S.cur.c,sb:T.s,s:sc,t:T.qs.length,sec,d:new Date().toISOString(),rv};put('results',r);go('result',{id:r.id});if(sc*100/T.qs.length>=80)setTimeout(confetti,200);}
+ const r={id:uid(),n:me(),c:S.cur.c,sb:T.s,s:sc,t:T.qs.length,sec,d:new Date().toISOString(),rv};put('results',r);go('result',{id:r.id});if(sc*100/T.qs.length>=80){setTimeout(confetti,200);beep('win');}else beep('ok');}
 V.result=()=>{const r=live('results').find(x=>x.id===param.id);if(!r)return '<div class="empty">ఫలితం దొరకలేదు</div>';const p=Math.round(r.s*100/r.t);
  const msg=p>=80?'🌟 అద్భుతం!':p>=60?'👏 బాగుంది!':p>=40?'🙂 పర్వాలేదు, ఇంకా సాధన చేయి':'💪 మళ్ళీ ప్రయత్నించు!';
  return `<div class="bar"><button class="ib" onclick="go('test',{tab:'done'})">←</button><h2>${SUBJ[r.sb].n} – ఫలితం</h2></div>
@@ -1126,16 +1138,16 @@ function gameArea(){const c=G.cur;const m=`<div class="gmsg ${G.mc}">${G.msg}</d
 <div class="ltiles">${c.tiles.map((t,i)=>`<button ${t.u?'disabled':''} onclick="ewTap(${i})">${t.l}</button>`).join('')}</div>
 <div class="row2 qnav"><button class="btn ghost" onclick="ewBack()">⌫ తొలగించు</button><button class="btn ghost" onclick="ewSkip()">దాటవేయి ⏭</button></div>`;}
 function upd(shake){const a=$('#garea');if(!a)return;a.innerHTML=gameArea();$('#gsc').textContent=G.score;if(shake){const s=$('#slots');if(s)s.classList.add('shake');}}
-function mmPick(j){const c=G.cur;if(c.o[j]===c.a){G.score++;G.msg='✓ సరైనది!';G.mc='ok';}else{G.msg=`✗ సరైన జవాబు: ${c.q.replace('?',c.a)}`;G.mc='no';}nextRound();upd();}
-function tlPick(j){const c=G.cur;if(c.o[j]===c.a){G.score++;G.msg=`✓ సరైనది! ${c.e} ${c.w}`;G.mc='ok';}else{G.msg=`✗ ${c.e} ${c.w} – మొదటి అక్షరం "${c.a}"`;G.mc='no';}speak(c.w);nextRound();upd();}
+function mmPick(j){const c=G.cur;beep(c.o[j]===c.a?'ok':'no');if(c.o[j]===c.a){G.score++;G.msg='✓ సరైనది!';G.mc='ok';}else{G.msg=`✗ సరైన జవాబు: ${c.q.replace('?',c.a)}`;G.mc='no';}nextRound();upd();}
+function tlPick(j){const c=G.cur;beep(c.o[j]===c.a?'ok':'no');if(c.o[j]===c.a){G.score++;G.msg=`✓ సరైనది! ${c.e} ${c.w}`;G.mc='ok';}else{G.msg=`✗ ${c.e} ${c.w} – మొదటి అక్షరం "${c.a}"`;G.mc='no';}speak(c.w);nextRound();upd();}
 function ewTap(i){const c=G.cur;if(c.tiles[i].u)return;c.tiles[i].u=true;c.typed.push(i);
  if(c.typed.length===c.w.length){const s=c.typed.map(k=>c.tiles[k].l).join('');
-  if(s===c.w){G.score++;G.msg=`✓ సరైనది! ${c.w}`;G.mc='ok';speak(c.w);nextRound();upd();}
+  beep(s===c.w?'ok':'no');if(s===c.w){G.score++;G.msg=`✓ సరైనది! ${c.w}`;G.mc='ok';speak(c.w);nextRound();upd();}
   else{G.msg='✗ మళ్ళీ ప్రయత్నించు';G.mc='no';c.typed=[];c.tiles.forEach(t=>t.u=false);upd(true);}}
  else{G.msg='';upd();}}
 function ewBack(){const c=G.cur;const k=c.typed.pop();if(k!=null)c.tiles[k].u=false;upd();}
 function ewSkip(){G.msg=`➡ సరైన పదం: ${G.cur.w}`;G.mc='no';nextRound();upd();}
-function endGame(){clearInterval(tick);tick=null;if(G.done)return;G.done=true;put('games',{id:uid(),n:me(),c:S.cur.c,g:G.g,s:G.score,d:new Date().toISOString()});render();}
+function endGame(){clearInterval(tick);tick=null;if(G.done)return;G.done=true;beep('win');put('games',{id:uid(),n:me(),c:S.cur.c,g:G.g,s:G.score,d:new Date().toISOString()});render();}
 function quitGame(){if(G.done||confirm('ఆట ఆపేయాలా?'))go('games',{lb:G.g});}
 V.gamerun=()=>{const g=GAMES[G.g];
  if(G.done){const mine=live('games').filter(x=>x.n===me()&&x.g===G.g&&x.c===S.cur.c).map(x=>x.s);const best=Math.max(...mine);
@@ -1517,6 +1529,33 @@ async function addPhoto(){const f=$('#php').files&&$('#php').files[0],u=$('#phu'
  if(!/^https:\/\//.test(u))return toast('ఫోటో ఎంచుకోండి లేదా https లింక్ ఇవ్వండి');
  put('notes',{id:uid(),kind:'photo',c,t,url:u,x:''});toast('ఫోటో జోడించబడింది ✓');go('teacher',{t:'fl'});}
 
+/* ---------- 🎁 అదనపు ఆకర్షణ: అవతార్, వరుస రోజులు, బ్యాడ్జీలు, శబ్దాలు ---------- */
+const AVS=['🦁','🐯','🐼','🐨','🐸','🐵','🦊','🐰','🐶','🐱','🦄','🐝','🦋','🐢','🐬','🦜','🦚','🐘','🌻','🚀','⚽','🎨','🎵','🌈'];
+function avOf(n){return (S.av||{})[n]||'🎒';}
+V.avatar=()=>`<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>నీ బొమ్మ ఎంచుకో</h2></div>
+<div class="card center"><div style="font-size:70px">${avOf(me())}</div><p class="mut">నచ్చిన బొమ్మ నొక్కు</p><div class="avgrid">${AVS.map(a=>`<button class="${avOf(me())===a?'on':''}" onclick="setAv('${a}')">${a}</button>`).join('')}</div></div>`;
+function setAv(a){S.av=S.av||{};S.av[me()]=a;save();beep('ok');toast('బాగుంది! '+a);go('home');}
+function markDay(){if(!S.cur)return;S.days=S.days||{};const d=S.days[me()]||(S.days[me()]=[]);const t=todayS();if(d[d.length-1]!==t){d.push(t);if(d.length>90)d.splice(0,d.length-90);save();}}
+function streak(){const d=((S.days||{})[me()]||[]).slice().reverse();if(!d.length)return 0;let n=0,want=todayS();if(d[0]!==want){want=addDays(want,-1);if(d[0]!==want)return 0;}
+ for(const x of d){if(x===want){n++;want=addDays(want,-1);}else if(x<want)break;}return n;}
+function badgeList(){const r=myRes(),pc=r.map(x=>Math.round(x.s*100/x.t)),hw=myHw().filter(h=>subOf(h)).length,rd=Object.keys(readMap()).length,
+ gm=live('games').filter(x=>x.n===me()),dq=live('doubts').filter(x=>x.n===me()).length,bk=Object.keys(S.bookPos||{}).length,st=stars(),sk=Math.max(streak(),(S.best||{})[me()]||0);
+ return [['🎯','మొదటి టెస్ట్','ఒక టెస్ట్ రాయి',r.length>=1],['📝','టెస్ట్ వీరుడు','10 టెస్టులు రాయి',r.length>=10],['💯','పూర్తి మార్కులు','ఏదైనా టెస్ట్‌లో 100%',pc.some(p=>p===100)],
+  ['🌟','స్టార్ విద్యార్థి','30 స్టార్లు సంపాదించు',st>=30],['🔥','3 రోజుల వరుస','3 రోజులు వరుసగా వాడు',sk>=3],['🏆','వారం వీరుడు','7 రోజులు వరుసగా వాడు',sk>=7],
+  ['📒','హోంవర్క్ హీరో','5 హోంవర్క్‌లు పూర్తి చేయి',hw>=5],['📖','పాఠాల ప్రియుడు','10 పాఠాలు చదువు',rd>=10],['🎮','ఆటగాడు','10 ఆటలు ఆడు',gm.length>=10],
+  ['⚡','మెరుపు లెక్కలు','Mental Maths లో 15+',gm.some(g=>g.g==='mm'&&g.s>=15)],['💬','జిజ్ఞాసి','ఒక సందేహం అడుగు',dq>=1],['📚','పుస్తక ప్రియుడు','లైబ్రరీలో పుస్తకం తెరువు',bk>=1]];}
+function badgeCount(){return badgeList().filter(b=>b[3]).length;}
+function checkBadges(){if(!S.cur)return;const sk=streak();S.best=S.best||{};if(sk>(S.best[me()]||0))S.best[me()]=sk;
+ S.bseen=S.bseen||{};const seen=S.bseen[me()]||(S.bseen[me()]=[]);const got=badgeList().filter(b=>b[3]&&!seen.includes(b[1]));
+ if(got.length){got.forEach(b=>seen.push(b[1]));save();setTimeout(()=>{toast('🏅 కొత్త బ్యాడ్జ్: '+got[0][0]+' '+got[0][1]+(got.length>1?' (+'+(got.length-1)+')':''));beep('win');confetti();},600);}else save();}
+V.badges=()=>{const bl=badgeList();return `<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>🏅 నా బ్యాడ్జీలు</h2></div>
+<div class="card center"><div style="font-size:46px">${avOf(me())}</div><h3>${esc(me())}</h3><p>🏅 ${bl.filter(b=>b[3]).length} / ${bl.length} బ్యాడ్జీలు • ⭐ ${stars()} స్టార్లు • 🔥 ${streak()} రోజులు</p></div>
+<div class="bgrid">${bl.map(b=>`<div class="bdg ${b[3]?'got':''}"><span>${b[3]?b[0]:'🔒'}</span><b>${b[1]}</b><small>${b[2]}</small></div>`).join('')}</div>`;};
+let AC=null;
+function beep(kind){if(S.sound===false)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const seq={ok:[[660,.08],[880,.12]],no:[[220,.18]],win:[[523,.1],[659,.1],[784,.1],[1047,.22]]}[kind]||[];
+ let t=AC.currentTime;seq.forEach(([f,d])=>{const o=AC.createOscillator(),g=AC.createGain();o.type=kind==='no'?'square':'sine';o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.18,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d+.02);t+=d;});}catch(e){}}
+function toggleSound(){S.sound=S.sound===false;save();toast(S.sound?'🔊 శబ్దాలు ఆన్':'🔇 శబ్దాలు ఆఫ్');render();}
+
 /* ---------- PWA: ఇన్‌స్టాల్ & ఆఫ్లైన్ ---------- */
 let instEvt=null;
 function isStandalone(){try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true||document.referrer.startsWith('android-app://');}catch(e){return false;}}
@@ -1533,7 +1572,8 @@ try{speechSynthesis.getVoices();}catch(e){}
 (function(){const h=location.hash||'';const m=h.match(/join=([A-Za-z0-9_\-]+)/);if(m)joinWith(m[1]);const g=h.match(/go=(\w+)/);if(g&&V[g[1]])view=g[1];if(m||g){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}})();
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')Sync.run();});
 window.addEventListener('online',()=>Sync.run());
-render();
+markDay();render();
+setTimeout(()=>{const sp=document.getElementById('splash');if(sp){sp.classList.add('out');setTimeout(()=>sp.remove(),500);}},900);
 if(S.cfg.type)Sync.start();
 if(/^https?:$/.test(location.protocol))loadPubCfg();
 </script>
