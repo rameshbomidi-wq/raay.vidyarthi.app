@@ -17,10 +17,13 @@
 <style>
 :root{--navy:#063a5b;--teal:#2aa6a6;--teal2:#1d8c8c;--ink:#1f2937;--mut:#6b7280;--bg:#eef5f6;--card:#fff;--line:#e5e7eb;--red:#e5484d;--green:#16a34a;--amber:#f59e0b}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{background:#dfe9eb;overflow-x:hidden;max-width:100%}
+html,body{background:#dfe9eb;max-width:100%}
+html{overflow-x:hidden}
+body{overflow-x:clip}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-html,body{overscroll-behavior-y:none}
-.car-in,.hscroll,.tchips,.bbox{overscroll-behavior:contain}
+html{overscroll-behavior-y:none}
+.car-in,.hscroll,.tchips{overscroll-behavior-x:contain}
+.bbox{overscroll-behavior:contain}
 body{font-family:'Poppins','Noto Sans Telugu',system-ui,sans-serif;color:var(--ink);font-size:15px;line-height:1.45}
 #app{max-width:520px;margin:0 auto;min-height:100vh;background:var(--bg);padding-bottom:86px;position:relative}
 button{font:inherit;cursor:pointer}
