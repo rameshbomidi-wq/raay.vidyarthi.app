@@ -856,14 +856,15 @@ function dueText(h){const sd=subOf(h);const d=diffDays(h.due,todayS());
  return `<span class="st due">ఇంకా ${d} రోజుల గడువు</span>`;}
 
 /* ---------- నావిగేషన్ ---------- */
-function go(v,p){clearInterval(tick);tick=null;try{speechSynthesis.cancel();}catch(e){}view=v;param=p||{};render();window.scrollTo(0,0);if(v==='library')libLoad();}
+function go(v,p){clearInterval(tick);tick=null;try{speechSynthesis.cancel();}catch(e){}view=v;param=p||{};render();window.scrollTo(0,0);}
 function render(){const app=$('#app');
  if(view==='teacher'){app.innerHTML='<main>'+V.teacher()+'</main>'+footer();return;}
  if(view==='privacy'&&!S.cur){app.innerHTML='<main>'+V.privacy()+'</main>'+footer();return;}
  if(view==='welcome'||(!S.cur&&!S.cfg.type&&!S.offline)){app.innerHTML=V.welcome()+footer();return;}
  if(!S.cur){app.innerHTML=V.login()+footer();return;}
  const full=view==='testrun'||view==='gamerun'||view==='book';
- app.innerHTML=(full?'':header())+(full?'':'<main>')+(V[view]||V.home)()+(full?'':'</main>')+footer()+(full?'':nav());}
+ app.innerHTML=(full?'':header())+(full?'':'<main>')+(V[view]||V.home)()+(full?'':'</main>')+footer()+(full?'':nav());
+ if(view==='library')setTimeout(()=>libLoad(),0);}
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
@@ -964,7 +965,7 @@ async function joinByCode(){const code=$('#jsc').value.trim().toUpperCase();if(c
 function loginJoin(){const c=prompt('ఉపాధ్యాయులు పంపిన జాయిన్ కోడ్ / లింక్ పేస్ట్ చేయండి');if(c&&joinWith(c))render();}
 function pickCls(c){selCls=c;document.querySelectorAll('.cb').forEach(b=>b.classList.toggle('on',+b.dataset.c===c));}
 function doLogin(){const n=$('#ln').value.trim();if(!n)return toast('నీ పేరు రాయి');if(!selCls)return toast('తరగతి ఎంచుకో');setStudent(n,selCls);}
-function setStudent(n,c){S.cur={n,c};setTimeout(markDay,0);const ex=S.local.find(s=>s.n===n);if(ex)ex.c=c;else S.local.push({n,c});put('students',{id:sid(n)+'@'+S.dev.slice(0,8),n,c});go('home');toast('స్వాగతం, '+n+'! 🎉');}
+function setStudent(n,c){S.cur={n,c};markDay();const ex=S.local.find(s=>s.n===n);if(ex)ex.c=c;else S.local.push({n,c});put('students',{id:sid(n)+'@'+S.dev.slice(0,8),n,c});go('home');toast('స్వాగతం, '+n+'! 🎉');}
 function quick(i){const s=S.local[i];setStudent(s.n,s.c);}
 function logout(){S.cur=null;selCls=null;save();go(S.cfg.type||S.offline?'home':'welcome');}
 
