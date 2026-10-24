@@ -355,7 +355,7 @@ label.dqck input{width:18px;height:18px;margin:0}
 .ansrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
 button.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;color:#3730a3;border:2px dashed #a5b4fc;border-radius:14px;padding:10px 14px;font-weight:700;font-size:15px}
 .lnk{border:0;background:none;color:var(--teal2);font-size:13px;font-weight:700;text-decoration:underline}
-.ansprev{margin-top:8px}.ansprev button{border:0;background:#fee2e2;color:#b91c1c;border-radius:10px;padding:6px 10px;margin-top:6px;font-size:13px}
+.ansprev{margin-top:8px}.szok{font-size:13px;color:#166534;background:#dcfce7;border-radius:10px;padding:6px 10px}.ansprev button{border:0;background:#fee2e2;color:#b91c1c;border-radius:10px;padding:6px 10px;margin-top:6px;font-size:13px}
 #ansPad{margin-top:10px}#ansPad[hidden]{display:none}
 .padtools{display:flex;gap:6px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
 #ansCv{display:block;border:1.5px solid var(--line);border-radius:12px;touch-action:none;background:#fff}
@@ -1730,6 +1730,7 @@ function replyD(id){const d=live('doubts').find(x=>x.id===id);const v=document.g
  put('doubts',Object.assign({},d,{r:v,ri:'',ra:Date.now(),rb:tName()}));DQSEL.delete(id);toast('జవాబు పంపాం ✓');go('teacher',Object.assign({},param,{t:'dq'}));}
 /* జవాబు ఫోటో – నలుపు-తెలుపు, నీడ తొలగించి, చిన్న సైజులో (సింక్ పరిమితి లోపు) */
 const ANSMAX=15000;
+function kbmb(b){return b>=1048576?(b/1048576).toFixed(1)+' MB':Math.max(1,Math.round(b/1024))+' KB';}
 function ansClean(src,w){const h=Math.round(src.height*w/src.width),cv=document.createElement('canvas');cv.width=w;cv.height=h;const x=cv.getContext('2d');
  x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(src,0,0,w,h);const id=x.getImageData(0,0,w,h),d=id.data,n=w*h,g=new Uint8ClampedArray(n);
  for(let i=0;i<n;i++)g[i]=(d[i*4]*.3+d[i*4+1]*.59+d[i*4+2]*.11)|0;
@@ -1755,7 +1756,7 @@ function ansRender(txt){const el=document.getElementById('ansSheet');if(!el)retu
 <div class="qrs">${QR0.map((q,i)=>`<button onclick="ansAdd(QR0[${i}])">${esc(q)}</button>`).join('')}${qrMine().map((q,i)=>`<button class="mine" onclick="ansAdd(qrMine()[${i}])">⭐ ${esc(q.length>28?q.slice(0,28)+'…':q)}<i onclick="event.stopPropagation();qrDel(${i})">✕</i></button>`).join('')}</div>
 <textarea id="ansTx" rows="3" maxlength="1500" placeholder="జవాబు టైప్ చేయండి (ఐచ్ఛికం – ఫోటో మాత్రమే కూడా పంపవచ్చు)"></textarea>
 <div class="ansrow"><label class="upbtn">📷 ఫోటో తీయి / ఎంచుకో<input type="file" accept="image/*" hidden onchange="ansPhoto(this)"></label><button class="upbtn" onclick="ansPadOpen()">✏️ రాసి చూపించు</button><button class="lnk" onclick="qrSave()">⭐ త్వరిత జవాబుగా సేవ్</button></div>
-<div id="ansImgBox">${ANS.img?`<div class="ansprev">${imgTag(ANS.img,'ansimg')}<button onclick="ANS.img='';ansRender()">✕ ఫోటో తీసేయి</button></div>`:''}</div>
+<div id="ansImgBox">${ANS.img?`<div class="ansprev"><p class="szok">✅ ${ANS.orig?'ఫోటో '+kbmb(ANS.orig)+' → ':''}<b>${kbmb(Math.round(ANS.img.length*0.75))}</b> కు తగ్గింది – ఇదే పంపబడుతుంది</p>${imgTag(ANS.img,'ansimg')}<button onclick="ANS.img='';ANS.orig=0;ansRender()">✕ ఫోటో తీసేయి</button></div>`:''}</div>
 <div id="ansPad" ${ANS.pad?'':'hidden'}><div class="padtools">${['#111827','#1d4ed8','#dc2626','#16a34a'].map(c=>`<button class="slc ${ANS.col===c?'on':''}" style="background:${c}" onclick="ANS.col='${c}';ansRender()"></button>`).join('')}${[2,3,6].map(w=>`<button class="slt ${ANS.w===w?'on':''}" onclick="ANS.w=${w};ansRender()"><i style="width:${w+3}px;height:${w+3}px"></i></button>`).join('')}<button class="slt" onclick="ANS.st.pop();ansPadDraw()">↶</button><button class="slt" onclick="ANS.st=[];ansPadDraw()">🗑️</button><button class="slt slnew" onclick="ansPadDone()">✓ పూర్తి</button></div><canvas id="ansCv"></canvas></div>
 ${same?`<label class="ck" style="margin-top:10px"><input type="checkbox" id="ansNote"> 📌 తరగతి అందరికీ “సెల్ఫ్ లెర్న్” లో నోట్‌గా కూడా పెట్టు</label>`:''}
 <button class="btn" id="ansGo" onclick="ansSend()">➤ ${ds.length} ${ds.length>1?'మందికి':'విద్యార్థికి'} పంపు</button></div>`;
@@ -1766,7 +1767,7 @@ function qrDel(i){const m=qrMine();m.splice(i,1);try{localStorage.setItem('raiQR
 function ansDrop(id){ANS.ids=ANS.ids.filter(x=>x!==id);DQSEL.delete(id);if(!ANS.ids.length)return ansClose();ansRender();}
 function ansClose(){const el=document.getElementById('ansSheet');if(el)el.remove();ANS.ids=[];}
 async function ansPhoto(inp){const f=inp.files&&inp.files[0];if(!f)return;const box=document.getElementById('ansImgBox');if(box)box.innerHTML='<p class="mut">⏳ ఫోటో స్పష్టంగా, చిన్నదిగా చేస్తోంది...</p>';
- try{ANS.img=await ansFromFile(f);ANS.pad=false;}catch(e){toast(e.message);}ansRender();}
+ try{ANS.img=await ansFromFile(f);ANS.orig=f.size;ANS.pad=false;}catch(e){toast(e.message);}ansRender();}
 function ansPadOpen(){ANS.pad=true;ANS.st=[];ansRender();setTimeout(()=>{const c=document.getElementById('ansCv');if(c)c.scrollIntoView({block:'center',behavior:'smooth'});},50);}
 function ansPadInit(){const cv=document.getElementById('ansCv');if(!cv)return;const w=cv.parentElement.clientWidth||320,h=Math.round(w*1.15),dpr=Math.min(2,window.devicePixelRatio||1);ANS.dpr=dpr;ANS.W=w;ANS.H=h;
  cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);cv.style.width=w+'px';cv.style.height=h+'px';ansPadDraw();
@@ -1779,7 +1780,7 @@ function ansPadDraw(){const cv=document.getElementById('ansCv');if(!cv)return;co
  x.lineCap='round';x.lineJoin='round';ANS.st.forEach(s=>{slDraw(x,{c:s.c,w:s.w,er:false,p:s.p});});x.globalCompositeOperation='source-over';}
 function ansPadDone(){if(!ANS.st.length)return toast('ముందు రాయండి');const cv=document.getElementById('ansCv'),o=document.createElement('canvas');const sc=Math.min(1,700/cv.width);o.width=Math.round(cv.width*sc);o.height=Math.round(cv.height*sc);
  const x=o.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,o.width,o.height);x.drawImage(cv,0,0,o.width,o.height);let u=o.toDataURL('image/png');if(u.length>ANSMAX)u=ansEncode(o)||ansFromImage(o);
- if(!u)return toast('చాలా పెద్దది – కొంచెం తక్కువ రాయండి');ANS.img=u;ANS.pad=false;ANS.st=[];ansRender();toast('✓ రాసింది జవాబుకు జతచేశాం');}
+ if(!u)return toast('చాలా పెద్దది – కొంచెం తక్కువ రాయండి');ANS.img=u;ANS.orig=0;ANS.pad=false;ANS.st=[];ansRender();toast('✓ రాసింది జవాబుకు జతచేశాం');}
 function ansSend(){const txt=(document.getElementById('ansTx').value||'').trim();if(ANS.pad&&ANS.st.length)return toast('ముందు ✓ పూర్తి నొక్కండి');if(!txt&&!ANS.img)return toast('జవాబు టైప్ చేయండి లేదా ఫోటో/రాసింది జతచేయండి');
  const ds=ANS.ids.map(id=>live('doubts').find(d=>d.id===id)).filter(Boolean);const now=Date.now(),by=tName();let bad=0;
  ds.forEach(d=>{const rec=Object.assign({},d,{r:txt||'📷 ఫోటోలో జవాబు చూడు',ri:ANS.img||'',ra:now,rb:by});if(JSON.stringify(rec).length>19500){bad++;return;}put('doubts',rec);DQSEL.delete(d.id);});
