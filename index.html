@@ -980,7 +980,7 @@ V.welcome=()=>{const w=param.w||'';const ps=pubServer();const back=`<button clas
 <div class="row2"><button class="btn" onclick="noteImage()">🖼️ ఫోటోగా సేవ్</button><button class="btn ghost" onclick="noteShare()">📤 షేర్ / WhatsApp</button></div>
 <div class="row2"><button class="btn ghost sm" onclick="copyText(noteText())">📋 కాపీ</button><button class="btn ghost sm" onclick="dl(noteFile('txt'),noteText())">📄 టెక్స్ట్ ఫైల్</button></div>
 <button class="btn" style="background:#16a34a" onclick="tAuth=true;go('teacher',{t:'hw'})">✓ సేవ్ చేశాను – కొనసాగించు</button></div>`;
- return `<div class="wel"><div class="logo">📚</div><h1>రాయ్ విద్యార్థి లెర్నింగ్ యాప్</h1><p>1 నుండి 5 తరగతులు • పాఠాలు, టెస్టులు, ఆటలు, హోంవర్క్</p>
+ return `${reconnectCard()?'<div style="padding:14px 14px 0">'+reconnectCard()+'</div>':''}<div class="wel"><div class="logo">📚</div><h1>రాయ్ విద్యార్థి లెర్నింగ్ యాప్</h1><p>1 నుండి 5 తరగతులు • పాఠాలు, టెస్టులు, ఆటలు, హోంవర్క్</p>
 <button class="role" style="background:#ccf0ee" onclick="go('welcome',{w:'t'})"><span>👩‍🏫</span><div><b>నేను ఉపాధ్యాయుడు / ఉపాధ్యాయురాలు</b><small>పాఠశాల వివరాలు నమోదు చేసి, పిల్లలకు కోడ్ ఇవ్వండి</small></div></button>
 <button class="role" style="background:#fdeaa8" onclick="go('welcome',{w:'s'})"><span>🧒</span><div><b>నేను విద్యార్థి</b><small>టీచర్ ఇచ్చిన పాఠశాల కోడ్‌తో చేరు</small></div></button>
 <button class="link" onclick="S.offline=true;save();go('home')">పాఠశాల లేకుండా సొంతంగా వాడుకో →</button><br><button class="link" onclick="go('privacy')">🔒 గోప్యత & నిబంధనలు</button></div>`;};
@@ -1050,7 +1050,7 @@ function evCard(e){const t=todayS();const lbl=e.d===t?'ఈరోజు':e.d===ad
 V.home=()=>{setTimeout(checkBadges,50);const st=stats();const up=upcoming(6);const pend=pendingHw();const g=greet(),stc=stars();
  return `<section class="hero"><div><small>${g[0]} ${g[1]}</small><h2>${esc(S.cur.n)}</h2><p>${S.cfg.sname?'🏫 '+esc(S.cfg.sname):'నేర్చుకో ఎప్పుడైనా, ఎక్కడైనా!'}</p><span class="starb" onclick="event.stopPropagation();toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐ ${stc} స్టార్లు</span> <span class="starb" onclick="event.stopPropagation();toast('వరుసగా ఎన్ని రోజులు యాప్ వాడావో')">🔥 ${streak()}</span> <span class="starb" onclick="event.stopPropagation();go('badges')">🏅 ${badgeCount()}</span></div><div class="mascot bob" onclick="go('avatar')" title="బొమ్మ మార్చు">${avOf(S.cur.n)}<i class="edit">✏️</i></div></section>
 ${tickerHtml()}${slidesHtml()}
-${installBanner()}<div class="perf" onclick="go('test',{tab:'done'})"><div><h3>మొత్తం ప్రదర్శన</h3><p>${perfMsg(st.avg,st.n)}</p><b class="more">మరిన్ని వివరాలు ▸</b></div>${ring(st.avg)}</div>
+${reconnectCard()}${installBanner()}<div class="perf" onclick="go('test',{tab:'done'})"><div><h3>మొత్తం ప్రదర్శన</h3><p>${perfMsg(st.avg,st.n)}</p><b class="more">మరిన్ని వివరాలు ▸</b></div>${ring(st.avg)}</div>
 <h4 class="sec">రాబోయే ఈవెంట్లు</h4><div class="hscroll">${up.length?up.map(evCard).join(''):`<div class="ecard"><span class="tag">ఈరోజు</span><b>కొత్త ఈవెంట్లు లేవు</b><small>షెడ్యూల్‌లో పీరియడ్లు చూడు</small><button class="lk2" onclick="go('schedule')">షెడ్యూల్ ▸</button></div>`}</div>
 <h4 class="sec">అన్ని విభాగాలు</h4><div class="tiles">
 ${tile('learn','📖','సెల్ఫ్ లెర్న్','పాఠాలు చదువు','#dbeafe')}${tile('doubts','💬','సందేహం','టీచర్‌ని అడుగు','#fde2e4')}${tile('test','📝','టెస్ట్','రాసి రిపోర్ట్ చూడు','#fdeaa8')}
@@ -1390,7 +1390,12 @@ function saveFB(){keepDraft();const d=getDraft();const fb=parseFbCfg(d.fb);if(!f
 async function fbLogin(){const e=$('#fle').value.trim(),p=$('#flp').value;if(!e||!p)return toast('ఇమెయిల్, పాస్‌వర్డ్ ఇవ్వండి');
  try{toast('లాగిన్ అవుతోంది...');await FBK.login(e,p);queueAll();save();Sync.run();toast('ఉపాధ్యాయ లాగిన్ ✓');go('teacher',{t:'sy',m:'fb'});}catch(x){toast('లాగిన్ విఫలం: '+((x&&x.code)||x));}}
 async function fbLogout(){await FBK.logout();S.cfg.isT=false;save();go('teacher',{t:'sy',m:'fb'});}
-function disconnect(){if(!confirm('ఆన్‌లైన్ సింక్ ఆపేయాలా? (ఈ ఫోన్‌లోని డేటా అలాగే ఉంటుంది)'))return;clearInterval(Sync.poll);const a=S.cfg.appUrl;S.cfg={type:'',appUrl:a};draft=null;S.q={};S.last={};save();location.reload();}
+async function disconnect(){if(!confirm('⚠️ ఆన్‌లైన్ సింక్ ఆపేయాలా?\n\nపాఠశాల నుండి ఈ ఫోన్ వేరవుతుంది. (తర్వాత “🔁 మళ్ళీ కనెక్ట్” తో ఒక్క నొక్కుతో తిరిగి కలపవచ్చు)'))return;
+ if(Object.keys(S.q).length){toast('పంపాల్సినవి ముందు పంపుతోంది...');try{Sync.running=false;await Sync.run();}catch(e){}}
+ clearInterval(Sync.poll);const a=S.cfg.appUrl;const old=Object.assign({},S.cfg);S.lastCfg=old.type?old:S.lastCfg;S.cfg={type:'',appUrl:a};draft=null;S.q={};S.last={};save();location.reload();}
+function reconnect(){const c=S.lastCfg;if(!c||!c.type)return;delete S.lastCfg;connectFresh(c);S.offline=false;save();toast('✅ మళ్ళీ కనెక్ట్ అయింది: '+(c.sname||'పాఠశాల'));render();}
+function reconnectCard(){const c=S.lastCfg;if(S.cfg.type||!c||!c.type)return '';
+ return `<div class="card" style="border:2px solid #f59e0b"><h3>🔁 మళ్ళీ కనెక్ట్ అవ్వాలా?</h3><p class="mut">ఈ ఫోన్ ఇంతకు ముందు <b>${esc(c.sname||(c.type==='gs'?'Google Sheets':'Firebase'))}</b> కు కనెక్ట్ అయి ఉంది. పొరపాటున ఆపితే ఒక్క నొక్కుతో తిరిగి కలపండి.</p><button class="btn" onclick="reconnect()">🔁 మళ్ళీ కనెక్ట్ చేయి</button></div>`;}
 function joinWith(code,quiet){try{const p=b64d(String(code).trim().replace(/^.*#join=/,''));
   const c=S.cfg||{};
   if(p.t==='gs'&&p.tk){const same=c.type&&c.url===p.u&&(c.sid||'')===(p.s||'');
@@ -1427,7 +1432,7 @@ const FB_STEPS=`<ol class="steps">
 <p class="mut">ఉచిత Spark ప్లాన్: రోజుకు 50,000 రీడ్‌లు, 20,000 రైట్‌లు – ఒక పాఠశాలకు సరిపోతుంది. యాప్ తెరిచి ఉన్నప్పుడు మార్పులు వెంటనే (live) వస్తాయి.</p>`;
 
 TP.sy=()=>{const c=S.cfg,d=getDraft();const m=param.m||c.type||'gs';const pubMode=c.type==='gs'&&!!c.sid;
- const status=`<div class="card"><h3>☁️ సింక్ స్థితి</h3><div id="syncst">${syncLine()}</div>
+ const status=reconnectCard()+`<div class="card"><h3>☁️ సింక్ స్థితి</h3><div id="syncst">${syncLine()}</div>
 ${c.type?`<div class="row2"><button class="btn sm" onclick="Sync.run()">🔄 ఇప్పుడే సింక్</button><button class="btn sm red" onclick="disconnect()">సింక్ ఆపు</button></div>`:''}
 ${c.type&&!c.isT?`<div class="warn" style="margin-top:10px">⚠️ ఈ ఫోన్‌కు సర్వర్‌లో ఉపాధ్యాయ అనుమతి లేదు. ${pubMode?'కింద పాఠశాల కోడ్, టీచర్ కీతో లాగిన్ అవ్వండి.':c.type==='gs'?'కింద టీచర్ కీ బాక్స్‌లో Apps Script లోని <b>TEACHER_KEY</b> పెట్టి “సేవ్ & కనెక్ట్” నొక్కండి.':'కింద ఉపాధ్యాయ లాగిన్ చేయండి.'} అప్పటివరకు హోంవర్క్/ఈవెంట్లు/నోట్స్ విద్యార్థులకు చేరవు.</div>`:''}</div>`;
  const tabs=`<div class="tabs">${[['gs','📗 Google Sheets'],['fb','🔥 Firebase']].map(([k,n])=>`<button class="${m===k?'on':''}" onclick="keepDraft();go('teacher',{t:'sy',m:'${k}'})">${n}${c.type===k?' ✓':''}</button>`).join('')}</div>`;
@@ -1459,7 +1464,7 @@ ${PUB.server?'<p style="margin-top:8px">✅ config.json లో పబ్లి�
 
 V.sync=()=>{const c=S.cfg;const np=window.Notification?Notification.permission:'na';
  return `<div class="bar"><button class="ib" onclick="go('menu')">←</button><h2>☁️ ఆన్‌లైన్ సింక్</h2></div>
-<div class="card"><div id="syncst">${syncLine()}</div>${c.type?`<button class="btn sm" onclick="Sync.run()">🔄 ఇప్పుడే సింక్</button>`:''}</div>
+${reconnectCard()}<div class="card"><div id="syncst">${syncLine()}</div>${c.type?`<button class="btn sm" onclick="Sync.run()">🔄 ఇప్పుడే సింక్</button>`:''}</div>
 ${c.type?`<div class="card"><h3>🔔 నోటిఫికేషన్లు</h3><p class="mut">కొత్త హోంవర్క్, ఈవెంట్, సందేహానికి జవాబు వచ్చినప్పుడు తెలియజేస్తుంది (యాప్ తెరిచి ఉన్నప్పుడు).</p>${np==='granted'?'<p>✅ ఆన్ అయ్యాయి</p>':np==='na'?'<p class="mut">ఈ బ్రౌజర్‌లో లేవు</p>':'<button class="btn sm" onclick="askNotif()">నోటిఫికేషన్లు అనుమతించు</button>'}</div>
 <button class="link" onclick="disconnect()">సింక్ ఆపు</button>`:
 `<div class="card"><h3>పాఠశాలకు కనెక్ట్ అవ్వు</h3><p class="mut">ఉపాధ్యాయులు పంపిన జాయిన్ లింక్ ఓపెన్ చేస్తే ఆటోగా కనెక్ట్ అవుతుంది. లేదా జాయిన్ కోడ్ ఇక్కడ పేస్ట్ చేయి:</p><textarea id="jc" rows="3"></textarea><button class="btn" onclick="if(joinWith($('#jc').value))go('sync')">కనెక్ట్</button></div>`}`;};
