@@ -255,6 +255,7 @@ main{padding:14px}
 .bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.bdg{background:#f3f4f6;border-radius:16px;padding:12px 6px;text-align:center;opacity:.6}.bdg.got{background:#fff7d6;opacity:1;box-shadow:0 2px 8px rgba(245,158,11,.25)}
 .bdg span{font-size:34px;display:block}.bdg b{font-size:12.5px;display:block;margin-top:4px}.bdg small{font-size:10.5px;color:#6b7280}
 @media(max-width:340px){.bgrid{grid-template-columns:1fr 1fr}.avgrid{grid-template-columns:repeat(4,1fr)}}
+.ckrow{display:flex;flex-wrap:wrap;gap:8px}.ck{display:flex!important;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;font-weight:500!important;margin:0!important;background:#fff}.ck input{width:auto;margin:0}
 .warn{background:#fef3c7;border-radius:12px;padding:10px 12px;font-size:13px;color:#92400e}
 .steps{padding-left:20px;margin:8px 0}.steps li{margin:6px 0;font-size:13.5px}
 .lnk{word-break:break-all;font-size:12px;background:#f1f5f9;padding:8px 10px;border-radius:10px;margin:8px 0}
@@ -284,7 +285,7 @@ main,.card,.qcard{overflow-wrap:anywhere}
  ******************************************************************/
 var SCHOOL_KEY  = '__SCHOOL_KEY__';   // విద్యార్థుల కీ (జాయిన్ లింక్‌లో వెళ్తుంది)
 var TEACHER_KEY = '__TEACHER_KEY__';  // ఉపాధ్యాయుల కీ – ఎవరికీ ఇవ్వకండి
-var ALL_COLS = ['students','hw','events','doubts','notes','results','games','subs'];
+var ALL_COLS = ['students','hw','events','doubts','notes','results','games','subs','teachers'];
 var TEACHER_COLS = ['hw','events','notes'];
 var PRIV = ['students','results','doubts','subs'];  // విద్యార్థికి తన డేటా మాత్రమే
 var SUBJ = {tel:'తెలుగు', eng:'English', mat:'గణితం', evs:'పరిసరాల విజ్ఞానం'};
@@ -303,11 +304,38 @@ function json_(o) {
   return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);
 }
 
+/* ఉపాధ్యాయుల సొంత కీలు (ప్రధానోపాధ్యాయులు యాప్‌లో జోడిస్తారు) */
+function tkeys_() {
+  var c = CacheService.getScriptCache(), h = c.get('tkeys');
+  if (h) return JSON.parse(h);
+  var sh = db_(), n = sh.getLastRow(), out = {};
+  if (n > 1) {
+    var v = sh.getRange(2, 2, n - 1, 5).getValues();
+    for (var i = 0; i < v.length; i++) {
+      if (v[i][0] !== 'teachers') continue;
+      try { var d = JSON.parse(v[i][4]); if (!d.del && d.key) out[d.key] = {id: d.id, n: d.n, cls: d.cls || [], subs: d.subs || []}; } catch (x) {}
+    }
+  }
+  c.put('tkeys', JSON.stringify(out), 600);
+  return out;
+}
+function who_(k) {
+  if (k && k === TEACHER_KEY) return {isT: true, admin: true};
+  if (k && k === SCHOOL_KEY) return {isT: false};
+  var m = k ? tkeys_()[k] : null;
+  return m ? {isT: true, admin: false, me: m} : null;
+}
+function cleanT_(col, js, admin) {
+  if (col !== 'teachers' || admin) return js;
+  try { var d = JSON.parse(js); delete d.key; return JSON.stringify(d); } catch (x) { return js; }
+}
+
 /* డేటా చదవడం (pull) */
 function doGet(e) {
   var p = (e && e.parameter) || {};
-  var isT = p.k === TEACHER_KEY;
-  if (!isT && p.k !== SCHOOL_KEY) return json_({ok:false, err:'key'});
+  var w = who_(p.k);
+  if (!w) return json_({ok:false, err:'key'});
+  var isT = w.isT;
   var lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
     var sh = db_(), n = sh.getLastRow(), since = Number(p.since || 0), max = since, rows = [];
@@ -318,10 +346,10 @@ function doGet(e) {
         if (srv > max) max = srv;
         if (srv <= since) continue;
         if (!isT && PRIV.indexOf(v[i][1]) >= 0) { var o = ''; try { o = JSON.parse(v[i][5]).o || ''; } catch (x) {} if (!o || o !== p.dev) continue; }
-        rows.push([v[i][1], String(v[i][2]), v[i][5]]);
+        rows.push([v[i][1], String(v[i][2]), cleanT_(v[i][1], v[i][5], w.admin)]);
       }
     }
-    return json_({ok:true, now:max, rows:rows, teacher:isT});
+    return json_({ok:true, now:max, rows:rows, teacher:isT, admin:!!w.admin, me:w.me || null});
   } finally { lock.releaseLock(); }
 }
 
@@ -329,8 +357,9 @@ function doGet(e) {
 function doPost(e) {
   var b;
   try { b = JSON.parse(e.postData.contents); } catch (x) { return json_({ok:false, err:'bad'}); }
-  var isT = b.k === TEACHER_KEY;
-  if (!isT && b.k !== SCHOOL_KEY) return json_({ok:false, err:'key'});
+  var w = who_(b.k);
+  if (!w) return json_({ok:false, err:'key'});
+  var isT = w.isT, tch = false;
   var lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
     var sh = db_(), n = sh.getLastRow(), idx = {};
@@ -339,7 +368,8 @@ function doPost(e) {
     (b.recs || []).forEach(function (r) { if (r && r.col && r.id != null) uniq[r.col + '|' + r.id] = r; });
     Object.keys(uniq).forEach(function (key) {
       var r = uniq[key], d = r.data || {};
-      if (ALL_COLS.indexOf(r.col) < 0 || (TEACHER_COLS.indexOf(r.col) >= 0 && !isT)) { rej.push(key); return; }
+      if (ALL_COLS.indexOf(r.col) < 0 || (TEACHER_COLS.indexOf(r.col) >= 0 && !isT) || (r.col === 'teachers' && !w.admin)) { rej.push(key); return; }
+      if (r.col === 'teachers') tch = true;
       var row = idx[key];
       if (row) {
         var old = {};
@@ -355,7 +385,8 @@ function doPost(e) {
       done.push(key);
     });
     if (add.length) sh.getRange(sh.getLastRow() + 1, 1, add.length, 6).setValues(add);
-    return json_({ok:true, done:done, rej:rej, teacher:isT});
+    if (tch) CacheService.getScriptCache().remove('tkeys');
+    return json_({ok:true, done:done, rej:rej, teacher:isT, admin:!!w.admin});
   } finally { lock.releaseLock(); }
 }
 
@@ -403,7 +434,7 @@ function put_(name, head, rows) {
  * Deploy → New deployment → Web app → Execute as: Me → Anyone → Deploy
  * ప్రతి పాఠశాలకు వేరే షీట్ (S_కోడ్) – ఒకరి డేటా మరొకరికి కనిపించదు.
  ******************************************************************/
-var COLS = ['students','hw','events','doubts','notes','results','games','subs'];
+var COLS = ['students','hw','events','doubts','notes','results','games','subs','teachers'];
 var TCOLS = ['hw','events','notes'];
 var PRIV = ['students','results','doubts','subs'];  // విద్యార్థికి తన డేటా మాత్రమే
 var MAX_REG_PER_HOUR = 40;
@@ -450,11 +481,32 @@ function db_(id) {
   }
   return sh;
 }
+/* ఉపాధ్యాయుల సొంత కీలు – ప్రధానోపాధ్యాయులు యాప్‌లో జోడిస్తారు */
+function tkeys_(id) {
+  var c = CacheService.getScriptCache(), h = c.get('tk_' + id);
+  if (h) return JSON.parse(h);
+  var sh = db_(id), n = sh.getLastRow(), out = {};
+  if (n > 1) {
+    var v = sh.getRange(2, 2, n - 1, 5).getValues();
+    for (var i = 0; i < v.length; i++) {
+      if (v[i][0] !== 'teachers') continue;
+      try { var d = JSON.parse(v[i][4]); if (!d.del && d.key) out[d.key] = {id: d.id, n: d.n, cls: d.cls || [], subs: d.subs || []}; } catch (x) {}
+    }
+  }
+  c.put('tk_' + id, JSON.stringify(out), 600);
+  return out;
+}
+function cleanT_(col, js, admin) {
+  if (col !== 'teachers' || admin) return js;
+  try { var d = JSON.parse(js); delete d.key; return JSON.stringify(d); } catch (x) { return js; }
+}
 function auth_(p) {
   var sc = findSchool_(String(p.s || '').toUpperCase());
   if (!sc) return {err: 'school'};
-  if (p.k && p.k === sc.tkey) return {sc: sc, isT: true};
+  if (p.k && p.k === sc.tkey) return {sc: sc, isT: true, admin: true};
   if (p.k && p.k === sc.skey) return {sc: sc, isT: false};
+  var m = p.k ? tkeys_(sc.id)[p.k] : null;
+  if (m) return {sc: sc, isT: true, admin: false, me: m};
   return {err: 'key'};
 }
 
@@ -477,12 +529,12 @@ function doGet(e) {
     for (var i = 0; i < v.length; i++) {
       if (Number(v[i][3]) <= since) continue;
       if (!a.isT && PRIV.indexOf(v[i][1]) >= 0) { var o = ''; try { o = JSON.parse(v[i][5]).o || ''; } catch (x) {} if (!o || o !== p.dev) continue; }
-      rows.push([v[i][1], String(v[i][2]), v[i][5]]);
+      rows.push([v[i][1], String(v[i][2]), cleanT_(v[i][1], v[i][5], a.admin)]);
     }
   }
   // 30 సెకన్లు వెనక్కి – అప్పుడే రాస్తున్న మార్పులు మిస్ కాకుండా
   var now = Math.max(since, Date.now() - 30000);
-  return json_({ok: true, now: now, rows: rows, teacher: a.isT, school: a.sc.name, skey: a.isT ? a.sc.skey : undefined});
+  return json_({ok: true, now: now, rows: rows, teacher: a.isT, admin: !!a.admin, me: a.me || null, school: a.sc.name, skey: a.isT ? a.sc.skey : undefined});
 }
 
 /* నమోదు & డేటా పంపడం */
@@ -496,11 +548,12 @@ function doPost(e) {
   try {
     var sh = db_(a.sc.id), n = sh.getLastRow(), idx = {};
     if (n > 1) sh.getRange(2, 1, n - 1, 1).getValues().forEach(function (r, i) { idx[r[0]] = i + 2; });
-    var srv = Date.now(), done = [], rej = [], add = [], uniq = {};
+    var srv = Date.now(), done = [], rej = [], add = [], uniq = {}, tch = false;
     (b.recs || []).slice(0, 300).forEach(function (r) { if (r && r.col && r.id != null) uniq[r.col + '|' + r.id] = r; });
     Object.keys(uniq).forEach(function (key) {
       var r = uniq[key], d = r.data || {}, js = JSON.stringify(d);
-      if (COLS.indexOf(r.col) < 0 || (TCOLS.indexOf(r.col) >= 0 && !a.isT) || js.length > 20000) { rej.push(key); return; }
+      if (COLS.indexOf(r.col) < 0 || (TCOLS.indexOf(r.col) >= 0 && !a.isT) || (r.col === 'teachers' && !a.admin) || js.length > 20000) { rej.push(key); return; }
+      if (r.col === 'teachers') tch = true;
       var row = idx[key];
       if (row) {
         var old = {};
@@ -516,7 +569,8 @@ function doPost(e) {
       done.push(key);
     });
     if (add.length) sh.getRange(sh.getLastRow() + 1, 1, add.length, 6).setValues(add);
-    return json_({ok: true, done: done, rej: rej, teacher: a.isT});
+    if (tch) CacheService.getScriptCache().remove('tk_' + a.sc.id);
+    return json_({ok: true, done: done, rej: rej, teacher: a.isT, admin: !!a.admin});
   } finally { lock.releaseLock(); }
 }
 
@@ -721,8 +775,8 @@ function ring(p,sz,col){sz=sz||96;col=col||'#f59e0b';const r=sz/2-8,C=2*Math.PI*
 function pctCls(p){return p>=80?'g':p>=50?'y':'r';}
 
 /* ---------- డేటా నిల్వ (ఆఫ్లైన్ + ఆన్‌లైన్ సింక్) ---------- */
-const COLS=['students','hw','events','doubts','notes','results','games','subs'];
-function def(){return {dev:'',offline:false,pub:'',pin:'1234',local:[],cur:null,students:[],results:[],games:[],hw:[],events:[],doubts:[],notes:[],subs:[],read:{},seeded:false,cfg:{type:''},q:{},last:{},lastSync:0};}
+const COLS=['students','hw','events','doubts','notes','results','games','subs','teachers'];
+function def(){return {dev:'',offline:false,pub:'',pin:'1234',local:[],cur:null,students:[],results:[],games:[],hw:[],events:[],doubts:[],notes:[],subs:[],teachers:[],read:{},seeded:false,cfg:{type:''},q:{},last:{},lastSync:0};}
 function load(){try{const d=JSON.parse(localStorage.getItem(LS));if(d)return migrate(Object.assign(def(),d));}catch(e){}return def();}
 function migrate(d){
  if(!d.dev){d.dev=newDev();const mine=new Set((d.local||[]).map(x=>x.n));if(d.cur)mine.add(d.cur.n);d.q=d.q||{};
@@ -738,7 +792,7 @@ function newDev(){const a='abcdefghijkmnpqrstuvwxyz23456789';let s='';const r=(w
 function save(){try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){toast('సేవ్ కాలేదు – స్టోరేజ్ నిండింది');}}
 function sid(n){return String(n).trim().toLowerCase().replace(/[\/\s.#$\[\]|]+/g,'_');}
 function live(col){const on=!!S.cfg.type;return S[col].filter(r=>!r.del&&!(on&&r.seed));}
-function put(col,rec){if(PRIV.includes(col)&&!rec.o)rec.o=S.dev;rec.upd=Math.max(Date.now(),(rec.upd||0)+1);const a=S[col];const i=a.findIndex(x=>x.id===rec.id);if(i>=0)a[i]=rec;else a.push(rec);
+function put(col,rec){if(PRIV.includes(col)&&!rec.o)rec.o=S.dev;if(['hw','events','notes'].includes(col)&&!rec.byn&&S.cfg.isT&&typeof tName==='function'){const t=tScope();rec.by=t?t.id:'admin';rec.byn=tName();}rec.upd=Math.max(Date.now(),(rec.upd||0)+1);const a=S[col];const i=a.findIndex(x=>x.id===rec.id);if(i>=0)a[i]=rec;else a.push(rec);
  if(S.cfg.type&&!rec.seed){S.q[col+'|'+rec.id]=rec.upd;Sync.later();}save();return rec;}
 function remove(col,id){const r=S[col].find(x=>x.id===id);if(r)put(col,Object.assign({},r,{del:true}));}
 function dropLocal(k){const i=k.indexOf('|');const col=k.slice(0,i),id=k.slice(i+1);if(S[col])S[col]=S[col].filter(x=>x.id!==id);}
@@ -794,7 +848,7 @@ const GS={
  key(){return S.cfg.tkey||S.cfg.key;},
  async pull(){const u=S.cfg.url+'?a=pull'+(S.cfg.sid?'&s='+encodeURIComponent(S.cfg.sid):'')+'&k='+encodeURIComponent(this.key())+'&dev='+encodeURIComponent(S.dev)+'&since='+(S.last.gs||0)+'&_='+Date.now();
   const j=await (await fetch(u)).json();if(!j.ok)throw new Error(gsErr(j.err));
-  S.cfg.isT=!!j.teacher;if(j.school)S.cfg.sname=j.school;if(j.skey)S.cfg.key=j.skey;
+  S.cfg.isT=!!j.teacher;if(j.school)S.cfg.sname=j.school;if(j.skey)S.cfg.key=j.skey;S.cfg.multiT=('admin' in j);S.cfg.admin=('admin' in j)?!!j.admin:!!j.teacher;S.cfg.tme=j.me||null;
   if(!j.teacher)PRIV.forEach(c=>{S[c]=S[c].filter(r=>!r.o||r.o===S.dev||S.q[c+'|'+r.id]);S[c]=S[c].filter(r=>r.o===S.dev||!r.n||S.local.some(l=>l.n===r.n));});if(j.now)S.last.gs=Math.max(S.last.gs||0,Number(j.now));
   applyIncoming((j.rows||[]).map(([col,id,js])=>{try{return [col,JSON.parse(js)];}catch(e){return [col,null];}}));},
  async push(){const ks=Object.keys(S.q);if(!ks.length)return;const sent={};
@@ -1023,9 +1077,9 @@ function toggleRead(k,s,i){const m=readMap();if(m[k])delete m[k];else{m[k]=1;toa
 /* ---------- సందేహాలు ---------- */
 V.doubts=()=>{const mine=live('doubts').filter(d=>d.n===me()).slice().reverse();const sel=param.s||subjectsFor(S.cur.c)[0];
  return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>💬 సందేహం అడుగు</h2></div>
-<div class="card"><label>సబ్జెక్ట్</label><select id="dsub">${subjectsFor(S.cur.c).map(s=>`<option value="${s}" ${s===sel?'selected':''}>${SUBJ[s].n}</option>`).join('')}</select>
+<div class="card"><label>సబ్జెక్ట్</label><select id="dsub" onchange="const e=document.getElementById('dto');if(e)e.textContent='👩‍🏫 '+doubtTo(S.cur.c,this.value)+' గారికి వెళ్తుంది'">${subjectsFor(S.cur.c).map(s=>`<option value="${s}" ${s===sel?'selected':''}>${SUBJ[s].n}</option>`).join('')}</select>${S.cfg.type?`<small class="mut" id="dto">👩‍🏫 ${esc(doubtTo(S.cur.c,sel))} గారికి వెళ్తుంది</small>`:''}
 <label>నీ సందేహం రాయి</label><textarea id="dtx" rows="3" placeholder="ఉదా: భిన్నాలు ఎలా కలపాలి?"></textarea><button class="btn" onclick="askDoubt()">పంపు ➤</button></div>
-<h4 class="sec">నా సందేహాలు (${mine.length})</h4>${mine.length?mine.map(d=>`<div class="dq"><small>${SUBJ[d.s].n} • ${fmtD(d.d)}</small><p>❓ ${esc(d.q)}</p>${d.r?`<div class="ans">👩‍🏫 ${esc(d.r)}</div>`:'<div class="wait">⏳ ఉపాధ్యాయుల జవాబు కోసం వేచి ఉంది</div>'}</div>`).join(''):'<div class="empty">ఇంకా సందేహాలు అడగలేదు</div>'}`;};
+<h4 class="sec">నా సందేహాలు (${mine.length})</h4>${mine.length?mine.map(d=>`<div class="dq"><small>${SUBJ[d.s].n} • ${fmtD(d.d)}</small><p>❓ ${esc(d.q)}</p>${d.r?`<div class="ans">👩‍🏫 ${d.rb?'<b>'+esc(d.rb)+':</b> ':''}${esc(d.r)}</div>`:'<div class="wait">⏳ ఉపాధ్యాయుల జవాబు కోసం వేచి ఉంది</div>'}</div>`).join(''):'<div class="empty">ఇంకా సందేహాలు అడగలేదు</div>'}`;};
 function askDoubt(){const q=$('#dtx').value.trim();if(!q)return toast('సందేహం రాయి');put('doubts',{id:uid(),n:me(),c:S.cur.c,s:$('#dsub').value,q,d:new Date().toISOString(),r:''});toast('సందేహం ఉపాధ్యాయులకు పంపబడింది ✓');go('doubts');}
 
 /* ---------- ప్రశ్నల తయారీ ---------- */
@@ -1166,7 +1220,7 @@ V.gamerun=()=>{const g=GAMES[G.g];
 
 /* ---------- హోంవర్క్ ---------- */
 function hwCard(h){const sd=subOf(h);
- return `<div class="hw" style="background:${SUBJ[h.s].bg}"><div class="hwt"><span>${SUBJ[h.s].ic}</span><b>${esc(h.t)}</b></div>${h.x?`<p>${esc(h.x)}</p>`:''}${dueText(h)}
+ return `<div class="hw" style="background:${SUBJ[h.s].bg}"><div class="hwt"><span>${SUBJ[h.s].ic}</span><b>${esc(h.t)}</b></div>${h.x?`<p>${esc(h.x)}</p>`:''}${h.byn?`<span class="st" style="color:#475569">👩‍🏫 ${esc(h.byn)}</span>`:''}${dueText(h)}
 <div class="hwa">${sd?`<button class="lk" onclick="unsubHw('${h.id}')">↺ రద్దు</button><button class="lk" onclick="go('subject',{s:'${h.s}'})">పాఠం చూడు ▸</button>`:`<button class="lk" onclick="go('subject',{s:'${h.s}'})">పాఠం ▸</button><button class="lk b" onclick="subHw('${h.id}')">పూర్తి చేశాను ✓</button>`}</div></div>`;}
 V.homework=()=>{const tab=param.tab||'all';const all=myHw();const pend=all.filter(h=>!subOf(h)),done=all.filter(h=>subOf(h));const list=tab==='all'?all:tab==='pend'?pend:done;
  return `<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>నా హోంవర్క్‌లు</h2></div>
@@ -1175,45 +1229,80 @@ V.homework=()=>{const tab=param.tab||'all';const all=myHw();const pend=all.filte
 function subHw(id){const h=live('hw').find(x=>x.id===id);if(!h)return;put('subs',{id:h.id+'|'+sid(me())+'@'+S.dev.slice(0,8),hw:h.id,n:me(),c:S.cur.c,d:new Date().toISOString()});toast('శభాష్! హోంవర్క్ సమర్పించావు ✓');render();}
 function unsubHw(id){live('subs').filter(x=>x.hw===id&&x.n===me()).forEach(x=>remove('subs',x.id));render();}
 
+/* ---------- 👥 చాలా మంది ఉపాధ్యాయులు (తరగతి / సబ్జెక్టు వారీ) ---------- */
+function tScope(){const c=S.cfg;return (c.type&&c.isT&&c.admin===false&&c.tme)?c.tme:null;}
+function isAdmin(){const c=S.cfg;return !c.type||c.admin!==false;}
+function myCls(){const t=tScope();return t&&t.cls&&t.cls.length?t.cls.map(Number).sort():[1,2,3,4,5];}
+function mySubs(c){const t=tScope();const all=subjectsFor(+c||5);return t&&t.subs&&t.subs.length?all.filter(s=>t.subs.includes(s)):all;}
+function canSee(c,s){const t=tScope();if(!t)return true;if(+c&&!myCls().includes(+c))return false;if(s&&t.subs&&t.subs.length&&!t.subs.includes(s))return false;return true;}
+function tName(){const c=S.cfg,t=tScope();return t?t.n:(c.tname||'ప్రధానోపాధ్యాయులు');}
+function subsTxt(a){return a&&a.length?a.map(s=>SUBJ[s]?SUBJ[s].n:s).join(', '):'అన్ని సబ్జెక్టులు';}
+function whoBanner(){const c=S.cfg;if(!c.type)return '';const t=tScope();
+ return `<div class="sbadge" style="margin-bottom:10px">👩‍🏫 ${esc(tName())} • ${t?'తరగతులు '+myCls().join(', ')+' • '+esc(subsTxt(t.subs)):'ప్రధానోపాధ్యాయులు (అన్నీ)'}</div>`;}
+function doubtTo(c,s){const ts=live('teachers').filter(t=>(t.cls||[]).map(Number).includes(+c)&&(!t.subs||!t.subs.length||t.subs.includes(s)));return ts.length?ts.map(t=>t.n).join(', '):'ఉపాధ్యాయులు';}
+function teacherLink(t){const c=S.cfg,b=appBase();return b?b+'#join='+b64e(Object.assign({t:'gs',u:c.url,k:c.key,tk:t.key},c.sid?{s:c.sid}:{})):'';}
+function teacherMsg(id){const t=live('teachers').find(x=>x.id===id);if(!t)return '';const c=S.cfg;
+ return `👩‍🏫 ${t.n} గారు,\nరాయ్ విద్యార్థి యాప్‌లో మీరు ${c.sname||'మన పాఠశాల'} ఉపాధ్యాయులుగా జోడించబడ్డారు.\nతరగతులు: ${(t.cls||[]).join(', ')} • ${subsTxt(t.subs)}\n\n👉 ఈ లింక్ మీ ఫోన్‌లో తెరవండి (ఆటోగా లాగిన్ అవుతుంది):\n${teacherLink(t)}\n`+
+  (c.sid?`\nలేదా యాప్ → నేను ఉపాధ్యాయుడు → ఇప్పటికే నమోదు చేశాను:\nపాఠశాల కోడ్: ${c.sid}\nమీ టీచర్ కీ: ${t.key}\n`:'')+`\n🔐 ఈ లింక్ / కీ ఎవరికీ ఇవ్వకండి.\n– రాయ్ ఎడ్యుకేషన్`;}
+function shareTeacher(id){window.open('https://wa.me/?text='+encodeURIComponent(teacherMsg(id)),'_blank');}
+function tcAll(){const a=document.getElementById('tcall');document.querySelectorAll('.tcs').forEach(x=>{x.disabled=a.checked;if(a.checked)x.checked=false;});}
+function addTeacher(){const n=$('#tcn').value.trim();if(!n)return toast('పేరు రాయండి');const cls=[...document.querySelectorAll('.tcc:checked')].map(x=>+x.value);
+ if(!cls.length)return toast('కనీసం ఒక తరగతి ఎంచుకోండి');const all=$('#tcall').checked;const subs=all?[]:[...document.querySelectorAll('.tcs:checked')].map(x=>x.value);
+ if(!all&&!subs.length)return toast('సబ్జెక్టు ఎంచుకోండి');const id=uid();put('teachers',{id,n,cls,subs,key:'t'+newDev().slice(0,15)});toast(n+' జోడించబడ్డారు ✓');go('teacher',{t:'tc',nt:id});}
+function delTeacher(id){const t=live('teachers').find(x=>x.id===id);if(!t||!confirm(t.n+' గారిని తొలగించాలా? వారి కీ / లింక్ వెంటనే పనిచేయదు.'))return;remove('teachers',id);toast('తొలగించబడ్డారు');go('teacher',{t:'tc'});}
+function tpTc(){const c=S.cfg,list=live('teachers');
+ return `${c.multiT===false?'<div class="warn" style="margin-bottom:10px">⚠️ మీ సర్వర్ కోడ్ పాతది. ఉపాధ్యాయుల సొంత కీలు పనిచేయాలంటే Apps Script లో కొత్త కోడ్ పెట్టి <b>Manage deployments → ✏️ → New version</b> చేయండి.</div>':''}
+<div class="card"><h3>👥 ఉపాధ్యాయుని జోడించు</h3><p class="mut">ప్రతి ఉపాధ్యాయునికి సొంత లింక్ / కీ వస్తుంది. వారికి తమ తరగతులు, సబ్జెక్టుల హోంవర్క్, సందేహాలు, రిపోర్ట్ మాత్రమే కనిపిస్తాయి. పిల్లలకు అదే పాఠశాల కోడ్.</p>
+<label>పేరు</label><input id="tcn" maxlength="40" placeholder="ఉదా: లక్ష్మి టీచర్">
+<label>తరగతులు</label><div class="ckrow">${[1,2,3,4,5].map(k=>`<label class="ck"><input type="checkbox" class="tcc" value="${k}"> ${k}వ</label>`).join('')}</div>
+<label>సబ్జెక్టులు</label><div class="ckrow"><label class="ck"><input type="checkbox" id="tcall" checked onchange="tcAll()"> అన్నీ (తరగతి టీచర్)</label>${['tel','eng','mat','evs'].map(s=>`<label class="ck"><input type="checkbox" class="tcs" value="${s}" disabled> ${SUBJ[s].n}</label>`).join('')}</div>
+<p class="mut" style="margin-top:8px">ఉదాహరణలు: ఒక తరగతికి ఒకరు → 3వ + అన్నీ • 1,2 ఒకరు → 1వ, 2వ + అన్నీ • సబ్జెక్టు టీచర్ → 3,4,5 + గణితం</p>
+<button class="btn" onclick="addTeacher()">➕ ఉపాధ్యాయుని జోడించు</button></div>
+<h4 class="sec">ఉపాధ్యాయులు (${list.length+1})</h4>
+<div class="titem"><div><b>⭐ ${esc(c.tname||'ప్రధానోపాధ్యాయులు')}</b><small>ప్రధానోపాధ్యాయులు • అన్ని తరగతులు, సబ్జెక్టులు • ఉపాధ్యాయులను జోడించగలరు</small></div></div>
+${list.map(t=>`<div class="titem" ${param.nt===t.id?'style="outline:3px solid #2aa6a6"':''}><div><b>👩‍🏫 ${esc(t.n)}</b><small>తరగతులు: ${(t.cls||[]).join(', ')} • ${esc(subsTxt(t.subs))}</small><small>కీ: <code>${esc(t.key||'')}</code></small>
+<div class="row2" style="margin-top:6px"><button class="btn sm" style="background:#25d366;margin-top:4px" onclick="shareTeacher('${t.id}')">📲 WhatsApp లో పంపు</button><button class="btn sm ghost" style="margin-top:4px" onclick="copyText(teacherMsg('${t.id}'))">📋 కాపీ</button></div></div><button class="del" onclick="delTeacher('${t.id}')">తొలగించు</button></div>`).join('')}
+<p class="mut" style="margin-top:8px">ఉపాధ్యాయుడు స్కూల్ మారితే “తొలగించు” నొక్కండి – వారి కీ వెంటనే ఆగిపోతుంది.</p>`;}
+
 /* ---------- ఉపాధ్యాయుల ప్యానెల్ ---------- */
 function tLogin(){if($('#tpin').value===S.pin){tAuth=true;go('teacher');}else toast('PIN తప్పు');}
 function tBack(){tAuth=false;go(S.cur||S.cfg.type||S.offline?'home':'welcome');}
-const TSEC=[['sy','☁️ ఆన్‌లైన్ సింక్'],['hw','📒 హోంవర్క్'],['ev','📅 ఈవెంట్/టెస్ట్'],['dq','💬 సందేహాలు'],['nt','📖 పాఠం నోట్స్'],['lb','📚 పుస్తకాలు/టూల్స్'],['fl','📢 ఫ్లాష్/ఫోటోలు'],['rp','📊 రిపోర్ట్'],['st','⚙️ సెట్టింగ్స్']];
-function clsSel(id,all){return `<select id="${id}" onchange="fillSubj('${id}','${id}s')">${all?'<option value="0">అన్ని తరగతులు</option>':''}${[1,2,3,4,5].map(c=>`<option value="${c}">${c}వ తరగతి</option>`).join('')}</select>`;}
-function subjOpts(c){return subjectsFor(+c||5).map(s=>`<option value="${s}">${SUBJ[s].n}</option>`).join('');}
+const TSEC=[['sy','☁️ ఆన్‌లైన్ సింక్'],['tc','👥 ఉపాధ్యాయులు'],['hw','📒 హోంవర్క్'],['ev','📅 ఈవెంట్/టెస్ట్'],['dq','💬 సందేహాలు'],['nt','📖 పాఠం నోట్స్'],['lb','📚 పుస్తకాలు/టూల్స్'],['fl','📢 ఫ్లాష్/ఫోటోలు'],['rp','📊 రిపోర్ట్'],['st','⚙️ సెట్టింగ్స్']];
+function clsSel(id,all){return `<select id="${id}" onchange="fillSubj('${id}','${id}s')">${all&&isAdmin()?'<option value="0">అన్ని తరగతులు</option>':''}${myCls().map(c=>`<option value="${c}">${c}వ తరగతి</option>`).join('')}</select>`;}
+function subjOpts(c){return mySubs(c).map(s=>`<option value="${s}">${SUBJ[s].n}</option>`).join('');}
 function fillSubj(cid,sid){const s=document.getElementById(sid);if(s)s.innerHTML=subjOpts(document.getElementById(cid).value);}
 V.teacher=()=>{if(!tAuth)return `<div class="login"><div class="logo">👩‍🏫</div><h1>ఉపాధ్యాయుల ప్యానెల్</h1><p>హోంవర్క్, ఈవెంట్లు, సందేహాలు, రిపోర్టులు</p><div class="card"><label>PIN నమోదు చేయండి</label><input id="tpin" type="password" inputmode="numeric" maxlength="8" onkeydown="if(event.key==='Enter')tLogin()"><button class="btn" onclick="tLogin()">ప్రవేశించు</button><p class="mut" style="margin-top:10px">మొదటి PIN: 1234 (సెట్టింగ్స్‌లో మార్చుకోండి)</p></div><button class="link" onclick="tBack()">← వెనుకకు</button></div>`;
- const sec=param.t||'hw';const un=live('doubts').filter(d=>!d.r).length;
+ const sec=param.t||'hw';const un=live('doubts').filter(d=>!d.r&&canSee(d.c,d.s)).length;
  return `<div class="bar"><button class="ib" onclick="tBack()">←</button><h2>👩‍🏫 ఉపాధ్యాయుల ప్యానెల్</h2></div>
 ${sec!=='sy'&&!S.cfg.type?`<div class="warn" style="margin-bottom:10px">📴 ఆఫ్లైన్ మోడ్ – మీరు ఇచ్చే హోంవర్క్ ఈ ఫోన్‌లోనే ఉంటుంది. విద్యార్థుల ఫోన్లకు చేరాలంటే <a onclick="go('teacher',{t:'sy'})">☁️ ఆన్‌లైన్ సింక్</a> సెటప్ చేయండి.</div>`:''}${sec!=='sy'&&S.cfg.type&&!S.cfg.isT?`<div class="warn" style="margin-bottom:10px">⚠️ సర్వర్‌లో ఉపాధ్యాయ అనుమతి లేదు – <a onclick="go('teacher',{t:'sy'})">సింక్ సెట్టింగ్స్</a> చూడండి.</div>`:''}
-<div class="tchips">${TSEC.map(([k,n])=>`<button class="${sec===k?'on':''}" onclick="go('teacher',{t:'${k}'})">${n}${k==='dq'&&un?' ('+un+')':''}</button>`).join('')}</div>${TP[sec]()}`;};
-const TP={};
-TP.hw=()=>`<div class="card"><h3>కొత్త హోంవర్క్ ఇవ్వండి</h3><div class="g2"><div><label>తరగతి</label>${clsSel('hc')}</div><div><label>సబ్జెక్ట్</label><select id="hcs">${subjOpts(1)}</select></div></div>
+${whoBanner()}<div class="tchips">${TSEC.filter(([k])=>k!=='tc'||(isAdmin()&&S.cfg.type==='gs')).map(([k,n])=>`<button class="${sec===k?'on':''}" onclick="go('teacher',{t:'${k}'})">${n}${k==='dq'&&un?' ('+un+')':''}</button>`).join('')}</div>${TP[sec]()}`;};
+const TP={};TP.tc=tpTc;
+TP.hw=()=>`<div class="card"><h3>కొత్త హోంవర్క్ ఇవ్వండి</h3><div class="g2"><div><label>తరగతి</label>${clsSel('hc')}</div><div><label>సబ్జెక్ట్</label><select id="hcs">${subjOpts(myCls()[0])}</select></div></div>
 <label>శీర్షిక</label><input id="ht" placeholder="ఉదా: ఎక్కాలు 2 నుండి 5 రాయండి"><label>వివరాలు (ఐచ్ఛికం)</label><textarea id="hx" rows="2"></textarea>
 <label>గడువు తేదీ</label><input id="hd" type="date" value="${addDays(todayS(),1)}"><button class="btn" onclick="addHw()">➕ జోడించు</button></div>
-<h4 class="sec">ఇచ్చిన హోంవర్క్‌లు (${live('hw').length})</h4>${live('hw').sort((a,b)=>a.due<b.due?1:-1).map(h=>{const who=live('subs').filter(x=>x.hw===h.id).map(x=>x.n);return `<div class="titem"><div><b>${esc(h.t)}</b><small>${h.c}వ తరగతి • ${SUBJ[h.s].n} • గడువు ${fmtD(h.due)}${h.seed?' • (నమూనా)':''}</small><small>✓ ${who.length} మంది సమర్పించారు${who.length?': '+who.map(esc).join(', '):''}</small></div><button class="del" onclick="delItem('hw','${h.id}')">తొలగించు</button></div>`;}).join('')||'<div class="empty">లేవు</div>'}`;
+<h4 class="sec">ఇచ్చిన హోంవర్క్‌లు (${live('hw').filter(h=>canSee(h.c,h.s)).length})</h4>${live('hw').filter(h=>canSee(h.c,h.s)).sort((a,b)=>a.due<b.due?1:-1).map(h=>{const who=live('subs').filter(x=>x.hw===h.id).map(x=>x.n);return `<div class="titem"><div><b>${esc(h.t)}</b><small>${h.c}వ తరగతి • ${SUBJ[h.s].n} • గడువు ${fmtD(h.due)}${h.seed?' • (నమూనా)':''}${h.byn?' • 👩‍🏫 '+esc(h.byn):''}</small><small>✓ ${who.length} మంది సమర్పించారు${who.length?': '+who.map(esc).join(', '):''}</small></div><button class="del" onclick="delItem('hw','${h.id}')">తొలగించు</button></div>`;}).join('')||'<div class="empty">లేవు</div>'}`;
 function addHw(){const t=$('#ht').value.trim();if(!t)return toast('శీర్షిక రాయండి');put('hw',{id:uid(),c:+$('#hc').value,s:$('#hcs').value,t,x:$('#hx').value.trim(),due:$('#hd').value||addDays(todayS(),1)});toast('హోంవర్క్ జోడించబడింది ✓');go('teacher',{t:'hw'});}
 TP.ev=()=>`<div class="card"><h3>ఈవెంట్ / టెస్ట్ / సెలవు</h3><label>శీర్షిక</label><input id="et" placeholder="ఉదా: తల్లిదండ్రుల సమావేశం">
 <div class="g2"><div><label>తేదీ</label><input id="ed" type="date" value="${todayS()}"></div><div><label>సమయం</label><input id="etm" type="time" value="10:00"></div></div>
 <div class="g2"><div><label>తరగతి</label>${clsSel('ec',true)}</div><div><label>రకం</label><select id="ety"><option value="ev">ఈవెంట్</option><option value="test">టెస్ట్</option><option value="hol">సెలవు</option><option value="live">లైవ్ క్లాస్</option></select></div></div>
 <label>లైవ్ క్లాస్ లింక్ (Google Meet / YouTube) – ఐచ్ఛికం</label><input id="elk" placeholder="https://meet.google.com/...">
 <button class="btn" onclick="addEv()">➕ జోడించు</button></div>
-<h4 class="sec">ఈవెంట్లు (${live('events').length})</h4>${live('events').sort((a,b)=>a.d<b.d?-1:1).map(e=>`<div class="titem"><div><b>${esc(e.t)}</b><small>${fmtD(e.d)} • ${to12(e.tm)} • ${e.c?e.c+'వ తరగతి':'అన్ని తరగతులు'} • ${EVT[e.ty]}${e.link?' • 🔗':''}${e.seed?' • (నమూనా)':''}</small></div><button class="del" onclick="delItem('events','${e.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}`;
+<h4 class="sec">ఈవెంట్లు (${live('events').filter(e=>canSee(e.c)).length})</h4>${live('events').filter(e=>canSee(e.c)).sort((a,b)=>a.d<b.d?-1:1).map(e=>`<div class="titem"><div><b>${esc(e.t)}</b><small>${fmtD(e.d)} • ${to12(e.tm)} • ${e.c?e.c+'వ తరగతి':'అన్ని తరగతులు'} • ${EVT[e.ty]}${e.link?' • 🔗':''}${e.seed?' • (నమూనా)':''}</small></div><button class="del" onclick="delItem('events','${e.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}`;
 function addEv(){const t=$('#et').value.trim();if(!t)return toast('శీర్షిక రాయండి');const lk=$('#elk').value.trim();if(lk&&!/^https:\/\//.test(lk))return toast('లింక్ https:// తో మొదలవ్వాలి');put('events',{id:uid(),t,d:$('#ed').value||todayS(),tm:$('#etm').value,c:+$('#ec').value,ty:$('#ety').value,link:lk});toast('ఈవెంట్ జోడించబడింది ✓');go('teacher',{t:'ev'});}
-TP.dq=()=>{const ds=live('doubts').sort((a,b)=>(!!a.r)-(!!b.r)||(a.d<b.d?1:-1));
+TP.dq=()=>{const ds=live('doubts').filter(d=>canSee(d.c,d.s)).sort((a,b)=>(!!a.r)-(!!b.r)||(a.d<b.d?1:-1));
  return ds.length?ds.map(d=>`<div class="card"><small class="mut">👤 ${esc(d.n)} • ${d.c}వ తరగతి • ${SUBJ[d.s].n} • ${fmtD(d.d)}</small><p style="margin:6px 0;font-weight:600">❓ ${esc(d.q)}</p>
 <textarea id="r_${d.id}" rows="2" placeholder="జవాబు రాయండి...">${esc(d.r)}</textarea><div class="row2"><button class="btn sm" onclick="replyD('${d.id}')">${d.r?'జవాబు మార్చు':'జవాబు పంపు'}</button><button class="del" style="margin-top:10px" onclick="delItem('doubts','${d.id}')">తొలగించు</button></div></div>`).join(''):'<div class="empty">సందేహాలు లేవు</div>';};
-function replyD(id){const d=live('doubts').find(x=>x.id===id);const v=document.getElementById('r_'+id).value.trim();if(!v)return toast('జవాబు రాయండి');put('doubts',Object.assign({},d,{r:v,ra:Date.now()}));toast('జవాబు సేవ్ అయింది ✓');go('teacher',{t:'dq'});}
-TP.nt=()=>`<div class="card"><h3>పాఠం నోట్ జోడించండి</h3><p class="mut">విద్యార్థుల “సెల్ఫ్ లెర్న్” లో కొత్త పాఠంగా కనిపిస్తుంది.</p><div class="g2"><div><label>తరగతి</label>${clsSel('nc')}</div><div><label>సబ్జెక్ట్</label><select id="ncs">${subjOpts(1)}</select></div></div>
+function replyD(id){const d=live('doubts').find(x=>x.id===id);const v=document.getElementById('r_'+id).value.trim();if(!v)return toast('జవాబు రాయండి');put('doubts',Object.assign({},d,{r:v,ra:Date.now(),rb:tName()}));toast('జవాబు సేవ్ అయింది ✓');go('teacher',{t:'dq'});}
+TP.nt=()=>`<div class="card"><h3>పాఠం నోట్ జోడించండి</h3><p class="mut">విద్యార్థుల “సెల్ఫ్ లెర్న్” లో కొత్త పాఠంగా కనిపిస్తుంది.</p><div class="g2"><div><label>తరగతి</label>${clsSel('nc')}</div><div><label>సబ్జెక్ట్</label><select id="ncs">${subjOpts(myCls()[0])}</select></div></div>
 <label>పాఠం పేరు</label><input id="ntt" placeholder="ఉదా: మన గ్రామం"><label>ముఖ్యాంశాలు (ఒక్కో లైన్ = ఒక పాయింట్)</label><textarea id="ntx" rows="5"></textarea><button class="btn" onclick="addNote()">➕ జోడించు</button></div>
-<h4 class="sec">టీచర్ నోట్స్ (${live('notes').filter(n=>!n.kind).length})</h4>${live('notes').filter(n=>!n.kind).map(n=>`<div class="titem"><div><b>${esc(n.t)}</b><small>${n.c}వ తరగతి • ${SUBJ[n.s].n}</small></div><button class="del" onclick="delItem('notes','${n.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}`;
+<h4 class="sec">టీచర్ నోట్స్ (${live('notes').filter(n=>!n.kind&&canSee(n.c,n.s)).length})</h4>${live('notes').filter(n=>!n.kind&&canSee(n.c,n.s)).map(n=>`<div class="titem"><div><b>${esc(n.t)}</b><small>${n.c}వ తరగతి • ${SUBJ[n.s].n}</small></div><button class="del" onclick="delItem('notes','${n.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}`;
 function addNote(){const t=$('#ntt').value.trim(),x=$('#ntx').value.trim();if(!t||!x)return toast('పేరు, ముఖ్యాంశాలు రాయండి');put('notes',{id:uid(),c:+$('#nc').value,s:$('#ncs').value,t,x});toast('పాఠం జోడించబడింది ✓');go('teacher',{t:'nt'});}
-TP.rp=()=>{const f=param.f||0;const seen={};const st=live('students').filter(s=>(!f||s.c===f)&&!seen[s.n+'|'+s.c]&&(seen[s.n+'|'+s.c]=1));
+TP.rp=()=>{const f=param.f||0;const seen={};const st=live('students').filter(s=>myCls().includes(+s.c)&&(!f||s.c===f)&&!seen[s.n+'|'+s.c]&&(seen[s.n+'|'+s.c]=1));
  const rows=st.map(s=>{const rs=live('results').filter(r=>r.n===s.n&&r.c===s.c);const avg=avgOf(rs);const by=subjectsFor(s.c).map(sb=>{const x=rs.filter(r=>r.sb===sb);return x.length?avgOf(x)+'%':'–';});
   const hw=live('hw').filter(h=>h.c===s.c);const sub=hw.filter(h=>live('subs').some(x=>x.hw===h.id&&x.n===s.n)).length;const rd=Object.keys(S.read[s.n]||{}).filter(k=>k.startsWith(s.c+'-')).length;
   const gb=Object.keys(GAMES).map(g=>{const v=live('games').filter(x=>x.n===s.n&&x.g===g&&x.c===s.c).map(x=>x.s);return v.length?Math.max(...v):'–';});
   return `<tr><td><b>${esc(s.n)}</b></td><td>${s.c}</td><td>${rs.length}</td><td>${rs.length?`<span class="pct ${pctCls(avg)}">${avg}%</span>`:'–'}</td><td>${by.join(' / ')}</td><td>${rd}</td><td>${sub}/${hw.length}</td><td>${gb.join(' / ')}</td><td><button class="del" onclick="delStudent('${esc(s.n).replace(/'/g,'')}',${s.c})">🗑️</button></td></tr>`;}).join('');
- return `<div class="tchips">${[0,1,2,3,4,5].map(c=>`<button class="${f===c?'on':''}" onclick="go('teacher',{t:'rp',f:${c}})">${c?c+'వ తరగతి':'అన్నీ'}</button>`).join('')}</div>
+ return `<div class="tchips">${[0].concat(myCls()).map(c=>`<button class="${f===c?'on':''}" onclick="go('teacher',{t:'rp',f:${c}})">${c?c+'వ తరగతి':'అన్నీ'}</button>`).join('')}</div>
 ${st.length?`<div class="tscroll"><table class="tbl"><tr><th>పేరు</th><th>తర.</th><th>టెస్టులు</th><th>సగటు</th><th>తెలుగు/Eng/గణితం/EVS</th><th>చదివిన పాఠాలు</th><th>హోంవర్క్</th><th>ఆటలు MM/EW/తెలుగు</th><th>తొలగించు</th></tr>${rows}</table></div>`:'<div class="empty">విద్యార్థులు లేరు</div>'}
 <p class="mut" style="margin-top:10px">${S.cfg.type?'☁️ అన్ని ఫోన్ల నుండి సింక్ అయిన డేటా. “చదివిన పాఠాలు” ఆ విద్యార్థి ఫోన్‌లోనే ఉంటుంది.':'📴 ఈ ఫోన్‌లో లాగిన్ అయిన విద్యార్థుల డేటా మాత్రమే.'}</p>`;};
 TP.st=()=>`<div class="card"><h3>🔒 గోప్యత</h3><p class="mut">తల్లిదండ్రులకు చూపించడానికి.</p><button class="btn sm ghost" onclick="tAuth=false;go('privacy')">గోప్యత & నిబంధనలు చూడు</button></div><div class="card"><h3>🔐 PIN మార్చండి</h3><input id="np" type="password" inputmode="numeric" maxlength="8" placeholder="కొత్త PIN (4–8 అంకెలు)"><button class="btn" onclick="chPin()">మార్చు</button></div>
@@ -1268,7 +1357,7 @@ async function regSchool(fromWel){const name=$('#rgn').value.trim(),place=$('#rg
 async function loginSchool(fromWel){const sid=$('#lgs').value.trim().toUpperCase(),tk=$('#lgk').value.trim();const pin=fromWel?$('#rgpin').value.trim():'';if(!sid||!tk)return toast('పాఠశాల కోడ్, టీచర్ కీ ఇవ్వండి');if(fromWel&&!/^\d{4,8}$/.test(pin))return toast('4 అంకెల PIN పెట్టండి');
  try{const j=await (await fetch(pubServer()+'?a=pull&s='+encodeURIComponent(sid)+'&k='+encodeURIComponent(tk)+'&since='+Date.now()+'&_='+Date.now())).json();
   if(!j.ok)throw new Error(gsErr(j.err));if(!j.teacher)throw new Error('ఇది టీచర్ కీ కాదు');
-  connectFresh({type:'gs',url:pubServer(),sid,key:j.skey||'',tkey:tk,sname:j.school,isT:true,pub:true});if(pin)S.pin=pin;S.offline=false;save();toast('✅ '+j.school);if(fromWel){tAuth=true;go('teacher',{t:'hw'});}else go('teacher',{t:'sy'});}
+  connectFresh({type:'gs',url:pubServer(),sid,key:j.skey||'',tkey:tk,sname:j.school,isT:true,pub:true,multiT:('admin' in j),admin:('admin' in j)?!!j.admin:true,tme:j.me||null});if(pin)S.pin=pin;S.offline=false;save();toast('✅ '+j.school);if(fromWel){tAuth=true;go('teacher',{t:'hw'});}else go('teacher',{t:'sy'});}
  catch(e){toast('లాగిన్ కాలేదు: '+((e&&e.message)||'ఇంటర్నెట్ చూడండి'));}}
 function schoolCard(){const c=S.cfg;const show=param.newreg||param.showk;
  return `<div class="card" style="border:2px solid #2aa6a6"><h3>🏫 ${esc(c.sname||'మీ పాఠశాల')}</h3>
@@ -1304,6 +1393,12 @@ async function fbLogout(){await FBK.logout();S.cfg.isT=false;save();go('teacher'
 function disconnect(){if(!confirm('ఆన్‌లైన్ సింక్ ఆపేయాలా? (ఈ ఫోన్‌లోని డేటా అలాగే ఉంటుంది)'))return;clearInterval(Sync.poll);const a=S.cfg.appUrl;S.cfg={type:'',appUrl:a};draft=null;S.q={};S.last={};save();location.reload();}
 function joinWith(code,quiet){try{const p=b64d(String(code).trim().replace(/^.*#join=/,''));
   const c=S.cfg||{};
+  if(p.t==='gs'&&p.tk){const same=c.type&&c.url===p.u&&(c.sid||'')===(p.s||'');
+   if(same&&c.tkey===p.tk){setTimeout(()=>toast('ఈ ఫోన్ ఇప్పటికే మీ ఉపాధ్యాయ ఖాతాతో ఉంది ✓'),300);return true;}
+   if(c.type&&c.isT&&!same&&!confirm('ఈ ఫోన్‌లో వేరే ఉపాధ్యాయ సెటప్ ఉంది. మార్చాలా?'))return false;
+   if(!/^https:\/\/script\.google\.com\//.test(p.u)||!p.k)throw 0;
+   connectFresh({type:'gs',url:p.u,key:p.k,sid:p.s||undefined,tkey:p.tk,isT:true,admin:false});S.offline=false;save();
+   setTimeout(()=>{tAuth=true;go('teacher',{t:'hw'});toast('👩‍🏫 ఉపాధ్యాయ ఖాతా కనెక్ట్ అయింది – ⚙️ సెట్టింగ్స్‌లో PIN మార్చుకోండి');},500);return true;}
   if(c.type&&c.isT&&((p.t==='gs'&&c.url===p.u&&(c.sid||'')===(p.s||''))||(p.t==='fb'&&c.school===p.s))){setTimeout(()=>toast('ఈ ఫోన్ ఇప్పటికే ఉపాధ్యాయ సెటప్‌తో కనెక్ట్ అయి ఉంది ✓'),300);return true;}
   if(c.type&&c.isT&&!confirm('ఈ ఫోన్‌లో ఉపాధ్యాయ సింక్ సెటప్ ఉంది. జాయిన్ లింక్ వాడితే అది పోతుంది. కొనసాగించాలా?'))return false;
   if(p.t==='gs'&&/^https:\/\/script\.google\.com\//.test(p.u)&&p.k)connectFresh({type:'gs',url:p.u,key:p.k,sid:p.s||undefined,tkey:(c.url===p.u&&(c.sid||'')===(p.s||'')&&c.tkey)||undefined});
@@ -1360,7 +1455,7 @@ ${joinLink()?`<div class="lnk">${esc(joinLink())}</div><div class="row2"><button
 <div class="row2"><button class="btn sm" onclick="savePubOwner()">✓ పరీక్షించి సేవ్</button>${S.pub?`<button class="btn sm ghost" onclick="copyText(cfgJson())">📋 config.json కాపీ</button>`:''}</div>
 ${PUB.server?'<p style="margin-top:8px">✅ config.json లో పబ్లిక్ సర్వర్ ఉంది – అందరికీ “పాఠశాల నమోదు” కనిపిస్తుంది.</p>':'<p class="mut" style="margin-top:8px">config.json ఇంకా GitHub లో లేదు / లోడ్ కాలేదు.</p>'}</div>`;
  const adv=`<details class="card" ${(!pubServer()||(c.type&&!pubMode))?'open':''}><summary><b>⚙️ అధునాతనం: సొంత సర్వర్ (Google Sheets / Firebase)</b></summary><div style="margin-top:10px">${pubMode?'<p class="mut">మీరు పబ్లిక్ సర్వర్‌తో కనెక్ట్ అయి ఉన్నారు. సొంత సర్వర్‌కు మారాలంటే ముందు “సింక్ ఆపు” నొక్కండి.</p>':tabs+form}</div></details>`;
- return status+pubCards()+join+adv+`<details class="card"><summary><b>🛠️ యాప్ యజమాని సెట్టింగ్</b></summary><div style="margin-top:10px">${owner}</div></details>`;};
+ return status+pubCards()+join+(isAdmin()?adv+`<details class="card"><summary><b>🛠️ యాప్ యజమాని సెట్టింగ్</b></summary><div style="margin-top:10px">${owner}</div></details>`:'');};
 
 V.sync=()=>{const c=S.cfg;const np=window.Notification?Notification.permission:'na';
  return `<div class="bar"><button class="ib" onclick="go('menu')">←</button><h2>☁️ ఆన్‌లైన్ సింక్</h2></div>
@@ -1448,9 +1543,9 @@ let tsx=null,tsy=null;
 document.addEventListener('touchstart',e=>{if(view==='book'&&param.k==='pdf'&&e.touches.length===1&&BV.zoom<=1){tsx=e.touches[0].clientX;tsy=e.touches[0].clientY;}else tsx=null;},{passive:true});
 document.addEventListener('touchend',e=>{if(tsx==null)return;const t=e.changedTouches[0],dx=t.clientX-tsx,dy=t.clientY-tsy;tsx=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)pdfGo(dx<0?1:-1);},{passive:true});
 /* టీచర్: పుస్తకం / టూల్ లింక్ జోడించడం */
-TP.lb=()=>{const bk=live('notes').filter(n=>n.kind==='book'),tl=live('notes').filter(n=>n.kind==='tool');
+TP.lb=()=>{const bk=live('notes').filter(n=>n.kind==='book'&&canSee(n.c,n.s)),tl=live('notes').filter(n=>n.kind==='tool'&&canSee(n.c));
  return `<div class="card"><h3>📘 పుస్తకం లింక్ జోడించు (Google Drive)</h3><p class="mut">పెద్ద PDF లు: Google Drive లో అప్‌లోడ్ చేసి → Share → <b>Anyone with the link</b> → Copy link → ఇక్కడ పేస్ట్. మీ పాఠశాల పిల్లలకు మాత్రమే కనిపిస్తుంది.</p>
-<div class="g2"><div><label>తరగతి</label>${clsSel('bkc')}</div><div><label>సబ్జెక్ట్</label><select id="bkcs">${subjOpts(1)}</select></div></div>
+<div class="g2"><div><label>తరగతి</label>${clsSel('bkc')}</div><div><label>సబ్జెక్ట్</label><select id="bkcs">${subjOpts(myCls()[0])}</select></div></div>
 <label>పుస్తకం పేరు</label><input id="bkt" placeholder="ఉదా: తెలుగు వర్క్‌బుక్ – సెమిస్టర్ 1"><label>లింక్</label><input id="bku" placeholder="https://drive.google.com/file/d/.../view"><button class="btn" onclick="addLib('book')">➕ పుస్తకం జోడించు</button></div>
 <div class="card"><h3>🧰 లెర్నింగ్ టూల్ లింక్ జోడించు</h3><p class="mut">మీ HTML టూల్ వెబ్ లింక్ (ఉదా: GitHub Pages). అదే తరగతి లేదా అందరికీ.</p>
 <label>తరగతి</label>${clsSel('tlc',true)}<label>టూల్ పేరు</label><input id="tlt" placeholder="ఉదా: A–Z ఇంగ్లీష్ పదాలు"><label>లింక్</label><input id="tlu" placeholder="https://rameshbomidi-wq.github.io/..."><button class="btn" onclick="addLib('tool')">➕ టూల్ జోడించు</button></div>
@@ -1509,7 +1604,7 @@ function confetti(){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: r
  const em=['🎉','⭐','🌟','🎊','✨','🏆'];for(let i=0;i<26;i++){const s=document.createElement('span');s.textContent=em[i%em.length];s.style.left=Math.random()*100+'%';s.style.animationDelay=(Math.random()*0.8)+'s';s.style.fontSize=(18+Math.random()*18)+'px';box.appendChild(s);}
  document.body.appendChild(box);setTimeout(()=>box.remove(),3500);}
 /* టీచర్: ఫ్లాష్ న్యూస్ & ఫోటోలు */
-TP.fl=()=>{const fl=live('notes').filter(n=>n.kind==='flash'),ph=live('notes').filter(n=>n.kind==='photo');
+TP.fl=()=>{const fl=live('notes').filter(n=>n.kind==='flash'&&canSee(n.c)),ph=live('notes').filter(n=>n.kind==='photo'&&canSee(n.c));
  return `<div class="card"><h3>📢 ఫ్లాష్ న్యూస్ జోడించు</h3><p class="mut">విద్యార్థుల హోమ్ స్క్రీన్‌పై రోల్ అవుతుంది (తాకితే ఆగుతుంది).</p>
 <label>వార్త</label><input id="flt" maxlength="140" placeholder="ఉదా: రేపు సెలవు – దీపావళి శుభాకాంక్షలు 🪔">
 <div class="g2"><div><label>తరగతి</label>${clsSel('flc',true)}</div><div><label>ఎప్పటి వరకు (ఐచ్ఛికం)</label><input id="flu" type="date"></div></div>
