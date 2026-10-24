@@ -1238,7 +1238,7 @@ function canSee(c,s){const t=tScope();if(!t)return true;if(+c&&!myCls().includes
 function tName(){const c=S.cfg,t=tScope();return t?t.n:(c.tname||'ప్రధానోపాధ్యాయులు');}
 function subsTxt(a){return a&&a.length?a.map(s=>SUBJ[s]?SUBJ[s].n:s).join(', '):'అన్ని సబ్జెక్టులు';}
 function whoBanner(){const c=S.cfg;if(!c.type)return '';const t=tScope();
- return `<div class="sbadge" style="margin-bottom:10px">👩‍🏫 ${esc(tName())} • ${t?'తరగతులు '+myCls().join(', ')+' • '+esc(subsTxt(t.subs)):'ప్రధానోపాధ్యాయులు (అన్నీ)'}</div>`;}
+ return `<div class="sbadge" style="margin-bottom:10px">👩‍🏫 ${t?esc(t.n)+' • తరగతులు '+myCls().join(', ')+' • '+esc(subsTxt(t.subs)):(c.tname?esc(c.tname)+' • ':'')+'ప్రధానోపాధ్యాయులు (అన్నీ)'}</div>`;}
 function doubtTo(c,s){const ts=live('teachers').filter(t=>(t.cls||[]).map(Number).includes(+c)&&(!t.subs||!t.subs.length||t.subs.includes(s)));return ts.length?ts.map(t=>t.n).join(', '):'ఉపాధ్యాయులు';}
 function teacherLink(t){const c=S.cfg,b=appBase();return b?b+'#join='+b64e(Object.assign({t:'gs',u:c.url,k:c.key,tk:t.key},c.sid?{s:c.sid}:{})):'';}
 function teacherMsg(id){const t=live('teachers').find(x=>x.id===id);if(!t)return '';const c=S.cfg;
@@ -1251,7 +1251,7 @@ function addTeacher(){const n=$('#tcn').value.trim();if(!n)return toast('పే�
  if(!all&&!subs.length)return toast('సబ్జెక్టు ఎంచుకోండి');const id=uid();put('teachers',{id,n,cls,subs,key:'t'+newDev().slice(0,15)});toast(n+' జోడించబడ్డారు ✓');go('teacher',{t:'tc',nt:id});}
 function delTeacher(id){const t=live('teachers').find(x=>x.id===id);if(!t||!confirm(t.n+' గారిని తొలగించాలా? వారి కీ / లింక్ వెంటనే పనిచేయదు.'))return;remove('teachers',id);toast('తొలగించబడ్డారు');go('teacher',{t:'tc'});}
 function tpTc(){const c=S.cfg,list=live('teachers');
- return `${c.multiT===false?'<div class="warn" style="margin-bottom:10px">⚠️ మీ సర్వర్ కోడ్ పాతది. ఉపాధ్యాయుల సొంత కీలు పనిచేయాలంటే Apps Script లో కొత్త కోడ్ పెట్టి <b>Manage deployments → ✏️ → New version</b> చేయండి.</div>':''}
+ return `${c.multiT===false?`<div class="warn" style="margin-bottom:10px">⚠️ సర్వర్ కోడ్ పాతది – <b>${c.sid?'అన్ని పాఠశాలల (పబ్లిక్) సర్వర్ షీట్':'మీ పాఠశాల సొంత Google Sheet'}</b> లో కొత్త కోడ్ ${c.sid?'(Raay_Vidyarthi_Public_Server.gs)':'(☁️ ఆన్‌లైన్ సింక్ → ⚙️ అధునాతనం → 📋 కోడ్ కాపీ)'} పెట్టి <b>Manage deployments → ✏️ → New version → Deploy</b> చేయండి.<br><button class="btn sm" onclick="Sync.running=false;Sync.run().then(()=>go('teacher',{t:'tc'}))">🔄 అప్‌డేట్ చేశాను – మళ్ళీ చెక్ చేయి</button></div>`:''}
 <div class="card"><h3>👥 ఉపాధ్యాయుని జోడించు</h3><p class="mut">ప్రతి ఉపాధ్యాయునికి సొంత లింక్ / కీ వస్తుంది. వారికి తమ తరగతులు, సబ్జెక్టుల హోంవర్క్, సందేహాలు, రిపోర్ట్ మాత్రమే కనిపిస్తాయి. పిల్లలకు అదే పాఠశాల కోడ్.</p>
 <label>పేరు</label><input id="tcn" maxlength="40" placeholder="ఉదా: లక్ష్మి టీచర్">
 <label>తరగతులు</label><div class="ckrow">${[1,2,3,4,5].map(k=>`<label class="ck"><input type="checkbox" class="tcc" value="${k}"> ${k}వ</label>`).join('')}</div>
