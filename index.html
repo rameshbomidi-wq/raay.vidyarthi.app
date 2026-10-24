@@ -270,6 +270,56 @@ main,.card,.qcard{overflow-wrap:anywhere}
 @media(max-width:400px){.top{gap:6px;padding:10px}.ib{width:36px;height:36px;font-size:16px;border-radius:10px}.top .hd{display:none}.tiles{grid-template-columns:1fr 1fr}}
 @media(max-width:360px){.day{width:36px;height:36px;font-size:9px}.day b{font-size:12px}.strip .ar{width:22px}.days{gap:2px}.tabs button{font-size:12px;padding:9px 2px}.hero h2{font-size:20px}.mascot{font-size:40px}.perf svg{width:76px;height:76px}.doubt p{max-width:70%}.sbar span:first-child{width:90px}}
 @media(max-width:320px){.top .cal{display:none}main{padding:10px}.subs,.gtiles{grid-template-columns:1fr}.gt.wide{grid-column:auto}.days .day:first-child,.days .day:last-child{display:none}.gopts button{font-size:20px}.ltiles button{width:40px;height:46px;font-size:20px}.slots span{width:30px;font-size:20px}.row2{flex-wrap:wrap}.row2 .btn{flex:1 1 120px}.inst{flex-wrap:wrap}.bn button{font-size:10px}.bn button span{font-size:18px}}
+
+/* ✏️ పలక */
+.slfab{position:fixed;right:0;bottom:calc(150px + env(safe-area-inset-bottom));z-index:45;border:0;border-radius:16px 0 0 16px;background:linear-gradient(160deg,#f59e0b,#ea580c);color:#fff;width:46px;padding:8px 0 6px;display:flex;flex-direction:column;align-items:center;gap:1px;box-shadow:-2px 4px 12px rgba(0,0,0,.25);cursor:pointer}
+.slfab span{font-size:20px;line-height:1.1}.slfab small{font-size:11px;font-weight:700}
+.slfab[hidden],.slate[hidden]{display:none}
+.slate{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:760px;height:58vh;z-index:60;background:#fffaf0;border-radius:20px 20px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.3);display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom);animation:slup .22s ease-out}
+.slate.full{height:100%;border-radius:0}
+@keyframes slup{from{transform:translate(-50%,40px);opacity:.4}to{transform:translate(-50%,0);opacity:1}}
+.slhd{display:flex;align-items:center;gap:6px;padding:8px 10px 4px}
+.slhd b{flex:1;min-width:0;font-size:12px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sltabs{display:flex;background:#f1e7d4;border-radius:12px;padding:3px;flex:none}
+.sltabs button{border:0;background:none;padding:6px 10px;border-radius:9px;font-size:13px;font-weight:700;color:#6b4f2a}
+.sltabs button.on{background:#fff;color:var(--navy);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.slb{border:0;background:#f1e7d4;width:36px;height:36px;border-radius:10px;font-size:16px;color:#6b4f2a;flex:none}
+.sltools{display:flex;align-items:center;gap:7px;padding:4px 10px 8px;overflow-x:auto;white-space:nowrap;overscroll-behavior-x:contain;scrollbar-width:none;min-height:46px}
+.sltools::-webkit-scrollbar{display:none}
+.slc{width:28px;height:28px;border-radius:50%;border:2px solid #d6c7a8;flex:none;padding:0}
+.slc.on{outline:3px solid var(--teal2);outline-offset:1px}
+.slt{border:0;background:#f1e7d4;min-width:36px;height:34px;border-radius:10px;font-size:16px;flex:none;display:grid;place-items:center;color:#6b4f2a;padding:0 6px}
+.slt.on{background:var(--teal2);color:#fff}
+.slt i{display:block;border-radius:50%;background:currentColor}
+.slsep{width:1px;height:24px;background:#e3d5b8;flex:none}
+select.slsel{border:1px solid #e3d5b8;border-radius:10px;padding:6px;font-size:13px;background:#fff;flex:none;width:auto;margin:0;height:34px}
+.slbody{flex:1;min-height:0;position:relative;overflow:hidden;margin:0 8px 8px;border-radius:12px}
+.slbody canvas{position:absolute;left:0;top:0;touch-action:none;display:block}
+.slbody canvas[hidden],.slbody textarea[hidden]{display:none}
+.slbody textarea{position:absolute;inset:0;width:100%;height:100%;margin:0;border:0;resize:none;padding:4px 14px;font-size:18px;line-height:32px;background:#fff repeating-linear-gradient(transparent 0 31px,#dbeafe 31px 32px);background-attachment:local;border-radius:6px;outline:none;color:#111827}
+.bg-slate{background:#22312b;border:7px solid #a0682e;box-shadow:inset 0 0 30px rgba(0,0,0,.45)}
+.bg-white{background:#fff;border:1px solid #e5e7eb}
+.bg-lines{background:#fff repeating-linear-gradient(transparent 0 35px,#c7d2fe 35px 36px);border:1px solid #e5e7eb}
+.bg-grid{background-color:#fff;background-image:linear-gradient(#e5e7eb 1px,transparent 1px),linear-gradient(90deg,#e5e7eb 1px,transparent 1px);background-size:24px 24px;border:1px solid #e5e7eb}
+/* 6–10 ఆటలు */
+.tfq{background:#fff;margin:0 14px;border-radius:22px;padding:20px 16px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+.tfq small{color:var(--mut);font-weight:600}.tfq p{font-size:19px;font-weight:700;margin:8px 0 12px;line-height:1.45}
+.tfv{display:inline-block;background:#eef2ff;border-radius:14px;padding:10px 16px;font-size:19px;font-weight:700;color:#3730a3}
+.tfb{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 14px}
+.tfb button{border:0;border-radius:18px;padding:20px 6px;font-size:21px;font-weight:700;color:#fff;box-shadow:0 3px 8px rgba(0,0,0,.12)}
+.tfb .y{background:#16a34a}.tfb .n{background:#dc2626}.tfb button:active{transform:scale(.95)}
+.vwh{background:#fff;margin:0 14px;border-radius:22px;padding:18px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:4px}
+.vwh b{font-size:28px;color:var(--navy)}.vwh small{color:var(--mut)}
+.hwq{font-size:52px;padding:26px 10px}.gopts button.hwo{font-size:19px;padding:16px 6px}
+.ltiles.long button{width:40px;height:48px;font-size:21px}.slots.long span{width:30px;font-size:22px}
+/* 📤 అప్‌లోడ్ */
+.upbox{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+label.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;color:#3730a3;border:2px dashed #a5b4fc;border-radius:14px;padding:10px 14px;font-weight:700;cursor:pointer;margin:0;font-size:15px}
+.upprog{margin-top:10px;background:#e5e7eb;border-radius:10px;height:26px;position:relative;overflow:hidden}
+.upprog[hidden]{display:none}
+.upprog i{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#2aa6a6,#16a34a);transition:width .3s}
+.upprog span{position:relative;display:block;text-align:center;font-size:12px;line-height:26px;font-weight:700}
+.orline{text-align:center;color:var(--mut);margin:14px 0 0;font-size:13px}
 </style>
 </head>
 <body>
@@ -282,13 +332,14 @@ main,.card,.qcard{overflow-wrap:anywhere}
  * Google Sheet → Extensions → Apps Script లో ఈ కోడ్ పేస్ట్ చేసి
  * Deploy → New deployment → Web app
  *   Execute as: Me   |   Who has access: Anyone
+ * PDF అప్‌లోడ్ కోసం: ఫంక్షన్ లిస్ట్‌లో driveSetup ఎంచుకుని ▶ Run → Allow
  ******************************************************************/
 var SCHOOL_KEY  = '__SCHOOL_KEY__';   // విద్యార్థుల కీ (జాయిన్ లింక్‌లో వెళ్తుంది)
 var TEACHER_KEY = '__TEACHER_KEY__';  // ఉపాధ్యాయుల కీ – ఎవరికీ ఇవ్వకండి
 var ALL_COLS = ['students','hw','events','doubts','notes','results','games','subs','teachers'];
 var TEACHER_COLS = ['hw','events','notes'];
 var PRIV = ['students','results','doubts','subs'];  // విద్యార్థికి తన డేటా మాత్రమే
-var SUBJ = {tel:'తెలుగు', eng:'English', mat:'గణితం', evs:'పరిసరాల విజ్ఞానం'};
+var SUBJ = {tel:'తెలుగు', hin:'హిందీ', eng:'English', mat:'గణితం', evs:'పరిసరాల విజ్ఞానం', sci:'సైన్స్', phy:'భౌతిక శాస్త్రం', bio:'జీవ శాస్త్రం', soc:'సాంఘిక శాస్త్రం'};
 
 function db_() {
   var ss = SpreadsheetApp.getActive(), sh = ss.getSheetByName('DB');
@@ -359,6 +410,8 @@ function doPost(e) {
   try { b = JSON.parse(e.postData.contents); } catch (x) { return json_({ok:false, err:'bad'}); }
   var w = who_(b.k);
   if (!w) return json_({ok:false, err:'key'});
+  if (b.a === 'up') return up_(b, w, '');
+  if (b.a === 'rm') return rm_(b, w, '');
   var isT = w.isT, tch = false;
   var lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
@@ -390,6 +443,66 @@ function doPost(e) {
   } finally { lock.releaseLock(); }
 }
 
+function clean_(v, n) { return String(v == null ? '' : v).replace(/[<>]/g, '').trim().slice(0, n); }
+/* 📤 PDF అప్‌లోడ్ – యజమాని Google Drive లో “Raay_Vidyarthi_PDFs” ఫోల్డర్‌లో సేవ్ అవుతాయి.
+   మొదటిసారి: పైన ఫంక్షన్ లిస్ట్‌లో driveSetup ఎంచుకుని ▶ Run → Allow చేయండి. */
+var UP_MAX_MB = 20, SCHOOL_MAX_MB = 500, UP_PER_HOUR = 40;
+function driveSetup() { folder_('Raay_Vidyarthi_PDFs'); Logger.log('Drive అనుమతి సరే ✓'); }
+function folder_(name, parent) {
+  var it = parent ? parent.getFoldersByName(name) : DriveApp.getFoldersByName(name);
+  while (it.hasNext()) { var f = it.next(); if (!f.isTrashed()) return f; }
+  return parent ? parent.createFolder(name) : DriveApp.createFolder(name);
+}
+function upFolder_(sid) { var root = folder_('Raay_Vidyarthi_PDFs'); return sid ? folder_(sid, root) : root; }
+function used_(f) { var t = 0, it = f.getFiles(); while (it.hasNext()) { var x = it.next(); if (!x.isTrashed()) t += x.getSize(); } return t; }
+function up_(b, a, sid) {
+  if (!a.isT) return json_({ok: false, err: 'key'});
+  if (a.me && a.me.cls && a.me.cls.length && a.me.cls.map(Number).indexOf(Number(b.c)) < 0) return json_({ok: false, err: 'key'});
+  var i = Number(b.i), n = Number(b.n), u = String(b.u || '').replace(/[^\w-]/g, '').slice(0, 40), data = String(b.data || '');
+  if (!u || !(n >= 1 && n <= 14) || !(i >= 0 && i < n) || data.length > 2100000 || /[^A-Za-z0-9+\/=]/.test(data)) return json_({ok: false, err: 'bad'});
+  try {
+    var sf = upFolder_(sid), tmp = folder_('_tmp', sf);
+    if (i === 0) {
+      var c = CacheService.getScriptCache(), ck = 'up_' + (sid || 'one'), cnt = Number(c.get(ck) || 0);
+      if (cnt >= UP_PER_HOUR) return json_({ok: false, err: 'busy'});
+      c.put(ck, String(cnt + 1), 3600);
+    }
+    if (i < n - 1) { tmp.createFile(u + '_' + i, data, MimeType.PLAIN_TEXT); return json_({ok: true, got: i}); }
+    var parts = [], old = [];
+    for (var k = 0; k < n - 1; k++) {
+      var it = tmp.getFilesByName(u + '_' + k), f = null;
+      while (it.hasNext()) { var y = it.next(); if (!y.isTrashed()) f = y; }
+      if (!f) return json_({ok: false, err: 'part'});
+      parts.push(f.getBlob().getDataAsString()); old.push(f);
+    }
+    parts.push(data);
+    var bytes = Utilities.base64Decode(parts.join(''));
+    parts = null;
+    old.forEach(function (f) { f.setTrashed(true); });
+    var cut = Date.now() - 86400000, it2 = tmp.getFiles();
+    while (it2.hasNext()) { var x = it2.next(); if (!x.isTrashed() && x.getDateCreated().getTime() < cut) x.setTrashed(true); }
+    if (bytes.length > UP_MAX_MB * 1048576) return json_({ok: false, err: 'big'});
+    if (!(bytes[0] === 37 && bytes[1] === 80 && bytes[2] === 68 && bytes[3] === 70)) return json_({ok: false, err: 'pdf'});
+    if (used_(sf) + bytes.length > SCHOOL_MAX_MB * 1048576) return json_({ok: false, err: 'quota'});
+    var name = clean_(b.name, 90).replace(/[\\\/:*?"|]/g, '-') || 'book.pdf';
+    if (!/\.pdf$/i.test(name)) name += '.pdf';
+    var file = sf.createFile(Utilities.newBlob(bytes, 'application/pdf', name));
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+    file.setDescription('Raay Vidyarthi ' + (sid || '') + ' – ' + (b.c || '') + 'వ తరగతి');
+    return json_({ok: true, got: i, id: file.getId(), url: 'https://drive.google.com/file/d/' + file.getId() + '/view'});
+  } catch (x) { return json_({ok: false, err: 'drive', msg: String(x).slice(0, 200)}); }
+}
+function rm_(b, a, sid) {
+  if (!a.isT) return json_({ok: false, err: 'key'});
+  try {
+    var f = DriveApp.getFileById(String(b.fid || '')), sf = upFolder_(sid), ps = f.getParents(), mine = false;
+    while (ps.hasNext()) if (ps.next().getId() === sf.getId()) mine = true;
+    if (!mine) return json_({ok: false, err: 'key'});
+    f.setTrashed(true);
+    return json_({ok: true});
+  } catch (x) { return json_({ok: false, err: 'drive'}); }
+}
+
 /* Sheet మెనూ – చదవడానికి సులభమైన రిపోర్ట్ షీట్లు */
 function onOpen() {
   SpreadsheetApp.getUi().createMenu('రాయ్ ఎడ్యుకేషన్')
@@ -415,7 +528,7 @@ function buildReports() {
     }));
   put_('సందేహాలు', ['పేరు','తరగతి','సబ్జెక్ట్','సందేహం','జవాబు','తేదీ'],
     by('doubts').map(function (d) { return [d.n, d.c, SUBJ[d.s] || d.s, d.q, d.r || '', fd(d.d)]; }));
-  var GN = {mm:'Mental Maths', ew:'English Words', tl:'తెలుగు అక్షరాలు'};
+  var GN = {mm:'Mental Maths', ew:'English Words', tl:'తెలుగు అక్షరాలు', vw:'Word Builder', tf:'నిజమా? అబద్ధమా?', hw:'హిందీ పదాలు'};
   put_('ఆటలు', ['పేరు','తరగతి','ఆట','స్కోరు','తేదీ'],
     by('games').map(function (g) { return [g.n, g.c, GN[g.g] || g.g, g.s, fd(g.d)]; }));
 }
@@ -433,12 +546,13 @@ function put_(name, head, rows) {
  * కొత్త Google Sheet → Extensions → Apps Script లో పేస్ట్ చేసి
  * Deploy → New deployment → Web app → Execute as: Me → Anyone → Deploy
  * ప్రతి పాఠశాలకు వేరే షీట్ (S_కోడ్) – ఒకరి డేటా మరొకరికి కనిపించదు.
+ * PDF అప్‌లోడ్ కోసం: ఫంక్షన్ లిస్ట్‌లో driveSetup ఎంచుకుని ▶ Run → Allow (ఒక్కసారి)
  ******************************************************************/
 var COLS = ['students','hw','events','doubts','notes','results','games','subs','teachers'];
 var TCOLS = ['hw','events','notes'];
 var PRIV = ['students','results','doubts','subs'];  // విద్యార్థికి తన డేటా మాత్రమే
 var MAX_REG_PER_HOUR = 40;
-var SUBJ = {tel:'తెలుగు', eng:'English', mat:'గణితం', evs:'పరిసరాల విజ్ఞానం'};
+var SUBJ = {tel:'తెలుగు', hin:'హిందీ', eng:'English', mat:'గణితం', evs:'పరిసరాల విజ్ఞానం', sci:'సైన్స్', phy:'భౌతిక శాస్త్రం', bio:'జీవ శాస్త్రం', soc:'సాంఘిక శాస్త్రం'};
 
 function ss_() { return SpreadsheetApp.getActive(); }
 function json_(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
@@ -513,7 +627,7 @@ function auth_(p) {
 /* డేటా చదవడం */
 function doGet(e) {
   var p = (e && e.parameter) || {};
-  if (p.a === 'ping') return json_({ok: true, multi: true});
+  if (p.a === 'ping') return json_({ok: true, multi: true, up: true});
   if (p.a === 'join') {
     var c = CacheService.getScriptCache(), bad = Number(c.get('badjoin') || 0);
     if (bad > 300) return json_({ok: false, err: 'busy'});
@@ -544,6 +658,8 @@ function doPost(e) {
   if (b.a === 'reg') return reg_(b);
   var a = auth_(b);
   if (a.err) return json_({ok: false, err: a.err});
+  if (b.a === 'up') return up_(b, a, a.sc.id);
+  if (b.a === 'rm') return rm_(b, a, a.sc.id);
   var lock = LockService.getScriptLock(); lock.waitLock(25000);
   try {
     var sh = db_(a.sc.id), n = sh.getLastRow(), idx = {};
@@ -572,6 +688,65 @@ function doPost(e) {
     if (tch) CacheService.getScriptCache().remove('tk_' + a.sc.id);
     return json_({ok: true, done: done, rej: rej, teacher: a.isT, admin: !!a.admin});
   } finally { lock.releaseLock(); }
+}
+
+/* 📤 PDF అప్‌లోడ్ – యజమాని Google Drive లో “Raay_Vidyarthi_PDFs” ఫోల్డర్‌లో సేవ్ అవుతాయి.
+   మొదటిసారి: పైన ఫంక్షన్ లిస్ట్‌లో driveSetup ఎంచుకుని ▶ Run → Allow చేయండి. */
+var UP_MAX_MB = 20, SCHOOL_MAX_MB = 500, UP_PER_HOUR = 40;
+function driveSetup() { folder_('Raay_Vidyarthi_PDFs'); Logger.log('Drive అనుమతి సరే ✓'); }
+function folder_(name, parent) {
+  var it = parent ? parent.getFoldersByName(name) : DriveApp.getFoldersByName(name);
+  while (it.hasNext()) { var f = it.next(); if (!f.isTrashed()) return f; }
+  return parent ? parent.createFolder(name) : DriveApp.createFolder(name);
+}
+function upFolder_(sid) { var root = folder_('Raay_Vidyarthi_PDFs'); return sid ? folder_(sid, root) : root; }
+function used_(f) { var t = 0, it = f.getFiles(); while (it.hasNext()) { var x = it.next(); if (!x.isTrashed()) t += x.getSize(); } return t; }
+function up_(b, a, sid) {
+  if (!a.isT) return json_({ok: false, err: 'key'});
+  if (a.me && a.me.cls && a.me.cls.length && a.me.cls.map(Number).indexOf(Number(b.c)) < 0) return json_({ok: false, err: 'key'});
+  var i = Number(b.i), n = Number(b.n), u = String(b.u || '').replace(/[^\w-]/g, '').slice(0, 40), data = String(b.data || '');
+  if (!u || !(n >= 1 && n <= 14) || !(i >= 0 && i < n) || data.length > 2100000 || /[^A-Za-z0-9+\/=]/.test(data)) return json_({ok: false, err: 'bad'});
+  try {
+    var sf = upFolder_(sid), tmp = folder_('_tmp', sf);
+    if (i === 0) {
+      var c = CacheService.getScriptCache(), ck = 'up_' + (sid || 'one'), cnt = Number(c.get(ck) || 0);
+      if (cnt >= UP_PER_HOUR) return json_({ok: false, err: 'busy'});
+      c.put(ck, String(cnt + 1), 3600);
+    }
+    if (i < n - 1) { tmp.createFile(u + '_' + i, data, MimeType.PLAIN_TEXT); return json_({ok: true, got: i}); }
+    var parts = [], old = [];
+    for (var k = 0; k < n - 1; k++) {
+      var it = tmp.getFilesByName(u + '_' + k), f = null;
+      while (it.hasNext()) { var y = it.next(); if (!y.isTrashed()) f = y; }
+      if (!f) return json_({ok: false, err: 'part'});
+      parts.push(f.getBlob().getDataAsString()); old.push(f);
+    }
+    parts.push(data);
+    var bytes = Utilities.base64Decode(parts.join(''));
+    parts = null;
+    old.forEach(function (f) { f.setTrashed(true); });
+    var cut = Date.now() - 86400000, it2 = tmp.getFiles();
+    while (it2.hasNext()) { var x = it2.next(); if (!x.isTrashed() && x.getDateCreated().getTime() < cut) x.setTrashed(true); }
+    if (bytes.length > UP_MAX_MB * 1048576) return json_({ok: false, err: 'big'});
+    if (!(bytes[0] === 37 && bytes[1] === 80 && bytes[2] === 68 && bytes[3] === 70)) return json_({ok: false, err: 'pdf'});
+    if (used_(sf) + bytes.length > SCHOOL_MAX_MB * 1048576) return json_({ok: false, err: 'quota'});
+    var name = clean_(b.name, 90).replace(/[\\\/:*?"|]/g, '-') || 'book.pdf';
+    if (!/\.pdf$/i.test(name)) name += '.pdf';
+    var file = sf.createFile(Utilities.newBlob(bytes, 'application/pdf', name));
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+    file.setDescription('Raay Vidyarthi ' + (sid || '') + ' – ' + (b.c || '') + 'వ తరగతి');
+    return json_({ok: true, got: i, id: file.getId(), url: 'https://drive.google.com/file/d/' + file.getId() + '/view'});
+  } catch (x) { return json_({ok: false, err: 'drive', msg: String(x).slice(0, 200)}); }
+}
+function rm_(b, a, sid) {
+  if (!a.isT) return json_({ok: false, err: 'key'});
+  try {
+    var f = DriveApp.getFileById(String(b.fid || '')), sf = upFolder_(sid), ps = f.getParents(), mine = false;
+    while (ps.hasNext()) if (ps.next().getId() === sf.getId()) mine = true;
+    if (!mine) return json_({ok: false, err: 'key'});
+    f.setTrashed(true);
+    return json_({ok: true});
+  } catch (x) { return json_({ok: false, err: 'drive'}); }
 }
 
 function reg_(b) {
@@ -766,7 +941,19 @@ const WORDS=[['🐱','cat'],['🐶','dog'],['☀️','sun'],['🚌','bus'],['�
 const TEL=[['🐄','ఆవు','ఆ'],['🏠','ఇల్లు','ఇ'],['🐿️','ఉడుత','ఉ'],['🐘','ఏనుగు','ఏ'],['🐒','కోతి','కో'],['🐟','చేప','చే'],['🐱','పిల్లి','పి'],['🐶','కుక్క','కు'],['🐐','మేక','మే'],['🦜','చిలుక','చి'],
  ['🦚','నెమలి','నె'],['🐎','గుర్రం','గు'],['🐍','పాము','పా'],['🐭','ఎలుక','ఎ'],['🌳','చెట్టు','చె'],['🌸','పువ్వు','పు'],['⚽','బంతి','బం'],['⛵','పడవ','ప'],['🚌','బస్సు','బ'],['🚂','రైలు','రై'],
  ['☀️','సూర్యుడు','సూ'],['🌙','చంద్రుడు','చం'],['⭐','నక్షత్రం','న'],['🍌','అరటిపండు','అ'],['🥭','మామిడి','మా'],['🍋','నిమ్మకాయ','ని'],['🐸','కప్ప','క'],['🦋','సీతాకోకచిలుక','సీ'],['🐔','కోడి','కో'],['🥚','గుడ్డు','గు']];
-const GAMES={mm:{n:'Mental Maths',t:'మనసులో లెక్కలు',ic:'🧮',bg:'#ffad94',sec:60},ew:{n:'English Words',t:'పదాన్ని కూర్చు',ic:'🔤',bg:'#cdc6fb',sec:90},tl:{n:'తెలుగు అక్షరాలు',t:'మొదటి అక్షరం గుర్తించు',ic:'అ',bg:'#a8e6c8',sec:60}};
+const GAMES_LO={mm:{n:'Mental Maths',t:'మనసులో లెక్కలు',ic:'🧮',bg:'#ffad94',sec:60},ew:{n:'English Words',t:'పదాన్ని కూర్చు',ic:'🔤',bg:'#cdc6fb',sec:90},tl:{n:'తెలుగు అక్షరాలు',t:'మొదటి అక్షరం గుర్తించు',ic:'అ',bg:'#a8e6c8',sec:60}};
+const GAMES_HI={mm:{n:'Mental Maths',t:'పూర్ణసంఖ్యలు, వర్గాలు, శాతాలు',ic:'🧮',bg:'#ffad94',sec:60},vw:{n:'Word Builder',t:'అర్థం చూసి English పదం కూర్చు',ic:'🔠',bg:'#cdc6fb',sec:90},tf:{n:'నిజమా? అబద్ధమా?',t:'అన్ని సబ్జెక్టుల ప్రశ్నలు',ic:'✅',bg:'#a8e6c8',sec:60},hw:{n:'हिंदी పదాలు',t:'హిందీ పదం – తెలుగు అర్థం',ic:'अ',bg:'#fde68a',sec:60}};
+const GAMES=Object.assign({},GAMES_LO,GAMES_HI);
+function gamesOf(c){return +c>=6?GAMES_HI:GAMES_LO;}
+const VW=[[['garden','తోట'],['market','సంత / మార్కెట్'],['village','గ్రామం'],['farmer','రైతు'],['doctor','వైద్యుడు'],['river','నది'],['mountain','పర్వతం'],['forest','అడవి'],['library','గ్రంథాలయం'],['kitchen','వంటగది'],['brave','ధైర్యవంతుడు'],['honest','నిజాయితీ గల'],['clever','తెలివైన'],['healthy','ఆరోగ్యకరమైన'],['quickly','వేగంగా'],['teacher','ఉపాధ్యాయుడు'],['student','విద్యార్థి'],['festival','పండుగ'],['weather','వాతావరణం'],['country','దేశం'],['island','ద్వీపం'],['planet','గ్రహం'],['animal','జంతువు'],['window','కిటికీ'],['bridge','వంతెన'],['friend','స్నేహితుడు'],['family','కుటుంబం'],['hungry','ఆకలిగా'],['thirsty','దాహంగా'],['answer','జవాబు'],['question','ప్రశ్న'],['science','విజ్ఞాన శాస్త్రం'],['picture','చిత్రం'],['kindness','దయ'],['morning','ఉదయం'],['evening','సాయంత్రం']],
+ [['knowledge','జ్ఞానం'],['education','విద్య'],['freedom','స్వాతంత్ర్యం'],['victory','విజయం'],['courage','ధైర్యం'],['patience','ఓర్పు'],['ancient','ప్రాచీన'],['harvest','పంట కోత'],['climate','శీతోష్ణస్థితి'],['pollution','కాలుష్యం'],['energy','శక్తి'],['gravity','గురుత్వాకర్షణ'],['electric','విద్యుత్ సంబంధమైన'],['magnet','అయస్కాంతం'],['triangle','త్రిభుజం'],['equation','సమీకరణం'],['citizen','పౌరుడు'],['democracy','ప్రజాస్వామ్యం'],['election','ఎన్నిక'],['journey','ప్రయాణం'],['wisdom','వివేకం'],['generous','ఉదారమైన'],['curious','కుతూహలం గల'],['nervous','కంగారుగా'],['protect','రక్షించు'],['improve','మెరుగుపరచు'],['discover','కనుగొను'],['measure','కొలుచు'],['century','శతాబ్దం'],['scientist','శాస్త్రవేత్త'],['vaccine','టీకా'],['oxygen','ఆక్సిజన్'],['habitat','ఆవాసం'],['ocean','మహాసముద్రం'],['agreement','ఒప్పందం'],['history','చరిత్ర']]];
+const HWD=[['पानी','నీరు'],['घर','ఇల్లు'],['किताब','పుస్తకం'],['पेड़','చెట్టు'],['फूल','పువ్వు'],['सूरज','సూర్యుడు'],['चाँद','చంద్రుడు'],['माता','తల్లి'],['पिता','తండ్రి'],['दोस्त','స్నేహితుడు'],['आँख','కన్ను'],['हाथ','చేయి'],['पैर','కాలు'],['कान','చెవి'],['नाक','ముక్కు'],['दूध','పాలు'],['रोटी','రొట్టె'],['फल','పండు'],['लाल','ఎరుపు'],['हरा','ఆకుపచ్చ'],['नीला','నీలం'],['बड़ा','పెద్ద'],['छोटा','చిన్న'],['आज','ఈరోజు'],['सुबह','ఉదయం'],['रात','రాత్రి'],['पाठशाला','పాఠశాల'],['अध्यापक','ఉపాధ్యాయుడు'],['छात्र','విద్యార్థి'],['नदी','నది'],['पहाड़','కొండ'],['आकाश','ఆకాశం'],['धरती','భూమి'],['गाय','ఆవు'],['घोड़ा','గుర్రం'],['मछली','చేప'],['पक्षी','పక్షి'],['सच','నిజం'],['खुश','సంతోషం'],['ज्ञान','జ్ఞానం'],['देश','దేశం'],['पढ़ना','చదవడం'],['लिखना','రాయడం'],['खेलना','ఆడటం'],['दौड़ना','పరుగెత్తడం'],['बोलना','మాట్లాడటం'],['सुनना','వినడం'],['खिड़की','కిటికీ'],['दरवाज़ा','తలుపు'],['बारिश','వర్షం']];
+function tfItem(c){const all=[];Object.entries(Q[c]||{}).forEach(([s,arr])=>{if(s!=='mat')arr.forEach(x=>all.push([s,x]));});
+ if(!all.length)return {s:'mat',q:'2 + 2 = ?',v:'4',a:'4',ok:true};
+ let it,gg=0;do{it=all[R(0,all.length-1)];}while(G.used.includes(it[1][0])&&gg++<40);G.used.push(it[1][0]);if(G.used.length>=all.length-1)G.used=[];
+ const op=it[1][1].split('|'),ok=Math.random()<.5;return {s:it[0],q:it[1][0],a:op[0],v:ok?op[0]:op[R(1,op.length-1)],ok};}
+function tfPick(b){const c=G.cur;const right=b===c.ok;beep(right?'ok':'no');if(right){G.score++;G.msg='✓ సరైనది!';G.mc='ok';}else{G.msg='✗ సరైన జవాబు: '+esc(c.a);G.mc='no';}nextRound();upd();}
+function hwPick(j){const c=G.cur;const ok=c.o[j]===c.a;beep(ok?'ok':'no');if(ok){G.score++;G.msg=`✓ ${c.e} = ${esc(c.a)}`;G.mc='ok';}else{G.msg=`✗ ${c.e} = ${esc(c.a)}`;G.mc='no';}speak(c.e);nextRound();upd();}
 
 /* ---------- తేదీలు & ఉపకరణాలు ---------- */
 const DAYS=['ఆది','సోమ','మంగళ','బుధ','గురు','శుక్ర','శని'];
@@ -928,7 +1115,105 @@ function dueText(h){const sd=subOf(h);const d=diffDays(h.due,todayS());
 
 /* ---------- నావిగేషన్ ---------- */
 function go(v,p){clearInterval(tick);tick=null;try{speechSynthesis.cancel();}catch(e){}view=v;param=p||{};render();window.scrollTo(0,0);}
-function render(){const app=$('#app');
+/* ---------- ✏️ పలక & 📝 నోట్ – ప్రతి విభాగానికి వేరుగా, అవసరమైనప్పుడే తెరుచుకుంటుంది ---------- */
+const SL={open:false,full:false,tab:'d',bg:'slate',col:'#ffffff',w:4,er:false,strokes:[],base:null,bw:0,sec:'',key:'',cur:null,pid:null,dpr:1,W:0,H:0,th:null,sv:null};
+const SLBG={slate:{n:'⬛ నల్ల పలక',c:'#22312b'},white:{n:'⬜ తెల్ల పేజీ',c:'#ffffff'},lines:{n:'📄 గీతల పేజీ',c:'#ffffff'},grid:{n:'🔲 గడుల పేజీ',c:'#ffffff'}};
+const SLCOL={dark:['#ffffff','#fde047','#f9a8d4','#7dd3fc','#86efac','#fdba74'],light:['#1e3a8a','#111827','#dc2626','#16a34a','#7c3aed','#ea580c']};
+const SLMEM={};let slDB=null;
+function slDb(){if(!slDB)slDB=new Promise((ok,no)=>{try{const r=indexedDB.open('raiSlate',1);r.onupgradeneeded=()=>r.result.createObjectStore('img');r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error);}catch(e){no(e);}});return slDB;}
+async function slGet(k){if(k in SLMEM)return SLMEM[k];try{const db=await slDb();return await new Promise(ok=>{const q=db.transaction('img').objectStore('img').get(k);q.onsuccess=()=>ok(q.result||null);q.onerror=()=>ok(null);});}catch(e){return null;}}
+async function slPut(k,v){SLMEM[k]=v;try{const db=await slDb();await new Promise(ok=>{const tx=db.transaction('img','readwrite');const st=tx.objectStore('img');if(v==null)st.delete(k);else st.put(v,k);tx.oncomplete=ok;tx.onerror=ok;tx.onabort=ok;});}catch(e){}}
+function slTxAll(){try{return JSON.parse(localStorage.getItem('raiSlTx')||'{}')||{};}catch(e){return {};}}
+function slHash(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return (h>>>0).toString(36);}
+function slSec(){const c=S.cur?S.cur.c:0,p=param||{};
+ if(view==='subject'&&SUBJ[p.s])return ['les-'+c+'-'+p.s,SUBJ[p.s].n+' పాఠాలు'];
+ if(view==='testrun'&&T&&SUBJ[T.s])return ['test-'+c+'-'+T.s,SUBJ[T.s].n+' టెస్ట్ – రఫ్ వర్క్'];
+ if(view==='book')return ['book-'+slHash(String(p.u||'')),p.t||'పుస్తకం'];
+ if(view==='homework')return ['hw-'+c,'హోంవర్క్'];
+ if(view==='doubts')return ['dbt-'+c,'సందేహాలు'];
+ if(view==='gamerun'&&G)return ['game-'+c+'-'+G.g,'ఆట – రఫ్ వర్క్'];
+ return ['gen-'+c,'నా పలక'];}
+function slShow(){return !!S.cur&&!['teacher','welcome','privacy'].includes(view)&&!(view==='gamerun'&&(!G||G.done||G.g!=='mm'));}
+function slSync(){if(!document.body)return;slInit();const f=document.getElementById('slFab');if(!f)return;const show=slShow();
+ if(SL.open&&(!show||slSec()[0]!==SL.sec))slClose();
+ f.hidden=!show||SL.open;}
+function slInit(){if(document.getElementById('slate'))return;const d=document.createElement('div');
+ d.innerHTML=`<button id="slFab" class="slfab" onclick="slOpen()" aria-label="పలక తెరువు" hidden><span>✏️</span><small>పలక</small></button>
+<div id="slate" class="slate" hidden role="dialog" aria-label="పలక"><div class="slhd"><div class="sltabs"><button id="slTd" class="on" onclick="slTab('d')">✏️ పలక</button><button id="slTn" onclick="slTab('n')">📝 నోట్</button></div><b id="slTitle"></b><button class="slb" id="slFull" onclick="slFullT()" aria-label="పెద్దది / చిన్నది">⤢</button><button class="slb" onclick="slClose()" aria-label="మూసివేయి">✕</button></div>
+<div class="sltools" id="slTools"></div><div class="slbody bg-slate" id="slBody"><canvas id="slCv"></canvas><textarea id="slTx" hidden maxlength="8000" placeholder="ఇక్కడ నీ నోట్ రాయి… ఈ విభాగానికి మాత్రమే సేవ్ అవుతుంది"></textarea></div></div>`;
+ while(d.firstChild)document.body.appendChild(d.firstChild);
+ const cv=document.getElementById('slCv');
+ const pos=e=>{const r=cv.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top];};
+ cv.addEventListener('pointerdown',e=>{if(SL.pid!=null||SL.tab!=='d')return;e.preventDefault();SL.pid=e.pointerId;try{cv.setPointerCapture(e.pointerId);}catch(x){}
+  SL.cur={c:SL.col,w:SL.er?SL.w*3+14:SL.w,er:SL.er,p:[pos(e)]};slSeg(SL.cur);});
+ cv.addEventListener('pointermove',e=>{if(e.pointerId!==SL.pid||!SL.cur)return;e.preventDefault();const evs=e.getCoalescedEvents?e.getCoalescedEvents():[e];(evs.length?evs:[e]).forEach(x=>{SL.cur.p.push(pos(x));slSeg(SL.cur);});});
+ const end=e=>{if(e.pointerId!==SL.pid)return;SL.pid=null;if(SL.cur){SL.strokes.push(SL.cur);SL.cur=null;slLater();}};
+ cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);cv.addEventListener('lostpointercapture',end);
+ document.getElementById('slTx').addEventListener('input',()=>{clearTimeout(SL.th);SL.th=setTimeout(slSaveTx,400);});
+ window.addEventListener('resize',()=>{if(SL.open)slResize();});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden&&SL.open){slSave();slSaveTx();}});}
+function slCtx(){const cv=document.getElementById('slCv'),x=cv.getContext('2d');x.setTransform(SL.dpr,0,0,SL.dpr,0,0);x.lineCap='round';x.lineJoin='round';return x;}
+function slStyle(x,s){x.lineWidth=s.w;x.strokeStyle=s.c;x.fillStyle=s.c;x.globalCompositeOperation=s.er?'destination-out':'source-over';}
+function slSeg(s){const x=slCtx(),p=s.p,n=p.length;slStyle(x,s);x.beginPath();
+ if(n===1){x.arc(p[0][0],p[0][1],s.w/2,0,Math.PI*2);x.fill();return;}
+ if(n===2){x.moveTo(p[0][0],p[0][1]);x.lineTo(p[1][0],p[1][1]);x.stroke();return;}
+ const a=p[n-3],b=p[n-2],c=p[n-1];x.moveTo((a[0]+b[0])/2,(a[1]+b[1])/2);x.quadraticCurveTo(b[0],b[1],(b[0]+c[0])/2,(b[1]+c[1])/2);x.stroke();}
+function slDraw(x,s){const p=s.p;slStyle(x,s);x.beginPath();
+ if(p.length===1){x.arc(p[0][0],p[0][1],s.w/2,0,Math.PI*2);x.fill();return;}
+ x.moveTo(p[0][0],p[0][1]);if(p.length===2)x.lineTo(p[1][0],p[1][1]);else{x.lineTo((p[0][0]+p[1][0])/2,(p[0][1]+p[1][1])/2);for(let i=1;i<p.length-1;i++)x.quadraticCurveTo(p[i][0],p[i][1],(p[i][0]+p[i+1][0])/2,(p[i][1]+p[i+1][1])/2);x.lineTo(p[p.length-1][0],p[p.length-1][1]);}x.stroke();}
+function slLastClear(){for(let i=SL.strokes.length-1;i>=0;i--)if(SL.strokes[i].clear)return i;return -1;}
+function slRedraw(){const cv=document.getElementById('slCv');if(!cv||!cv.width)return;const x=cv.getContext('2d');x.setTransform(1,0,0,1,0,0);x.globalCompositeOperation='source-over';x.clearRect(0,0,cv.width,cv.height);
+ const lc=slLastClear();if(lc<0&&SL.base){const f=cv.width/(SL.bw||cv.width);x.drawImage(SL.base,0,0,SL.base.width*f,SL.base.height*f);}
+ const y=slCtx();SL.strokes.slice(lc+1).forEach(s=>slDraw(y,s));}
+function slEmpty(){const lc=slLastClear();return SL.strokes.length-lc-1===0&&(lc>=0||!SL.base);}
+function slResize(){const cv=document.getElementById('slCv'),body=document.getElementById('slBody');if(!cv||!body)return;
+ const w=body.clientWidth,h=Math.max(window.innerHeight,body.clientHeight),dpr=Math.min(window.devicePixelRatio||1,2);if(!w)return;
+ if(SL.W===w&&SL.H>=h&&cv.width)return;
+ if(cv.width&&!slEmpty()){const im=new Image();im.src=cv.toDataURL('image/png');SL.base=im;SL.bw=cv.width;SL.strokes=[];}
+ SL.W=w;SL.H=Math.max(h,SL.H);SL.dpr=dpr;cv.width=Math.round(w*dpr);cv.height=Math.round(SL.H*dpr);cv.style.width=w+'px';cv.style.height=SL.H+'px';
+ if(SL.base&&!SL.base.complete)SL.base.onload=slRedraw;slRedraw();}
+function slTools(){const el=document.getElementById('slTools');if(!el)return;
+ if(SL.tab==='n'){el.innerHTML=`<span class="mut" style="font-size:12px;white-space:normal">📝 టైప్ చేసింది ఈ ఫోన్‌లో, ఈ విభాగానికే సేవ్ అవుతుంది</span><button class="slt" onclick="slTxClear()" aria-label="నోట్ తుడువు">🗑️</button>`;return;}
+ const cols=SLCOL[SL.bg==='slate'?'dark':'light'];
+ el.innerHTML=cols.map(c=>`<button class="slc ${!SL.er&&SL.col===c?'on':''}" style="background:${c}" onclick="slColor('${c}')" aria-label="రంగు"></button>`).join('')+`<span class="slsep"></span>`+
+ [2,4,8].map(w=>`<button class="slt ${!SL.er&&SL.w===w?'on':''}" onclick="slWidth(${w})" aria-label="మందం"><i style="width:${w+3}px;height:${w+3}px"></i></button>`).join('')+
+ `<button class="slt ${SL.er?'on':''}" onclick="slEraser()" aria-label="రబ్బరు">🧽</button><button class="slt" onclick="slUndo()" aria-label="వెనక్కి">↶</button><button class="slt" onclick="slClear()" aria-label="మొత్తం తుడువు">🗑️</button>`+
+ `<select class="slsel" onchange="slBg(this.value)" aria-label="పలక రకం">${Object.entries(SLBG).map(([k,v])=>`<option value="${k}" ${SL.bg===k?'selected':''}>${v.n}</option>`).join('')}</select><button class="slt" onclick="slDownload()" aria-label="చిత్రంగా సేవ్">⬇</button>`;}
+function slColor(c){SL.col=c;SL.er=false;slTools();}
+function slWidth(w){SL.w=w;SL.er=false;slTools();}
+function slEraser(){SL.er=!SL.er;slTools();}
+function slUndo(){if(!SL.strokes.length)return toast('వెనక్కి తీసుకోవడానికి ఏమీ లేదు');SL.strokes.pop();slRedraw();slLater();}
+function slClear(){if(slEmpty())return;SL.strokes.push({clear:1});slRedraw();slLater();toast('పలక తుడిచాం – ↶ తో వెనక్కి తేవచ్చు');}
+function slBg(b){const dark=b==='slate',was=SL.bg==='slate';SL.bg=b;if(dark!==was)SL.col=SLCOL[dark?'dark':'light'][0];try{localStorage.setItem('raiSlBg',b);}catch(e){}slApplyBg();slTools();slLater();}
+function slApplyBg(){const b=document.getElementById('slBody');if(b)b.className='slbody bg-'+SL.bg;}
+function slTab(t){SL.tab=t;document.getElementById('slTd').classList.toggle('on',t==='d');document.getElementById('slTn').classList.toggle('on',t==='n');
+ document.getElementById('slCv').hidden=t!=='d';const tx=document.getElementById('slTx');tx.hidden=t!=='n';slTools();if(t==='n')setTimeout(()=>{try{tx.focus();}catch(e){}},50);}
+function slFullT(){SL.full=!SL.full;document.getElementById('slate').classList.toggle('full',SL.full);document.getElementById('slFull').textContent=SL.full?'⤡':'⤢';setTimeout(slResize,30);}
+async function slOpen(){slInit();if(SL.open)return;const [sec,title]=slSec();SL.sec=sec;SL.key=me()+'|'+sec;SL.open=true;
+ const el=document.getElementById('slate');el.hidden=false;document.getElementById('slFab').hidden=true;document.getElementById('slTitle').textContent=title;
+ SL.strokes=[];SL.base=null;SL.bw=0;SL.cur=null;SL.pid=null;SL.er=false;
+ let bg0='slate';try{bg0=localStorage.getItem('raiSlBg')||'slate';}catch(e){}
+ const cv0=document.getElementById('slCv');cv0.width=0;cv0.height=0;
+ const k=SL.key,d=await slGet(k);if(!SL.open||SL.key!==k)return;
+ SL.bg=(d&&d.bg)||bg0;SL.col=SLCOL[SL.bg==='slate'?'dark':'light'][0];slApplyBg();
+ document.getElementById('slTx').value=slTxAll()[k]||'';
+ if(d&&d.img){const im=new Image();im.onload=()=>{if(SL.key===k){slRedraw();}};im.src=d.img;SL.base=im;SL.bw=d.pw||0;}
+ slTab(SL.tab==='n'&&!document.getElementById('slTx').value&&d&&d.img?'d':SL.tab);
+ SL.W=0;slResize();}
+function slLater(){clearTimeout(SL.sv);SL.sv=setTimeout(slSave,700);}
+function slSave(){clearTimeout(SL.sv);if(!SL.key)return;const cv=document.getElementById('slCv');if(!cv||!cv.width)return;
+ const k=SL.key,v=slEmpty()?(SL.bg!=='slate'?{img:null,bg:SL.bg}:null):{img:cv.toDataURL('image/png'),pw:cv.width,bg:SL.bg};slPut(k,v);}
+function slSaveTx(){clearTimeout(SL.th);if(!SL.key)return;const v=document.getElementById('slTx').value;const all=slTxAll();if(v.trim())all[SL.key]=v;else delete all[SL.key];try{localStorage.setItem('raiSlTx',JSON.stringify(all));}catch(e){toast('నోట్ సేవ్ కాలేదు – ఫోన్ స్టోరేజ్ నిండింది');}}
+function slTxClear(){const t=document.getElementById('slTx');if(!t.value)return;if(!confirm('ఈ నోట్ తుడిచేయాలా?'))return;t.value='';slSaveTx();}
+function slClose(){if(!SL.open)return;if(SL.cur){SL.strokes.push(SL.cur);SL.cur=null;}slSave();slSaveTx();SL.open=false;SL.key='';SL.pid=null;
+ const el=document.getElementById('slate');if(el)el.hidden=true;const f=document.getElementById('slFab');if(f)f.hidden=!slShow();}
+function slDownload(){const cv=document.getElementById('slCv');if(!cv||!cv.width)return;const o=document.createElement('canvas');o.width=cv.width;o.height=cv.height;const x=o.getContext('2d');
+ x.fillStyle=SLBG[SL.bg].c;x.fillRect(0,0,o.width,o.height);const d=SL.dpr;
+ if(SL.bg==='lines'){x.fillStyle='#c7d2fe';for(let y=35*d;y<o.height;y+=36*d)x.fillRect(0,y,o.width,d);}
+ if(SL.bg==='grid'){x.fillStyle='#e5e7eb';for(let y=0;y<o.height;y+=24*d)x.fillRect(0,y,o.width,d);for(let z=0;z<o.width;z+=24*d)x.fillRect(z,0,d,o.height);}
+ x.drawImage(cv,0,0);const a=document.createElement('a');a.download='Raay_Palaka_'+SL.sec+'.png';a.href=o.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();toast('చిత్రం సేవ్ అయింది ⬇');}
+function render(){render0();slSync();}
+function render0(){const app=$('#app');
  if(view==='teacher'){app.innerHTML='<main>'+V.teacher()+'</main>'+footer();return;}
  if(view==='privacy'&&!S.cur){app.innerHTML='<main>'+V.privacy()+'</main>'+footer();return;}
  if(view==='welcome'||(!S.cur&&!S.cfg.type&&!S.offline)){app.innerHTML=V.welcome()+footer();return;}
@@ -1217,9 +1502,9 @@ V.games=()=>{const pend=pendingHw();const lb=param.lb||'mm';
  return `${pend.slice(0,2).map(h=>`<div class="task"><span class="si" style="background:${SUBJ[h.s].bg};color:${SUBJ[h.s].col}">${SUBJ[h.s].ic}</span><div><b>${esc(h.t)}</b><small>${diffDays(h.due,todayS())<0?'గడువు దాటింది':'గడువు: '+fmtD(h.due)}</small></div><span>›</span></div>`).join('')}
 ${pend.length?`<button class="btn dark" style="width:100%;margin-top:4px" onclick="go('homework')">అన్ని పనులు చూడు</button>`:''}
 <div class="concept"><h3>కాన్సెప్ట్స్ బలపరచుకో</h3><p>ఎంపిక చేసిన పాఠాల నుండి నేర్చుకుని, నీ అవగాహన పెంచుకో.</p><button class="btn dark" onclick="go('learn')">నేర్చుకోవడం ప్రారంభించు</button><span>📄</span></div>
-<h4 class="sec">ఆటలతో నేర్చుకో</h4><div class="gtiles">${Object.entries(GAMES).map(([k,g],i)=>`<button class="gt ${i===2?'wide':''}" style="background:${g.bg}" onclick="startGame('${k}')"><div><b>${g.n}</b><br><small>${g.t} • ${g.sec} సెకన్లు</small></div><em>ఆడు ▶</em><i>${g.ic}</i></button>`).join('')}</div>
+<h4 class="sec">ఆటలతో నేర్చుకో</h4><div class="gtiles">${Object.entries(gamesOf(S.cur.c)).map(([k,g],i,a)=>`<button class="gt ${i===2&&a.length===3?'wide':''}" style="background:${g.bg}" onclick="startGame('${k}')"><div><b>${g.n}</b><br><small>${g.t} • ${g.sec} సెకన్లు</small></div><em>ఆడు ▶</em><i>${g.ic}</i></button>`).join('')}</div>
 <h4 class="sec">🏆 స్నేహితులతో పోల్చు (${S.cur.c}వ తరగతి)</h4>
-<div class="tabs">${Object.entries(GAMES).map(([k,g])=>`<button class="${lb===k?'on':''}" onclick="go('games',{lb:'${k}'})">${g.n}</button>`).join('')}</div>
+<div class="tabs">${Object.entries(gamesOf(S.cur.c)).map(([k,g])=>`<button class="${lb===k?'on':''}" onclick="go('games',{lb:'${k}'})">${g.n}</button>`).join('')}</div>
 <div class="lb">${rows.length?rows.map(([n,s],i)=>`<div class="lbr ${n===me()?'me':''}"><span class="rk">${['🥇','🥈','🥉'][i]||i+1}</span><span class="nm">${esc(n)}${n===me()?' (నువ్వు)':''}</span><b>${s}</b></div>`).join(''):'<p class="mut" style="padding:14px 0;text-align:center">ఇంకా ఎవరూ ఆడలేదు – మొదటివాడివి నువ్వే అవ్వు!</p>'}</div>
 ${S.cfg.type?'<p class="mut" style="margin-top:8px">☁️ నీ తరగతిలోని అందరి స్కోర్లు ఆన్‌లైన్‌లో పోల్చబడతాయి.</p>':'<p class="mut" style="margin-top:8px">ఆఫ్లైన్‌లో ఈ ఫోన్‌లో ఆడినవారే కనిపిస్తారు. అందరితో పోల్చడానికి ఆన్‌లైన్ సింక్ ఆన్ చేయాలి.</p>'}`;};
 function genMental(c){let q,a;const k=R(0,2);
@@ -1227,7 +1512,10 @@ function genMental(c){let q,a;const k=R(0,2);
  else if(c===2){if(k===0){const x=R(10,50),y=R(5,30);q=`${x} + ${y}`;a=x+y;}else if(k===1){const x=R(20,60),y=R(5,x-1);q=`${x} − ${y}`;a=x-y;}else{const x=R(2,5),y=R(1,10);q=`${x} × ${y}`;a=x*y;}}
  else if(c===3){if(k===0){const x=R(20,80),y=R(10,60);q=`${x} + ${y}`;a=x+y;}else if(k===1){const x=R(2,10),y=R(2,10);q=`${x} × ${y}`;a=x*y;}else{const d=R(2,10),y=R(2,10);q=`${d*y} ÷ ${d}`;a=y;}}
  else if(c===4){if(k===0){const x=R(11,30),y=R(2,9);q=`${x} × ${y}`;a=x*y;}else if(k===1){const d=R(2,9),y=R(5,20);q=`${d*y} ÷ ${d}`;a=y;}else{const x=R(100,500),y=R(50,99);q=`${x} − ${y}`;a=x-y;}}
- else if(c>=6){if(k===0){const x=R(-20,20),y=R(-20,20);q=`(${x}) + (${y})`;a=x+y;return {q:q+' = ?',a:String(a),o:numOptsZ(a,5)};}else if(k===1){const x=c>=8?R(11,30):R(11,20);q=`${x}²`;a=x*x;}else{const pc=[10,20,25,50,75][R(0,4)],n=R(1,c>=8?20:10)*20;q=`${n} లో ${pc}%`;a=n*pc/100;}}
+ else if(c>=6){const kk=R(0,4);if(kk===0){const x=R(-20,20),y=R(-20,20);q=`(${x}) + (${y})`;a=x+y;return {q:q+' = ?',a:String(a),o:numOptsZ(a,5)};}
+  else if(kk===1){const x=c>=8?R(11,30):R(11,20);q=`${x}²`;a=x*x;}else if(kk===2){const pc=[10,20,25,50,75][R(0,4)],n=R(1,c>=8?20:10)*20;q=`${n} లో ${pc}%`;a=n*pc/100;}
+  else if(kk===3){if(c>=8){const x=R(2,10);q=`${x}³`;a=x**3;}else{const x=R(12,40),y=R(3,9);q=`${x} × ${y}`;a=x*y;}}
+  else{const x=R(2,c>=8?15:10),y=R(2,9);q=`${y}x = ${x*y} అయితే x`;a=x;}}
  else{if(k===0){const x=R(11,20),y=R(3,9);q=`${x} × ${y}`;a=x*y;}else if(k===1){const d=R(11,20),y=R(3,12);q=`${d*y} ÷ ${d}`;a=y;}else{const x=R(2,15);q=`${x} × ${x}`;a=x*x;}}
  return {q:q+' = ?',a:String(a),o:numOpts(a,a>40?10:4)};}
 function startGame(g){G={g,score:0,left:GAMES[g].sec,done:false,used:[],msg:'',mc:''};nextRound();go('gamerun');
@@ -1236,14 +1524,22 @@ function nextRound(){const c=S.cur.c;
  if(G.g==='mm')G.cur=genMental(c);
  else if(G.g==='tl'){let pool=TEL.filter(x=>!G.used.includes(x[1]));if(!pool.length){G.used=[];pool=TEL;}const it=pool[R(0,pool.length-1)];G.used.push(it[1]);
   const o=new Set([it[2]]);while(o.size<4)o.add(TEL[R(0,TEL.length-1)][2]);G.cur={e:it[0],w:it[1],a:it[2],o:shuffle([...o])};}
+ else if(G.g==='vw'){const p0=VW[c>=8?1:0];let pool=p0.filter(x=>!G.used.includes(x[0]));if(!pool.length){G.used=[];pool=p0;}const it=pool[R(0,pool.length-1)];G.used.push(it[0]);
+  let tl=shuffle(it[0].split(''));let g2=0;while(tl.join('')===it[0]&&g2++<10)tl=shuffle(tl);G.cur={e:'',hint:it[1],w:it[0],tiles:tl.map(l=>({l,u:false})),typed:[]};}
+ else if(G.g==='tf')G.cur=tfItem(c);
+ else if(G.g==='hw'){let pool=HWD.filter(x=>!G.used.includes(x[0]));if(!pool.length){G.used=[];pool=HWD;}const it=pool[R(0,pool.length-1)];G.used.push(it[0]);
+  const o=new Set([it[1]]);let g3=0;while(o.size<4&&g3++<60)o.add(HWD[R(0,HWD.length-1)][1]);G.cur={e:it[0],a:it[1],o:shuffle([...o])};}
  else{const max={1:3,2:4,3:5,4:7}[c]||99;let pool=WORDS.filter(w=>w[1].length<=max&&!G.used.includes(w[1]));if(!pool.length){G.used=[];pool=WORDS.filter(w=>w[1].length<=max);}
   const it=pool[R(0,pool.length-1)];G.used.push(it[1]);let tl=shuffle(it[1].split(''));let g2=0;while(tl.join('')===it[1]&&g2++<10)tl=shuffle(tl);
   G.cur={e:it[0],w:it[1],tiles:tl.map(l=>({l,u:false})),typed:[]};}}
 function gameArea(){const c=G.cur;const m=`<div class="gmsg ${G.mc}">${G.msg}</div>`;
  if(G.g==='mm')return `<div class="gq">${c.q}</div>${m}<div class="gopts">${c.o.map((o,j)=>`<button onclick="mmPick(${j})">${o}</button>`).join('')}</div>`;
  if(G.g==='tl')return `<div class="gemo">${c.e}</div><p class="center">ఈ బొమ్మ పేరు ఏ అక్షరంతో మొదలవుతుంది?</p>${m}<div class="gopts">${c.o.map((o,j)=>`<button onclick="tlPick(${j})">${o}</button>`).join('')}</div>`;
- return `<div class="gemo">${c.e}</div><p class="center">అక్షరాలను సరైన క్రమంలో నొక్కి పదం తయారు చేయి</p><div class="slots" id="slots">${c.w.split('').map((_,i)=>`<span>${c.typed[i]!=null?c.tiles[c.typed[i]].l:''}</span>`).join('')}</div>${m}
-<div class="ltiles">${c.tiles.map((t,i)=>`<button ${t.u?'disabled':''} onclick="ewTap(${i})">${t.l}</button>`).join('')}</div>
+ if(G.g==='tf')return `<div class="tfq"><small>${SUBJ[c.s]?SUBJ[c.s].ic+' '+SUBJ[c.s].n:''}</small><p>${esc(c.q)}</p><div class="tfv">👉 ${esc(c.v)}</div></div>${m}<div class="tfb"><button class="y" onclick="tfPick(true)">✅ నిజం</button><button class="n" onclick="tfPick(false)">❌ అబద్ధం</button></div>`;
+ if(G.g==='hw')return `<div class="gq hwq">${c.e}</div><p class="center">ఈ హిందీ పదానికి తెలుగు అర్థం ఏమిటి?</p>${m}<div class="gopts">${c.o.map((o,j)=>`<button class="hwo" onclick="hwPick(${j})">${esc(o)}</button>`).join('')}</div>`;
+ const lg=c.w.length>7?'long':'';
+ return `${c.hint?`<div class="vwh"><small>తెలుగు అర్థం</small><b>${esc(c.hint)}</b><small>${c.w.length} అక్షరాల English పదం</small></div>`:`<div class="gemo">${c.e}</div>`}<p class="center">అక్షరాలను సరైన క్రమంలో నొక్కి పదం తయారు చేయి</p><div class="slots ${lg}" id="slots">${c.w.split('').map((_,i)=>`<span>${c.typed[i]!=null?c.tiles[c.typed[i]].l:''}</span>`).join('')}</div>${m}
+<div class="ltiles ${lg}">${c.tiles.map((t,i)=>`<button ${t.u?'disabled':''} onclick="ewTap(${i})">${t.l}</button>`).join('')}</div>
 <div class="row2 qnav"><button class="btn ghost" onclick="ewBack()">⌫ తొలగించు</button><button class="btn ghost" onclick="ewSkip()">దాటవేయి ⏭</button></div>`;}
 function upd(shake){const a=$('#garea');if(!a)return;a.innerHTML=gameArea();$('#gsc').textContent=G.score;if(shake){const s=$('#slots');if(s)s.classList.add('shake');}}
 function mmPick(j){const c=G.cur;beep(c.o[j]===c.a?'ok':'no');if(c.o[j]===c.a){G.score++;G.msg='✓ సరైనది!';G.mc='ok';}else{G.msg=`✗ సరైన జవాబు: ${c.q.replace('?',c.a)}`;G.mc='no';}nextRound();upd();}
@@ -1348,10 +1644,10 @@ function addNote(){const t=$('#ntt').value.trim(),x=$('#ntx').value.trim();if(!t
 TP.rp=()=>{const f=param.f||0;const seen={};const st=live('students').filter(s=>myCls().includes(+s.c)&&(!f||s.c===f)&&!seen[s.n+'|'+s.c]&&(seen[s.n+'|'+s.c]=1));
  const rows=st.map(s=>{const rs=live('results').filter(r=>r.n===s.n&&r.c===s.c);const avg=avgOf(rs);const by=subjectsFor(s.c).map(sb=>{const x=rs.filter(r=>r.sb===sb);return SUBJ[sb].sh+' '+(x.length?avgOf(x)+'%':'–');});
   const hw=live('hw').filter(h=>h.c===s.c);const sub=hw.filter(h=>live('subs').some(x=>x.hw===h.id&&x.n===s.n)).length;const rd=Object.keys(S.read[s.n]||{}).filter(k=>k.startsWith(s.c+'-')).length;
-  const gb=Object.keys(GAMES).map(g=>{const v=live('games').filter(x=>x.n===s.n&&x.g===g&&x.c===s.c).map(x=>x.s);return v.length?Math.max(...v):'–';});
+  const gb=Object.keys(gamesOf(s.c)).map(g=>{const v=live('games').filter(x=>x.n===s.n&&x.g===g&&x.c===s.c).map(x=>x.s);return GAMES[g].ic+' '+(v.length?Math.max(...v):'–');});
   return `<tr><td><b>${esc(s.n)}</b></td><td>${s.c}</td><td>${rs.length}</td><td>${rs.length?`<span class="pct ${pctCls(avg)}">${avg}%</span>`:'–'}</td><td>${by.join(' / ')}</td><td>${rd}</td><td>${sub}/${hw.length}</td><td>${gb.join(' / ')}</td><td><button class="del" onclick="delStudent('${esc(s.n).replace(/'/g,'')}',${s.c})">🗑️</button></td></tr>`;}).join('');
  return `<div class="tchips">${[0].concat(myCls()).map(c=>`<button class="${f===c?'on':''}" onclick="go('teacher',{t:'rp',f:${c}})">${c?c+'వ తరగతి':'అన్నీ'}</button>`).join('')}</div>
-${st.length?`<div class="tscroll"><table class="tbl"><tr><th>పేరు</th><th>తర.</th><th>టెస్టులు</th><th>సగటు</th><th>సబ్జెక్టుల వారీ సగటు</th><th>చదివిన పాఠాలు</th><th>హోంవర్క్</th><th>ఆటలు MM/EW/తెలుగు</th><th>తొలగించు</th></tr>${rows}</table></div>`:'<div class="empty">విద్యార్థులు లేరు</div>'}
+${st.length?`<div class="tscroll"><table class="tbl"><tr><th>పేరు</th><th>తర.</th><th>టెస్టులు</th><th>సగటు</th><th>సబ్జెక్టుల వారీ సగటు</th><th>చదివిన పాఠాలు</th><th>హోంవర్క్</th><th>ఆటల ఉత్తమ స్కోర్లు</th><th>తొలగించు</th></tr>${rows}</table></div>`:'<div class="empty">విద్యార్థులు లేరు</div>'}
 <p class="mut" style="margin-top:10px">${S.cfg.type?'☁️ అన్ని ఫోన్ల నుండి సింక్ అయిన డేటా. “చదివిన పాఠాలు” ఆ విద్యార్థి ఫోన్‌లోనే ఉంటుంది.':'📴 ఈ ఫోన్‌లో లాగిన్ అయిన విద్యార్థుల డేటా మాత్రమే.'}</p>`;};
 TP.st=()=>`<div class="card"><h3>🔒 గోప్యత</h3><p class="mut">తల్లిదండ్రులకు చూపించడానికి.</p><button class="btn sm ghost" onclick="tAuth=false;go('privacy')">గోప్యత & నిబంధనలు చూడు</button></div><div class="card"><h3>🔐 PIN మార్చండి</h3><input id="np" type="password" inputmode="numeric" maxlength="8" placeholder="కొత్త PIN (4–8 అంకెలు)"><button class="btn" onclick="chPin()">మార్చు</button></div>
 <div class="card"><h3>💾 బ్యాకప్ & పునరుద్ధరణ</h3><p class="mut">డేటా కాపీ ఈ బ్రౌజర్‌లో ఉంటుంది. వేరే ఫోన్‌కు మార్చడానికి బ్యాకప్ వాడండి.</p><button class="btn" onclick="exportData()">⬇ బ్యాకప్ డౌన్‌లోడ్ (.json)</button><label>బ్యాకప్ ఫైల్ నుండి పునరుద్ధరించు</label><input type="file" accept=".json,application/json" onchange="importData(this)"></div>
@@ -1552,7 +1848,7 @@ async function libLoad(force){if(view!=='library')return;const tab=param.tab||'b
  let items=[];
  if(tab==='books'){const files=await listDir('books/'+c,force);
   (files||[]).filter(f=>/\.pdf$/i.test(f.name)).sort((a,b)=>a.name.localeCompare(b.name)).forEach(f=>items.push({t:prettyName(f.name),u:'books/'+c+'/'+encodeURIComponent(f.name),k:'pdf',ic:bookIcon(f.name),sub:mb(f.size)}));
-  live('notes').filter(n=>n.kind==='book'&&n.c===c).forEach(n=>items.push({t:n.t,u:n.url,k:tKind(n.url),ic:'🔗',sub:(SUBJ[n.s]?SUBJ[n.s].n+' • ':'')+'టీచర్ జోడించింది'}));
+  live('notes').filter(n=>n.kind==='book'&&n.c===c).forEach(n=>items.push({t:n.t,u:n.url,k:tKind(n.url),ic:n.up?'📘':'🔗',sub:(SUBJ[n.s]?SUBJ[n.s].n+' • ':'')+(n.up?'టీచర్ అప్‌లోడ్ చేసింది':'టీచర్ జోడించింది')}));
   if(files===null&&!items.length){box.innerHTML='<div class="empty">📴 ఇంటర్నెట్ లేదు – నెట్ ఆన్ చేసి 🔄 నొక్కు</div>';return;}}
  else{const files=await listDir('tools',force);
   (files||[]).filter(f=>/\.html?$/i.test(f.name)).sort((a,b)=>a.name.localeCompare(b.name)).forEach(f=>items.push({t:prettyName(f.name),u:'tools/'+encodeURIComponent(f.name),k:'tool',ic:'🧰',sub:'అందరికీ'}));
@@ -1597,18 +1893,24 @@ document.addEventListener('touchstart',e=>{if(view==='book'&&param.k==='pdf'&&e.
 document.addEventListener('touchend',e=>{if(tsx==null)return;const t=e.changedTouches[0],dx=t.clientX-tsx,dy=t.clientY-tsy;tsx=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)pdfGo(dx<0?1:-1);},{passive:true});
 /* టీచర్: పుస్తకం / టూల్ లింక్ జోడించడం */
 TP.lb=()=>{const bk=live('notes').filter(n=>n.kind==='book'&&canSee(n.c,n.s)),tl=live('notes').filter(n=>n.kind==='tool'&&canSee(n.c));
- return `<div class="card"><h3>📘 పుస్తకం లింక్ జోడించు (Google Drive)</h3><p class="mut">పెద్ద PDF లు: Google Drive లో అప్‌లోడ్ చేసి → Share → <b>Anyone with the link</b> → Copy link → ఇక్కడ పేస్ట్. మీ పాఠశాల పిల్లలకు మాత్రమే కనిపిస్తుంది.</p>
+ return `<div class="card"><h3>📘 పుస్తకం జోడించు – PDF అప్‌లోడ్ / Drive లింక్</h3><p class="mut">PDF ఫైల్ నేరుగా అప్‌లోడ్ చేయండి (20 MB లోపు) లేదా Google Drive లింక్ పేస్ట్ చేయండి. మీ పాఠశాల పిల్లలకు మాత్రమే కనిపిస్తుంది.</p>
 <div class="g2"><div><label>తరగతి</label>${clsSel('bkc')}</div><div><label>సబ్జెక్ట్</label><select id="bkcs">${subjOpts(myCls()[0])}</select></div></div>
-<label>పుస్తకం పేరు</label><input id="bkt" placeholder="ఉదా: తెలుగు వర్క్‌బుక్ – సెమిస్టర్ 1"><label>లింక్</label><input id="bku" placeholder="https://drive.google.com/file/d/.../view"><button class="btn" onclick="addLib('book')">➕ పుస్తకం జోడించు</button></div>
+<label>పుస్తకం పేరు</label><input id="bkt" placeholder="ఉదా: తెలుగు వర్క్‌బుక్ – సెమిస్టర్ 1">
+<div class="upbox"><label class="upbtn">📤 PDF ఫైల్ ఎంచుకో<input type="file" id="bkf" accept="application/pdf,.pdf" hidden onchange="bkFile(this)"></label><small id="bkfn" class="mut">ఫైల్ ఎంచుకోలేదు</small></div>
+<div id="bkp" class="upprog" hidden><i></i><span></span></div>
+${S.cfg.type==='gs'?'':'<p class="mut" style="margin:6px 0 0">⚠️ PDF అప్‌లోడ్‌కు ఆన్‌లైన్ సింక్ (Google Sheets) ఆన్ చేయాలి. అప్పటివరకు Drive లింక్ వాడండి.</p>'}
+<div class="orline">— లేదా —</div>
+<label>Google Drive లింక్</label><input id="bku" placeholder="https://drive.google.com/file/d/.../view"><button class="btn" id="bkbtn" onclick="addLib('book')">➕ పుస్తకం జోడించు</button>
+<details style="margin-top:8px"><summary class="mut">PDF 20 MB కంటే పెద్దదైతే?</summary><p class="mut">ilovepdf.com → Compress PDF తో చిన్నది చేయండి, లేదా Drive లో పెట్టి Share → Anyone with the link → Copy link → పైన పేస్ట్ చేయండి.</p></details></div>
 <div class="card"><h3>🧰 లెర్నింగ్ టూల్ లింక్ జోడించు</h3><p class="mut">మీ HTML టూల్ వెబ్ లింక్ (ఉదా: GitHub Pages). అదే తరగతి లేదా అందరికీ.</p>
 <label>తరగతి</label>${clsSel('tlc',true)}<label>టూల్ పేరు</label><input id="tlt" placeholder="ఉదా: A–Z ఇంగ్లీష్ పదాలు"><label>లింక్</label><input id="tlu" placeholder="https://rameshbomidi-wq.github.io/..."><button class="btn" onclick="addLib('tool')">➕ టూల్ జోడించు</button></div>
-<h4 class="sec">జోడించినవి (${bk.length+tl.length})</h4>${bk.concat(tl).map(n=>`<div class="titem"><div><b>${n.kind==='book'?'📘':'🧰'} ${esc(n.t)}</b><small>${n.c?n.c+'వ తరగతి':'అందరికీ'}${SUBJ[n.s]?' • '+SUBJ[n.s].n:''}</small><small style="word-break:break-all">${esc(n.url)}</small></div><button class="del" onclick="delItem('notes','${n.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}
+<h4 class="sec">జోడించినవి (${bk.length+tl.length})</h4>${bk.concat(tl).map(n=>`<div class="titem"><div><b>${n.kind==='book'?'📘':'🧰'} ${esc(n.t)}</b><small>${n.c?n.c+'వ తరగతి':'అందరికీ'}${SUBJ[n.s]?' • '+SUBJ[n.s].n:''}</small><small style="word-break:break-all">${n.up?'📤 అప్‌లోడ్ చేసిన PDF (Google Drive)':esc(n.url)}</small></div><button class="del" onclick="${n.kind==='book'?`delBook('${n.id}')`:`delItem('notes','${n.id}')`}">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}
 <details class="card"><summary><b>📂 యాప్ యజమాని: GitHub ఫోల్డర్‌లో పెట్టడం (అన్ని పాఠశాలలకు)</b></summary><ol class="steps">
-<li>యాప్ రిపోలో <b>books/1 … books/5</b> ఫోల్డర్లలో ఆ తరగతి PDF లు, <b>tools/</b> ఫోల్డర్‌లో HTML టూల్స్ అప్‌లోడ్ చేయండి.</li>
+<li>యాప్ రిపోలో <b>books/1 … books/10</b> ఫోల్డర్లలో ఆ తరగతి PDF లు, <b>tools/</b> ఫోల్డర్‌లో HTML టూల్స్ అప్‌లోడ్ చేయండి.</li>
 <li>ఫైల్ పేర్లు ఇంగ్లీష్‌లో: <code>telugu-textbook-sem1.pdf</code>, <code>maths-workbook-sem1.pdf</code>, <code>a-z-english-words.html</code> – యాప్ తెలుగులో చూపిస్తుంది.</li>
 <li>ఒక్కో ఫైల్ <b>25 MB లోపు</b> (ilovepdf.com → Compress PDF). మొత్తం 1 GB లోపు ఉంచండి.</li>
 <li>అప్‌లోడ్ చేసిన 2–3 నిమిషాల తర్వాత యాప్‌లో 🔄 నొక్కితే కనిపిస్తాయి.</li></ol></details>`;};
-function addLib(kind){const isB=kind==='book';const t=$(isB?'#bkt':'#tlt').value.trim(),u=$(isB?'#bku':'#tlu').value.trim();
+function addLib(kind){if(kind==='book'){const fi=document.getElementById('bkf');if(fi&&fi.files&&fi.files[0])return upBook();}const isB=kind==='book';const t=$(isB?'#bkt':'#tlt').value.trim(),u=$(isB?'#bku':'#tlu').value.trim();
  if(!t)return toast('పేరు రాయండి');if(!/^https:\/\//.test(u))return toast('https:// తో మొదలయ్యే లింక్ ఇవ్వండి');
  if(isB&&!driveId(u)&&!/\.pdf(\?|#|$)/i.test(u))return toast('Google Drive లింక్ / .pdf లింక్ ఇవ్వండి');
  put('notes',{id:uid(),kind,c:+$(isB?'#bkc':'#tlc').value,s:isB?$('#bkcs').value:'',t,url:u,x:''});toast('జోడించబడింది ✓');go('teacher',{t:'lb'});}
@@ -1731,6 +2033,36 @@ markDay();render();
  if(seen){sp.remove();return;}setTimeout(()=>{sp.classList.add('out');setTimeout(()=>sp.remove(),500);},900);})();
 if(S.cfg.type)Sync.start();
 if(/^https?:$/.test(location.protocol))loadPubCfg();
+
+/* 📤 PDF నేరుగా అప్‌లోడ్ (Google Sheets సర్వర్ → యజమాని Google Drive) */
+const UPMAX=20*1048576,UPCH=2000000;let UPBUSY=false;
+function bkFile(inp){const f=inp.files&&inp.files[0];const n=document.getElementById('bkfn');if(!f){if(n)n.textContent='ఫైల్ ఎంచుకోలేదు';return;}
+ if(n)n.innerHTML=`📄 <b>${esc(f.name)}</b> • ${mb(f.size)}${f.size>UPMAX?' <span style="color:#dc2626">(20 MB కంటే పెద్దది)</span>':''}`;const t=document.getElementById('bkt');if(t&&!t.value.trim())t.value=prettyName(f.name);}
+function upProg(p,msg){const b=document.getElementById('bkp');if(!b)return;b.hidden=false;const i=b.querySelector('i'),s=b.querySelector('span');if(p>=0)i.style.width=p+'%';i.style.background=p<0?'#fca5a5':'';s.textContent=msg;}
+function upErr(e){return {key:'అనుమతి లేదు – మీ తరగతికి మాత్రమే అప్‌లోడ్ చేయగలరు',big:'ఫైల్ 20 MB కంటే పెద్దది – Compress చేయండి',pdf:'ఇది PDF ఫైల్ కాదు',quota:'పాఠశాల PDF స్థలం (500 MB) నిండింది – పాత పుస్తకాలు తొలగించండి',busy:'ఈ గంటలో అప్‌లోడ్ పరిమితి దాటింది – కాసేపాగి ప్రయత్నించండి',drive:'సర్వర్‌కు Google Drive అనుమతి లేదు – యజమాని Apps Script లో driveSetup ▶ Run చేయాలి',part:'అప్‌లోడ్ మధ్యలో తెగింది – మళ్ళీ ప్రయత్నించండి',bad:'అప్‌లోడ్ అభ్యర్థన తప్పు – మళ్ళీ ప్రయత్నించండి'}[e]||gsErr(e);}
+function b64File(f){return new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>{const s=String(r.result);ok(s.slice(s.indexOf(',')+1));};r.onerror=()=>no(new Error('ఫైల్ చదవలేకపోయాం'));r.readAsDataURL(f);});}
+const UPOLD='సర్వర్ కోడ్ పాతది – పబ్లిక్ సర్వర్ కోడ్ మార్చి New version Deploy చేయాలి';
+async function upPdf(f,c,prog){prog(1,'ఫైల్ సిద్ధం చేస్తోంది...');const data=await b64File(f);const n=Math.ceil(data.length/UPCH),u=uid();let j=null;
+ for(let i=0;i<n;i++){const part=data.slice(i*UPCH,(i+1)*UPCH);prog(Math.max(2,Math.round(i*95/n)),i===n-1?'Drive లో సేవ్ చేస్తోంది... (కొంచెం సమయం పడుతుంది)':'అప్‌లోడ్ అవుతోంది '+Math.round(i*100/n)+'%');j=null;
+  for(let a=0;a<3&&!j;a++){try{const r=await fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'up',s:S.cfg.sid,k:GS.key(),dev:S.dev,u,i,n,c,name:f.name,data:part})});j=await r.json();}catch(e){j=null;if(a<2)await new Promise(z=>setTimeout(z,1500*(a+1)));}}
+  if(!j)throw new Error('ఇంటర్నెట్ సమస్య – నెట్ చూసి మళ్ళీ ప్రయత్నించండి');
+  if(!j.ok)throw new Error(upErr(j.err));
+  if(j.got!==i)throw new Error(UPOLD);}
+ if(!j||!j.url)throw new Error(UPOLD);prog(100,'✓ అప్‌లోడ్ పూర్తయింది');return j.url;}
+async function upBook(){const fi=document.getElementById('bkf'),f=fi&&fi.files&&fi.files[0];if(!f)return;
+ const t=$('#bkt').value.trim()||prettyName(f.name),c=+$('#bkc').value,s=$('#bkcs').value;
+ if(S.cfg.type!=='gs')return toast('PDF అప్‌లోడ్‌కు ఆన్‌లైన్ సింక్ (Google Sheets) కావాలి – లేదా Drive లింక్ ఇవ్వండి');
+ if(!S.cfg.isT)return toast('ఉపాధ్యాయ కీతో కనెక్ట్ అయితేనే అప్‌లోడ్ చేయగలరు');
+ if(!/\.pdf$/i.test(f.name)&&f.type!=='application/pdf')return toast('PDF ఫైల్ మాత్రమే అప్‌లోడ్ చేయగలరు');
+ if(f.size>UPMAX)return toast(`ఫైల్ ${mb(f.size)} – 20 MB లోపు ఉండాలి (ilovepdf.com → Compress PDF)`);
+ if(UPBUSY)return;UPBUSY=true;const btn=document.getElementById('bkbtn');if(btn){btn.disabled=true;btn.textContent='⏳ అప్‌లోడ్ అవుతోంది...';}
+ try{const url=await upPdf(f,c,upProg);put('notes',{id:uid(),kind:'book',c,s,t,url,fid:driveId(url),up:1,x:''});toast('PDF అప్‌లోడ్ అయింది ✓ పిల్లలకు కనిపిస్తుంది');go('teacher',{t:'lb'});}
+ catch(e){upProg(-1,'❌ '+e.message);toast(e.message);}
+ finally{UPBUSY=false;const b2=document.getElementById('bkbtn');if(b2){b2.disabled=false;b2.textContent='➕ పుస్తకం జోడించు';}}}
+function delBook(id){if(!confirm('తొలగించాలా?'))return;const n=live('notes').find(x=>x.id===id);
+ if(n&&n.up&&n.fid&&S.cfg.type==='gs')fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'rm',s:S.cfg.sid,k:GS.key(),dev:S.dev,fid:n.fid})}).catch(()=>{});
+ remove('notes',id);go('teacher',{t:'lb'});}
+
 </script>
 </body>
 </html>
