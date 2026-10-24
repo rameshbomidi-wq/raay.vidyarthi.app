@@ -273,6 +273,7 @@ main,.card,.qcard{overflow-wrap:anywhere}
 
 /* ✏️ పలక */
 .slfab{position:fixed;right:0;bottom:calc(150px + env(safe-area-inset-bottom));z-index:45;border:0;border-radius:16px 0 0 16px;background:linear-gradient(160deg,#f59e0b,#ea580c);color:#fff;width:46px;padding:8px 0 6px;display:flex;flex-direction:column;align-items:center;gap:1px;box-shadow:-2px 4px 12px rgba(0,0,0,.25);cursor:pointer}
+.slfab{touch-action:none;user-select:none;-webkit-user-select:none}.slfab.drag{opacity:.85;transform:scale(1.08)}
 .slfab span{font-size:20px;line-height:1.1}.slfab small{font-size:11px;font-weight:700}
 .slfab[hidden],.slate[hidden]{display:none}
 .slate{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:760px;height:58vh;z-index:60;background:#fffaf0;border-radius:20px 20px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.3);display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom);animation:slup .22s ease-out}
@@ -295,6 +296,7 @@ main,.card,.qcard{overflow-wrap:anywhere}
 select.slsel{border:1px solid #e3d5b8;border-radius:10px;padding:6px;font-size:13px;background:#fff;flex:none;width:auto;margin:0;height:34px}
 .slbody{flex:1;min-height:0;position:relative;overflow:hidden;margin:0 8px 8px;border-radius:12px}
 .slbody canvas{position:absolute;left:0;top:0;touch-action:none;display:block}
+.slpg{display:flex;align-items:center;justify-content:center;gap:6px;padding:0 8px 8px;flex-wrap:nowrap}.slpg[hidden]{display:none}.slpg b{font-size:13px;min-width:78px;text-align:center;color:#6b4f2a}.slpg .slt:disabled{opacity:.35}.slt.slnew{background:#dcfce7;color:#166534;font-size:13px;font-weight:700}
 .slbody canvas[hidden],.slbody textarea[hidden]{display:none}
 .slbody textarea{position:absolute;inset:0;width:100%;height:100%;margin:0;border:0;resize:none;padding:4px 14px;font-size:18px;line-height:32px;background:#fff repeating-linear-gradient(transparent 0 31px,#dbeafe 31px 32px);background-attachment:local;border-radius:6px;outline:none;color:#111827}
 .bg-slate{background:#22312b;border:7px solid #a0682e;box-shadow:inset 0 0 30px rgba(0,0,0,.45)}
@@ -320,6 +322,43 @@ label.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;co
 .upprog i{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#2aa6a6,#16a34a);transition:width .3s}
 .upprog span{position:relative;display:block;text-align:center;font-size:12px;line-height:26px;font-weight:700}
 .orline{text-align:center;color:var(--mut);margin:14px 0 0;font-size:13px}
+/* 💬 సందేహాల జవాబులు */
+.ansimg{display:block;max-width:100%;margin-top:8px;border-radius:10px;border:1px solid #d1fae5;background:#fff;cursor:zoom-in}
+.ansimg.sm{max-height:180px;object-fit:contain}
+.zoom{position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.9);display:flex;flex-direction:column}
+.zbar{display:flex;justify-content:space-between;gap:8px;padding:10px 12px calc(10px);}
+.zbar button{border:0;background:rgba(255,255,255,.18);color:#fff;border-radius:12px;padding:10px 14px;font-size:15px}
+.zin{flex:1;overflow:auto;display:flex;align-items:flex-start;justify-content:center;padding:8px}
+.zin img{max-width:100%;background:#fff;border-radius:8px}
+.zoom.big .zin img{max-width:none;width:220%}
+.dqc{position:relative}.dqc.sel{outline:3px solid var(--teal);background:#f0fdfa}
+label.dqck{position:absolute;right:10px;top:10px;display:flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--teal2);background:#ecfeff;border-radius:10px;padding:5px 8px;margin:0}
+label.dqck input{width:18px;height:18px;margin:0}
+.dqc>small{display:block;padding-right:86px}
+.simb{border:1px dashed #f59e0b;background:#fffbeb;color:#92400e;border-radius:10px;padding:6px 10px;font-size:12px;font-weight:700;margin-bottom:6px}
+.dqbtns{display:flex;gap:8px;align-items:center;margin-top:8px}.dqbtns .btn{margin:0;width:auto;flex:1;padding:10px 8px;font-size:14px}.dqbtns .del{margin:0}
+.dqgrp{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:14px 2px 8px}.dqgrp b{font-size:14px;color:var(--navy)}
+.dqgrp button{border:1.5px solid var(--teal);background:#fff;color:var(--teal2);border-radius:16px;padding:5px 10px;font-size:12px;font-weight:700}
+.dqbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));width:calc(100% - 24px);max-width:520px;z-index:50;background:var(--navy);color:#fff;border-radius:18px;padding:8px 8px 8px 16px;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.dqbar span{flex:1;font-weight:700}.dqbar .x{border:0;background:rgba(255,255,255,.15);color:#fff;width:38px;height:38px;border-radius:12px}
+.dqbar .go{border:0;background:#f59e0b;color:#111827;font-weight:700;border-radius:12px;padding:10px 14px;font-size:14px}
+.anssh{position:fixed;inset:0;z-index:70;background:rgba(15,23,42,.55);display:flex;align-items:flex-end;justify-content:center}
+.anscard{background:#fff;width:100%;max-width:640px;max-height:94%;overflow:auto;border-radius:22px 22px 0 0;padding:14px 14px calc(16px + env(safe-area-inset-bottom));animation:slup2 .2s ease-out}
+@keyframes slup2{from{transform:translateY(40px);opacity:.5}to{transform:none;opacity:1}}
+.anshd{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}.anshd b{font-size:16px;color:var(--navy)}
+.ansto{max-height:150px;overflow:auto;background:#f8fafc;border-radius:12px;padding:6px 8px;margin-bottom:8px}
+.ansto div{display:grid;grid-template-columns:1fr auto;gap:0 6px;padding:5px 0;border-bottom:1px solid #e5e7eb;font-size:13px}.ansto div:last-child{border:0}
+.ansto small{grid-column:1;color:var(--mut)}.ansto button{grid-row:1/3;grid-column:2;border:0;background:#fee2e2;color:#b91c1c;border-radius:8px;width:30px;height:30px}
+.qrs{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;overscroll-behavior-x:contain;scrollbar-width:none}.qrs::-webkit-scrollbar{display:none}
+.qrs button{flex:none;border:1.5px solid #c7d2fe;background:#eef2ff;color:#3730a3;border-radius:16px;padding:7px 11px;font-size:13px;white-space:nowrap}
+.qrs button.mine{background:#fef3c7;border-color:#fcd34d;color:#92400e}.qrs button i{font-style:normal;margin-left:6px;color:#b91c1c}
+.ansrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+button.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;color:#3730a3;border:2px dashed #a5b4fc;border-radius:14px;padding:10px 14px;font-weight:700;font-size:15px}
+.lnk{border:0;background:none;color:var(--teal2);font-size:13px;font-weight:700;text-decoration:underline}
+.ansprev{margin-top:8px}.ansprev button{border:0;background:#fee2e2;color:#b91c1c;border-radius:10px;padding:6px 10px;margin-top:6px;font-size:13px}
+#ansPad{margin-top:10px}#ansPad[hidden]{display:none}
+.padtools{display:flex;gap:6px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
+#ansCv{display:block;border:1.5px solid var(--line);border-radius:12px;touch-action:none;background:#fff}
 </style>
 </head>
 <body>
@@ -1093,7 +1132,7 @@ let view='home',param={},tick=null,T=null,G=null,tAuth=false;
 const PARENT={avatar:'home',badges:'home',library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
 function me(){return S.cur.n;}
 function lessonsOf(c,s){const b=((L[c]||{})[s]||[]).map((x,i)=>({k:'b'+i,t:x[0],b:x[1].split('|')}));
- const n=live('notes').filter(x=>!x.kind&&x.c===c&&x.s===s).map(x=>({k:'n'+x.id,t:x.t,b:x.x.split('\n').filter(Boolean),tn:1}));return b.concat(n);}
+ const n=live('notes').filter(x=>!x.kind&&x.c===c&&x.s===s).map(x=>({k:'n'+x.id,t:x.t,b:String(x.x||'').split('\n').filter(Boolean),tn:1,img:x.img||''}));return b.concat(n);}
 function readMap(){return S.read[me()]||(S.read[me()]={});}
 function isRead(k){return !!readMap()[k];}
 function readPct(s){const c=S.cur.c,ls=lessonsOf(c,s);if(!ls.length)return 0;return Math.round(ls.filter(l=>isRead(c+'-'+s+'-'+l.k)).length*100/ls.length);}
@@ -1138,10 +1177,11 @@ function slSync(){if(!document.body)return;slInit();const f=document.getElementB
  if(SL.open&&(!show||slSec()[0]!==SL.sec))slClose();
  f.hidden=!show||SL.open;}
 function slInit(){if(document.getElementById('slate'))return;const d=document.createElement('div');
- d.innerHTML=`<button id="slFab" class="slfab" onclick="slOpen()" aria-label="పలక తెరువు" hidden><span>✏️</span><small>పలక</small></button>
+ d.innerHTML=`<button id="slFab" class="slfab" onclick="slFabClick()" aria-label="పలక తెరువు – పైకి కిందికి లాగవచ్చు" hidden><span>✏️</span><small>పలక</small></button>
 <div id="slate" class="slate" hidden role="dialog" aria-label="పలక"><div class="slhd"><div class="sltabs"><button id="slTd" class="on" onclick="slTab('d')">✏️ పలక</button><button id="slTn" onclick="slTab('n')">📝 నోట్</button></div><b id="slTitle"></b><button class="slb" id="slFull" onclick="slFullT()" aria-label="పెద్దది / చిన్నది">⤢</button><button class="slb" onclick="slClose()" aria-label="మూసివేయి">✕</button></div>
-<div class="sltools" id="slTools"></div><div class="slbody bg-slate" id="slBody"><canvas id="slCv"></canvas><textarea id="slTx" hidden maxlength="8000" placeholder="ఇక్కడ నీ నోట్ రాయి… ఈ విభాగానికి మాత్రమే సేవ్ అవుతుంది"></textarea></div></div>`;
+<div class="sltools" id="slTools"></div><div class="slbody bg-slate" id="slBody"><canvas id="slCv"></canvas><textarea id="slTx" hidden maxlength="8000" placeholder="ఇక్కడ నీ నోట్ రాయి… ఈ విభాగానికి మాత్రమే సేవ్ అవుతుంది"></textarea></div><div class="slpg" id="slPg"></div></div>`;
  while(d.firstChild)document.body.appendChild(d.firstChild);
+ slFabDrag();
  const cv=document.getElementById('slCv');
  const pos=e=>{const r=cv.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top];};
  cv.addEventListener('pointerdown',e=>{if(SL.pid!=null||SL.tab!=='d')return;e.preventDefault();SL.pid=e.pointerId;try{cv.setPointerCapture(e.pointerId);}catch(x){}
@@ -1179,6 +1219,15 @@ function slTools(){const el=document.getElementById('slTools');if(!el)return;
  [2,4,8].map(w=>`<button class="slt ${!SL.er&&SL.w===w?'on':''}" onclick="slWidth(${w})" aria-label="మందం"><i style="width:${w+3}px;height:${w+3}px"></i></button>`).join('')+
  `<button class="slt ${SL.er?'on':''}" onclick="slEraser()" aria-label="రబ్బరు">🧽</button><button class="slt" onclick="slUndo()" aria-label="వెనక్కి">↶</button><button class="slt" onclick="slClear()" aria-label="మొత్తం తుడువు">🗑️</button>`+
  `<select class="slsel" onchange="slBg(this.value)" aria-label="పలక రకం">${Object.entries(SLBG).map(([k,v])=>`<option value="${k}" ${SL.bg===k?'selected':''}>${v.n}</option>`).join('')}</select><button class="slt" onclick="slDownload()" aria-label="చిత్రంగా సేవ్">⬇</button>`;}
+function slFabPos(y){const f=document.getElementById('slFab');if(!f)return;if(y==null){try{y=parseFloat(localStorage.getItem('raiSlFabY'));}catch(e){}}if(!(y>=0))return;
+ y=Math.min(Math.max(64,y),window.innerHeight-130);f.style.top=y+'px';f.style.bottom='auto';return y;}
+function slFabDrag(){const f=document.getElementById('slFab');let sy=null,st=0,mv=false;slFabPos();
+ f.addEventListener('pointerdown',e=>{sy=e.clientY;st=f.getBoundingClientRect().top;mv=false;try{f.setPointerCapture(e.pointerId);}catch(x){}});
+ f.addEventListener('pointermove',e=>{if(sy==null)return;const dy=e.clientY-sy;if(!mv&&Math.abs(dy)<8)return;mv=true;f.classList.add('drag');slFabPos(st+dy);});
+ const up=()=>{if(sy==null)return;sy=null;f.classList.remove('drag');if(mv){SL.nofab=Date.now();try{localStorage.setItem('raiSlFabY',String(f.getBoundingClientRect().top));}catch(x){}}};
+ f.addEventListener('pointerup',up);f.addEventListener('pointercancel',up);
+ window.addEventListener('resize',()=>slFabPos());}
+function slFabClick(){if(SL.nofab&&Date.now()-SL.nofab<400)return;slOpen();}
 function slColor(c){SL.col=c;SL.er=false;slTools();}
 function slWidth(w){SL.w=w;SL.er=false;slTools();}
 function slEraser(){SL.er=!SL.er;slTools();}
@@ -1187,22 +1236,38 @@ function slClear(){if(slEmpty())return;SL.strokes.push({clear:1});slRedraw();slL
 function slBg(b){const dark=b==='slate',was=SL.bg==='slate';SL.bg=b;if(dark!==was)SL.col=SLCOL[dark?'dark':'light'][0];try{localStorage.setItem('raiSlBg',b);}catch(e){}slApplyBg();slTools();slLater();}
 function slApplyBg(){const b=document.getElementById('slBody');if(b)b.className='slbody bg-'+SL.bg;}
 function slTab(t){SL.tab=t;document.getElementById('slTd').classList.toggle('on',t==='d');document.getElementById('slTn').classList.toggle('on',t==='n');
- document.getElementById('slCv').hidden=t!=='d';const tx=document.getElementById('slTx');tx.hidden=t!=='n';slTools();if(t==='n')setTimeout(()=>{try{tx.focus();}catch(e){}},50);}
+ document.getElementById('slCv').hidden=t!=='d';const tx=document.getElementById('slTx');tx.hidden=t!=='n';slTools();slPgBar();if(t==='n')setTimeout(()=>{try{tx.focus();}catch(e){}},50);}
 function slFullT(){SL.full=!SL.full;document.getElementById('slate').classList.toggle('full',SL.full);document.getElementById('slFull').textContent=SL.full?'⤡':'⤢';setTimeout(slResize,30);}
 async function slOpen(){slInit();if(SL.open)return;const [sec,title]=slSec();SL.sec=sec;SL.key=me()+'|'+sec;SL.open=true;
  const el=document.getElementById('slate');el.hidden=false;document.getElementById('slFab').hidden=true;document.getElementById('slTitle').textContent=title;
- SL.strokes=[];SL.base=null;SL.bw=0;SL.cur=null;SL.pid=null;SL.er=false;
+ SL.strokes=[];SL.base=null;SL.bw=0;SL.cur=null;SL.pid=null;SL.er=false;SL.n=1;SL.page=0;
  let bg0='slate';try{bg0=localStorage.getItem('raiSlBg')||'slate';}catch(e){}
  const cv0=document.getElementById('slCv');cv0.width=0;cv0.height=0;
- const k=SL.key,d=await slGet(k);if(!SL.open||SL.key!==k)return;
+ const k=SL.key;let d=await slGet(k);if(!SL.open||SL.key!==k)return;
+ if(d&&('img' in d)&&!('n' in d)){if(d.img)await slPut(k+'#p0',{img:d.img,pw:d.pw});d={n:1,cur:0,bg:d.bg};await slPut(k,d);}
+ SL.n=Math.min(SLMAXP,Math.max(1,(d&&d.n)||1));SL.page=Math.min(Math.max(0,(d&&d.cur)||0),SL.n-1);
  SL.bg=(d&&d.bg)||bg0;SL.col=SLCOL[SL.bg==='slate'?'dark':'light'][0];slApplyBg();
  document.getElementById('slTx').value=slTxAll()[k]||'';
- if(d&&d.img){const im=new Image();im.onload=()=>{if(SL.key===k){slRedraw();}};im.src=d.img;SL.base=im;SL.bw=d.pw||0;}
- slTab(SL.tab==='n'&&!document.getElementById('slTx').value&&d&&d.img?'d':SL.tab);
- SL.W=0;slResize();}
+ slTab(SL.tab);SL.W=0;slResize();await slLoadPage(SL.page);}
+const SLMAXP=20;
+async function slLoadPage(i){const k=SL.key;SL.page=i;SL.strokes=[];SL.base=null;SL.bw=0;SL.cur=null;slRedraw();slPgBar();
+ const d=await slGet(k+'#p'+i);if(SL.key!==k||SL.page!==i)return;
+ if(d&&d.img){const im=new Image();im.onload=()=>{if(SL.key===k&&SL.page===i)slRedraw();};im.src=d.img;SL.base=im;SL.bw=d.pw||0;}}
+function slMeta(){if(SL.key)slPut(SL.key,{n:SL.n,cur:SL.page,bg:SL.bg});}
+function slPgBar(){const b=document.getElementById('slPg');if(!b)return;b.hidden=SL.tab!=='d';
+ b.innerHTML=`<button class="slt" onclick="slGo(-1)" ${SL.page<=0?'disabled':''} aria-label="ముందు పేజీ">◀</button><b>పేజీ ${SL.page+1} / ${SL.n}</b><button class="slt" onclick="slGo(1)" ${SL.page>=SL.n-1?'disabled':''} aria-label="తర్వాతి పేజీ">▶</button><button class="slt slnew" onclick="slAddPage()">➕ కొత్త పేజీ</button><button class="slt" onclick="slDelPage()" aria-label="ఈ పేజీ తొలగించు">🗑️ పేజీ</button>`;}
+function slFlush(){if(SL.cur){SL.strokes.push(SL.cur);SL.cur=null;}SL.pid=null;slSave();}
+async function slGo(d){const j=SL.page+d;if(SL.busy||j<0||j>=SL.n)return;SL.busy=true;try{slFlush();await slLoadPage(j);slMeta();}finally{SL.busy=false;}}
+async function slAddPage(){if(SL.busy)return;if(SL.n>=SLMAXP)return toast('ఒక విభాగానికి గరిష్ఠంగా '+SLMAXP+' పేజీలు');SL.busy=true;
+ try{slFlush();const k=SL.key;for(let j=SL.n-1;j>SL.page;j--)await slPut(k+'#p'+(j+1),await slGet(k+'#p'+j));
+  await slPut(k+'#p'+(SL.page+1),null);SL.n++;await slLoadPage(SL.page+1);slMeta();toast('కొత్త పేజీ '+(SL.page+1)+' ✓');}finally{SL.busy=false;}}
+async function slDelPage(){if(SL.busy)return;if(!confirm(`పేజీ ${SL.page+1} తొలగించాలా?`))return;SL.busy=true;
+ try{const k=SL.key;if(SL.n<=1){SL.strokes=[];SL.base=null;SL.cur=null;slRedraw();slSave();toast('పేజీ తుడిచాం');return;}
+  for(let j=SL.page;j<SL.n-1;j++)await slPut(k+'#p'+j,await slGet(k+'#p'+(j+1)));
+  await slPut(k+'#p'+(SL.n-1),null);SL.n--;await slLoadPage(Math.min(SL.page,SL.n-1));slMeta();toast('పేజీ తొలగించాం');}finally{SL.busy=false;}}
 function slLater(){clearTimeout(SL.sv);SL.sv=setTimeout(slSave,700);}
 function slSave(){clearTimeout(SL.sv);if(!SL.key)return;const cv=document.getElementById('slCv');if(!cv||!cv.width)return;
- const k=SL.key,v=slEmpty()?(SL.bg!=='slate'?{img:null,bg:SL.bg}:null):{img:cv.toDataURL('image/png'),pw:cv.width,bg:SL.bg};slPut(k,v);}
+ slPut(SL.key+'#p'+SL.page,slEmpty()?null:{img:cv.toDataURL('image/png'),pw:cv.width});slMeta();}
 function slSaveTx(){clearTimeout(SL.th);if(!SL.key)return;const v=document.getElementById('slTx').value;const all=slTxAll();if(v.trim())all[SL.key]=v;else delete all[SL.key];try{localStorage.setItem('raiSlTx',JSON.stringify(all));}catch(e){toast('నోట్ సేవ్ కాలేదు – ఫోన్ స్టోరేజ్ నిండింది');}}
 function slTxClear(){const t=document.getElementById('slTx');if(!t.value)return;if(!confirm('ఈ నోట్ తుడిచేయాలా?'))return;t.value='';slSaveTx();}
 function slClose(){if(!SL.open)return;if(SL.cur){SL.strokes.push(SL.cur);SL.cur=null;}slSave();slSaveTx();SL.open=false;SL.key='';SL.pid=null;
@@ -1211,7 +1276,7 @@ function slDownload(){const cv=document.getElementById('slCv');if(!cv||!cv.width
  x.fillStyle=SLBG[SL.bg].c;x.fillRect(0,0,o.width,o.height);const d=SL.dpr;
  if(SL.bg==='lines'){x.fillStyle='#c7d2fe';for(let y=35*d;y<o.height;y+=36*d)x.fillRect(0,y,o.width,d);}
  if(SL.bg==='grid'){x.fillStyle='#e5e7eb';for(let y=0;y<o.height;y+=24*d)x.fillRect(0,y,o.width,d);for(let z=0;z<o.width;z+=24*d)x.fillRect(z,0,d,o.height);}
- x.drawImage(cv,0,0);const a=document.createElement('a');a.download='Raay_Palaka_'+SL.sec+'.png';a.href=o.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();toast('చిత్రం సేవ్ అయింది ⬇');}
+ x.drawImage(cv,0,0);const a=document.createElement('a');a.download='Raay_Palaka_'+SL.sec+'_page'+(SL.page+1)+'.png';a.href=o.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();toast('చిత్రం సేవ్ అయింది ⬇');}
 function render(){render0();slSync();}
 function render0(){const app=$('#app');
  if(view==='teacher'){app.innerHTML='<main>'+V.teacher()+'</main>'+footer();return;}
@@ -1371,7 +1436,7 @@ V.learn=()=>{const c=S.cur.c;return `<div class="row2" style="margin-bottom:12px
 V.subject=()=>{const c=S.cur.c,s=param.s,ls=lessonsOf(c,s);
  return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>${SUBJ[s].ic} ${SUBJ[s].n} • ${c}వ తరగతి</h2></div>
 <p class="mut" style="margin:-6px 2px 12px">చదివిన పాఠాలు: ${readPct(s)}%</p>
-${ls.map((l,i)=>{const k=c+'-'+s+'-'+l.k;const d=isRead(k);return `<details class="les ${d?'done':''}" ${i===param.open?'open':''}><summary><span>${i+1}. ${esc(l.t)}${l.tn?' <small class="mut">(టీచర్ నోట్)</small>':''}</span>${d?'<em>✓</em>':'<em style="color:#9ca3af">▾</em>'}</summary><ul>${l.b.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><div class="lfoot"><button class="spk" onclick="speakLesson('${s}',${i})">🔊 వినండి</button><button class="btn sm ${d?'ghost':''}" onclick="toggleRead('${k}','${s}',${i})">${d?'↺ మళ్ళీ చదవాలి':'✓ చదివాను'}</button></div></details>`;}).join('')||'<div class="empty">పాఠాలు లేవు</div>'}
+${ls.map((l,i)=>{const k=c+'-'+s+'-'+l.k;const d=isRead(k);return `<details class="les ${d?'done':''}" ${i===param.open?'open':''}><summary><span>${i+1}. ${esc(l.t)}${l.tn?' <small class="mut">(టీచర్ నోట్)</small>':''}</span>${d?'<em>✓</em>':'<em style="color:#9ca3af">▾</em>'}</summary><ul>${l.b.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${l.img?imgTag(l.img):''}<div class="lfoot"><button class="spk" onclick="speakLesson('${s}',${i})">🔊 వినండి</button><button class="btn sm ${d?'ghost':''}" onclick="toggleRead('${k}','${s}',${i})">${d?'↺ మళ్ళీ చదవాలి':'✓ చదివాను'}</button></div></details>`;}).join('')||'<div class="empty">పాఠాలు లేవు</div>'}
 <div class="row2"><button class="btn" onclick="startTest('${s}')">📝 టెస్ట్ రాయి</button><button class="btn ghost" onclick="go('doubts',{s:'${s}'})">💬 సందేహం</button></div>`;};
 function speakLesson(s,i){const l=lessonsOf(S.cur.c,s)[i];speak(l.t+'. '+l.b.join('. '));}
 function toggleRead(k,s,i){const m=readMap();if(m[k])delete m[k];else{m[k]=1;toast('బాగుంది! పాఠం పూర్తయింది ✓');}save();go('subject',{s,open:i});}
@@ -1381,7 +1446,7 @@ V.doubts=()=>{const mine=live('doubts').filter(d=>d.n===me()).slice().reverse();
  return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>💬 సందేహం అడుగు</h2></div>
 <div class="card"><label>సబ్జెక్ట్</label><select id="dsub" onchange="const e=document.getElementById('dto');if(e)e.textContent='👩‍🏫 '+doubtTo(S.cur.c,this.value)+' గారికి వెళ్తుంది'">${subjectsFor(S.cur.c).map(s=>`<option value="${s}" ${s===sel?'selected':''}>${SUBJ[s].n}</option>`).join('')}</select>${S.cfg.type?`<small class="mut" id="dto">👩‍🏫 ${esc(doubtTo(S.cur.c,sel))} గారికి వెళ్తుంది</small>`:''}
 <label>నీ సందేహం రాయి</label><textarea id="dtx" rows="3" placeholder="ఉదా: భిన్నాలు ఎలా కలపాలి?"></textarea><button class="btn" onclick="askDoubt()">పంపు ➤</button></div>
-<h4 class="sec">నా సందేహాలు (${mine.length})</h4>${mine.length?mine.map(d=>`<div class="dq"><small>${SUBJ[d.s].n} • ${fmtD(d.d)}</small><p>❓ ${esc(d.q)}</p>${d.r?`<div class="ans">👩‍🏫 ${d.rb?'<b>'+esc(d.rb)+':</b> ':''}${esc(d.r)}</div>`:'<div class="wait">⏳ ఉపాధ్యాయుల జవాబు కోసం వేచి ఉంది</div>'}</div>`).join(''):'<div class="empty">ఇంకా సందేహాలు అడగలేదు</div>'}`;};
+<h4 class="sec">నా సందేహాలు (${mine.length})</h4>${mine.length?mine.map(d=>`<div class="dq"><small>${SUBJ[d.s].n} • ${fmtD(d.d)}</small><p>❓ ${esc(d.q)}</p>${d.r?`<div class="ans">👩‍🏫 ${d.rb?'<b>'+esc(d.rb)+':</b> ':''}${esc(d.r)}${imgTag(d.ri)}${d.ri?'<small style="display:block;margin-top:4px">👆 ఫోటో నొక్కితే పెద్దదిగా కనిపిస్తుంది</small>':''}</div>`:'<div class="wait">⏳ ఉపాధ్యాయుల జవాబు కోసం వేచి ఉంది</div>'}</div>`).join(''):'<div class="empty">ఇంకా సందేహాలు అడగలేదు</div>'}`;};
 function askDoubt(){const q=$('#dtx').value.trim();if(!q)return toast('సందేహం రాయి');put('doubts',{id:uid(),n:me(),c:S.cur.c,s:$('#dsub').value,q,d:new Date().toISOString(),r:''});toast('సందేహం ఉపాధ్యాయులకు పంపబడింది ✓');go('doubts');}
 
 /* ---------- ప్రశ్నల తయారీ ---------- */
@@ -1633,10 +1698,93 @@ TP.ev=()=>`<div class="card"><h3>ఈవెంట్ / టెస్ట్ / స�
 <button class="btn" onclick="addEv()">➕ జోడించు</button></div>
 <h4 class="sec">ఈవెంట్లు (${live('events').filter(e=>canSee(e.c)).length})</h4>${live('events').filter(e=>canSee(e.c)).sort((a,b)=>a.d<b.d?-1:1).map(e=>`<div class="titem"><div><b>${esc(e.t)}</b><small>${fmtD(e.d)} • ${to12(e.tm)} • ${e.c?e.c+'వ తరగతి':'అన్ని తరగతులు'} • ${EVT[e.ty]}${e.link?' • 🔗':''}${e.seed?' • (నమూనా)':''}</small></div><button class="del" onclick="delItem('events','${e.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}`;
 function addEv(){const t=$('#et').value.trim();if(!t)return toast('శీర్షిక రాయండి');const lk=$('#elk').value.trim();if(lk&&!/^https:\/\//.test(lk))return toast('లింక్ https:// తో మొదలవ్వాలి');put('events',{id:uid(),t,d:$('#ed').value||todayS(),tm:$('#etm').value,c:+$('#ec').value,ty:$('#ety').value,link:lk});toast('ఈవెంట్ జోడించబడింది ✓');go('teacher',{t:'ev'});}
-TP.dq=()=>{const ds=live('doubts').filter(d=>canSee(d.c,d.s)).sort((a,b)=>(!!a.r)-(!!b.r)||(a.d<b.d?1:-1));
- return ds.length?ds.map(d=>`<div class="card"><small class="mut">👤 ${esc(d.n)} • ${d.c}వ తరగతి • ${SUBJ[d.s].n} • ${fmtD(d.d)}</small><p style="margin:6px 0;font-weight:600">❓ ${esc(d.q)}</p>
-<textarea id="r_${d.id}" rows="2" placeholder="జవాబు రాయండి...">${esc(d.r)}</textarea><div class="row2"><button class="btn sm" onclick="replyD('${d.id}')">${d.r?'జవాబు మార్చు':'జవాబు పంపు'}</button><button class="del" style="margin-top:10px" onclick="delItem('doubts','${d.id}')">తొలగించు</button></div></div>`).join(''):'<div class="empty">సందేహాలు లేవు</div>';};
-function replyD(id){const d=live('doubts').find(x=>x.id===id);const v=document.getElementById('r_'+id).value.trim();if(!v)return toast('జవాబు రాయండి');put('doubts',Object.assign({},d,{r:v,ra:Date.now(),rb:tName()}));toast('జవాబు సేవ్ అయింది ✓');go('teacher',{t:'dq'});}
+/* ---------- 💬 సందేహాలు: ఫోటో / రాసి జవాబు, ఒకేసారి చాలా మందికి ---------- */
+function safeImg(u){return typeof u==='string'&&/^data:image\/(webp|jpeg|png);base64,[A-Za-z0-9+/=]+$/.test(u)?u:'';}
+function imgTag(u,cls){const s=safeImg(u);return s?`<img class="${cls||'ansimg'}" src="${s}" alt="జవాబు ఫోటో" onclick="zoomImg(this.src)">`:'';}
+function zoomImg(src){let z=document.getElementById('zoom');if(!z){z=document.createElement('div');z.id='zoom';z.className='zoom';document.body.appendChild(z);}
+ z.innerHTML=`<div class="zbar"><button onclick="document.getElementById('zoom').classList.toggle('big')">🔍 పెద్దది / చిన్నది</button><button onclick="document.getElementById('zoom').remove()">✕</button></div><div class="zin"><img src="${safeImg(src)}" alt=""></div>`;}
+const DQSEL=new Set();
+const DQSTOP=new Set(['అంటే','ఏమిటి','ఏమి','ఎలా','ఎందుకు','ఎక్కడ','ఎవరు','ఎప్పుడు','ఎన్ని','సార్','మేడం','టీచర్','గారు','నాకు','అర్థం','కాలేదు','చెప్పండి','చేయాలి','ఇది','అది','ఒక','మరియు','what','is','how','why','the','a','an','of','to','in','sir','madam','teacher','please','do','does','meaning']);
+function dqTok(q){return new Set(String(q).toLowerCase().replace(/[?.,!;:'"“”()\-–]/g,' ').split(/\s+/).filter(w=>w.length>1&&!DQSTOP.has(w)).map(w=>w.slice(0,3)));}
+function dqSim(a,b){if(a.c!==b.c||a.s!==b.s)return false;const A=dqTok(a.q),B=dqTok(b.q);if(!A.size||!B.size)return false;let n=0;A.forEach(w=>{if(B.has(w))n++;});return n>0&&n/Math.min(A.size,B.size)>=0.6;}
+TP.dq=()=>{const f=param.f||'open',fc=+param.fc||0;const all=live('doubts').filter(d=>canSee(d.c,d.s)&&(!fc||d.c===fc));
+ const open=all.filter(d=>!d.r),done=all.filter(d=>d.r);[...DQSEL].forEach(id=>{if(!open.some(d=>d.id===id))DQSEL.delete(id);});
+ const list=(f==='open'?open:f==='done'?done:all).slice().sort((a,b)=>(!!a.r)-(!!b.r)||a.c-b.c||String(a.s).localeCompare(b.s)||(a.d<b.d?1:-1));
+ const cls=[...new Set(live('doubts').filter(d=>canSee(d.c,d.s)).map(d=>d.c))].sort((a,b)=>a-b);
+ const groups={};list.forEach(d=>{const k=d.c+'|'+d.s;(groups[k]=groups[k]||[]).push(d);});
+ const card=d=>{const sim=!d.r?open.filter(x=>x.id!==d.id&&dqSim(x,d)).length:0;const on=DQSEL.has(d.id);
+  return `<div class="card dqc ${on?'sel':''}">${!d.r?`<label class="dqck"><input type="checkbox" ${on?'checked':''} onchange="dqPick('${d.id}',this.checked)"> ఎంచుకో</label>`:''}<small class="mut">👤 ${esc(d.n)} • ${d.c}వ • ${SUBJ[d.s]?SUBJ[d.s].n:''} • ${fmtD(d.d)}</small>
+<p style="margin:6px 0;font-weight:600">❓ ${esc(d.q)}</p>${sim?`<button class="simb" onclick="dqSimSel('${d.id}')">🔁 ఇలాంటి సందేహాలు ఇంకా ${sim} – అన్నీ ఎంచుకో</button>`:''}
+${d.r?`<div class="ans">👩‍🏫 ${d.rb?'<b>'+esc(d.rb)+':</b> ':''}${esc(d.r)}${imgTag(d.ri,'ansimg sm')}</div>`:''}
+<textarea id="r_${d.id}" rows="2" maxlength="1500" placeholder="జవాబు టైప్ చేయండి...">${d.r&&!d.ri?esc(d.r):''}</textarea>
+<div class="dqbtns"><button class="btn sm" onclick="replyD('${d.id}')">➤ ${d.r?'మార్చు':'పంపు'}</button><button class="btn sm ghost" onclick="ansOpen(['${d.id}'])">📷 ✏️ ఫోటో / రాసి</button><button class="del" onclick="delItem('doubts','${d.id}')">🗑️</button></div></div>`;};
+ return `<div class="tchips"><button class="${f==='open'?'on':''}" onclick="go('teacher',{t:'dq',f:'open',fc:${fc}})">⏳ జవాబు ఇవ్వాల్సినవి (${open.length})</button><button class="${f==='done'?'on':''}" onclick="go('teacher',{t:'dq',f:'done',fc:${fc}})">✅ ఇచ్చినవి (${done.length})</button><button class="${f==='all'?'on':''}" onclick="go('teacher',{t:'dq',f:'all',fc:${fc}})">అన్నీ</button></div>
+${cls.length>1?`<div class="tchips">${[0].concat(cls).map(c=>`<button class="${fc===c?'on':''}" onclick="go('teacher',{t:'dq',f:'${f}',fc:${c}})">${c?c+'వ తరగతి':'అన్ని తరగతులు'}</button>`).join('')}</div>`:''}
+${open.length>1&&f!=='done'?`<p class="mut" style="margin:-2px 2px 10px">💡 ఒకే రకం సందేహాలను ☑ ఎంచుకుని ఒకేసారి జవాబు ఇవ్వండి – ప్రతి ఒక్కరికీ వేరుగా రాయనవసరం లేదు.</p>`:''}
+${Object.entries(groups).map(([k,ds])=>{const [c,s]=k.split('|');const op=ds.filter(d=>!d.r);return `<div class="dqgrp"><b>${c}వ తరగతి • ${SUBJ[s]?SUBJ[s].ic+' '+SUBJ[s].n:s} (${ds.length})</b>${op.length>1?`<button onclick="dqGrpSel('${c}','${s}')">☑ అన్నీ ఎంచుకో</button>`:''}</div>${ds.map(card).join('')}`;}).join('')||'<div class="empty">సందేహాలు లేవు 🎉</div>'}
+${DQSEL.size?`<div class="dqbar"><span>☑ ${DQSEL.size} ఎంచుకున్నారు</span><button class="x" onclick="DQSEL.clear();softRender()">✕</button><button class="go" onclick="ansOpen([...DQSEL])">💬 ఒకే జవాబు ఇవ్వు</button></div><div style="height:70px"></div>`:''}`;};
+function dqPick(id,on){if(on)DQSEL.add(id);else DQSEL.delete(id);softRender();}
+function dqSimSel(id){const d=live('doubts').find(x=>x.id===id);if(!d)return;const op=live('doubts').filter(x=>!x.r&&canSee(x.c,x.s));const grp=[d];for(let i=0;i<grp.length;i++)op.forEach(x=>{if(!grp.includes(x)&&dqSim(x,grp[i]))grp.push(x);});grp.forEach(x=>DQSEL.add(x.id));softRender();toast('☑ '+DQSEL.size+' సందేహాలు ఎంచుకున్నాం');}
+function dqGrpSel(c,s){live('doubts').filter(x=>!x.r&&canSee(x.c,x.s)&&x.c===+c&&x.s===s).forEach(x=>DQSEL.add(x.id));softRender();}
+function replyD(id){const d=live('doubts').find(x=>x.id===id);const v=document.getElementById('r_'+id).value.trim();if(!v)return toast('జవాబు రాయండి');
+ put('doubts',Object.assign({},d,{r:v,ri:'',ra:Date.now(),rb:tName()}));DQSEL.delete(id);toast('జవాబు పంపాం ✓');go('teacher',Object.assign({},param,{t:'dq'}));}
+/* జవాబు ఫోటో – నలుపు-తెలుపు, నీడ తొలగించి, చిన్న సైజులో (సింక్ పరిమితి లోపు) */
+const ANSMAX=15000;
+function ansClean(src,w){const h=Math.round(src.height*w/src.width),cv=document.createElement('canvas');cv.width=w;cv.height=h;const x=cv.getContext('2d');
+ x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(src,0,0,w,h);const id=x.getImageData(0,0,w,h),d=id.data,n=w*h,g=new Uint8ClampedArray(n);
+ for(let i=0;i<n;i++)g[i]=(d[i*4]*.3+d[i*4+1]*.59+d[i*4+2]*.11)|0;
+ const r=Math.max(8,Math.round(w/28)),bg=new Float32Array(n),tmp=new Float32Array(n);
+ for(let y=0;y<h;y++){let s=0,c=0;for(let xx=-r;xx<w+r;xx++){const a=xx+r,b=xx-r-1;if(a<w&&a>=0){s+=g[y*w+a];c++;}if(b>=0&&b<w){s-=g[y*w+b];c--;}if(xx>=0&&xx<w)tmp[y*w+xx]=s/c;}}
+ for(let xx=0;xx<w;xx++){let s=0,c=0;for(let y=-r;y<h+r;y++){const a=y+r,b=y-r-1;if(a<h&&a>=0){s+=tmp[a*w+xx];c++;}if(b>=0&&b<h){s-=tmp[b*w+xx];c--;}if(y>=0&&y<h)bg[y*w+xx]=s/c;}}
+ for(let i=0;i<n;i++){let v=g[i]/Math.max(1,bg[i]+2);v=v>=0.92?255:v<=0.62?0:Math.round((v-0.62)/0.30*255);d[i*4]=d[i*4+1]=d[i*4+2]=v;d[i*4+3]=255;}
+ x.putImageData(id,0,0);return cv;}
+function ansEncode(cv){for(const [t,qs] of [['image/webp',[.6,.5,.4,.32]],['image/jpeg',[.6,.48,.38]]]){for(const q of qs){const u=cv.toDataURL(t,q);if(u.indexOf('data:'+t)!==0)break;if(u.length<=ANSMAX)return u;}}const p=cv.toDataURL('image/png');return p.length<=ANSMAX?p:'';}
+function ansFromImage(im){for(const w of [900,780,680,600,520,460,400,340]){if(w>im.width*1.2&&w!==340)continue;const u=ansEncode(ansClean(im,Math.min(w,Math.max(340,im.width))));if(u)return u;}return '';}
+function ansFromFile(f){return new Promise((ok,no)=>{const fr=new FileReader();fr.onerror=()=>no(new Error('ఫోటో చదవలేకపోయాం'));fr.onload=()=>{const im=new Image();im.onerror=()=>no(new Error('ఇది ఫోటో కాదు'));im.onload=()=>{const u=ansFromImage(im);u?ok(u):no(new Error('ఫోటో చాలా పెద్దది'));};im.src=fr.result;};fr.readAsDataURL(f);});}
+/* జవాబు రాసే షీట్ */
+const ANS={ids:[],img:'',pad:false,st:[],cur:null,col:'#111827',w:3,dpr:1};
+const QR0=['చాలా మంచి ప్రశ్న! 👍','పాఠ్యపుస్తకంలో ఆ పాఠం మళ్ళీ చదువు 📖','ఫోటోలో ఉన్నట్టు చేసి చూడు ✍️','రేపు తరగతిలో వివరంగా చెప్తాను 🏫','సరైన జవాబు: ','ఇంకా సందేహం ఉంటే మళ్ళీ అడుగు 😊'];
+function qrMine(){try{return JSON.parse(localStorage.getItem('raiQR')||'[]')||[];}catch(e){return [];}}
+function ansOpen(ids){ids=ids.filter(id=>live('doubts').some(d=>d.id===id));if(!ids.length)return toast('సందేహాలు ఎంచుకోండి');ANS.ids=ids;ANS.img='';ANS.pad=false;ANS.st=[];
+ let el=document.getElementById('ansSheet');if(!el){el=document.createElement('div');el.id='ansSheet';el.className='anssh';document.body.appendChild(el);}
+ const one=ids.length===1?live('doubts').find(d=>d.id===ids[0]):null;ansRender(one&&one.r&&!one.ri?one.r:'');}
+function ansRender(txt){const el=document.getElementById('ansSheet');if(!el)return;const ds=ANS.ids.map(id=>live('doubts').find(d=>d.id===id)).filter(Boolean);
+ const same=ds.every(d=>d.c===ds[0].c&&d.s===ds[0].s);const keep=document.getElementById('ansTx');if(txt==null&&keep)txt=keep.value;
+ el.innerHTML=`<div class="anscard"><div class="anshd"><b>💬 జవాబు – ${ds.length} ${ds.length>1?'మంది విద్యార్థులకు':'విద్యార్థికి'}</b><button class="slb" onclick="ansClose()">✕</button></div>
+<div class="ansto">${ds.map(d=>`<div><span>👤 <b>${esc(d.n)}</b> (${d.c}వ • ${SUBJ[d.s]?SUBJ[d.s].n:''})</span><small>❓ ${esc(d.q)}</small>${ds.length>1?`<button onclick="ansDrop('${d.id}')" aria-label="తీసేయి">✕</button>`:''}</div>`).join('')}</div>
+<div class="qrs">${QR0.map((q,i)=>`<button onclick="ansAdd(QR0[${i}])">${esc(q)}</button>`).join('')}${qrMine().map((q,i)=>`<button class="mine" onclick="ansAdd(qrMine()[${i}])">⭐ ${esc(q.length>28?q.slice(0,28)+'…':q)}<i onclick="event.stopPropagation();qrDel(${i})">✕</i></button>`).join('')}</div>
+<textarea id="ansTx" rows="3" maxlength="1500" placeholder="జవాబు టైప్ చేయండి (ఐచ్ఛికం – ఫోటో మాత్రమే కూడా పంపవచ్చు)"></textarea>
+<div class="ansrow"><label class="upbtn">📷 ఫోటో తీయి / ఎంచుకో<input type="file" accept="image/*" hidden onchange="ansPhoto(this)"></label><button class="upbtn" onclick="ansPadOpen()">✏️ రాసి చూపించు</button><button class="lnk" onclick="qrSave()">⭐ త్వరిత జవాబుగా సేవ్</button></div>
+<div id="ansImgBox">${ANS.img?`<div class="ansprev">${imgTag(ANS.img,'ansimg')}<button onclick="ANS.img='';ansRender()">✕ ఫోటో తీసేయి</button></div>`:''}</div>
+<div id="ansPad" ${ANS.pad?'':'hidden'}><div class="padtools">${['#111827','#1d4ed8','#dc2626','#16a34a'].map(c=>`<button class="slc ${ANS.col===c?'on':''}" style="background:${c}" onclick="ANS.col='${c}';ansRender()"></button>`).join('')}${[2,3,6].map(w=>`<button class="slt ${ANS.w===w?'on':''}" onclick="ANS.w=${w};ansRender()"><i style="width:${w+3}px;height:${w+3}px"></i></button>`).join('')}<button class="slt" onclick="ANS.st.pop();ansPadDraw()">↶</button><button class="slt" onclick="ANS.st=[];ansPadDraw()">🗑️</button><button class="slt slnew" onclick="ansPadDone()">✓ పూర్తి</button></div><canvas id="ansCv"></canvas></div>
+${same?`<label class="ck" style="margin-top:10px"><input type="checkbox" id="ansNote"> 📌 తరగతి అందరికీ “సెల్ఫ్ లెర్న్” లో నోట్‌గా కూడా పెట్టు</label>`:''}
+<button class="btn" id="ansGo" onclick="ansSend()">➤ ${ds.length} ${ds.length>1?'మందికి':'విద్యార్థికి'} పంపు</button></div>`;
+ document.getElementById('ansTx').value=txt||'';if(ANS.pad)ansPadInit();}
+function ansAdd(q){const t=document.getElementById('ansTx');t.value=(t.value&&!/\s$/.test(t.value)?t.value+' ':t.value)+q;t.focus();}
+function qrSave(){const v=(document.getElementById('ansTx').value||'').trim();if(!v)return toast('ముందు జవాబు రాయండి');const m=qrMine().filter(x=>x!==v);m.unshift(v);try{localStorage.setItem('raiQR',JSON.stringify(m.slice(0,12)));}catch(e){}ansRender();toast('⭐ సేవ్ అయింది – ఇకపై ఒక్క నొక్కుతో వస్తుంది');}
+function qrDel(i){const m=qrMine();m.splice(i,1);try{localStorage.setItem('raiQR',JSON.stringify(m));}catch(e){}ansRender();}
+function ansDrop(id){ANS.ids=ANS.ids.filter(x=>x!==id);DQSEL.delete(id);if(!ANS.ids.length)return ansClose();ansRender();}
+function ansClose(){const el=document.getElementById('ansSheet');if(el)el.remove();ANS.ids=[];}
+async function ansPhoto(inp){const f=inp.files&&inp.files[0];if(!f)return;const box=document.getElementById('ansImgBox');if(box)box.innerHTML='<p class="mut">⏳ ఫోటో స్పష్టంగా, చిన్నదిగా చేస్తోంది...</p>';
+ try{ANS.img=await ansFromFile(f);ANS.pad=false;}catch(e){toast(e.message);}ansRender();}
+function ansPadOpen(){ANS.pad=true;ANS.st=[];ansRender();setTimeout(()=>{const c=document.getElementById('ansCv');if(c)c.scrollIntoView({block:'center',behavior:'smooth'});},50);}
+function ansPadInit(){const cv=document.getElementById('ansCv');if(!cv)return;const w=cv.parentElement.clientWidth||320,h=Math.round(w*1.15),dpr=Math.min(2,window.devicePixelRatio||1);ANS.dpr=dpr;ANS.W=w;ANS.H=h;
+ cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);cv.style.width=w+'px';cv.style.height=h+'px';ansPadDraw();
+ const pos=e=>{const r=cv.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top];};let pid=null;
+ cv.onpointerdown=e=>{if(pid!=null)return;e.preventDefault();pid=e.pointerId;try{cv.setPointerCapture(pid);}catch(x){}ANS.cur={c:ANS.col,w:ANS.w,p:[pos(e)]};ANS.st.push(ANS.cur);ansPadDraw();};
+ cv.onpointermove=e=>{if(e.pointerId!==pid)return;e.preventDefault();(e.getCoalescedEvents?e.getCoalescedEvents():[e]).forEach(x=>ANS.cur.p.push(pos(x)));ansPadDraw();};
+ cv.onpointerup=cv.onpointercancel=e=>{if(e.pointerId===pid){pid=null;ANS.cur=null;}};}
+function ansPadDraw(){const cv=document.getElementById('ansCv');if(!cv)return;const x=cv.getContext('2d');x.setTransform(1,0,0,1,0,0);x.fillStyle='#fff';x.fillRect(0,0,cv.width,cv.height);
+ x.setTransform(ANS.dpr,0,0,ANS.dpr,0,0);x.strokeStyle='#e0e7ff';x.lineWidth=1;for(let y=36;y<ANS.H;y+=36){x.beginPath();x.moveTo(0,y);x.lineTo(ANS.W,y);x.stroke();}
+ x.lineCap='round';x.lineJoin='round';ANS.st.forEach(s=>{slDraw(x,{c:s.c,w:s.w,er:false,p:s.p});});x.globalCompositeOperation='source-over';}
+function ansPadDone(){if(!ANS.st.length)return toast('ముందు రాయండి');const cv=document.getElementById('ansCv'),o=document.createElement('canvas');const sc=Math.min(1,700/cv.width);o.width=Math.round(cv.width*sc);o.height=Math.round(cv.height*sc);
+ const x=o.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,o.width,o.height);x.drawImage(cv,0,0,o.width,o.height);let u=o.toDataURL('image/png');if(u.length>ANSMAX)u=ansEncode(o)||ansFromImage(o);
+ if(!u)return toast('చాలా పెద్దది – కొంచెం తక్కువ రాయండి');ANS.img=u;ANS.pad=false;ANS.st=[];ansRender();toast('✓ రాసింది జవాబుకు జతచేశాం');}
+function ansSend(){const txt=(document.getElementById('ansTx').value||'').trim();if(ANS.pad&&ANS.st.length)return toast('ముందు ✓ పూర్తి నొక్కండి');if(!txt&&!ANS.img)return toast('జవాబు టైప్ చేయండి లేదా ఫోటో/రాసింది జతచేయండి');
+ const ds=ANS.ids.map(id=>live('doubts').find(d=>d.id===id)).filter(Boolean);const now=Date.now(),by=tName();let bad=0;
+ ds.forEach(d=>{const rec=Object.assign({},d,{r:txt||'📷 ఫోటోలో జవాబు చూడు',ri:ANS.img||'',ra:now,rb:by});if(JSON.stringify(rec).length>19500){bad++;return;}put('doubts',rec);DQSEL.delete(d.id);});
+ const nt=document.getElementById('ansNote');if(nt&&nt.checked&&ds.length){const d0=ds[0];put('notes',{id:uid(),c:d0.c,s:d0.s,t:'❓ '+String(d0.q).slice(0,80),x:txt||'ఫోటో చూడండి',img:ANS.img||''});}
+ ansClose();toast(bad?`${ds.length-bad} మందికి పంపాం, ${bad} పెద్దవి – చిన్న జవాబు ఇవ్వండి`:`✓ ${ds.length} ${ds.length>1?'మందికి':'విద్యార్థికి'} జవాబు పంపాం`);go('teacher',Object.assign({},param,{t:'dq'}));}
 TP.nt=()=>`<div class="card"><h3>పాఠం నోట్ జోడించండి</h3><p class="mut">విద్యార్థుల “సెల్ఫ్ లెర్న్” లో కొత్త పాఠంగా కనిపిస్తుంది.</p><div class="g2"><div><label>తరగతి</label>${clsSel('nc')}</div><div><label>సబ్జెక్ట్</label><select id="ncs">${subjOpts(myCls()[0])}</select></div></div>
 <label>పాఠం పేరు</label><input id="ntt" placeholder="ఉదా: మన గ్రామం"><label>ముఖ్యాంశాలు (ఒక్కో లైన్ = ఒక పాయింట్)</label><textarea id="ntx" rows="5"></textarea><button class="btn" onclick="addNote()">➕ జోడించు</button></div>
 <h4 class="sec">టీచర్ నోట్స్ (${live('notes').filter(n=>!n.kind&&canSee(n.c,n.s)).length})</h4>${live('notes').filter(n=>!n.kind&&canSee(n.c,n.s)).map(n=>`<div class="titem"><div><b>${esc(n.t)}</b><small>${n.c}వ తరగతి • ${SUBJ[n.s].n}</small></div><button class="del" onclick="delItem('notes','${n.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}`;
