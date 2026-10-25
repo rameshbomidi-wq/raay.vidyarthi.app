@@ -359,6 +359,26 @@ button.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;c
 #ansPad{margin-top:10px}#ansPad[hidden]{display:none}
 .padtools{display:flex;gap:6px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
 #ansCv{display:block;border:1.5px solid var(--line);border-radius:12px;touch-action:none;background:#fff}
+/* 🧑‍🎓 ప్రగతి */
+.pgsearch{margin-bottom:10px}
+.pgst{display:flex;align-items:center;gap:10px;background:#fff;border-radius:14px;padding:10px;margin-bottom:8px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.pgst .av{width:40px;height:40px;border-radius:12px;background:#e0f2fe;color:#0369a1;display:grid;place-items:center;font-weight:800;flex:none}
+.pgst .in{flex:1;min-width:0;cursor:pointer}.pgst .in>b{display:block;font-size:15px}.pgst .in small{display:block;color:var(--mut);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pgst .bt{display:flex;gap:4px;flex:none}.pgst .bt a,.pgst .bt button{border:0;background:#f1f5f9;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;text-decoration:none;font-size:16px}
+.pglo{color:#dc2626;font-weight:700}.pgok{color:#16a34a}
+.pgcard{background:#fff;border-radius:16px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:12px}
+.pghd{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-bottom:2px solid var(--teal);padding-bottom:8px;margin-bottom:10px;flex-wrap:wrap}.pghd b{color:var(--navy);font-size:15px}.pghd small{color:var(--mut);font-weight:600}
+.pginfo{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:10px}.pginfo div{background:#f8fafc;border-radius:10px;padding:6px 8px}.pginfo small{display:block;color:var(--mut);font-size:11px}.pginfo b{font-size:14px;word-break:break-word}
+.pgt{font-size:12px;min-width:100%}.pgt th{white-space:nowrap}.pgt td{text-align:center;vertical-align:middle}.pgt td.s{text-align:left;font-weight:600;white-space:nowrap}.pgt td small{display:block;color:#475569;font-size:10px;white-space:nowrap}.pgt th,.pgt td{min-width:50px}.pgt td.s{min-width:0}.pgatt th,.pgatt td{min-width:34px}
+.pgt td.na{color:#cbd5e1}.pgt td.ab{color:#dc2626;font-weight:700}.pgt tr.tot td{background:#f0fdfa;font-weight:700}
+.gd{display:inline-block;min-width:26px;padding:1px 5px;border-radius:6px;font-weight:800;font-size:11px;background:#e5e7eb}
+.gd.pg1{background:#dcfce7;color:#166534}.gd.pg2{background:#d9f99d;color:#3f6212}.gd.pg3{background:#fef9c3;color:#854d0e}.gd.pg4{background:#ffedd5;color:#9a3412}.gd.pg5{background:#fee2e2;color:#991b1b}
+.pgh4{margin:12px 0 6px;font-size:14px;color:var(--navy)}
+.pgatts{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}.pgatts div{flex:1;min-width:90px;background:#f0fdf4;border-radius:12px;padding:8px;text-align:center}.pgatts div.low{background:#fef2f2}
+.pgatts small{display:block;color:var(--mut);font-size:11px}.pgatts b{font-size:18px;color:var(--navy)}
+.pgatt td{min-width:30px}.pgleg{font-size:11px;color:var(--mut);margin-top:10px}.pgdist{display:flex;gap:6px;flex-wrap:wrap}
+.pgin{font-size:13px}.pgin td.s{text-align:left;white-space:nowrap}.pgin input{width:56px;padding:7px 4px;text-align:center;border-radius:8px;margin:0}.pgin th small{font-weight:400;color:var(--mut)}
+@media print{body.pgprint *{visibility:hidden!important}body.pgprint .pgcard,body.pgprint .pgcard *{visibility:visible!important}body.pgprint .pgcard{position:absolute;left:0;top:0;width:100%;box-shadow:none;border-radius:0}body.pgprint .tscroll{overflow:visible!important}body.pgprint .slfab{display:none!important}}
 </style>
 </head>
 <body>
@@ -375,8 +395,8 @@ button.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;c
  ******************************************************************/
 var SCHOOL_KEY  = '__SCHOOL_KEY__';   // విద్యార్థుల కీ (జాయిన్ లింక్‌లో వెళ్తుంది)
 var TEACHER_KEY = '__TEACHER_KEY__';  // ఉపాధ్యాయుల కీ – ఎవరికీ ఇవ్వకండి
-var ALL_COLS = ['students','hw','events','doubts','notes','results','games','subs','teachers'];
-var TEACHER_COLS = ['hw','events','notes'];
+var ALL_COLS = ['students','hw','events','doubts','notes','results','games','subs','teachers','roster','marks'];
+var TEACHER_COLS = ['hw','events','notes','roster','marks'];
 var PRIV = ['students','results','doubts','subs'];  // విద్యార్థికి తన డేటా మాత్రమే
 var SUBJ = {tel:'తెలుగు', hin:'హిందీ', eng:'English', mat:'గణితం', evs:'పరిసరాల విజ్ఞానం', sci:'సైన్స్', phy:'భౌతిక శాస్త్రం', bio:'జీవ శాస్త్రం', soc:'సాంఘిక శాస్త్రం'};
 
@@ -423,8 +443,10 @@ function cleanT_(col, js, admin) {
 /* డేటా చదవడం (pull) */
 function doGet(e) {
   var p = (e && e.parameter) || {};
+  if (p.a === 'ping') return json_({ok:true, up:true, roster:true});
   var w = who_(p.k);
   if (!w) return json_({ok:false, err:'key'});
+  if (p.a === 'card') return card_(p, db_(), SpreadsheetApp.getActive().getName(), 'cardf_one');
   var isT = w.isT, since = Number(p.since || 0), cc = CacheService.getScriptCache(), lc = Number(cc.get('chg') || 0);
   // ⚡ మార్పు లేకపోతే షీట్ చదవకుండానే జవాబు
   if (since > 0 && lc > 0 && lc <= since) return json_({ok:true, now:since, rows:[], teacher:isT, admin:!!w.admin, me:w.me || null});
@@ -438,6 +460,7 @@ function doGet(e) {
         if (srv > max) max = srv;
         if (srv <= since) continue;
         if (!isT && PRIV.indexOf(v[i][1]) >= 0) { var o = ''; try { o = JSON.parse(v[i][5]).o || ''; } catch (x) {} if (!o || o !== p.dev) continue; }
+        if (TONLY.indexOf(v[i][1]) >= 0 && (!isT || !tonlyOk_(v[i][1], v[i][5], w.me))) continue;
         rows.push([v[i][1], String(v[i][2]), cleanT_(v[i][1], v[i][5], w.admin)]);
       }
     }
@@ -463,7 +486,7 @@ function doPost(e) {
     (b.recs || []).forEach(function (r) { if (r && r.col && r.id != null) uniq[r.col + '|' + r.id] = r; });
     Object.keys(uniq).forEach(function (key) {
       var r = uniq[key], d = r.data || {};
-      if (ALL_COLS.indexOf(r.col) < 0 || (TEACHER_COLS.indexOf(r.col) >= 0 && !isT) || (r.col === 'teachers' && !w.admin)) { rej.push(key); return; }
+      if (ALL_COLS.indexOf(r.col) < 0 || (TEACHER_COLS.indexOf(r.col) >= 0 && !isT) || (r.col === 'teachers' && !w.admin) || !tonlyOk_(r.col, JSON.stringify(d), w.me)) { rej.push(key); return; }
       if (r.col === 'teachers') tch = true;
       var row = idx[key];
       if (row) {
@@ -557,6 +580,32 @@ function rm_(b, a, sid) {
   } catch (x) { return json_({ok: false, err: 'drive'}); }
 }
 
+/* 🎓 విద్యార్థి ప్రగతి కార్డు – విద్యార్థి ID + పుట్టిన తేదీ సరిపోతేనే, తన రికార్డు మాత్రమే */
+var TONLY = ['roster', 'marks'];  // విద్యార్థులకు ఎప్పుడూ పంపము
+function sha_(t) { return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t, Utilities.Charset.UTF_8).map(function (b) { return ('0' + (b & 255).toString(16)).slice(-2); }).join(''); }
+function tonlyOk_(col, js, me) {
+  if (TONLY.indexOf(col) < 0 || !me || !me.cls || !me.cls.length) return true;
+  var c = 0; try { c = Number(JSON.parse(js).c) || 0; } catch (x) {}
+  return me.cls.map(Number).indexOf(c) >= 0;
+}
+function card_(p, sh, school, fk) {
+  var cache = CacheService.getScriptCache(), dk = fk + '_' + String(p.dev || '').replace(/\W/g, '').slice(0, 24), bad = Number(cache.get(fk) || 0), bd = Number(cache.get(dk) || 0);
+  if (bad >= 200 || bd >= 10) return json_({ok: false, err: 'busy'});  // తప్పు ప్రయత్నాలు: ఒక ఫోన్ 10, పాఠశాల 200 / గంట
+  var sid = String(p.sid || '').replace(/\D/g, '').slice(0, 20), dob = String(p.dob || '').trim();
+  if (!sid || !/^\d{4}-\d{2}-\d{2}$/.test(dob)) return json_({ok: false, err: 'card'});
+  var n = sh.getLastRow(), r = null, mk = [];
+  if (n > 1) {
+    var v = sh.getRange(2, 1, n - 1, 6).getValues(), rk = 'roster|rs_' + sid, mp = 'marks|mk_' + sid + '_';
+    for (var i = 0; i < v.length; i++) {
+      var key = String(v[i][0]);
+      if (key === rk) { try { r = JSON.parse(v[i][5]); } catch (x) {} }
+      else if (key.indexOf(mp) === 0) { try { var d = JSON.parse(v[i][5]); if (!d.del) mk.push({s: d.s, a: d.a || {}}); } catch (x) {} }
+    }
+  }
+  if (!r || r.del || !r.h || r.h !== sha_(sid + '|' + dob)) { cache.put(fk, String(bad + 1), 3600); cache.put(dk, String(bd + 1), 3600); return json_({ok: false, err: 'card'}); }
+  return json_({ok: true, r: {sid: r.sid, n: r.n, c: r.c, sec: r.sec || '', att: r.att || [], yr: r.yr || ''}, m: mk, school: school || ''});
+}
+
 /* Sheet మెనూ – చదవడానికి సులభమైన రిపోర్ట్ షీట్లు */
 function onOpen() {
   SpreadsheetApp.getUi().createMenu('రాయ్ ఎడ్యుకేషన్')
@@ -602,8 +651,8 @@ function put_(name, head, rows) {
  * ప్రతి పాఠశాలకు వేరే షీట్ (S_కోడ్) – ఒకరి డేటా మరొకరికి కనిపించదు.
  * PDF అప్‌లోడ్ కోసం: ఫంక్షన్ లిస్ట్‌లో driveSetup ఎంచుకుని ▶ Run → Allow (ఒక్కసారి)
  ******************************************************************/
-var COLS = ['students','hw','events','doubts','notes','results','games','subs','teachers'];
-var TCOLS = ['hw','events','notes'];
+var COLS = ['students','hw','events','doubts','notes','results','games','subs','teachers','roster','marks'];
+var TCOLS = ['hw','events','notes','roster','marks'];
 var PRIV = ['students','results','doubts','subs'];  // విద్యార్థికి తన డేటా మాత్రమే
 var MAX_REG_PER_HOUR = 40;
 var SUBJ = {tel:'తెలుగు', hin:'హిందీ', eng:'English', mat:'గణితం', evs:'పరిసరాల విజ్ఞానం', sci:'సైన్స్', phy:'భౌతిక శాస్త్రం', bio:'జీవ శాస్త్రం', soc:'సాంఘిక శాస్త్రం'};
@@ -681,7 +730,7 @@ function auth_(p) {
 /* డేటా చదవడం */
 function doGet(e) {
   var p = (e && e.parameter) || {};
-  if (p.a === 'ping') return json_({ok: true, multi: true, up: true});
+  if (p.a === 'ping') return json_({ok: true, multi: true, up: true, roster: true});
   if (p.a === 'join') {
     var c = CacheService.getScriptCache(), bad = Number(c.get('badjoin') || 0);
     if (bad > 300) return json_({ok: false, err: 'busy'});
@@ -691,6 +740,7 @@ function doGet(e) {
   }
   var a = auth_(p);
   if (a.err) return json_({ok: false, err: a.err});
+  if (p.a === 'card') return card_(p, db_(a.sc.id), a.sc.name, 'cardf_' + a.sc.id);
   var since = Number(p.since || 0), cc = CacheService.getScriptCache(), ck = 'chg_' + a.sc.id, lc = Number(cc.get(ck) || 0);
   // ⚡ చివరిసారి తర్వాత ఈ పాఠశాలలో మార్పు లేకపోతే షీట్ చదవకుండానే జవాబు (ఎక్కువ సింక్‌లు ఇలాగే)
   if (since > 0 && lc > 0 && lc <= since) return json_({ok: true, now: since, rows: [], teacher: a.isT, admin: !!a.admin, me: a.me || null, school: a.sc.name, skey: a.isT ? a.sc.skey : undefined});
@@ -700,6 +750,7 @@ function doGet(e) {
     for (var i = 0; i < v.length; i++) {
       if (Number(v[i][3]) <= since) continue;
       if (!a.isT && PRIV.indexOf(v[i][1]) >= 0) { var o = ''; try { o = JSON.parse(v[i][5]).o || ''; } catch (x) {} if (!o || o !== p.dev) continue; }
+      if (TONLY.indexOf(v[i][1]) >= 0 && (!a.isT || !tonlyOk_(v[i][1], v[i][5], a.me))) continue;
       rows.push([v[i][1], String(v[i][2]), cleanT_(v[i][1], v[i][5], a.admin)]);
     }
   }
@@ -728,7 +779,7 @@ function doPost(e) {
     (b.recs || []).slice(0, 300).forEach(function (r) { if (r && r.col && r.id != null) uniq[r.col + '|' + r.id] = r; });
     Object.keys(uniq).forEach(function (key) {
       var r = uniq[key], d = r.data || {}, js = JSON.stringify(d);
-      if (COLS.indexOf(r.col) < 0 || (TCOLS.indexOf(r.col) >= 0 && !a.isT) || (r.col === 'teachers' && !a.admin) || js.length > 20000) { rej.push(key); return; }
+      if (COLS.indexOf(r.col) < 0 || (TCOLS.indexOf(r.col) >= 0 && !a.isT) || (r.col === 'teachers' && !a.admin) || js.length > 20000 || !tonlyOk_(r.col, js, a.me)) { rej.push(key); return; }
       if (r.col === 'teachers') tch = true;
       var row = idx[key];
       if (row) {
@@ -839,6 +890,32 @@ function reg_(b) {
     db_(id);
     return json_({ok: true, id: id, skey: skey, tkey: tkey, name: name});
   } finally { lock.releaseLock(); }
+}
+
+/* 🎓 విద్యార్థి ప్రగతి కార్డు – విద్యార్థి ID + పుట్టిన తేదీ సరిపోతేనే, తన రికార్డు మాత్రమే */
+var TONLY = ['roster', 'marks'];  // విద్యార్థులకు ఎప్పుడూ పంపము
+function sha_(t) { return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t, Utilities.Charset.UTF_8).map(function (b) { return ('0' + (b & 255).toString(16)).slice(-2); }).join(''); }
+function tonlyOk_(col, js, me) {
+  if (TONLY.indexOf(col) < 0 || !me || !me.cls || !me.cls.length) return true;
+  var c = 0; try { c = Number(JSON.parse(js).c) || 0; } catch (x) {}
+  return me.cls.map(Number).indexOf(c) >= 0;
+}
+function card_(p, sh, school, fk) {
+  var cache = CacheService.getScriptCache(), dk = fk + '_' + String(p.dev || '').replace(/\W/g, '').slice(0, 24), bad = Number(cache.get(fk) || 0), bd = Number(cache.get(dk) || 0);
+  if (bad >= 200 || bd >= 10) return json_({ok: false, err: 'busy'});  // తప్పు ప్రయత్నాలు: ఒక ఫోన్ 10, పాఠశాల 200 / గంట
+  var sid = String(p.sid || '').replace(/\D/g, '').slice(0, 20), dob = String(p.dob || '').trim();
+  if (!sid || !/^\d{4}-\d{2}-\d{2}$/.test(dob)) return json_({ok: false, err: 'card'});
+  var n = sh.getLastRow(), r = null, mk = [];
+  if (n > 1) {
+    var v = sh.getRange(2, 1, n - 1, 6).getValues(), rk = 'roster|rs_' + sid, mp = 'marks|mk_' + sid + '_';
+    for (var i = 0; i < v.length; i++) {
+      var key = String(v[i][0]);
+      if (key === rk) { try { r = JSON.parse(v[i][5]); } catch (x) {} }
+      else if (key.indexOf(mp) === 0) { try { var d = JSON.parse(v[i][5]); if (!d.del) mk.push({s: d.s, a: d.a || {}}); } catch (x) {} }
+    }
+  }
+  if (!r || r.del || !r.h || r.h !== sha_(sid + '|' + dob)) { cache.put(fk, String(bad + 1), 3600); cache.put(dk, String(bd + 1), 3600); return json_({ok: false, err: 'card'}); }
+  return json_({ok: true, r: {sid: r.sid, n: r.n, c: r.c, sec: r.sec || '', att: r.att || [], yr: r.yr || ''}, m: mk, school: school || ''});
 }
 
 /* ఒక పాఠశాల తాళం (CacheService) – 30 సెకన్లలో దానంతట అదే విడుదల */
@@ -1105,8 +1182,8 @@ function ring(p,sz,col){sz=sz||96;col=col||'#f59e0b';const r=sz/2-8,C=2*Math.PI*
 function pctCls(p){return p>=80?'g':p>=50?'y':'r';}
 
 /* ---------- డేటా నిల్వ (ఆఫ్లైన్ + ఆన్‌లైన్ సింక్) ---------- */
-const COLS=['students','hw','events','doubts','notes','results','games','subs','teachers'];
-function def(){return {dev:'',offline:false,pub:'',pin:'1234',local:[],cur:null,students:[],results:[],games:[],hw:[],events:[],doubts:[],notes:[],subs:[],teachers:[],read:{},seeded:false,cfg:{type:''},q:{},last:{},lastSync:0};}
+const COLS=['students','hw','events','doubts','notes','results','games','subs','teachers','roster','marks'];
+function def(){return {dev:'',offline:false,pub:'',pin:'1234',local:[],cur:null,students:[],results:[],games:[],hw:[],events:[],doubts:[],notes:[],subs:[],teachers:[],roster:[],marks:[],read:{},seeded:false,cfg:{type:''},q:{},last:{},lastSync:0};}
 function load(){try{const d=JSON.parse(localStorage.getItem(LS));if(d)return migrate(Object.assign(def(),d));}catch(e){}return def();}
 function migrate(d){
  if(!d.dev){d.dev=newDev();const mine=new Set((d.local||[]).map(x=>x.n));if(d.cur)mine.add(d.cur.n);d.q=d.q||{};
@@ -1170,7 +1247,7 @@ function notify(list){toast(list[0]+(list.length>1?` (+${list.length-1})`:''));
  try{if(window.Notification&&Notification.permission==='granted'){const body=list.join('\n');
   if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration){navigator.serviceWorker.getRegistration().then(r=>{if(r)r.showNotification('రాయ్ విద్యార్థి యాప్',{body});else new Notification('రాయ్ విద్యార్థి యాప్',{body});}).catch(()=>{});}
   else new Notification('రాయ్ విద్యార్థి యాప్',{body});}}catch(e){}}
-function softRender(){if(view==='testrun'||view==='gamerun'||view==='book')return;const ae=document.activeElement;if(ae&&/^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName))return;const y=window.scrollY||0;render();try{window.scrollTo(0,y);}catch(e){}}
+function softRender(){if(view==='testrun'||view==='gamerun'||view==='book')return;if(typeof PGDIRTY!=='undefined'&&PGDIRTY&&view==='teacher')return;const ae=document.activeElement;if(ae&&/^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName))return;const y=window.scrollY||0;render();try{window.scrollTo(0,y);}catch(e){}}
 
 /* Google Sheets (Apps Script) */
 function gsErr(e){return {key:'కీ తప్పు',school:'పాఠశాల కోడ్ తప్పు',busy:'సర్వర్ బిజీ – కాసేపటి తర్వాత ప్రయత్నించండి'}[e]||e;}
@@ -1181,14 +1258,14 @@ const GS={
   S.cfg.isT=!!j.teacher;if(j.school)S.cfg.sname=j.school;if(j.skey)S.cfg.key=j.skey;S.cfg.multiT=('admin' in j);S.cfg.admin=('admin' in j)?!!j.admin:!!j.teacher;S.cfg.tme=j.me||null;
   if(!j.teacher)PRIV.forEach(c=>{S[c]=S[c].filter(r=>!r.o||r.o===S.dev||S.q[c+'|'+r.id]);S[c]=S[c].filter(r=>r.o===S.dev||!r.n||S.local.some(l=>l.n===r.n));});if(j.now)S.last.gs=Math.max(S.last.gs||0,Number(j.now));
   applyIncoming((j.rows||[]).map(([col,id,js])=>{try{return [col,JSON.parse(js)];}catch(e){return [col,null];}}));},
- async push(){const ks=Object.keys(S.q);if(!ks.length)return;const sent={};
+ async push(){const all=Object.keys(S.q),ks=all.slice(0,250);if(!ks.length)return;const sent={};
   const recs=ks.map(k=>{const i=k.indexOf('|');const col=k.slice(0,i),id=k.slice(i+1);const d=(S[col]||[]).find(x=>x.id===id);sent[k]=S.q[k];return d?{col,id,data:d}:null;}).filter(Boolean);
   if(!recs.length){ks.forEach(k=>delete S.q[k]);return;}
   const j=await (await fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'push',s:S.cfg.sid,k:this.key(),dev:S.dev,recs})})).json();
   if(!j.ok)throw new Error(gsErr(j.err));
   (j.done||[]).forEach(k=>{if(S.q[k]===sent[k])delete S.q[k];});
   if(j.rej&&j.rej.length){j.rej.forEach(k=>{delete S.q[k];dropLocal(k);});S.last.gs=0;toast('కొన్ని మార్పులకు ఉపాధ్యాయ అనుమతి లేదు');}
-  ks.forEach(k=>{if(!recs.find(r=>r.col+'|'+r.id===k))delete S.q[k];});save();}
+  ks.forEach(k=>{if(!recs.find(r=>r.col+'|'+r.id===k))delete S.q[k];});save();if(all.length>ks.length)Sync.later();}
 };
 
 /* Firebase (Firestore) */
@@ -1200,7 +1277,7 @@ const FBK={ready:false,user:null,
   U.onAuthStateChanged(this.auth,u=>{this.user=u;S.cfg.isT=!!(u&&u.email&&S.cfg.temail&&u.email.toLowerCase()===S.cfg.temail.toLowerCase());save();if(u)this.push().catch(()=>{});if(view==='teacher')softRender();});
   this.ready=true;},
  async start(){await this.init();this.listen();await this.push();setTimeout(()=>{Sync.primed=true;},5000);},
- listen(){const F=this.F;COLS.forEach(col=>{
+ listen(){const F=this.F;COLS.filter(c=>c!=='roster'&&c!=='marks').forEach(col=>{
   const q=F.query(F.collection(this.db,'schools',S.cfg.school,col),F.where('srv','>',F.Timestamp.fromMillis(S.last[col]||0)));
   F.onSnapshot(q,snap=>{const ch=[];snap.docChanges().forEach(c=>{if(c.type==='removed')return;const x=c.doc.data();const ms=x.srv&&x.srv.toMillis?x.srv.toMillis():0;if(ms>(S.last[col]||0))S.last[col]=ms;delete x.srv;ch.push([col,x]);});
    S.lastSync=Date.now();applyIncoming(ch);save();Sync.set('ok');},e=>Sync.set('err',e.message));});},
@@ -1216,7 +1293,7 @@ const FBK={ready:false,user:null,
 
 /* ---------- సహాయక ఫంక్షన్లు ---------- */
 let view='home',param={},tick=null,T=null,G=null,tAuth=false;
-const PARENT={avatar:'home',badges:'home',library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
+const PARENT={card:'home',avatar:'home',badges:'home',library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
 function me(){return S.cur.n;}
 function lessonsOf(c,s){const b=((L[c]||{})[s]||[]).map((x,i)=>({k:'b'+i,t:x[0],b:x[1].split('|')}));
  const n=live('notes').filter(x=>!x.kind&&x.c===c&&x.s===s).map(x=>({k:'n'+x.id,t:x.t,b:String(x.x||'').split('\n').filter(Boolean),tn:1,img:x.img||''}));return b.concat(n);}
@@ -1240,7 +1317,7 @@ function dueText(h){const sd=subOf(h);const d=diffDays(h.due,todayS());
  return `<span class="st due">ఇంకా ${d} రోజుల గడువు</span>`;}
 
 /* ---------- నావిగేషన్ ---------- */
-function go(v,p){clearInterval(tick);tick=null;try{speechSynthesis.cancel();}catch(e){}view=v;param=p||{};render();window.scrollTo(0,0);}
+function go(v,p){if(typeof PGDIRTY!=='undefined')PGDIRTY=false;clearInterval(tick);tick=null;try{speechSynthesis.cancel();}catch(e){}view=v;param=p||{};render();window.scrollTo(0,0);}
 /* ---------- ✏️ పలక & 📝 నోట్ – ప్రతి విభాగానికి వేరుగా, అవసరమైనప్పుడే తెరుచుకుంటుంది ---------- */
 const SL={open:false,full:false,tab:'d',bg:'slate',col:'#ffffff',w:4,er:false,strokes:[],base:null,bw:0,sec:'',key:'',cur:null,pid:null,dpr:1,W:0,H:0,th:null,sv:null};
 const SLBG={slate:{n:'⬛ నల్ల పలక',c:'#22312b'},white:{n:'⬜ తెల్ల పేజీ',c:'#ffffff'},lines:{n:'📄 గీతల పేజీ',c:'#ffffff'},grid:{n:'🔲 గడుల పేజీ',c:'#ffffff'}};
@@ -1372,11 +1449,11 @@ function render0(){const app=$('#app');
  if(!S.cur){app.innerHTML=V.login()+footer();return;}
  const full=view==='testrun'||view==='gamerun'||view==='book';
  app.innerHTML=(full?'':header())+(full?'':'<main>')+(V[view]||V.home)()+(full?'':'</main>')+footer()+(full?'':nav());
- if(view==='library')setTimeout(()=>libLoad(),0);}
+ if(view==='library')setTimeout(()=>libLoad(),0);if(view==='card')setTimeout(()=>cardLoad(false),0);}
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.10.25-6';
+const APPV='2026.10.25-7';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -1484,6 +1561,7 @@ V.menu=()=>`<h2 class="pt">మెనూ</h2><div class="list">
 <button class="li" onclick="go('doubts')">💬 సందేహం అడుగు</button>
 <button class="li" onclick="go('library',{tab:'books'})">📚 పుస్తకాలు & టూల్స్</button>
 <button class="li" onclick="go('schedule')">📅 షెడ్యూల్ & ఈవెంట్లు</button>
+<button class="li" onclick="go('card')">🎓 నా ప్రగతి కార్డు <span>FA / SA • హాజరు</span></button>
 <button class="li" onclick="go('test',{tab:'done'})">📊 నా రిపోర్ట్</button>
 ${isStandalone()?'':`<button class="li" onclick="installApp()">📲 యాప్‌గా ఇన్‌స్టాల్ చేయి</button>`}
 ${S.cfg.type?'':`<button class="li" onclick="go('welcome',{w:'s'})">🏫 పాఠశాల కోడ్‌తో చేరు</button>`}
@@ -1765,7 +1843,7 @@ ${list.map(t=>`<div class="titem" ${param.nt===t.id?'style="outline:3px solid #2
 /* ---------- ఉపాధ్యాయుల ప్యానెల్ ---------- */
 function tLogin(){if($('#tpin').value===S.pin){tAuth=true;go('teacher');}else toast('PIN తప్పు');}
 function tBack(){tAuth=false;go(S.cur||S.cfg.type||S.offline?'home':'welcome');}
-const TSEC=[['sy','☁️ ఆన్‌లైన్ సింక్'],['tc','👥 ఉపాధ్యాయులు'],['hw','📒 హోంవర్క్'],['ev','📅 ఈవెంట్/టెస్ట్'],['dq','💬 సందేహాలు'],['nt','📖 పాఠం నోట్స్'],['lb','📚 పుస్తకాలు/టూల్స్'],['fl','📢 ఫ్లాష్/ఫోటోలు'],['rp','📊 రిపోర్ట్'],['st','⚙️ సెట్టింగ్స్']];
+const TSEC=[['sy','☁️ ఆన్‌లైన్ సింక్'],['tc','👥 ఉపాధ్యాయులు'],['pg','🧑‍🎓 విద్యార్థులు & మార్కులు'],['hw','📒 హోంవర్క్'],['ev','📅 ఈవెంట్/టెస్ట్'],['dq','💬 సందేహాలు'],['nt','📖 పాఠం నోట్స్'],['lb','📚 పుస్తకాలు/టూల్స్'],['fl','📢 ఫ్లాష్/ఫోటోలు'],['rp','📊 రిపోర్ట్'],['st','⚙️ సెట్టింగ్స్']];
 function clsSel(id,all){return `<select id="${id}" onchange="fillSubj('${id}','${id}s')">${all&&isAdmin()?'<option value="0">అన్ని తరగతులు</option>':''}${myCls().map(c=>`<option value="${c}">${c}వ తరగతి</option>`).join('')}</select>`;}
 function subjOpts(c){return mySubs(c).map(s=>`<option value="${s}">${SUBJ[s].n}</option>`).join('');}
 function fillSubj(cid,sid){const s=document.getElementById(sid);if(s)s.innerHTML=subjOpts(document.getElementById(cid).value);}
@@ -1787,6 +1865,181 @@ TP.ev=()=>`<div class="card"><h3>ఈవెంట్ / టెస్ట్ / స�
 <button class="btn" onclick="addEv()">➕ జోడించు</button></div>
 <h4 class="sec">ఈవెంట్లు (${live('events').filter(e=>canSee(e.c)).length})</h4>${live('events').filter(e=>canSee(e.c)).sort((a,b)=>a.d<b.d?-1:1).map(e=>`<div class="titem"><div><b>${esc(e.t)}</b><small>${fmtD(e.d)} • ${to12(e.tm)} • ${e.c?e.c+'వ తరగతి':'అన్ని తరగతులు'} • ${EVT[e.ty]}${e.link?' • 🔗':''}${e.seed?' • (నమూనా)':''}</small></div><button class="del" onclick="delItem('events','${e.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}`;
 function addEv(){const t=$('#et').value.trim();if(!t)return toast('శీర్షిక రాయండి');const lk=$('#elk').value.trim();if(lk&&!/^https:\/\//.test(lk))return toast('లింక్ https:// తో మొదలవ్వాలి');put('events',{id:uid(),t,d:$('#ed').value||todayS(),tm:$('#etm').value,c:+$('#ec').value,ty:$('#ety').value,link:lk});toast('ఈవెంట్ జోడించబడింది ✓');go('teacher',{t:'ev'});}
+/* ================= 🧑‍🎓 విద్యార్థుల జాబితా + ప్రగతి (FA-1 → SA-2, హాజరు) ================= */
+const PG_A=['FA1','FA2','SA1','FA3','FA4','SA2'],PG_AL={FA1:'FA-1',FA2:'FA-2',SA1:'SA-1',FA3:'FA-3',FA4:'FA-4',SA2:'SA-2',ANN:'వార్షికం'};
+const PG_TOOLS=['ప్రతిస్పందనలు','రాత అంశాలు','ప్రాజెక్ట్','రాత పరీక్ష'];
+const PG_MON=['జూన్','జూలై','ఆగస్టు','సెప్టెంబర్','అక్టోబర్','నవంబర్','డిసెంబర్','జనవరి','ఫిబ్రవరి','మార్చి','ఏప్రిల్'];
+const PG_T1=[0,1,2,3,4,5],PG_T2=[6,7,8,9,10];
+const PG_SC={P:[['A+',91],['A',71],['B+',51],['B',41],['C',0]],H:[['A1',91],['A2',81],['B1',71],['B2',61],['C1',51],['C2',41],['D1',35],['D2',0]],L2:[['A1',90],['A2',79],['B1',68],['B2',57],['C1',46],['C2',35],['D1',20],['D2',0]]};
+const PG_MAP={'First Language':'tel','Second Language':'hin','English':'eng','Mathematics':'mat','EVS':'evs','General Science':'sci','Physical Science':'phy','Biological Science':'bio','Social Studies':'soc'};
+const PG_ONLY=['roster','marks'];
+function pgSc(c,s){return c<=5?'P':s==='hin'?'L2':'H';}
+function pgGrade(p,sc){if(p==null||isNaN(p))return '';const q=Math.round(p);for(const [g,m] of PG_SC[sc])if(q>=m)return g;return PG_SC[sc][PG_SC[sc].length-1][0];}
+function pgGcl(g,sc){const G=PG_SC[sc],i=G.findIndex(x=>x[0]===g);return i<0?'':'pg'+(1+Math.floor(i*5/G.length));}
+function pgFaMax(c,s){return c>=8&&(s==='phy'||s==='bio')?[5,5,5,10]:[5,5,5,35];}
+function pgSaMax(c,s){return c<=5?50:(s==='phy'||s==='bio')?50:100;}
+function pgSaN(c){return c<=5?6:1;}
+function r1(x){return Math.round(x*10)/10;}
+function pgRes(c,s,A,v){if(v==null)return null;
+ if(!Array.isArray(v)){if(v.ab)return {ab:1};if(v.tot==null||!v.max)return null;const p=Math.min(100,v.tot/v.max*100);return {tot:v.tot,max:v.max,p,g:pgGrade(p,pgSc(c,s)),pt:1};}
+ if(!v.some(x=>x!==null&&x!==''&&x!==undefined))return null;if(v.some(x=>String(x).toUpperCase()==='AB'))return {ab:1};
+ const max=A[0]==='F'?pgFaMax(c,s).reduce((a,b)=>a+b,0):pgSaMax(c,s),tot=v.reduce((a,x)=>a+(+x||0),0),p=Math.min(100,tot/max*100);return {tot,max,p,g:pgGrade(p,pgSc(c,s)),t:v};}
+function pgRoster(c){return live('roster').filter(r=>!c||r.c===+c).sort((a,b)=>(a.ord||0)-(b.ord||0)||String(a.n).localeCompare(String(b.n)));}
+function pgMkMap(sid){const o={};live('marks').filter(m=>m.sid===sid).forEach(m=>o[m.s]=m.a||{});return o;}
+function pgCls(){const have=new Set(live('roster').map(r=>r.c));return myCls().filter(c=>have.has(c));}
+function pgAtt(att,idx){let w=0,p=0;(idx||PG_T1.concat(PG_T2)).forEach(i=>{const a=(att||[])[i];if(a&&+a[0]>0){w+=+a[0];p+=Math.min(Math.max(+a[1]||0,0),+a[0]);}});return {w,p,pc:w?p*100/w:null};}
+function pgAllA(c,mk,A){const rs=subjectsFor(c).map(s=>A==='ANN'?pgAnn(c,s,mk[s]):pgRes(c,s,A,(mk[s]||{})[A])),v=rs.filter(r=>r&&!r.ab);const p=v.length?v.reduce((a,r)=>a+r.p,0)/v.length:null;return {rs,p,g:pgGrade(p,c<=5?'P':'H')};}
+function pgAnn(c,s,a){const v=PG_A.map(A=>pgRes(c,s,A,(a||{})[A])).filter(r=>r&&!r.ab);if(!v.length)return null;const p=v.reduce((x,r)=>x+r.p,0)/v.length;return {p,g:pgGrade(p,pgSc(c,s))};}
+function pgLast(c,mk){for(let i=PG_A.length-1;i>=0;i--){const x=pgAllA(c,mk,PG_A[i]);if(x.p!=null)return {A:PG_A[i],...x};}return null;}
+function pgCell(r,sc){return r?(r.ab?'<td class="ab">AB</td>':`<td>${r.tot!=null?`<small>${r1(r.tot)}/${r.max}</small>`:`<small>${r1(r.p)}%</small>`}<span class="gd ${pgGcl(r.g,sc)}">${r.g}</span></td>`):'<td class="na">–</td>';}
+/* ప్రగతి కార్డు – టీచర్ & విద్యార్థి ఇద్దరికీ ఒకటే */
+function pgCard(r,mk,o){o=o||{};const c=+r.c,subs=subjectsFor(c),sc=c<=5?'P':'H';const at=[PG_T1,PG_T2,null].map(x=>pgAtt(r.att,x));
+ return `<div class="pgcard"><div class="pghd"><b>🏫 ${esc(o.school||S.cfg.sname||'పాఠశాల')}</b><small>ప్రగతి కార్డు ${esc(r.yr||'')}</small></div>
+<div class="pginfo"><div><small>పేరు</small><b>${esc(r.n)}</b></div><div><small>తరగతి</small><b>${c}వ ${esc(r.sec&&r.sec!=='A'?r.sec:'')}</b></div><div><small>ID</small><b>${esc(r.sid)}</b></div>${o.teacher&&r.f?`<div><small>తండ్రి</small><b>${esc(r.f)}</b></div>`:''}</div>
+<div class="tscroll"><table class="tbl pgt"><tr><th>సబ్జెక్టు</th>${PG_A.map(A=>`<th>${PG_AL[A]}</th>`).join('')}<th>వార్షికం</th></tr>
+${subs.map(s=>`<tr><td class="s">${SUBJ[s].n}</td>${PG_A.map(A=>pgCell(pgRes(c,s,A,(mk[s]||{})[A]),pgSc(c,s))).join('')}${(()=>{const x=pgAnn(c,s,mk[s]);return x?`<td><small>${r1(x.p)}%</small><span class="gd ${pgGcl(x.g,pgSc(c,s))}">${x.g}</span></td>`:'<td class="na">–</td>';})()}</tr>`).join('')}
+<tr class="tot"><td class="s">మొత్తం</td>${PG_A.concat(['ANN']).map(A=>{const x=pgAllA(c,mk,A);return x.p==null?'<td class="na">–</td>':`<td><small>${r1(x.p)}%</small><span class="gd ${pgGcl(x.g,sc)}">${x.g}</span></td>`;}).join('')}</tr></table></div>
+<h4 class="pgh4">📅 హాజరు</h4><div class="tscroll"><table class="tbl pgt pgatt"><tr><th>నెల</th>${PG_MON.map(m=>`<th>${m.slice(0,3)}</th>`).join('')}</tr>
+<tr><td class="s">పనిదినాలు</td>${PG_MON.map((_,i)=>{const a=(r.att||[])[i];return `<td>${a&&+a[0]>0?a[0]:''}</td>`;}).join('')}</tr>
+<tr><td class="s">హాజరు</td>${PG_MON.map((_,i)=>{const a=(r.att||[])[i];return `<td>${a&&+a[0]>0?Math.max(+a[1]||0,0):''}</td>`;}).join('')}</tr></table></div>
+<div class="pgatts">${['TERM-1','TERM-2','సంవత్సరం'].map((t,i)=>`<div class="${at[i].pc!=null&&at[i].pc<75?'low':''}"><small>${t}</small><b>${at[i].pc==null?'–':r1(at[i].pc)+'%'}</b><small>${at[i].w?at[i].p+'/'+at[i].w:''}</small></div>`).join('')}</div>
+<p class="pgleg">గ్రేడ్లు: ${PG_SC[sc].map(([g,m],i,a)=>`${g} ${m}${i?'–'+(a[i-1][1]-1):'–100'}`).join(' • ')}${c>5?' (హిందీ వేరు స్కేల్)':''}</p></div>`;}
+function pgPrint(){document.body.classList.add('pgprint');setTimeout(()=>{window.print();setTimeout(()=>document.body.classList.remove('pgprint'),500);},50);}
+function pgWaText(r,mk){const c=+r.c,lines=PG_A.map(A=>{const x=pgAllA(c,mk,A);return x.p==null?'':`${PG_AL[A]}: ${x.g} (${r1(x.p)}%)`;}).filter(Boolean);const a=pgAtt(r.att);
+ return `🏫 ${S.cfg.sname||''}\n📘 ${r.n} (${c}వ తరగతి) – ప్రగతి\n${lines.join('\n')||'మార్కులు ఇంకా నమోదు కాలేదు'}\n📅 హాజరు: ${a.pc==null?'–':r1(a.pc)+'%'}\n– ${tName()}`;}
+function pgPhone(p){p=String(p||'').replace(/\D/g,'').slice(-10);return /^[6-9]\d{9}$/.test(p)?p:'';}
+/* ---------- టీచర్ ప్యానెల్ ట్యాబ్ ---------- */
+TP.pg=()=>{const v=param.v||'list',cls=pgCls(),hasAny=live('roster').length>0;
+ const tabs=[['list','👥 జాబితా'],['mk','📝 మార్కులు'],['att','📅 హాజరు'],['rep','📊 తరగతి రిపోర్ట్']].concat(isAdmin()?[['imp','📥 దిగుమతి']]:[]);
+ const head=`<div class="tchips">${tabs.map(([k,n])=>`<button class="${v===k?'on':''}" onclick="go('teacher',{t:'pg',v:'${k}',c:${+param.c||0}})">${n}</button>`).join('')}</div>`;
+ if(v==='imp')return head+pgImpView();
+ if(v==='card'){const r=live('roster').find(x=>x.sid===param.sid);if(!r)return head+'<div class="empty">విద్యార్థి దొరకలేదు</div>';const mk=pgMkMap(r.sid),ph=pgPhone(r.ph);
+  return head+`<div class="row2 noprint" style="margin-bottom:10px"><button class="btn ghost" style="margin:0" onclick="go('teacher',{t:'pg',v:'list',c:${r.c}})">← జాబితా</button><button class="btn" style="margin:0" onclick="pgPrint()">🖨️ ప్రింట్ / PDF</button></div>${pgCard(r,mk,{teacher:1})}
+${ph?`<div class="row2 noprint"><a class="btn" style="background:#16a34a;text-align:center;text-decoration:none" href="https://wa.me/91${ph}?text=${encodeURIComponent(pgWaText(r,mk))}" target="_blank" rel="noopener">🟢 తల్లిదండ్రులకు WhatsApp</a><a class="btn ghost" style="text-align:center;text-decoration:none" href="tel:+91${ph}">📞 కాల్</a></div>`:''}`;}
+ if(!hasAny)return head+`<div class="empty">ఇంకా విద్యార్థుల జాబితా లేదు.<br>${isAdmin()?`<button class="btn" onclick="go('teacher',{t:'pg',v:'imp'})">📥 ప్రగతి ఫైల్ నుండి దిగుమతి</button>`:'ప్రధానోపాధ్యాయులు 📥 దిగుమతి చేయాలి.'}</div>`;
+ if(!cls.length)return head+'<div class="empty">మీ తరగతుల విద్యార్థులు జాబితాలో లేరు</div>';
+ const c=cls.includes(+param.c)?+param.c:cls[0];const cchips=`<div class="tchips">${cls.map(k=>`<button class="${k===c?'on':''}" onclick="go('teacher',{t:'pg',v:'${v}',c:${k},s:'${param.s||''}',a:'${param.a||''}'})">${k}వ (${pgRoster(k).length})</button>`).join('')}</div>`;
+ const L=pgRoster(c);
+ if(v==='list')return head+cchips+`<input class="pgsearch" placeholder="🔍 పేరు / ID / తండ్రి పేరు" oninput="pgFilter(this.value)">
+<div id="pgList">${L.map(r=>{const mk=pgMkMap(r.sid),la=pgLast(c,mk),a=pgAtt(r.att),ph=pgPhone(r.ph);return `<div class="pgst" data-q="${esc((r.n+' '+r.sid+' '+(r.f||'')).toLowerCase())}"><span class="av">${esc(String(r.n).trim().charAt(0).toUpperCase())}</span><div class="in" onclick="go('teacher',{t:'pg',v:'card',sid:'${esc(r.sid)}'})"><b>${esc(r.n)}</b><small>ID ${esc(r.sid)}${r.f?' • 👨 '+esc(r.f):''}</small><small>${a.pc!=null?`<span class="${a.pc<75?'pglo':'pgok'}">📅 ${r1(a.pc)}%</span>`:''}${la?` • ${PG_AL[la.A]}: <b class="gd ${pgGcl(la.g,c<=5?'P':'H')}">${la.g}</b>`:''}</small></div><div class="bt">${ph?`<a href="tel:+91${ph}" aria-label="కాల్">📞</a><a href="https://wa.me/91${ph}" target="_blank" rel="noopener" aria-label="WhatsApp">🟢</a>`:''}<button onclick="go('teacher',{t:'pg',v:'card',sid:'${esc(r.sid)}'})" aria-label="ప్రగతి">📘</button>${isAdmin()?`<button onclick="pgDel('${esc(r.sid)}')" aria-label="తొలగించు">🗑️</button>`:''}</div></div>`;}).join('')}</div>
+<p class="mut" style="margin-top:8px">📘 నొక్కితే ప్రగతి కార్డు, తల్లిదండ్రులకు WhatsApp. ఫోన్ నంబర్లు మీ పాఠశాల ఉపాధ్యాయులకు మాత్రమే.</p>`;
+ if(v==='mk'){const subs=mySubs(c).filter(s=>subjectsFor(c).includes(s));if(!subs.length)return head+cchips+'<div class="empty">ఈ తరగతికి మీ సబ్జెక్టు లేదు</div>';
+  const s=subs.includes(param.s)?param.s:subs[0],A=PG_A.includes(param.a)?param.a:'FA2',isFA=A[0]==='F',n=isFA?4:pgSaN(c),mx=isFA?pgFaMax(c,s):null;
+  return head+cchips+`<div class="tchips">${subs.map(k=>`<button class="${k===s?'on':''}" onclick="go('teacher',{t:'pg',v:'mk',c:${c},s:'${k}',a:'${A}'})">${SUBJ[k].ic} ${SUBJ[k].n}</button>`).join('')}</div>
+<div class="tchips">${PG_A.map(k=>`<button class="${k===A?'on':''}" onclick="go('teacher',{t:'pg',v:'mk',c:${c},s:'${s}',a:'${k}'})">${PG_AL[k]}</button>`).join('')}</div>
+<p class="mut" style="margin:-4px 2px 8px">${isFA?`FA: ${PG_TOOLS.map((t,i)=>t+' /'+mx[i]).join(', ')} = ${mx.reduce((a,b)=>a+b,0)}`:`SA: గరిష్ఠం ${pgSaMax(c,s)}${n>1?' (AS-1 … AS-6 కలిపి)':''}`} • గైర్హాజరు అయితే <b>AB</b> అని టైప్ చేయండి</p>
+<div class="tscroll"><table class="tbl pgin"><tr><th>#</th><th>పేరు</th>${isFA?PG_TOOLS.map((t,i)=>`<th>${t}<br><small>/${mx[i]}</small></th>`).join(''):Array.from({length:n},(_,i)=>`<th>${n>1?'AS-'+(i+1):'మార్కులు<br><small>/'+pgSaMax(c,s)+'</small>'}</th>`).join('')}<th>మొత్తం</th><th>గ్రేడ్</th></tr>
+${L.map((r,k)=>{const a=(pgMkMap(r.sid)[s]||{})[A],arr=Array.isArray(a)?a:[],res=pgRes(c,s,A,a);return `<tr data-sid="${esc(r.sid)}"><td>${k+1}</td><td class="s">${esc(r.n)}${a&&!Array.isArray(a)&&a.tot!=null?`<br><small class="mut">పోర్టల్: ${a.tot}/${a.max}</small>`:''}</td>${Array.from({length:n},(_,q)=>`<td><input class="pgi" inputmode="decimal" data-q="${q}" ${mx?`data-mx="${mx[q]}" placeholder="/${mx[q]}"`:`data-mx="${n>1?999:pgSaMax(c,s)}"`} value="${arr[q]==null?'':esc(arr[q])}" oninput="pgLive(this,${c},'${s}','${A}')"></td>`).join('')}<td class="t">${res?(res.ab?'AB':r1(res.tot)+'/'+res.max):''}</td><td class="g">${res&&!res.ab?`<span class="gd ${pgGcl(res.g,pgSc(c,s))}">${res.g}</span>`:''}</td></tr>`;}).join('')}</table></div>
+<button class="btn" onclick="pgSaveMk(${c},'${s}','${A}')">💾 ${PG_AL[A]} ${SUBJ[s].n} మార్కులు సేవ్</button>`;}
+ if(v==='att'){const m=param.m!=null&&param.m!==''?+param.m:pgCurMonth();const ws=L.map(r=>((r.att||[])[m]||[])[0]).filter(x=>+x>0),w=ws.length?Math.max(...ws):'';
+  return head+cchips+`<div class="g2"><div><label>నెల</label><select onchange="go('teacher',{t:'pg',v:'att',c:${c},m:this.value})">${PG_MON.map((n,i)=>`<option value="${i}" ${i===m?'selected':''}>${n}</option>`).join('')}</select></div><div><label>పనిదినాలు</label><input id="pgw" inputmode="numeric" value="${w}" placeholder="ఉదా: 22"></div></div>
+<div class="tscroll" style="margin-top:10px"><table class="tbl pgin"><tr><th>#</th><th>పేరు</th><th>హాజరైన రోజులు</th><th>సంవత్సరం %</th></tr>${L.map((r,k)=>{const a=(r.att||[])[m],y=pgAtt(r.att);return `<tr data-sid="${esc(r.sid)}"><td>${k+1}</td><td class="s">${esc(r.n)}</td><td><input class="pga" inputmode="numeric" oninput="PGDIRTY=true" value="${a&&+a[0]>0?Math.max(+a[1]||0,0):''}"></td><td class="${y.pc!=null&&y.pc<75?'pglo':''}">${y.pc==null?'–':r1(y.pc)+'%'}</td></tr>`;}).join('')}</table></div>
+<button class="btn" onclick="pgSaveAtt(${c},${m})">💾 ${PG_MON[m]} హాజరు సేవ్</button>`;}
+ if(v==='rep'){const A=PG_A.concat(['ANN']).includes(param.a)?param.a:'ANN',subs=subjectsFor(c),sc=c<=5?'P':'H';
+  const rows=L.map(r=>{const mk=pgMkMap(r.sid);return {r,x:pgAllA(c,mk,A),y:pgAtt(r.att)};});const done=rows.filter(o=>o.x.p!=null);
+  const avg=subs.map((s,i)=>{const v=rows.map(o=>o.x.rs[i]).filter(x=>x&&!x.ab);return v.length?v.reduce((a,x)=>a+x.p,0)/v.length:null;});
+  const dist={};done.forEach(o=>dist[o.x.g]=(dist[o.x.g]||0)+1);const weak=done.filter(o=>o.x.p<35).sort((a,b)=>a.x.p-b.x.p);const top=done.slice().sort((a,b)=>b.x.p-a.x.p).slice(0,3);
+  return head+cchips+`<div class="tchips">${PG_A.concat(['ANN']).map(k=>`<button class="${k===A?'on':''}" onclick="go('teacher',{t:'pg',v:'rep',c:${c},a:'${k}'})">${PG_AL[k]}</button>`).join('')}</div>
+<div class="row2 noprint" style="margin-bottom:10px"><button class="btn" style="margin:0" onclick="pgPrint()">🖨️ ప్రింట్ / PDF</button></div>
+<div class="pgcard"><div class="pghd"><b>🏫 ${esc(S.cfg.sname||'పాఠశాల')}</b><small>${c}వ తరగతి • ${PG_AL[A]} ఫలితాలు</small></div>
+<div class="pgatts"><div><small>విద్యార్థులు</small><b>${L.length}</b></div><div><small>మార్కులు ఉన్నవి</small><b>${done.length}</b></div><div><small>తరగతి సగటు</small><b>${done.length?r1(done.reduce((a,o)=>a+o.x.p,0)/done.length)+'%':'–'}</b></div></div>
+<div class="tscroll"><table class="tbl pgt"><tr><th>#</th><th>పేరు</th>${subs.map(s=>`<th>${SUBJ[s].n}</th>`).join('')}<th>మొత్తం</th><th>హాజరు</th></tr>
+${rows.map((o,k)=>`<tr><td>${k+1}</td><td class="s">${esc(o.r.n)}</td>${o.x.rs.map((x,i)=>A==='ANN'?(x?`<td><small>${r1(x.p)}%</small><span class="gd ${pgGcl(x.g,pgSc(c,subs[i]))}">${x.g}</span></td>`:'<td class="na">–</td>'):pgCell(x,pgSc(c,subs[i]))).join('')}${o.x.p==null?'<td class="na">–</td>':`<td><small>${r1(o.x.p)}%</small><span class="gd ${pgGcl(o.x.g,sc)}">${o.x.g}</span></td>`}<td class="${o.y.pc!=null&&o.y.pc<75?'pglo':''}">${o.y.pc==null?'–':r1(o.y.pc)+'%'}</td></tr>`).join('')}
+<tr class="tot"><td></td><td class="s">సబ్జెక్టు సగటు</td>${avg.map(a=>`<td>${a==null?'–':r1(a)+'%'}</td>`).join('')}<td></td><td></td></tr></table></div>
+<h4 class="pgh4">గ్రేడ్ల వారీగా</h4><div class="pgdist">${PG_SC[sc].map(([g])=>`<span class="gd ${pgGcl(g,sc)}">${g}: ${dist[g]||0}</span>`).join('')}</div>
+${top.length?`<h4 class="pgh4">🏆 మొదటి 3</h4><p>${top.map(o=>`${esc(o.r.n)} (${r1(o.x.p)}%)`).join(', ')}</p>`:''}
+<h4 class="pgh4">🔁 35% కంటే తక్కువ – అదనపు శ్రద్ధ (${weak.length})</h4><p>${weak.map(o=>`${esc(o.r.n)} (${r1(o.x.p)}%)`).join(', ')||'లేరు 🎉'}</p></div>`;}
+ return head;};
+function pgCurMonth(){const m=new Date().getMonth();return m>=5?m-5:m<=3?m+7:10;}
+function pgFilter(q){q=q.toLowerCase().trim();document.querySelectorAll('#pgList .pgst').forEach(e=>e.style.display=!q||e.dataset.q.includes(q)?'':'none');}
+function pgVals(tr){return [...tr.querySelectorAll('.pgi')].map(x=>{let v=x.value.trim();if(v==='')return null;if(v.toUpperCase()==='AB')return 'AB';let n=+v;if(isNaN(n))return null;const mx=+x.dataset.mx||1e9;if(n<0)n=0;if(n>mx){n=mx;x.value=n;}return n;});}
+let PGDIRTY=false;
+function pgLive(el,c,s,A){PGDIRTY=true;const tr=el.closest('tr'),v=pgVals(tr),r=pgRes(c,s,A,v);tr.querySelector('.t').textContent=r?(r.ab?'AB':r1(r.tot)+'/'+r.max):'';tr.querySelector('.g').innerHTML=r&&!r.ab?`<span class="gd ${pgGcl(r.g,pgSc(c,s))}">${r.g}</span>`:'';}
+function putMany(col,recs){if(!recs.length)return;const a=S[col],ix=new Map(a.map((x,i)=>[x.id,i]));let t=Date.now();
+ recs.forEach(rec=>{rec.upd=Math.max(t++,(rec.upd||0)+1);const i=ix.get(rec.id);if(i!=null)a[i]=rec;else{ix.set(rec.id,a.length);a.push(rec);}if(S.cfg.type)S.q[col+'|'+rec.id]=rec.upd;});save();if(S.cfg.type)Sync.later();}
+function pgSaveMk(c,s,A){const out=[];document.querySelectorAll('.pgin tr[data-sid]').forEach(tr=>{const sid=tr.dataset.sid,v=pgVals(tr),old=live('marks').find(m=>m.sid===sid&&m.s===s);
+  const a=Object.assign({},old?old.a:{}),had=a[A];const empty=v.every(x=>x===null);if(empty){if(!Array.isArray(had))return;delete a[A];}else a[A]=v;
+  if(JSON.stringify(had)===JSON.stringify(a[A]))return;out.push(Object.assign({},old||{id:'mk_'+sid+'_'+s,sid,c,s},{c,a,by:tName()}));});
+ PGDIRTY=false;putMany('marks',out);toast(out.length?`✓ ${out.length} మంది మార్కులు సేవ్ అయ్యాయి`:'మార్పులు లేవు');if(out.length)go('teacher',Object.assign({},param));}
+function pgSaveAtt(c,m){const w=+$('#pgw').value;if(!(w>0&&w<=31))return toast('పనిదినాలు సరిగ్గా ఇవ్వండి (1–31)');const out=[];let bad=0;
+ document.querySelectorAll('.pgin tr[data-sid]').forEach(tr=>{const r=live('roster').find(x=>x.sid===tr.dataset.sid);if(!r)return;const iv=tr.querySelector('.pga').value.trim();if(iv===''&&!((r.att||[])[m]))return;
+  let p=iv===''?0:Math.round(+iv);if(isNaN(p)||p<0){bad++;return;}if(p>w)p=w;const att=(r.att||[]).slice();while(att.length<11)att.push([0,0]);const old=att[m];att[m]=[w,p];if(old&&old[0]===w&&old[1]===p)return;out.push(Object.assign({},r,{att}));});
+ PGDIRTY=false;putMany('roster',out);toast(`✓ ${PG_MON[m]} హాజరు సేవ్ (${out.length})`+(bad?` • ${bad} తప్పు`:''));go('teacher',Object.assign({},param));}
+function pgDel(sid){const r=live('roster').find(x=>x.sid===sid);if(!r||!confirm(r.n+' ను జాబితా నుండి తొలగించాలా? (మార్కులు కూడా)'))return;remove('roster',r.id);live('marks').filter(m=>m.sid===sid).forEach(m=>remove('marks',m.id));toast('తొలగించాం');go('teacher',Object.assign({},param));}
+/* ---------- 📥 ప్రగతి ఫైల్ దిగుమతి (డేటా ప్రైవేట్ షీట్‌కే – GitHub కు కాదు) ---------- */
+let PGIMP=null;
+function pgImpView(){return `<div class="card"><h3>📥 “విద్యార్థులు + ప్రగతి” ఫైల్ నుండి దిగుమతి</h3><p class="mut">మీ ప్రగతి <b>.html</b> ఫైల్ లేదా దాని <b>⬇️ బ్యాకప్ .json</b> ఎంచుకోండి. డేటా మీ పాఠశాల ప్రైవేట్ షీట్‌కు మాత్రమే వెళ్తుంది – ఎక్కడా పబ్లిక్‌గా రాదు. మళ్ళీ దిగుమతి చేస్తే పేర్లు/హాజరు అప్‌డేట్ అవుతాయి.</p>
+<label class="upbtn">📂 ఫైల్ ఎంచుకో<input type="file" accept=".html,.htm,.json" hidden onchange="pgPick(this)"></label><div id="pgPrev">${PGIMP?pgPrevHTML():''}</div></div>
+<details class="card"><summary><b>ఏ వివరాలు యాప్‌లోకి వస్తాయి?</b></summary><ul class="steps"><li>✅ పేరు, విద్యార్థి ID, తరగతి, తండ్రి పేరు, ఫోన్, మీడియం, నెలవారీ హాజరు, FA-1 (పోర్టల్) మార్కులు, బ్యాకప్‌లోని FA/SA మార్కులు</li>
+<li>🔒 పుట్టిన తేదీ – పిల్లల కార్డు లింక్ కోసం <b>గుప్త కోడ్ (hash)</b> గా మాత్రమే; తేదీ ఎవరికీ కనిపించదు</li><li>❌ APAAR, PEN, ఆధార్, చిరునామా, ఎత్తు/బరువు, కులం – రావు (ప్రగతి ఫైల్‌లోనే ఉంటాయి)</li>
+<li>👩‍🏫 ప్రతి ఉపాధ్యాయునికి తమ తరగతుల పిల్లలే కనిపిస్తారు; విద్యార్థికి తన కార్డు మాత్రమే</li></ul></details>`;}
+function pgLit(src,pos){let i=pos;const ws=()=>{for(;;){const ch=src[i];if(ch===' '||ch==='\n'||ch==='\r'||ch==='\t')i++;else if(src.startsWith('//',i)){while(i<src.length&&src[i]!=='\n')i++;}else break;}};
+ const str=()=>{const q=src[i++];let o='';while(i<src.length&&src[i]!==q){if(src[i]==='\\'){const n=src[i+1];o+=({n:'\n',t:'\t',r:'\r'}[n]||n);i+=2;}else o+=src[i++];}i++;return o;};
+ const val=()=>{ws();const ch=src[i];
+  if(ch==='{'){i++;const o={};for(;;){ws();if(src[i]==='}'){i++;return o;}let k;if(src[i]==='"'||src[i]==="'")k=str();else{const m=/^[A-Za-z_$][\w$]*/.exec(src.slice(i,i+80));if(!m)throw new Error('key@'+i);k=m[0];i+=k.length;}ws();if(src[i]!==':')throw new Error(':@'+i);i++;o[k]=val();ws();if(src[i]===',')i++;else if(src[i]!=='}')throw new Error('}@'+i);}}
+  if(ch==='['){i++;const a=[];for(;;){ws();if(src[i]===']'){i++;return a;}a.push(val());ws();if(src[i]===',')i++;else if(src[i]!==']')throw new Error(']@'+i);}}
+  if(ch==='"'||ch==="'")return str();
+  const m=/^-?\d+(\.\d+)?([eE][+-]?\d+)?/.exec(src.slice(i,i+40));if(m){i+=m[0].length;return +m[0];}
+  for(const [w,v] of [['true',true],['false',false],['null',null]])if(src.startsWith(w,i)){i+=w.length;return v;}
+  throw new Error('val@'+i);};
+ return val();}
+function pgFind(src,re){let m;re.lastIndex=0;while((m=re.exec(src))){try{return pgLit(src,m.index+m[0].length-1);}catch(e){}}return null;}
+function pgDob(d){const m=String(d||'').match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/);return m?`${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`:'';}
+async function pgSha(t){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');}catch(e){return '';}}
+function pgCodes(g){return (String(g||'').match(/A1|A2|B1|B2|C1|C2|D1|D2|E/g)||[]).length||1;}
+function pgMed(a){if(!a.length)return 0;a=a.slice().sort((x,y)=>x-y);const m=a.length>>1;return a.length%2?a[m]:(a[m-1]+a[m])/2;}
+function pgEff(C,i){const sb=C.subs[i];if(sb.max>=50)return 50;const v=[];C.st.forEach(s=>{const m=s.m[i]||[];if(m[3]!=null&&m[4])v.push(m[3]/pgCodes(m[5]));});return pgMed(v)>(sb.tm&&sb.tm[3]?sb.tm[3]:10)*1.5?50:sb.max;}
+function pgFa1(per,m){if(!m)return null;const tot=m[4],g=m[5]||'';if(tot==null||g==='-')return null;if(tot===0&&m.slice(0,4).every(v=>!v))return m[4]!=null?{ab:1}:null;const n=Math.max(g?pgCodes(g):1,Math.ceil(tot/per-1e-9));return {tot,max:per*n};}
+function pgOrder(c){return c<=2?['tel','eng','mat']:c<=5?['tel','eng','mat','evs']:c<=7?['tel','hin','eng','mat','sci','soc']:['tel','hin','eng','mat','phy','bio','soc'];}
+async function pgPick(inp){const f=inp.files&&inp.files[0];if(!f)return;const box=document.getElementById('pgPrev');box.innerHTML='<p class="mut">⏳ చదువుతోంది...</p>';
+ try{const txt=await f.text();let o={data:null,hpc:null,sch:null,ps:null};
+  if(/\.json$/i.test(f.name)||/^\s*\{/.test(txt)){const j=JSON.parse(txt);if(j.ps)o.ps=j.ps;else if(Array.isArray(j.d))o.hpc=j.d;else throw new Error('ఇది ప్రగతి బ్యాకప్ కాదు');}
+  else{o.data=pgFind(txt,/const\s+DATA\s*=\s*\{/g);o.hpc=pgFind(txt,/const\s+HPC_BASE\s*=\s*\[/g);o.sch=pgFind(txt,/const\s+SCH\s*=\s*\{/g);if(!o.data)throw new Error('ఫైల్‌లో విద్యార్థుల జాబితా (DATA) దొరకలేదు');}
+  if(o.ps&&o.ps.hpc)o.hpc=o.ps.hpc;PGIMP=o;box.innerHTML=pgPrevHTML();}catch(e){PGIMP=null;box.innerHTML=`<p class="ansErr">❌ ${esc(e.message)}</p>`;}}
+function pgPrevHTML(){const o=PGIMP;if(!o)return '';const cls=o.data?Object.keys(o.data):[];const n=cls.reduce((a,k)=>a+(o.data[k]||[]).length,0);const nf=o.hpc?o.hpc.reduce((a,C)=>a+C.st.length,0):0;
+ const nps=o.ps?Object.keys(o.ps.mk||{}).length:0,have=live('roster').length;
+ return `<div class="szok" style="margin-top:10px">✅ ${o.sch?'🏫 '+esc(o.sch.name||'')+' • '+esc(o.sch.year||'')+'<br>':''}${n?`👥 ${n} మంది • ${cls.map(k=>k+': '+o.data[k].length).join(', ')}<br>`:''}${nf?`📘 FA-1 (పోర్టల్): ${nf} మంది<br>`:''}${nps?`📝 బ్యాకప్ మార్కులు: ${nps} మంది`:''}</div>
+${!n&&!have?'<p class="ansErr">ముందు ప్రగతి .html ఫైల్ దిగుమతి చేయండి (విద్యార్థుల జాబితా కోసం)</p>':''}
+${n?`<label class="ck"><input type="checkbox" id="pgiR" checked> 👥 విద్యార్థుల జాబితా</label><label class="ck"><input type="checkbox" id="pgiA" ${have?'':'checked'}> 📅 హాజరు (ఫైల్‌లోనిది – యాప్‌లో మార్చినదానిపై రాస్తుంది)</label>`:''}
+${nf?`<label class="ck"><input type="checkbox" id="pgiF" checked> 📘 FA-1 పోర్టల్ మార్కులు</label>`:''}${nps?`<label class="ck"><input type="checkbox" id="pgiP" checked> 📝 బ్యాకప్ మార్కులు & హాజరు</label>`:''}
+<button class="btn" id="pgiGo" onclick="pgImport()" ${!n&&!have?'disabled':''}>☁️ దిగుమతి చేయి</button><div id="pgiMsg"></div>`;}
+async function pgServerOk(){if(S.cfg.type!=='gs')return S.cfg.type?'Firebase లో ఈ సౌకర్యం లేదు':'';try{const j=await (await fetch(S.cfg.url+'?a=ping&_='+Date.now())).json();return j&&j.roster?'':'సర్వర్ కోడ్ పాతది – కొత్త కోడ్ పెట్టి మూడు deployments కూ New version Deploy చేయండి';}catch(e){return 'సర్వర్ చేరలేదు – నెట్ చూడండి';}}
+async function pgImport(){const o=PGIMP;if(!o)return;const b=$('#pgiGo'),msg=$('#pgiMsg');const ck=id=>{const e=document.getElementById(id);return !!(e&&e.checked);};
+ b.disabled=true;b.textContent='⏳ సర్వర్ చూస్తోంది...';const bad=await pgServerOk();if(bad){b.disabled=false;b.textContent='☁️ దిగుమతి చేయి';msg.innerHTML=`<p class="ansErr">❌ ${esc(bad)}</p>`;return;}
+ b.textContent='⏳ సిద్ధం చేస్తోంది...';const yr=o.sch&&o.sch.year||'';const ros=[],mks={},byId=new Map(live('roster').map(r=>[r.sid,r]));
+ if(o.data&&ck('pgiR')){const wAtt=ck('pgiA');for(const key of Object.keys(o.data)){const c=parseInt(key,10);if(!(c>=1&&c<=10))continue;const sec=String(key).replace(/^\d+/,'')||'A';
+  const L=o.data[key]||[];for(let k=0;k<L.length;k++){const s=L[k];const sid=String(s.id||'').replace(/\D/g,'');if(!sid||!s.name)continue;const old=byId.get(sid);
+   const att=wAtt||!old?(Array.isArray(s.m)?s.m.slice(0,11).map(p=>Array.isArray(p)&&+p[0]>0?[+p[0],Math.max(+p[1]||0,0)]:[0,0]):[]):(old.att||[]);
+   const dob=pgDob(s.dob),h=dob?await pgSha(sid+'|'+dob):'';
+   const r=Object.assign({},old||{},{id:'rs_'+sid,sid,c,sec,n:String(s.name).trim().slice(0,60),f:String(s.father||'').slice(0,60),ph:pgPhone(s.mobile),med:s.medium&&s.medium!=='-'?String(s.medium).slice(0,20):'',h:h||(old&&old.h)||'',att,ord:k,yr,del:false});ros.push(r);byId.set(sid,r);}}}
+ const mk=(sid,c,s)=>{const id='mk_'+sid+'_'+s;if(!mks[id]){const old=live('marks').find(m=>m.id===id);mks[id]=Object.assign({},old||{id,sid,s},{c,a:Object.assign({},old?old.a:{})});}return mks[id];};
+ if(o.hpc&&ck('pgiF'))o.hpc.forEach(C=>{const eff=C.subs.map((_,i)=>pgEff(C,i));C.st.forEach(st=>{const r=byId.get(String(st.id));if(!r)return;C.subs.forEach((sb,i)=>{const s=PG_MAP[sb.n];if(!s)return;const v=pgFa1(eff[i],st.m[i]);if(!v)return;const m=mk(r.sid,r.c,s);if(!Array.isArray(m.a.FA1))m.a.FA1=v;});});});
+ if(o.ps&&ck('pgiP')){Object.entries(o.ps.mk||{}).forEach(([sid,AS])=>{const r=byId.get(String(sid));if(!r)return;const ord=(o.hpc&&o.hpc.find(C=>C.c===r.c)||null);const subs=ord?ord.subs.map(x=>PG_MAP[x.n]):pgOrder(r.c);
+   Object.entries(AS||{}).forEach(([A,byI])=>{if(!PG_A.includes(A))return;Object.entries(byI||{}).forEach(([i,vals])=>{const s=subs[+i];if(!s||!Array.isArray(vals))return;mk(r.sid,r.c,s).a[A]=vals.map(x=>x===''?null:x);});});});
+  Object.entries(o.ps.att||{}).forEach(([sid,byM])=>{const r=byId.get(String(sid));if(!r)return;const att=(r.att||[]).slice();while(att.length<11)att.push([0,0]);Object.entries(byM||{}).forEach(([mi,p])=>{if(Array.isArray(p)&&+mi>=0&&+mi<11)att[+mi]=[+p[0]||0,Math.max(+p[1]||0,0)];});
+   const nr=Object.assign({},r,{att});const j=ros.findIndex(x=>x.sid===r.sid);if(j>=0)ros[j]=nr;else ros.push(nr);byId.set(r.sid,nr);});}
+ const mlist=Object.values(mks);putMany('roster',ros);putMany('marks',mlist);if(!S.cfg.sname&&o.sch&&o.sch.name){S.cfg.sname=o.sch.name;save();}
+ msg.innerHTML=`<p class="szok">✅ ${ros.length} మంది జాబితా, ${mlist.length} మార్కుల రికార్డులు సిద్ధం.${S.cfg.type?' <span id="pgiQ">సర్వర్‌కు పంపుతోంది...</span>':''}</p>`;b.textContent='✓ పూర్తయింది';PGIMP=null;
+ if(S.cfg.type){for(let k=0;k<40&&Object.keys(S.q).length;k++){await Sync.run();const q=document.getElementById('pgiQ');if(q)q.textContent='సర్వర్‌కు పంపుతోంది... మిగిలినవి '+Object.keys(S.q).length;if(Sync.st==='err')break;}
+  const q=document.getElementById('pgiQ');if(q)q.textContent=Object.keys(S.q).length?'⚠️ కొన్ని ఇంకా పంపలేదు – తర్వాత దానంతట అదే వెళ్తాయి':'☁️ అన్నీ సర్వర్‌కు చేరాయి – మీ ఉపాధ్యాయులకు కనిపిస్తాయి';}}
+/* ---------- 🎓 విద్యార్థి: నా ప్రగతి కార్డు ---------- */
+function cardKey(){return me()+'|'+S.cur.c;}
+V.card=()=>{const k=cardKey(),ln=(S.cardLink||{})[k],cc=(S.cardCache||{})[k];
+ const bar=`<div class="bar noprint"><button class="ib" onclick="go('menu')">←</button><h2>🎓 నా ప్రగతి కార్డు</h2></div>`;
+ if(S.cfg.type!=='gs')return bar+'<div class="empty">పాఠశాల కోడ్‌తో చేరితేనే ప్రగతి కార్డు వస్తుంది.</div>';
+ if(!ln)return bar+`<div class="card"><p class="mut">మొదటిసారి మాత్రమే: నీ <b>విద్యార్థి ID</b>, <b>పుట్టిన తేదీ</b> ఇవ్వు. ఇవి సరిపోతేనే నీ కార్డు కనిపిస్తుంది – వేరే వారి కార్డు ఎవరికీ కనిపించదు.</p>
+<label>విద్యార్థి ID (టీచర్ చెబుతారు)</label><input id="cdid" inputmode="numeric" maxlength="20" placeholder="ఉదా: 1234567890"><label>పుట్టిన తేదీ</label><input id="cddob" type="date"><button class="btn" id="cdgo" onclick="cardLink()">🎓 కార్డు చూపించు</button><div id="cdmsg"></div></div>`;
+ return bar+`<div class="row2 noprint" style="margin-bottom:10px"><button class="btn ghost" style="margin:0" onclick="cardLoad(true)">🔄 తాజా</button><button class="btn" style="margin:0" onclick="pgPrint()">🖨️ ప్రింట్ / PDF</button></div><div id="cdbox">${cc?pgCard(cc.r,cc.m,{school:cc.school}):'<div class="empty">⏳ లోడ్ అవుతోంది...</div>'}</div>
+${cc?`<p class="mut center noprint">చివరి అప్‌డేట్: ${new Date(cc.at).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'})}</p>`:''}<p class="center noprint"><a class="lnk" onclick="cardUnlink()">🔓 ఈ ఫోన్ నుండి లింక్ తీసేయి</a></p>`;};
+async function cardFetch(sid,dob){const u=S.cfg.url+'?a=card'+(S.cfg.sid?'&s='+encodeURIComponent(S.cfg.sid):'')+'&k='+encodeURIComponent(GS.key())+'&dev='+encodeURIComponent(S.dev)+'&sid='+encodeURIComponent(sid)+'&dob='+encodeURIComponent(dob)+'&_='+Date.now();return await (await fetch(u)).json();}
+function cardSave(j){const mk={};(j.m||[]).forEach(x=>mk[x.s]=x.a||{});S.cardCache=S.cardCache||{};S.cardCache[cardKey()]={r:j.r,m:mk,school:j.school||S.cfg.sname||'',at:Date.now()};save();}
+function cardErr(j){return !j?'సర్వర్ జవాబు లేదు':j.err==='card'?'ID లేదా పుట్టిన తేదీ సరిపోలేదు – టీచర్‌ని అడుగు':j.err==='busy'?'ఎక్కువసార్లు ప్రయత్నించారు – గంట తర్వాత ప్రయత్నించు':j.ok?'సర్వర్ కోడ్ పాతది – టీచర్‌కు చెప్పు':gsErr(j.err);}
+async function cardLink(){const sid=$('#cdid').value.replace(/\D/g,''),dob=$('#cddob').value,m=$('#cdmsg'),b=$('#cdgo');if(!sid||!dob)return toast('ID, పుట్టిన తేదీ రెండూ ఇవ్వు');
+ b.disabled=true;b.textContent='⏳ చూస్తోంది...';try{const j=await cardFetch(sid,dob);if(j&&j.ok&&j.r){S.cardLink=S.cardLink||{};S.cardLink[cardKey()]={sid,dob};cardSave(j);toast('🎉 నీ ప్రగతి కార్డు వచ్చింది');go('card');return;}m.innerHTML=`<p class="ansErr">❌ ${esc(cardErr(j))}</p>`;}
+ catch(e){m.innerHTML='<p class="ansErr">❌ నెట్ లేదు – మళ్ళీ ప్రయత్నించు</p>';}b.disabled=false;b.textContent='🎓 కార్డు చూపించు';}
+async function cardLoad(force){const ln=(S.cardLink||{})[cardKey()];if(!ln||S.cfg.type!=='gs')return;const cc=(S.cardCache||{})[cardKey()];if(!force&&cc&&Date.now()-cc.at<5*60000)return;
+ try{const j=await cardFetch(ln.sid,ln.dob);if(j&&j.ok&&j.r){cardSave(j);if(view==='card')render();if(force)toast('✓ తాజా కార్డు');}else if(force)toast(cardErr(j));}catch(e){if(force)toast('నెట్ లేదు');}}
+function cardUnlink(){if(!confirm('ఈ ఫోన్ నుండి కార్డు లింక్ తీసేయాలా?'))return;delete (S.cardLink||{})[cardKey()];delete (S.cardCache||{})[cardKey()];save();go('card');}
 /* ---------- 💬 సందేహాలు: ఫోటో / రాసి జవాబు, ఒకేసారి చాలా మందికి ---------- */
 function safeImg(u){return typeof u==='string'&&(/^data:image\/(webp|jpeg|png);base64,[A-Za-z0-9+/=]+$/.test(u)||/^https:\/\/drive\.google\.com\/thumbnail\?id=[\w-]{20,}&sz=w\d+$/.test(u))?u:'';}
 function imgTag(u,cls,fb){const s=safeImg(u),f=safeImg(fb);return s?`<img class="${cls||'ansimg'}" src="${s}" alt="జవాబు ఫోటో" onclick="zoomImg(this.src)"${f&&f!==s?` onerror="this.onerror=null;this.src='${f}'"`:''}>`:'';}
