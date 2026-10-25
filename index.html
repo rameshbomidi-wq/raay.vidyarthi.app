@@ -355,7 +355,7 @@ label.dqck input{width:18px;height:18px;margin:0}
 .ansrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
 button.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;color:#3730a3;border:2px dashed #a5b4fc;border-radius:14px;padding:10px 14px;font-weight:700;font-size:15px}
 .lnk{border:0;background:none;color:var(--teal2);font-size:13px;font-weight:700;text-decoration:underline}
-.ansprev{margin-top:8px}.szok{font-size:13px;color:#166534;background:#dcfce7;border-radius:10px;padding:6px 10px}.ansprev button{border:0;background:#fee2e2;color:#b91c1c;border-radius:10px;padding:6px 10px;margin-top:6px;font-size:13px}
+.ansprev{margin-top:8px}.ansErr{background:#fee2e2;color:#991b1b;border-radius:10px;padding:8px 10px;font-size:13px;font-weight:600;margin-top:8px}.szok{font-size:13px;color:#166534;background:#dcfce7;border-radius:10px;padding:6px 10px}.ansprev button{border:0;background:#fee2e2;color:#b91c1c;border-radius:10px;padding:6px 10px;margin-top:6px;font-size:13px}
 #ansPad{margin-top:10px}#ansPad[hidden]{display:none}
 .padtools{display:flex;gap:6px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
 #ansCv{display:block;border:1.5px solid var(--line);border-radius:12px;touch-action:none;background:#fff}
@@ -1376,7 +1376,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.10.25-5';
+const APPV='2026.10.25-6';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -1822,21 +1822,28 @@ const ANSMAX=15000;
 // సింక్ పరిమితి: Google Sheets సర్వర్‌కు ఒక్కో రికార్డు ~20,000 అక్షరాలు; ఆఫ్లైన్‌లో / Firebase లో ఎక్కువ
 function ansMax(){return !S.cfg.type?120000:S.cfg.type==='gs'?ANSMAX:200000;}
 function kbmb(b){return b>=1048576?(b/1048576).toFixed(1)+' MB':Math.max(1,Math.round(b/1024))+' KB';}
-function ansClean(src,w){const h=Math.round(src.height*w/src.width),cv=document.createElement('canvas');cv.width=w;cv.height=h;const x=cv.getContext('2d');
- x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(src,0,0,w,h);const id=x.getImageData(0,0,w,h),d=id.data,n=w*h,g=new Uint8ClampedArray(n);
+function ansScale(src,w){let cur=src,cw=src.width,ch=src.height;const h=Math.round(ch*w/cw);
+ while(cw/2>=w){const c=document.createElement('canvas');c.width=Math.round(cw/2);c.height=Math.round(ch/2);const x=c.getContext('2d');x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(cur,0,0,c.width,c.height);cur=c;cw=c.width;ch=c.height;}
+ const o=document.createElement('canvas');o.width=w;o.height=h;const x=o.getContext('2d');x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(cur,0,0,w,h);return o;}
+function ansClean(src,w){const cv=ansScale(src,w),h=cv.height,x=cv.getContext('2d');const id=x.getImageData(0,0,w,h),d=id.data,n=w*h,g=new Uint8ClampedArray(n);
  for(let i=0;i<n;i++)g[i]=(d[i*4]*.3+d[i*4+1]*.59+d[i*4+2]*.11)|0;
  const r=Math.max(8,Math.round(w/28)),bg=new Float32Array(n),tmp=new Float32Array(n);
  for(let y=0;y<h;y++){let s=0,c=0;for(let xx=-r;xx<w+r;xx++){const a=xx+r,b=xx-r-1;if(a<w&&a>=0){s+=g[y*w+a];c++;}if(b>=0&&b<w){s-=g[y*w+b];c--;}if(xx>=0&&xx<w)tmp[y*w+xx]=s/c;}}
  for(let xx=0;xx<w;xx++){let s=0,c=0;for(let y=-r;y<h+r;y++){const a=y+r,b=y-r-1;if(a<h&&a>=0){s+=tmp[a*w+xx];c++;}if(b>=0&&b<h){s-=tmp[b*w+xx];c--;}if(y>=0&&y<h)bg[y*w+xx]=s/c;}}
- for(let i=0;i<n;i++){let v=g[i]/Math.max(1,bg[i]+2);v=v>=0.88?255:v<=0.58?0:Math.round((v-0.58)/0.30*255);d[i*4]=d[i*4+1]=d[i*4+2]=v;d[i*4+3]=255;}
+ for(let i=0;i<n;i++){let v=g[i]/Math.max(1,bg[i]+2);v=v>=0.9?255:v<=0.35?0:Math.round(Math.pow((v-0.35)/0.55,1.6)*255);d[i*4]=d[i*4+1]=d[i*4+2]=v;d[i*4+3]=255;}
  x.putImageData(id,0,0);return cv;}
 function ansEncode(cv,mx){mx=mx||ansMax();for(const [t,qs] of [['image/webp',[.6,.5,.4,.32,.24]],['image/jpeg',[.6,.48,.38,.28]]]){for(const q of qs){const u=cv.toDataURL(t,q);if(u.indexOf('data:'+t)!==0)break;if(u.length<=mx)return u;}}const p=cv.toDataURL('image/png');return p.length<=mx?p:'';}
 function ansFromImage(im,quick){const mx=ansMax();for(const w of (quick?[600,460,340]:[1100,900,780,680,600,520,460,400,340,300])){if(w>im.width*1.2&&w>340)continue;const u=ansEncode(ansClean(im,Math.min(w,Math.max(300,im.width))),mx);if(u)return u;}return '';}
 function ansLoad(f){return new Promise((ok,no)=>{const fr=new FileReader();fr.onerror=()=>no(new Error('ఫోటో చదవలేకపోయాం'));fr.onload=()=>{const im=new Image();im.onerror=()=>no(new Error('ఇది ఫోటో కాదు'));im.onload=()=>ok(im);im.src=fr.result;};fr.readAsDataURL(f);});}
-function ansHQ(im){const cv=ansClean(im,Math.min(1400,im.width));for(const q of [.72,.6,.5,.4]){const u=cv.toDataURL('image/jpeg',q);if(u.length<1900000)return u;}return '';}
+function ansHQ(im){const cv=ansScale(im,Math.min(1400,im.width));for(const q of [.72,.6,.5,.4]){const u=cv.toDataURL('image/jpeg',q);if(u.length<1900000)return u;}return '';}
 function ansCanUp(){return S.cfg.type==='gs'&&S.cfg.isT;}
-async function ansUpload(du,c){const data=du.slice(du.indexOf(',')+1);if(!ansCanUp()||data.length>2000000)return '';
- try{const r=await fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'up',kind:'img',s:S.cfg.sid,k:GS.key(),dev:S.dev,u:uid().replace(/[^\w-]/g,''),i:0,n:1,c,name:'answer.jpg',data})});const j=await r.json();if(j&&j.ok&&j.id)return 'https://drive.google.com/thumbnail?id='+j.id+'&sz=w1600';}catch(e){}return '';}
+let ANSERR='';
+function ansMsg(m){const b=document.getElementById('ansImgBox');if(!b)return;let p=b.querySelector('.ansErr');if(!p){p=document.createElement('p');p.className='ansErr';b.prepend(p);}p.textContent=m;}
+async function ansUpload(du,c){ANSERR='';const data=du.slice(du.indexOf(',')+1);if(!ansCanUp()){ANSERR='ఆన్‌లైన్ సింక్ (ఉపాధ్యాయ కీ) లేదు';return '';}if(data.length>2000000){ANSERR='ఫోటో చాలా పెద్దది';return '';}
+ try{const r=await fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'up',kind:'img',s:S.cfg.sid,k:GS.key(),dev:S.dev,u:uid().replace(/[^\w-]/g,''),i:0,n:1,c,name:'answer.jpg',data})});const j=await r.json();
+  if(j&&j.ok&&j.id)return 'https://drive.google.com/thumbnail?id='+j.id+'&sz=w1600';
+  ANSERR=!j?'సర్వర్ జవాబు లేదు':j.ok?'సర్వర్ కోడ్ పాతది – కొత్త కోడ్ పెట్టి New version Deploy చేయండి':j.err==='pdf'?'సర్వర్ కోడ్ పాతది (ఫోటోలు తీసుకోదు) – కొత్త కోడ్ పెట్టి మూడు deployments కూ New version Deploy చేయండి':upErr(j.err);}
+ catch(e){ANSERR='నెట్ లేదు / సర్వర్ చేరలేదు – మళ్ళీ ప్రయత్నించండి';}return '';}
 function ansFromFile(f){return new Promise((ok,no)=>{const fr=new FileReader();fr.onerror=()=>no(new Error('ఫోటో చదవలేకపోయాం'));fr.onload=()=>{const im=new Image();im.onerror=()=>no(new Error('ఇది ఫోటో కాదు'));im.onload=()=>{const u=ansFromImage(im);u?ok(u):no(new Error('ఫోటో చాలా పెద్దది'));};im.src=fr.result;};fr.readAsDataURL(f);});}
 /* జవాబు రాసే షీట్ */
 const ANS={ids:[],img:'',pad:false,st:[],cur:null,col:'#111827',w:3,dpr:1};
@@ -1881,7 +1888,7 @@ function ansPadDone(){if(!ANS.st.length)return toast('ముందు రాయ�
 async function ansSend(){const txt=(document.getElementById('ansTx').value||'').trim();if(ANS.pad&&ANS.st.length)return toast('ముందు ✓ పూర్తి నొక్కండి');if(!txt&&!ANS.img&&!ANS.hq)return toast('జవాబు టైప్ చేయండి లేదా ఫోటో/రాసింది జతచేయండి');
  const ds=ANS.ids.map(id=>live('doubts').find(d=>d.id===id)).filter(Boolean);if(!ds.length)return;const now=Date.now(),by=tName();let bad=0,ri=ANS.img||'';
  if(ANS.hq){const b=document.getElementById('ansGo');if(b){b.disabled=true;b.textContent='⏳ ఫోటో పంపుతోంది...';}const u=await ansUpload(ANS.hq,ds[0].c);
-  if(u)ri=u;else if(!ri){if(b){b.disabled=false;b.textContent='➤ మళ్ళీ ప్రయత్నించు';}return toast('ఫోటో పంపలేకపోయాం – నెట్ చూడండి / సర్వర్ కోడ్ కొత్తది పెట్టండి');}}
+  if(u)ri=u;else if(!ri){if(b){b.disabled=false;b.textContent='➤ మళ్ళీ ప్రయత్నించు';}ansMsg('❌ ఫోటో పంపలేదు: '+ANSERR);return toast('ఫోటో పంపలేదు: '+ANSERR);}else toast('Drive కు వెళ్ళలేదు ('+ANSERR+') – చిన్న ఫోటో పంపుతున్నాం');}
  const ris=ri!==ANS.img&&ANS.img&&ANS.img.length<=ANSMAX?ANS.img:'';
  ds.forEach(d=>{const rec=Object.assign({},d,{r:txt||'📷 ఫోటోలో జవాబు చూడు',ri,ris,ra:now,rb:by});if(JSON.stringify(rec).length>(S.cfg.type==='gs'?19500:ansMax()+8000)){bad++;return;}put('doubts',rec);DQSEL.delete(d.id);});
  const nt=document.getElementById('ansNote');if(nt&&nt.checked&&ds.length){const d0=ds[0];put('notes',{id:uid(),c:d0.c,s:d0.s,t:'❓ '+String(d0.q).slice(0,80),x:txt||'ఫోటో చూడండి',img:ri});}
