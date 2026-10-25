@@ -425,10 +425,12 @@ function doGet(e) {
   var p = (e && e.parameter) || {};
   var w = who_(p.k);
   if (!w) return json_({ok:false, err:'key'});
-  var isT = w.isT;
+  var isT = w.isT, since = Number(p.since || 0), cc = CacheService.getScriptCache(), lc = Number(cc.get('chg') || 0);
+  // ⚡ మార్పు లేకపోతే షీట్ చదవకుండానే జవాబు
+  if (since > 0 && lc > 0 && lc <= since) return json_({ok:true, now:since, rows:[], teacher:isT, admin:!!w.admin, me:w.me || null});
   var lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
-    var sh = db_(), n = sh.getLastRow(), since = Number(p.since || 0), max = since, rows = [];
+    var sh = db_(), n = sh.getLastRow(), max = since, rows = [];
     if (n > 1) {
       var v = sh.getRange(2, 1, n - 1, 6).getValues();
       for (var i = 0; i < v.length; i++) {
@@ -439,6 +441,7 @@ function doGet(e) {
         rows.push([v[i][1], String(v[i][2]), cleanT_(v[i][1], v[i][5], w.admin)]);
       }
     }
+    if (!lc && max > 0) cc.put('chg', String(max), 21600);
     return json_({ok:true, now:max, rows:rows, teacher:isT, admin:!!w.admin, me:w.me || null});
   } finally { lock.releaseLock(); }
 }
@@ -477,7 +480,9 @@ function doPost(e) {
       done.push(key);
     });
     if (add.length) sh.getRange(sh.getLastRow() + 1, 1, add.length, 6).setValues(add);
-    if (tch) CacheService.getScriptCache().remove('tkeys');
+    var cc = CacheService.getScriptCache();
+    if (done.length) cc.put('chg', String(Math.max(Number(cc.get('chg') || 0), srv)), 21600);
+    if (tch) cc.remove('tkeys');
     return json_({ok:true, done:done, rej:rej, teacher:isT, admin:!!w.admin});
   } finally { lock.releaseLock(); }
 }
@@ -676,7 +681,10 @@ function doGet(e) {
   }
   var a = auth_(p);
   if (a.err) return json_({ok: false, err: a.err});
-  var sh = db_(a.sc.id), n = sh.getLastRow(), since = Number(p.since || 0), rows = [];
+  var since = Number(p.since || 0), cc = CacheService.getScriptCache(), ck = 'chg_' + a.sc.id, lc = Number(cc.get(ck) || 0);
+  // ⚡ చివరిసారి తర్వాత ఈ పాఠశాలలో మార్పు లేకపోతే షీట్ చదవకుండానే జవాబు (ఎక్కువ సింక్‌లు ఇలాగే)
+  if (since > 0 && lc > 0 && lc <= since) return json_({ok: true, now: since, rows: [], teacher: a.isT, admin: !!a.admin, me: a.me || null, school: a.sc.name, skey: a.isT ? a.sc.skey : undefined});
+  var sh = db_(a.sc.id), n = sh.getLastRow(), rows = [];
   if (n > 1) {
     var v = sh.getRange(2, 1, n - 1, 6).getValues();
     for (var i = 0; i < v.length; i++) {
@@ -687,6 +695,7 @@ function doGet(e) {
   }
   // 30 సెకన్లు వెనక్కి – అప్పుడే రాస్తున్న మార్పులు మిస్ కాకుండా
   var now = Math.max(since, Date.now() - 30000);
+  if (!lc) { try { var gl = LockService.getScriptLock(); if (gl.tryLock(3000)) { try { if (!cc.get(ck)) cc.put(ck, String(Date.now()), 21600); } finally { gl.releaseLock(); } } } catch (x) {} }
   return json_({ok: true, now: now, rows: rows, teacher: a.isT, admin: !!a.admin, me: a.me || null, school: a.sc.name, skey: a.isT ? a.sc.skey : undefined});
 }
 
@@ -699,7 +708,9 @@ function doPost(e) {
   if (a.err) return json_({ok: false, err: a.err});
   if (b.a === 'up') return up_(b, a, a.sc.id);
   if (b.a === 'rm') return rm_(b, a, a.sc.id);
-  var lock = LockService.getScriptLock(); lock.waitLock(25000);
+  // ఒక్కో పాఠశాలకు వేరు తాళం – ఒక పాఠశాల పంపుతుంటే మిగతావి వేచి ఉండవు
+  var unlock = slock_(a.sc.id);
+  if (!unlock) return json_({ok: false, err: 'busy'});
   try {
     var sh = db_(a.sc.id), n = sh.getLastRow(), idx = {};
     if (n > 1) sh.getRange(2, 1, n - 1, 1).getValues().forEach(function (r, i) { idx[r[0]] = i + 2; });
@@ -723,10 +734,16 @@ function doPost(e) {
       }
       done.push(key);
     });
-    if (add.length) sh.getRange(sh.getLastRow() + 1, 1, add.length, 6).setValues(add);
+    // కొత్త వరుసలు చేర్చడం & మార్పు సమయం – క్షణంలో అయిపోయే చిన్న భాగం మాత్రమే అందరికీ ఒకే తాళంతో
+    var gl = LockService.getScriptLock(); gl.waitLock(25000);
+    try {
+      if (add.length) sh.getRange(sh.getLastRow() + 1, 1, add.length, 6).setValues(add);
+      var cc = CacheService.getScriptCache(), ck = 'chg_' + a.sc.id;
+      if (done.length) cc.put(ck, String(Math.max(Number(cc.get(ck) || 0), srv)), 21600);
+    } finally { gl.releaseLock(); }
     if (tch) CacheService.getScriptCache().remove('tk_' + a.sc.id);
     return json_({ok: true, done: done, rej: rej, teacher: a.isT, admin: !!a.admin});
-  } finally { lock.releaseLock(); }
+  } finally { unlock(); }
 }
 
 /* 📤 PDF అప్‌లోడ్ – యజమాని Google Drive లో “Raay_Vidyarthi_PDFs” ఫోల్డర్‌లో సేవ్ అవుతాయి.
@@ -804,10 +821,60 @@ function reg_(b) {
   } finally { lock.releaseLock(); }
 }
 
+/* ఒక పాఠశాల తాళం (CacheService) – 30 సెకన్లలో దానంతట అదే విడుదల */
+function slock_(id) {
+  var c = CacheService.getScriptCache(), k = 'lk_' + id, tok = Utilities.getUuid(), t0 = Date.now();
+  while (Date.now() - t0 < 20000) {
+    if (!c.get(k)) {
+      c.put(k, tok, 30); Utilities.sleep(40);
+      if (c.get(k) === tok) return function () { if (c.get(k) === tok) c.remove(k); };
+    }
+    Utilities.sleep(120 + Math.floor(Math.random() * 180));
+  }
+  return null;
+}
+
 /* యజమాని మెనూ */
 function onOpen() {
   SpreadsheetApp.getUi().createMenu('రాయ్ ఎడ్యుకేషన్')
-    .addItem('📊 ఒక పాఠశాల రిపోర్ట్', 'schoolReport').addToUi();
+    .addItem('📊 ఒక పాఠశాల రిపోర్ట్', 'schoolReport')
+    .addItem('📦 పాత డేటా ఆర్కైవ్ (ఏడాది చివర)', 'archiveOld')
+    .addItem('📏 షీట్ సైజు చూడు', 'sizeReport').addToUi();
+}
+/* 📦 పాత టెస్ట్ ఫలితాలు, ఆటలు, హోంవర్క్ సమర్పణలు, సందేహాలు వేరే ఫైల్‌కు – ప్రధాన షీట్ తేలికగా, వేగంగా */
+function archiveOld() {
+  var ui = SpreadsheetApp.getUi();
+  var r = ui.prompt('📦 పాత డేటా ఆర్కైవ్', 'ఈ తేదీ కంటే ముందున్న టెస్ట్ ఫలితాలు, ఆటల స్కోర్లు, హోంవర్క్ సమర్పణలు, సందేహాలు కొత్త ఫైల్‌కు మారుతాయి.\n(విద్యార్థులు, ఉపాధ్యాయులు, పాఠాలు, పుస్తకాలు, హోంవర్క్‌లు అలాగే ఉంటాయి)\n\nతేదీ ఇవ్వండి – ఉదా: 2027-06-01', ui.ButtonSet.OK_CANCEL);
+  if (r.getSelectedButton() !== ui.Button.OK) return;
+  var txt = r.getResponseText().trim(), m = txt.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!m) { ui.alert('తేదీ ఇలా ఇవ్వండి: 2027-06-01'); return; }
+  var cut = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3])).getTime();
+  if (cut > Date.now() - 7 * 86400000) { ui.alert('కనీసం ఒక వారం పాత తేదీ ఇవ్వండి'); return; }
+  var OLD = ['results', 'games', 'subs', 'doubts'], arc = null, moved = 0, skipped = [];
+  ss_().getSheets().forEach(function (sh) {
+    var nm = sh.getName(); if (!/^S_[A-Z0-9]{4,10}$/.test(nm)) return;
+    var un = slock_(nm.slice(2)); if (!un) { skipped.push(nm); return; }
+    try {
+      var n = sh.getLastRow(); if (n < 2) return;
+      var v = sh.getRange(2, 1, n - 1, 6).getValues(), keep = [], out = [];
+      v.forEach(function (row) { var t = Number(row[4] || 0) || Number(row[3] || 0); (OLD.indexOf(String(row[1])) >= 0 && t > 0 && t < cut ? out : keep).push(row); });
+      if (!out.length) return;
+      if (!arc) arc = SpreadsheetApp.create('Raay_Vidyarthi_Archive_' + txt);
+      var as = arc.insertSheet(nm); as.getRange('A:F').setNumberFormat('@');
+      as.getRange(1, 1, 1, 6).setValues([['key', 'col', 'id', 'srv', 'upd', 'json']]);
+      as.getRange(2, 1, out.length, 6).setValues(out);
+      sh.getRange(2, 1, n - 1, 6).clearContent();
+      if (keep.length) sh.getRange(2, 1, keep.length, 6).setValues(keep);
+      moved += out.length;
+    } finally { un(); }
+  });
+  ui.alert(moved ? ('📦 ' + moved + ' పాత రికార్డులు “' + arc.getName() + '” ఫైల్‌కు మార్చాం (మీ Drive లో ఉంది).' + (skipped.length ? '\nబిజీగా ఉన్నవి – మళ్ళీ రన్ చేయండి: ' + skipped.join(', ') : '')) : 'ఆ తేదీ కంటే పాత రికార్డులు లేవు');
+}
+/* 📏 ఏ పాఠశాలకు ఎన్ని వరుసలు – 1 కోటి సెల్స్ పరిమితికి ఎంత దూరం */
+function sizeReport() {
+  var tot = 0, lines = [];
+  ss_().getSheets().forEach(function (sh) { var c = sh.getMaxRows() * sh.getMaxColumns(); tot += c; if (/^S_/.test(sh.getName())) lines.push(sh.getName() + ': ' + Math.max(0, sh.getLastRow() - 1) + ' వరుసలు'); });
+  SpreadsheetApp.getUi().alert('📏 మొత్తం సెల్స్: ' + tot.toLocaleString() + ' / 1,00,00,000 (' + Math.round(tot / 100000) + '%)\n\n' + lines.join('\n') + '\n\n70% దాటితే 📦 ఆర్కైవ్ చేయండి.');
 }
 function schoolReport() {
   var ui = SpreadsheetApp.getUi(), r = ui.prompt('పాఠశాల కోడ్ ఇవ్వండి (Schools షీట్‌లో ఉంది)');
@@ -1289,7 +1356,8 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a></footer>`;}
+const APPV='2026.10.25-4';
+function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
 /* ---------- లాగిన్ ---------- */
@@ -1616,7 +1684,8 @@ function ewTap(i){const c=G.cur;if(c.tiles[i].u)return;c.tiles[i].u=true;c.typed
  else{G.msg='';upd();}}
 function ewBack(){const c=G.cur;const k=c.typed.pop();if(k!=null)c.tiles[k].u=false;upd();}
 function ewSkip(){G.msg=`➡ సరైన పదం: ${G.cur.w}`;G.mc='no';nextRound();upd();}
-function endGame(){clearInterval(tick);tick=null;if(G.done)return;G.done=true;beep('win');put('games',{id:uid(),n:me(),c:S.cur.c,g:G.g,s:G.score,d:new Date().toISOString()});render();}
+function endGame(){clearInterval(tick);tick=null;if(G.done)return;G.done=true;beep('win');const day=todayS(),gid='g'+slHash(S.dev+'|'+me()+'|'+S.cur.c+'|'+G.g+'|'+day),old=live('games').find(x=>x.id===gid);
+ put('games',{id:gid,n:me(),c:S.cur.c,g:G.g,s:Math.max(G.score,old?old.s:0),k:old?(old.k||1)+1:1,last:G.score,day,d:new Date().toISOString()});render();}
 function quitGame(){if(G.done||confirm('ఆట ఆపేయాలా?'))go('games',{lb:G.g});}
 V.gamerun=()=>{const g=GAMES[G.g];
  if(G.done){const mine=live('games').filter(x=>x.n===me()&&x.g===G.g&&x.c===S.cur.c).map(x=>x.s);const best=Math.max(...mine);
@@ -2147,7 +2216,7 @@ function badgeList(){const r=myRes(),pc=r.map(x=>Math.round(x.s*100/x.t)),hw=myH
  gm=live('games').filter(x=>x.n===me()),dq=live('doubts').filter(x=>x.n===me()).length,bk=Object.keys(S.bookPos||{}).length,st=stars(),sk=Math.max(streak(),(S.best||{})[me()]||0);
  return [['🎯','మొదటి టెస్ట్','ఒక టెస్ట్ రాయి',r.length>=1],['📝','టెస్ట్ వీరుడు','10 టెస్టులు రాయి',r.length>=10],['💯','పూర్తి మార్కులు','ఏదైనా టెస్ట్‌లో 100%',pc.some(p=>p===100)],
   ['🌟','స్టార్ విద్యార్థి','30 స్టార్లు సంపాదించు',st>=30],['🔥','3 రోజుల వరుస','3 రోజులు వరుసగా వాడు',sk>=3],['🏆','వారం వీరుడు','7 రోజులు వరుసగా వాడు',sk>=7],
-  ['📒','హోంవర్క్ హీరో','5 హోంవర్క్‌లు పూర్తి చేయి',hw>=5],['📖','పాఠాల ప్రియుడు','10 పాఠాలు చదువు',rd>=10],['🎮','ఆటగాడు','10 ఆటలు ఆడు',gm.length>=10],
+  ['📒','హోంవర్క్ హీరో','5 హోంవర్క్‌లు పూర్తి చేయి',hw>=5],['📖','పాఠాల ప్రియుడు','10 పాఠాలు చదువు',rd>=10],['🎮','ఆటగాడు','10 ఆటలు ఆడు',gm.reduce((a,x)=>a+(x.k||1),0)>=10],
   ['⚡','మెరుపు లెక్కలు','Mental Maths లో 15+',gm.some(g=>g.g==='mm'&&g.s>=15)],['💬','జిజ్ఞాసి','ఒక సందేహం అడుగు',dq>=1],['📚','పుస్తక ప్రియుడు','లైబ్రరీలో పుస్తకం తెరువు',bk>=1]];}
 function badgeCount(){return badgeList().filter(b=>b[3]).length;}
 function checkBadges(){if(!S.cur)return;const sk=streak();S.best=S.best||{};if(sk>(S.best[me()]||0))S.best[me()]=sk;
