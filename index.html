@@ -504,11 +504,12 @@ function up_(b, a, sid) {
   if (a.me && a.me.cls && a.me.cls.length && a.me.cls.map(Number).indexOf(Number(b.c)) < 0) return json_({ok: false, err: 'key'});
   var i = Number(b.i), n = Number(b.n), u = String(b.u || '').replace(/[^\w-]/g, '').slice(0, 40), data = String(b.data || '');
   if (!u || !(n >= 1 && n <= 14) || !(i >= 0 && i < n) || data.length > 2100000 || /[^A-Za-z0-9+\/=]/.test(data)) return json_({ok: false, err: 'bad'});
+  var isImg = b.kind === 'img';  // 📷 సందేహాల జవాబు ఫోటోలు
   try {
-    var sf = upFolder_(sid), tmp = folder_('_tmp', sf);
+    var sf = upFolder_(sid), dst = isImg ? folder_('answers', sf) : sf, tmp = folder_('_tmp', sf);
     if (i === 0) {
-      var c = CacheService.getScriptCache(), ck = 'up_' + (sid || 'one'), cnt = Number(c.get(ck) || 0);
-      if (cnt >= UP_PER_HOUR) return json_({ok: false, err: 'busy'});
+      var c = CacheService.getScriptCache(), ck = (isImg ? 'upi_' : 'up_') + (sid || 'one'), cnt = Number(c.get(ck) || 0);
+      if (cnt >= (isImg ? 300 : UP_PER_HOUR)) return json_({ok: false, err: 'busy'});
       c.put(ck, String(cnt + 1), 3600);
     }
     if (i < n - 1) { tmp.createFile(u + '_' + i, data, MimeType.PLAIN_TEXT); return json_({ok: true, got: i}); }
@@ -525,12 +526,21 @@ function up_(b, a, sid) {
     old.forEach(function (f) { f.setTrashed(true); });
     var cut = Date.now() - 86400000, it2 = tmp.getFiles();
     while (it2.hasNext()) { var x = it2.next(); if (!x.isTrashed() && x.getDateCreated().getTime() < cut) x.setTrashed(true); }
-    if (bytes.length > UP_MAX_MB * 1048576) return json_({ok: false, err: 'big'});
-    if (!(bytes[0] === 37 && bytes[1] === 80 && bytes[2] === 68 && bytes[3] === 70)) return json_({ok: false, err: 'pdf'});
-    if (used_(sf) + bytes.length > SCHOOL_MAX_MB * 1048576) return json_({ok: false, err: 'quota'});
-    var name = clean_(b.name, 90).replace(/[\\\/:*?"|]/g, '-') || 'book.pdf';
-    if (!/\.pdf$/i.test(name)) name += '.pdf';
-    var file = sf.createFile(Utilities.newBlob(bytes, 'application/pdf', name));
+    if (bytes.length > (isImg ? 3 : UP_MAX_MB) * 1048576) return json_({ok: false, err: 'big'});
+    var mime = 'application/pdf', name;
+    if (isImg) {
+      if (bytes[0] === -1 && bytes[1] === -40) mime = 'image/jpeg';
+      else if (bytes[0] === -119 && bytes[1] === 80) mime = 'image/png';
+      else if (bytes[0] === 82 && bytes[1] === 73 && bytes[8] === 87 && bytes[9] === 69) mime = 'image/webp';
+      else return json_({ok: false, err: 'pdf'});
+      name = 'answer_' + Utilities.formatDate(new Date(), 'Asia/Kolkata', 'yyyyMMdd_HHmmss') + '_' + u.slice(0, 6) + '.' + mime.split('/')[1].replace('jpeg', 'jpg');
+    } else {
+      if (!(bytes[0] === 37 && bytes[1] === 80 && bytes[2] === 68 && bytes[3] === 70)) return json_({ok: false, err: 'pdf'});
+      if (used_(sf) + bytes.length > SCHOOL_MAX_MB * 1048576) return json_({ok: false, err: 'quota'});
+      name = clean_(b.name, 90).replace(/[\\\/:*?"|]/g, '-') || 'book.pdf';
+      if (!/\.pdf$/i.test(name)) name += '.pdf';
+    }
+    var file = dst.createFile(Utilities.newBlob(bytes, mime, name));
     file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
     file.setDescription('Raay Vidyarthi ' + (sid || '') + ' – ' + (b.c || '') + 'వ తరగతి');
     return json_({ok: true, got: i, id: file.getId(), url: 'https://drive.google.com/file/d/' + file.getId() + '/view'});
@@ -762,11 +772,12 @@ function up_(b, a, sid) {
   if (a.me && a.me.cls && a.me.cls.length && a.me.cls.map(Number).indexOf(Number(b.c)) < 0) return json_({ok: false, err: 'key'});
   var i = Number(b.i), n = Number(b.n), u = String(b.u || '').replace(/[^\w-]/g, '').slice(0, 40), data = String(b.data || '');
   if (!u || !(n >= 1 && n <= 14) || !(i >= 0 && i < n) || data.length > 2100000 || /[^A-Za-z0-9+\/=]/.test(data)) return json_({ok: false, err: 'bad'});
+  var isImg = b.kind === 'img';  // 📷 సందేహాల జవాబు ఫోటోలు
   try {
-    var sf = upFolder_(sid), tmp = folder_('_tmp', sf);
+    var sf = upFolder_(sid), dst = isImg ? folder_('answers', sf) : sf, tmp = folder_('_tmp', sf);
     if (i === 0) {
-      var c = CacheService.getScriptCache(), ck = 'up_' + (sid || 'one'), cnt = Number(c.get(ck) || 0);
-      if (cnt >= UP_PER_HOUR) return json_({ok: false, err: 'busy'});
+      var c = CacheService.getScriptCache(), ck = (isImg ? 'upi_' : 'up_') + (sid || 'one'), cnt = Number(c.get(ck) || 0);
+      if (cnt >= (isImg ? 300 : UP_PER_HOUR)) return json_({ok: false, err: 'busy'});
       c.put(ck, String(cnt + 1), 3600);
     }
     if (i < n - 1) { tmp.createFile(u + '_' + i, data, MimeType.PLAIN_TEXT); return json_({ok: true, got: i}); }
@@ -783,12 +794,21 @@ function up_(b, a, sid) {
     old.forEach(function (f) { f.setTrashed(true); });
     var cut = Date.now() - 86400000, it2 = tmp.getFiles();
     while (it2.hasNext()) { var x = it2.next(); if (!x.isTrashed() && x.getDateCreated().getTime() < cut) x.setTrashed(true); }
-    if (bytes.length > UP_MAX_MB * 1048576) return json_({ok: false, err: 'big'});
-    if (!(bytes[0] === 37 && bytes[1] === 80 && bytes[2] === 68 && bytes[3] === 70)) return json_({ok: false, err: 'pdf'});
-    if (used_(sf) + bytes.length > SCHOOL_MAX_MB * 1048576) return json_({ok: false, err: 'quota'});
-    var name = clean_(b.name, 90).replace(/[\\\/:*?"|]/g, '-') || 'book.pdf';
-    if (!/\.pdf$/i.test(name)) name += '.pdf';
-    var file = sf.createFile(Utilities.newBlob(bytes, 'application/pdf', name));
+    if (bytes.length > (isImg ? 3 : UP_MAX_MB) * 1048576) return json_({ok: false, err: 'big'});
+    var mime = 'application/pdf', name;
+    if (isImg) {
+      if (bytes[0] === -1 && bytes[1] === -40) mime = 'image/jpeg';
+      else if (bytes[0] === -119 && bytes[1] === 80) mime = 'image/png';
+      else if (bytes[0] === 82 && bytes[1] === 73 && bytes[8] === 87 && bytes[9] === 69) mime = 'image/webp';
+      else return json_({ok: false, err: 'pdf'});
+      name = 'answer_' + Utilities.formatDate(new Date(), 'Asia/Kolkata', 'yyyyMMdd_HHmmss') + '_' + u.slice(0, 6) + '.' + mime.split('/')[1].replace('jpeg', 'jpg');
+    } else {
+      if (!(bytes[0] === 37 && bytes[1] === 80 && bytes[2] === 68 && bytes[3] === 70)) return json_({ok: false, err: 'pdf'});
+      if (used_(sf) + bytes.length > SCHOOL_MAX_MB * 1048576) return json_({ok: false, err: 'quota'});
+      name = clean_(b.name, 90).replace(/[\\\/:*?"|]/g, '-') || 'book.pdf';
+      if (!/\.pdf$/i.test(name)) name += '.pdf';
+    }
+    var file = dst.createFile(Utilities.newBlob(bytes, mime, name));
     file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
     file.setDescription('Raay Vidyarthi ' + (sid || '') + ' – ' + (b.c || '') + 'వ తరగతి');
     return json_({ok: true, got: i, id: file.getId(), url: 'https://drive.google.com/file/d/' + file.getId() + '/view'});
@@ -1356,7 +1376,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.10.25-4';
+const APPV='2026.10.25-5';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -1514,7 +1534,7 @@ V.doubts=()=>{const mine=live('doubts').filter(d=>d.n===me()).slice().reverse();
  return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>💬 సందేహం అడుగు</h2></div>
 <div class="card"><label>సబ్జెక్ట్</label><select id="dsub" onchange="const e=document.getElementById('dto');if(e)e.textContent='👩‍🏫 '+doubtTo(S.cur.c,this.value)+' గారికి వెళ్తుంది'">${subjectsFor(S.cur.c).map(s=>`<option value="${s}" ${s===sel?'selected':''}>${SUBJ[s].n}</option>`).join('')}</select>${S.cfg.type?`<small class="mut" id="dto">👩‍🏫 ${esc(doubtTo(S.cur.c,sel))} గారికి వెళ్తుంది</small>`:''}
 <label>నీ సందేహం రాయి</label><textarea id="dtx" rows="3" placeholder="ఉదా: భిన్నాలు ఎలా కలపాలి?"></textarea><button class="btn" onclick="askDoubt()">పంపు ➤</button></div>
-<h4 class="sec">నా సందేహాలు (${mine.length})</h4>${mine.length?mine.map(d=>`<div class="dq"><small>${SUBJ[d.s].n} • ${fmtD(d.d)}</small><p>❓ ${esc(d.q)}</p>${d.r?`<div class="ans">👩‍🏫 ${d.rb?'<b>'+esc(d.rb)+':</b> ':''}${esc(d.r)}${imgTag(d.ri)}${d.ri?'<small style="display:block;margin-top:4px">👆 ఫోటో నొక్కితే పెద్దదిగా కనిపిస్తుంది</small>':''}</div>`:'<div class="wait">⏳ ఉపాధ్యాయుల జవాబు కోసం వేచి ఉంది</div>'}</div>`).join(''):'<div class="empty">ఇంకా సందేహాలు అడగలేదు</div>'}`;};
+<h4 class="sec">నా సందేహాలు (${mine.length})</h4>${mine.length?mine.map(d=>`<div class="dq"><small>${SUBJ[d.s].n} • ${fmtD(d.d)}</small><p>❓ ${esc(d.q)}</p>${d.r?`<div class="ans">👩‍🏫 ${d.rb?'<b>'+esc(d.rb)+':</b> ':''}${esc(d.r)}${imgTag(d.ri,'ansimg',d.ris)}${d.ri?'<small style="display:block;margin-top:4px">👆 ఫోటో నొక్కితే పెద్దదిగా కనిపిస్తుంది</small>':''}</div>`:'<div class="wait">⏳ ఉపాధ్యాయుల జవాబు కోసం వేచి ఉంది</div>'}</div>`).join(''):'<div class="empty">ఇంకా సందేహాలు అడగలేదు</div>'}`;};
 function askDoubt(){const q=$('#dtx').value.trim();if(!q)return toast('సందేహం రాయి');put('doubts',{id:uid(),n:me(),c:S.cur.c,s:$('#dsub').value,q,d:new Date().toISOString(),r:''});toast('సందేహం ఉపాధ్యాయులకు పంపబడింది ✓');go('doubts');}
 
 /* ---------- ప్రశ్నల తయారీ ---------- */
@@ -1768,8 +1788,8 @@ TP.ev=()=>`<div class="card"><h3>ఈవెంట్ / టెస్ట్ / స�
 <h4 class="sec">ఈవెంట్లు (${live('events').filter(e=>canSee(e.c)).length})</h4>${live('events').filter(e=>canSee(e.c)).sort((a,b)=>a.d<b.d?-1:1).map(e=>`<div class="titem"><div><b>${esc(e.t)}</b><small>${fmtD(e.d)} • ${to12(e.tm)} • ${e.c?e.c+'వ తరగతి':'అన్ని తరగతులు'} • ${EVT[e.ty]}${e.link?' • 🔗':''}${e.seed?' • (నమూనా)':''}</small></div><button class="del" onclick="delItem('events','${e.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}`;
 function addEv(){const t=$('#et').value.trim();if(!t)return toast('శీర్షిక రాయండి');const lk=$('#elk').value.trim();if(lk&&!/^https:\/\//.test(lk))return toast('లింక్ https:// తో మొదలవ్వాలి');put('events',{id:uid(),t,d:$('#ed').value||todayS(),tm:$('#etm').value,c:+$('#ec').value,ty:$('#ety').value,link:lk});toast('ఈవెంట్ జోడించబడింది ✓');go('teacher',{t:'ev'});}
 /* ---------- 💬 సందేహాలు: ఫోటో / రాసి జవాబు, ఒకేసారి చాలా మందికి ---------- */
-function safeImg(u){return typeof u==='string'&&/^data:image\/(webp|jpeg|png);base64,[A-Za-z0-9+/=]+$/.test(u)?u:'';}
-function imgTag(u,cls){const s=safeImg(u);return s?`<img class="${cls||'ansimg'}" src="${s}" alt="జవాబు ఫోటో" onclick="zoomImg(this.src)">`:'';}
+function safeImg(u){return typeof u==='string'&&(/^data:image\/(webp|jpeg|png);base64,[A-Za-z0-9+/=]+$/.test(u)||/^https:\/\/drive\.google\.com\/thumbnail\?id=[\w-]{20,}&sz=w\d+$/.test(u))?u:'';}
+function imgTag(u,cls,fb){const s=safeImg(u),f=safeImg(fb);return s?`<img class="${cls||'ansimg'}" src="${s}" alt="జవాబు ఫోటో" onclick="zoomImg(this.src)"${f&&f!==s?` onerror="this.onerror=null;this.src='${f}'"`:''}>`:'';}
 function zoomImg(src){let z=document.getElementById('zoom');if(!z){z=document.createElement('div');z.id='zoom';z.className='zoom';document.body.appendChild(z);}
  z.innerHTML=`<div class="zbar"><button onclick="document.getElementById('zoom').classList.toggle('big')">🔍 పెద్దది / చిన్నది</button><button onclick="document.getElementById('zoom').remove()">✕</button></div><div class="zin"><img src="${safeImg(src)}" alt=""></div>`;}
 const DQSEL=new Set();
@@ -1784,7 +1804,7 @@ TP.dq=()=>{const f=param.f||'open',fc=+param.fc||0;const all=live('doubts').filt
  const card=d=>{const sim=!d.r?open.filter(x=>x.id!==d.id&&dqSim(x,d)).length:0;const on=DQSEL.has(d.id);
   return `<div class="card dqc ${on?'sel':''}">${!d.r?`<label class="dqck"><input type="checkbox" ${on?'checked':''} onchange="dqPick('${d.id}',this.checked)"> ఎంచుకో</label>`:''}<small class="mut">👤 ${esc(d.n)} • ${d.c}వ • ${SUBJ[d.s]?SUBJ[d.s].n:''} • ${fmtD(d.d)}</small>
 <p style="margin:6px 0;font-weight:600">❓ ${esc(d.q)}</p>${sim?`<button class="simb" onclick="dqSimSel('${d.id}')">🔁 ఇలాంటి సందేహాలు ఇంకా ${sim} – అన్నీ ఎంచుకో</button>`:''}
-${d.r?`<div class="ans">👩‍🏫 ${d.rb?'<b>'+esc(d.rb)+':</b> ':''}${esc(d.r)}${imgTag(d.ri,'ansimg sm')}</div>`:''}
+${d.r?`<div class="ans">👩‍🏫 ${d.rb?'<b>'+esc(d.rb)+':</b> ':''}${esc(d.r)}${imgTag(d.ri,'ansimg sm',d.ris)}</div>`:''}
 <textarea id="r_${d.id}" rows="2" maxlength="1500" placeholder="జవాబు టైప్ చేయండి...">${d.r&&!d.ri?esc(d.r):''}</textarea>
 <div class="dqbtns"><button class="btn sm" onclick="replyD('${d.id}')">➤ ${d.r?'మార్చు':'పంపు'}</button><button class="btn sm ghost" onclick="ansOpen(['${d.id}'])">📷 ✏️ ఫోటో / రాసి</button><button class="del" onclick="delItem('doubts','${d.id}')">🗑️</button></div></div>`;};
  return `<div class="tchips"><button class="${f==='open'?'on':''}" onclick="go('teacher',{t:'dq',f:'open',fc:${fc}})">⏳ జవాబు ఇవ్వాల్సినవి (${open.length})</button><button class="${f==='done'?'on':''}" onclick="go('teacher',{t:'dq',f:'done',fc:${fc}})">✅ ఇచ్చినవి (${done.length})</button><button class="${f==='all'?'on':''}" onclick="go('teacher',{t:'dq',f:'all',fc:${fc}})">అన్నీ</button></div>
@@ -1799,6 +1819,8 @@ function replyD(id){const d=live('doubts').find(x=>x.id===id);const v=document.g
  put('doubts',Object.assign({},d,{r:v,ri:'',ra:Date.now(),rb:tName()}));DQSEL.delete(id);toast('జవాబు పంపాం ✓');go('teacher',Object.assign({},param,{t:'dq'}));}
 /* జవాబు ఫోటో – నలుపు-తెలుపు, నీడ తొలగించి, చిన్న సైజులో (సింక్ పరిమితి లోపు) */
 const ANSMAX=15000;
+// సింక్ పరిమితి: Google Sheets సర్వర్‌కు ఒక్కో రికార్డు ~20,000 అక్షరాలు; ఆఫ్లైన్‌లో / Firebase లో ఎక్కువ
+function ansMax(){return !S.cfg.type?120000:S.cfg.type==='gs'?ANSMAX:200000;}
 function kbmb(b){return b>=1048576?(b/1048576).toFixed(1)+' MB':Math.max(1,Math.round(b/1024))+' KB';}
 function ansClean(src,w){const h=Math.round(src.height*w/src.width),cv=document.createElement('canvas');cv.width=w;cv.height=h;const x=cv.getContext('2d');
  x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(src,0,0,w,h);const id=x.getImageData(0,0,w,h),d=id.data,n=w*h,g=new Uint8ClampedArray(n);
@@ -1806,16 +1828,21 @@ function ansClean(src,w){const h=Math.round(src.height*w/src.width),cv=document.
  const r=Math.max(8,Math.round(w/28)),bg=new Float32Array(n),tmp=new Float32Array(n);
  for(let y=0;y<h;y++){let s=0,c=0;for(let xx=-r;xx<w+r;xx++){const a=xx+r,b=xx-r-1;if(a<w&&a>=0){s+=g[y*w+a];c++;}if(b>=0&&b<w){s-=g[y*w+b];c--;}if(xx>=0&&xx<w)tmp[y*w+xx]=s/c;}}
  for(let xx=0;xx<w;xx++){let s=0,c=0;for(let y=-r;y<h+r;y++){const a=y+r,b=y-r-1;if(a<h&&a>=0){s+=tmp[a*w+xx];c++;}if(b>=0&&b<h){s-=tmp[b*w+xx];c--;}if(y>=0&&y<h)bg[y*w+xx]=s/c;}}
- for(let i=0;i<n;i++){let v=g[i]/Math.max(1,bg[i]+2);v=v>=0.92?255:v<=0.62?0:Math.round((v-0.62)/0.30*255);d[i*4]=d[i*4+1]=d[i*4+2]=v;d[i*4+3]=255;}
+ for(let i=0;i<n;i++){let v=g[i]/Math.max(1,bg[i]+2);v=v>=0.88?255:v<=0.58?0:Math.round((v-0.58)/0.30*255);d[i*4]=d[i*4+1]=d[i*4+2]=v;d[i*4+3]=255;}
  x.putImageData(id,0,0);return cv;}
-function ansEncode(cv){for(const [t,qs] of [['image/webp',[.6,.5,.4,.32]],['image/jpeg',[.6,.48,.38]]]){for(const q of qs){const u=cv.toDataURL(t,q);if(u.indexOf('data:'+t)!==0)break;if(u.length<=ANSMAX)return u;}}const p=cv.toDataURL('image/png');return p.length<=ANSMAX?p:'';}
-function ansFromImage(im){for(const w of [900,780,680,600,520,460,400,340]){if(w>im.width*1.2&&w!==340)continue;const u=ansEncode(ansClean(im,Math.min(w,Math.max(340,im.width))));if(u)return u;}return '';}
+function ansEncode(cv,mx){mx=mx||ansMax();for(const [t,qs] of [['image/webp',[.6,.5,.4,.32,.24]],['image/jpeg',[.6,.48,.38,.28]]]){for(const q of qs){const u=cv.toDataURL(t,q);if(u.indexOf('data:'+t)!==0)break;if(u.length<=mx)return u;}}const p=cv.toDataURL('image/png');return p.length<=mx?p:'';}
+function ansFromImage(im,quick){const mx=ansMax();for(const w of (quick?[600,460,340]:[1100,900,780,680,600,520,460,400,340,300])){if(w>im.width*1.2&&w>340)continue;const u=ansEncode(ansClean(im,Math.min(w,Math.max(300,im.width))),mx);if(u)return u;}return '';}
+function ansLoad(f){return new Promise((ok,no)=>{const fr=new FileReader();fr.onerror=()=>no(new Error('ఫోటో చదవలేకపోయాం'));fr.onload=()=>{const im=new Image();im.onerror=()=>no(new Error('ఇది ఫోటో కాదు'));im.onload=()=>ok(im);im.src=fr.result;};fr.readAsDataURL(f);});}
+function ansHQ(im){const cv=ansClean(im,Math.min(1400,im.width));for(const q of [.72,.6,.5,.4]){const u=cv.toDataURL('image/jpeg',q);if(u.length<1900000)return u;}return '';}
+function ansCanUp(){return S.cfg.type==='gs'&&S.cfg.isT;}
+async function ansUpload(du,c){const data=du.slice(du.indexOf(',')+1);if(!ansCanUp()||data.length>2000000)return '';
+ try{const r=await fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'up',kind:'img',s:S.cfg.sid,k:GS.key(),dev:S.dev,u:uid().replace(/[^\w-]/g,''),i:0,n:1,c,name:'answer.jpg',data})});const j=await r.json();if(j&&j.ok&&j.id)return 'https://drive.google.com/thumbnail?id='+j.id+'&sz=w1600';}catch(e){}return '';}
 function ansFromFile(f){return new Promise((ok,no)=>{const fr=new FileReader();fr.onerror=()=>no(new Error('ఫోటో చదవలేకపోయాం'));fr.onload=()=>{const im=new Image();im.onerror=()=>no(new Error('ఇది ఫోటో కాదు'));im.onload=()=>{const u=ansFromImage(im);u?ok(u):no(new Error('ఫోటో చాలా పెద్దది'));};im.src=fr.result;};fr.readAsDataURL(f);});}
 /* జవాబు రాసే షీట్ */
 const ANS={ids:[],img:'',pad:false,st:[],cur:null,col:'#111827',w:3,dpr:1};
 const QR0=['చాలా మంచి ప్రశ్న! 👍','పాఠ్యపుస్తకంలో ఆ పాఠం మళ్ళీ చదువు 📖','ఫోటోలో ఉన్నట్టు చేసి చూడు ✍️','రేపు తరగతిలో వివరంగా చెప్తాను 🏫','సరైన జవాబు: ','ఇంకా సందేహం ఉంటే మళ్ళీ అడుగు 😊'];
 function qrMine(){try{return JSON.parse(localStorage.getItem('raiQR')||'[]')||[];}catch(e){return [];}}
-function ansOpen(ids){ids=ids.filter(id=>live('doubts').some(d=>d.id===id));if(!ids.length)return toast('సందేహాలు ఎంచుకోండి');ANS.ids=ids;ANS.img='';ANS.pad=false;ANS.st=[];
+function ansOpen(ids){ids=ids.filter(id=>live('doubts').some(d=>d.id===id));if(!ids.length)return toast('సందేహాలు ఎంచుకోండి');ANS.ids=ids;ANS.img='';ANS.hq='';ANS.orig=0;ANS.pad=false;ANS.st=[];
  let el=document.getElementById('ansSheet');if(!el){el=document.createElement('div');el.id='ansSheet';el.className='anssh';document.body.appendChild(el);}
  const one=ids.length===1?live('doubts').find(d=>d.id===ids[0]):null;ansRender(one&&one.r&&!one.ri?one.r:'');}
 function ansRender(txt){const el=document.getElementById('ansSheet');if(!el)return;const ds=ANS.ids.map(id=>live('doubts').find(d=>d.id===id)).filter(Boolean);
@@ -1825,7 +1852,7 @@ function ansRender(txt){const el=document.getElementById('ansSheet');if(!el)retu
 <div class="qrs">${QR0.map((q,i)=>`<button onclick="ansAdd(QR0[${i}])">${esc(q)}</button>`).join('')}${qrMine().map((q,i)=>`<button class="mine" onclick="ansAdd(qrMine()[${i}])">⭐ ${esc(q.length>28?q.slice(0,28)+'…':q)}<i onclick="event.stopPropagation();qrDel(${i})">✕</i></button>`).join('')}</div>
 <textarea id="ansTx" rows="3" maxlength="1500" placeholder="జవాబు టైప్ చేయండి (ఐచ్ఛికం – ఫోటో మాత్రమే కూడా పంపవచ్చు)"></textarea>
 <div class="ansrow"><label class="upbtn">📷 ఫోటో తీయి / ఎంచుకో<input type="file" accept="image/*" hidden onchange="ansPhoto(this)"></label><button class="upbtn" onclick="ansPadOpen()">✏️ రాసి చూపించు</button><button class="lnk" onclick="qrSave()">⭐ త్వరిత జవాబుగా సేవ్</button></div>
-<div id="ansImgBox">${ANS.img?`<div class="ansprev"><p class="szok">✅ ${ANS.orig?'ఫోటో '+kbmb(ANS.orig)+' → ':''}<b>${kbmb(Math.round(ANS.img.length*0.75))}</b> కు తగ్గింది – ఇదే పంపబడుతుంది</p>${imgTag(ANS.img,'ansimg')}<button onclick="ANS.img='';ANS.orig=0;ansRender()">✕ ఫోటో తీసేయి</button></div>`:''}</div>
+<div id="ansImgBox">${ANS.img||ANS.hq?`<div class="ansprev"><p class="szok">✅ ${ANS.orig?'ఫోటో '+kbmb(ANS.orig)+' → ':''}<b>${kbmb(Math.round((ANS.hq||ANS.img).length*0.75))}</b> కు తగ్గింది${ANS.hq?' – Google Drive ద్వారా స్పష్టంగా వెళ్తుంది':' – ఇదే పంపబడుతుంది'}</p>${imgTag(ANS.hq||ANS.img,'ansimg')}<button onclick="ANS.img='';ANS.hq='';ANS.orig=0;ansRender()">✕ ఫోటో తీసేయి</button></div>`:''}</div>
 <div id="ansPad" ${ANS.pad?'':'hidden'}><div class="padtools">${['#111827','#1d4ed8','#dc2626','#16a34a'].map(c=>`<button class="slc ${ANS.col===c?'on':''}" style="background:${c}" onclick="ANS.col='${c}';ansRender()"></button>`).join('')}${[2,3,6].map(w=>`<button class="slt ${ANS.w===w?'on':''}" onclick="ANS.w=${w};ansRender()"><i style="width:${w+3}px;height:${w+3}px"></i></button>`).join('')}<button class="slt" onclick="ANS.st.pop();ansPadDraw()">↶</button><button class="slt" onclick="ANS.st=[];ansPadDraw()">🗑️</button><button class="slt slnew" onclick="ansPadDone()">✓ పూర్తి</button></div><canvas id="ansCv"></canvas></div>
 ${same?`<label class="ck" style="margin-top:10px"><input type="checkbox" id="ansNote"> 📌 తరగతి అందరికీ “సెల్ఫ్ లెర్న్” లో నోట్‌గా కూడా పెట్టు</label>`:''}
 <button class="btn" id="ansGo" onclick="ansSend()">➤ ${ds.length} ${ds.length>1?'మందికి':'విద్యార్థికి'} పంపు</button></div>`;
@@ -1836,7 +1863,8 @@ function qrDel(i){const m=qrMine();m.splice(i,1);try{localStorage.setItem('raiQR
 function ansDrop(id){ANS.ids=ANS.ids.filter(x=>x!==id);DQSEL.delete(id);if(!ANS.ids.length)return ansClose();ansRender();}
 function ansClose(){const el=document.getElementById('ansSheet');if(el)el.remove();ANS.ids=[];}
 async function ansPhoto(inp){const f=inp.files&&inp.files[0];if(!f)return;const box=document.getElementById('ansImgBox');if(box)box.innerHTML='<p class="mut">⏳ ఫోటో స్పష్టంగా, చిన్నదిగా చేస్తోంది...</p>';
- try{ANS.img=await ansFromFile(f);ANS.orig=f.size;ANS.pad=false;}catch(e){toast(e.message);}ansRender();}
+ try{const im=await ansLoad(f);await new Promise(z=>setTimeout(z,30));ANS.orig=f.size;ANS.hq=ansCanUp()?ansHQ(im):'';ANS.img=ansFromImage(im,!!ANS.hq);if(ANS.hq&&ANS.img&&ANS.img.length>ANS.hq.length)ANS.img='';
+  if(!ANS.img&&!ANS.hq)throw new Error('ఫోటో చాలా పెద్దది – పేజీకి దగ్గరగా, రాసిన భాగం మాత్రమే వచ్చేలా తీయండి');ANS.pad=false;}catch(e){ANS.img='';ANS.hq='';toast(e.message);}ansRender();}
 function ansPadOpen(){ANS.pad=true;ANS.st=[];ansRender();setTimeout(()=>{const c=document.getElementById('ansCv');if(c)c.scrollIntoView({block:'center',behavior:'smooth'});},50);}
 function ansPadInit(){const cv=document.getElementById('ansCv');if(!cv)return;const w=cv.parentElement.clientWidth||320,h=Math.round(w*1.15),dpr=Math.min(2,window.devicePixelRatio||1);ANS.dpr=dpr;ANS.W=w;ANS.H=h;
  cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);cv.style.width=w+'px';cv.style.height=h+'px';ansPadDraw();
@@ -1848,12 +1876,15 @@ function ansPadDraw(){const cv=document.getElementById('ansCv');if(!cv)return;co
  x.setTransform(ANS.dpr,0,0,ANS.dpr,0,0);x.strokeStyle='#e0e7ff';x.lineWidth=1;for(let y=36;y<ANS.H;y+=36){x.beginPath();x.moveTo(0,y);x.lineTo(ANS.W,y);x.stroke();}
  x.lineCap='round';x.lineJoin='round';ANS.st.forEach(s=>{slDraw(x,{c:s.c,w:s.w,er:false,p:s.p});});x.globalCompositeOperation='source-over';}
 function ansPadDone(){if(!ANS.st.length)return toast('ముందు రాయండి');const cv=document.getElementById('ansCv'),o=document.createElement('canvas');const sc=Math.min(1,700/cv.width);o.width=Math.round(cv.width*sc);o.height=Math.round(cv.height*sc);
- const x=o.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,o.width,o.height);x.drawImage(cv,0,0,o.width,o.height);let u=o.toDataURL('image/png');if(u.length>ANSMAX)u=ansEncode(o)||ansFromImage(o);
- if(!u)return toast('చాలా పెద్దది – కొంచెం తక్కువ రాయండి');ANS.img=u;ANS.orig=0;ANS.pad=false;ANS.st=[];ansRender();toast('✓ రాసింది జవాబుకు జతచేశాం');}
-function ansSend(){const txt=(document.getElementById('ansTx').value||'').trim();if(ANS.pad&&ANS.st.length)return toast('ముందు ✓ పూర్తి నొక్కండి');if(!txt&&!ANS.img)return toast('జవాబు టైప్ చేయండి లేదా ఫోటో/రాసింది జతచేయండి');
- const ds=ANS.ids.map(id=>live('doubts').find(d=>d.id===id)).filter(Boolean);const now=Date.now(),by=tName();let bad=0;
- ds.forEach(d=>{const rec=Object.assign({},d,{r:txt||'📷 ఫోటోలో జవాబు చూడు',ri:ANS.img||'',ra:now,rb:by});if(JSON.stringify(rec).length>19500){bad++;return;}put('doubts',rec);DQSEL.delete(d.id);});
- const nt=document.getElementById('ansNote');if(nt&&nt.checked&&ds.length){const d0=ds[0];put('notes',{id:uid(),c:d0.c,s:d0.s,t:'❓ '+String(d0.q).slice(0,80),x:txt||'ఫోటో చూడండి',img:ANS.img||''});}
+ const x=o.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,o.width,o.height);x.drawImage(cv,0,0,o.width,o.height);const png=o.toDataURL('image/png');let u=png.length<=ansMax()?png:(ansEncode(o)||ansFromImage(o));
+ const hq=!u&&ansCanUp()?png:'';if(!u&&!hq)return toast('చాలా పెద్దది – కొంచెం తక్కువ రాయండి');ANS.img=u;ANS.hq=hq;ANS.orig=0;ANS.pad=false;ANS.st=[];ansRender();toast('✓ రాసింది జవాబుకు జతచేశాం');}
+async function ansSend(){const txt=(document.getElementById('ansTx').value||'').trim();if(ANS.pad&&ANS.st.length)return toast('ముందు ✓ పూర్తి నొక్కండి');if(!txt&&!ANS.img&&!ANS.hq)return toast('జవాబు టైప్ చేయండి లేదా ఫోటో/రాసింది జతచేయండి');
+ const ds=ANS.ids.map(id=>live('doubts').find(d=>d.id===id)).filter(Boolean);if(!ds.length)return;const now=Date.now(),by=tName();let bad=0,ri=ANS.img||'';
+ if(ANS.hq){const b=document.getElementById('ansGo');if(b){b.disabled=true;b.textContent='⏳ ఫోటో పంపుతోంది...';}const u=await ansUpload(ANS.hq,ds[0].c);
+  if(u)ri=u;else if(!ri){if(b){b.disabled=false;b.textContent='➤ మళ్ళీ ప్రయత్నించు';}return toast('ఫోటో పంపలేకపోయాం – నెట్ చూడండి / సర్వర్ కోడ్ కొత్తది పెట్టండి');}}
+ const ris=ri!==ANS.img&&ANS.img&&ANS.img.length<=ANSMAX?ANS.img:'';
+ ds.forEach(d=>{const rec=Object.assign({},d,{r:txt||'📷 ఫోటోలో జవాబు చూడు',ri,ris,ra:now,rb:by});if(JSON.stringify(rec).length>(S.cfg.type==='gs'?19500:ansMax()+8000)){bad++;return;}put('doubts',rec);DQSEL.delete(d.id);});
+ const nt=document.getElementById('ansNote');if(nt&&nt.checked&&ds.length){const d0=ds[0];put('notes',{id:uid(),c:d0.c,s:d0.s,t:'❓ '+String(d0.q).slice(0,80),x:txt||'ఫోటో చూడండి',img:ri});}
  ansClose();toast(bad?`${ds.length-bad} మందికి పంపాం, ${bad} పెద్దవి – చిన్న జవాబు ఇవ్వండి`:`✓ ${ds.length} ${ds.length>1?'మందికి':'విద్యార్థికి'} జవాబు పంపాం`);go('teacher',Object.assign({},param,{t:'dq'}));}
 TP.nt=()=>`<div class="card"><h3>పాఠం నోట్ జోడించండి</h3><p class="mut">విద్యార్థుల “సెల్ఫ్ లెర్న్” లో కొత్త పాఠంగా కనిపిస్తుంది.</p><div class="g2"><div><label>తరగతి</label>${clsSel('nc')}</div><div><label>సబ్జెక్ట్</label><select id="ncs">${subjOpts(myCls()[0])}</select></div></div>
 <label>పాఠం పేరు</label><input id="ntt" placeholder="ఉదా: మన గ్రామం"><label>ముఖ్యాంశాలు (ఒక్కో లైన్ = ఒక పాయింట్)</label><textarea id="ntx" rows="5"></textarea><button class="btn" onclick="addNote()">➕ జోడించు</button></div>
