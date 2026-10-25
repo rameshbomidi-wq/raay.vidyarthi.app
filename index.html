@@ -1453,7 +1453,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.10.25-7';
+const APPV='2026.10.25-8';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -1910,13 +1910,14 @@ function pgWaText(r,mk){const c=+r.c,lines=PG_A.map(A=>{const x=pgAllA(c,mk,A);r
 function pgPhone(p){p=String(p||'').replace(/\D/g,'').slice(-10);return /^[6-9]\d{9}$/.test(p)?p:'';}
 /* ---------- టీచర్ ప్యానెల్ ట్యాబ్ ---------- */
 TP.pg=()=>{const v=param.v||'list',cls=pgCls(),hasAny=live('roster').length>0;
- const tabs=[['list','👥 జాబితా'],['mk','📝 మార్కులు'],['att','📅 హాజరు'],['rep','📊 తరగతి రిపోర్ట్']].concat(isAdmin()?[['imp','📥 దిగుమతి']]:[]);
+ const tabs=[['list','👥 జాబితా'],['mk','📝 మార్కులు'],['att','📅 హాజరు'],['rep','📊 తరగతి రిపోర్ట్'],['add','➕ జోడించు']].concat(isAdmin()?[['imp','📥 దిగుమతి']]:[]);
  const head=`<div class="tchips">${tabs.map(([k,n])=>`<button class="${v===k?'on':''}" onclick="go('teacher',{t:'pg',v:'${k}',c:${+param.c||0}})">${n}</button>`).join('')}</div>`;
  if(v==='imp')return head+pgImpView();
+ if(v==='add')return head+pgAddView();
  if(v==='card'){const r=live('roster').find(x=>x.sid===param.sid);if(!r)return head+'<div class="empty">విద్యార్థి దొరకలేదు</div>';const mk=pgMkMap(r.sid),ph=pgPhone(r.ph);
   return head+`<div class="row2 noprint" style="margin-bottom:10px"><button class="btn ghost" style="margin:0" onclick="go('teacher',{t:'pg',v:'list',c:${r.c}})">← జాబితా</button><button class="btn" style="margin:0" onclick="pgPrint()">🖨️ ప్రింట్ / PDF</button></div>${pgCard(r,mk,{teacher:1})}
 ${ph?`<div class="row2 noprint"><a class="btn" style="background:#16a34a;text-align:center;text-decoration:none" href="https://wa.me/91${ph}?text=${encodeURIComponent(pgWaText(r,mk))}" target="_blank" rel="noopener">🟢 తల్లిదండ్రులకు WhatsApp</a><a class="btn ghost" style="text-align:center;text-decoration:none" href="tel:+91${ph}">📞 కాల్</a></div>`:''}`;}
- if(!hasAny)return head+`<div class="empty">ఇంకా విద్యార్థుల జాబితా లేదు.<br>${isAdmin()?`<button class="btn" onclick="go('teacher',{t:'pg',v:'imp'})">📥 ప్రగతి ఫైల్ నుండి దిగుమతి</button>`:'ప్రధానోపాధ్యాయులు 📥 దిగుమతి చేయాలి.'}</div>`;
+ if(!hasAny)return head+`<div class="empty">ఇంకా విద్యార్థుల జాబితా లేదు.<br><small>ప్రతి పాఠశాలకు ఇది ఖాళీగా మొదలవుతుంది – మీ పిల్లలను జోడించండి.</small><br><button class="btn" onclick="go('teacher',{t:'pg',v:'add'})">➕ విద్యార్థులను జోడించు / Excel పేస్ట్</button>${isAdmin()?`<button class="btn ghost" onclick="go('teacher',{t:'pg',v:'imp'})">📥 ప్రగతి ఫైల్ ఉంటే దిగుమతి</button>`:''}</div>`;
  if(!cls.length)return head+'<div class="empty">మీ తరగతుల విద్యార్థులు జాబితాలో లేరు</div>';
  const c=cls.includes(+param.c)?+param.c:cls[0];const cchips=`<div class="tchips">${cls.map(k=>`<button class="${k===c?'on':''}" onclick="go('teacher',{t:'pg',v:'${v}',c:${k},s:'${param.s||''}',a:'${param.a||''}'})">${k}వ (${pgRoster(k).length})</button>`).join('')}</div>`;
  const L=pgRoster(c);
@@ -1966,6 +1967,39 @@ function pgSaveAtt(c,m){const w=+$('#pgw').value;if(!(w>0&&w<=31))return toast('
   let p=iv===''?0:Math.round(+iv);if(isNaN(p)||p<0){bad++;return;}if(p>w)p=w;const att=(r.att||[]).slice();while(att.length<11)att.push([0,0]);const old=att[m];att[m]=[w,p];if(old&&old[0]===w&&old[1]===p)return;out.push(Object.assign({},r,{att}));});
  PGDIRTY=false;putMany('roster',out);toast(`✓ ${PG_MON[m]} హాజరు సేవ్ (${out.length})`+(bad?` • ${bad} తప్పు`:''));go('teacher',Object.assign({},param));}
 function pgDel(sid){const r=live('roster').find(x=>x.sid===sid);if(!r||!confirm(r.n+' ను జాబితా నుండి తొలగించాలా? (మార్కులు కూడా)'))return;remove('roster',r.id);live('marks').filter(m=>m.sid===sid).forEach(m=>remove('marks',m.id));toast('తొలగించాం');go('teacher',Object.assign({},param));}
+/* ---------- ➕ విద్యార్థులను జోడించడం: ఒక్కొక్కరు / Excel పేస్ట్ / CSV – ప్రతి పాఠశాలకు ఖాళీ ఫార్మ్ ---------- */
+function pgAddView(){const cl=myCls();return `<div class="card"><h3>➕ ఒక విద్యార్థిని జోడించు</h3>
+<div class="g2"><div><label>తరగతి</label><select id="paC">${cl.map(c=>`<option value="${c}" ${+param.c===c?'selected':''}>${c}వ తరగతి</option>`).join('')}</select></div><div><label>విద్యార్థి ID (ఐచ్ఛికం)</label><input id="paI" inputmode="numeric" maxlength="20" placeholder="లేకపోతే యాప్ ఇస్తుంది"></div></div>
+<label>పేరు</label><input id="paN" maxlength="60" placeholder="ఉదా: Ravi Kumar">
+<div class="g2"><div><label>తండ్రి పేరు</label><input id="paF" maxlength="60"></div><div><label>ఫోన్</label><input id="paP" inputmode="numeric" maxlength="10" placeholder="10 అంకెలు"></div></div>
+<label>పుట్టిన తేదీ <small class="mut">(పిల్లల ప్రగతి కార్డు లింక్ కోసం – ఎవరికీ కనిపించదు)</small></label><input id="paD" type="date">
+<button class="btn" id="paGo" onclick="pgAddOne()">➕ జోడించు</button></div>
+<div class="card"><h3>📋 చాలా మంది ఒకేసారి – Excel / Sheets నుండి</h3><p class="mut">ప్రతి వరుసలో వరుసగా: <b>తరగతి, పేరు, విద్యార్థి ID, తండ్రి పేరు, ఫోన్, పుట్టిన తేదీ (dd/mm/yyyy)</b>. Excel లో ఈ 6 కాలమ్స్ ఎంచుకుని కాపీ చేసి కింద పేస్ట్ చేయండి. ID, ఫోన్, తేదీ లేకపోయినా పర్వాలేదు.</p>
+<div class="ansrow" style="margin:0 0 8px"><button class="upbtn" onclick="pgTemplate()">⬇️ ఖాళీ ఫార్మ్ (Excel/CSV)</button><label class="upbtn">📂 నింపిన CSV ఎంచుకో<input type="file" accept=".csv,.txt" hidden onchange="pgCsv(this)"></label></div>
+<textarea id="paB" rows="6" placeholder="8&#9;Ravi Kumar&#9;1234567890&#9;Venkata Rao&#9;9876543210&#9;18/12/2013&#10;8, Sita Devi, , Rama Rao, , "></textarea>
+<button class="btn ghost" onclick="pgBulkPrev()">👀 సరిచూడు</button><div id="paPrev"></div></div>
+<p class="mut">ఒకే ID తో మళ్ళీ జోడిస్తే ఆ విద్యార్థి వివరాలు అప్‌డేట్ అవుతాయి (హాజరు, మార్కులు పోవు). మీ తరగతులకు మాత్రమే జోడించగలరు.</p>`;}
+const PG_ROM={I:1,II:2,III:3,IV:4,V:5,VI:6,VII:7,VIII:8,IX:9,X:10};
+function pgClsOf(v){v=String(v||'').trim().toUpperCase().replace(/(వ|TH|ST|ND|RD|CLASS|తరగతి|\s)/g,'');const m=v.match(/^(\d{1,2})/);if(m)return +m[1];const r=v.match(/^(X|IX|VIII|VII|VI|V|IV|III|II|I)/);return r?PG_ROM[r[1]]:0;}
+function pgNewId(){return '9'+String(Date.now()).slice(-8)+String(Math.floor(Math.random()*90+10));}
+function pgRows(txt){return String(txt||'').split(/\r?\n/).map(l=>l.trim()).filter(Boolean).map(l=>{const cs=(l.includes('\t')?l.split('\t'):l.match(/("([^"]|"")*"|[^,]*)(,|$)/g).map(x=>x.replace(/,$/,''))).map(x=>x.replace(/^"|"$/g,'').replace(/""/g,'"').trim());return cs;}).filter(cs=>pgClsOf(cs[0])>=1&&pgClsOf(cs[0])<=10&&cs[1]);}
+function pgBulkPrev(){const rows=pgRows($('#paB').value),cl=myCls(),ok=rows.filter(r=>cl.includes(pgClsOf(r[0]))),bad=rows.length-ok.length;const box=$('#paPrev');
+ if(!rows.length){box.innerHTML='<p class="ansErr">సరైన వరుసలు లేవు – మొదటి కాలమ్ తరగతి (1–10), రెండవది పేరు ఉండాలి</p>';return;}
+ const by={};ok.forEach(r=>{const c=pgClsOf(r[0]);by[c]=(by[c]||0)+1;});
+ box.innerHTML=`<div class="szok" style="margin-top:10px">✅ ${ok.length} మంది • ${Object.entries(by).map(([c,n])=>c+'వ: '+n).join(', ')}${bad?`<br>⚠️ ${bad} మంది మీ తరగతులు కాదు – వదిలేస్తాం`:''}</div><div class="tscroll" style="max-height:220px"><table class="tbl pgin"><tr><th>తర.</th><th>పేరు</th><th>ID</th><th>తండ్రి</th><th>ఫోన్</th><th>పు.తే.</th></tr>${ok.slice(0,50).map(r=>`<tr><td>${pgClsOf(r[0])}</td><td class="s">${esc(r[1])}</td><td>${esc(r[2]||'(కొత్త)')}</td><td>${esc(r[3]||'')}</td><td>${pgPhone(r[4])?'✓':''}</td><td>${pgDob(r[5])||String(r[5]||'').match(/^\d{4}-\d{2}-\d{2}$/)?'✓':''}</td></tr>`).join('')}</table></div>
+<button class="btn" id="paBGo" onclick="pgBulkGo()">➕ ${ok.length} మందిని జోడించు</button>`;}
+async function pgMake(list){const byId=new Map(live('roster').map(r=>[r.sid,r]));const ordOf={};live('roster').forEach(r=>{ordOf[r.c]=Math.max(ordOf[r.c]||0,(r.ord||0)+1);});const out=[];
+ for(const x of list){let sid=String(x.sid||'').replace(/\D/g,'');if(!sid)sid=pgNewId();const old=byId.get(sid);const dob=String(x.dob||'').match(/^\d{4}-\d{2}-\d{2}$/)?x.dob:pgDob(x.dob);
+  const r=Object.assign({},old||{att:[],ord:(ordOf[x.c]=(ordOf[x.c]||0)+1)},{id:'rs_'+sid,sid,c:x.c,sec:(old&&old.sec)||'A',n:String(x.n).trim().slice(0,60),f:String(x.f||(old&&old.f)||'').trim().slice(0,60),ph:pgPhone(x.ph)||(old&&old.ph)||'',h:dob?await pgSha(sid+'|'+dob):((old&&old.h)||''),yr:(old&&old.yr)||'',del:false});
+  out.push(r);byId.set(sid,r);}
+ putMany('roster',out);return out;}
+async function pgAddOne(){const n=$('#paN').value.trim();if(!n)return toast('పేరు రాయండి');const c=+$('#paC').value;const b=$('#paGo');b.disabled=true;
+ const out=await pgMake([{c,n,sid:$('#paI').value,f:$('#paF').value,ph:$('#paP').value,dob:$('#paD').value}]);toast(`✓ ${n} జోడించాం • ID ${out[0].sid}`);go('teacher',{t:'pg',v:'add',c});}
+async function pgBulkGo(){const cl=myCls(),rows=pgRows($('#paB').value).filter(r=>cl.includes(pgClsOf(r[0])));if(!rows.length)return;const b=$('#paBGo');b.disabled=true;b.textContent='⏳ జోడిస్తోంది...';
+ const out=await pgMake(rows.map(r=>({c:pgClsOf(r[0]),n:r[1],sid:r[2],f:r[3],ph:r[4],dob:r[5]})));toast(`✓ ${out.length} మంది జోడించాం`);go('teacher',{t:'pg',v:'list',c:out[0].c});}
+function pgTemplate(){const head='తరగతి,పేరు,విద్యార్థి ID,తండ్రి పేరు,ఫోన్,పుట్టిన తేదీ (dd/mm/yyyy)\n';const ex='1,,,,,\n'.repeat(40);
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+head+ex],{type:'text/csv'}));a.download='Raay_Vidyarthi_Students_Form.csv';document.body.appendChild(a);a.click();a.remove();toast('⬇️ ఖాళీ ఫార్మ్ డౌన్‌లోడ్ – Excel లో నింపి ఇక్కడ ఎంచుకోండి');}
+async function pgCsv(inp){const f=inp.files&&inp.files[0];if(!f)return;const t=await f.text();$('#paB').value=t.replace(/^﻿/,'');pgBulkPrev();}
 /* ---------- 📥 ప్రగతి ఫైల్ దిగుమతి (డేటా ప్రైవేట్ షీట్‌కే – GitHub కు కాదు) ---------- */
 let PGIMP=null;
 function pgImpView(){return `<div class="card"><h3>📥 “విద్యార్థులు + ప్రగతి” ఫైల్ నుండి దిగుమతి</h3><p class="mut">మీ ప్రగతి <b>.html</b> ఫైల్ లేదా దాని <b>⬇️ బ్యాకప్ .json</b> ఎంచుకోండి. డేటా మీ పాఠశాల ప్రైవేట్ షీట్‌కు మాత్రమే వెళ్తుంది – ఎక్కడా పబ్లిక్‌గా రాదు. మళ్ళీ దిగుమతి చేస్తే పేర్లు/హాజరు అప్‌డేట్ అవుతాయి.</p>
