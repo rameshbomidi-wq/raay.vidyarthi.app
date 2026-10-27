@@ -409,6 +409,19 @@ button.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;c
 .wsck .e{flex:1;min-width:0}.wsck .e b{font-size:17px}.wsck .e small{display:block;font-size:12.5px;color:#475569}
 .wsck button{border:0;background:#f1f5f9;border-radius:10px;width:48px;height:44px;font-size:22px;flex:none}
 @media(max-width:360px){.wsv{grid-template-columns:repeat(var(--w),40px);font-size:30px}.wc{width:37px;height:42px;font-size:26px}}
+
+.wsmk{background:#f59e0b;color:#fff;border-radius:12px;padding:4px 10px;font-weight:800}
+.wsdots button.no{background:#e5484d;border-color:#e5484d;color:#fff}.wsdots button.ok{background:#16a34a;border-color:#16a34a}
+.wsbox.ok .wc{border-color:#16a34a;background:#f0fdf4}.wsbox.no .wc{border-color:#e5484d;background:#fff5f5}
+.wsfb{border-radius:14px;padding:12px;font-size:16px;margin:8px 0}.wsfb.ok{background:#dcfce7;color:#166534}.wsfb.no{background:#fee2e2;color:#991b1b}
+.btn.wsok{background:#16a34a}
+.wsdone{background:#dcfce7;color:#166534;border-radius:12px;padding:10px;margin-top:10px;font-size:14px}
+.wspr{margin-top:10px}.wspr summary{cursor:pointer;font-weight:600;color:#0c8599;padding:6px 0}
+.wsby{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:6px 0}.wsby span{border:1.5px solid var(--c);color:var(--c);border-radius:20px;padding:3px 10px;font-weight:700;font-size:13px}
+.wsbd>div{display:flex;align-items:center;gap:10px;background:#fff;border-radius:14px;padding:10px 12px;margin-bottom:6px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.wsbd>div.me{outline:2.5px solid #f59e0b;background:#fffbeb}
+.wsbd .rk{width:30px;text-align:center;font-size:20px;font-weight:800;flex:none}.wsbd b{flex:1;min-width:0;font-size:15px}.wsbd>div>small{color:var(--mut);font-size:12px;flex:none}
+.wsbd .sc{font:800 22px 'Baloo Tamma 2',sans-serif;color:#0c8599;flex:none}.wsbd .sc small{font-size:12px;color:var(--mut)}
 </style>
 </head>
 <body>
@@ -1271,8 +1284,7 @@ function applyIncoming(ch){if(!ch.length)return;const notes=[];
   if(!S.cur||d.del)return;
   if(!old&&col==='hw'&&d.c===S.cur.c)notes.push('📒 కొత్త హోంవర్క్: '+d.t);
   if(!old&&col==='events'&&(d.c===0||d.c===S.cur.c))notes.push('📅 '+d.t+' – '+fmtD(d.d));
-  if(col==='doubts'&&d.n===me()&&d.r&&(!old||old.r!==d.r))notes.push('💬 నీ సందేహానికి జవాబు వచ్చింది');
-  if(col==='results'&&d.kind==='ws'&&d.n===me()&&d.chk&&(!old||!old.chk||old.chk.at!==d.chk.at))notes.push('✅ టీచర్ నీ అభ్యాస పత్రం OK చేశారు: '+d.s+'/'+d.t);});
+  if(col==='doubts'&&d.n===me()&&d.r&&(!old||old.r!==d.r))notes.push('💬 నీ సందేహానికి జవాబు వచ్చింది');});
  save();if(notes.length&&Sync.primed)notify(notes);softRender();}
 function notify(list){toast(list[0]+(list.length>1?` (+${list.length-1})`:''));
  try{if(window.Notification&&Notification.permission==='granted'){const body=list.join('\n');
@@ -1324,7 +1336,7 @@ const FBK={ready:false,user:null,
 
 /* ---------- సహాయక ఫంక్షన్లు ---------- */
 let view='home',param={},tick=null,T=null,G=null,tAuth=false;
-const PARENT={card:'home',avatar:'home',badges:'home',library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',wsrun:'test',wsres:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
+const PARENT={card:'home',avatar:'home',badges:'home',library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',wsrun:'test',wsres:'test',wsboard:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
 function me(){return S.cur.n;}
 function lessonsOf(c,s){const b=((L[c]||{})[s]||[]).map((x,i)=>({k:'b'+i,t:x[0],b:x[1].split('|')}));
  const n=live('notes').filter(x=>!x.kind&&x.c===c&&x.s===s).map(x=>({k:'n'+x.id,t:x.t,b:String(x.x||'').split('\n').filter(Boolean),tn:1,img:x.img||''}));return b.concat(n);}
@@ -1332,7 +1344,7 @@ function readMap(){return S.read[me()]||(S.read[me()]={});}
 function isRead(k){return !!readMap()[k];}
 function readPct(s){const c=S.cur.c,ls=lessonsOf(c,s);if(!ls.length)return 0;return Math.round(ls.filter(l=>isRead(c+'-'+s+'-'+l.k)).length*100/ls.length);}
 function myRes(){return live('results').filter(r=>r.n===me()&&r.c===S.cur.c);}
-function myScored(){return myRes().filter(r=>!(r.kind==='ws'&&!r.chk));}
+function myScored(){return myRes();}
 function avgOf(rs){return rs.length?Math.round(rs.reduce((a,x)=>a+x.s*100/x.t,0)/rs.length):0;}
 function stats(){const r=myScored();const by={};subjectsFor(S.cur.c).forEach(s=>{const rs=r.filter(x=>x.sb===s);by[s]=rs.length?avgOf(rs):null;});return {avg:avgOf(r),n:r.length,by};}
 function perfMsg(a,n){if(!n)return 'ఇంకా టెస్ట్ రాయలేదు. మొదటి టెస్ట్ రాసి నీ ప్రదర్శన చూడు!';if(a>=80)return 'అద్భుతం! ఇలాగే కొనసాగించు 🌟';if(a>=60)return 'బాగుంది! ఇంకా మెరుగ్గా చేయగలవు. శుభాకాంక్షలు!';return 'పర్వాలేదు! రోజూ సాధన చేస్తే తప్పకుండా మెరుగవుతావు 💪';}
@@ -1486,7 +1498,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.10.27-1';
+const APPV='2026.10.27-2';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -1710,7 +1722,7 @@ V.test=()=>{const tab=param.tab||'new';const st=stats();const c=S.cur.c;
   return `<div class="tcard"><div class="th" style="background:${SUBJ[s].bg}"><span class="si" style="width:34px;height:34px;font-size:16px;color:${SUBJ[s].col}">${SUBJ[s].ic}</span>${SUBJ[s].n} టెస్ట్</div><div class="tb">${n} ప్రశ్నలు • ${rs.length} సార్లు రాశావు${best!=null?` • ఉత్తమం <span class="pct ${pctCls(best)}">${best}%</span>`:''}<div class="r"><small class="mut">${s==='mat'?'ప్రతిసారీ కొత్త లెక్కలు':'ప్రశ్నలు కలగలుపుగా'}</small><button class="lk b" onclick="startTest('${s}')">ప్రారంభించు ▶</button></div></div></div>`;}).join('');
  if(tab==='done'){const rs=myRes().slice().reverse();
   body=`<div class="card"><h3>సబ్జెక్టుల వారీ ప్రదర్శన</h3>${subjectsFor(c).map(s=>{const p=st.by[s];return `<div class="sbar"><span>${SUBJ[s].n}</span><span class="tr"><i style="width:${p||0}%;background:${SUBJ[s].col}"></i></span><b>${p==null?'–':p+'%'}</b></div>`;}).join('')}</div>`+
-  (rs.length?rs.map(r=>{const p=Math.round(r.s*100/r.t);if(r.kind==='ws')return `<div class="tcard"><div class="th" style="background:#d3f9f2">✎ రోజువారీ అభ్యాస పత్రం • ${WSLV[(r.lv||2)-1].t}</div><div class="tb">${fmtD(r.d)} • ${new Date(r.d).toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'})} • ${r.t} లెక్కలు<div class="r"><span>సమయం: <b>${mmss(r.sec)}</b>${r.chk?` &nbsp; స్కోరు: <b>${r.s}/${r.t}</b>`:''}</span>${r.chk?`<span class="pct ${pctCls(p)}">✅ ${p}%</span>`:'<span class="pct y">⏳ పరిశీలనలో</span>'}</div><div class="r"><span></span><button class="lk" onclick="go('wsres',{id:'${r.id}'})">వివరాలు చూడు ▸</button></div></div></div>`;return `<div class="tcard"><div class="th" style="background:${SUBJ[r.sb].bg}">${SUBJ[r.sb].ic} ${SUBJ[r.sb].n} టెస్ట్</div><div class="tb">${fmtD(r.d)} • ${new Date(r.d).toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'})} • ${r.t} ప్రశ్నలు<div class="r"><span>సమయం: <b>${mmss(r.sec)}</b> &nbsp; స్కోరు: <b>${r.s}/${r.t}</b></span><span class="pct ${pctCls(p)}">${p}%</span></div><div class="r"><span></span><button class="lk" onclick="go('result',{id:'${r.id}'})">వివరాలు చూడు ▸</button></div></div></div>`;}).join(''):'<div class="empty">ఇంకా టెస్టులు రాయలేదు</div>');}
+  (rs.length?rs.map(r=>{const p=Math.round(r.s*100/r.t);if(r.kind==='ws')return `<div class="tcard"><div class="th" style="background:#d3f9f2">${r.m==='day'?'📅 నేటి లెక్కలు':'✎ అభ్యాసం'} • ${WSLV[(r.lv||2)-1].t}</div><div class="tb">${fmtD(r.d)} • ${new Date(r.d).toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'})} • ${wsByTxt(r.by)}<div class="r"><span>సమయం: <b>${mmss(r.sec)}</b> &nbsp; మార్కులు: <b>${r.s}/${r.t}</b></span><span class="pct ${pctCls(p)}">${p}%</span></div><div class="r"><span></span><button class="lk" onclick="go('wsres',{id:'${r.id}'})">వివరాలు చూడు ▸</button></div></div></div>`;return `<div class="tcard"><div class="th" style="background:${SUBJ[r.sb].bg}">${SUBJ[r.sb].ic} ${SUBJ[r.sb].n} టెస్ట్</div><div class="tb">${fmtD(r.d)} • ${new Date(r.d).toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'})} • ${r.t} ప్రశ్నలు<div class="r"><span>సమయం: <b>${mmss(r.sec)}</b> &nbsp; స్కోరు: <b>${r.s}/${r.t}</b></span><span class="pct ${pctCls(p)}">${p}%</span></div><div class="r"><span></span><button class="lk" onclick="go('result',{id:'${r.id}'})">వివరాలు చూడు ▸</button></div></div></div>`;}).join(''):'<div class="empty">ఇంకా టెస్టులు రాయలేదు</div>');}
  if(tab==='sch'){const t=todayS();const ev=live('events').filter(e=>e.ty==='test'&&e.d>=t&&(e.c===0||e.c===c)).sort((a,b)=>a.d<b.d?-1:1);
   body=ev.length?ev.map(e=>`<div class="tcard"><div class="th" style="background:#dbeafe">📝 ${esc(e.t)}</div><div class="tb">${fmtLong(e.d)} • ${to12(e.tm)}<div class="r"><small class="mut">${diffDays(e.d,t)===0?'ఈరోజే!':'ఇంకా '+diffDays(e.d,t)+' రోజులు'}</small><span class="badge">షెడ్యూల్డ్</span></div></div></div>`).join(''):'<div class="empty">షెడ్యూల్ చేసిన టెస్టులు లేవు</div>';}
  return `<div class="perf"><div><h3>మొత్తం ప్రదర్శన</h3><p>${perfMsg(st.avg,st.n)}</p><b class="more">${st.n} టెస్టులు రాశావు</b></div>${ring(st.avg)}</div>
@@ -1736,50 +1748,59 @@ V.result=()=>{const r=live('results').find(x=>x.id===param.id);if(!r)return '<di
 <div class="row2"><button class="btn" onclick="startTest('${r.sb}')">↻ మళ్ళీ రాయి</button><button class="btn ghost" onclick="go('subject',{s:'${r.sb}'})">📖 పాఠాలు</button></div></div>
 <h4 class="sec">జవాబుల సమీక్ష</h4>${(r.rv||[]).map((x,i)=>{const ok=x.y===x.a;return `<div class="rv ${ok?'':'x'}"><p>${i+1}. ${esc(x.q)}</p><small>నీ జవాబు: <b>${esc(x.y||'—')}</b> ${ok?'✅':'❌'}</small>${ok?'':`<small>సరైన జవాబు: <b style="color:#166534">${esc(x.a)}</b></small>`}</div>`;}).join('')}`;};
 
-/* ---------- ✎ రోజువారీ అభ్యాస పత్రం (+ − × ÷) – ఒక్కొక్క లెక్క, టీచర్ తనిఖీ ---------- */
+/* ---------- ✎ రోజువారీ లెక్కలు (+ − × ÷ – ఒక్కో ప్రక్రియకు 4) – వెంటనే జవాబు, మార్కులు, ర్యాంక్ ---------- */
 const WSO={add:{s:'+',c:'#2b8a3e',n:'కూడిక'},sub:{s:'−',c:'#d6336c',n:'తీసివేత'},mul:{s:'×',c:'#1c7ed6',n:'గుణకారం'},div:{s:'÷',c:'#7048e8',n:'భాగాహారం'}};
-const WSU={ri:(a,b)=>a+Math.floor(Math.random()*(b-a+1)),dg:(n,i)=>Math.floor(n/Math.pow(10,i))%10,L:n=>String(n).length,
+const WSU={rnd:Math.random,ri:(a,b)=>a+Math.floor(WSU.rnd()*(b-a+1)),dg:(n,i)=>Math.floor(n/Math.pow(10,i))%10,L:n=>String(n).length,
  rej(g,ok){let v;for(let i=0;i<500;i++){v=g();if(ok(v))return v;}return v;},
- brw(a,b){let c=0,br=0;for(let i=0;i<3;i++){const x=WSU.dg(a,i),y=WSU.dg(b,i)+br;if(x<y){c++;br=1;}else br=0;}return c;}};
+ brw(a,b){let c=0,br=0;for(let i=0;i<3;i++){const x=WSU.dg(a,i),y=WSU.dg(b,i)+br;if(x<y){c++;br=1;}else br=0;}return c;},
+ seed(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}};
+/* ఒక్కో స్థాయి: 4 కూడికలు, 4 తీసివేతలు, 4 గుణకారాలు (2 అం×1 – 2, 3 అం×1 – 2), 4 భాగాహారాలు (2 అం – 2, 3 అం – 2) */
 const WSLV=(()=>{const {ri,dg,rej,brw}=WSU;return [
- {t:'సులభం',d:'2 అంకెల + −, × 2/3, ÷ 2',r:[
+ {t:'సులభం',d:'2 అంకెల + −, × 2–3, ÷ 2',r:[
   ['add',4,()=>rej(()=>[ri(10,99),ri(10,99)],([a,b])=>dg(a,0)+dg(b,0)>=10)],
   ['sub',4,()=>rej(()=>{const a=ri(20,99);return[a,ri(10,a-1)];},([a,b])=>dg(a,0)<dg(b,0))],
-  ['mul',4,()=>[ri(11,49),ri(2,3)]],['mul',3,()=>[ri(100,499),2]],
-  ['div',3,()=>[ri(10,99),2]],['div',3,()=>[ri(100,999),2]]]},
+  ['mul',2,()=>[ri(11,49),ri(2,3)]],['mul',2,()=>[ri(100,499),2]],
+  ['div',2,()=>[ri(10,99),2]],['div',2,()=>[ri(100,999),2]]]},
  {t:'మధ్యస్థం',d:'3 అంకెల + −, × 2–5, ÷ 2–5',r:[
   ['add',4,()=>[ri(100,999),ri(100,999)]],
   ['sub',4,()=>rej(()=>{const a=ri(200,999);return[a,ri(100,a-1)];},([a,b])=>brw(a,b)>=1)],
-  ['mul',4,()=>[ri(11,99),ri(2,5)]],['mul',3,()=>[ri(100,999),ri(2,5)]],
-  ['div',3,()=>rej(()=>[ri(10,99),ri(2,5)],([a,d])=>a>=d*2)],['div',3,()=>[ri(100,999),ri(2,5)]]]},
+  ['mul',2,()=>[ri(11,99),ri(2,5)]],['mul',2,()=>[ri(100,999),ri(2,5)]],
+  ['div',2,()=>rej(()=>[ri(10,99),ri(2,5)],([a,d])=>a>=d*2)],['div',2,()=>[ri(100,999),ri(2,5)]]]},
  {t:'కఠినం',d:'3 అంకెల + −, × 4–9, ÷ 3–9',r:[
   ['add',4,()=>rej(()=>[ri(100,999),ri(100,999)],([a,b])=>dg(a,0)+dg(b,0)>=10||dg(a,1)+dg(b,1)>=10)],
   ['sub',4,()=>rej(()=>{const a=ri(200,999);return[a,ri(100,a-1)];},([a,b])=>brw(a,b)===2)],
-  ['mul',4,()=>[ri(11,99),ri(4,9)]],['mul',3,()=>[ri(100,999),ri(4,9)]],
-  ['div',3,()=>rej(()=>[ri(10,99),ri(3,9)],([a,d])=>a>=d*2)],['div',3,()=>[ri(100,999),ri(3,9)]]]}];})();
+  ['mul',2,()=>[ri(11,99),ri(4,9)]],['mul',2,()=>[ri(100,999),ri(4,9)]],
+  ['div',2,()=>rej(()=>[ri(10,99),ri(3,9)],([a,d])=>a>=d*2)],['div',2,()=>[ri(100,999),ri(3,9)]]]}];})();
+/* తరగతి వారీ నేటి పత్రం స్థాయి */
+function wsLvFor(c){c=+c;return c<=2?1:c<=4?2:3;}
 const WSZ=(()=>{const {dg}=WSU;return [p=>p.a>=10&&dg(p.a,0)===0,p=>p.a>=100&&dg(p.a,1)===0,p=>p.b>=10&&dg(p.b,0)===0,p=>p.x>=10&&/0/.test(String(p.x)),p=>p.b>=100&&dg(p.b,1)===0,p=>p.a>=100&&p.a%100===0];})();
 function wsMk(o,[a,b]){const p={o,a,b};if(o==='add')p.x=a+b;else if(o==='sub')p.x=a-b;else if(o==='mul')p.x=a*b;else{p.x=Math.floor(a/b);p.rm=a%b;}return p;}
-function wsGen(lv){const seen=new Set();let zi=0;const out=[];
- WSLV[lv-1].r.forEach(([o,n,g])=>{for(let i=0;i<n;i++){const want=i%2===0?WSZ[(zi++)%WSZ.length]:null;let p=null;
+function wsGen(lv,seed){WSU.rnd=WSU.seed(seed);const seen=new Set();let zi=0;const out=[];
+ try{WSLV[lv-1].r.forEach(([o,n,g])=>{for(let i=0;i<n;i++){const want=i%2===0?WSZ[(zi++)%WSZ.length]:null;let p=null;
   const tries=[...(want?[[want,300],[q=>WSZ.some(f=>f(q)),300]]:[]),[()=>true,80]];
   for(const [f,m] of tries){for(let t=0;t<m&&!p;t++){const q=wsMk(o,g());if(!seen.has(o+q.a+'_'+q.b)&&f(q))p=q;}if(p)break;}
-  if(!p)p=wsMk(o,g());seen.add(o+p.a+'_'+p.b);out.push(p);}});return out;}
+  if(!p)p=wsMk(o,g());seen.add(o+p.a+'_'+p.b);out.push(p);}});}finally{WSU.rnd=Math.random;}return out;}
+function wsDaySeed(day,c,lv){return parseInt(slHash('ws|'+day+'|'+c+'|'+lv),36)>>>0;}
 /* కణాల వెడల్పు: జవాబు అంకెల సంఖ్య బయటపడకుండా */
 function wsW(p){const L=WSU.L;return p.o==='add'?Math.max(L(p.a),L(p.b))+1:p.o==='sub'?L(p.a):p.o==='mul'?L(p.a)+1:L(p.a);}
 function wsDraftMap(){S.wsd=S.wsd||{};return S.wsd;}
 function wsKey(){return me()+'|'+S.cur.c;}
-function wsDraft(){return wsDraftMap()[wsKey()]||null;}
+function wsDraft(){const d=wsDraftMap()[wsKey()];if(d&&d.m==='day'&&d.day!==todayS()){delete wsDraftMap()[wsKey()];save();return null;}return d||null;}
+function wsGid(day){return 'w'+slHash(S.dev+'|'+me()+'|'+S.cur.c+'|'+day);}
+function wsTodayRec(){return live('games').find(x=>x.g==='ws'&&x.n===me()&&x.c===S.cur.c&&x.day===todayS());}
 let WSR=null;
-function wsStart(lv,resume){const m=wsDraftMap();let d=m[wsKey()];
- if(!resume||!d){d={lv,items:wsGen(lv),y:{},i:0,start:Date.now(),el:0};m[wsKey()]=d;save();}
+function wsStart(m,lv,resume){const map=wsDraftMap();let d=wsDraft();
+ if(m==='day'&&wsTodayRec())return toast('ఈరోజు పత్రం పూర్తయింది ✓ అభ్యాసం చేయవచ్చు');
+ if(!resume||!d){const day=todayS();lv=m==='day'?wsLvFor(S.cur.c):lv;
+  d={m,lv,day,items:wsGen(lv,m==='day'?wsDaySeed(day,S.cur.c,lv):Math.floor(Math.random()*1e9)+1),y:{},i:0,el:0};map[wsKey()]=d;save();}
  d.t0=Date.now();WSR=d;wsSelDefault();go('wsrun');}
 function wsCur(){return WSR.items[WSR.i];}
 function wsY(i){return WSR.y[i]||(WSR.y[i]={a:[],c:[],q:[],r:''});}
 function wsSelDefault(){const p=wsCur(),w=wsW(p),y=wsY(WSR.i);
  if(p.o==='div'){const k=Array.from({length:w},(_,j)=>j).find(j=>!y.q[j]);WSR.sel=k==null?{r:'r',i:0}:{r:'q',i:k};}
  else{let k=-1;for(let j=w-1;j>=0;j--){if(!y.a[j]){k=j;break;}}WSR.sel={r:'a',i:k<0?0:k};}}
-function wsTap(r,i){WSR.sel={r,i};render();}
-function wsKeyIn(k){const p=wsCur(),w=wsW(p),y=wsY(WSR.i),s=WSR.sel;
+function wsTap(r,i){if(wsY(WSR.i).k&&r!=='c')return;WSR.sel={r,i};render();}
+function wsKeyIn(k){const p=wsCur(),w=wsW(p),y=wsY(WSR.i),s=WSR.sel;if(y.k)return;
  if(k==='bk'){if(s.r==='r'){y.r='';}else{const arr=y[s.r];if(arr[s.i])arr[s.i]='';else{const ni=s.r==='q'?s.i-1:s.i+1;if(ni>=0&&ni<w){WSR.sel={r:s.r,i:ni};arr[ni]='';}}}}
  else{if(s.r==='r'){y.r=k;}
   else if(s.r==='c'){y.c[s.i]=k;WSR.sel={r:'a',i:s.i};}
@@ -1789,70 +1810,93 @@ function wsKeyIn(k){const p=wsCur(),w=wsW(p),y=wsY(WSR.i),s=WSR.sel;
 function wsVal(arr,w,both){let a=Array.from({length:w},(_,j)=>arr[j]||'');while(a.length&&!a[0])a.shift();if(both)while(a.length&&!a[a.length-1])a.pop();
  if(!a.length)return '';if(a.some(x=>!x))return '?'+a.map(x=>x||'_').join('');return String(Number(a.join('')));}
 function wsAns(i){const p=WSR.items[i],w=wsW(p),y=WSR.y[i];if(!y)return {v:'',r:''};return p.o==='div'?{v:wsVal(y.q,w,1),r:y.r||''}:{v:wsVal(y.a,w),r:''};}
-function wsDone(i){const a=wsAns(i),p=WSR.items[i];return !!a.v&&(p.o!=='div'||a.r!=='');}
-function wsGo(i){if(i<0||i>=WSR.items.length)return;WSR.i=i;wsSelDefault();save();render();}
-function wsCell(r,i,v,cls){const on=WSR.sel.r===r&&WSR.sel.i===i;return `<button class="wc ${cls||''} ${on?'on':''}" onclick="wsTap('${r}',${i})">${esc(v||'')}</button>`;}
-function wsProbHtml(p,y,w){const sy=WSO[p.o].s;
- if(p.o==='div'){const ad=String(p.a).split('');
-  return `<div class="wsd"><div class="wsdh"><b>${p.b}</b><i>)</i>${ad.map(d=>`<b>${d}</b>`).join('')}<i>(</i><span class="wsqr">${Array.from({length:w},(_,j)=>wsCell('q',j,y.q[j])).join('')}</span></div>
-  <div class="wsrm">భాగఫలం ← పై గడులలో &nbsp; • &nbsp; శేషం ${wsCell('r',0,y.r)}</div></div>`;}
- const col=n=>{const t=String(n),pad=w-t.length;return Array.from({length:w},(_,j)=>`<span>${j>=pad?t[j-pad]:''}</span>`).join('');};
- return `<div class="wsv" style="--w:${w+1}"><span></span>${Array.from({length:w},(_,j)=>wsCell('c',j,y.c[j],'cr')).join('')}
- <span></span>${col(p.a)}<span class="op" style="color:${WSO[p.o].c}">${sy}</span>${col(p.b)}<span class="ln"></span>
- <span></span>${Array.from({length:w},(_,j)=>wsCell('a',j,y.a[j])).join('')}<span class="ln"></span></div>`;}
-V.wsrun=()=>{if(!WSR)return '<div class="empty">పత్రం లేదు</div>';const p=wsCur(),w=wsW(p),y=wsY(WSR.i),n=WSR.items.length,done=WSR.items.filter((_,i)=>wsDone(i)).length;
- return `<div class="trbar"><button class="ib" onclick="wsQuit()">✕</button><b>✎ రోజువారీ అభ్యాసం – ${WSLV[WSR.lv-1].t}</b><span>${done}/${n}</span></div>
-<div class="prog"><i style="width:${done/n*100}%"></i></div>
-<div class="wsdots">${WSR.items.map((q,i)=>`<button class="${i===WSR.i?'on':''} ${wsDone(i)?'ok':''}" style="--c:${WSO[q.o].c}" onclick="wsGo(${i})">${i+1}</button>`).join('')}</div>
-<div class="qcard wsq" style="border-top:6px solid ${WSO[p.o].c}"><small>లెక్క ${WSR.i+1} / ${n} • <b style="color:${WSO[p.o].c}">${WSO[p.o].n}</b></small>
-<div class="wsbox">${wsProbHtml(p,y,w)}</div>
-<p class="mut wshint">${p.o==='div'?'ఎడమ నుండి ఒక్కొక్క అంకె: "వస్తుంది" / "రాదు". భాగఫలం పై గడులలో, శేషం కింద రాయి.':'ఒకట్ల నుండి మొదలుపెట్టు. మార్పిడి ఉంటే ముందు పై చిన్న గడిలో రాసి, తర్వాత జవాబు రాయి.'}</p>
-<div class="wskp">${['1','2','3','4','5','6','7','8','9','bk','0','sl'].map(k=>k==='bk'?`<button onclick="wsKeyIn('bk')">⌫</button>`:k==='sl'?`<button class="sl" onclick="slOpen()">✏️ రఫ్</button>`:`<button onclick="wsKeyIn('${k}')">${k}</button>`).join('')}</div></div>
-<div class="row2 qnav"><button class="btn ghost" ${WSR.i?'':'disabled'} onclick="wsGo(WSR.i-1)">◀ వెనుకకు</button>${WSR.i===n-1?`<button class="btn" onclick="wsSubmit()">సమర్పించు ✓</button>`:`<button class="btn" onclick="wsGo(WSR.i+1)">తర్వాత ▶</button>`}</div>
-${WSR.i!==n-1&&done===n?`<div style="padding:0 14px"><button class="btn" onclick="wsSubmit()">అన్నీ అయ్యాయి – సమర్పించు ✓</button></div>`:''}`;};
-function wsQuit(){if(WSR){WSR.el=(WSR.el||0)+Math.round((Date.now()-(WSR.t0||Date.now()))/1000);save();}toast('మధ్యలో ఆపాము – తర్వాత కొనసాగించవచ్చు');go('test');}
-function wsSubmit(){const n=WSR.items.length,blank=WSR.items.filter((_,i)=>!wsDone(i)).length;
- if(blank&&!confirm(blank+' లెక్కలు ఖాళీగా ఉన్నాయి. అయినా సమర్పించాలా?'))return;
- const sec=(WSR.el||0)+Math.round((Date.now()-(WSR.t0||Date.now()))/1000);let auto=0;
- const ws=WSR.items.map((p,i)=>{const a=wsAns(i);const ok=a.v===String(p.x)&&(p.o!=='div'||a.r===String(p.rm));if(ok)auto++;return {o:p.o,a:p.a,b:p.b,x:p.x,rm:p.rm,v:a.v,r:a.r};});
- const r={id:uid(),n:me(),c:S.cur.c,sb:'mat',kind:'ws',lv:WSR.lv,s:auto,t:n,sec,d:new Date().toISOString(),ws,chk:null};
- delete wsDraftMap()[wsKey()];WSR=null;put('results',r);beep('ok');toast('సమర్పించావు ✓ టీచర్ చూసి OK చేస్తారు');go('wsres',{id:r.id});}
+function wsFilled(i){const a=wsAns(i),p=WSR.items[i];return !!a.v&&(p.o!=='div'||a.r!=='');}
 function wsOk(x){return x.v===String(x.x)&&(x.o!=='div'||x.r===String(x.rm));}
-function wsExpr(x){return `${x.a} ${WSO[x.o].s} ${x.b}`;}
+function wsItemOk(i){const p=WSR.items[i],a=wsAns(i);return wsOk({o:p.o,x:p.x,rm:p.rm,v:a.v,r:a.r});}
+function wsChecked(){return WSR.items.filter((_,i)=>WSR.y[i]&&WSR.y[i].k).length;}
+function wsMarks(){return WSR.items.filter((_,i)=>WSR.y[i]&&WSR.y[i].k&&WSR.y[i].ok).length;}
+function wsCheck(){const i=WSR.i;if(!wsFilled(i))return toast(wsCur().o==='div'?'భాగఫలం, శేషం రెండూ రాయి':'ముందు జవాబు రాయి');
+ const y=wsY(i);y.k=1;y.ok=wsItemOk(i)?1:0;beep(y.ok?'ok':'no');save();render();}
+function wsGo(i){if(i<0||i>=WSR.items.length)return;WSR.i=i;wsSelDefault();save();render();}
+function wsNext(){const n=WSR.items.length;for(let j=1;j<=n;j++){const k=(WSR.i+j)%n;if(!(WSR.y[k]&&WSR.y[k].k))return wsGo(k);}wsFinish();}
+function wsCell(r,i,v,cls,lock){const on=!lock&&WSR.sel.r===r&&WSR.sel.i===i;return `<button class="wc ${cls||''} ${on?'on':''}" ${lock&&r!=='c'?'disabled':''} onclick="wsTap('${r}',${i})">${esc(v||'')}</button>`;}
+function wsProbHtml(p,y,w){const sy=WSO[p.o].s,lk=!!y.k;
+ if(p.o==='div'){const ad=String(p.a).split('');
+  return `<div class="wsd"><div class="wsdh"><b>${p.b}</b><i>)</i>${ad.map(d=>`<b>${d}</b>`).join('')}<i>(</i><span class="wsqr">${Array.from({length:w},(_,j)=>wsCell('q',j,y.q[j],'',lk)).join('')}</span></div>
+  <div class="wsrm">భాగఫలం ← పై గడులలో &nbsp; • &nbsp; శేషం ${wsCell('r',0,y.r,'',lk)}</div></div>`;}
+ const col=n=>{const t=String(n),pad=w-t.length;return Array.from({length:w},(_,j)=>`<span>${j>=pad?t[j-pad]:''}</span>`).join('');};
+ return `<div class="wsv" style="--w:${w+1}"><span></span>${Array.from({length:w},(_,j)=>wsCell('c',j,y.c[j],'cr',lk)).join('')}
+ <span></span>${col(p.a)}<span class="op" style="color:${WSO[p.o].c}">${sy}</span>${col(p.b)}<span class="ln"></span>
+ <span></span>${Array.from({length:w},(_,j)=>wsCell('a',j,y.a[j],'',lk)).join('')}<span class="ln"></span></div>`;}
 function wsRight(x){return x.o==='div'?`${x.x}, శేషం ${x.rm}`:String(x.x);}
+V.wsrun=()=>{if(!WSR)return '<div class="empty">పత్రం లేదు</div>';const p=wsCur(),w=wsW(p),y=wsY(WSR.i),n=WSR.items.length,ck=wsChecked();
+ const fb=y.k?(y.ok?`<div class="wsfb ok">✅ సరైన జవాబు! <b>+1 మార్కు</b></div>`:`<div class="wsfb no">❌ తప్పు. సరైన జవాబు: <b>${wsRight(p)}</b></div>`):'';
+ return `<div class="trbar"><button class="ib" onclick="wsQuit()">✕</button><b>${WSR.m==='day'?'📅 నేటి లెక్కలు':'✎ అభ్యాసం'} – ${WSLV[WSR.lv-1].t}</b><span class="wsmk">⭐ ${wsMarks()}/${n}</span></div>
+<div class="prog"><i style="width:${ck/n*100}%"></i></div>
+<div class="wsdots">${WSR.items.map((q,i)=>{const t=WSR.y[i];return `<button class="${i===WSR.i?'on':''} ${t&&t.k?(t.ok?'ok':'no'):''}" style="--c:${WSO[q.o].c}" onclick="wsGo(${i})">${i+1}</button>`;}).join('')}</div>
+<div class="qcard wsq" style="border-top:6px solid ${WSO[p.o].c}"><small>లెక్క ${WSR.i+1} / ${n} • <b style="color:${WSO[p.o].c}">${WSO[p.o].n}</b></small>
+<div class="wsbox ${y.k?(y.ok?'ok':'no'):''}">${wsProbHtml(p,y,w)}</div>${fb}
+${y.k?'':`<p class="mut wshint">${p.o==='div'?'ఎడమ నుండి ఒక్కొక్క అంకె: "వస్తుంది" / "రాదు". భాగఫలం పై గడులలో, శేషం కింద రాయి.':'ఒకట్ల నుండి మొదలుపెట్టు. మార్పిడి ఉంటే ముందు పై చిన్న గడిలో రాసి, తర్వాత జవాబు రాయి.'}</p>
+<div class="wskp">${['1','2','3','4','5','6','7','8','9','bk','0','sl'].map(k=>k==='bk'?`<button onclick="wsKeyIn('bk')">⌫</button>`:k==='sl'?`<button class="sl" onclick="slOpen()">✏️ రఫ్</button>`:`<button onclick="wsKeyIn('${k}')">${k}</button>`).join('')}</div>`}</div>
+<div class="row2 qnav">${y.k?`<button class="btn" onclick="wsNext()">${ck===n?'ఫలితం చూడు 🏆':'తర్వాత లెక్క ▶'}</button>`:`<button class="btn ghost" ${WSR.i?'':'disabled'} onclick="wsGo(WSR.i-1)">◀</button><button class="btn wsok" onclick="wsCheck()">✓ జవాబు చూడు</button>`}</div>`;};
+function wsQuit(){if(WSR){WSR.el=(WSR.el||0)+Math.round((Date.now()-(WSR.t0||Date.now()))/1000);save();}toast('మధ్యలో ఆపాము – తర్వాత కొనసాగించవచ్చు');go('test');}
+function wsFinish(){const n=WSR.items.length,sec=(WSR.el||0)+Math.round((Date.now()-(WSR.t0||Date.now()))/1000);
+ const ws=WSR.items.map((p,i)=>{const a=wsAns(i),t=WSR.y[i]||{};return {o:p.o,a:p.a,b:p.b,x:p.x,rm:p.rm,v:t.k?a.v:'',r:t.k?a.r:''};});
+ const s=ws.filter(wsOk).length,by={};Object.keys(WSO).forEach(o=>{by[o]=ws.filter(x=>x.o===o&&wsOk(x)).length;});
+ const r={id:uid(),n:me(),c:S.cur.c,sb:'mat',kind:'ws',m:WSR.m,lv:WSR.lv,day:WSR.day,s,t:n,sec,by,d:new Date().toISOString(),ws};
+ const day=WSR.m==='day';delete wsDraftMap()[wsKey()];WSR=null;put('results',r);
+ if(day)put('games',{id:wsGid(r.day),n:me(),c:S.cur.c,g:'ws',s,t:n,sec,by,lv:r.lv,day:r.day,d:r.d});
+ if(s*100/n>=80){setTimeout(confetti,200);beep('win');}go('wsres',{id:r.id});}
+function wsExpr(x){return `${x.a} ${WSO[x.o].s} ${x.b}`;}
 function wsGiven(x){if(!x.v)return '—';const v=x.v.startsWith('?')?x.v.slice(1).replace(/_/g,'□'):x.v;return x.o==='div'?`${v}, శేషం ${x.r===''?'—':x.r}`:v;}
+function wsByTxt(by){return by?Object.keys(WSO).map(o=>WSO[o].s+' '+(by[o]||0)+'/4').join('  '):'';}
+/* ర్యాంక్ బోర్డు – games సేకరణ (అందరికీ కనిపిస్తుంది) */
+function wsBoard(c,from,to){const per={};live('games').filter(x=>x.g==='ws'&&x.c===+c&&x.day>=from&&x.day<=to).forEach(x=>{const k=x.n;const p=per[k]||(per[k]={n:x.n,s:0,t:0,sec:0,k:0});p.s+=x.s;p.t+=x.t;p.sec+=x.sec||0;p.k++;});
+ return Object.values(per).sort((a,b)=>b.s-a.s||a.sec-b.sec||(a.n<b.n?-1:1));}
+function wsRange(k){const t=todayS();if(k==='w'){const d=parseD(t);return [addDays(t,-((d.getDay()+6)%7)),t];}if(k==='m')return [t.slice(0,8)+'01',t];return [t,t];}
+function wsBoardHtml(c,k,meN){const [f,t]=wsRange(k),b=wsBoard(c,f,t);
+ return b.length?`<div class="wsbd">${b.map((p,i)=>`<div class="${p.n===meN?'me':''}"><span class="rk">${i<3?['🥇','🥈','🥉'][i]:i+1}</span><b>${esc(p.n)}</b><small>${k==='d'?'⏱ '+mmss(p.sec):p.k+' రోజులు'}</small><span class="sc">${p.s}<small>/${p.t}</small></span></div>`).join('')}</div>`:'<div class="empty">ఇంకా ఎవరూ రాయలేదు – నువ్వే మొదటి వాడివి అవ్వు! 🚀</div>';}
+V.wsboard=()=>{const k=param.k||'d';return `<div class="bar"><button class="ib" onclick="go('test')">←</button><h2>🏆 ర్యాంక్ బోర్డు – ${S.cur.c}వ తరగతి</h2></div>
+<div class="tabs">${[['d','ఈరోజు'],['w','ఈ వారం'],['m','ఈ నెల']].map(([x,nm])=>`<button class="${k===x?'on':''}" onclick="go('wsboard',{k:'${x}'})">${nm}</button>`).join('')}</div>
+${wsBoardHtml(S.cur.c,k,me())}${S.cfg.type?'':'<p class="mut" style="text-align:center;margin-top:10px">📴 ఆఫ్లైన్ – ఈ ఫోన్‌లో రాసిన వారి మార్కులు మాత్రమే కనిపిస్తాయి</p>'}`;};
 function wsMine(){return live('results').filter(r=>r.kind==='ws'&&r.n===me()&&r.c===S.cur.c).sort((a,b)=>a.d<b.d?1:-1);}
-function wsCard(){const d=wsDraft(),mine=wsMine(),pend=mine.filter(r=>!r.chk).length;
- return `<div class="tcard wscard"><div class="th" style="background:#d3f9f2"><span class="si" style="width:34px;height:34px;font-size:18px;color:#0c8599">✎</span>రోజువారీ అభ్యాస పత్రం (+ − × ÷)</div><div class="tb">21 లెక్కలు: 4 కూడికలు • 4 తీసివేతలు • 7 గుణకారాలు • 6 భాగాహారాలు. ఒక్కొక్కటిగా చేసి సమర్పించు – టీచర్ చూసి OK చేస్తారు.
-${d?`<div class="warn" style="margin-top:8px">📝 మధ్యలో ఆపిన పత్రం (${WSLV[d.lv-1].t}) ఉంది <button class="lk b" onclick="wsStart(${d.lv},true)">కొనసాగించు ▶</button></div>`:''}
-<div class="wslv">${WSLV.map((l,i)=>`<button onclick="${d?`if(confirm('మధ్యలో ఉన్న పత్రం పోతుంది. కొత్తది మొదలుపెట్టాలా?'))`:''}wsStart(${i+1})"><b>${l.t}</b><small>${l.d}</small></button>`).join('')}</div>
-${mine.length?`<div class="r" style="margin-top:8px"><small class="mut">${mine.length} పత్రాలు సమర్పించావు${pend?` • ⏳ ${pend} టీచర్ పరిశీలనలో`:''}</small><button class="lk" onclick="go('test',{tab:'done'})">చూడు ▸</button></div>`:''}</div></div>`;}
-V.wsres=()=>{const r=live('results').find(x=>x.id===param.id);if(!r)return '<div class="empty">పత్రం దొరకలేదు</div>';const ck=r.chk;
- const m=ck?ck.m:null,sc=ck?m.filter(Boolean).length:0,p=ck?Math.round(sc*100/r.t):0;
- return `<div class="bar"><button class="ib" onclick="go('test',{tab:'done'})">←</button><h2>✎ అభ్యాస పత్రం – ${WSLV[(r.lv||2)-1].t}</h2></div>
-<div class="card center">${ck?`${ring(p,120,p>=80?'#16a34a':p>=50?'#f59e0b':'#e5484d')}<h3 style="margin-top:8px">✅ టీచర్ OK చేశారు</h3><p>సరైనవి: <b>${sc} / ${r.t}</b> • సమయం: <b>${mmss(r.sec)}</b></p><p class="mut">👩‍🏫 ${esc(ck.by||'')} • ${fmtD(ck.at)}</p>${ck.rem?`<div class="wsrem">💬 ${esc(ck.rem)}</div>`:''}`:`<div style="font-size:54px">⏳</div><h3>టీచర్ పరిశీలనలో ఉంది</h3><p class="mut">టీచర్ చూసి OK చేసిన తర్వాత ఇక్కడ ✓ / ✗ కనిపిస్తాయి.<br>సమర్పించింది: ${fmtD(r.d)} • సమయం ${mmss(r.sec)}</p>`}
-<div class="row2"><button class="btn" onclick="wsStart(${r.lv||2})">↻ కొత్త పత్రం</button></div></div>
-<h4 class="sec">నా జవాబులు</h4>${r.ws.map((x,i)=>{const ok=m?!!m[i]:null;return `<div class="rv ${ok===false?'x':''}" style="${ok==null?'border-left-color:#94a3b8':''}"><p>${i+1}. <b style="color:${WSO[x.o].c}">${wsExpr(x)}</b> = ?</p><small>నా జవాబు: <b>${esc(wsGiven(x))}</b> ${ok==null?'':ok?'✅':'❌'}</small>${ok===false?`<small>సరైన జవాబు: <b style="color:#166534">${wsRight(x)}</b></small>`:''}</div>`;}).join('')}`;};
-/* ఉపాధ్యాయ తనిఖీ */
-function wsPendT(){return live('results').filter(r=>r.kind==='ws'&&!r.chk&&canSee(r.c,'mat'));}
-let WSM=null;
-function wsTList(){const f=param.f||'p',fc=+param.fc||0;const all=live('results').filter(r=>r.kind==='ws'&&canSee(r.c,'mat')&&(!fc||r.c===fc));
- const list=all.filter(r=>f==='p'?!r.chk:!!r.chk).sort((a,b)=>f==='p'?(a.d<b.d?-1:1):(a.d<b.d?1:-1));
- return `<div class="tabs">${[['p','⏳ తనిఖీ చేయాల్సినవి ('+all.filter(r=>!r.chk).length+')'],['d','✅ OK చేసినవి']].map(([k,n])=>`<button class="${f===k?'on':''}" onclick="go('teacher',{t:'ws',f:'${k}',fc:${fc}})">${n}</button>`).join('')}</div>
-<div class="tchips">${[0].concat(myCls()).map(c=>`<button class="${fc===c?'on':''}" onclick="go('teacher',{t:'ws',f:'${f}',fc:${c}})">${c?c+'వ తరగతి':'అన్నీ'}</button>`).join('')}</div>
-${list.map(r=>{const sc=r.chk?r.chk.m.filter(Boolean).length:r.s;return `<div class="titem"><div style="flex:1"><b>${esc(r.n)}</b> <small style="display:inline">• ${r.c}వ తరగతి • ${WSLV[(r.lv||2)-1].t}</small><small>${fmtD(r.d)} • ${new Date(r.d).toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'})} • సమయం ${mmss(r.sec)} • ${r.chk?'✅ '+sc+'/'+r.t+' • OK: '+esc(r.chk.by||''):'యాప్ అంచనా: '+sc+'/'+r.t}</small></div><button class="lk b" onclick="go('teacher',{t:'ws',id:'${r.id}',f:'${f}',fc:${fc}})">${r.chk?'చూడు':'తనిఖీ'} ▸</button></div>`;}).join('')||`<div class="empty">${f==='p'?'తనిఖీ చేయాల్సిన పత్రాలు లేవు 👍':'ఇంకా OK చేసినవి లేవు'}</div>`}`;}
-function wsTOne(r){if(!WSM||WSM.id!==r.id)WSM={id:r.id,m:r.chk?r.chk.m.slice():r.ws.map(wsOk)};const m=WSM.m,sc=m.filter(Boolean).length;
- return `<div class="bar" style="margin-bottom:8px"><button class="ib" style="background:#e2e8f0" onclick="WSM=null;go('teacher',{t:'ws',f:'${param.f||'p'}',fc:${+param.fc||0}})">←</button><h2 style="font-size:17px">${esc(r.n)} • ${r.c}వ తరగతి</h2></div>
-<div class="card"><p class="mut" style="margin:0 0 6px">${WSLV[(r.lv||2)-1].t} • ${fmtD(r.d)} • సమయం ${mmss(r.sec)}${r.chk?' • ✅ OK: '+esc(r.chk.by||'')+' ('+fmtD(r.chk.at)+')':''}</p>
-<p style="margin:0">యాప్ ✓/✗ పెట్టింది – అవసరమైతే మార్చండి (నొక్కితే మారుతుంది). <b>స్కోరు: <span id="wssc">${sc}</span> / ${r.t}</b></p></div>
-${r.ws.map((x,i)=>`<div class="wsck ${m[i]?'':'x'}" id="wsk${i}"><span class="n">${i+1}</span><div class="e"><b style="color:${WSO[x.o].c}">${wsExpr(x)}</b><small>విద్యార్థి: <b>${esc(wsGiven(x))}</b>${wsOk(x)?'':` • సరైనది: ${wsRight(x)}`}</small></div><button onclick="wsTog(${i})">${m[i]?'✅':'❌'}</button></div>`).join('')}
-<div class="card"><label>టీచర్ వ్యాఖ్య (ఐచ్ఛికం)</label><textarea id="wsrem" rows="2" placeholder="ఉదా: బాగుంది! భాగాహారం ఇంకా సాధన చేయి">${esc(r.chk&&r.chk.rem||'')}</textarea>
-<button class="btn" onclick="wsApprove('${r.id}')">✅ ${r.chk?'మళ్ళీ OK చేసి పంపు':'OK చేసి విద్యార్థికి పంపు'}</button></div>`;}
-function wsTog(i){WSM.m[i]=!WSM.m[i];const e=document.getElementById('wsk'+i);if(e){e.classList.toggle('x',!WSM.m[i]);e.querySelector('button').textContent=WSM.m[i]?'✅':'❌';}const s=document.getElementById('wssc');if(s)s.textContent=WSM.m.filter(Boolean).length;}
-function wsApprove(id){const r=live('results').find(x=>x.id===id);if(!r||!WSM)return;const m=WSM.m.slice();
- put('results',Object.assign({},r,{s:m.filter(Boolean).length,chk:{by:tName(),at:new Date().toISOString(),m,rem:(document.getElementById('wsrem').value||'').trim().slice(0,300)}}));
- WSM=null;toast('OK చేశారు ✓ విద్యార్థి ఫోన్‌కు చేరుతుంది');const nx=wsPendT().filter(x=>!(+param.fc)||x.c===+param.fc).sort((a,b)=>a.d<b.d?-1:1)[0];
- go('teacher',nx?{t:'ws',id:nx.id,f:'p',fc:+param.fc||0}:{t:'ws',f:'p',fc:+param.fc||0});}
+function wsRankToday(){const b=wsBoard(S.cur.c,todayS(),todayS());const i=b.findIndex(p=>p.n===me());return i<0?0:i+1;}
+function wsCard(){const d=wsDraft(),tr=wsTodayRec(),lv=wsLvFor(S.cur.c),rk=tr?wsRankToday():0;
+ return `<div class="tcard wscard"><div class="th" style="background:#d3f9f2"><span class="si" style="width:34px;height:34px;font-size:18px;color:#0c8599">📅</span>నేటి లెక్కలు (+ − × ÷)</div><div class="tb">రోజూ కొత్త 16 లెక్కలు – ఒక్కో ప్రక్రియకు 4. ప్రతి లెక్క చేసిన వెంటనే జవాబు, మార్కు. మార్కులు సార్‌కి చేరతాయి.<br><small class="mut">${fmtD(todayS())} • ${WSLV[lv-1].t} (${WSLV[lv-1].d})</small>
+${tr?`<div class="wsdone">✅ ఈరోజు పూర్తి: <b>${tr.s}/${tr.t}</b> • ⏱ ${mmss(tr.sec)}${rk?` • ర్యాంక్ <b>${rk}</b>`:''}</div>`:d&&d.m==='day'?`<button class="btn" style="margin-top:10px" onclick="wsStart('day',0,true)">▶ నేటి లెక్కలు కొనసాగించు (${Object.values(d.y).filter(x=>x.k).length}/16)</button>`:`<button class="btn" style="margin-top:10px" onclick="wsStart('day')">▶ నేటి లెక్కలు ప్రారంభించు</button>`}
+<div class="row2" style="margin-top:8px"><button class="btn ghost" style="margin:0" onclick="go('wsboard')">🏆 ర్యాంక్ బోర్డు</button>${wsMine().length?`<button class="btn ghost" style="margin:0" onclick="go('test',{tab:'done'})">📋 నా మార్కులు</button>`:''}</div>
+<details class="wspr"${d&&d.m==='pr'?' open':''}><summary>✎ అదనపు అభ్యాసం (ర్యాంక్‌కి లెక్కించదు)</summary>${d&&d.m==='pr'?`<div class="warn" style="margin-top:8px">📝 మధ్యలో ఆపిన అభ్యాసం ఉంది <button class="lk b" onclick="wsStart('pr',${d.lv},true)">కొనసాగించు ▶</button></div>`:''}
+<div class="wslv">${WSLV.map((l,i)=>`<button onclick="wsStart('pr',${i+1})"><b>${l.t}</b><small>${l.d}</small></button>`).join('')}</div></details></div></div>`;}
+function wsShare(id){const r=live('results').find(x=>x.id===id);if(!r)return;
+ const t=`📅 నేటి లెక్కలు – ${fmtD(r.day||r.d.slice(0,10))}\n👤 ${r.n} (${r.c}వ తరగతి)\n⭐ మార్కులు: ${r.s}/${r.t}\n${wsByTxt(r.by)}\n⏱ సమయం: ${mmss(r.sec)}\n${r.ws.map((x,i)=>`${i+1}) ${wsExpr(x)} = ${wsGiven(x)} ${wsOk(x)?'✅':'❌'}`).join('\n')}\n— రాయ్ విద్యార్థి యాప్`;
+ window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank');}
+V.wsres=()=>{const r=live('results').find(x=>x.id===param.id);if(!r)return '<div class="empty">పత్రం దొరకలేదు</div>';const p=Math.round(r.s*100/r.t),day=r.m==='day';
+ const rk=day&&r.day===todayS()?wsRankToday():0;const msg=p>=80?'🌟 అద్భుతం!':p>=60?'👏 బాగుంది!':p>=40?'🙂 పర్వాలేదు':'💪 రోజూ సాధన చేయి!';
+ return `<div class="bar"><button class="ib" onclick="go('test')">←</button><h2>${day?'📅 నేటి లెక్కలు':'✎ అభ్యాసం'} – ఫలితం</h2></div>
+<div class="card center">${ring(p,120,p>=80?'#16a34a':p>=50?'#f59e0b':'#e5484d')}<h3 style="margin-top:8px">${msg}</h3><p>మార్కులు: <b>${r.s} / ${r.t}</b> • సమయం: <b>${mmss(r.sec)}</b>${rk?` • ర్యాంక్: <b>${rk}</b>`:''}</p>
+<p class="wsby">${Object.keys(WSO).map(o=>`<span style="--c:${WSO[o].c}">${WSO[o].s} ${(r.by||{})[o]||0}/4</span>`).join('')}</p><p class="mut">${fmtD(r.d)} • ${WSLV[(r.lv||2)-1].t}${S.cfg.type?' • ☁️ సార్‌కి చేరుతుంది':''}</p>
+<div class="row2">${day?`<button class="btn" onclick="go('wsboard')">🏆 ర్యాంక్ బోర్డు</button>`:`<button class="btn" onclick="wsStart('pr',${r.lv||2})">↻ మళ్ళీ అభ్యాసం</button>`}<button class="btn ghost" onclick="wsShare('${r.id}')">📤 సార్‌కి WhatsApp</button></div></div>
+<h4 class="sec">నా జవాబులు</h4>${r.ws.map((x,i)=>{const ok=wsOk(x);return `<div class="rv ${ok?'':'x'}"><p>${i+1}. <b style="color:${WSO[x.o].c}">${wsExpr(x)}</b> = ?</p><small>నా జవాబు: <b>${esc(wsGiven(x))}</b> ${ok?'✅':'❌'}</small>${ok?'':`<small>సరైన జవాబు: <b style="color:#166534">${wsRight(x)}</b></small>`}</div>`;}).join('')}`;};
+/* ఉపాధ్యాయ ప్యానెల్ – రోజువారీ మార్కుల రిపోర్ట్ */
+function wsPendT(){const t=todayS();return live('results').filter(r=>r.kind==='ws'&&r.m==='day'&&r.day===t&&canSee(r.c,'mat'));}
+function wsTList(){const day=param.d||todayS(),cls=myCls(),lastR=live('results').filter(r=>r.kind==='ws'&&r.m==='day'&&r.day===day&&cls.includes(+r.c)).sort((a,b)=>a.d<b.d?1:-1)[0],fc=+param.fc||(lastR?+lastR.c:cls[0]);
+ const rs=live('results').filter(r=>r.kind==='ws'&&r.m==='day'&&r.day===day&&r.c===fc&&canSee(r.c,'mat'));
+ const best={};rs.forEach(r=>{const k=r.n;if(!best[k]||r.s>best[k].s||(r.s===best[k].s&&r.sec<best[k].sec))best[k]=r;});
+ const list=Object.values(best).sort((a,b)=>b.s-a.s||a.sec-b.sec);
+ const st=live('students').filter(s=>+s.c===fc).map(s=>s.n),miss=[...new Set(st)].filter(n=>!best[n]);
+ const tot={};Object.keys(WSO).forEach(o=>{tot[o]=list.reduce((a,r)=>a+((r.by||{})[o]||0),0);});
+ const days=Array.from({length:7},(_,i)=>addDays(todayS(),-i));
+ const wa=`📅 నేటి లెక్కలు – ${fmtD(day)} – ${fc}వ తరగతి\n`+list.map((r,i)=>`${i+1}. ${r.n} – ${r.s}/${r.t} (⏱ ${mmss(r.sec)})`).join('\n')+(miss.length?`\n❗ రాయనివారు: ${miss.join(', ')}`:'')+'\n— రాయ్ ఎడ్యుకేషన్';
+ return `<div class="card" style="padding:12px"><b>📅 రోజువారీ లెక్కల మార్కులు</b><p class="mut" style="margin:4px 0 0">ప్రతి రోజూ ఒక్కో తరగతికి 16 లెక్కలు (+ − × ÷ ఒక్కోటి 4). స్థాయి: 1–2 తరగతులు సులభం • 3–4 మధ్యస్థం • 5+ కఠినం. విద్యార్థి రాసిన వెంటనే ఇక్కడ వస్తుంది.</p></div>
+<div class="tchips">${cls.map(c=>`<button class="${fc===c?'on':''}" onclick="go('teacher',{t:'ws',d:'${day}',fc:${c}})">${c}వ తరగతి</button>`).join('')}</div>
+<div class="tchips">${days.map(d=>`<button class="${d===day?'on':''}" onclick="go('teacher',{t:'ws',d:'${d}',fc:${fc}})">${d===todayS()?'ఈరోజు':parseD(d).getDate()+' '+MON[parseD(d).getMonth()].slice(0,3)}</button>`).join('')}</div>
+${list.length?`<div class="card" style="padding:10px 12px"><b>${list.length} మంది రాశారు</b> • సగటు ${Math.round(list.reduce((a,r)=>a+r.s,0)/list.length*10)/10}/16<p class="wsby" style="justify-content:flex-start;margin:6px 0 0">${Object.keys(WSO).map(o=>`<span style="--c:${WSO[o].c}">${WSO[o].s} ${Math.round(tot[o]*100/(list.length*4))}%</span>`).join('')}</p></div>
+<div class="wsbd">${list.map((r,i)=>`<div onclick="go('teacher',{t:'ws',id:'${r.id}',d:'${day}',fc:${fc}})" style="cursor:pointer"><span class="rk">${i<3?['🥇','🥈','🥉'][i]:i+1}</span><b>${esc(r.n)}<small style="display:block;font-weight:500">${wsByTxt(r.by)}</small></b><small>⏱ ${mmss(r.sec)}</small><span class="sc">${r.s}<small>/${r.t}</small></span></div>`).join('')}</div>
+<button class="btn" onclick="window.open('https://wa.me/?text='+encodeURIComponent(${esc(JSON.stringify(wa))}),'_blank')">📤 ర్యాంక్ లిస్ట్ WhatsApp లో పంపు</button>`:'<div class="empty">ఈ రోజు ఇంకా ఎవరూ రాయలేదు</div>'}
+${miss.length?`<div class="warn" style="margin-top:10px">❗ రాయనివారు (${miss.length}): ${miss.map(esc).join(', ')}</div>`:''}`;}
+function wsTOne(r){return `<div class="bar" style="margin-bottom:8px"><button class="ib" style="background:#e2e8f0" onclick="go('teacher',{t:'ws',d:'${param.d||''}',fc:${+param.fc||r.c}})">←</button><h2 style="font-size:17px">${esc(r.n)} • ${r.c}వ తరగతి</h2></div>
+<div class="card"><p style="margin:0"><b>మార్కులు: ${r.s} / ${r.t}</b> • ⏱ ${mmss(r.sec)} • ${WSLV[(r.lv||2)-1].t}</p><p class="mut" style="margin:4px 0 0">${fmtD(r.d)} • ${new Date(r.d).toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'})} • ${wsByTxt(r.by)}</p></div>
+${r.ws.map((x,i)=>`<div class="wsck ${wsOk(x)?'':'x'}"><span class="n">${i+1}</span><div class="e"><b style="color:${WSO[x.o].c}">${wsExpr(x)}</b><small>విద్యార్థి: <b>${esc(wsGiven(x))}</b>${wsOk(x)?'':` • సరైనది: ${wsRight(x)}`}</small></div><span style="font-size:22px">${wsOk(x)?'✅':'❌'}</span></div>`).join('')}`;}
 
 /* ---------- షెడ్యూల్ ---------- */
 const SLOTS=[[540,30,'ప్రార్థన & హాజరు'],[570,45,0],[615,45,1],[660,15,'విరామం'],[675,45,2],[720,45,3],[765,60,'మధ్యాహ్న భోజనం'],[825,45,4],[870,45,5],[915,30,'ఆటలు / కథలు']];
@@ -1994,7 +2038,7 @@ ${list.map(t=>`<div class="titem" ${param.nt===t.id?'style="outline:3px solid #2
 /* ---------- ఉపాధ్యాయుల ప్యానెల్ ---------- */
 function tLogin(){if($('#tpin').value===S.pin){tAuth=true;go('teacher');}else toast('PIN తప్పు');}
 function tBack(){tAuth=false;go(S.cur||S.cfg.type||S.offline?'home':'welcome');}
-const TSEC=[['sy','☁️ ఆన్‌లైన్ సింక్'],['tc','👥 ఉపాధ్యాయులు'],['pg','🧑‍🎓 విద్యార్థులు & మార్కులు'],['hw','📒 హోంవర్క్'],['ev','📅 ఈవెంట్/టెస్ట్'],['dq','💬 సందేహాలు'],['ws','✎ వర్క్‌షీట్ తనిఖీ'],['nt','📖 పాఠం నోట్స్'],['lb','📚 పుస్తకాలు/టూల్స్'],['fl','📢 ఫ్లాష్/ఫోటోలు'],['rp','📊 రిపోర్ట్'],['st','⚙️ సెట్టింగ్స్']];
+const TSEC=[['sy','☁️ ఆన్‌లైన్ సింక్'],['tc','👥 ఉపాధ్యాయులు'],['pg','🧑‍🎓 విద్యార్థులు & మార్కులు'],['hw','📒 హోంవర్క్'],['ev','📅 ఈవెంట్/టెస్ట్'],['dq','💬 సందేహాలు'],['ws','📅 రోజువారీ లెక్కలు'],['nt','📖 పాఠం నోట్స్'],['lb','📚 పుస్తకాలు/టూల్స్'],['fl','📢 ఫ్లాష్/ఫోటోలు'],['rp','📊 రిపోర్ట్'],['st','⚙️ సెట్టింగ్స్']];
 function clsSel(id,all){return `<select id="${id}" onchange="fillSubj('${id}','${id}s')">${all&&isAdmin()?'<option value="0">అన్ని తరగతులు</option>':''}${myCls().map(c=>`<option value="${c}">${c}వ తరగతి</option>`).join('')}</select>`;}
 function subjOpts(c){return mySubs(c).map(s=>`<option value="${s}">${SUBJ[s].n}</option>`).join('');}
 function fillSubj(cid,sid){const s=document.getElementById(sid);if(s)s.innerHTML=subjOpts(document.getElementById(cid).value);}
