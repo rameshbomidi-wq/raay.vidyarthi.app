@@ -1512,7 +1512,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.10.27-6';
+const APPV='2026.10.27-7';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -2280,10 +2280,15 @@ function pgMed(a){if(!a.length)return 0;a=a.slice().sort((x,y)=>x-y);const m=a.l
 function pgEff(C,i){const sb=C.subs[i];if(sb.max>=50)return 50;const v=[];C.st.forEach(s=>{const m=s.m[i]||[];if(m[3]!=null&&m[4])v.push(m[3]/pgCodes(m[5]));});return pgMed(v)>(sb.tm&&sb.tm[3]?sb.tm[3]:10)*1.5?50:sb.max;}
 function pgFa1(per,m){if(!m)return null;const tot=m[4],g=m[5]||'';if(tot==null||g==='-')return null;if(tot===0&&m.slice(0,4).every(v=>!v))return m[4]!=null?{ab:1}:null;const n=Math.max(g?pgCodes(g):1,Math.ceil(tot/per-1e-9));return {tot,max:per*n};}
 function pgOrder(c){return c<=2?['tel','eng','mat']:c<=5?['tel','eng','mat','evs']:c<=7?['tel','hin','eng','mat','sci','soc']:['tel','hin','eng','mat','phy','bio','soc'];}
+function pgWhy(t,f){const nm=`(“${f.name}” • ${Math.round(f.size/1024)} KB)`;
+ if(/raiVidyarthiApp_v1|id="gs-code"/.test(t))return 'ఇది యాప్ ఫైల్ (index.html) – ప్రగతి ఫైల్ కాదు '+nm+'. “…Pragathi…html” ఫైల్ ఎంచుకోండి.';
+ if(/Saved by Blink|^\s*From:|MIME-Version/i.test(t.slice(0,800))||/\.mht/i.test(f.name))return 'ఇది Chrome లో “Download page” చేసిన కాపీ – అందులో డేటా ఉండదు '+nm+'. WhatsApp / Files లోని అసలు .html ఫైల్ ఎంచుకోండి.';
+ if(!/<script/i.test(t))return 'ఈ ఫైల్‌లో డేటా (script) లేదు '+nm+' – ఇది సేవ్ చేసిన కాపీ కావచ్చు. అసలు ప్రగతి .html ఫైల్ ఎంచుకోండి.';
+ return 'ఫైల్‌లో విద్యార్థుల జాబితా (DATA) దొరకలేదు '+nm+'. సరైన ప్రగతి ఫైల్ ఎంచుకోండి.';}
 async function pgPick(inp){const f=inp.files&&inp.files[0];if(!f)return;const box=document.getElementById('pgPrev');box.innerHTML='<p class="mut">⏳ చదువుతోంది...</p>';
  try{const txt=await f.text();let o={data:null,hpc:null,sch:null,ps:null};
   if(/\.json$/i.test(f.name)||/^\s*\{/.test(txt)){const j=JSON.parse(txt);if(j.ps)o.ps=j.ps;else if(Array.isArray(j.d))o.hpc=j.d;else throw new Error('ఇది ప్రగతి బ్యాకప్ కాదు');}
-  else{o.data=pgFind(txt,/const\s+DATA\s*=\s*\{/g);o.hpc=pgFind(txt,/const\s+HPC_BASE\s*=\s*\[/g);o.sch=pgFind(txt,/const\s+SCH\s*=\s*\{/g);if(!o.data)throw new Error('ఫైల్‌లో విద్యార్థుల జాబితా (DATA) దొరకలేదు');
+  else{o.data=pgFind(txt,/(?:const|let|var)\s+DATA\s*=\s*\{/g);if(!o.data)throw new Error(pgWhy(txt,f));o.hpc=pgFind(txt,/const\s+HPC_BASE\s*=\s*\[/g);o.sch=pgFind(txt,/const\s+SCH\s*=\s*\{/g);if(!o.data)throw new Error('ఫైల్‌లో విద్యార్థుల జాబితా (DATA) దొరకలేదు');
    o.fa2=pgFind(txt,/const\s+FA2B\s*=\s*\{/g);pgExtra(o,pgFind(txt,/const\s+NEWST\s*=\s*\{/g),pgFind(txt,/const\s+ATTU\s*=\s*\{/g));}
   if(o.ps&&o.ps.hpc)o.hpc=o.ps.hpc;PGIMP=o;box.innerHTML=pgPrevHTML();}catch(e){PGIMP=null;box.innerHTML=`<p class="ansErr">❌ ${esc(e.message)}</p>`;}}
 function pgExtra(o,nw,au){o.nNew=0;o.nAtt=0;
