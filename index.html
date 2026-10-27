@@ -422,6 +422,20 @@ button.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;c
 .wsbd>div.me{outline:2.5px solid #f59e0b;background:#fffbeb}
 .wsbd .rk{width:30px;text-align:center;font-size:20px;font-weight:800;flex:none}.wsbd b{flex:1;min-width:0;font-size:15px}.wsbd>div>small{color:var(--mut);font-size:12px;flex:none}
 .wsbd .sc{font:800 22px 'Baloo Tamma 2',sans-serif;color:#0c8599;flex:none}.wsbd .sc small{font-size:12px;color:var(--mut)}
+
+.wsv>span.dc{position:relative}
+.wsv.sb{grid-template-columns:repeat(var(--w),66px)}.wsv.sb>span.dc{width:66px}
+.wc.sm{position:absolute;width:21px;height:26px;font-size:15px;border-style:dashed;border-radius:7px;color:#c2410c;background:#fff;left:1px;top:10px;z-index:1;padding:0}
+@media(max-width:360px){.wsv.sb{grid-template-columns:repeat(var(--w),58px)}.wsv.sb>span.dc{width:58px}}
+.wc.good{border-color:#16a34a!important;background:#dcfce7!important}.wc.bad{border-color:#e5484d!important;background:#fee2e2!important;color:#991b1b}
+.wspm{background:#eff6ff;border-radius:12px;padding:9px 11px;font-size:14px;line-height:1.55;text-align:left;margin:8px 0 10px;color:#1e3a8a}
+.wskp .nx{background:#dcfce7;color:#166534}
+.wsdw{margin-top:10px;display:flex;flex-direction:column;gap:6px;font:600 16px 'Noto Sans Telugu',sans-serif}
+.wsdr{display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:#f8fafc;border-radius:10px;padding:5px 8px}
+.wsdr .cu{font:800 22px 'Baloo Tamma 2',sans-serif;min-width:30px;color:#7048e8}
+.wsdr .wc{width:36px;height:40px;font-size:24px}.wsdr .wc.pp{width:52px}
+.wsdr em{font-style:normal;font-size:12.5px;border-radius:8px;padding:2px 7px}.wsdr em.ys{background:#dcfce7;color:#166534}.wsdr em.no{background:#fef3c7;color:#92400e}
+.wsdr.sk{opacity:.75}
 </style>
 </head>
 <body>
@@ -1498,7 +1512,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.10.27-2';
+const APPV='2026.10.27-3';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -1782,8 +1796,6 @@ function wsGen(lv,seed){WSU.rnd=WSU.seed(seed);const seen=new Set();let zi=0;con
   if(!p)p=wsMk(o,g());seen.add(o+p.a+'_'+p.b);out.push(p);}});}finally{WSU.rnd=Math.random;}return out;}
 function wsDaySeed(day,c,lv){return parseInt(slHash('ws|'+day+'|'+c+'|'+lv),36)>>>0;}
 /* కణాల వెడల్పు: జవాబు అంకెల సంఖ్య బయటపడకుండా */
-function wsW(p){const L=WSU.L;return p.o==='add'?Math.max(L(p.a),L(p.b))+1:p.o==='sub'?L(p.a):p.o==='mul'?L(p.a)+1:L(p.a);}
-function wsDraftMap(){S.wsd=S.wsd||{};return S.wsd;}
 function wsKey(){return me()+'|'+S.cur.c;}
 function wsDraft(){const d=wsDraftMap()[wsKey()];if(d&&d.m==='day'&&d.day!==todayS()){delete wsDraftMap()[wsKey()];save();return null;}return d||null;}
 function wsGid(day){return 'w'+slHash(S.dev+'|'+me()+'|'+S.cur.c+'|'+day);}
@@ -1795,21 +1807,40 @@ function wsStart(m,lv,resume){const map=wsDraftMap();let d=wsDraft();
   d={m,lv,day,items:wsGen(lv,m==='day'?wsDaySeed(day,S.cur.c,lv):Math.floor(Math.random()*1e9)+1),y:{},i:0,el:0};map[wsKey()]=d;save();}
  d.t0=Date.now();WSR=d;wsSelDefault();go('wsrun');}
 function wsCur(){return WSR.items[WSR.i];}
-function wsY(i){return WSR.y[i]||(WSR.y[i]={a:[],c:[],q:[],r:''});}
-function wsSelDefault(){const p=wsCur(),w=wsW(p),y=wsY(WSR.i);
- if(p.o==='div'){const k=Array.from({length:w},(_,j)=>j).find(j=>!y.q[j]);WSR.sel=k==null?{r:'r',i:0}:{r:'q',i:k};}
- else{let k=-1;for(let j=w-1;j>=0;j--){if(!y.a[j]){k=j;break;}}WSR.sel={r:'a',i:k<0?0:k};}}
-function wsTap(r,i){if(wsY(WSR.i).k&&r!=='c')return;WSR.sel={r,i};render();}
-function wsKeyIn(k){const p=wsCur(),w=wsW(p),y=wsY(WSR.i),s=WSR.sel;if(y.k)return;
- if(k==='bk'){if(s.r==='r'){y.r='';}else{const arr=y[s.r];if(arr[s.i])arr[s.i]='';else{const ni=s.r==='q'?s.i-1:s.i+1;if(ni>=0&&ni<w){WSR.sel={r:s.r,i:ni};arr[ni]='';}}}}
- else{if(s.r==='r'){y.r=k;}
-  else if(s.r==='c'){y.c[s.i]=k;WSR.sel={r:'a',i:s.i};}
-  else if(s.r==='a'){y.a[s.i]=k;if(s.i>0)WSR.sel={r:'a',i:s.i-1};}
-  else if(s.r==='q'){y.q[s.i]=k;if(s.i<w-1)WSR.sel={r:'q',i:s.i+1};else WSR.sel={r:'r',i:0};}}
+/* ---- పద్ధతి ప్రకారం గడుల క్రమం (ముందు మార్పిడి/గుర్తు, తరువాత జవాబు అంకె) ---- */
+const WSPL=['ఒకట్ల','పదుల','వందల','వేల'];
+function wsLa(p){const L=WSU.L;return p.o==='add'?Math.max(L(p.a),L(p.b)):L(p.a);}
+function wsW(p){return p.o==='sub'||p.o==='div'?WSU.L(p.a):wsLa(p)+1;}
+function wsSteps(p){const st=[],la=wsLa(p);
+ if(p.o==='add'||p.o==='mul'){for(let pl=0;pl<la;pl++){st.push({id:(pl<la-1?'c':'a')+(pl+1),opt:1,pl,ty:pl<la-1?'cr':'lead'});st.push({id:'a'+pl,pl,ty:'ans'});}}
+ else if(p.o==='sub'){for(let pl=0;pl<la;pl++){if(pl<la-1){st.push({id:'t'+pl,opt:1,pl,ty:'tp'});st.push({id:'b'+(pl+1),opt:1,pl,ty:'bp'});}st.push({id:'a'+pl,pl,ty:'ans',opt:pl===la-1&&la>1?1:0});}}
+ else{const n=WSU.L(p.a);for(let k=0;k<n;k++){st.push({id:'q'+k,k,ty:'q',opt:1});st.push({id:'p'+k,k,ty:'p',multi:1});st.push({id:'w'+k,k,ty:'w'});}st.push({id:'rm',ty:'rm'});}
+ return st;}
+function wsExp(p){const e={},dg=WSU.dg,la=wsLa(p);
+ if(p.o==='add'||p.o==='mul'){let c=0;for(let pl=0;pl<la;pl++){const s=p.o==='add'?dg(p.a,pl)+dg(p.b,pl)+c:dg(p.a,pl)*p.b+c,cy=Math.floor(s/10);
+   e[(pl<la-1?'c':'a')+(pl+1)]=cy?String(cy):'';e['a'+pl]=String(s%10);c=cy;}}
+ else if(p.o==='sub'){let bor=0;const dl=WSU.L(p.x);for(let pl=0;pl<la;pl++){const x=dg(p.a,pl),y=dg(p.b,pl)+bor,need=pl<la-1&&x<y;
+   if(pl<la-1){e['t'+pl]=need?'1':'';e['b'+(pl+1)]=need?'1':'';}e['a'+pl]=pl<dl?String(need?x+10-y:x-y):'';bor=need?1:0;}}
+ else{let rem=0,started=false;String(p.a).split('').forEach((ch,k)=>{const cur=rem*10+(+ch),q=Math.floor(cur/p.b);
+   if(q===0&&!started){e['q'+k]='';e['lead'+k]=1;rem=cur;}else{started=true;e['q'+k]=String(q);e['p'+k]=String(q*p.b);e['w'+k]=String(cur-q*p.b);rem=cur-q*p.b;}});e.rm=String(rem);}
+ return e;}
+function wsDraftMap(){S.wsd2=S.wsd2||{};return S.wsd2;}
+function wsY(i){return WSR.y[i]||(WSR.y[i]={v:{},si:0});}
+function wsSkip(p,y,s){if(s.ty==='bp')return !y.v['t'+s.pl];if(s.ty==='p'||s.ty==='w'){const q=y.v['q'+s.k]||'';return !q||(q==='0'&&wsDivCur(p,y,s.k)<p.b);}return false;}
+function wsStepIx(p,y,from,dir){const st=wsSteps(p);let i=from;while(i>=0&&i<st.length&&wsSkip(p,y,st[i]))i+=dir;return i;}
+function wsSelDefault(){const p=wsCur(),y=wsY(WSR.i);y.si=wsStepIx(p,y,Math.min(y.si||0,wsSteps(p).length),1);}
+function wsTap(id){const p=wsCur(),y=wsY(WSR.i);if(y.k)return;const st=wsSteps(p),i=st.findIndex(s=>s.id===id);if(i<0||wsSkip(p,y,st[i]))return;y.si=i;render();}
+function wsAdv(p,y){y.si=wsStepIx(p,y,y.si+1,1);}
+function wsKeyIn(k){const p=wsCur(),y=wsY(WSR.i);if(y.k)return;const st=wsSteps(p),s=st[y.si];
+ if(k==='bk'){if(s&&y.v[s.id]){y.v[s.id]=s.multi?y.v[s.id].slice(0,-1):'';}else{const j=wsStepIx(p,y,(s?y.si:st.length)-1,-1);if(j>=0){y.si=j;y.v[st[j].id]=st[j].multi?(y.v[st[j].id]||'').slice(0,-1):'';}}}
+ else if(k==='nx'){if(!s)return;if(!s.opt&&!y.v[s.id])return toast('ఈ గడిలో అంకె రాయాలి');wsAdv(p,y);}
+ else{if(!s)return;if(s.multi){y.v[s.id]=((y.v[s.id]||'')+k).slice(-2);const cu=wsDivCur(p,y,s.k);if(y.v[s.id].length>=2||(cu!=null&&+y.v[s.id]*10>cu))wsAdv(p,y);}else{y.v[s.id]=k;wsAdv(p,y);}}
  save();render();}
-function wsVal(arr,w,both){let a=Array.from({length:w},(_,j)=>arr[j]||'');while(a.length&&!a[0])a.shift();if(both)while(a.length&&!a[a.length-1])a.pop();
+function wsVal(arr,both){let a=arr.slice();while(a.length&&!a[0])a.shift();if(both)while(a.length&&!a[a.length-1])a.pop();
  if(!a.length)return '';if(a.some(x=>!x))return '?'+a.map(x=>x||'_').join('');return String(Number(a.join('')));}
-function wsAns(i){const p=WSR.items[i],w=wsW(p),y=WSR.y[i];if(!y)return {v:'',r:''};return p.o==='div'?{v:wsVal(y.q,w,1),r:y.r||''}:{v:wsVal(y.a,w),r:''};}
+function wsAns(i){const p=WSR.items[i],w=wsW(p),y=WSR.y[i];if(!y)return {v:'',r:''};
+ if(p.o==='div')return {v:wsVal(Array.from({length:w},(_,k)=>y.v['q'+k]||''),1),r:y.v.rm||''};
+ return {v:wsVal(Array.from({length:w},(_,j)=>y.v['a'+(w-1-j)]||'')),r:''};}
 function wsFilled(i){const a=wsAns(i),p=WSR.items[i];return !!a.v&&(p.o!=='div'||a.r!=='');}
 function wsOk(x){return x.v===String(x.x)&&(x.o!=='div'||x.r===String(x.rm));}
 function wsItemOk(i){const p=WSR.items[i],a=wsAns(i);return wsOk({o:p.o,x:p.x,rm:p.rm,v:a.v,r:a.r});}
@@ -1819,25 +1850,51 @@ function wsCheck(){const i=WSR.i;if(!wsFilled(i))return toast(wsCur().o==='div'?
  const y=wsY(i);y.k=1;y.ok=wsItemOk(i)?1:0;beep(y.ok?'ok':'no');save();render();}
 function wsGo(i){if(i<0||i>=WSR.items.length)return;WSR.i=i;wsSelDefault();save();render();}
 function wsNext(){const n=WSR.items.length;for(let j=1;j<=n;j++){const k=(WSR.i+j)%n;if(!(WSR.y[k]&&WSR.y[k].k))return wsGo(k);}wsFinish();}
-function wsCell(r,i,v,cls,lock){const on=!lock&&WSR.sel.r===r&&WSR.sel.i===i;return `<button class="wc ${cls||''} ${on?'on':''}" ${lock&&r!=='c'?'disabled':''} onclick="wsTap('${r}',${i})">${esc(v||'')}</button>`;}
-function wsProbHtml(p,y,w){const sy=WSO[p.o].s,lk=!!y.k;
- if(p.o==='div'){const ad=String(p.a).split('');
-  return `<div class="wsd"><div class="wsdh"><b>${p.b}</b><i>)</i>${ad.map(d=>`<b>${d}</b>`).join('')}<i>(</i><span class="wsqr">${Array.from({length:w},(_,j)=>wsCell('q',j,y.q[j],'',lk)).join('')}</span></div>
-  <div class="wsrm">భాగఫలం ← పై గడులలో &nbsp; • &nbsp; శేషం ${wsCell('r',0,y.r,'',lk)}</div></div>`;}
- const col=n=>{const t=String(n),pad=w-t.length;return Array.from({length:w},(_,j)=>`<span>${j>=pad?t[j-pad]:''}</span>`).join('');};
- return `<div class="wsv" style="--w:${w+1}"><span></span>${Array.from({length:w},(_,j)=>wsCell('c',j,y.c[j],'cr',lk)).join('')}
- <span></span>${col(p.a)}<span class="op" style="color:${WSO[p.o].c}">${sy}</span>${col(p.b)}<span class="ln"></span>
- <span></span>${Array.from({length:w},(_,j)=>wsCell('a',j,y.a[j],'',lk)).join('')}<span class="ln"></span></div>`;}
+/* గడి: చెక్ చేశాక సరి/తప్పు రంగు */
+function wsEq(s,v,e){v=v||'';e=e==null?'':e;return v===e||(!!(s&&s.opt)&&(v||'0')==='0'&&(e||'0')==='0');}
+function wsCell(p,y,id,cls){const st=wsSteps(p),i=st.findIndex(s=>s.id===id),s=st[i],v=y.v[id]||'';let c=cls||'';
+ if(y.k&&s&&!(s.ty==='p'||s.ty==='w')||y.k&&s&&!wsExp(p)['lead'+s.k]){const e=wsExp(p)[id];if(s&&(v||e))c+=wsEq(s,v,e)?' good':' bad';}
+ else if(!y.k&&i===y.si)c+=' on';
+ return `<button class="wc ${c}" onclick="wsTap('${id}')">${esc(v)}</button>`;}
+function wsDivCur(p,y,k){const ds=String(p.a).split('').map(Number);let carry=0;for(let j=0;j<k;j++){const cur=carry*10+ds[j],q=y.v['q'+j]||'';
+  if(!q||(q==='0'&&cur<p.b))carry=cur;else{const w=y.v['w'+j];if(w==null||w==='')return null;carry=+w;}}return carry*10+ds[k];}
+function wsProbHtml(p,y){const sy=WSO[p.o].s,w=wsW(p),dg=WSU.dg;
+ if(p.o==='div'){const ds=String(p.a).split('');
+  const rows=ds.map((_,k)=>{const cur=wsDivCur(p,y,k),q=y.v['q'+k]||'';const skip=!q||(q==='0'&&cur!=null&&cur<p.b);
+   const lab=q&&cur!=null?(skip?'<em class="no">రాదు → తర్వాతి అంకెతో</em>':cur%p.b===0?'<em class="ys">వస్తుంది ✓</em>':`<em class="no">రాదు → ${p.b}×${q}</em>`):'';
+   return `<div class="wsdr ${skip&&q?'sk':''}"><span class="cu">${cur==null?'?':cur}</span><span>÷ ${p.b} →</span>${skip?`<span class="mut">${q?'0':'—'}</span>`:`<span>${p.b} × ${q||'?'} =</span>${wsCell(p,y,'p'+k,'pp')}<span>శేషం</span>${wsCell(p,y,'w'+k)}`}${lab}</div>`;}).join('');
+  return `<div class="wsd"><div class="wsdh"><b>${p.b}</b><i>)</i>${ds.map(d=>`<b>${d}</b>`).join('')}<i>(</i><span class="wsqr">${ds.map((_,k)=>wsCell(p,y,'q'+k)).join('')}</span></div>
+  <div class="wsdw">${rows}</div><div class="wsrm">చివరి శేషం ${wsCell(p,y,'rm')}</div></div>`;}
+ const la=wsLa(p),num=(n,isTop)=>Array.from({length:w},(_,j)=>{const pl=w-1-j,has=pl<WSU.L(n);const d=has?String(dg(n,pl)):'';
+   let ex='';if(p.o==='sub'){if(isTop&&pl<la-1)ex=wsCell(p,y,'t'+pl,'sm st');if(!isTop&&pl>=1&&pl<la)ex=wsCell(p,y,'b'+pl,'sm sb');}
+   return `<span class="dc">${ex}${d}</span>`;}).join('');
+ const crow=p.o==='sub'?'':`<span></span>${Array.from({length:w},(_,j)=>{const pl=w-1-j;return pl>=1&&pl<la?wsCell(p,y,'c'+pl,'cr'):'<span></span>';}).join('')}`;
+ return `<div class="wsv ${p.o==='sub'?'sb':''}" style="--w:${w+1}">${crow}<span></span>${num(p.a,1)}<span class="op" style="color:${WSO[p.o].c}">${sy}</span>${num(p.b,0)}<span class="ln"></span>
+ <span></span>${Array.from({length:w},(_,j)=>wsCell(p,y,'a'+(w-1-j))).join('')}<span class="ln"></span></div>`;}
+function wsPrompt(p,y){const st=wsSteps(p),s=st[y.si];if(!s)return '✅ అన్ని గడులు అయ్యాయి – <b>"✓ జవాబు చూడు"</b> నొక్కు';const dg=WSU.dg,P=WSPL;
+ if(p.o==='add'||p.o==='mul'){const cin=s.pl>0?(+y.v['c'+s.pl]||0):0,ex=p.o==='add'?`${dg(p.a,s.pl)} + ${dg(p.b,s.pl)}${cin?' + '+cin:''}`:`${dg(p.a,s.pl)} × ${p.b}${cin?' + '+cin:''}`;
+  if(s.ty==='cr')return `<b>${P[s.pl]} స్థానం:</b> ${ex} = ? <br>10 దాటితే ముందు <b>మార్పిడి అంకెను ${P[s.pl+1]} స్థానం పైన</b> రాయి. లేకపోతే ▶`;
+  if(s.ty==='lead')return `<b>చివరి (${P[s.pl]}) స్థానం:</b> ${ex} = ? <br>10 దాటితే ముందు మార్పిడి అంకెను <b>${P[s.pl+1]} స్థానంలో</b> రాయి. లేకపోతే ▶`;
+  return `ఇప్పుడు <b>${P[s.pl]} స్థానంలో</b> జవాబు అంకె రాయి (${ex})`;}
+ if(p.o==='sub'){const bin=s.pl>0?(+y.v['b'+s.pl]||0):0,x=dg(p.a,s.pl),yy=dg(p.b,s.pl)+bin;
+  if(s.ty==='tp')return `<b>${P[s.pl]} స్థానం:</b> ${x} నుండి ${dg(p.b,s.pl)}${bin?' + 1':''} తీసివేయగలమా? <br>రాకపోతే ముందు <b>పై అంకె ముందు 1</b> రాయి. వస్తే ▶`;
+  if(s.ty==='bp')return `ఇప్పుడు <b>కింది సంఖ్యలో ${P[s.pl+1]} స్థానం అంకెకు 1</b> రాయి (కలపాలి)`;
+  return `<b>${P[s.pl]} స్థానంలో</b> జవాబు రాయి (${y.v['t'+s.pl]?'1'+x:x} − ${yy})${s.opt?' • 0 అయితే ▶':''}`;}
+ const cur=s.ty==='rm'?null:wsDivCur(p,y,s.k),q=s.k!=null?y.v['q'+s.k]:'';
+ if(s.ty==='q')return `<b>${cur==null?'?':cur}</b> లో <b>${p.b}</b> ఎన్నిసార్లు? ఎక్కంలో ఉంటే <b>"వస్తుంది"</b>, లేకపోతే <b>"రాదు"</b> – దగ్గరి చిన్న విలువ తీసుకో.${cur!=null&&cur<p.b?' (చిన్నది అయితే ▶)':''}`;
+ if(s.ty==='p')return `${p.b} × ${q} = ? (కింద రాయి)`;
+ if(s.ty==='w')return `${cur} − ${y.v['p'+s.k]||'?'} = ? (మిగిలింది)`;
+ return 'చివరి శేషం రాయి';}
 function wsRight(x){return x.o==='div'?`${x.x}, శేషం ${x.rm}`:String(x.x);}
-V.wsrun=()=>{if(!WSR)return '<div class="empty">పత్రం లేదు</div>';const p=wsCur(),w=wsW(p),y=wsY(WSR.i),n=WSR.items.length,ck=wsChecked();
- const fb=y.k?(y.ok?`<div class="wsfb ok">✅ సరైన జవాబు! <b>+1 మార్కు</b></div>`:`<div class="wsfb no">❌ తప్పు. సరైన జవాబు: <b>${wsRight(p)}</b></div>`):'';
+V.wsrun=()=>{if(!WSR)return '<div class="empty">పత్రం లేదు</div>';const p=wsCur(),y=wsY(WSR.i),n=WSR.items.length,ck=wsChecked();
+ const fb=y.k?(y.ok?`<div class="wsfb ok">✅ సరైన జవాబు! <b>+1 మార్కు</b></div>`:`<div class="wsfb no">❌ తప్పు. సరైన జవాబు: <b>${wsRight(p)}</b><br><small>ఎరుపు గడులు చూడు – అక్కడ పొరపాటు</small></div>`):'';
  return `<div class="trbar"><button class="ib" onclick="wsQuit()">✕</button><b>${WSR.m==='day'?'📅 నేటి లెక్కలు':'✎ అభ్యాసం'} – ${WSLV[WSR.lv-1].t}</b><span class="wsmk">⭐ ${wsMarks()}/${n}</span></div>
 <div class="prog"><i style="width:${ck/n*100}%"></i></div>
 <div class="wsdots">${WSR.items.map((q,i)=>{const t=WSR.y[i];return `<button class="${i===WSR.i?'on':''} ${t&&t.k?(t.ok?'ok':'no'):''}" style="--c:${WSO[q.o].c}" onclick="wsGo(${i})">${i+1}</button>`;}).join('')}</div>
 <div class="qcard wsq" style="border-top:6px solid ${WSO[p.o].c}"><small>లెక్క ${WSR.i+1} / ${n} • <b style="color:${WSO[p.o].c}">${WSO[p.o].n}</b></small>
-<div class="wsbox ${y.k?(y.ok?'ok':'no'):''}">${wsProbHtml(p,y,w)}</div>${fb}
-${y.k?'':`<p class="mut wshint">${p.o==='div'?'ఎడమ నుండి ఒక్కొక్క అంకె: "వస్తుంది" / "రాదు". భాగఫలం పై గడులలో, శేషం కింద రాయి.':'ఒకట్ల నుండి మొదలుపెట్టు. మార్పిడి ఉంటే ముందు పై చిన్న గడిలో రాసి, తర్వాత జవాబు రాయి.'}</p>
-<div class="wskp">${['1','2','3','4','5','6','7','8','9','bk','0','sl'].map(k=>k==='bk'?`<button onclick="wsKeyIn('bk')">⌫</button>`:k==='sl'?`<button class="sl" onclick="slOpen()">✏️ రఫ్</button>`:`<button onclick="wsKeyIn('${k}')">${k}</button>`).join('')}</div>`}</div>
+<div class="wsbox">${wsProbHtml(p,y)}</div>${fb}
+${y.k?'':`<div class="wspm">👉 ${wsPrompt(p,y)}</div>
+<div class="wskp">${['1','2','3','4','5','6','7','8','9','bk','0','nx'].map(k=>k==='bk'?`<button onclick="wsKeyIn('bk')">⌫</button>`:k==='nx'?`<button class="nx" onclick="wsKeyIn('nx')">▶</button>`:`<button onclick="wsKeyIn('${k}')">${k}</button>`).join('')}</div>`}</div>
 <div class="row2 qnav">${y.k?`<button class="btn" onclick="wsNext()">${ck===n?'ఫలితం చూడు 🏆':'తర్వాత లెక్క ▶'}</button>`:`<button class="btn ghost" ${WSR.i?'':'disabled'} onclick="wsGo(WSR.i-1)">◀</button><button class="btn wsok" onclick="wsCheck()">✓ జవాబు చూడు</button>`}</div>`;};
 function wsQuit(){if(WSR){WSR.el=(WSR.el||0)+Math.round((Date.now()-(WSR.t0||Date.now()))/1000);save();}toast('మధ్యలో ఆపాము – తర్వాత కొనసాగించవచ్చు');go('test');}
 function wsFinish(){const n=WSR.items.length,sec=(WSR.el||0)+Math.round((Date.now()-(WSR.t0||Date.now()))/1000);

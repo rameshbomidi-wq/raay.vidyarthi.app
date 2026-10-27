@@ -1,5 +1,5 @@
 /* రాయ్ విద్యార్థి యాప్ – Service Worker (ఆఫ్లైన్ పనిచేయడానికి) */
-const VER = 'rai-vidyarthi-v6';
+const VER = 'rai-vidyarthi-v7';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-96.png', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 const BASE = new URL('./', self.location).pathname;
 
