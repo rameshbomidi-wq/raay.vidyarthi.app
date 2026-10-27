@@ -1512,7 +1512,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.10.27-3';
+const APPV='2026.10.27-4';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -1900,9 +1900,9 @@ function wsQuit(){if(WSR){WSR.el=(WSR.el||0)+Math.round((Date.now()-(WSR.t0||Dat
 function wsFinish(){const n=WSR.items.length,sec=(WSR.el||0)+Math.round((Date.now()-(WSR.t0||Date.now()))/1000);
  const ws=WSR.items.map((p,i)=>{const a=wsAns(i),t=WSR.y[i]||{};return {o:p.o,a:p.a,b:p.b,x:p.x,rm:p.rm,v:t.k?a.v:'',r:t.k?a.r:''};});
  const s=ws.filter(wsOk).length,by={};Object.keys(WSO).forEach(o=>{by[o]=ws.filter(x=>x.o===o&&wsOk(x)).length;});
- const r={id:uid(),n:me(),c:S.cur.c,sb:'mat',kind:'ws',m:WSR.m,lv:WSR.lv,day:WSR.day,s,t:n,sec,by,d:new Date().toISOString(),ws};
+ const lk=(S.cardLink||{})[cardKey()],sid=lk&&lk.sid||'';const r={id:uid(),n:me(),c:S.cur.c,sid,sb:'mat',kind:'ws',m:WSR.m,lv:WSR.lv,day:WSR.day,s,t:n,sec,by,d:new Date().toISOString(),ws};
  const day=WSR.m==='day';delete wsDraftMap()[wsKey()];WSR=null;put('results',r);
- if(day)put('games',{id:wsGid(r.day),n:me(),c:S.cur.c,g:'ws',s,t:n,sec,by,lv:r.lv,day:r.day,d:r.d});
+ if(day)put('games',{id:wsGid(r.day),n:me(),c:S.cur.c,sid,g:'ws',s,t:n,sec,by,lv:r.lv,day:r.day,d:r.d});
  if(s*100/n>=80){setTimeout(confetti,200);beep('win');}go('wsres',{id:r.id});}
 function wsExpr(x){return `${x.a} ${WSO[x.o].s} ${x.b}`;}
 function wsGiven(x){if(!x.v)return '—';const v=x.v.startsWith('?')?x.v.slice(1).replace(/_/g,'□'):x.v;return x.o==='div'?`${v}, శేషం ${x.r===''?'—':x.r}`:v;}
@@ -1940,14 +1940,16 @@ function wsTList(){const day=param.d||todayS(),cls=myCls(),lastR=live('results')
  const rs=live('results').filter(r=>r.kind==='ws'&&r.m==='day'&&r.day===day&&r.c===fc&&canSee(r.c,'mat'));
  const best={};rs.forEach(r=>{const k=r.n;if(!best[k]||r.s>best[k].s||(r.s===best[k].s&&r.sec<best[k].sec))best[k]=r;});
  const list=Object.values(best).sort((a,b)=>b.s-a.s||a.sec-b.sec);
- const st=live('students').filter(s=>+s.c===fc).map(s=>s.n),miss=[...new Set(st)].filter(n=>!best[n]);
+ const ros=typeof pgRoster==='function'?pgRoster(fc):[],nk=x=>String(x||'').toLowerCase().replace(/[^a-z\u0C00-\u0C7F ]/g,' ').split(/\s+/).filter(Boolean).sort().join('');
+ const doneSid=new Set(list.map(r=>r.sid).filter(Boolean)),doneNm=new Set(list.map(r=>nk(r.n)));
+ const miss=ros.length?ros.filter(x=>!doneSid.has(String(x.sid))&&!doneNm.has(nk(x.n))).map(x=>x.n):[...new Set(live('students').filter(s=>+s.c===fc).map(s=>s.n))].filter(n=>!best[n]);
  const tot={};Object.keys(WSO).forEach(o=>{tot[o]=list.reduce((a,r)=>a+((r.by||{})[o]||0),0);});
  const days=Array.from({length:7},(_,i)=>addDays(todayS(),-i));
  const wa=`📅 నేటి లెక్కలు – ${fmtD(day)} – ${fc}వ తరగతి\n`+list.map((r,i)=>`${i+1}. ${r.n} – ${r.s}/${r.t} (⏱ ${mmss(r.sec)})`).join('\n')+(miss.length?`\n❗ రాయనివారు: ${miss.join(', ')}`:'')+'\n— రాయ్ ఎడ్యుకేషన్';
  return `<div class="card" style="padding:12px"><b>📅 రోజువారీ లెక్కల మార్కులు</b><p class="mut" style="margin:4px 0 0">ప్రతి రోజూ ఒక్కో తరగతికి 16 లెక్కలు (+ − × ÷ ఒక్కోటి 4). స్థాయి: 1–2 తరగతులు సులభం • 3–4 మధ్యస్థం • 5+ కఠినం. విద్యార్థి రాసిన వెంటనే ఇక్కడ వస్తుంది.</p></div>
 <div class="tchips">${cls.map(c=>`<button class="${fc===c?'on':''}" onclick="go('teacher',{t:'ws',d:'${day}',fc:${c}})">${c}వ తరగతి</button>`).join('')}</div>
 <div class="tchips">${days.map(d=>`<button class="${d===day?'on':''}" onclick="go('teacher',{t:'ws',d:'${d}',fc:${fc}})">${d===todayS()?'ఈరోజు':parseD(d).getDate()+' '+MON[parseD(d).getMonth()].slice(0,3)}</button>`).join('')}</div>
-${list.length?`<div class="card" style="padding:10px 12px"><b>${list.length} మంది రాశారు</b> • సగటు ${Math.round(list.reduce((a,r)=>a+r.s,0)/list.length*10)/10}/16<p class="wsby" style="justify-content:flex-start;margin:6px 0 0">${Object.keys(WSO).map(o=>`<span style="--c:${WSO[o].c}">${WSO[o].s} ${Math.round(tot[o]*100/(list.length*4))}%</span>`).join('')}</p></div>
+${list.length?`<div class="card" style="padding:10px 12px"><b>${list.length}${ros.length?' / '+ros.length:''} మంది రాశారు</b> • సగటు ${Math.round(list.reduce((a,r)=>a+r.s,0)/list.length*10)/10}/16<p class="wsby" style="justify-content:flex-start;margin:6px 0 0">${Object.keys(WSO).map(o=>`<span style="--c:${WSO[o].c}">${WSO[o].s} ${Math.round(tot[o]*100/(list.length*4))}%</span>`).join('')}</p></div>
 <div class="wsbd">${list.map((r,i)=>`<div onclick="go('teacher',{t:'ws',id:'${r.id}',d:'${day}',fc:${fc}})" style="cursor:pointer"><span class="rk">${i<3?['🥇','🥈','🥉'][i]:i+1}</span><b>${esc(r.n)}<small style="display:block;font-weight:500">${wsByTxt(r.by)}</small></b><small>⏱ ${mmss(r.sec)}</small><span class="sc">${r.s}<small>/${r.t}</small></span></div>`).join('')}</div>
 <button class="btn" onclick="window.open('https://wa.me/?text='+encodeURIComponent(${esc(JSON.stringify(wa))}),'_blank')">📤 ర్యాంక్ లిస్ట్ WhatsApp లో పంపు</button>`:'<div class="empty">ఈ రోజు ఇంకా ఎవరూ రాయలేదు</div>'}
 ${miss.length?`<div class="warn" style="margin-top:10px">❗ రాయనివారు (${miss.length}): ${miss.map(esc).join(', ')}</div>`:''}`;}
