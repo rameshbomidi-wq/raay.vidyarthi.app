@@ -379,6 +379,20 @@ button.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;c
 .pgatt td{min-width:30px}.pgleg{font-size:11px;color:var(--mut);margin-top:10px}.pgdist{display:flex;gap:6px;flex-wrap:wrap}
 .pgin{font-size:13px}.pgin td.s{text-align:left;white-space:nowrap}.pgin input{width:56px;padding:7px 4px;text-align:center;border-radius:8px;margin:0}.pgin th small{font-weight:400;color:var(--mut)}
 @media print{body.pgprint *{visibility:hidden!important}body.pgprint .pgcard,body.pgprint .pgcard *{visibility:visible!important}body.pgprint .pgcard{position:absolute;left:0;top:0;width:100%;box-shadow:none;border-radius:0}body.pgprint .tscroll{overflow:visible!important}body.pgprint .slfab{display:none!important}}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.g3 label{font-size:12.5px}.g3 label small{display:block;color:var(--mut);font-weight:500}
+.qpav .qpbig{font-size:17px;margin-bottom:6px}.qpav .qpbig b{color:#16a34a;font-size:22px}.qpauto{display:inline-block;background:#ede9fe;color:#6d28d9;border-radius:10px;padding:2px 8px;font-size:12.5px;font-weight:700}
+.qpchips{display:flex;flex-wrap:wrap;gap:5px;margin:4px 0}.qpchip{background:#f1f5f9;border-radius:10px;padding:3px 8px;font-size:12px}.qph4{margin:12px 0 2px;font-size:15px}
+.qpq{display:flex;gap:8px;align-items:flex-start;border-bottom:1px dashed var(--line);padding:10px 0}.qpq .qn{width:26px;height:26px;border-radius:50%;background:#0b5e73;color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+.qpq .qb{flex:1;min-width:0}.qpq .qt{font-weight:600;line-height:1.5}.qpo{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:4px;font-size:14px}.qpo .ok{color:#15803d;font-weight:700}
+.qptags{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}.qptags span{font-size:11px;background:#e0f2fe;color:#075985;border-radius:8px;padding:1px 7px}
+.qpq .qbtn{display:flex;flex-direction:column;gap:4px}.qpq .qbtn button{border:0;background:#f1f5f9;border-radius:10px;width:36px;height:34px;font-size:15px}
+.frin{width:100%;font-size:22px;padding:14px;border:2px solid var(--c,#2aa6a6);border-radius:14px;text-align:center;margin:10px 0}
+#qpPrint{display:none}
+@media print{body.qpprint>*:not(#qpPrint){display:none!important}body.qpprint #qpPrint{display:block!important}body.qpprint,html:has(body.qpprint){background:#fff!important}}
+.qpsheet{font-family:'Noto Sans Telugu',sans-serif;color:#000;padding:8px 14px;font-size:14px}.qpsheet .qph{text-align:center;border-bottom:2px solid #000;padding-bottom:6px;margin-bottom:8px}
+.qpsheet .qph h2{font-size:19px;margin:2px 0}.qpsheet .qpnm{display:flex;justify-content:space-between;gap:8px;margin-top:8px;font-size:13px;flex-wrap:wrap}
+.qpsheet .qpol{padding-left:22px}.qpsheet .qpol li{margin:0 0 10px;break-inside:avoid}.qpsheet .qq i{font-style:normal;font-size:12px;color:#444}.qpsheet .qo{display:flex;flex-wrap:wrap;gap:4px 22px;margin-top:3px}
+.qpsheet .qline{margin-top:6px;color:#333}.qpsheet .qpkey{break-before:page;margin-top:16px;border-top:2px dashed #000;padding-top:8px}.qpsheet .qpkey ol{columns:2;padding-left:22px}.qpsheet .qpft{text-align:center;font-size:11px;color:#555;margin-top:12px}
 /* అభ్యాస పత్రం */
 .wsdots{display:flex;flex-wrap:wrap;gap:5px;padding:10px 14px 0}
 .wsdots button{width:34px;height:34px;border-radius:50%;border:2px solid var(--c);background:#fff;color:var(--c);font-weight:700;font-size:13px}
@@ -452,8 +466,8 @@ button.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;c
  ******************************************************************/
 var SCHOOL_KEY  = '__SCHOOL_KEY__';   // విద్యార్థుల కీ (జాయిన్ లింక్‌లో వెళ్తుంది)
 var TEACHER_KEY = '__TEACHER_KEY__';  // ఉపాధ్యాయుల కీ – ఎవరికీ ఇవ్వకండి
-var ALL_COLS = ['students','hw','events','doubts','notes','results','games','subs','teachers','roster','marks'];
-var TEACHER_COLS = ['hw','events','notes','roster','marks'];
+var ALL_COLS = ['students','hw','events','doubts','notes','results','games','subs','teachers','roster','marks','qb','papers'];
+var TEACHER_COLS = ['hw','events','notes','roster','marks','qb','papers'];
 var PRIV = ['students','results','doubts','subs'];  // విద్యార్థికి తన డేటా మాత్రమే
 var SUBJ = {tel:'తెలుగు', hin:'హిందీ', eng:'English', mat:'గణితం', evs:'పరిసరాల విజ్ఞానం', sci:'సైన్స్', phy:'భౌతిక శాస్త్రం', bio:'జీవ శాస్త్రం', soc:'సాంఘిక శాస్త్రం'};
 
@@ -500,7 +514,7 @@ function cleanT_(col, js, admin) {
 /* డేటా చదవడం (pull) */
 function doGet(e) {
   var p = (e && e.parameter) || {};
-  if (p.a === 'ping') return json_({ok:true, up:true, roster:true});
+  if (p.a === 'ping') return json_({ok:true, up:true, roster:true, qp:true});
   var w = who_(p.k);
   if (!w) return json_({ok:false, err:'key'});
   if (p.a === 'card') return card_(p, db_(), SpreadsheetApp.getActive().getName(), 'cardf_one');
@@ -638,7 +652,7 @@ function rm_(b, a, sid) {
 }
 
 /* 🎓 విద్యార్థి ప్రగతి కార్డు – విద్యార్థి ID + పుట్టిన తేదీ సరిపోతేనే, తన రికార్డు మాత్రమే */
-var TONLY = ['roster', 'marks'];  // విద్యార్థులకు ఎప్పుడూ పంపము
+var TONLY = ['roster', 'marks', 'qb'];  // విద్యార్థులకు ఎప్పుడూ పంపము
 function sha_(t) { return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t, Utilities.Charset.UTF_8).map(function (b) { return ('0' + (b & 255).toString(16)).slice(-2); }).join(''); }
 function tonlyOk_(col, js, me) {
   if (TONLY.indexOf(col) < 0 || !me || !me.cls || !me.cls.length) return true;
@@ -708,8 +722,8 @@ function put_(name, head, rows) {
  * ప్రతి పాఠశాలకు వేరే షీట్ (S_కోడ్) – ఒకరి డేటా మరొకరికి కనిపించదు.
  * PDF అప్‌లోడ్ కోసం: ఫంక్షన్ లిస్ట్‌లో driveSetup ఎంచుకుని ▶ Run → Allow (ఒక్కసారి)
  ******************************************************************/
-var COLS = ['students','hw','events','doubts','notes','results','games','subs','teachers','roster','marks'];
-var TCOLS = ['hw','events','notes','roster','marks'];
+var COLS = ['students','hw','events','doubts','notes','results','games','subs','teachers','roster','marks','qb','papers'];
+var TCOLS = ['hw','events','notes','roster','marks','qb','papers'];
 var PRIV = ['students','results','doubts','subs'];  // విద్యార్థికి తన డేటా మాత్రమే
 var MAX_REG_PER_HOUR = 40;
 var SUBJ = {tel:'తెలుగు', hin:'హిందీ', eng:'English', mat:'గణితం', evs:'పరిసరాల విజ్ఞానం', sci:'సైన్స్', phy:'భౌతిక శాస్త్రం', bio:'జీవ శాస్త్రం', soc:'సాంఘిక శాస్త్రం'};
@@ -787,7 +801,7 @@ function auth_(p) {
 /* డేటా చదవడం */
 function doGet(e) {
   var p = (e && e.parameter) || {};
-  if (p.a === 'ping') return json_({ok: true, multi: true, up: true, roster: true});
+  if (p.a === 'ping') return json_({ok: true, multi: true, up: true, roster: true, qp: true});
   if (p.a === 'join') {
     var c = CacheService.getScriptCache(), bad = Number(c.get('badjoin') || 0);
     if (bad > 300) return json_({ok: false, err: 'busy'});
@@ -950,7 +964,7 @@ function reg_(b) {
 }
 
 /* 🎓 విద్యార్థి ప్రగతి కార్డు – విద్యార్థి ID + పుట్టిన తేదీ సరిపోతేనే, తన రికార్డు మాత్రమే */
-var TONLY = ['roster', 'marks'];  // విద్యార్థులకు ఎప్పుడూ పంపము
+var TONLY = ['roster', 'marks', 'qb'];  // విద్యార్థులకు ఎప్పుడూ పంపము
 function sha_(t) { return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t, Utilities.Charset.UTF_8).map(function (b) { return ('0' + (b & 255).toString(16)).slice(-2); }).join(''); }
 function tonlyOk_(col, js, me) {
   if (TONLY.indexOf(col) < 0 || !me || !me.cls || !me.cls.length) return true;
@@ -1073,6 +1087,666 @@ service cloud.firestore {
     }
   }
 }
+</script>
+<script>
+/* రాయ్ ఎడ్యుకేషన్ – ప్రశ్నల బ్యాంకు (1–5 తరగతులు) v1
+   టాపిక్ → సబ్-టాపిక్, కష్టతనం (1 సులభం, 2 మధ్యస్థం, 3 కఠినం), Bloom's (R U A N E C)
+   గణితం: ఆటో-జనరేటర్లు (అపరిమిత ప్రశ్నలు) | తెలుగు, English, EVS: తయారుచేసిన ప్రశ్నలు */
+(function(){
+'use strict';
+const QB={v:1,cat:{},items:[],gens:[]};
+/* ---------- టాపిక్‌ల జాబితా ---------- */
+function T(s,k,te,en,c0,c1,subs){(QB.cat[s]=QB.cat[s]||[]).push({k,te,en,c:[c0,c1],sub:subs.map(x=>({k:x[0],te:x[1],en:x[2],c:[x[3]||c0,x[4]||c1]}))});}
+T('mat','num','సంఖ్యా భావనలు','Number Concepts',1,5,[['cnt','లెక్కించడం','Counting',1,2],['nam','సంఖ్యల పేర్లు','Number Names',1,4],['seq','ముందు, తర్వాత, మధ్య','Before, After, Between',1,3],['cmp','పోల్చడం & క్రమం','Compare & Order',1,5],['pv','స్థాన విలువ','Place Value',2,5],['exp','విస్తరణ రూపం','Expanded Form',2,5],['eo','సరి – బేసి సంఖ్యలు','Even & Odd Numbers',2,4],['rom','రోమన్ సంఖ్యలు','Roman Numerals',4,5],['rnd','సవరించడం (Rounding)','Rounding Off',4,5]]);
+T('mat','ops','సంఖ్యలపై పరిక్రియలు','Whole Number Operations',1,5,[['add','కూడిక','Addition'],['sub','తీసివేత','Subtraction'],['mul','గుణకారం','Multiplication',2,5],['div','భాగహారం','Division',3,5],['wp','పద సమస్యలు','Word Problems']]);
+T('mat','frac','భిన్నాలు & దశాంశాలు','Fractions & Decimals',2,5,[['half','సగం, పావు, ముప్పావు','Half, Quarter, Three-quarter',2,3],['fgrp','సమూహంలో భాగం','Fraction of a Collection',3,5],['fcmp','భిన్నాల పోలిక','Comparing Fractions',4,5],['fadd','సజాతి భిన్నాల కూడిక, తీసివేత','Adding & Subtracting Like Fractions',4,5],['dec','దశాంశాలు','Decimals',5,5]]);
+T('mat','meas','కొలతలు','Measurement',1,5,[['len','పొడవు','Length'],['wt','బరువు','Weight',2,5],['cap','ఘనపరిమాణం (లీటర్లు)','Capacity',2,5],['time','కాలం','Time'],['money','డబ్బు','Money']]);
+T('mat','geo','ప్రాథమిక జ్యామితి','Basic Geometry',1,5,[['shp','సమతల ఆకారాలు','Plane Shapes'],['sol','ఘన ఆకారాలు','Solid Shapes',2,5],['ang','కోణాలు','Angles',4,5],['circ','వృత్తం','Circle',5,5]]);
+T('mat','ap','వైశాల్యం & చుట్టుకొలత','Area & Perimeter',3,5,[['per','చుట్టుకొలత','Perimeter'],['area','వైశాల్యం','Area']]);
+T('mat','pat','అమరికలు & ప్రాథమిక బీజగణితం','Patterns & Basic Algebra',1,5,[['npat','సంఖ్యల అమరికలు','Number Patterns'],['miss','ఖాళీ సంఖ్య కనుక్కోవడం','Find the Missing Number']]);
+T('mat','nth','సంఖ్యా సిద్ధాంతం','Number Theory',4,5,[['fac','కారణాంకాలు','Factors'],['mlt','గుణిజాలు','Multiples'],['pr','ప్రధాన – సంయుక్త సంఖ్యలు','Prime & Composite Numbers'],['dvt','భాజనీయత','Divisibility Rules'],['lh','క.సా.గు – గ.సా.భా','LCM & HCF',5,5]]);
+T('mat','data','దత్తాంశ నిర్వహణ','Data Handling',2,5,[['tal','టాలీ గుర్తులు','Tally Marks'],['pic','చిత్రాలతో దత్తాంశం','Pictographs']]);
+
+T('tel','ak','అక్షరాలు','అక్షరాలు',1,5,[['ach','అచ్చులు','అచ్చులు',1,3],['hal','హల్లులు','హల్లులు',1,3],['gun','గుణింతాలు','గుణింతాలు',1,4],['ott','ఒత్తులు','ఒత్తులు',2,5]]);
+T('tel','pad','పదజాలం','పదజాలం',1,5,[['art','పదాల అర్థాలు','పదాల అర్థాలు'],['vya','వ్యతిరేక పదాలు','వ్యతిరేక పదాలు'],['pry','పర్యాయ పదాలు','పర్యాయ పదాలు',3,5],['lv','లింగం – వచనం','లింగం – వచనం',2,5]]);
+T('tel','vyk','వ్యాకరణం','వ్యాకరణం',2,5,[['bh','భాషా భాగాలు','భాషా భాగాలు',3,5],['kal','కాలాలు','కాలాలు',3,5],['vib','విభక్తులు','విభక్తులు',4,5],['snd','సంధులు','సంధులు',4,5],['sms','సమాసాలు','సమాసాలు',5,5]]);
+T('tel','vak','వాక్యాలు','వాక్యాలు',1,5,[['krm','పదాల క్రమం','పదాల క్రమం'],['vir','విరామ చిహ్నాలు','విరామ చిహ్నాలు',3,5]]);
+T('tel','sah','సాహిత్యం & సంస్కృతి','సాహిత్యం & సంస్కృతి',1,5,[['kav','కవులు & పద్యాలు','కవులు & పద్యాలు',3,5],['sam','సామెతలు','సామెతలు',3,5],['pod','పొడుపు కథలు','పొడుపు కథలు',1,5],['pan','పండుగలు & సంస్కృతి','పండుగలు & సంస్కృతి',1,5]]);
+
+T('eng','ph','Alphabet & Phonics','Alphabet & Phonics',1,3,[['abc','Letters & Order','Letters & Order'],['vow','Vowels & Consonants','Vowels & Consonants'],['snd','Sounds & Rhyming Words','Sounds & Rhyming Words']]);
+T('eng','voc','Vocabulary','Vocabulary',1,5,[['opp','Opposites','Opposites'],['pl','Singular & Plural','Singular & Plural'],['gen','Gender','Gender',2,5],['ani','Animals – Young, Sounds, Homes','Animals – Young, Sounds, Homes'],['syn','Synonyms & Word Meanings','Synonyms & Word Meanings',3,5]]);
+T('eng','gr','Grammar','Grammar',1,5,[['noun','Nouns','Nouns'],['pron','Pronouns','Pronouns',2,5],['verb','Verbs','Verbs'],['adj','Adjectives','Adjectives',2,5],['art','Articles (a, an, the)','Articles (a, an, the)'],['prep','Prepositions','Prepositions',2,5],['tense','Tenses','Tenses',3,5],['conj','Conjunctions','Conjunctions',4,5]]);
+T('eng','sp','Spelling','Spelling',1,5,[['spl','Correct Spelling','Correct Spelling'],['miss','Missing Letters','Missing Letters']]);
+T('eng','sen','Sentences','Sentences',1,5,[['punc','Capital Letters & Punctuation','Capital Letters & Punctuation'],['wo','Word Order','Word Order',2,5],['qw','Question Words','Question Words',2,5],['kind','Kinds of Sentences','Kinds of Sentences',4,5]]);
+
+T('evs','body','మన శరీరం & ఆరోగ్యం','Our Body & Health',3,5,[['part','శరీర భాగాలు & జ్ఞానేంద్రియాలు','Body Parts & Sense Organs'],['hyg','పరిశుభ్రత & ఆరోగ్యం','Hygiene & Health'],['org','అంతర్గత అవయవాలు','Internal Organs',4,5]]);
+T('evs','food','ఆహారం','Food',3,5,[['src','ఆహారం ఎక్కడి నుండి','Sources of Food'],['nut','పోషకాలు & సమతుల్య ఆహారం','Nutrients & Balanced Diet'],['pres','వంట & నిల్వ','Cooking & Preservation',4,5]]);
+T('evs','water','నీరు','Water',3,5,[['wsrc','నీటి వనరులు','Sources of Water'],['wuse','నీటి ఉపయోగాలు & పొదుపు','Uses & Saving Water'],['wcl','శుభ్రమైన నీరు','Safe Drinking Water']]);
+T('evs','plant','మొక్కలు','Plants',3,5,[['ppart','మొక్క భాగాలు','Parts of a Plant'],['ptyp','మొక్కల రకాలు','Types of Plants'],['puse','మొక్కల ఉపయోగాలు','Uses of Plants']]);
+T('evs','anim','జంతువులు & పక్షులు','Animals & Birds',3,5,[['atyp','జంతువుల రకాలు','Types of Animals'],['ahome','నివాసాలు & ఆహారం','Homes & Food'],['bird','పక్షులు','Birds']]);
+T('evs','fam','కుటుంబం & సమాజం','Family & Community',3,5,[['fam','కుటుంబం','Family'],['work','మనకు సహాయపడేవారు','People Who Help Us'],['fest','పండుగలు','Festivals']]);
+T('evs','trans','రవాణా & సమాచారం','Transport & Communication',3,5,[['tr','రవాణా సాధనాలు','Means of Transport'],['com','సమాచార సాధనాలు','Means of Communication'],['road','రోడ్డు భద్రత','Road Safety']]);
+T('evs','earth','భూమి, ఆకాశం & వాతావరణం','Earth, Sky & Weather',3,5,[['sky','సూర్యుడు, చంద్రుడు & నక్షత్రాలు','Sun, Moon & Stars'],['seas','ఋతువులు & వాతావరణం','Seasons & Weather'],['dir','దిక్కులు & పటాలు','Directions & Maps']]);
+T('evs','nation','మన రాష్ట్రం & దేశం','Our State & Country',3,5,[['sym','జాతీయ చిహ్నాలు','National Symbols'],['ap','ఆంధ్రప్రదేశ్','Andhra Pradesh'],['riv','నదులు & ప్రదేశాలు','Rivers & Places',4,5]]);
+T('evs','env','పరిసరాలు & భద్రత','Environment & Safety',3,5,[['poll','కాలుష్యం & చెత్త','Pollution & Waste'],['tree','చెట్లు & అడవులు','Trees & Forests'],['safe','భద్రత & ప్రథమ చికిత్స','Safety & First Aid']]);
+
+/* ---------- సహాయకాలు ---------- */
+const r=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function nw(a,sp,min){sp=sp||Math.max(2,Math.round(Math.abs(a)*0.15));min=min==null?0:min;const s=new Set(),out=[];let g=0;
+ const cand=[a+1,a-1,a+10,a-10,a+sp,a-sp,a+2,a-2];while(out.length<3&&g<80){g++;let v=g<=cand.length?cand[g-1]:a+r(-sp*2,sp*2);if(v===a||v<min||s.has(v))continue;s.add(v);out.push(v);}return out;}
+const TE1=['సున్నా','ఒకటి','రెండు','మూడు','నాలుగు','ఐదు','ఆరు','ఏడు','ఎనిమిది','తొమ్మిది','పది','పదకొండు','పన్నెండు','పదమూడు','పద్నాలుగు','పదిహేను','పదహారు','పదిహేడు','పద్దెనిమిది','పందొమ్మిది'];
+const TE10=['','','ఇరవై','ముప్పై','నలభై','యాభై','అరవై','డెబ్బై','ఎనభై','తొంభై'];
+function teName(n){if(n===100)return 'వంద';if(n<20)return TE1[n];const t=Math.floor(n/10),u=n%10;return TE10[t]+(u?' '+TE1[u]:'');}
+const EN1=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+const EN10=['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+function enName(n){if(n<20)return EN1[n];if(n<100){const t=Math.floor(n/10),u=n%10;return EN10[t]+(u?'-'+EN1[u]:'');}
+ if(n<1000){const h=Math.floor(n/100),x=n%100;return EN1[h]+' hundred'+(x?' '+enName(x):'');}
+ const th=Math.floor(n/1000),x=n%1000;return enName(th)+' thousand'+(x?' '+enName(x):'');}
+const fmt=n=>{const s=String(n);if(s.length<=3)return s;const l3=s.slice(-3),rest=s.slice(0,-3);return rest.replace(/\B(?=(\d{2})+(?!\d))/g,',')+','+l3;};
+const NM=[['రవి','Ravi'],['సీత','Sita'],['అను','Anu'],['కిరణ్','Kiran'],['లక్ష్మి','Lakshmi'],['రాము','Ramu'],['గీత','Geetha'],['సాయి','Sai']];
+const OB=[['మామిడి పండ్లు','mangoes'],['పెన్సిళ్లు','pencils'],['పుస్తకాలు','books'],['బంతులు','balls'],['గోళీలు','marbles'],['పూలు','flowers'],['చాక్లెట్లు','chocolates'],['బిస్కెట్లు','biscuits']];
+/* జనరేటర్ నమోదు: fn(c,d) → {q:[te,en], a, w:[..]}  (a/w = సంఖ్య / పదం / [te,en]) */
+function G(t,s,c0,c1,d,b,fn,o){QB.gens.push(Object.assign({sb:'mat',t,s,c:[c0,c1],d,b,fn},o||{}));}
+function G3(t,s,c0,c1,b,fn,o){[1,2,3].forEach(d=>G(t,s,c0,c1,d,b,fn,o));}
+QB.util={r,pick,nw,teName,enName,fmt};
+window.RAAY_QB=QB;
+/* ================= గణితం – ఆటో జనరేటర్లు ================= */
+const M=(te,en,a,w,x)=>{const K=v=>JSON.stringify(v);w=(w||nw(a)).filter((v,i,arr)=>K(v)!==K(a)&&arr.findIndex(y=>K(y)===K(v))===i&&!(typeof v==='number'&&(v<0||!isFinite(v))));
+ const add=v=>{if(w.length<3&&K(v)!==K(a)&&!w.some(y=>K(y)===K(v)))w.push(v);};
+ if(w.length<3){if(typeof a==='number')nw(a,null,0).concat([a+3,a+4,a+5]).forEach(v=>{if(v>=0)add(v);});
+  else if(typeof a==='string'){let m;if((m=a.match(/^(\d+)\/(\d+)$/))){const p=+m[1],q=+m[2];[`${p+1}/${q}`,`${p}/${q+1}`,`${Math.max(1,p-1)}/${q}`,`${q}/${p}`,`${p+2}/${q}`].forEach(add);}
+   else if(/^\d{1,3}(,\d{2,3})*$/.test(a)){const n=+a.replace(/,/g,'');nw(n,null,0).forEach(v=>add(fmt(v)));}
+   else if(/^\d+\.\d+$/.test(a)){const n=+a,dp=a.split('.')[1].length,st=Math.pow(10,-dp);[n+st,n+2*st,Math.max(0,n-st),n+10*st].forEach(v=>add(v.toFixed(dp)));}}}
+ return Object.assign({q:[te,en],a,w},x||{});};
+const lim=(c,d)=>[[0,0,0,0],[0,10,20,50],[0,50,100,100],[0,200,999,999],[0,999,9999,9999],[0,9999,99999,999999]][c][d];
+/* ---- లెక్కించడం ---- */
+const EM=['🍎','⚽','🌸','⭐','🐟','🎈','🍌','🐥'];
+G3('num','cnt',1,2,'R',(c,d)=>{const n=r(d===1?2:5,d===1?6:(d===2?10:15)),e=pick(EM);return M(`ఎన్ని ఉన్నాయి?  ${e.repeat(n)}`,`How many are there?  ${e.repeat(n)}`,n,nw(n,2,1));});
+G('num','cnt',1,2,2,'U',()=>{const t=r(2,5),u=r(1,9);return M(`${t} పదులు, ${u} ఒకట్లు కలిపి ఏ సంఖ్య?`,`${t} tens and ${u} ones make which number?`,t*10+u,[u*10+t,t+u,t*10+u+10].filter(x=>x!==t*10+u));});
+/* ---- సంఖ్యల పేర్లు ---- */
+G('num','nam',1,2,1,'R',()=>{const n=r(1,20);return M(`'${teName(n)}' ను అంకెల్లో రాయండి.`,`Write '${enName(n)}' in numbers.`,n,nw(n,3,0));});
+G('num','nam',1,3,2,'U',()=>{const n=r(21,99);return M(`'${teName(n)}' ను అంకెల్లో రాయండి.`,`Write '${enName(n)}' in numbers.`,n,[n%10*10+Math.floor(n/10),n+10,n-1].filter(x=>x!==n&&x>0));});
+G('num','nam',1,3,2,'R',()=>{const n=r(11,99),f=x=>[teName(x),enName(x)];const w=[n+1,n+10,n%10*10+Math.floor(n/10),n-1,n-10,n+2].filter((x,i,a)=>x!==n&&x<=100&&x>0&&a.indexOf(x)===i).slice(0,3);
+ return M(`${n} సంఖ్య పేరు ఏది?`,`What is the number name of ${n}?`,f(n),w.map(f));});
+G('num','nam',3,4,3,'U',(c)=>{const n=r(101,c===3?999:9999);return M(`'${enName(n)}' – అంకెల్లో? (English లో రాసిన సంఖ్య)`,`Write '${enName(n)}' in numbers.`,n,nw(n,n>999?100:10,100));});
+/* ---- ముందు, తర్వాత, మధ్య ---- */
+G3('num','seq',1,3,'R',(c,d)=>{const L=[0,20,100,999][Math.min(c,3)]*(d===1?0.5:1),n=r(2,Math.max(5,Math.floor(L))),k=r(0,2);
+ if(k===0)return M(`${n} తర్వాత వచ్చే సంఖ్య ఏది?`,`Which number comes just after ${n}?`,n+1,[n-1,n+2,n+10]);
+ if(k===1)return M(`${n} ముందు వచ్చే సంఖ్య ఏది?`,`Which number comes just before ${n}?`,n-1,[n+1,n-2,n-10].filter(x=>x>=0).concat([n+2]).slice(0,3));
+ return M(`${n-1} మరియు ${n+1} మధ్య వచ్చే సంఖ్య ఏది?`,`Which number comes between ${n-1} and ${n+1}?`,n,[n+2,n-2,n+10]);});
+/* ---- పోల్చడం & క్రమం ---- */
+G3('num','cmp',1,5,'U',(c,d)=>{const L=lim(c,d)||20;let a=r(1,L),b=r(1,L);if(a===b)b=a+r(1,9);const k=r(0,1);
+ return k?M(`ఏది పెద్ద సంఖ్య?  ${fmt(a)}  లేదా  ${fmt(b)}`,`Which is the greater number?  ${fmt(a)}  or  ${fmt(b)}`,fmt(Math.max(a,b)),[fmt(Math.min(a,b)),['రెండూ సమానం','Both are equal']],{fr:false})
+  :M(`ఏది చిన్న సంఖ్య?  ${fmt(a)}  లేదా  ${fmt(b)}`,`Which is the smaller number?  ${fmt(a)}  or  ${fmt(b)}`,fmt(Math.min(a,b)),[fmt(Math.max(a,b)),['రెండూ సమానం','Both are equal']],{fr:false});});
+G('num','cmp',1,5,2,'U',(c)=>{const L=lim(c,2)||20;let a=r(1,L),b=r(1,L);if(a===b)b++;const s=a>b?'>':'<';
+ return M(`సరైన గుర్తు ఏది?  ${fmt(a)} ___ ${fmt(b)}`,`Choose the correct sign:  ${fmt(a)} ___ ${fmt(b)}`,s,[s==='>'?'<':'>','='],{fr:false});});
+G('num','cmp',2,5,3,'N',(c)=>{const L=lim(c,2);const s=new Set();while(s.size<4)s.add(r(Math.floor(L/10),L));const a=[...s],asc=a.slice().sort((x,y)=>x-y),j=x=>x.map(fmt).join(', ');
+ const w1=asc.slice().reverse(),w2=[asc[1],asc[0],asc[2],asc[3]],w3=[asc[0],asc[2],asc[1],asc[3]];
+ return M(`ఆరోహణ క్రమం (చిన్న నుండి పెద్ద) ఏది? ${j(a)}`,`Which is the ascending order (smallest to largest)? ${j(a)}`,j(asc),[j(w1),j(w2),j(w3)],{fr:false});});
+G('num','cmp',3,5,3,'N',(c)=>{const ds=new Set();while(ds.size<(c===3?3:4))ds.add(r(1,9));const D=[...ds],big=+D.slice().sort((a,b)=>b-a).join(''),sm=+D.slice().sort((a,b)=>a-b).join('');const k=r(0,1);
+ return k?M(`${D.join(', ')} అంకెలతో (ఒక్కోటి ఒకసారి) ఏర్పడే అతి పెద్ద సంఖ్య?`,`Greatest number formed using the digits ${D.join(', ')} (each once)?`,big,[sm,+String(big).split('').reverse().join('')===sm?big-9:+String(big).split('').reverse().join(''),big-90].filter(x=>x!==big))
+  :M(`${D.join(', ')} అంకెలతో (ఒక్కోటి ఒకసారి) ఏర్పడే అతి చిన్న సంఖ్య?`,`Smallest number formed using the digits ${D.join(', ')} (each once)?`,sm,[big,sm+9,sm+90]);});
+/* ---- స్థాన విలువ ---- */
+const PVN=[['ఒకట్ల','ones'],['పదుల','tens'],['వందల','hundreds'],['వేల','thousands'],['పదివేల','ten-thousands']];
+G3('num','pv',2,5,'U',(c,d)=>{const dg=Math.min(5,Math.max(2,c-1+(d>1?1:0)));const n=r(Math.pow(10,dg-1),Math.pow(10,dg)-1),S=String(n);const i=r(0,dg-1),D=+S[S.length-1-i];
+ if(d===3){const v=D*Math.pow(10,i);if(!D)return M(`${fmt(n)} లో ${PVN[0][0]} స్థానంలోని అంకె?`,`In ${fmt(n)}, which digit is in the ${PVN[0][1]} place?`,+S[S.length-1],nw(+S[S.length-1],3,0));
+  const w=[D,D*Math.pow(10,i+1),D*Math.pow(10,Math.max(0,i-1))].filter(x=>x!==v);return M(`${fmt(n)} లో ${D} యొక్క స్థాన విలువ ఎంత?`,`What is the place value of ${D} in ${fmt(n)}?`,fmt(v),w.map(fmt));}
+ return M(`${fmt(n)} లో ${PVN[i][0]} స్థానంలో ఉన్న అంకె ఏది?`,`In ${fmt(n)}, which digit is in the ${PVN[i][1]} place?`,D,[0,1,2,3,4,5,6,7,8,9].filter(x=>x!==D&&S.includes(String(x))).concat([0,1,2,3,4,5,6,7,8,9].filter(x=>x!==D)).slice(0,3));});
+/* ---- విస్తరణ రూపం ---- */
+G3('num','exp',2,5,'U',(c,d)=>{const dg=Math.min(5,c+(d===3?1:0));const n=r(Math.pow(10,dg-1),Math.pow(10,dg)-1),S=String(n),parts=S.split('').map((x,i)=>+x*Math.pow(10,S.length-1-i)).filter(x=>x);
+ const e=parts.join(' + ');if(d===1)return M(`${e} = ?`,`${e} = ?`,n,nw(n,Math.pow(10,dg-2)||2,1));
+ const w1=S.split('').map((x,i)=>+x*Math.pow(10,Math.max(0,S.length-2-i))).filter(x=>x).join(' + '),w2=S.split('').filter(x=>x!=='0').join(' + '),w3=parts.map(x=>x*10).join(' + ');
+ return M(`${fmt(n)} విస్తరణ రూపం ఏది?`,`What is the expanded form of ${fmt(n)}?`,e,[w1,w2,w3].filter(x=>x!==e),{fr:false});});
+/* ---- సరి / బేసి ---- */
+const EV=['సరి సంఖ్య','Even'],OD=['బేసి సంఖ్య','Odd'];
+G('num','eo',2,4,1,'R',(c)=>{const n=r(1,c===2?50:999);return M(`${n} సరి సంఖ్యా లేదా బేసి సంఖ్యా?`,`Is ${n} even or odd?`,n%2?OD:EV,[n%2?EV:OD,['రెండూ కాదు','Neither']],{fr:false});});
+G('num','eo',2,4,2,'U',(c)=>{const L=c===2?50:200,s=new Set();while(s.size<3)s.add(r(1,L/2)*2);const o=r(1,L/2)*2-1;return M('వీటిలో బేసి సంఖ్య ఏది?','Which of these is an odd number?',o,[...s]);});
+G('num','eo',2,4,3,'N',()=>{const a=r(10,40);const k=r(0,1);return k?M(`రెండు బేసి సంఖ్యలను కూడితే వచ్చేది ఎల్లప్పుడూ ఏ సంఖ్య?`,`The sum of two odd numbers is always:`,EV,[OD,['సున్నా','Zero'],['ప్రధాన సంఖ్య','A prime number']],{fr:false})
+ :M(`${a} నుండి ${a+10} వరకు (రెండూ కలిపి) ఎన్ని సరి సంఖ్యలు ఉన్నాయి?`,`How many even numbers are there from ${a} to ${a+10} (both included)?`,a%2?5:6,[a%2?6:5,10,4]);});
+/* ---- రోమన్ సంఖ్యలు ---- */
+function rom(n){const v=[[100,'C'],[90,'XC'],[50,'L'],[40,'XL'],[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']];let s='';for(const [k,x] of v)while(n>=k){s+=x;n-=k;}return s;}
+G('num','rom',4,5,1,'R',()=>{const n=r(2,20);return M(`${n} ను రోమన్ సంఖ్యలో రాయండి.`,`Write ${n} in Roman numerals.`,rom(n),[rom(n+1),rom(Math.max(1,n-1)),n===4?'IIII':rom(n+5)].filter(x=>x!==rom(n)));});
+G('num','rom',4,5,2,'U',()=>{const n=r(21,100);return M(`${rom(n)} = ?`,`${rom(n)} = ?`,n,[n+10,n-10,n+5].filter(x=>x>0));});
+G('num','rom',4,5,3,'N',()=>{const n=r(40,99),w=[n.toString().split('').map(x=>rom(+x)).join(''),'XXXX'.slice(0,Math.floor(n/10))+rom(n%10),rom(n+10)];return M(`${n} సరైన రోమన్ రూపం ఏది?`,`Which is the correct Roman numeral for ${n}?`,rom(n),w.filter(x=>x!==rom(n)));});
+/* ---- సవరించడం ---- */
+G3('num','rnd',4,5,'A',(c,d)=>{const p=d===1?10:d===2?100:1000,n=r(p+1,p*(d===3?99:9)+p-1),a=Math.round(n/p)*p;if(n%p===p/2)return M(`${fmt(n+1)} ను దగ్గరి ${p} కి సవరించండి.`,`Round ${fmt(n+1)} to the nearest ${p}.`,fmt(Math.round((n+1)/p)*p),[fmt(Math.floor((n+1)/p)*p),fmt(Math.round((n+1)/p)*p+p),fmt(n+1)]);
+ const fl=Math.floor(n/p)*p,ce=fl+p;return M(`${fmt(n)} ను దగ్గరి ${p} కి సవరించండి.`,`Round ${fmt(n)} to the nearest ${p}.`,fmt(a),[fmt(a===fl?ce:fl),fmt(a+p),fmt(n)].filter(x=>x!==fmt(a)));});
+
+/* ---- కూడిక ---- */
+function addN(c,d){if(c===1)return d===1?[r(1,5),r(1,5)]:d===2?[r(5,12),r(3,8)]:[r(10,40),r(1,9)];
+ if(c===2){if(d===1){const a=r(10,49);return [a,r(1,4)*10+r(0,9-a%10)];}return d===2?[r(15,59),r(15,39)]:[r(10,40),r(10,30),r(5,20)];}
+ if(c===3)return d===1?[r(25,75),r(15,24)]:d===2?[r(100,499),r(100,399)]:[r(150,599),r(180,399)];
+ if(c===4)return d===1?[r(100,999),r(100,999)]:d===2?[r(1000,4999),r(1000,4999)]:[r(1000,3999),r(500,2999),r(100,999)];
+ return d===1?[r(1000,9999),r(1000,9999)]:d===2?[r(10000,49999),r(10000,49999)]:[r(100000,499999),r(100000,399999)];}
+G3('ops','add',1,5,'A',(c,d)=>{const x=addN(c,d),a=x.reduce((p,q)=>p+q,0),e=x.map(fmt).join(' + ');return M(`${e} = ?`,`${e} = ?`,a,nw(a,c>3?(d>1?1000:100):10,0));});
+G('ops','add',1,5,2,'U',(c)=>{const x=addN(c,1),a=x[0]+x[1];return M(`${fmt(x[0])} + ___ = ${fmt(a)}`,`${fmt(x[0])} + ___ = ${fmt(a)}`,x[1],nw(x[1],c>3?100:5,0));});
+/* ---- తీసివేత ---- */
+function subN(c,d){const x=addN(c,d).slice(0,2);let a=Math.max(x[0],x[1]),b=Math.min(x[0],x[1]);if(a===b)a+=r(1,9);return [a,b];}
+G3('ops','sub',1,5,'A',(c,d)=>{const [a,b]=subN(c,d);return M(`${fmt(a)} − ${fmt(b)} = ?`,`${fmt(a)} − ${fmt(b)} = ?`,a-b,nw(a-b,c>3?100:10,0));});
+G('ops','sub',2,5,3,'N',(c)=>{const [a,b]=subN(c,2);return M(`${fmt(a)} − ___ = ${fmt(a-b)}`,`${fmt(a)} − ___ = ${fmt(a-b)}`,b,nw(b,c>3?100:10,0));});
+/* ---- గుణకారం ---- */
+function mulN(c,d){if(c===2)return d===1?[r(2,5),r(1,5)]:d===2?[r(2,5),r(6,10)]:[r(2,5),r(2,10)];
+ if(c===3)return d===1?[r(2,10),r(2,10)]:d===2?[r(11,40),r(2,9)]:[r(100,300),r(2,5)];
+ if(c===4)return d===1?[r(11,99),r(2,9)]:d===2?[r(100,999),r(2,9)]:[r(11,99),r(11,49)];
+ return d===1?[r(100,999),r(11,99)]:d===2?[r(1000,9999),r(11,99)]:[r(100,999),r(100,999)];}
+G3('ops','mul',2,5,'A',(c,d)=>{const [a,b]=mulN(c,d),p=a*b;return M(`${fmt(a)} × ${fmt(b)} = ?`,`${fmt(a)} × ${fmt(b)} = ?`,fmt(p),[p+a,p-b,p+10*b].map(fmt));});
+G('ops','mul',2,4,1,'R',(c)=>{const t=r(2,c===2?5:10),k=r(2,10);return M(`${t} ఎక్కంలో ${k}వ పదం ఏది? (${t} × ${k})`,`In the table of ${t}, what is ${t} × ${k}?`,t*k,[t*(k+1),t*(k-1),t+k]);});
+G('ops','mul',3,5,3,'N',()=>{const a=r(2,9),b=r(10,40);return M(`${a} × ${b} = ${b} × ___`,`${a} × ${b} = ${b} × ___`,a,[b,a*b,a+1]);});
+/* ---- భాగహారం ---- */
+G3('ops','div',3,5,'A',(c,d)=>{let dv,q,rm=0;if(c===3){dv=r(2,d===1?5:9);q=r(2,d===3?20:10);}else if(c===4){dv=r(2,9);q=d===1?r(5,20):d===2?r(21,150):r(100,999);}else{dv=d===3?r(11,30):r(2,9);q=d===1?r(25,250):r(100,999);}
+ if(d===3&&c>3)rm=r(1,dv-1);const n=dv*q+rm;
+ if(rm)return M(`${fmt(n)} ÷ ${dv} చేస్తే శేషం ఎంత?`,`What is the remainder when ${fmt(n)} is divided by ${dv}?`,rm,nw(rm,3,0).filter(x=>x<dv).concat([0,dv]).filter((x,i,a)=>x!==rm&&a.indexOf(x)===i).slice(0,3));
+ return M(`${fmt(n)} ÷ ${dv} = ?`,`${fmt(n)} ÷ ${dv} = ?`,q,nw(q,Math.max(2,Math.round(q*0.1)),1));});
+G('ops','div',3,5,1,'U',()=>{const a=r(2,9),b=r(2,9);return M(`${a} × ${b} = ${a*b} అయితే, ${a*b} ÷ ${a} = ?`,`If ${a} × ${b} = ${a*b}, then ${a*b} ÷ ${a} = ?`,b,[a,a*b,b+1].filter(x=>x!==b).concat([b+2]).slice(0,3));});
+/* ---- పద సమస్యలు ---- */
+function wp(c,d){const n=pick(NM),o=pick(OB),n2=pick(NM.filter(x=>x!==n));const k=r(0,c<=2?1:c===3?3:4);const L=[0,10,50,500,5000,50000][c]*(d===1?0.5:1);
+ if(k===0){const a=r(2,Math.max(5,Math.floor(L))),b=r(2,Math.max(5,Math.floor(L)));return M(`${n[0]} దగ్గర ${a} ${o[0]} ఉన్నాయి. అమ్మ ఇంకా ${b} ఇచ్చింది. ఇప్పుడు మొత్తం ఎన్ని?`,`${n[1]} has ${a} ${o[1]}. Mother gives ${b} more. How many ${o[1]} are there now?`,a+b,nw(a+b,5,0).concat([Math.abs(a-b)]).slice(0,3));}
+ if(k===1){const a=r(5,Math.max(8,Math.floor(L))),b=r(1,a-1);return M(`${n[0]} దగ్గర ${a} ${o[0]} ఉన్నాయి. వాటిలో ${b} స్నేహితులకు ఇచ్చేశారు. ఇంకా ఎన్ని మిగిలాయి?`,`${n[1]} has ${a} ${o[1]} and gives ${b} to friends. How many are left?`,a-b,[a+b].concat(nw(a-b,3,0)).slice(0,3));}
+ if(k===2){const p=r(2,c>3?12:6),q=r(3,c>3?25:10);return M(`ఒక పెట్టెలో ${q} ${o[0]} ఉన్నాయి. ${p} పెట్టెల్లో మొత్తం ఎన్ని?`,`A box has ${q} ${o[1]}. How many ${o[1]} are there in ${p} boxes?`,p*q,[p+q,p*q+q,p*q-p]);}
+ if(k===3){const p=r(2,9),q=r(3,c>3?30:10);return M(`${p*q} ${o[0]} ను ${p} మంది పిల్లలకు సమానంగా పంచితే ఒక్కొక్కరికి ఎన్ని?`,`${p*q} ${o[1]} are shared equally among ${p} children. How many does each child get?`,q,[q+1,q-1,p*q-p].filter(x=>x>0));}
+ const pr=r(c>4?150:15,c>4?950:95),qt=r(2,c>4?25:9),pay=Math.ceil(pr*qt/100)*100+(c>4?500:100);return M(`ఒక వస్తువు ధర ₹${pr}. ${qt} వస్తువులు కొని ₹${pay} ఇస్తే తిరిగి ఎంత చిల్లర వస్తుంది?`,`One item costs ₹${pr}. If you buy ${qt} items and pay ₹${pay}, how much change will you get?`,pay-pr*qt,[pr*qt,pay-pr,pay-pr*qt+pr].filter(x=>x>0&&x!==pay-pr*qt));}
+G3('ops','wp',1,5,'A',(c,d)=>wp(c,d));
+G('ops','wp',3,5,3,'N',(c)=>{const e=r(5,30),b=r(10,c>4?500:50),a=b+e+r(5,c>4?400:40);const n=pick(NM);return M(`${n[0]} దగ్గర ₹${a} ఉన్నాయి. ₹${b} కి పుస్తకం, ₹${e} కి పెన్ను కొన్న తర్వాత ఇంకా ఎంత మిగిలింది?`,`${n[1]} had ₹${a}. After buying a book for ₹${b} and a pen for ₹${e}, how much money is left?`,a-b-e,[a-b,a-e,a-b+e].filter(x=>x>=0&&x!==a-b-e),{x:a-b-e>=0});});
+
+/* ---- భిన్నాలు ---- */
+const FR_=[[1,2,'సగం','half'],[1,4,'పావు','one-fourth (quarter)'],[3,4,'ముప్పావు','three-fourths']];
+G('frac','half',2,3,1,'R',()=>{const f=pick(FR_);return M(`'${f[2]}' ను భిన్నంగా ఎలా రాస్తాం?`,`How do we write '${f[3]}' as a fraction?`,`${f[0]}/${f[1]}`,['1/2','1/4','3/4','1/3','2/3'].filter(x=>x!==`${f[0]}/${f[1]}`).slice(0,3));});
+G('frac','half',2,3,2,'A',()=>{const n=r(2,12)*4,k=r(0,1);return k?M(`${n} లో సగం ఎంత?`,`What is half of ${n}?`,n/2,[n/4,n*2,n/2+2]):M(`${n} లో పావు ఎంత?`,`What is one-fourth of ${n}?`,n/4,[n/2,n/4+1,n*4]);});
+G('frac','half',2,3,3,'N',()=>{const n=r(2,10)*4;return M(`${n} లో ముప్పావు ఎంత?`,`What is three-fourths of ${n}?`,n*3/4,[n/4,n/2,n*3/4+3]);});
+G3('frac','fgrp',3,5,'A',(c,d)=>{const den=pick(d===1?[2,3,4]:d===2?[3,4,5,6]:[5,6,8,10]),num=d===1?1:r(1,den-1),k=r(2,c===3?6:12),n=den*k;return M(`${n} లో ${num}/${den} వంతు ఎంత?`,`What is ${num}/${den} of ${n}?`,num*k,[k,num*k+k,n-num*k].filter((x,i,a)=>x!==num*k&&x>0&&a.indexOf(x)===i).concat([num*k+1]).slice(0,3));});
+G('frac','fgrp',3,5,2,'U',()=>{const t=r(5,12),s=r(1,t-1);return M(`${t} బంతుల్లో ${s} ఎరుపు రంగువి. ఎరుపు బంతులు ఏ భిన్నం?`,`${s} out of ${t} balls are red. What fraction of the balls are red?`,`${s}/${t}`,[`${t}/${s}`,`${t-s}/${t}`,`${s}/${t+s}`].filter(x=>x!==`${s}/${t}`));});
+G('frac','fcmp',4,5,1,'U',()=>{const d=r(5,12);let a=r(1,d-1),b=r(1,d-1);if(a===b)b=a===1?2:a-1;return M(`ఏ భిన్నం పెద్దది?  ${a}/${d}  లేదా  ${b}/${d}`,`Which fraction is greater?  ${a}/${d}  or  ${b}/${d}`,`${Math.max(a,b)}/${d}`,[`${Math.min(a,b)}/${d}`,['రెండూ సమానం','Both are equal']],{fr:false});});
+G('frac','fcmp',4,5,2,'U',()=>{const n=r(1,3);let a=r(2,9),b=r(2,9);if(a===b)b=a+1;return M(`ఏ భిన్నం పెద్దది?  ${n}/${a}  లేదా  ${n}/${b}`,`Which fraction is greater?  ${n}/${a}  or  ${n}/${b}`,`${n}/${Math.min(a,b)}`,[`${n}/${Math.max(a,b)}`,['రెండూ సమానం','Both are equal']],{fr:false});});
+G('frac','fcmp',4,5,3,'N',()=>{const k=r(2,5),a=r(1,4),b=a+r(1,4);return M(`${a}/${b} కి సమాన భిన్నం ఏది?`,`Which fraction is equivalent to ${a}/${b}?`,`${a*k}/${b*k}`,[`${a+k}/${b+k}`,`${a*k}/${b}`,`${a}/${b*k}`]);});
+G3('frac','fadd',4,5,'A',(c,d)=>{const den=r(5,d===3?15:10);let a=r(1,den-2),b=r(1,den-a-1);const k=d===2&&a>b?1:0;
+ if(k)return M(`${a}/${den} − ${b}/${den} = ?`,`${a}/${den} − ${b}/${den} = ?`,`${a-b}/${den}`,[`${a-b}/0`,`${a+b}/${den}`,`${a-b}/${den*2}`].filter(x=>x!==`${a-b}/${den}`));
+ return M(`${a}/${den} + ${b}/${den} = ?`,`${a}/${den} + ${b}/${den} = ?`,`${a+b}/${den}`,[`${a+b}/${den*2}`,`${a*b}/${den}`,`${Math.abs(a-b)}/${den}`].filter(x=>x!==`${a+b}/${den}`));});
+G('frac','dec',5,5,1,'R',()=>{const n=r(1,9);return M(`${n}/10 ను దశాంశ రూపంలో రాయండి.`,`Write ${n}/10 as a decimal.`,`0.${n}`,[`${n}.0`,`0.0${n}`,`${n}.10`]);});
+G('frac','dec',5,5,2,'U',()=>{const n=r(11,99);return M(`${n}/100 ను దశాంశ రూపంలో రాయండి.`,`Write ${n}/100 as a decimal.`,`0.${n}`,[`${(n/10).toFixed(1)}`,`${n}.0`,`0.0${n}`]);});
+G('frac','dec',5,5,3,'A',()=>{const a=r(11,89),b=r(11,89),s=(a+b)/10;return M(`${(a/10).toFixed(1)} + ${(b/10).toFixed(1)} = ?`,`${(a/10).toFixed(1)} + ${(b/10).toFixed(1)} = ?`,s.toFixed(1),[(s+1).toFixed(1),(s-0.1).toFixed(1),String(a+b)]);});
+
+/* ---- కొలతలు ---- */
+G('meas','len',1,2,1,'U',()=>{const k=r(0,2),Q=[['వీటిలో ఏది పొడవైనది?','Which of these is the longest?',['రైలు','Train'],[['పెన్సిల్','Pencil'],['పుస్తకం','Book'],['చెంచా','Spoon']]],['వీటిలో ఏది ఎత్తైనది?','Which of these is the tallest?',['తాటి చెట్టు','Palm tree'],[['కుర్చీ','Chair'],['మేక','Goat'],['బకెట్','Bucket']]],['వీటిలో ఏది పొట్టిది?','Which of these is the shortest?',['చాక్‌పీస్','Chalk piece'],[['బల్ల','Table'],['తలుపు','Door'],['బస్సు','Bus']]]][k];return M(Q[0],Q[1],Q[2],Q[3],{fr:false});});
+G3('meas','len',3,5,'A',(c,d)=>{const k=d===1?0:d===2?1:2;if(k===0){const m=r(2,9);return M(`${m} మీటర్లు = ఎన్ని సెంటీమీటర్లు?`,`${m} metres = how many centimetres?`,m*100,[m*10,m*1000,m+100]);}
+ if(k===1){const km=r(2,9);return M(`${km} కిలోమీటర్లు = ఎన్ని మీటర్లు?`,`${km} kilometres = how many metres?`,fmt(km*1000),[km*100,km*10,km*10000].map(fmt));}
+ const m=r(1,8),cm=r(10,90);return M(`${m} మీ ${cm} సెం.మీ = ఎన్ని సెం.మీ?`,`${m} m ${cm} cm = how many cm?`,m*100+cm,[m*10+cm,m+cm,m*1000+cm]);});
+G3('meas','wt',2,5,'A',(c,d)=>{if(c===2||d===1){const k=r(0,1);return k?M('వీటిలో ఏది ఎక్కువ బరువు?','Which of these is the heaviest?',['ఏనుగు','Elephant'],[['మేక','Goat'],['కోడి','Hen'],['పిల్లి','Cat']],{fr:false}):M('బియ్యం బస్తా బరువును ఏ ప్రమాణంలో కొలుస్తాం?','In which unit do we measure the weight of a rice bag?',['కిలోగ్రాములు','Kilograms'],[['లీటర్లు','Litres'],['మీటర్లు','Metres'],['గంటలు','Hours']],{fr:false});}
+ if(d===2){const kg=r(2,9);return M(`${kg} కిలోగ్రాములు = ఎన్ని గ్రాములు?`,`${kg} kilograms = how many grams?`,fmt(kg*1000),[kg*100,kg*10,kg*10000].map(fmt));}
+ const a=r(1,4),g=r(1,9)*100,b=r(1,3),h=r(1,9)*100,t=a*1000+g+b*1000+h;return M(`${a} కి.గ్రా ${g} గ్రా + ${b} కి.గ్రా ${h} గ్రా = ఎన్ని గ్రాములు?`,`${a} kg ${g} g + ${b} kg ${h} g = how many grams?`,fmt(t),[t+1000,t-100,(a+b)*1000].map(fmt));});
+G3('meas','cap',2,5,'A',(c,d)=>{if(c===2||d===1)return M('పాలు, నీరు వంటి ద్రవాలను ఏ ప్రమాణంలో కొలుస్తాం?','In which unit do we measure liquids like milk and water?',['లీటర్లు','Litres'],[['కిలోగ్రాములు','Kilograms'],['సెంటీమీటర్లు','Centimetres'],['రూపాయలు','Rupees']],{fr:false});
+ if(d===2){const l=r(2,9);return M(`${l} లీటర్లు = ఎన్ని మిల్లీలీటర్లు?`,`${l} litres = how many millilitres?`,fmt(l*1000),[l*100,l*10,l*10000].map(fmt));}
+ const b=r(2,6),ml=pick([250,500]),t=b*ml;return M(`ఒక సీసాలో ${ml} మి.లీ పడుతుంది. ${b} సీసాల నీరు మొత్తం ఎన్ని మి.లీ?`,`A bottle holds ${ml} ml. How many ml of water do ${b} bottles hold?`,fmt(t),[t+ml,t-ml,b+ml].map(fmt));});
+G('meas','time',1,3,1,'R',()=>{const k=r(0,3),Q=[['వారానికి ఎన్ని రోజులు?','How many days are there in a week?',7,[5,6,10]],['ఒక రోజుకు ఎన్ని గంటలు?','How many hours are there in a day?',24,[12,60,7]],['సంవత్సరానికి ఎన్ని నెలలు?','How many months are there in a year?',12,[10,7,24]],['ఆదివారం తర్వాత వచ్చే రోజు ఏది?','Which day comes after Sunday?',['సోమవారం','Monday'],[['శనివారం','Saturday'],['మంగళవారం','Tuesday'],['శుక్రవారం','Friday']]]][k];return M(Q[0],Q[1],Q[2],Q[3]);});
+G3('meas','time',3,5,'A',(c,d)=>{if(d===1){const h=r(2,6);return M(`${h} గంటలు = ఎన్ని నిమిషాలు?`,`${h} hours = how many minutes?`,h*60,[h*100,h*30,h*24]);}
+ if(d===2){const s=r(6,10),dur=r(2,4);return M(`బడి ఉదయం ${s} గంటలకు మొదలై ${dur} గంటలు నడిస్తే ఎన్ని గంటలకు ముగుస్తుంది? (12 గంటల గడియారం)`,`School starts at ${s} o'clock and goes on for ${dur} hours. At what time does it end? (12-hour clock)`,`${(s+dur-1)%12+1}:00`,[`${(s+dur)%12+1}:00`,`${s+dur-1}:00`,`${dur}:00`]);}
+ const h=r(1,3),m=r(1,5)*10,t=h*60+m;return M(`${h} గంటల ${m} నిమిషాలు = ఎన్ని నిమిషాలు?`,`${h} hours ${m} minutes = how many minutes?`,t,[h*100+m,t+60,h+m]);});
+G3('meas','money',1,5,'A',(c,d)=>{if(c<=2){const a=r(2,d===1?10:30),b=r(1,d===1?9:20);return M(`ఒక పెన్సిల్ ₹${a}, ఒక రబ్బరు ₹${b}. రెండూ కలిపి ఎంత?`,`A pencil costs ₹${a} and an eraser costs ₹${b}. What is the total cost?`,a+b,nw(a+b,3,1));}
+ if(d===1){const rs=r(2,9);return M(`₹${rs} = ఎన్ని పైసలు?`,`₹${rs} = how many paise?`,rs*100,[rs*10,rs*1000,rs+100]);}
+ if(d===2){const p=r(c*10,c*60),q=r(2,9);return M(`ఒక నోట్‌బుక్ ధర ₹${p}. ${q} నోట్‌బుక్‌ల ధర ఎంత?`,`One notebook costs ₹${p}. What is the cost of ${q} notebooks?`,p*q,[p+q,p*q+p,p*q-q]);}
+ const rs=r(2,50),ps=pick([25,50,75]);return M(`₹${rs}.${ps} = ఎన్ని పైసలు?`,`₹${rs}.${ps} = how many paise?`,rs*100+ps,[rs*10+ps,rs+ps,rs*100+ps+100]);});
+
+/* ---- జ్యామితి ---- */
+const SHP=[[['త్రిభుజం','Triangle'],3,'త్రిభుజానికి'],[['చతురస్రం','Square'],4,'చతురస్రానికి'],[['దీర్ఘచతురస్రం','Rectangle'],4,'దీర్ఘచతురస్రానికి'],[['పంచభుజి','Pentagon'],5,'పంచభుజికి'],[['షడ్భుజి','Hexagon'],6,'షడ్భుజికి']];
+G('geo','shp',1,5,1,'R',(c)=>{const S=pick(SHP.slice(0,c<3?3:5));return M(`${S[2]} ఎన్ని భుజాలు ఉంటాయి?`,`How many sides does a ${S[0][1].toLowerCase()} have?`,S[1],nw(S[1],2,0).filter(x=>x>0));});
+G('geo','shp',1,5,2,'U',(c)=>{const S=pick(SHP.slice(0,c<3?3:5)),o=SHP.filter(x=>x[1]!==S[1]).map(x=>x[0]);return M(`${S[1]} భుజాలు, ${S[1]} మూలలు గల ఆకారం ఏది?`,`Which shape has ${S[1]} sides and ${S[1]} corners?`,S[0],o.concat([['వృత్తం','Circle']]).slice(0,3),{fr:false});});
+G('geo','shp',1,3,1,'R',()=>M('భుజాలు, మూలలు లేని ఆకారం ఏది?','Which shape has no sides and no corners?',['వృత్తం','Circle'],[['త్రిభుజం','Triangle'],['చతురస్రం','Square'],['దీర్ఘచతురస్రం','Rectangle']],{fr:false}));
+G('geo','shp',3,5,3,'N',()=>{const k=r(0,1);return k?M('చతురస్రం యొక్క ప్రత్యేకత ఏమిటి?','What is special about a square?',['నాలుగు భుజాలు సమానం','All four sides are equal'],[['మూడు భుజాలు ఉంటాయి','It has three sides'],['భుజాలు ఉండవు','It has no sides'],['ఒక భుజం మాత్రమే పొడవు','Only one side is long']],{fr:false})
+ :M('ఒక త్రిభుజం, ఒక చతురస్రం – మొత్తం భుజాలు ఎన్ని?','A triangle and a square together have how many sides?',7,[6,8,4]);});
+const SOL=[[['బంతి','Ball'],['గోళం','Sphere']],[['ఐస్‌క్రీమ్ కోన్','Ice-cream cone'],['శంకువు','Cone']],[['పాచిక','Dice'],['ఘనం','Cube']],[['ఇటుక','Brick'],['దీర్ఘఘనం','Cuboid']],[['డబ్బా (టిన్)','Tin can'],['స్థూపం','Cylinder']]];
+G('geo','sol',2,5,1,'U',()=>{const S=pick(SOL),o=SOL.filter(x=>x!==S).map(x=>x[1]);return M(`${S[0][0]} ఏ ఘన ఆకారంలో ఉంటుంది?`,`${/^[aeiou]/i.test(S[0][1])?'An':'A'} ${S[0][1].toLowerCase()} has the shape of a:`,S[1],o.slice(0,3),{fr:false});});
+G('geo','sol',3,5,2,'R',()=>{const k=r(0,2),Q=[['ఘనానికి (cube) ఎన్ని ముఖాలు ఉంటాయి?','How many faces does a cube have?',6,[4,8,12]],['ఘనానికి ఎన్ని అంచులు ఉంటాయి?','How many edges does a cube have?',12,[6,8,10]],['ఘనానికి ఎన్ని శీర్షాలు (మూలలు) ఉంటాయి?','How many vertices (corners) does a cube have?',8,[6,4,12]]][k];return M(Q[0],Q[1],Q[2],Q[3]);});
+G('geo','sol',3,5,3,'N',()=>M('దొర్లగలిగే, పేర్చగలిగే (రెండూ చేయగలిగే) ఆకారం ఏది?','Which shape can both roll and be stacked?',['స్థూపం','Cylinder'],[['గోళం','Sphere'],['ఘనం','Cube'],['దీర్ఘఘనం','Cuboid']],{fr:false}));
+const ANG=[['లంబ కోణం','Right angle'],['లఘు కోణం','Acute angle'],['అధిక కోణం','Obtuse angle'],['సరళ కోణం','Straight angle']];
+G('geo','ang',4,5,1,'R',()=>M('లంబ కోణం ఎన్ని డిగ్రీలు?','How many degrees is a right angle?',90,[180,45,360]));
+G('geo','ang',4,5,2,'U',()=>{const v=pick([r(10,80),r(100,170),90,180]),a=v<90?ANG[1]:v===90?ANG[0]:v<180?ANG[2]:ANG[3];return M(`${v}° కోణం ఏ రకం?`,`What type of angle is ${v}°?`,a,ANG.filter(x=>x!==a),{fr:false});});
+G('geo','ang',4,5,3,'N',()=>{const k=r(0,1);return k?M('గడియారంలో 3 గంటలప్పుడు ముళ్ల మధ్య కోణం ఏ రకం?','At 3 o\'clock, the angle between the clock hands is a:',ANG[0],[ANG[1],ANG[2],ANG[3]],{fr:false}):M('ఒక లంబ కోణంలో సగం ఎన్ని డిగ్రీలు?','Half of a right angle is how many degrees?',45,[90,30,180]);});
+G3('geo','circ',5,5,'A',(c,d)=>{if(d===1)return M('వృత్త కేంద్రం నుండి వృత్తం మీది బిందువు వరకు గల దూరాన్ని ఏమంటారు?','The distance from the centre of a circle to a point on the circle is called the:',['వ్యాసార్ధం','Radius'],[['వ్యాసం','Diameter'],['జ్యా','Chord'],['చుట్టుకొలత','Perimeter']],{fr:false});
+ const x=r(2,20);return d===2?M(`వ్యాసార్ధం ${x} సెం.మీ అయితే వ్యాసం ఎంత? (సెం.మీ)`,`If the radius is ${x} cm, what is the diameter (in cm)?`,2*x,[x,x/2,x+2]):M(`వ్యాసం ${2*x} సెం.మీ అయితే వ్యాసార్ధం ఎంత? (సెం.మీ)`,`If the diameter is ${2*x} cm, what is the radius (in cm)?`,x,[2*x,4*x,x+2]);});
+
+/* ---- వైశాల్యం & చుట్టుకొలత ---- */
+G3('ap','per',3,5,'A',(c,d)=>{if(d===1){const s=r(2,15);return M(`భుజం ${s} సెం.మీ గల చతురస్రం చుట్టుకొలత ఎంత? (సెం.మీ)`,`What is the perimeter of a square of side ${s} cm (in cm)?`,4*s,[s*s,2*s,s+4]);}
+ const l=r(5,25),b=r(2,l-1);if(d===2)return M(`పొడవు ${l} సెం.మీ, వెడల్పు ${b} సెం.మీ గల దీర్ఘచతురస్రం చుట్టుకొలత? (సెం.మీ)`,`Perimeter of a rectangle with length ${l} cm and breadth ${b} cm (in cm)?`,2*(l+b),[l*b,l+b,2*l+b]);
+ const p=4*r(3,15);return M(`ఒక చతురస్రం చుట్టుకొలత ${p} సెం.మీ. దాని భుజం ఎంత? (సెం.మీ)`,`The perimeter of a square is ${p} cm. What is its side (in cm)?`,p/4,[p/2,p-4,p/4+2]);});
+G3('ap','area',3,5,'A',(c,d)=>{if(d===1){const s=r(2,12);return M(`భుజం ${s} సెం.మీ గల చతురస్ర వైశాల్యం? (చ.సెం.మీ)`,`Area of a square of side ${s} cm (in sq cm)?`,s*s,[4*s,2*s,s*s+s]);}
+ const l=r(4,20),b=r(2,l-1);if(d===2)return M(`పొడవు ${l} సెం.మీ, వెడల్పు ${b} సెం.మీ గల దీర్ఘచతురస్ర వైశాల్యం? (చ.సెం.మీ)`,`Area of a rectangle with length ${l} cm and breadth ${b} cm (in sq cm)?`,l*b,[2*(l+b),l+b,l*b+l]);
+ return M(`ఒక దీర్ఘచతురస్రం వైశాల్యం ${l*b} చ.సెం.మీ, పొడవు ${l} సెం.మీ. వెడల్పు ఎంత? (సెం.మీ)`,`The area of a rectangle is ${l*b} sq cm and its length is ${l} cm. What is its breadth (in cm)?`,b,[l,l*b-l,b+2].filter(x=>x!==b));});
+G('ap','area',3,5,2,'U',()=>M('వైశాల్యాన్ని ఏ ప్రమాణాల్లో కొలుస్తాం?','Area is measured in:',['చదరపు సెంటీమీటర్లు','Square centimetres'],[['సెంటీమీటర్లు','Centimetres'],['లీటర్లు','Litres'],['కిలోగ్రాములు','Kilograms']],{fr:false}));
+
+/* ---- అమరికలు ---- */
+G3('pat','npat',1,5,'N',(c,d)=>{const st=r(1,c*10),k=d===1?pick([1,2,5,10]):d===2?r(3,c*4+3):0;
+ if(d<3){const s=[0,1,2,3].map(i=>st+i*k);return M(`తర్వాత వచ్చే సంఖ్య? ${s.join(', ')}, ___`,`What comes next? ${s.join(', ')}, ___`,st+4*k,[st+4*k+1,st+5*k,st+3*k+1].filter(x=>x!==st+4*k));}
+ const m=pick([2,3]),a=r(1,5),s=[a,a*m,a*m*m,a*m*m*m];return M(`తర్వాత వచ్చే సంఖ్య? ${s.join(', ')}, ___`,`What comes next? ${s.join(', ')}, ___`,a*m**4,[s[3]+(s[3]-s[2]),s[3]+m,a*m**4+m]);});
+G('pat','npat',1,3,1,'U',()=>{const s=['🔴🔵','⭐🌙','🍎🍌'][r(0,2)],u=[...s];return M(`అమరికలో తర్వాత వచ్చేది? ${s+s+u[0]} ___`,`What comes next in the pattern? ${s+s+u[0]} ___`,u[1],[u[0],'⚽','🌸'],{fr:false});});
+G3('pat','miss',1,5,'A',(c,d)=>{const L=Math.max(9,Math.floor((lim(c,d)||20)/2));const a=r(1,L),b=r(1,L),k=d===3&&c>=3?2:r(0,1);
+ if(k===0)return M(`___ + ${fmt(b)} = ${fmt(a+b)}`,`___ + ${fmt(b)} = ${fmt(a+b)}`,a,nw(a,c>3?100:5,0));
+ if(k===1)return M(`${fmt(a+b)} − ___ = ${fmt(a)}`,`${fmt(a+b)} − ___ = ${fmt(a)}`,b,nw(b,c>3?100:5,0));
+ const x=r(2,9),y=r(2,12);return M(`${x} × ___ = ${x*y}`,`${x} × ___ = ${x*y}`,y,[x,x*y-x,y+1]);});
+
+/* ---- సంఖ్యా సిద్ధాంతం ---- */
+const facs=n=>{const f=[];for(let i=1;i<=n;i++)if(n%i===0)f.push(i);return f;};
+const isPr=n=>n>1&&facs(n).length===2;
+G3('nth','fac',4,5,'U',(c,d)=>{const n=pick(d===1?[6,8,10,12,15]:d===2?[18,20,24,28,30]:[36,40,42,48,60]),f=facs(n);if(d===3)return M(`${n} యొక్క కారణాంకాలు ఎన్ని?`,`How many factors does ${n} have?`,f.length,nw(f.length,2,1));
+ const nf=[];for(let i=2;nf.length<3&&i<n;i++)if(n%i)nf.push(i);const a=pick(f.filter(x=>x>1&&x<n));return M(`వీటిలో ${n} యొక్క కారణాంకం ఏది?`,`Which of these is a factor of ${n}?`,a,nf);});
+G3('nth','mlt',4,5,'U',(c,d)=>{const n=r(3,d===1?9:15);if(d===3){const k=r(3,9);return M(`${n} యొక్క ${k}వ గుణిజం ఏది?`,`What is the ${k}th multiple of ${n}?`,n*k,[n*(k+1),n+k,n*(k-1)]);}
+ const m=n*r(2,9);return M(`వీటిలో ${n} యొక్క గుణిజం ఏది?`,`Which of these is a multiple of ${n}?`,m,[m+1,m-1,m+2].filter(x=>x%n));});
+G3('nth','pr',4,5,'U',(c,d)=>{const P=[2,3,5,7,11,13,17,19,23,29,31,37,41,43,47],C=[4,6,8,9,10,12,14,15,16,18,20,21,22,25,27,33,35,39,49,51];
+ if(d===1)return M('వీటిలో ప్రధాన సంఖ్య ఏది?','Which of these is a prime number?',pick(P.slice(0,8)),[pick([4,6,8]),pick([9,10,12]),pick([14,15,16])]);
+ if(d===2)return M('వీటిలో సంయుక్త సంఖ్య ఏది?','Which of these is a composite number?',pick(C.slice(4)),[pick([2,3,5]),pick([7,11,13]),pick([17,19,23])]);
+ return M('ఏకైక సరి ప్రధాన సంఖ్య ఏది?','Which is the only even prime number?',2,[4,1,0]);});
+G3('nth','dvt',4,5,'N',(c,d)=>{const k=pick(d===1?[2,5,10]:d===2?[3,9]:[4,6]);let y=k*r(15,250),n1=[];while(n1.length<3){const z=r(30,2000);if(z%k&&!n1.includes(z))n1.push(z);}return M(`వీటిలో ${k} చేత నిశ్శేషంగా భాగించబడే సంఖ్య ఏది?`,`Which of these is divisible by ${k}?`,y,n1);});
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+G3('nth','lh',5,5,'A',(c,d)=>{const a=r(2,d===1?10:15)*(d===3?2:1),b=r(2,d===1?10:15)*(d===3?3:1);const A=Math.min(a,b),B=Math.max(a,b)+(a===b?1:0),g=gcd(A,B),l=A*B/g;
+ return r(0,1)?M(`${A}, ${B} ల క.సా.గు (LCM) ఎంత?`,`What is the LCM of ${A} and ${B}?`,l,[A*B===l?l+A:A*B,g,l+B].filter(x=>x!==l)):M(`${A}, ${B} ల గ.సా.భా (HCF) ఎంత?`,`What is the HCF of ${A} and ${B}?`,g,[l,g+1,A].filter(x=>x!==g).concat([B]).slice(0,3));});
+
+/* ---- దత్తాంశం ---- */
+G3('data','tal',2,5,'U',(c,d)=>{const n=r(d===1?3:6,d===1?9:23),t='𝍸 '.repeat(Math.floor(n/5))+'|'.repeat(n%5);return M(`ఈ టాలీ గుర్తులు ఏ సంఖ్యను సూచిస్తాయి?  ${t}   (𝍸 = 5)`,`What number do these tally marks show?  ${t}   (𝍸 = 5)`,n,nw(n,2,1));});
+G3('data','pic',2,5,'A',(c,d)=>{const k=d===1?1:d===2?2:pick([5,10]),fr=[['మామిడి','Mango',r(2,6)],['అరటి','Banana',r(2,6)],['జామ','Guava',r(2,6)]];
+ const lines=fr.map(f=>'🍎'.repeat(f[2])),lt=fr.map((f,i)=>`${f[0]}: ${lines[i]}`).join('  •  '),le=fr.map((f,i)=>`${f[1]}: ${lines[i]}`).join('  •  ');const i=r(0,2),q=r(0,1);
+ if(q||d===1)return M(`పిల్లలు ఇష్టపడే పండ్లు (🍎 = ${k} మంది): ${lt}. ${fr[i][0]} ఇష్టపడేవారు ఎంతమంది?`,`Favourite fruits (🍎 = ${k} ${k===1?'child':'children'}): ${le}. How many children like ${fr[i][1]}?`,fr[i][2]*k,[fr[i][2],fr[i][2]*k+k,fr[(i+1)%3][2]*k].filter((x,j,a)=>x!==fr[i][2]*k&&a.indexOf(x)===j).concat([fr[i][2]*k+2*k]).slice(0,3));
+ const tot=fr.reduce((a,f)=>a+f[2],0)*k;return M(`పిల్లలు ఇష్టపడే పండ్లు (🍎 = ${k} మంది): ${lt}. మొత్తం ఎంతమంది పిల్లలు?`,`Favourite fruits (🍎 = ${k} ${k===1?'child':'children'}): ${le}. How many children in all?`,tot,[tot/k===tot?tot+1:tot/k,tot+k,tot-k]);});
+/* ================= తయారుచేసిన ప్రశ్నలు =================
+   వరుస: "తరగతులు|టాపిక్|సబ్|కష్టం|Bloom|FR|ప్రశ్న|సరైన జవాబు|తప్పు1|తప్పు2|తప్పు3"
+   తరగతులు: "13" = 1 నుండి 3 | ద్విభాషా (EVS): "తెలుగు~English" */
+function I(sb,rows){rows.trim().split('\n').forEach(l=>{l=l.trim();if(!l||l.startsWith('//'))return;const p=l.split('|');if(p.length<10)throw new Error('QB row: '+l);
+ const sp=x=>x.includes('~')?x.split('~').map(y=>y.trim()):x.trim();
+ QB.items.push({sb,c:[+p[0][0],+p[0].slice(1)||+p[0][0]],t:p[1],s:p[2],d:+p[3],b:p[4],fr:p[5]==='1',q:sp(p[6]),a:sp(p[7]),w:p.slice(8).map(sp).filter(x=>x!=='')});});}
+
+I('tel',`
+12|ak|ach|1|R|1|'అ' తర్వాత వచ్చే అచ్చు ఏది?|ఆ|ఇ|ఉ|ఎ
+12|ak|ach|1|R|1|'ఇ' తర్వాత వచ్చే అచ్చు ఏది?|ఈ|ఉ|ఎ|అ
+13|ak|ach|1|R|1|'ఉ' తర్వాత వచ్చే అచ్చు ఏది?|ఊ|ఋ|ఒ|ఎ
+13|ak|ach|2|U|0|వీటిలో అచ్చు ఏది?|ఏ|క|మ|ట
+13|ak|ach|2|U|0|వీటిలో అచ్చు కానిది ఏది?|ప|ఐ|ఓ|ఔ
+12|ak|ach|1|R|1|'అమ్మ' పదం ఏ అక్షరంతో మొదలవుతుంది?|అ|ఆ|ఇ|ఉ
+12|ak|ach|1|R|1|'ఈగ' పదం ఏ అక్షరంతో మొదలవుతుంది?|ఈ|ఇ|ఎ|ఏ
+13|ak|ach|2|A|1|'ఒంటె' పదంలోని మొదటి అక్షరం ఏది?|ఒ|ఓ|ఉ|అ
+13|ak|ach|3|N|0|'ఎ' కి దీర్ఘం ఏది?|ఏ|ఐ|ఈ|ఓ
+12|ak|hal|1|R|1|'క' తర్వాత వచ్చే హల్లు ఏది?|ఖ|గ|చ|ట
+12|ak|hal|1|R|1|'చ' తర్వాత వచ్చే హల్లు ఏది?|ఛ|జ|ట|త
+13|ak|hal|1|R|1|'ప' తర్వాత వచ్చే హల్లు ఏది?|ఫ|బ|మ|య
+13|ak|hal|2|U|0|వీటిలో హల్లు ఏది?|త|ఆ|ఈ|ఊ
+12|ak|hal|1|R|1|'కలం' పదంలోని మొదటి అక్షరం ఏది?|క|గ|ల|మ
+12|ak|hal|2|A|1|'చిలుక' పదంలోని చివరి అక్షరం ఏది?|క|చి|లు|ల
+13|ak|hal|2|U|0|'త థ ద ధ ___' – ఖాళీలో వచ్చే హల్లు?|న|ణ|మ|ప
+13|ak|hal|3|N|0|'క' వర్గంలో (క ఖ గ ఘ ఙ) లేని అక్షరం ఏది?|చ|ఖ|గ|ఘ
+13|ak|gun|1|R|1|క + ఆ = ?|కా|కి|కు|కె
+13|ak|gun|1|R|1|మ + ఇ = ?|మి|మీ|ము|మా
+13|ak|gun|1|R|1|ప + ఉ = ?|పు|పూ|పి|పె
+14|ak|gun|2|U|1|గ + ఈ = ?|గీ|గి|గె|గా
+14|ak|gun|2|U|1|త + ఏ = ?|తే|తె|తి|తై
+14|ak|gun|2|U|1|ర + ఒ = ?|రొ|రో|రు|రౌ
+14|ak|gun|2|A|1|'కి' గుణింతంలో ఏ అచ్చు కలిసింది?|ఇ|ఈ|ఉ|అ
+24|ak|gun|3|N|0|'క' గుణింతంలో 'కీ' తర్వాత వచ్చేది?|కు|కూ|కి|కె
+24|ak|gun|3|A|1|స + ఔ = ?|సౌ|సో|సై|సా
+14|ak|gun|2|U|0|'బొమ్మ' పదంలో 'బొ' కి ఏ అచ్చు కలిసింది?|ఒ|ఓ|ఉ|ఊ
+25|ak|ott|1|R|0|'అమ్మ' పదంలో ఏ ఒత్తు ఉంది?|మ ఒత్తు|న ఒత్తు|క ఒత్తు|ల ఒత్తు
+25|ak|ott|1|R|0|'పిల్లి' పదంలో ఏ ఒత్తు ఉంది?|ల ఒత్తు|ప ఒత్తు|మ ఒత్తు|య ఒత్తు
+25|ak|ott|2|U|0|'చెట్టు' పదంలో ఏ ఒత్తు ఉంది?|ట ఒత్తు|త ఒత్తు|చ ఒత్తు|డ ఒత్తు
+25|ak|ott|2|U|0|'పుస్తకం' పదంలో ఏ ఒత్తు ఉంది?|త ఒత్తు|స ఒత్తు|క ఒత్తు|ప ఒత్తు
+35|ak|ott|2|U|0|'సూర్యుడు' పదంలో ఏ ఒత్తు ఉంది?|య ఒత్తు|ర ఒత్తు|డ ఒత్తు|స ఒత్తు
+35|ak|ott|3|N|0|'చక్రం' పదంలో 'క్ర' లో ఏ ఒత్తు ఉంది?|ర ఒత్తు (వట్రసుడి)|క ఒత్తు|య ఒత్తు|మ ఒత్తు
+35|ak|ott|3|N|0|వీటిలో ద్విత్వాక్షరం (అదే అక్షరం ఒత్తు) ఉన్న పదం ఏది?|ఎద్దు|పుస్తకం|చక్రం|సూర్యుడు
+35|ak|ott|3|N|0|వీటిలో సంయుక్తాక్షరం (వేరే అక్షరం ఒత్తు) ఉన్న పదం ఏది?|పుస్తకం|అమ్మ|పిల్లి|కన్ను
+12|pad|art|1|U|0|🐄 ఈ బొమ్మ పేరు ఏమిటి?|ఆవు|మేక|కుక్క|పిల్లి
+12|pad|art|1|U|0|🏠 ఇది ఏమిటి?|ఇల్లు|బడి|గుడి|చెట్టు
+12|pad|art|1|U|0|🌳 ఇది ఏమిటి?|చెట్టు|పువ్వు|ఆకు|కాయ
+13|pad|art|1|R|1|'జలం' అంటే అర్థం ఏమిటి?|నీరు|నిప్పు|గాలి|మట్టి
+13|pad|art|1|R|1|'వృక్షం' అంటే అర్థం ఏమిటి?|చెట్టు|పువ్వు|పండు|ఆకు
+25|pad|art|2|R|1|'పుష్పం' అంటే అర్థం ఏమిటి?|పువ్వు|పండు|ఆకు|కాయ
+25|pad|art|2|R|1|'నేత్రం' అంటే అర్థం ఏమిటి?|కన్ను|ముక్కు|చెవి|నోరు
+25|pad|art|2|R|1|'గృహం' అంటే అర్థం ఏమిటి?|ఇల్లు|బడి|గుడి|తోట
+35|pad|art|2|R|1|'గజం' అంటే అర్థం ఏమిటి?|ఏనుగు|గుర్రం|ఒంటె|సింహం
+35|pad|art|2|R|1|'అశ్వం' అంటే అర్థం ఏమిటి?|గుర్రం|ఏనుగు|ఆవు|ఎద్దు
+35|pad|art|3|U|1|'సాగరం' అంటే అర్థం ఏమిటి?|సముద్రం|నది|చెరువు|కొండ
+35|pad|art|3|U|1|'గగనం' అంటే అర్థం ఏమిటి?|ఆకాశం|భూమి|నీరు|గాలి
+12|pad|vya|1|R|1|'పెద్ద' కి వ్యతిరేక పదం?|చిన్న|పొడవు|ఎత్తు|లావు
+12|pad|vya|1|R|1|'పగలు' కి వ్యతిరేక పదం?|రాత్రి|ఉదయం|సాయంత్రం|మధ్యాహ్నం
+13|pad|vya|1|R|1|'మంచి' కి వ్యతిరేక పదం?|చెడు|తీపి|పెద్ద|కొత్త
+13|pad|vya|1|R|1|'లోపల' కి వ్యతిరేక పదం?|బయట|పైన|ముందు|కింద
+24|pad|vya|2|R|1|'తీపి' కి వ్యతిరేక పదం?|చేదు|పులుపు|ఉప్పు|కారం
+24|pad|vya|2|R|1|'ముందు' కి వ్యతిరేక పదం?|వెనుక|పక్కన|పైన|లోపల
+35|pad|vya|2|U|1|'గెలుపు' కి వ్యతిరేక పదం?|ఓటమి|ఆట|పోటీ|బహుమతి
+35|pad|vya|2|U|1|'సుఖం' కి వ్యతిరేక పదం?|దుఃఖం|సంతోషం|ఆనందం|నవ్వు
+35|pad|vya|3|U|1|'న్యాయం' కి వ్యతిరేక పదం?|అన్యాయం|నిజం|ధర్మం|సత్యం
+35|pad|vya|3|N|0|వ్యతిరేక పదాల జత కానిది ఏది?|ఆకాశం – గగనం|వేడి – చల్లదనం|పైన – కింద|కొత్త – పాత
+35|pad|pry|2|R|1|'సూర్యుడు' కి పర్యాయ పదం?|భానుడు|శశి|ఇంద్రుడు|వరుణుడు
+35|pad|pry|2|R|1|'చంద్రుడు' కి పర్యాయ పదం?|శశి|రవి|భానుడు|అగ్ని
+35|pad|pry|2|R|1|'తల్లి' కి పర్యాయ పదం?|మాత|పిత|సోదరి|బంధువు
+35|pad|pry|3|U|0|'భూమి' కి పర్యాయ పదాలు ఏవి?|ధరణి, పృథ్వి|గగనం, నింగి|జలం, నీరు|అనలం, అగ్ని
+35|pad|pry|3|U|0|'నీరు' కి పర్యాయ పదాలు ఏవి?|జలం, ఉదకం|అగ్ని, అనలం|వాయువు, గాలి|పుడమి, ధరణి
+25|pad|lv|1|R|1|'రాజు' కి స్త్రీ లింగ పదం?|రాణి|రాజ్యం|మంత్రి|యువరాజు
+25|pad|lv|1|R|1|'బాలుడు' కి స్త్రీ లింగ పదం?|బాలిక|బాలలు|బాల్యం|బాలుర
+25|pad|lv|2|U|1|'దేవుడు' కి స్త్రీ లింగ పదం?|దేవత|దేవాలయం|దైవం|దేవుళ్లు
+25|pad|lv|1|R|1|'పుస్తకం' బహువచనం?|పుస్తకాలు|పుస్తకము|పుస్తకలు|పుస్తకం
+25|pad|lv|2|U|1|'చెట్టు' బహువచనం?|చెట్లు|చెట్టులు|చెట్టుళ్లు|చెట్టాలు
+35|pad|lv|2|U|1|'కాలు' బహువచనం?|కాళ్లు|కాలులు|కాల్లు|కాలాలు
+35|pad|lv|3|A|1|'ఇల్లు' బహువచనం?|ఇళ్లు|ఇల్లులు|ఇల్లాలు|ఇల్లు
+35|pad|lv|3|A|1|'రాయి' బహువచనం?|రాళ్లు|రాయిలు|రాయ్లు|రాయాలు
+35|vyk|bh|1|R|0|పేర్లను తెలిపే పదాలను ఏమంటారు?|నామవాచకం|క్రియ|విశేషణం|అవ్యయం
+35|vyk|bh|1|R|0|పనిని తెలిపే పదాలను ఏమంటారు?|క్రియ|నామవాచకం|సర్వనామం|విశేషణం
+35|vyk|bh|2|U|0|'నేను, నువ్వు, అతడు' – ఇవి ఏ భాషా భాగం?|సర్వనామం|నామవాచకం|క్రియ|అవ్యయం
+35|vyk|bh|2|U|0|'ఎర్రని పువ్వు' లో 'ఎర్రని' ఏ భాషా భాగం?|విశేషణం|నామవాచకం|క్రియ|సర్వనామం
+35|vyk|bh|2|A|0|'రవి పాఠం చదివాడు' – ఈ వాక్యంలో క్రియ ఏది?|చదివాడు|రవి|పాఠం|ఏదీ కాదు
+45|vyk|bh|3|A|0|'ఆహా! ఎంత అందమైన తోట!' – 'ఆహా' ఏ భాషా భాగం?|అవ్యయం|విశేషణం|క్రియ|సర్వనామం
+45|vyk|bh|3|N|0|'సీత అందమైన బొమ్మ గీసింది' – నామవాచకాలు ఏవి?|సీత, బొమ్మ|అందమైన, గీసింది|సీత, గీసింది|అందమైన, బొమ్మ
+35|vyk|kal|1|R|0|'నేను పాఠం చదివాను' – ఇది ఏ కాలం?|భూత కాలం|వర్తమాన కాలం|భవిష్యత్ కాలం|ఏదీ కాదు
+35|vyk|kal|2|U|0|'నేను పాఠం చదువుతున్నాను' – ఇది ఏ కాలం?|వర్తమాన కాలం|భూత కాలం|భవిష్యత్ కాలం|ఏదీ కాదు
+35|vyk|kal|2|U|0|'రేపు మేము ఊరికి వెళ్తాము' – ఇది ఏ కాలం?|భవిష్యత్ కాలం|భూత కాలం|వర్తమాన కాలం|ఏదీ కాదు
+35|vyk|kal|3|A|0|'ఆడు' క్రియను భూత కాలంలో మార్చండి: 'పిల్లలు ___'|ఆడారు|ఆడుతున్నారు|ఆడతారు|ఆడండి
+45|vyk|vib|2|R|0|'డు, ము, వు, లు' ఏ విభక్తి ప్రత్యయాలు?|ప్రథమా విభక్తి|ద్వితీయా విభక్తి|తృతీయా విభక్తి|షష్ఠీ విభక్తి
+45|vyk|vib|2|R|0|'చేతన్, చేన్, తోడన్, తోన్' ఏ విభక్తి ప్రత్యయాలు?|తృతీయా విభక్తి|ప్రథమా విభక్తి|చతుర్థీ విభక్తి|సప్తమీ విభక్తి
+45|vyk|vib|3|U|0|'కొఱకున్, కై' ఏ విభక్తి ప్రత్యయాలు?|చతుర్థీ విభక్తి|పంచమీ విభక్తి|షష్ఠీ విభక్తి|ద్వితీయా విభక్తి
+45|vyk|vib|3|U|0|'ఓ, ఓరీ, ఓయీ, ఓసీ' ఏ విభక్తి ప్రత్యయాలు?|సంబోధనా ప్రథమా విభక్తి|సప్తమీ విభక్తి|పంచమీ విభక్తి|తృతీయా విభక్తి
+45|vyk|snd|2|U|1|విద్య + ఆలయం = ?|విద్యాలయం|విద్యలయం|విద్యేలయం|విద్యోలయం
+45|vyk|snd|2|U|0|'విద్యాలయం' – ఇది ఏ సంధి?|సవర్ణదీర్ఘ సంధి|గుణ సంధి|వృద్ధి సంధి|ఉత్వ సంధి
+45|vyk|snd|3|U|0|'సూర్యోదయం' (సూర్య + ఉదయం) – ఇది ఏ సంధి?|గుణ సంధి|సవర్ణదీర్ఘ సంధి|వృద్ధి సంధి|యడాగమ సంధి
+45|vyk|snd|3|A|1|దేవ + ఇంద్రుడు = ?|దేవేంద్రుడు|దేవింద్రుడు|దేవైంద్రుడు|దేవాంద్రుడు
+45|vyk|snd|3|U|0|'ఏకైక' (ఏక + ఏక) – ఇది ఏ సంధి?|వృద్ధి సంధి|గుణ సంధి|సవర్ణదీర్ఘ సంధి|ఇకార సంధి
+45|vyk|snd|3|N|0|'మా + అమ్మ = మాయమ్మ' – ఇది ఏ సంధి?|యడాగమ సంధి|గుణ సంధి|వృద్ధి సంధి|సవర్ణదీర్ఘ సంధి
+55|vyk|sms|2|U|0|'తల్లిదండ్రులు' – ఇది ఏ సమాసం?|ద్వంద్వ సమాసం|ద్విగు సమాసం|బహువ్రీహి సమాసం|షష్ఠీ తత్పురుష సమాసం
+55|vyk|sms|2|U|0|'రామలక్ష్మణులు' – ఇది ఏ సమాసం?|ద్వంద్వ సమాసం|ద్విగు సమాసం|కర్మధారయ సమాసం|బహువ్రీహి సమాసం
+55|vyk|sms|3|U|0|'ముల్లోకాలు' (మూడైన లోకాలు) – ఇది ఏ సమాసం?|ద్విగు సమాసం|ద్వంద్వ సమాసం|బహువ్రీహి సమాసం|షష్ఠీ తత్పురుష సమాసం
+55|vyk|sms|3|N|0|'దేవాలయం' (దేవుని యొక్క ఆలయం) – ఇది ఏ సమాసం?|షష్ఠీ తత్పురుష సమాసం|ద్వంద్వ సమాసం|ద్విగు సమాసం|కర్మధారయ సమాసం
+12|vak|krm|1|U|0|సరైన వాక్యం ఏది?|నేను బడికి వెళ్తాను.|బడికి నేను వెళ్తాను నేను.|వెళ్తాను బడికి.|నేను వెళ్తాను బడికి నేను.
+13|vak|krm|2|A|0|పదాలను సరిగా అమర్చండి: 'తిన్నాడు / రవి / అన్నం'|రవి అన్నం తిన్నాడు.|అన్నం తిన్నాడు రవి రవి.|తిన్నాడు రవి.|అన్నం రవి.
+25|vak|krm|2|A|0|పదాలను సరిగా అమర్చండి: 'పాడింది / పాట / సీత / మంచి'|సీత మంచి పాట పాడింది.|పాట సీత పాడింది మంచి.|మంచి సీత పాడింది.|పాడింది పాట మంచి.
+35|vak|krm|3|N|0|వీటిలో తప్పు వాక్యం ఏది?|పిల్లలు ఆడుతున్నాడు.|పిల్లలు ఆడుతున్నారు.|రవి ఆడుతున్నాడు.|సీత ఆడుతోంది.
+35|vak|vir|1|R|0|వాక్యం చివర సాధారణంగా ఏ గుర్తు పెడతాం?|పూర్ణ బిందువు ( . )|ప్రశ్నార్థకం ( ? )|కామా ( , )|ఆశ్చర్యార్థకం ( ! )
+35|vak|vir|2|U|0|'నీ పేరు ఏమిటి' – చివర ఏ గుర్తు పెట్టాలి?|ప్రశ్నార్థకం ( ? )|పూర్ణ బిందువు ( . )|కామా ( , )|ఆశ్చర్యార్థకం ( ! )
+35|vak|vir|3|A|0|'అబ్బా ఎంత అందంగా ఉంది' – చివర ఏ గుర్తు సరైనది?|ఆశ్చర్యార్థకం ( ! )|ప్రశ్నార్థకం ( ? )|కామా ( , )|పూర్ణ బిందువు ( . )
+35|sah|kav|1|R|0|'విశ్వదాభిరామ వినురవేమ' అనే మకుటం ఎవరి పద్యాలది?|వేమన|బద్దెన|పోతన|నన్నయ
+35|sah|kav|2|R|0|'సుమతీ' మకుటంతో ఉన్న శతకం ఏది?|సుమతీ శతకం|వేమన శతకం|భాస్కర శతకం|దాశరథి శతకం
+45|sah|kav|2|R|0|ఆంధ్ర మహాభాగవతాన్ని తెలుగులో రచించిన కవి ఎవరు?|బమ్మెర పోతన|నన్నయ|వేమన|తిక్కన
+45|sah|kav|2|R|0|'ఆదికవి' అని ఎవరిని అంటారు?|నన్నయ|తిక్కన|పోతన|వేమన
+45|sah|kav|3|R|0|కవిత్రయం ఎవరు?|నన్నయ, తిక్కన, ఎర్రాప్రగడ|వేమన, పోతన, బద్దెన|గురజాడ, శ్రీశ్రీ, జాషువా|నన్నయ, పోతన, వేమన
+45|sah|kav|3|R|0|'దేశభాషలందు తెలుగు లెస్స' అన్నది ఎవరు?|శ్రీకృష్ణదేవరాయలు|వేమన|నన్నయ|గురజాడ అప్పారావు
+45|sah|kav|3|R|0|'దేశమును ప్రేమించుమన్నా' గీతం రాసింది ఎవరు?|గురజాడ అప్పారావు|వేమన|పోతన|శ్రీకృష్ణదేవరాయలు
+35|sah|kav|2|R|0|'మా తెలుగు తల్లికి మల్లె పూదండ' గీతం రాసింది ఎవరు?|శంకరంబాడి సుందరాచారి|గురజాడ అప్పారావు|వేమన|నన్నయ
+35|sah|sam|1|R|1|సామెత పూర్తి చేయండి: 'ఆరోగ్యమే ___'|మహాభాగ్యం|ధనం|బలం|సుఖం
+35|sah|sam|2|R|1|సామెత పూర్తి చేయండి: 'నిదానమే ___'|ప్రధానం|బలం|ఆలస్యం|లాభం
+35|sah|sam|2|R|1|సామెత పూర్తి చేయండి: 'అందని ద్రాక్ష ___'|పుల్లన|తీపి|చేదు|పండు
+45|sah|sam|2|R|1|సామెత పూర్తి చేయండి: 'కృషితో నాస్తి ___'|దుర్భిక్షం|ధనం|సుఖం|విజయం
+45|sah|sam|3|U|0|'మొక్కై వంగనిది మానై వంగునా' – అర్థం ఏమిటి?|చిన్నప్పుడే మంచి అలవాట్లు నేర్పాలి|చెట్లు నాటాలి|పెద్ద చెట్లు వంగుతాయి|మొక్కలకు నీరు పోయాలి
+45|sah|sam|3|U|0|'చేతులు కాలాక ఆకులు పట్టుకున్నట్లు' – అర్థం?|సమయం మించాక జాగ్రత్త పడటం|ముందే జాగ్రత్త పడటం|వంట చేయటం|ఆకులు కోయటం
+15|sah|pod|1|A|1|పొడుపు కథ: 'నాకు కాళ్లు లేవు, కానీ టిక్ టిక్ అంటూ నడుస్తాను.' నేను ఎవరు?|గడియారం|రైలు|బంతి|పుస్తకం
+15|sah|pod|1|A|1|పొడుపు కథ: 'రాత్రి ఆకాశంలో వెలుగుతాను, పగలు కనిపించను, నెలకోసారి నిండుగా ఉంటాను.' నేను ఎవరు?|చంద్రుడు|సూర్యుడు|మేఘం|దీపం
+15|sah|pod|2|A|1|పొడుపు కథ: 'నాకు పేజీలు ఉంటాయి, చదివితే జ్ఞానం ఇస్తాను.' నేను ఎవరు?|పుస్తకం|కలం|బల్ల|సంచి
+25|sah|pod|2|N|1|పొడుపు కథ: 'వర్షం వస్తే విచ్చుకుంటాను, మిమ్మల్ని తడవకుండా కాపాడతాను.' నేను ఎవరు?|గొడుగు|టోపీ|చెప్పులు|సంచి
+25|sah|pod|3|N|1|పొడుపు కథ: 'నన్ను కోస్తే మీ కళ్లలో నీళ్లు వస్తాయి.' నేను ఎవరు?|ఉల్లిపాయ|టమాటా|బంగాళాదుంప|క్యారెట్
+15|sah|pan|1|R|1|తెలుగు నూతన సంవత్సరం ఏ పండుగతో మొదలవుతుంది?|ఉగాది|దీపావళి|సంక్రాంతి|దసరా
+15|sah|pan|1|R|0|ముగ్గులు, గాలిపటాలు, హరిదాసులు – ఏ పండుగ ప్రత్యేకత?|సంక్రాంతి|ఉగాది|దీపావళి|వినాయక చవితి
+25|sah|pan|2|U|0|దీపాలు వెలిగించి జరుపుకునే పండుగ ఏది?|దీపావళి|సంక్రాంతి|ఉగాది|రంజాన్
+35|sah|pan|2|R|1|ఉగాది పచ్చడిలో ఎన్ని రుచులు ఉంటాయి?|6|4|5|8
+35|sah|pan|2|R|1|క్రిస్మస్ పండుగను ఏ తేదీన జరుపుకుంటారు?|డిసెంబర్ 25|జనవరి 1|ఆగస్టు 15|అక్టోబర్ 2
+`);
+I('eng',`
+12|ph|abc|1|R|1|Which letter comes after B?|C|A|D|E
+12|ph|abc|1|R|1|Which letter comes before M?|L|N|K|O
+12|ph|abc|1|R|1|What is the small letter of 'G'?|g|q|j|p
+13|ph|abc|1|R|1|How many letters are there in the English alphabet?|26|24|25|27
+13|ph|abc|2|U|1|Which letter comes between P and R?|Q|O|S|T
+13|ph|abc|2|U|1|What is the capital letter of 'd'?|D|B|P|Q
+23|ph|abc|3|N|0|Which group is in alphabetical order?|cat, dog, egg|dog, cat, egg|egg, dog, cat|cat, egg, dog
+23|ph|abc|3|N|1|Which is the last letter of the English alphabet?|Z|Y|X|A
+13|ph|vow|1|R|0|Which of these is a vowel?|e|b|k|t
+13|ph|vow|1|R|1|How many vowels are there in English?|5|6|4|21
+13|ph|vow|2|U|0|Which of these is a consonant?|m|a|i|o
+23|ph|vow|2|U|0|Which word begins with a vowel?|apple|ball|cat|dog
+23|ph|vow|3|N|0|Which word has only one vowel?|cat|apple|orange|eagle
+12|ph|snd|1|U|0|🍎 'Apple' begins with which letter?|A|E|P|L
+12|ph|snd|1|U|0|🐟 'Fish' begins with which letter?|F|S|H|P
+13|ph|snd|2|U|0|Which word rhymes with 'cat'?|hat|cup|dog|pen
+13|ph|snd|2|U|0|Which word rhymes with 'ball'?|wall|bell|bat|bowl
+13|ph|snd|2|U|0|Which word rhymes with 'sun'?|run|sit|sea|son
+23|ph|snd|3|N|0|Which word does NOT rhyme with the others?|book|cake|lake|make
+12|voc|opp|1|R|1|What is the opposite of 'big'?|small|tall|long|fat
+12|voc|opp|1|R|1|What is the opposite of 'hot'?|cold|warm|sunny|wet
+13|voc|opp|1|R|1|What is the opposite of 'day'?|night|morning|evening|noon
+13|voc|opp|1|R|1|What is the opposite of 'up'?|down|in|on|over
+25|voc|opp|2|R|1|What is the opposite of 'happy'?|sad|glad|funny|kind
+25|voc|opp|2|R|1|What is the opposite of 'open'?|close|push|pull|start
+25|voc|opp|2|R|1|What is the opposite of 'old'?|new|young|aged|big
+35|voc|opp|3|U|1|What is the opposite of 'strong'?|weak|thin|short|slow
+35|voc|opp|3|U|1|What is the opposite of 'friend'?|enemy|brother|neighbour|teacher
+45|voc|opp|3|U|1|What is the opposite of 'remember'?|forget|recall|think|learn
+12|voc|pl|1|R|1|What is the plural of 'book'?|books|bookes|bookies|book
+13|voc|pl|1|R|1|What is the plural of 'cat'?|cats|cates|caties|catz
+25|voc|pl|2|U|1|What is the plural of 'box'?|boxes|boxs|boxies|box
+25|voc|pl|2|U|1|What is the plural of 'baby'?|babies|babys|babyes|babis
+35|voc|pl|3|U|1|What is the plural of 'child'?|children|childs|childes|childrens
+35|voc|pl|3|U|1|What is the plural of 'mouse'?|mice|mouses|mices|mousies
+35|voc|pl|3|U|1|What is the plural of 'tooth'?|teeth|tooths|teeths|toothes
+45|voc|pl|3|A|1|What is the plural of 'leaf'?|leaves|leafs|leafes|leavs
+25|voc|gen|1|R|1|What is the feminine of 'king'?|queen|princess|lady|girl
+25|voc|gen|2|R|1|What is the feminine of 'father'?|mother|sister|aunt|daughter
+35|voc|gen|2|U|1|What is the masculine of 'girl'?|boy|man|son|brother
+35|voc|gen|3|U|1|What is the feminine of 'lion'?|lioness|lionet|she-lion|tigress
+45|voc|gen|3|U|1|What is the masculine of 'hen'?|cock|duck|chick|drake
+12|voc|ani|1|R|0|🐄 Which animal gives us milk?|Cow|Lion|Tiger|Fox
+13|voc|ani|1|R|1|What is the young one of a cat?|kitten|puppy|calf|cub
+13|voc|ani|2|R|1|What is the young one of a dog?|puppy|kitten|lamb|foal
+25|voc|ani|2|R|1|What is the young one of a cow?|calf|cub|kid|chick
+25|voc|ani|2|R|1|A lion lives in a ___.|den|nest|kennel|stable
+25|voc|ani|2|R|1|A bird lives in a ___.|nest|den|hive|burrow
+35|voc|ani|3|R|1|A horse lives in a ___.|stable|kennel|nest|hive
+35|voc|ani|3|R|0|Which sound does a dog make?|bark|roar|moo|neigh
+35|voc|ani|3|R|0|Which sound does a lion make?|roar|bark|bleat|chirp
+35|voc|syn|2|U|1|Which word means the same as 'big'?|large|small|thin|short
+35|voc|syn|2|U|1|Which word means the same as 'quick'?|fast|slow|late|lazy
+45|voc|syn|3|U|1|Which word means the same as 'begin'?|start|end|stop|finish
+45|voc|syn|3|U|1|Which word means the same as 'happy'?|glad|sad|angry|tired
+45|voc|syn|3|N|0|'The old man was very kind.' A word with the same meaning as 'kind' is:|gentle|rude|cruel|proud
+12|gr|noun|1|R|0|Which word is the name of a thing?|pen|run|happy|quickly
+13|gr|noun|1|U|0|Find the noun: 'Ravi plays.'|Ravi|plays|the|none
+25|gr|noun|2|U|0|Find the noun in: 'The dog is barking.'|dog|is|barking|the
+35|gr|noun|2|A|0|Which of these is a proper noun?|Hyderabad|city|river|school
+35|gr|noun|3|N|0|Which of these is a common noun?|river|Godavari|Ravi|Monday
+45|gr|noun|3|N|0|'A ___ of cows' – choose the correct collective noun.|herd|flock|swarm|bunch
+25|gr|pron|1|U|0|Ravi is my friend. ___ is very kind.|He|She|It|They
+25|gr|pron|2|U|0|Sita is my sister. ___ goes to school.|She|He|It|We
+35|gr|pron|2|A|0|The children are playing. ___ are happy.|They|He|She|It
+35|gr|pron|3|A|0|This pen belongs to me. It is ___.|mine|my|me|I
+12|gr|verb|1|U|0|Which word is an action word?|jump|book|red|tree
+25|gr|verb|2|U|0|Find the verb: 'Birds fly in the sky.'|fly|birds|sky|the
+25|gr|verb|2|A|0|She ___ to school every day.|goes|go|going|gone
+35|gr|verb|3|A|0|They ___ football now.|are playing|is playing|plays|was playing
+25|gr|adj|1|U|0|Find the describing word: 'a red ball'|red|ball|a|none
+35|gr|adj|2|U|0|Find the adjective: 'The tall boy won.'|tall|boy|won|the
+35|gr|adj|3|A|0|Ravi is taller than Kiran. Kiran is ___ than Ravi.|shorter|tallest|taller|short
+45|gr|adj|3|A|0|This is the ___ building in our town.|tallest|taller|tall|more tall
+12|gr|art|1|U|0|___ apple|an|a|the|no article
+13|gr|art|1|U|0|___ ball|a|an|any|no article
+25|gr|art|2|U|0|___ umbrella|an|a|two|no article
+35|gr|art|2|A|0|I saw ___ elephant at the zoo.|an|a|the|some
+45|gr|art|3|A|0|___ sun rises in the east.|The|A|An|Some
+45|gr|art|3|A|0|He is ___ honest boy.|an|a|the|some
+25|gr|prep|1|U|0|🐱 The cat is ___ the table. (under it)|under|on|in|at
+25|gr|prep|2|U|0|The book is ___ the bag. (inside)|in|on|under|at
+35|gr|prep|2|A|0|We go to school ___ Monday.|on|in|at|by
+35|gr|prep|3|A|0|The train leaves ___ 5 o'clock.|at|in|on|by
+45|gr|prep|3|A|0|I was born ___ June.|in|on|at|by
+35|gr|tense|1|U|0|'I played cricket.' – Which tense is this?|Past tense|Present tense|Future tense|None
+35|gr|tense|2|U|0|'I will go to the market tomorrow.' – Which tense is this?|Future tense|Past tense|Present tense|None
+35|gr|tense|2|A|0|What is the past tense of 'go'?|went|goed|gone|going
+45|gr|tense|3|A|0|What is the past tense of 'eat'?|ate|eated|eaten|eating
+45|gr|tense|3|A|0|Yesterday, she ___ a letter.|wrote|writes|will write|writing
+45|gr|conj|2|U|0|I like tea ___ coffee.|and|but|because|so
+45|gr|conj|3|A|0|He was ill, ___ he did not go to school.|so|but|or|because
+55|gr|conj|3|A|0|I stayed at home ___ it was raining.|because|but|or|so
+12|sp|spl|1|R|0|Which spelling is correct? 🐶|dog|dgo|god|odg
+13|sp|spl|1|R|0|Which spelling is correct? 🐟|fish|fsih|fihs|sfih
+25|sp|spl|2|R|0|Which spelling is correct?|school|scool|skool|schol
+35|sp|spl|2|R|0|Which spelling is correct?|beautiful|beutiful|beautifull|butiful
+35|sp|spl|3|U|0|Which spelling is correct?|friend|freind|frend|friand
+45|sp|spl|3|U|0|Which spelling is correct?|February|Febuary|Febraury|Februery
+13|sp|miss|1|A|1|Fill in the missing letter: c _ t (🐱)|a|o|u|e
+13|sp|miss|1|A|1|Fill in the missing letter: s _ n (☀️)|u|a|i|e
+25|sp|miss|2|A|1|Fill in the missing letter: b _ rd (🐦)|i|e|a|o
+35|sp|miss|3|A|1|Fill in the missing letters: el _ ph _ nt (🐘)|e, a|a, e|i, a|e, e
+13|sen|punc|1|R|0|A sentence always begins with a ___.|capital letter|small letter|full stop|comma
+25|sen|punc|2|U|0|Which sentence is written correctly?|My name is Ravi.|my name is ravi.|My name is ravi|my Name is Ravi.
+35|sen|punc|2|U|0|'What is your name' – which mark comes at the end?|?|.|,|!
+35|sen|punc|3|A|0|Which word should start with a capital letter?|india|river|country|state
+25|sen|wo|2|A|0|Arrange the words: 'is / This / pen / my'|This is my pen.|My this is pen.|Pen is this my.|Is my this pen.
+35|sen|wo|3|A|0|Arrange the words: 'goes / Sita / school / to'|Sita goes to school.|School goes to Sita.|To school Sita goes.|Goes Sita to school.
+25|sen|qw|1|U|0|___ is your name?|What|Where|When|Who
+25|sen|qw|2|U|0|___ do you live? – I live in Gudur.|Where|What|When|Who
+35|sen|qw|2|U|0|___ is your birthday? – It is on 5th May.|When|Where|Who|What
+35|sen|qw|3|A|0|___ is your teacher? – Mrs. Lakshmi is my teacher.|Who|What|Where|When
+45|sen|kind|2|U|0|'Please close the door.' – What kind of sentence is this?|Command / Request|Question|Exclamation|Statement
+45|sen|kind|3|N|0|'How beautiful the garden is!' – What kind of sentence is this?|Exclamatory sentence|Question|Command|Statement
+`);
+I('evs',`
+35|body|part|1|R|1|మనం దేనితో చూస్తాం?~With what do we see?|కళ్లు~Eyes|చెవులు~Ears|ముక్కు~Nose|నాలుక~Tongue
+35|body|part|1|R|1|మనం దేనితో వింటాం?~With what do we hear?|చెవులు~Ears|కళ్లు~Eyes|చర్మం~Skin|నాలుక~Tongue
+35|body|part|1|R|1|రుచిని తెలిపే జ్ఞానేంద్రియం ఏది?~Which sense organ tells us taste?|నాలుక~Tongue|ముక్కు~Nose|చెవి~Ear|కన్ను~Eye
+35|body|part|2|R|1|మనకు ఎన్ని జ్ఞానేంద్రియాలు ఉన్నాయి?~How many sense organs do we have?|5~5|3~3|4~4|6~6
+35|body|part|2|U|1|వాసనను గుర్తించే అవయవం ఏది?~Which organ helps us smell?|ముక్కు~Nose|నాలుక~Tongue|చెవి~Ear|చర్మం~Skin
+35|body|part|2|U|1|వేడి, చల్లదనాన్ని గుర్తించేది ఏది?~Which sense organ helps us feel hot and cold?|చర్మం~Skin|కళ్లు~Eyes|చెవులు~Ears|ముక్కు~Nose
+35|body|part|3|N|0|కళ్లు కనిపించని వారు చదవడానికి ఏ లిపి వాడతారు?~Which script do visually challenged people use to read?|బ్రెయిలీ లిపి~Braille|తెలుగు లిపి~Telugu script|రోమన్ లిపి~Roman script|సంకేత భాష~Sign language
+35|body|hyg|1|R|0|రోజుకు కనీసం ఎన్ని సార్లు పళ్లు తోముకోవాలి?~At least how many times a day should we brush our teeth?|2 సార్లు~Twice|వారానికి ఒకసారి~Once a week|నెలకు ఒకసారి~Once a month|అసలు అవసరం లేదు~Not needed
+35|body|hyg|1|U|0|భోజనానికి ముందు ఏమి చేయాలి?~What should we do before eating food?|సబ్బుతో చేతులు కడుక్కోవాలి~Wash hands with soap|నిద్రపోవాలి~Sleep|ఆడుకోవాలి~Play|ఏమీ చేయనక్కర్లేదు~Nothing
+35|body|hyg|2|U|0|గోళ్లు ఎందుకు కత్తిరించుకోవాలి?~Why should we cut our nails?|గోళ్లలో మురికి, సూక్ష్మజీవులు చేరకుండా~So that dirt and germs do not collect|అందం కోసమే~Only for beauty|బరువు తగ్గడానికి~To lose weight|ఎక్కువ తినడానికి~To eat more
+35|body|hyg|2|U|0|మంచి ఆరోగ్యానికి ఏది అవసరం?~What is needed for good health?|వ్యాయామం, సరైన నిద్ర~Exercise and proper sleep|రోజంతా టీవీ చూడటం~Watching TV all day|జంక్ ఫుడ్~Junk food|ఆలస్యంగా నిద్రపోవడం~Sleeping very late
+35|body|hyg|3|E|0|రవి రోజూ చిప్స్, కూల్ డ్రింక్స్ తింటున్నాడు. అతనికి ఇచ్చే మంచి సలహా ఏది?~Ravi eats chips and drinks cold drinks every day. What is the best advice for him?|పండ్లు, కూరగాయలు, పాలు తీసుకోవాలి~Eat fruits, vegetables and milk|ఇంకా ఎక్కువ తినాలి~Eat even more|అసలు ఏమీ తినకూడదు~Eat nothing at all|నీళ్లు తాగకూడదు~Stop drinking water
+45|body|org|2|R|1|శరీరమంతటికీ రక్తాన్ని పంపే అవయవం ఏది?~Which organ pumps blood to the whole body?|గుండె~Heart|ఊపిరితిత్తులు~Lungs|మెదడు~Brain|జీర్ణాశయం~Stomach
+45|body|org|2|R|1|శ్వాస తీసుకోవడానికి సహాయపడే అవయవాలు ఏవి?~Which organs help us breathe?|ఊపిరితిత్తులు~Lungs|మూత్రపిండాలు~Kidneys|గుండె~Heart|కాలేయం~Liver
+45|body|org|3|U|1|శరీరం మొత్తాన్ని నియంత్రించే అవయవం ఏది?~Which organ controls the whole body?|మెదడు~Brain|గుండె~Heart|చర్మం~Skin|జీర్ణాశయం~Stomach
+45|body|org|3|U|0|మన శరీరానికి ఆకారం ఇచ్చి, లోపలి అవయవాలను కాపాడేది ఏది?~What gives shape to our body and protects inner organs?|అస్థిపంజరం (ఎముకలు)~Skeleton (bones)|వెంట్రుకలు~Hair|గోళ్లు~Nails|రక్తం~Blood
+35|food|src|1|R|0|పాలు మనకు దేని నుండి వస్తాయి?~From where do we get milk?|ఆవు, గేదె~Cow and buffalo|చెట్లు~Trees|కోడి~Hen|చేప~Fish
+35|food|src|1|R|0|తేనెను తయారు చేసేవి ఏవి?~Who makes honey?|తేనెటీగలు~Honeybees|చీమలు~Ants|సీతాకోకచిలుకలు~Butterflies|ఈగలు~Houseflies
+35|food|src|2|U|0|వీటిలో మొక్కల నుండి వచ్చే ఆహారం ఏది?~Which of these food items comes from plants?|బియ్యం~Rice|గుడ్డు~Egg|పాలు~Milk|తేనె~Honey
+35|food|src|2|U|0|వీటిలో జంతువుల నుండి వచ్చే ఆహారం ఏది?~Which of these food items comes from animals?|గుడ్డు~Egg|పప్పు~Dal|గోధుమ~Wheat|అరటి పండు~Banana
+35|food|src|3|N|0|క్యారెట్‌లో మనం తినే మొక్క భాగం ఏది?~Which part of the plant do we eat in a carrot?|వేరు~Root|కాండం~Stem|ఆకు~Leaf|పువ్వు~Flower
+35|food|src|3|N|0|పాలకూరలో మనం తినే మొక్క భాగం ఏది?~Which part of the plant do we eat in spinach?|ఆకు~Leaf|వేరు~Root|విత్తనం~Seed|పువ్వు~Flower
+35|food|nut|1|R|0|శరీరానికి శక్తినిచ్చే ఆహారం ఏది?~Which food gives us energy?|బియ్యం, గోధుమలు~Rice and wheat|నీరు~Water|ఉప్పు~Salt|మంచు~Ice
+35|food|nut|2|U|0|శరీర పెరుగుదలకు అవసరమైన మాంసకృత్తులు (ప్రొటీన్లు) దేనిలో ఎక్కువ?~Which food is rich in proteins needed for body growth?|పప్పులు, గుడ్లు~Pulses and eggs|చక్కెర~Sugar|నూనె~Oil|ఉప్పు~Salt
+35|food|nut|2|U|0|అన్ని పోషకాలు తగిన మోతాదులో ఉన్న ఆహారాన్ని ఏమంటారు?~Food that has all nutrients in the right amount is called:|సమతుల్య ఆహారం~Balanced diet|జంక్ ఫుడ్~Junk food|నిల్వ ఆహారం~Stored food|వేపుడు ఆహారం~Fried food
+45|food|nut|3|U|1|ఎముకలు, పళ్లు గట్టిగా ఉండటానికి ఏ ఖనిజం అవసరం?~Which mineral keeps our bones and teeth strong?|కాల్షియం~Calcium|ఇనుము~Iron|చక్కెర~Sugar|ఉప్పు~Salt
+45|food|nut|3|A|0|సీత తరచూ అలసిపోతోంది. డాక్టర్ ఆకుకూరలు, బెల్లం తినమన్నారు. ఆమెకు ఏ పోషకం తక్కువ కావచ్చు?~Sita feels tired often. The doctor asks her to eat green leafy vegetables and jaggery. Which nutrient may she lack?|ఇనుము~Iron|కొవ్వు~Fat|ఉప్పు~Salt|నీరు~Water
+45|food|pres|2|U|0|పాలు త్వరగా పాడవకుండా ఏమి చేస్తాం?~What do we do so that milk does not spoil quickly?|కాచి ఉంచుతాం~We boil it|ఎండలో పెడతాం~Keep it in the sun|ఉప్పు కలుపుతాం~Add salt|తెరిచి ఉంచుతాం~Keep it open
+45|food|pres|2|R|0|మామిడికాయ పచ్చడి ఎక్కువ రోజులు నిల్వ ఉండటానికి ఏమి కలుపుతారు?~What is added to mango pickle so it lasts for many days?|ఉప్పు, నూనె~Salt and oil|నీరు~Water|పాలు~Milk|చక్కెర నీరు~Sugar water
+45|food|pres|3|E|0|ఆహారాన్ని వృథా చేయకుండా ఉండటానికి మంచి మార్గం ఏది?~What is a good way to avoid wasting food?|అవసరమైనంతే వడ్డించుకోవడం~Take only as much as we need|ఎక్కువ వండి పారేయడం~Cook too much and throw it away|ఆహారం బయట పడేయడం~Throw food outside|సగం తిని వదిలేయడం~Leave half the food
+35|water|wsrc|1|R|0|వర్షపు నీరు దేని నుండి వస్తుంది?~Where does rain water come from?|మేఘాలు~Clouds|చెట్లు~Trees|కొండలు~Hills|భూమి లోపల~Under the ground
+35|water|wsrc|2|U|0|వీటిలో సహజ నీటి వనరు ఏది?~Which of these is a natural source of water?|నది~River|కుళాయి~Tap|ట్యాంకర్~Tanker|బకెట్~Bucket
+35|water|wsrc|2|U|0|భూమి లోపలి నీటిని బయటకు తీసే వనరు ఏది?~Which source brings out water from under the ground?|బావి / బోరు~Well / Borewell|చెరువు~Pond|నది~River|సముద్రం~Sea
+45|water|wsrc|3|N|0|సముద్రపు నీటిని మనం నేరుగా ఎందుకు తాగలేం?~Why can't we drink sea water directly?|అది చాలా ఉప్పగా ఉంటుంది~It is very salty|అది చాలా తీయగా ఉంటుంది~It is very sweet|అది వేడిగా ఉంటుంది~It is hot|అది నీలంగా ఉంటుంది~It is blue
+35|water|wuse|1|R|0|నీటిని పొదుపు చేయడానికి సరైన పని ఏది?~Which is the right way to save water?|పళ్లు తోముకునేటప్పుడు కుళాయి కట్టేయడం~Close the tap while brushing|కుళాయి తెరిచి వదిలేయడం~Leave the tap open|రోడ్డు మీద నీళ్లు పారించడం~Let water flow on the road|రోజూ వాహనం కడగడం~Wash the vehicle every day
+35|water|wuse|2|U|0|వర్షపు నీటిని నిల్వ చేయడాన్ని ఏమంటారు?~Collecting and storing rain water is called:|వర్షపు నీటి సంరక్షణ (ఇంకుడు గుంతలు)~Rainwater harvesting|నీటి కాలుష్యం~Water pollution|నీటి ఆవిరి~Evaporation|వరద~Flood
+45|water|wuse|3|E|0|వీధి కుళాయి నుండి నీరు వృథాగా పోతోంది. నువ్వు ఏమి చేయాలి?~Water is flowing waste from a street tap. What should you do?|కుళాయి కట్టి, పెద్దలకు / పంచాయతీకి చెప్పాలి~Close the tap and inform elders / panchayat|పట్టించుకోకుండా వెళ్లిపోవాలి~Ignore it and go away|నీటితో ఆడుకోవాలి~Play with the water|కుళాయి విరగ్గొట్టాలి~Break the tap
+35|water|wcl|2|U|0|తాగునీటిని సురక్షితంగా చేయడానికి సులభ మార్గం ఏది?~What is an easy way to make drinking water safe?|కాచి చల్లార్చి తాగడం~Boil and cool it before drinking|ఉప్పు కలపడం~Add salt|ఎండలో పెట్టడం మాత్రమే~Only keep it in the sun|రంగు కలపడం~Add colour
+45|water|wcl|2|U|0|కలుషిత నీరు తాగడం వల్ల వచ్చే వ్యాధి ఏది?~Which disease can be caused by drinking dirty water?|కలరా / టైఫాయిడ్~Cholera / Typhoid|కంటి చూపు పెరగడం~Better eyesight|జలుబు మాత్రమే~Only a cold|ఏదీ రాదు~None
+45|water|wcl|3|N|0|నీటిలోని మట్టి, చెత్తను తొలగించడానికి ఏమి చేస్తారు?~What is done to remove mud and dirt from water?|వడపోత (శుభ్రమైన గుడ్డతో వడకట్టడం)~Filtration (using a clean cloth)|ఉప్పు కలపడం~Adding salt|వేడి చేయకుండా తాగడం~Drinking without heating|చక్కెర కలపడం~Adding sugar
+35|plant|ppart|1|R|1|మొక్కను నేలలో పట్టి ఉంచే భాగం ఏది?~Which part holds the plant in the soil?|వేరు~Root|ఆకు~Leaf|పువ్వు~Flower|పండు~Fruit
+35|plant|ppart|1|R|1|మొక్కకు ఆహారాన్ని తయారు చేసే భాగం ఏది?~Which part of the plant makes food?|ఆకు~Leaf|వేరు~Root|కాండం~Stem|విత్తనం~Seed
+35|plant|ppart|2|U|0|కాండం యొక్క పని ఏమిటి?~What is the work of the stem?|నీటిని, ఆహారాన్ని ఇతర భాగాలకు చేర్చడం~Carry water and food to other parts|వాసన ఇవ్వడం~Give smell|రంగు ఇవ్వడం~Give colour|మట్టిని తినడం~Eat soil
+45|plant|ppart|3|U|0|మొక్కలు ఆహారం తయారు చేసుకోవడానికి ఏమి కావాలి?~What do plants need to make their food?|సూర్యరశ్మి, నీరు, గాలి~Sunlight, water and air|పాలు, చక్కెర~Milk and sugar|చీకటి మాత్రమే~Only darkness|మట్టి మాత్రమే~Only soil
+45|plant|ppart|3|N|1|ఆకులు ఆకుపచ్చగా ఉండటానికి కారణమైన పదార్థం ఏది?~Which substance makes leaves green?|పత్రహరితం (క్లోరోఫిల్)~Chlorophyll|నీరు~Water|ఉప్పు~Salt|రక్తం~Blood
+35|plant|ptyp|1|U|0|వీటిలో పెద్ద వృక్షం ఏది?~Which of these is a big tree?|మర్రి~Banyan|తులసి~Tulsi|గడ్డి~Grass|పుదీనా~Mint
+35|plant|ptyp|2|U|0|ఆధారం సాయంతో పైకి పాకే మొక్కను ఏమంటారు?~A plant that climbs up with support is called a:|లత / తీగ~Climber|వృక్షం~Tree|పొద~Shrub|గడ్డి~Herb
+45|plant|ptyp|2|U|0|నీటిలో పెరిగే మొక్క ఏది?~Which plant grows in water?|తామర~Lotus|మామిడి~Mango|కాక్టస్ (బ్రహ్మజెముడు)~Cactus|వేప~Neem
+45|plant|ptyp|3|N|0|ఎడారిలో పెరిగే మొక్కలకు ముళ్లు ఎందుకు ఉంటాయి?~Why do desert plants have spines?|నీరు ఆవిరి కాకుండా ఆపడానికి~To reduce water loss|అందం కోసం~For beauty|పండ్లు ఇవ్వడానికి~To give fruits|ఎగరడానికి~To fly
+35|plant|puse|1|R|0|కాగితం దేని నుండి తయారవుతుంది?~Paper is made from:|చెట్ల కలప~Wood of trees|రాళ్లు~Stones|ప్లాస్టిక్~Plastic|ఇనుము~Iron
+35|plant|puse|2|U|0|మన బట్టలకు దూది (పత్తి) ఏ మొక్క నుండి వస్తుంది?~Cotton for our clothes comes from which plant?|పత్తి మొక్క~Cotton plant|వరి~Paddy|మామిడి~Mango|తాటి~Palm
+45|plant|puse|3|E|0|చెట్లను ఎందుకు కాపాడాలి?~Why should we protect trees?|ప్రాణవాయువు, నీడ, వర్షం కోసం~For oxygen, shade and rain|వాటిని నరికి అమ్మడానికి~To cut and sell them|ఏ ఉపయోగం లేదు~They have no use|ఆటలకు అడ్డు కాబట్టి~They block our games
+35|anim|atyp|1|R|0|వీటిలో పెంపుడు జంతువు ఏది?~Which of these is a pet animal?|కుక్క~Dog|పులి~Tiger|సింహం~Lion|నక్క~Fox
+35|anim|atyp|1|R|0|వీటిలో అడవి జంతువు ఏది?~Which of these is a wild animal?|పులి~Tiger|ఆవు~Cow|మేక~Goat|పిల్లి~Cat
+35|anim|atyp|2|U|0|మొక్కలను మాత్రమే తినే జంతువులను ఏమంటారు?~Animals that eat only plants are called:|శాకాహారులు~Herbivores|మాంసాహారులు~Carnivores|సర్వాహారులు~Omnivores|పరాన్నజీవులు~Parasites
+45|anim|atyp|2|U|0|వీటిలో మాంసాహార జంతువు ఏది?~Which of these is a carnivore?|సింహం~Lion|ఆవు~Cow|ఏనుగు~Elephant|జింక~Deer
+45|anim|atyp|3|N|0|నీటిలో, నేలపై రెండు చోట్లా జీవించే జంతువు ఏది?~Which animal lives both in water and on land?|కప్ప~Frog|చేప~Fish|పిల్లి~Cat|ఆవు~Cow
+45|anim|atyp|3|N|0|గుడ్లు పెట్టని జంతువు ఏది?~Which animal does NOT lay eggs?|ఆవు~Cow|కోడి~Hen|తాబేలు~Tortoise|పాము~Snake
+35|anim|ahome|1|R|0|సాలీడు ఏమి అల్లుతుంది?~What does a spider weave?|గూడు (సాలెగూడు)~Web|తేనెపట్టు~Honeycomb|పుట్ట~Anthill|గుహ~Cave
+35|anim|ahome|2|U|0|కుక్క ఉండే ఇంటిని ఏమంటారు?~The home of a dog is called a:|కెన్నెల్~Kennel|గుహ~Den|గూడు~Nest|పుట్ట~Anthill
+35|anim|ahome|2|U|0|తేనెటీగలు ఉండే చోటు ఏది?~Where do honeybees live?|తేనెపట్టు~Hive|గూడు~Nest|గుహ~Den|కొట్టం~Shed
+45|anim|ahome|3|N|0|ఒంటెను 'ఎడారి ఓడ' అని ఎందుకు అంటారు?~Why is the camel called the 'ship of the desert'?|ఎడారిలో ఎక్కువ దూరం ప్రయాణించగలదు~It can travel long distances in the desert|అది నీటిలో ఈదుతుంది~It swims in water|అది ఓడను లాగుతుంది~It pulls ships|అది ఎగురుతుంది~It flies
+35|anim|bird|1|R|0|మన జాతీయ పక్షి ఏది?~Which is our national bird?|నెమలి~Peacock|చిలుక~Parrot|కాకి~Crow|పావురం~Pigeon
+35|anim|bird|2|U|0|పక్షులు గూడు దేనితో కడతాయి?~What do birds use to build nests?|పుల్లలు, గడ్డి, ఆకులు~Twigs, grass and leaves|ఇటుకలు~Bricks|ఇనుము~Iron|ప్లాస్టిక్ మాత్రమే~Only plastic
+45|anim|bird|2|U|0|రాత్రిపూట చూడగలిగే పక్షి ఏది?~Which bird can see well at night?|గుడ్లగూబ~Owl|కాకి~Crow|చిలుక~Parrot|కోడి~Hen
+45|anim|bird|3|N|0|ఎగరలేని పెద్ద పక్షి ఏది?~Which big bird cannot fly?|నిప్పుకోడి~Ostrich|గద్ద~Eagle|పావురం~Pigeon|కాకి~Crow
+35|fam|fam|1|R|0|అమ్మ, నాన్న, పిల్లలు మాత్రమే ఉండే కుటుంబాన్ని ఏమంటారు?~A family with only mother, father and children is called a:|చిన్న కుటుంబం~Small (nuclear) family|ఉమ్మడి కుటుంబం~Joint family|పెద్ద కుటుంబం~Big family|పాఠశాల~School
+35|fam|fam|2|U|0|తాతయ్య, నానమ్మ, పెదనాన్న, బాబాయి అందరూ కలిసి ఉండే కుటుంబం?~A family where grandparents, uncles and aunts all live together is a:|ఉమ్మడి కుటుంబం~Joint family|చిన్న కుటుంబం~Small family|ఒంటరి కుటుంబం~Single family|హాస్టల్~Hostel
+35|fam|fam|2|R|1|నాన్న యొక్క తండ్రిని ఏమని పిలుస్తాం?~What do we call our father's father?|తాతయ్య~Grandfather|మామయ్య~Uncle|అన్నయ్య~Brother|బావ~Brother-in-law
+45|fam|fam|3|E|0|ఇంటి పనుల్లో పిల్లలు ఎలా సహాయం చేయవచ్చు?~How can children help in household work?|తమ వస్తువులు సర్దుకోవడం, మొక్కలకు నీళ్లు పోయడం~Arrange their things, water the plants|ఏ పనీ చేయకుండా ఉండటం~Doing no work at all|పెద్దలను పని చేయనీయకపోవడం~Stopping elders from working|రోజంతా ఆడుకోవడం~Playing all day
+35|fam|work|1|R|0|మనకు జబ్బు చేస్తే ఎవరి దగ్గరకు వెళ్తాం?~When we are sick, whom do we visit?|డాక్టర్~Doctor|రైతు~Farmer|దర్జీ~Tailor|కుమ్మరి~Potter
+35|fam|work|1|R|0|మట్టి కుండలు తయారు చేసేవారు ఎవరు?~Who makes clay pots?|కుమ్మరి~Potter|కమ్మరి~Blacksmith|దర్జీ~Tailor|వడ్రంగి~Carpenter
+35|fam|work|2|U|0|మనకు ఆహార ధాన్యాలు పండించేవారు ఎవరు?~Who grows food grains for us?|రైతు~Farmer|పోస్ట్‌మ్యాన్~Postman|పోలీసు~Police|డ్రైవర్~Driver
+35|fam|work|2|U|0|చెక్కతో కుర్చీలు, తలుపులు తయారుచేసేవారు ఎవరు?~Who makes chairs and doors with wood?|వడ్రంగి~Carpenter|కుమ్మరి~Potter|చేనేత కార్మికుడు~Weaver|రైతు~Farmer
+45|fam|work|3|N|0|అగ్ని ప్రమాదం జరిగితే ఎవరికి ఫోన్ చేయాలి?~Whom should we call in case of a fire?|అగ్నిమాపక దళం (101)~Fire brigade (101)|పోస్ట్ ఆఫీస్~Post office|బ్యాంకు~Bank|పాఠశాల~School
+35|fam|fest|1|R|0|స్వాతంత్ర్య దినోత్సవం ఎప్పుడు జరుపుకుంటాం?~When do we celebrate Independence Day?|ఆగస్టు 15~August 15|జనవరి 26~January 26|అక్టోబర్ 2~October 2|నవంబర్ 14~November 14
+35|fam|fest|1|R|0|గణతంత్ర దినోత్సవం ఎప్పుడు?~When is Republic Day?|జనవరి 26~January 26|ఆగస్టు 15~August 15|సెప్టెంబర్ 5~September 5|నవంబర్ 14~November 14
+35|fam|fest|2|R|0|బాలల దినోత్సవం (నవంబర్ 14) ఎవరి జన్మదినం?~Children's Day (November 14) is the birthday of:|జవహర్‌లాల్ నెహ్రూ~Jawaharlal Nehru|మహాత్మా గాంధీ~Mahatma Gandhi|సర్వేపల్లి రాధాకృష్ణన్~Sarvepalli Radhakrishnan|అబ్దుల్ కలాం~Abdul Kalam
+45|fam|fest|2|R|0|ఉపాధ్యాయ దినోత్సవం (సెప్టెంబర్ 5) ఎవరి జన్మదినం?~Teachers' Day (September 5) is the birthday of:|డా. సర్వేపల్లి రాధాకృష్ణన్~Dr. Sarvepalli Radhakrishnan|జవహర్‌లాల్ నెహ్రూ~Jawaharlal Nehru|మహాత్మా గాంధీ~Mahatma Gandhi|సుభాష్ చంద్రబోస్~Subhas Chandra Bose
+45|fam|fest|3|R|0|గాంధీ జయంతి ఎప్పుడు?~When is Gandhi Jayanti?|అక్టోబర్ 2~October 2|ఆగస్టు 15~August 15|జనవరి 26~January 26|నవంబర్ 14~November 14
+35|trans|tr|1|R|0|వీటిలో నీటి మీద నడిచే వాహనం ఏది?~Which of these travels on water?|పడవ~Boat|బస్సు~Bus|రైలు~Train|విమానం~Aeroplane
+35|trans|tr|1|R|0|వీటిలో ఆకాశంలో ఎగిరే వాహనం ఏది?~Which of these flies in the sky?|విమానం~Aeroplane|ఆటో~Auto|ఓడ~Ship|సైకిల్~Bicycle
+35|trans|tr|2|U|0|పొగ, కాలుష్యం లేని వాహనం ఏది?~Which vehicle does not cause smoke or pollution?|సైకిల్~Bicycle|బస్సు~Bus|లారీ~Lorry|కారు~Car
+45|trans|tr|3|N|0|ఎక్కువ సరుకులను దూర దేశాలకు సముద్రం మీదుగా తీసుకెళ్లేది?~Which carries large amounts of goods to faraway countries across the sea?|ఓడ~Ship|ఎడ్ల బండి~Bullock cart|సైకిల్~Bicycle|ఆటో~Auto
+35|trans|com|1|R|0|వీటిలో సమాచార సాధనం ఏది?~Which of these is a means of communication?|మొబైల్ ఫోన్~Mobile phone|సైకిల్~Bicycle|బస్సు~Bus|పడవ~Boat
+35|trans|com|2|U|0|ఉత్తరాలను మనకు అందించేవారు ఎవరు?~Who delivers letters to us?|పోస్ట్‌మ్యాన్~Postman|డాక్టర్~Doctor|రైతు~Farmer|పోలీసు~Police
+45|trans|com|2|U|0|ఒకేసారి చాలా మందికి వార్తలు అందించే సాధనాలను ఏమంటారు?~Means that give news to many people at once are called:|ప్రసార సాధనాలు (టీవీ, రేడియో, వార్తాపత్రిక)~Mass media (TV, radio, newspaper)|వ్యక్తిగత ఉత్తరం~Personal letter|రహస్య సందేశం~Secret message|సైకిల్~Bicycle
+35|trans|road|1|R|0|ట్రాఫిక్ సిగ్నల్‌లో ఎరుపు రంగు అంటే?~What does the red traffic light mean?|ఆగు~Stop|వెళ్లు~Go|సిద్ధంగా ఉండు~Get ready|వేగంగా వెళ్లు~Go fast
+35|trans|road|1|R|0|ట్రాఫిక్ సిగ్నల్‌లో ఆకుపచ్చ రంగు అంటే?~What does the green traffic light mean?|వెళ్లు~Go|ఆగు~Stop|వెనక్కి వెళ్లు~Go back|సిద్ధంగా ఉండు~Get ready
+35|trans|road|2|U|0|రోడ్డు దాటడానికి సురక్షితమైన చోటు ఏది?~Where is it safe to cross the road?|జీబ్రా క్రాసింగ్~Zebra crossing|రోడ్డు మధ్యలో ఎక్కడైనా~Anywhere in the middle|మలుపు దగ్గర~Near a turning|వాహనాల మధ్యలో నుండి~Between moving vehicles
+45|trans|road|3|E|0|బైక్ మీద వెళ్లేటప్పుడు తప్పనిసరిగా ధరించాల్సింది ఏది?~What must be worn while riding a motorbike?|హెల్మెట్~Helmet|టోపీ~Cap|కళ్లజోడు మాత్రమే~Only spectacles|స్కార్ఫ్~Scarf
+35|earth|sky|1|R|0|సూర్యుడు ఏ దిక్కున ఉదయిస్తాడు?~In which direction does the sun rise?|తూర్పు~East|పడమర~West|ఉత్తరం~North|దక్షిణం~South
+35|earth|sky|1|R|0|మనకు వెలుగు, వేడి ఇచ్చేది ఏది?~What gives us light and heat?|సూర్యుడు~The Sun|చంద్రుడు~The Moon|మేఘాలు~Clouds|నక్షత్రాలు~Stars
+45|earth|sky|2|U|0|చంద్రుడికి సొంత వెలుగు ఉందా?~Does the moon have its own light?|లేదు, సూర్యుని వెలుగును ప్రతిబింబిస్తుంది~No, it reflects the sun's light|అవును, సొంత వెలుగు ఉంది~Yes, it has its own light|అది మంటలతో వెలుగుతుంది~It glows with fire|విద్యుత్‌తో వెలుగుతుంది~It glows with electricity
+45|earth|sky|2|R|0|మనం నివసించే గ్రహం ఏది?~On which planet do we live?|భూమి~Earth|అంగారకుడు~Mars|శుక్రుడు~Venus|బృహస్పతి~Jupiter
+45|earth|sky|3|N|0|పగలు, రాత్రి ఏర్పడటానికి కారణం ఏమిటి?~What causes day and night?|భూమి తన చుట్టూ తాను తిరగడం~The Earth spinning on its axis|చంద్రుడు తిరగడం~The moon moving|మేఘాలు కదలడం~Clouds moving|సూర్యుడు ఆరిపోవడం~The sun switching off
+35|earth|seas|1|R|0|గొడుగు, రెయిన్‌కోట్ ఏ కాలంలో ఎక్కువగా వాడతాం?~In which season do we use umbrellas and raincoats most?|వర్షాకాలం~Rainy season|వేసవి కాలం~Summer|శీతాకాలం~Winter|ఏ కాలంలోనూ కాదు~None
+35|earth|seas|2|U|0|వేసవిలో ఎలాంటి బట్టలు వేసుకోవడం మంచిది?~What kind of clothes are best in summer?|వదులుగా ఉండే నూలు బట్టలు~Loose cotton clothes|ఉన్ని స్వెట్టర్లు~Woollen sweaters|రెయిన్‌కోట్~Raincoat|మందపాటి జాకెట్~Thick jacket
+45|earth|seas|3|N|0|వర్షం ఎలా ఏర్పడుతుంది?~How is rain formed?|నీరు ఆవిరై మేఘాలుగా మారి, చల్లబడి కురుస్తుంది~Water evaporates, forms clouds, cools and falls as rain|చెట్లు నీటిని విసురుతాయి~Trees throw water|సముద్రం ఎగిరి పడుతుంది~The sea jumps up|కొండల నుండి వస్తుంది~It comes from the hills
+35|earth|dir|1|R|1|సూర్యుడు ఏ దిక్కున అస్తమిస్తాడు?~In which direction does the sun set?|పడమర~West|తూర్పు~East|ఉత్తరం~North|దక్షిణం~South
+45|earth|dir|2|U|0|తూర్పు వైపు తిరిగి నిలబడితే, నీ వెనుక ఏ దిక్కు ఉంటుంది?~If you face east, which direction is behind you?|పడమర~West|ఉత్తరం~North|దక్షిణం~South|తూర్పు~East
+45|earth|dir|2|R|0|దిక్కులు తెలుసుకోవడానికి వాడే పరికరం ఏది?~Which instrument is used to find directions?|దిక్సూచి (కంపాస్)~Compass|థర్మామీటర్~Thermometer|గడియారం~Clock|స్కేలు~Scale
+55|earth|dir|3|N|0|పటంలో సాధారణంగా పైభాగం ఏ దిక్కును సూచిస్తుంది?~On a map, the top usually shows which direction?|ఉత్తరం~North|దక్షిణం~South|తూర్పు~East|పడమర~West
+35|nation|sym|1|R|0|మన జాతీయ జంతువు ఏది?~Which is our national animal?|పులి~Tiger|సింహం~Lion|ఏనుగు~Elephant|ఆవు~Cow
+35|nation|sym|1|R|0|మన జాతీయ పుష్పం ఏది?~Which is our national flower?|తామర~Lotus|గులాబీ~Rose|మల్లె~Jasmine|బంతి~Marigold
+35|nation|sym|2|R|0|మన జాతీయ పండు ఏది?~Which is our national fruit?|మామిడి~Mango|అరటి~Banana|ఆపిల్~Apple|జామ~Guava
+45|nation|sym|2|R|0|మన జాతీయ గీతం 'జనగణమన' రాసింది ఎవరు?~Who wrote our national anthem 'Jana Gana Mana'?|రవీంద్రనాథ్ ఠాగూర్~Rabindranath Tagore|బంకించంద్ర ఛటర్జీ~Bankim Chandra Chatterjee|మహాత్మా గాంధీ~Mahatma Gandhi|జవహర్‌లాల్ నెహ్రూ~Jawaharlal Nehru
+45|nation|sym|3|U|0|మన జాతీయ జెండాలో మధ్యలో ఉన్న చక్రంలో ఎన్ని ఆకులు (గీతలు) ఉంటాయి?~How many spokes are there in the wheel at the centre of our national flag?|24~24|12~12|20~20|30~30
+45|nation|sym|3|U|0|మన జాతీయ జెండాను రూపొందించింది ఎవరు?~Who designed our national flag?|పింగళి వెంకయ్య~Pingali Venkayya|రవీంద్రనాథ్ ఠాగూర్~Rabindranath Tagore|అల్లూరి సీతారామరాజు~Alluri Sitarama Raju|గురజాడ అప్పారావు~Gurajada Apparao
+35|nation|ap|1|R|0|మన రాష్ట్రం పేరు ఏమిటి?~What is the name of our state?|ఆంధ్రప్రదేశ్~Andhra Pradesh|తమిళనాడు~Tamil Nadu|కర్ణాటక~Karnataka|కేరళ~Kerala
+35|nation|ap|2|R|0|ఆంధ్రప్రదేశ్ ప్రజలు ఎక్కువగా మాట్లాడే భాష ఏది?~Which language is spoken by most people of Andhra Pradesh?|తెలుగు~Telugu|తమిళం~Tamil|హిందీ~Hindi|కన్నడ~Kannada
+45|nation|ap|2|R|0|ఆంధ్రప్రదేశ్ రాష్ట్ర పక్షి ఏది?~Which is the state bird of Andhra Pradesh?|రామచిలుక~Rose-ringed parakeet|నెమలి~Peacock|కాకి~Crow|గద్ద~Eagle
+45|nation|ap|2|R|0|ఆంధ్రప్రదేశ్ రాష్ట్ర వృక్షం ఏది?~Which is the state tree of Andhra Pradesh?|వేప~Neem|మర్రి~Banyan|మామిడి~Mango|తాటి~Palm
+45|nation|ap|3|R|0|ఆంధ్రప్రదేశ్ రాష్ట్ర జంతువు ఏది?~Which is the state animal of Andhra Pradesh?|కృష్ణ జింక~Blackbuck|పులి~Tiger|ఏనుగు~Elephant|సింహం~Lion
+45|nation|ap|3|R|0|ఆంధ్రప్రదేశ్ రాష్ట్ర పుష్పం ఏది?~Which is the state flower of Andhra Pradesh?|మల్లె~Jasmine|తామర~Lotus|గులాబీ~Rose|బంతి~Marigold
+45|nation|ap|3|N|0|ఆంధ్రప్రదేశ్‌కు ఏ దిక్కున సముద్రం (బంగాళాఖాతం) ఉంది?~On which side of Andhra Pradesh is the sea (Bay of Bengal)?|తూర్పు~East|పడమర~West|ఉత్తరం~North|దక్షిణం మాత్రమే~Only south
+45|nation|riv|2|R|0|ఆంధ్రప్రదేశ్‌లో ప్రవహించే పెద్ద నదులు ఏవి?~Which big rivers flow through Andhra Pradesh?|గోదావరి, కృష్ణ~Godavari and Krishna|గంగ, యమున~Ganga and Yamuna|నర్మద, తపతి~Narmada and Tapti|బ్రహ్మపుత్ర, సింధు~Brahmaputra and Indus
+45|nation|riv|2|R|0|భారతదేశ జాతీయ నది ఏది?~Which is the national river of India?|గంగ~Ganga|గోదావరి~Godavari|కృష్ణ~Krishna|కావేరి~Kaveri
+45|nation|riv|3|R|0|తిరుమల శ్రీ వేంకటేశ్వర స్వామి ఆలయం ఏ జిల్లాలో ఉంది?~In which district is the Tirumala Sri Venkateswara temple?|తిరుపతి~Tirupati|విశాఖపట్నం~Visakhapatnam|గుంటూరు~Guntur|కర్నూలు~Kurnool
+55|nation|riv|3|N|0|నదులు చివరికి ఎక్కడ కలుస్తాయి?~Where do rivers finally flow into?|సముద్రం~The sea|కొండ~A hill|బావి~A well|అడవి~A forest
+35|env|poll|1|R|0|తడి చెత్త, పొడి చెత్తను ఏమి చేయాలి?~What should we do with wet and dry waste?|వేర్వేరు డబ్బాల్లో వేయాలి~Put them in separate bins|రోడ్డు మీద పడేయాలి~Throw them on the road|కాల్చేయాలి~Burn them|నీటిలో వేయాలి~Throw them in water
+35|env|poll|2|U|0|గాలి కాలుష్యానికి ఒక కారణం ఏది?~Which is a cause of air pollution?|వాహనాలు, కర్మాగారాల పొగ~Smoke from vehicles and factories|చెట్లు నాటడం~Planting trees|సైకిల్ తొక్కడం~Riding a bicycle|నడవడం~Walking
+45|env|poll|2|U|0|ప్లాస్టిక్ సంచులకు బదులు ఏమి వాడాలి?~What should we use instead of plastic bags?|గుడ్డ / జూట్ సంచులు~Cloth / jute bags|మరిన్ని ప్లాస్టిక్ సంచులు~More plastic bags|థర్మోకోల్~Thermocol|ఏమీ వాడకూడదు~Nothing
+45|env|poll|3|E|0|వంటింటి కూరగాయల తొక్కలతో ఏమి చేయడం మంచిది?~What is a good thing to do with vegetable peels from the kitchen?|ఎరువు (కంపోస్ట్) తయారు చేయడం~Make compost (manure)|రోడ్డు మీద వేయడం~Throw them on the road|కాల్చడం~Burn them|కాలువలో వేయడం~Throw them into a drain
+35|env|tree|1|R|0|అడవులను నరికేయడం వల్ల ఏమి జరుగుతుంది?~What happens when forests are cut down?|జంతువులు నివాసం కోల్పోతాయి~Animals lose their homes|వర్షాలు పెరుగుతాయి~Rainfall increases|గాలి శుభ్రమవుతుంది~Air becomes cleaner|ఏమీ జరగదు~Nothing happens
+35|env|tree|2|U|0|చెట్లు మనకు ఏ వాయువును ఇస్తాయి?~Which gas do trees give us?|ఆక్సిజన్ (ప్రాణవాయువు)~Oxygen|పొగ~Smoke|దుమ్ము~Dust|కార్బన్ మోనాక్సైడ్~Carbon monoxide
+45|env|tree|3|C|0|మీ బడిని పచ్చగా మార్చడానికి మంచి ప్రణాళిక ఏది?~What is a good plan to make your school green?|ప్రతి తరగతి ఒక మొక్క నాటి, రోజూ నీళ్లు పోయడం~Each class plants a sapling and waters it daily|చెట్లు నరకడం~Cutting trees|ప్లాస్టిక్ పూలు పెట్టడం~Putting plastic flowers|గోడలకు రంగు వేయడం మాత్రమే~Only painting the walls
+35|env|safe|1|R|0|చిన్న గాయం అయితే ముందు ఏమి చేయాలి?~What should we do first for a small cut?|శుభ్రమైన నీటితో కడిగి, కట్టు కట్టాలి~Wash with clean water and put a bandage|మట్టి పూయాలి~Apply mud|వదిలేయాలి~Ignore it|గట్టిగా రుద్దాలి~Rub it hard
+35|env|safe|2|U|0|విద్యుత్ స్విచ్‌లను ఎలా ముట్టుకోవాలి?~How should we touch electric switches?|పొడి చేతులతో మాత్రమే~Only with dry hands|తడి చేతులతో~With wet hands|కాళ్లతో~With feet|కర్రతో కొట్టి~By hitting with a stick
+45|env|safe|2|R|1|అంబులెన్స్ కోసం ఏ నంబర్‌కు ఫోన్ చేయాలి?~Which number should we call for an ambulance?|108~108|100~100|101~101|1098~1098
+45|env|safe|3|E|0|తెలియని వ్యక్తి చాక్లెట్ ఇచ్చి తనతో రమ్మంటే ఏమి చేయాలి?~A stranger offers you chocolate and asks you to come with him. What should you do?|వెళ్లకుండా, వెంటనే పెద్దలకు చెప్పాలి~Refuse and tell an elder immediately|చాక్లెట్ తీసుకుని వెళ్లాలి~Take the chocolate and go|ఎవరికీ చెప్పకూడదు~Tell no one|అతనితో ఆడుకోవాలి~Play with him
+`);
+/* ================= API ================= */
+const L_=(x,m)=>Array.isArray(x)?(x[m]||x[0]):String(x);
+/* జనరేటర్ సామర్థ్యం (ఎన్ని ఆప్షన్లు, FR కి సరిపోతుందా) – ముందే పరీక్షిస్తాం */
+QB.gens.forEach(g=>{let mw=9,fr=true,ok=0;for(let k=0;k<6;k++){const c=g.c[0]+(k%(g.c[1]-g.c[0]+1));try{const o=g.fn(c,g.d);if(!o||!o.q)continue;ok++;mw=Math.min(mw,(o.w||[]).filter(x=>String(L_(x,0))!==String(L_(o.a,0))).length);if(o.fr===false)fr=false;}catch(e){}}g.nw=ok?mw:0;g.fr=fr&&ok>0;});
+QB.items.forEach(it=>{it.nw=it.w.length;});
+function okTy(src,ty){return ty==='FR'?!!src.fr:ty==='M3'?src.nw>=2:ty==='M4'?src.nw>=3:(src.nw>=2||src.fr);}
+QB.topics=(c,s)=>(QB.cat[s]||[]).filter(t=>c>=t.c[0]&&c<=t.c[1]).map(t=>Object.assign({},t,{sub:t.sub.filter(x=>c>=x.c[0]&&c<=x.c[1])})).filter(t=>t.sub.length);
+QB.pool=(c,s,f)=>{f=f||{};const m=x=>x.sb===s&&c>=x.c[0]&&c<=x.c[1]&&(!f.t||x.t===f.t)&&(!f.s||x.s===f.s)&&(!f.ty||okTy(x,f.ty));
+ return {items:QB.items.filter(m),gens:QB.gens.filter(m)};};
+/* ఒక ప్రశ్నను తయారు చేయి: med 0=తెలుగు 1=English */
+QB.inst=(src,c,med)=>{let o;if(src.fn){for(let k=0;k<5&&!o;k++){try{o=src.fn(c,src.d);}catch(e){o=null;}}if(!o)return null;}else o=src;
+ const a=L_(o.a,med),w=[];(o.w||[]).forEach(x=>{const v=String(L_(x,med));if(v!==String(a)&&!w.includes(v))w.push(v);});
+ return {q:L_(o.q,med),a:String(a),w,fr:src.fn?(src.fr&&o.fr!==false):!!src.fr,d:src.d,b:src.b,t:src.t,s:src.s,auto:!!src.fn};};
+QB.label=(s,t,st,med)=>{const T=(QB.cat[s]||[]).find(x=>x.k===t);if(!T)return '';const S=st&&T.sub.find(x=>x.k===st);return med?(S?S.en:T.en):(S?S.te:T.te);};
+QB.okTy=okTy;
+})();
+
 </script>
 <script>
 /* ============ రాయ్ ఎడ్యుకేషన్ – విద్యార్థి లెర్నింగ్ యాప్ (1–10 తరగతులు) ============ */
@@ -1239,8 +1913,8 @@ function ring(p,sz,col){sz=sz||96;col=col||'#f59e0b';const r=sz/2-8,C=2*Math.PI*
 function pctCls(p){return p>=80?'g':p>=50?'y':'r';}
 
 /* ---------- డేటా నిల్వ (ఆఫ్లైన్ + ఆన్‌లైన్ సింక్) ---------- */
-const COLS=['students','hw','events','doubts','notes','results','games','subs','teachers','roster','marks'];
-function def(){return {dev:'',offline:false,pub:'',pin:'1234',local:[],cur:null,students:[],results:[],games:[],hw:[],events:[],doubts:[],notes:[],subs:[],teachers:[],roster:[],marks:[],read:{},seeded:false,cfg:{type:''},q:{},last:{},lastSync:0};}
+const COLS=['students','hw','events','doubts','notes','results','games','subs','teachers','roster','marks','qb','papers'];
+function def(){return {dev:'',offline:false,pub:'',pin:'1234',local:[],cur:null,students:[],results:[],games:[],hw:[],events:[],doubts:[],notes:[],subs:[],teachers:[],roster:[],marks:[],qb:[],papers:[],read:{},seeded:false,cfg:{type:''},q:{},last:{},lastSync:0};}
 function load(){try{const d=JSON.parse(localStorage.getItem(LS));if(d)return migrate(Object.assign(def(),d));}catch(e){}return def();}
 function migrate(d){
  if(!d.dev){d.dev=newDev();const mine=new Set((d.local||[]).map(x=>x.n));if(d.cur)mine.add(d.cur.n);d.q=d.q||{};
@@ -1297,6 +1971,7 @@ function applyIncoming(ch){if(!ch.length)return;const notes=[];
   if(old&&(old.upd||0)>(d.upd||0))return;if(i>=0)a[i]=d;else a.push(d);
   if(!S.cur||d.del)return;
   if(!old&&col==='hw'&&d.c===S.cur.c)notes.push('📒 కొత్త హోంవర్క్: '+d.t);
+  if(!old&&col==='papers'&&d.on&&+d.c===+S.cur.c)notes.push('📝 టీచర్ కొత్త టెస్ట్ ఇచ్చారు: '+d.t);
   if(!old&&col==='events'&&(d.c===0||d.c===S.cur.c))notes.push('📅 '+d.t+' – '+fmtD(d.d));
   if(col==='doubts'&&d.n===me()&&d.r&&(!old||old.r!==d.r))notes.push('💬 నీ సందేహానికి జవాబు వచ్చింది');});
  save();if(notes.length&&Sync.primed)notify(notes);softRender();}
@@ -1512,7 +2187,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.10.27-7';
+const APPV='2026.10.28-1';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -1732,7 +2407,7 @@ function buildQs(c,s){if(s==='mat'){const out=[],seen=new Set();let g=0;while(ou
 /* ---------- టెస్ట్ ---------- */
 V.test=()=>{const tab=param.tab||'new';const st=stats();const c=S.cur.c;
  let body='';
- if(tab==='new')body=wsCard()+subjectsFor(c).map(s=>{const rs=myScored().filter(r=>r.sb===s&&r.kind!=='ws');const best=rs.length?Math.max(...rs.map(r=>Math.round(r.s*100/r.t))):null;const n=s==='mat'?10:((Q[c]||{})[s]||[]).length;
+ if(tab==='new')body=qpStudentCards()+wsCard()+subjectsFor(c).map(s=>{const rs=myScored().filter(r=>r.sb===s&&r.kind!=='ws');const best=rs.length?Math.max(...rs.map(r=>Math.round(r.s*100/r.t))):null;const n=s==='mat'?10:((Q[c]||{})[s]||[]).length;
   return `<div class="tcard"><div class="th" style="background:${SUBJ[s].bg}"><span class="si" style="width:34px;height:34px;font-size:16px;color:${SUBJ[s].col}">${SUBJ[s].ic}</span>${SUBJ[s].n} టెస్ట్</div><div class="tb">${n} ప్రశ్నలు • ${rs.length} సార్లు రాశావు${best!=null?` • ఉత్తమం <span class="pct ${pctCls(best)}">${best}%</span>`:''}<div class="r"><small class="mut">${s==='mat'?'ప్రతిసారీ కొత్త లెక్కలు':'ప్రశ్నలు కలగలుపుగా'}</small><button class="lk b" onclick="startTest('${s}')">ప్రారంభించు ▶</button></div></div></div>`;}).join('');
  if(tab==='done'){const rs=myRes().slice().reverse();
   body=`<div class="card"><h3>సబ్జెక్టుల వారీ ప్రదర్శన</h3>${subjectsFor(c).map(s=>{const p=st.by[s];return `<div class="sbar"><span>${SUBJ[s].n}</span><span class="tr"><i style="width:${p||0}%;background:${SUBJ[s].col}"></i></span><b>${p==null?'–':p+'%'}</b></div>`;}).join('')}</div>`+
@@ -1744,22 +2419,22 @@ V.test=()=>{const tab=param.tab||'new';const st=stats();const c=S.cur.c;
 function startTest(s){const qs=buildQs(S.cur.c,s);if(!qs.length)return toast('ఈ సబ్జెక్టుకు ప్రశ్నలు లేవు');T={s,qs,i:0,ans:[],start:Date.now()};go('testrun');
  tick=setInterval(()=>{const e=$('#ttime');if(e)e.textContent=mmss((Date.now()-T.start)/1000);},1000);}
 V.testrun=()=>{const q=T.qs[T.i],sel=T.ans[T.i];
- return `<div class="trbar"><button class="ib" onclick="quitTest()">✕</button><b>${SUBJ[T.s].n} టెస్ట్</b><span>⏱ <span id="ttime">${mmss((Date.now()-T.start)/1000)}</span></span></div>
+ return `<div class="trbar"><button class="ib" onclick="quitTest()">✕</button><b>${T.ti?esc(T.ti):SUBJ[T.s].n+' టెస్ట్'}</b><span>⏱ <span id="ttime">${mmss((Date.now()-T.start)/1000)}</span></span></div>
 <div class="prog"><i style="width:${(T.i+1)/T.qs.length*100}%"></i></div>
-<div class="qcard"><small>ప్రశ్న ${T.i+1} / ${T.qs.length}</small><h3>${esc(q.q)}</h3><div class="opts">${q.o.map((o,j)=>`<button class="opt ${sel===j?'sel':''}" onclick="pickAns(${j})"><span>${'ABCD'[j]}</span>${esc(o)}</button>`).join('')}</div>
+<div class="qcard"><small>ప్రశ్న ${T.i+1} / ${T.qs.length}</small><h3>${esc(q.q)}</h3>${q.fr?`<input id="frin" class="frin" autocomplete="off" value="${esc(sel==null?'':sel)}" oninput="frType(this)" placeholder="✍️ జవాబు ఇక్కడ రాయి">`:`<div class="opts">${q.o.map((o,j)=>`<button class="opt ${sel===j?'sel':''}" onclick="pickAns(${j})"><span>${'ABCD'[j]}</span>${esc(o)}</button>`).join('')}</div>`}
 <button class="spk" onclick="speak(T.qs[T.i].q)">🔊 ప్రశ్న వినండి</button></div>
-<div class="row2 qnav"><button class="btn ghost" ${T.i?'':'disabled'} onclick="T.i--;render()">◀ వెనుకకు</button><button class="btn" ${sel==null?'disabled':''} onclick="nextQ()">${T.i===T.qs.length-1?'సమర్పించు ✓':'తర్వాత ▶'}</button></div>`;};
+<div class="row2 qnav"><button class="btn ghost" ${T.i?'':'disabled'} onclick="T.i--;render()">◀ వెనుకకు</button><button class="btn" id="tnext" ${(q.fr?!String(sel==null?'':sel).trim():sel==null)?'disabled':''} onclick="nextQ()">${T.i===T.qs.length-1?'సమర్పించు ✓':'తర్వాత ▶'}</button></div>`;};
 function pickAns(j){T.ans[T.i]=j;render();}
 function nextQ(){if(T.i<T.qs.length-1){T.i++;render();}else finishTest();}
 function quitTest(){if(confirm('టెస్ట్ మధ్యలో ఆపేయాలా? జవాబులు సేవ్ కావు.'))go('test');}
 function finishTest(){const sec=Math.round((Date.now()-T.start)/1000);let sc=0;
- const rv=T.qs.map((q,i)=>{const y=q.o[T.ans[i]];if(y===q.a)sc++;return {q:q.q,y:y||'',a:q.a};});
- const r={id:uid(),n:me(),c:S.cur.c,sb:T.s,s:sc,t:T.qs.length,sec,d:new Date().toISOString(),rv};put('results',r);go('result',{id:r.id});if(sc*100/T.qs.length>=80){setTimeout(confetti,200);beep('win');}else beep('ok');}
+ const rv=T.qs.map((q,i)=>{const y=q.fr?String(T.ans[i]==null?'':T.ans[i]).trim():q.o[T.ans[i]],ok=q.fr?(qpNorm(y)!==''&&qpNorm(y)===qpNorm(q.a)):y===q.a;if(ok)sc++;return {q:q.q,y:y||'',a:q.a,ok};});
+ const r={id:uid(),n:me(),c:S.cur.c,sb:T.s,s:sc,t:T.qs.length,sec,d:new Date().toISOString(),rv};if(T.pid)Object.assign(r,{pid:T.pid,ti:T.ti,kind:'qp'});put('results',r);go('result',{id:r.id});if(sc*100/T.qs.length>=80){setTimeout(confetti,200);beep('win');}else beep('ok');}
 V.result=()=>{const r=live('results').find(x=>x.id===param.id);if(!r)return '<div class="empty">ఫలితం దొరకలేదు</div>';if(r.kind==='ws'){param={id:r.id};return V.wsres();}const p=Math.round(r.s*100/r.t);
  const msg=p>=80?'🌟 అద్భుతం!':p>=60?'👏 బాగుంది!':p>=40?'🙂 పర్వాలేదు, ఇంకా సాధన చేయి':'💪 మళ్ళీ ప్రయత్నించు!';
- return `<div class="bar"><button class="ib" onclick="go('test',{tab:'done'})">←</button><h2>${SUBJ[r.sb].n} – ఫలితం</h2></div>
+ return `<div class="bar"><button class="ib" onclick="go('test',{tab:'done'})">←</button><h2>${r.ti?esc(r.ti):SUBJ[r.sb].n} – ఫలితం</h2></div>
 <div class="card center">${ring(p,130,p>=80?'#16a34a':p>=50?'#f59e0b':'#e5484d')}<h3 style="margin-top:8px">${msg}</h3><p>సరైనవి: <b>${r.s} / ${r.t}</b> &nbsp;•&nbsp; సమయం: <b>${mmss(r.sec)}</b></p><p class="mut">${fmtD(r.d)}</p>
-<div class="row2"><button class="btn" onclick="startTest('${r.sb}')">↻ మళ్ళీ రాయి</button><button class="btn ghost" onclick="go('subject',{s:'${r.sb}'})">📖 పాఠాలు</button></div></div>
+<div class="row2">${r.pid?`<button class="btn" onclick="go('test')">📝 టెస్టులు</button>`:`<button class="btn" onclick="startTest('${r.sb}')">↻ మళ్ళీ రాయి</button>`}<button class="btn ghost" onclick="go('subject',{s:'${r.sb}'})">📖 పాఠాలు</button></div></div>
 <h4 class="sec">జవాబుల సమీక్ష</h4>${(r.rv||[]).map((x,i)=>{const ok=x.y===x.a;return `<div class="rv ${ok?'':'x'}"><p>${i+1}. ${esc(x.q)}</p><small>నీ జవాబు: <b>${esc(x.y||'—')}</b> ${ok?'✅':'❌'}</small>${ok?'':`<small>సరైన జవాబు: <b style="color:#166534">${esc(x.a)}</b></small>`}</div>`;}).join('')}`;};
 
 /* ---------- ✎ రోజువారీ లెక్కలు (+ − × ÷ – ఒక్కో ప్రక్రియకు 4) – వెంటనే జవాబు, మార్కులు, ర్యాంక్ ---------- */
@@ -2097,7 +2772,7 @@ ${list.map(t=>`<div class="titem" ${param.nt===t.id?'style="outline:3px solid #2
 /* ---------- ఉపాధ్యాయుల ప్యానెల్ ---------- */
 function tLogin(){if($('#tpin').value===S.pin){tAuth=true;go('teacher');}else toast('PIN తప్పు');}
 function tBack(){tAuth=false;go(S.cur||S.cfg.type||S.offline?'home':'welcome');}
-const TSEC=[['sy','☁️ ఆన్‌లైన్ సింక్'],['tc','👥 ఉపాధ్యాయులు'],['pg','🧑‍🎓 విద్యార్థులు & మార్కులు'],['hw','📒 హోంవర్క్'],['ev','📅 ఈవెంట్/టెస్ట్'],['dq','💬 సందేహాలు'],['ws','📅 రోజువారీ లెక్కలు'],['nt','📖 పాఠం నోట్స్'],['lb','📚 పుస్తకాలు/టూల్స్'],['fl','📢 ఫ్లాష్/ఫోటోలు'],['rp','📊 రిపోర్ట్'],['st','⚙️ సెట్టింగ్స్']];
+const TSEC=[['sy','☁️ ఆన్‌లైన్ సింక్'],['tc','👥 ఉపాధ్యాయులు'],['pg','🧑‍🎓 విద్యార్థులు & మార్కులు'],['hw','📒 హోంవర్క్'],['ev','📅 ఈవెంట్/టెస్ట్'],['qp','📝 ప్రశ్నాపత్రం'],['dq','💬 సందేహాలు'],['ws','📅 రోజువారీ లెక్కలు'],['nt','📖 పాఠం నోట్స్'],['lb','📚 పుస్తకాలు/టూల్స్'],['fl','📢 ఫ్లాష్/ఫోటోలు'],['rp','📊 రిపోర్ట్'],['st','⚙️ సెట్టింగ్స్']];
 function clsSel(id,all){return `<select id="${id}" onchange="fillSubj('${id}','${id}s')">${all&&isAdmin()?'<option value="0">అన్ని తరగతులు</option>':''}${myCls().map(c=>`<option value="${c}">${c}వ తరగతి</option>`).join('')}</select>`;}
 function subjOpts(c){return mySubs(c).map(s=>`<option value="${s}">${SUBJ[s].n}</option>`).join('');}
 function fillSubj(cid,sid){const s=document.getElementById(sid);if(s)s.innerHTML=subjOpts(document.getElementById(cid).value);}
@@ -2107,6 +2782,173 @@ V.teacher=()=>{if(!tAuth)return `<div class="login"><div class="logo">👩‍�
 ${sec!=='sy'&&!S.cfg.type?`<div class="warn" style="margin-bottom:10px">📴 ఆఫ్లైన్ మోడ్ – మీరు ఇచ్చే హోంవర్క్ ఈ ఫోన్‌లోనే ఉంటుంది. విద్యార్థుల ఫోన్లకు చేరాలంటే <a onclick="go('teacher',{t:'sy'})">☁️ ఆన్‌లైన్ సింక్</a> సెటప్ చేయండి.</div>`:''}${sec!=='sy'&&S.cfg.type&&!S.cfg.isT?`<div class="warn" style="margin-bottom:10px">⚠️ సర్వర్‌లో ఉపాధ్యాయ అనుమతి లేదు – <a onclick="go('teacher',{t:'sy'})">సింక్ సెట్టింగ్స్</a> చూడండి.</div>`:''}
 ${whoBanner()}<div class="tchips">${TSEC.filter(([k])=>k!=='tc'||(isAdmin()&&S.cfg.type==='gs')).map(([k,n])=>`<button class="${sec===k?'on':''}" onclick="go('teacher',{t:'${k}'})">${n}${k==='dq'&&un?' ('+un+')':''}${k==='ws'&&wsPendT().length?' ('+wsPendT().length+')':''}</button>`).join('')}</div>${TP[sec]()}`;};
 const TP={};TP.tc=tpTc;
+/* ================= 📝 ప్రశ్నాపత్రం తయారీ (టాపిక్ → కష్టతనం → Bloom's) ================= */
+const QBK=window.RAAY_QB||null;
+const QP_TY=[['M4','MCQ-4 (4 ఆప్షన్లు)'],['M3','MCQ-3 (3 ఆప్షన్లు)'],['FR','FR – ఖాళీ / చిన్న జవాబు'],['MIX','కలిపి (MCQ + FR)']];
+const QP_D=[[1,'సులభం','Easy'],[2,'మధ్యస్థం','Medium'],[3,'కఠినం','Hard']];
+const QP_B=[['R','గుర్తుంచుకోవడం','Remember'],['U','అవగాహన','Understand'],['A','వినియోగం','Apply'],['N','విశ్లేషణ','Analyze'],['E','మూల్యాంకనం','Evaluate'],['C','సృజన','Create']];
+const QP_LANG=['tel','eng','hin'];
+let QP=null;
+function qpInit(){if(!QP){try{QP=JSON.parse(localStorage.getItem('raiQP')||'null');}catch(e){}if(!QP||!QP.f)QP={f:{}};}qpFix();}
+function qpSave(){try{localStorage.setItem('raiQP',JSON.stringify(QP));}catch(e){}}
+function qpLbl(x){return !x?'':x.te===x.en?x.te:x.te+' – '+x.en;}
+function qpTopics(c,s){c=+c;const T=QBK&&c<=5?QBK.topics(c,s).map(t=>({k:t.k,n:qpLbl(t),sub:t.sub.map(x=>({k:x.k,n:qpLbl(x)}))})):[];
+ if(c>5&&(((Q[c]||{})[s]||[]).length||s==='mat'))T.push({k:'gen',n:'సాధారణ ప్రశ్నలు (యాప్ బ్యాంకు)',sub:[]});
+ const own=[...new Set(live('qb').filter(q=>+q.c===c&&q.s===s&&q.t==='own'&&q.tn).map(q=>q.tn))];
+ if(own.length)T.push({k:'own',n:'✍️ ఉపాధ్యాయులు చేర్చిన టాపిక్‌లు',sub:own.map(x=>({k:'o:'+x,n:x}))});return T;}
+function qpFix(){const f=QP.f,cl=myCls();if(!cl.includes(+f.c))f.c=cl.find(x=>x<=5)||cl[0];f.c=+f.c;const ss=mySubs(f.c);if(!ss.includes(f.s))f.s=ss[0];
+ if(QP_LANG.includes(f.s))f.med=f.s==='eng'?'en':'te';else if(f.med!=='en')f.med='te';if(!QP_TY.some(x=>x[0]===f.ty))f.ty='M4';
+ const T=qpTopics(f.c,f.s),tp=T.find(x=>x.k===f.t);if(!tp)f.t='';if(f.st&&!(tp&&tp.sub.some(x=>x.k===f.st)))f.st='';if(!(+f.n>0))f.n=10;if(!(+f.mk>0))f.mk=1;}
+function qpMi(){return QP.f.med==='en'?1:0;}
+function qpTyOk(x,ty){return ty==='FR'?!!x.fr:ty==='M3'?x.nw>=2:ty==='M4'?x.nw>=3:(x.nw>=2||!!x.fr);}
+function qpSrc(f){const c=+f.c,s=f.s,mi=f.med==='en'?1:0,lang=QP_LANG.includes(s),out=[];
+ if(QBK&&c<=5&&f.t!=='gen'&&f.t!=='own'){const P=QBK.pool(c,s,{t:f.t,s:f.st});
+  P.items.forEach(x=>out.push({k:'b'+QBK.items.indexOf(x),d:x.d,b:x.b,t:x.t,st:x.s,fr:x.fr,nw:x.nw,mk:()=>QBK.inst(x,c,mi)}));
+  P.gens.forEach(g=>out.push({k:'g'+QBK.gens.indexOf(g),auto:1,d:g.d,b:g.b,t:g.t,st:g.s,fr:g.fr,nw:g.nw,mk:()=>QBK.inst(g,c,mi)}));}
+ if(c>5&&(!f.t||f.t==='gen')){((Q[c]||{})[s]||[]).forEach(([q,o],i)=>{const op=o.split('|');out.push({k:'q'+i,d:2,b:'R',t:'gen',st:'',fr:false,nw:op.length-1,mk:()=>({q,a:op[0],w:op.slice(1),fr:false})});});
+  if(s==='mat')out.push({k:'gm',auto:1,d:2,b:'A',t:'gen',st:'',fr:true,nw:3,mk:()=>{const g=genMath(c);return {q:g.q,a:String(g.a),w:(g.o||[]).map(String).filter(x=>x!==String(g.a)),fr:true};}});}
+ live('qb').forEach(x=>{if(+x.c!==c||x.s!==s)return;if(!lang&&x.med&&x.med!==f.med)return;const st=x.t==='own'?'o:'+x.tn:(x.st||'');
+  if(f.t&&x.t!==f.t)return;if(f.st&&st!==f.st)return;const w=(x.w||[]).filter(v=>String(v).trim());
+  out.push({k:'t'+x.id,own:1,d:+x.d||2,b:x.b||'R',t:x.t,st,fr:x.ty==='FR'||!!x.fr,nw:x.ty==='FR'?0:w.length,mk:()=>({q:x.q,a:x.a,w,fr:x.ty==='FR'||!!x.fr})});});
+ return out.filter(x=>qpTyOk(x,f.ty));}
+function qpStats(src){const st={n:0,auto:0,d:{1:0,2:0,3:0},b:{},ad:{},ab:{}};src.forEach(x=>{if(x.auto){st.auto++;st.ad[x.d]=1;st.ab[x.b]=1;}else{st.n++;st.d[x.d]++;st.b[x.b]=(st.b[x.b]||0)+1;}});return st;}
+function qpOne(x,ty){let r;try{r=x.mk();}catch(e){r=null;}if(!r||!r.q)return null;let t=ty;if(ty==='MIX')t=x.nw>=3?'M4':x.nw>=2?'M3':'FR';
+ const base={q:String(r.q),a:String(r.a),d:x.d,b:x.b,t:x.t,st:x.st,k:x.k};if(t==='FR')return Object.assign(base,{o:null});
+ const n=t==='M3'?2:3,w=shuffle([...new Set((r.w||[]).map(String))].filter(v=>v!==base.a)).slice(0,n);if(w.length<n)return null;return Object.assign(base,{o:shuffle([base.a].concat(w))});}
+function qpDraw(src,d,bl,used,txt,bySt,ty){const cand=src.filter(x=>(!d||x.d===d)&&(x.auto||!used.has(x.k)));if(!cand.length)return null;
+ const sc=x=>(bl[x.b]>0?100:0)-(bySt[x.st]||0)*8+(x.auto?0:5)+Math.random()*12;
+ for(const x of cand.map(x=>[sc(x),x]).sort((a,b)=>b[0]-a[0]).map(y=>y[1]).slice(0,50))for(let k=0;k<(x.auto?8:1);k++){const q=qpOne(x,ty);if(!q||txt.has(q.q))continue;
+  used.add(x.k);txt.add(q.q);bySt[x.st]=(bySt[x.st]||0)+1;if(bl[x.b]>0)bl[x.b]--;return q;}return null;}
+function qpRead(){const f=QP.f,v=id=>{const e=document.getElementById(id);return e?e.value:undefined;},set=(k,id)=>{const x=v(id);if(x!==undefined)f[k]=x;};
+ set('c','qpC');set('s','qpS');set('med','qpM');set('ty','qpTy');set('t','qpT');set('st','qpST');set('n','qpN');set('d1','qpD1');set('d2','qpD2');set('d3','qpD3');QP_B.forEach(([k])=>set('b'+k,'qpB'+k));set('ti','qpTi');set('mk','qpMk');set('tm','qpTm');f.c=+f.c;}
+function qpCh(k){const f=QP.f,old={c:f.c,s:f.s,med:f.med};qpRead();if(k==='c'||k==='s'){f.t='';f.st='';}if(k==='t')f.st='';qpFix();if(f.c!==old.c||f.s!==old.s||f.med!==old.med){QP.qs=null;QP.pid='';f.ti='';}qpSave();go('teacher',{t:'qp'});}
+function qpBuild(){qpRead();qpFix();const f=QP.f,N=Math.min(60,Math.max(1,parseInt(f.n,10)||0)),D={1:+f.d1||0,2:+f.d2||0,3:+f.d3||0},B={};QP_B.forEach(([k])=>{B[k]=+f['b'+k]||0;});
+ const sd=D[1]+D[2]+D[3],sb=Object.values(B).reduce((a,b)=>a+b,0);
+ if(sd>N)return toast(`కష్టతనం సంఖ్యల మొత్తం (${sd}) > మొత్తం ప్రశ్నలు (${N})`);if(sb>N)return toast(`Bloom's సంఖ్యల మొత్తం (${sb}) > మొత్తం ప్రశ్నలు (${N})`);
+ const src=qpSrc(f);if(!src.length)return toast('ఈ ఎంపికకు ప్రశ్నలు లేవు – టాపిక్ / ప్రశ్న రకం మార్చండి');
+ const slots=[];[1,2,3].forEach(d=>{for(let i=0;i<D[d];i++)slots.push(d);});while(slots.length<N)slots.push(0);
+ const used=new Set(),txt=new Set(),bl=Object.assign({},B),bySt={},out=[],short={};
+ slots.forEach(d=>{const q=qpDraw(src,d,bl,used,txt,bySt,f.ty);if(q)out.push(q);else short[d]=(short[d]||0)+1;});
+ out.sort((a,b)=>a.d-b.d);f.n=N;QP.qs=out;QP.short=short;QP.bl=bl;QP.pid='';if(!f.ti)f.ti=qpDefTitle();qpSave();
+ toast(out.length?`✅ ${out.length} ప్రశ్నలు సిద్ధం`:'ప్రశ్నలు దొరకలేదు');go('teacher',{t:'qp'});setTimeout(()=>{const e=document.getElementById('qpPrev');if(e)e.scrollIntoView({behavior:'smooth'});},120);}
+function qpDefTitle(){const f=QP.f,T=qpTopics(f.c,f.s).find(x=>x.k===f.t),st=T&&T.sub.find(x=>x.k===f.st);return SUBJ[f.s].n+(T?' – '+(st?st.n:T.n).split(' – ')[0]:'')+' పరీక్ష';}
+function qpSwap(i){const cur=QP.qs[i];if(!cur)return;const src=qpSrc(QP.f),used=new Set(QP.qs.map(q=>q.k)),txt=new Set(QP.qs.map(q=>q.q));
+ const q=qpDraw(src.filter(x=>x.auto||x.k!==cur.k),cur.d,{[cur.b]:1},used,txt,{},QP.f.ty);if(!q)return toast('ఇదే స్థాయిలో వేరే ప్రశ్న లేదు');QP.qs[i]=q;qpSave();go('teacher',{t:'qp'});}
+function qpDel(i){QP.qs.splice(i,1);qpSave();go('teacher',{t:'qp'});}
+function qpAdd(){const src=qpSrc(QP.f),used=new Set(QP.qs.map(q=>q.k)),txt=new Set(QP.qs.map(q=>q.q)),q=qpDraw(src,0,{},used,txt,{},QP.f.ty);if(!q)return toast('ఇంకా ప్రశ్నలు లేవు');QP.qs.push(q);qpSave();go('teacher',{t:'qp'});}
+/* జవాబులు కొద్దిగా దాచి పంపుతాం */
+function qpEnc(v,id){const s=unescape(encodeURIComponent(JSON.stringify(v)));let o='';for(let i=0;i<s.length;i++)o+=String.fromCharCode(s.charCodeAt(i)^(id.charCodeAt(i%id.length)%31+1));return btoa(o);}
+function qpDec(k,id){try{const s=atob(k);let o='';for(let i=0;i<s.length;i++)o+=String.fromCharCode(s.charCodeAt(i)^(id.charCodeAt(i%id.length)%31+1));return JSON.parse(decodeURIComponent(escape(o)));}catch(e){return null;}}
+function qpRec(on){qpRead();const f=QP.f,id=QP.pid||('qp'+uid()),old=live('papers').find(p=>p.id===id);
+ return Object.assign({},old||{},{id,c:+f.c,s:f.s,med:f.med,ty:f.ty,t:String(f.ti||qpDefTitle()).slice(0,80),mk:+f.mk||1,tm:+f.tm||0,n:QP.qs.length,on:on==null?!!(old&&old.on):on,d:old&&old.d||new Date().toISOString(),
+  qs:QP.qs.map(q=>({q:q.q,o:q.o,k:qpEnc(q.o?q.o.indexOf(q.a):q.a,id),d:q.d,b:q.b})),sn:S.cfg.sname||'',byn:tName()});}
+async function qpStore(on){if(!QP.qs||!QP.qs.length)return toast('ముందు ప్రశ్నాపత్రం తయారు చేయండి');const rec=qpRec(on);
+ if(JSON.stringify(rec).length>18500)return toast('పత్రం చాలా పెద్దది – కొన్ని ప్రశ్నలు తగ్గించండి');
+ if(on&&S.cfg.type==='gs'){toast('సర్వర్ చూస్తోంది...');const bad=await qpServerOk();if(bad){toast('❌ '+bad);return;}}
+ put('papers',rec);QP.pid=rec.id;qpSave();toast(on?'📤 పిల్లలకు పంపాం – వారి యాప్‌లో “టెస్ట్” లో కనిపిస్తుంది':'💾 సేవ్ అయింది');go('teacher',{t:'qp',v:on?'ls':''});}
+async function qpServerOk(){try{const j=await (await fetch(S.cfg.url+'?a=ping&_='+Date.now())).json();return j&&j.qp?'':'సర్వర్ కోడ్ పాతది – కొత్త సర్వర్ కోడ్ పెట్టి మూడు deployments కూ New version Deploy చేయండి';}catch(e){return 'సర్వర్ చేరలేదు – నెట్ చూడండి';}}
+function qpOpen(id){const p=live('papers').find(x=>x.id===id);if(!p)return;qpInit();QP.f=Object.assign(QP.f,{c:+p.c,s:p.s,med:p.med||'te',ty:p.ty||'M4',ti:p.t,mk:p.mk,tm:p.tm||''});
+ QP.qs=p.qs.map(q=>{const a=qpDec(q.k,p.id);return {q:q.q,o:q.o,a:q.o?q.o[a]:String(a),d:q.d||2,b:q.b||'R',t:'',st:'',k:'x'+Math.random()};});QP.pid=p.id;QP.short={};qpFix();QP.f.t='';qpSave();go('teacher',{t:'qp'});}
+function qpToggle(id){const p=live('papers').find(x=>x.id===id);if(p)put('papers',Object.assign({},p,{on:!p.on}));go('teacher',{t:'qp',v:'ls'});}
+function qpRemove(id){if(!confirm('ఈ ప్రశ్నాపత్రం తొలగించాలా? (పిల్లల ఫలితాలు ఉంటాయి)'))return;remove('papers',id);if(QP&&QP.pid===id)QP.pid='';go('teacher',{t:'qp',v:'ls'});}
+/* ---------- ప్రింట్ ---------- */
+function qpSheet(p,key){const L='ABCD',f=p,tot=p.qs.length*(+p.mk||1);
+ return `<div class="qpsheet"><div class="qph"><b>${esc(p.sn||S.cfg.sname||'')}</b><h2>${esc(p.t)}</h2><div>తరగతి: ${p.c} &nbsp;•&nbsp; ${SUBJ[f.s].n} &nbsp;•&nbsp; మార్కులు: ${tot}${p.tm?` &nbsp;•&nbsp; సమయం: ${p.tm} నిమిషాలు`:''}</div>
+<div class="qpnm"><span>పేరు: ____________________</span><span>క్రమ సంఖ్య: ______</span><span>తేదీ: ________</span></div></div>
+<ol class="qpol">${p.qs.map(q=>`<li><div class="qq">${esc(q.q)} <i>[${+p.mk||1}]</i></div>${q.o?`<div class="qo">${q.o.map((o,j)=>`<span>(${L[j]}) ${esc(o)}</span>`).join('')}</div>`:'<div class="qline">జవాబు: ______________________________</div>'}</li>`).join('')}</ol>
+${key?`<div class="qpkey"><h3>🔑 జవాబుల కీ – ${esc(p.t)}</h3><ol>${p.qs.map(q=>`<li>${q.o?'('+L[q.o.indexOf(q.a)]+') ':''}${esc(q.a)}</li>`).join('')}</ol></div>`:''}
+<div class="qpft">రాయ్ విద్యార్థి యాప్ • రాయ్ ఎడ్యుకేషన్</div></div>`;}
+function qpPrint(p,key){const box=document.getElementById('qpPrint')||document.body.appendChild(Object.assign(document.createElement('div'),{id:'qpPrint'}));box.innerHTML=qpSheet(p,key);
+ document.body.classList.add('qpprint');setTimeout(()=>{window.print();setTimeout(()=>{document.body.classList.remove('qpprint');box.innerHTML='';},600);},80);}
+function qpPrintCur(){if(!QP.qs||!QP.qs.length)return toast('ముందు ప్రశ్నాపత్రం తయారు చేయండి');qpRead();const f=QP.f;qpPrint({t:f.ti||qpDefTitle(),c:f.c,s:f.s,mk:f.mk,tm:f.tm,qs:QP.qs},!!(document.getElementById('qpKey')||{}).checked);}
+function qpPrintId(id,key){const p=live('papers').find(x=>x.id===id);if(!p)return;qpPrint(Object.assign({},p,{qs:p.qs.map(q=>{const a=qpDec(q.k,p.id);return {q:q.q,o:q.o,a:q.o?q.o[a]:String(a)};})}),key);}
+/* ---------- టీచర్ ప్యానెల్ ---------- */
+function qpOpt(list,val){return list.map(([k,n])=>`<option value="${esc(k)}" ${String(k)===String(val)?'selected':''}>${esc(n)}</option>`).join('');}
+TP.qp=()=>{qpInit();const v=param.v||'',nP=live('papers').filter(p=>canSee(p.c,p.s)).length,nQ=live('qb').filter(q=>canSee(q.c,q.s)).length;
+ const head=`<div class="tchips">${[['','🧩 తయారు చేయి'],['ls',`📄 ప్రశ్నాపత్రాలు (${nP})`],['qb',`✍️ నా ప్రశ్నలు (${nQ})`]].map(([k,n])=>`<button class="${v===k||(k==='ls'&&v==='res')?'on':''}" onclick="go('teacher',{t:'qp',v:'${k}'})">${n}</button>`).join('')}</div>`;
+ if(v==='ls')return head+qpListV();if(v==='res')return head+qpResV(param.id);if(v==='qb')return head+qbBankV();return head+qpMakeV();};
+function qpMakeV(){const f=QP.f,T=qpTopics(f.c,f.s),tp=T.find(x=>x.k===f.t),src=qpSrc(f),st=qpStats(src),lang=QP_LANG.includes(f.s);
+ const num=(id,val,ph)=>`<input id="${id}" inputmode="numeric" maxlength="3" value="${esc(val==null?'':val)}" placeholder="${ph||'0'}" onchange="qpRead();qpSave()">`;
+ const chip=(t,n,a)=>`<span class="qpchip">${t}: <b>${n}${a?'+♾️':''}</b></span>`;
+ let h=`<div class="card"><h3>📝 ప్రశ్నాపత్రం తయారీ</h3><p class="mut" style="margin:-4px 0 8px">తరగతి, సబ్జెక్టు, టాపిక్ ఎంచుకుని – కష్టతనం, Bloom's స్థాయి వారీగా ఎన్ని ప్రశ్నలు కావాలో ఇవ్వండి.</p>
+<div class="g2"><div><label>తరగతి</label><select id="qpC" onchange="qpCh('c')">${qpOpt(myCls().map(c=>[c,c+'వ తరగతి']),f.c)}</select></div><div><label>సబ్జెక్టు</label><select id="qpS" onchange="qpCh('s')">${qpOpt(mySubs(f.c).map(s=>[s,SUBJ[s].n]),f.s)}</select></div>
+<div><label>మీడియం</label><select id="qpM" onchange="qpCh('med')" ${lang?'disabled':''}>${qpOpt([['te','తెలుగు'],['en','English']],f.med)}</select></div><div><label>ప్రశ్న రకం</label><select id="qpTy" onchange="qpCh('ty')">${qpOpt(QP_TY,f.ty)}</select></div></div>
+<label>టాపిక్</label><select id="qpT" onchange="qpCh('t')"><option value="">అన్ని టాపిక్‌లు</option>${qpOpt(T.map(x=>[x.k,x.n]),f.t)}</select>
+<label>సబ్ టాపిక్</label><select id="qpST" onchange="qpCh('st')" ${tp&&tp.sub.length?'':'disabled'}><option value="">అన్ని సబ్ టాపిక్‌లు</option>${tp?qpOpt(tp.sub.map(x=>[x.k,x.n]),f.st):''}</select></div>`;
+ h+=`<div class="card qpav"><div class="qpbig">అందుబాటులో ఉన్న ప్రశ్నలు: <b>${st.n}</b>${st.auto?` <span class="qpauto">+ ♾️ ఆటో (ప్రతిసారీ కొత్తవి)</span>`:''}</div>
+<div class="qpchips">${QP_D.map(([d,t])=>chip(t,st.d[d],st.ad[d])).join('')}</div><div class="qpchips">${QP_B.map(([k,t,e])=>chip(e,st.b[k]||0,st.ab[k])).join('')}</div>
+${!st.n&&!st.auto?`<p class="ansErr" style="margin-top:8px">ఈ ఎంపికకు ప్రశ్నలు లేవు. ${+f.c>5?'6–10 తరగతులకు ప్రశ్నల బ్యాంకు త్వరలో – ఇప్పటికి “✍️ నా ప్రశ్నలు” లో మీ ప్రశ్నలు చేర్చండి.':'టాపిక్ / ప్రశ్న రకం మార్చండి.'}</p>`:''}
+<label>కావలసిన మొత్తం ప్రశ్నలు</label>${num('qpN',f.n,'10')}
+<h4 class="qph4">కష్టతనం స్థాయి <small class="mut">(ఖాళీ = ఏదైనా)</small></h4><div class="g3">${QP_D.map(([d,t,e])=>`<div><label>${t} <small>${e}</small></label>${num('qpD'+d,f['d'+d])}</div>`).join('')}</div>
+<h4 class="qph4">Bloom's Taxonomy <small class="mut">(ఐచ్ఛికం)</small></h4><div class="g3">${QP_B.map(([k,t,e])=>`<div><label>${t} <small>${e}</small></label>${num('qpB'+k,f['b'+k])}</div>`).join('')}</div>
+<h4 class="qph4">పరీక్ష వివరాలు</h4><label>శీర్షిక</label><input id="qpTi" maxlength="80" onchange="qpRead();qpSave()" value="${esc(f.ti||'')}" placeholder="${esc(qpDefTitle())}">
+<div class="g2"><div><label>ఒక్కో ప్రశ్నకు మార్కులు</label>${num('qpMk',f.mk,'1')}</div><div><label>సమయం (నిమిషాలు)</label>${num('qpTm',f.tm,'ఐచ్ఛికం')}</div></div>
+<button class="btn" onclick="qpBuild()">🔍 ప్రశ్నాపత్రం తయారు చేయి</button></div>`;
+ if(QP.qs)h+=qpPrevV();return h;}
+function qpPrevV(){const qs=QP.qs,L='ABCD',f=QP.f;if(!qs.length)return '<div class="empty" id="qpPrev">ప్రశ్నలు దొరకలేదు – ఎంపికలు మార్చండి</div>';
+ const cd={1:0,2:0,3:0},cb={};qs.forEach(q=>{cd[q.d]++;cb[q.b]=(cb[q.b]||0)+1;});const sh=Object.entries(QP.short||{}).filter(([,n])=>n),blm=Object.entries(QP.bl||{}).filter(([,n])=>n>0);
+ const dn=d=>(QP_D.find(x=>x[0]===+d)||[0,'ఏదైనా'])[1],bn=b=>(QP_B.find(x=>x[0]===b)||[0,b,b])[2],tl=q=>QBK&&q.t&&q.t!=='own'&&q.t!=='gen'?QBK.label(f.s,q.t,q.st,0):'';
+ const pub=QP.pid&&live('papers').find(p=>p.id===QP.pid);
+ return `<div class="card" id="qpPrev"><h3>👀 ప్రశ్నాపత్రం – ${qs.length} ప్రశ్నలు${pub?` <span class="badge">${pub.on?'🟢 పిల్లలకు పంపారు':'💾 సేవ్'}</span>`:''}</h3>
+<div class="qpchips">${QP_D.map(([d,t])=>`<span class="qpchip">${t}: <b>${cd[d]}</b></span>`).join('')}${Object.keys(cb).map(b=>`<span class="qpchip">${bn(b)}: <b>${cb[b]}</b></span>`).join('')}</div>
+${sh.length?`<p class="warn" style="margin:6px 0">⚠️ సరిపడా ప్రశ్నలు లేవు: ${sh.map(([d,n])=>dn(d)+' '+n).join(', ')} తక్కువ. టాపిక్‌ను “అన్నీ” చేయండి లేదా “✍️ నా ప్రశ్నలు” లో చేర్చండి.</p>`:''}
+${blm.length?`<p class="mut" style="margin:4px 0">ℹ️ Bloom's: ${blm.map(([b,n])=>bn(b)+' '+n).join(', ')} స్థాయి ప్రశ్నలు ఈ టాపిక్‌లో దొరకలేదు – వేరేవి పెట్టాం.</p>`:''}
+${qs.map((q,i)=>`<div class="qpq"><div class="qn">${i+1}</div><div class="qb"><div class="qt">${esc(q.q)}</div>${q.o?`<div class="qpo">${q.o.map((o,j)=>`<span class="${o===q.a?'ok':''}">(${L[j]}) ${esc(o)}${o===q.a?' ✓':''}</span>`).join('')}</div>`:`<div class="qpo"><span class="ok">జవాబు: ${esc(q.a)}</span></div>`}
+<div class="qptags"><span>${dn(q.d)}</span><span>${bn(q.b)}</span>${tl(q)?`<span>${esc(tl(q))}</span>`:''}${q.o?'':'<span>FR</span>'}</div></div><div class="qbtn"><button title="మార్చు" onclick="qpSwap(${i})">🔄</button><button title="తీసేయి" onclick="qpDel(${i})">✕</button></div></div>`).join('')}
+<button class="btn ghost sm" onclick="qpAdd()">➕ ఇంకో ప్రశ్న</button>
+<label class="ck" style="margin-top:10px"><input type="checkbox" id="qpKey" checked> 🔑 చివర జవాబుల కీ కూడా ప్రింట్ చేయి</label>
+<div class="row2"><button class="btn" onclick="qpPrintCur()">🖨️ ప్రింట్ / PDF</button><button class="btn ghost" onclick="qpStore(null)">💾 సేవ్</button></div>
+<button class="btn" style="background:#16a34a" onclick="qpStore(true)">📤 పిల్లలకు ఆన్‌లైన్ టెస్ట్‌గా పంపు</button>
+<p class="mut" style="margin-top:6px">ఆన్‌లైన్ టెస్ట్: ${f.c}వ తరగతి పిల్లల యాప్‌లో “📝 టెస్ట్” లో వస్తుంది. ఒక్కసారే రాయగలరు. మార్కులు ఆటోగా మీకు వస్తాయి.</p></div>`;}
+function qpResOf(id){return live('results').filter(r=>r.pid===id);}
+function qpListV(){const ps=live('papers').filter(p=>canSee(p.c,p.s)).sort((a,b)=>(b.d||'')<(a.d||'')?-1:1);
+ if(!ps.length)return '<div class="empty">ఇంకా ప్రశ్నాపత్రాలు లేవు.<br><small>“🧩 తయారు చేయి” లో తయారు చేసి సేవ్ / పంపండి.</small></div>';
+ return ps.map(p=>{const rs=qpResOf(p.id),av=rs.length?Math.round(rs.reduce((a,r)=>a+r.s*100/r.t,0)/rs.length):null;
+  return `<div class="titem"><div style="flex:1;min-width:0"><b>${esc(p.t)}</b><br><small class="mut">${p.c}వ తరగతి • ${SUBJ[p.s].n} • ${p.n} ప్రశ్నలు • ${fmtD(String(p.d||'').slice(0,10))} • ${esc(p.byn||'')}</small><br>
+<small>${p.on?'🟢 పిల్లలకు అందుబాటులో':'⏸ పిల్లలకు కనిపించదు'} • 👥 ${rs.length} మంది రాశారు${av!=null?` • సగటు <b>${av}%</b>`:''}</small>
+<div class="ansrow" style="margin:6px 0 0"><button class="upbtn" onclick="go('teacher',{t:'qp',v:'res',id:'${p.id}'})">📊 ఫలితాలు</button><button class="upbtn" onclick="qpPrintId('${p.id}',true)">🖨️ ప్రింట్</button><button class="upbtn" onclick="qpToggle('${p.id}')">${p.on?'⏸ ఆపు':'📤 పంపు'}</button><button class="upbtn" onclick="qpOpen('${p.id}')">✏️ మార్చు</button><button class="upbtn" onclick="qpRemove('${p.id}')">🗑️</button></div></div></div>`;}).join('');}
+function qpResV(id){const p=live('papers').find(x=>x.id===id);if(!p)return '<div class="empty">పత్రం దొరకలేదు</div>';const rs=qpResOf(id).sort((a,b)=>b.s-a.s||a.sec-b.sec);
+ const qn=p.qs.map((q,i)=>{const ok=rs.filter(r=>r.rv&&r.rv[i]&&r.rv[i].ok).length;return rs.length?Math.round(ok*100/rs.length):null;});
+ return `<div class="card"><h3>📊 ${esc(p.t)}</h3><p class="mut">${p.c}వ తరగతి • ${SUBJ[p.s].n} • ${p.n} ప్రశ్నలు • ${rs.length} మంది రాశారు</p>
+${rs.length?`<div class="tscroll"><table class="tbl"><tr><th>#</th><th>పేరు</th><th>మార్కులు</th><th>%</th><th>సమయం</th></tr>${rs.map((r,i)=>{const pc=Math.round(r.s*100/r.t);return `<tr><td>${i+1}</td><td class="s">${esc(r.n)}</td><td>${r.s*(+p.mk||1)}/${r.t*(+p.mk||1)}</td><td><span class="pct ${pctCls(pc)}">${pc}%</span></td><td>${mmss(r.sec)}</td></tr>`;}).join('')}</table></div>`:'<div class="empty">ఇంకా ఎవరూ రాయలేదు</div>'}</div>
+${rs.length?`<div class="card"><h3>ప్రశ్న వారీగా – ఎంతమంది సరిగా రాశారు</h3>${p.qs.map((q,i)=>`<div class="sbar"><span>${i+1}. ${esc(q.q.length>38?q.q.slice(0,38)+'…':q.q)}</span><span class="tr"><i style="width:${qn[i]||0}%;background:${qn[i]>=60?'#16a34a':qn[i]>=35?'#f59e0b':'#e5484d'}"></i></span><b>${qn[i]}%</b></div>`).join('')}<p class="mut" style="margin-top:6px">ఎర్రని ప్రశ్నలు – మళ్ళీ బోధించాల్సిన అంశాలు.</p></div>`:''}
+<button class="btn ghost" onclick="go('teacher',{t:'qp',v:'ls'})">← ప్రశ్నాపత్రాలు</button>`;}
+/* ---------- ✍️ ఉపాధ్యాయుల ప్రశ్నలు (పాఠశాల అంతా షేర్) ---------- */
+let QBF=null;
+function qbFix(){const f=QBF||(QBF={});const cl=myCls();if(!cl.includes(+f.c))f.c=(QP&&QP.f.c)||cl[0];f.c=+f.c;const ss=mySubs(f.c);if(!ss.includes(f.s))f.s=ss[0];if(QP_LANG.includes(f.s))f.med=f.s==='eng'?'en':'te';else if(f.med!=='en')f.med='te';
+ const T=QBK&&f.c<=5?QBK.topics(f.c,f.s):[];if(f.t!=='own'&&!T.some(x=>x.k===f.t))f.t=T.length?T[0].k:'own';const tp=T.find(x=>x.k===f.t);if(f.t!=='own'&&!(tp&&tp.sub.some(x=>x.k===f.st)))f.st=tp?tp.sub[0].k:'';if(!f.ty)f.ty='MCQ';if(!f.d)f.d=2;if(!f.b)f.b='U';return T;}
+function qbRead(){const g=id=>{const e=document.getElementById(id);return e?e.value:undefined;};const f=QBF;[['c','qbC'],['s','qbS'],['med','qbM'],['t','qbT'],['st','qbST'],['tn','qbTN'],['ty','qbTy'],['d','qbD'],['b','qbB'],['q','qbQ'],['a','qbA'],['w1','qbW1'],['w2','qbW2'],['w3','qbW3']].forEach(([k,id])=>{const v=g(id);if(v!==undefined)f[k]=v;});f.c=+f.c;}
+function qbCh(){qbRead();qbFix();go('teacher',{t:'qp',v:'qb'});}
+function qbBankV(){const T=qbFix(),f=QBF,tp=T.find(x=>x.k===f.t),lang=QP_LANG.includes(f.s);
+ const mine=live('qb').filter(q=>canSee(q.c,q.s)).sort((a,b)=>(b.upd||0)-(a.upd||0));
+ return `<div class="card"><h3>✍️ కొత్త ప్రశ్న చేర్చండి</h3><p class="mut" style="margin:-4px 0 8px">మీరు చేర్చిన ప్రశ్నలు మీ పాఠశాల ఉపాధ్యాయులందరికీ ప్రశ్నాపత్రం తయారీలో వస్తాయి.</p>
+<div class="g2"><div><label>తరగతి</label><select id="qbC" onchange="qbCh()">${qpOpt(myCls().map(c=>[c,c+'వ తరగతి']),f.c)}</select></div><div><label>సబ్జెక్టు</label><select id="qbS" onchange="qbCh()">${qpOpt(mySubs(f.c).map(s=>[s,SUBJ[s].n]),f.s)}</select></div>
+<div><label>మీడియం</label><select id="qbM" ${lang?'disabled':''}>${qpOpt([['te','తెలుగు'],['en','English']],f.med)}</select></div><div><label>ప్రశ్న రకం</label><select id="qbTy" onchange="qbCh()">${qpOpt([['MCQ','MCQ (ఆప్షన్లతో)'],['FR','FR (చిన్న జవాబు)']],f.ty)}</select></div></div>
+<label>టాపిక్</label><select id="qbT" onchange="qbCh()">${qpOpt(T.map(x=>[x.k,qpLbl(x)]).concat([['own','➕ కొత్త టాపిక్ (మీరే రాయండి)']]),f.t)}</select>
+${f.t==='own'?`<label>టాపిక్ పేరు</label><input id="qbTN" maxlength="50" value="${esc(f.tn||'')}" placeholder="ఉదా: కిరణజన్య సంయోగక్రియ">`:`<label>సబ్ టాపిక్</label><select id="qbST">${tp?qpOpt(tp.sub.map(x=>[x.k,qpLbl(x)]),f.st):''}</select>`}
+<div class="g2"><div><label>కష్టతనం</label><select id="qbD">${qpOpt(QP_D.map(([d,t,e])=>[d,t+' – '+e]),f.d)}</select></div><div><label>Bloom's స్థాయి</label><select id="qbB">${qpOpt(QP_B.map(([k,t,e])=>[k,t+' – '+e]),f.b)}</select></div></div>
+<label>ప్రశ్న</label><textarea id="qbQ" rows="2" maxlength="400">${esc(f.q||'')}</textarea>
+<label>సరైన జవాబు</label><input id="qbA" maxlength="120" value="${esc(f.a||'')}">
+${f.ty==='MCQ'?`<label>తప్పు ఆప్షన్లు (కనీసం 2)</label><div class="g3"><input id="qbW1" maxlength="120" value="${esc(f.w1||'')}" placeholder="తప్పు 1"><input id="qbW2" maxlength="120" value="${esc(f.w2||'')}" placeholder="తప్పు 2"><input id="qbW3" maxlength="120" value="${esc(f.w3||'')}" placeholder="తప్పు 3"></div>`:''}
+<button class="btn" onclick="qbAdd()">➕ ప్రశ్న చేర్చు</button></div>
+<h4 class="sec">చేర్చిన ప్రశ్నలు (${mine.length})</h4>${mine.length?mine.slice(0,150).map(q=>`<div class="titem"><div style="flex:1;min-width:0"><b>${esc(q.q)}</b><br><small class="mut">✓ ${esc(q.a)}${q.ty==='FR'?' • FR':' • ✗ '+esc((q.w||[]).filter(Boolean).join(', '))}</small><br><small class="mut">${q.c}వ తరగతి • ${SUBJ[q.s]?SUBJ[q.s].n:q.s} • ${esc(q.t==='own'?q.tn:QBK?QBK.label(q.s,q.t,q.st,0):q.t)} • ${(QP_D.find(x=>x[0]===+q.d)||[0,''])[1]} • ${(QP_B.find(x=>x[0]===q.b)||[0,0,''])[2]} • ${esc(q.byn||'')}</small></div>${isAdmin()||q.byn===tName()?`<button class="ib" onclick="qbDel('${q.id}')">🗑️</button>`:''}</div>`).join(''):'<div class="empty">ఇంకా ఏమీ లేవు</div>'}`;}
+function qbAdd(){qbRead();const f=QBF,q=String(f.q||'').trim(),a=String(f.a||'').trim(),w=[f.w1,f.w2,f.w3].map(x=>String(x||'').trim()).filter(Boolean);
+ if(q.length<3)return toast('ప్రశ్న రాయండి');if(!a)return toast('సరైన జవాబు రాయండి');if(f.ty==='MCQ'&&w.length<2)return toast('కనీసం 2 తప్పు ఆప్షన్లు ఇవ్వండి');if(w.includes(a))return toast('తప్పు ఆప్షన్ సరైన జవాబులా ఉంది');if(f.t==='own'&&!String(f.tn||'').trim())return toast('టాపిక్ పేరు రాయండి');
+ put('qb',{id:'qb'+uid(),c:+f.c,s:f.s,med:QP_LANG.includes(f.s)?'':f.med,t:f.t,st:f.t==='own'?'':f.st,tn:f.t==='own'?String(f.tn).trim().slice(0,50):'',ty:f.ty,d:+f.d,b:f.b,q:q.slice(0,400),a:a.slice(0,120),w:f.ty==='MCQ'?w.slice(0,3):[],fr:f.ty==='FR',byn:tName()});
+ f.q='';f.a='';f.w1=f.w2=f.w3='';toast('✅ ప్రశ్న చేరింది');go('teacher',{t:'qp',v:'qb'});}
+function qbDel(id){if(confirm('ఈ ప్రశ్న తొలగించాలా?')){remove('qb',id);go('teacher',{t:'qp',v:'qb'});}}
+/* ---------- 🧒 విద్యార్థి: టీచర్ ఇచ్చిన ఆన్‌లైన్ టెస్టులు ---------- */
+function qpMine(pid){return myRes().find(r=>r.pid===pid);}
+function qpStudentCards(){const c=S.cur.c,ps=live('papers').filter(p=>p.on&&+p.c===+c).sort((a,b)=>(b.d||'')<(a.d||'')?-1:1);if(!ps.length)return '';
+ return ps.map(p=>{const r=qpMine(p.id),pc=r?Math.round(r.s*100/r.t):null;return `<div class="tcard qptc"><div class="th" style="background:#ede9fe"><span class="si" style="width:34px;height:34px;font-size:17px;color:#6d28d9">📝</span>${esc(p.t)}</div><div class="tb">${SUBJ[p.s]?SUBJ[p.s].n:''} • ${p.n} ప్రశ్నలు${p.tm?' • ⏱ '+p.tm+' ని.':''}${p.byn?' • '+esc(p.byn):''}
+<div class="r">${r?`<span>మార్కులు: <b>${r.s}/${r.t}</b> <span class="pct ${pctCls(pc)}">${pc}%</span></span><button class="lk" onclick="go('result',{id:'${r.id}'})">ఫలితం ▸</button>`:`<small class="mut">🆕 టీచర్ ఇచ్చిన టెస్ట్ – ఒక్కసారే రాయాలి</small><button class="lk b" onclick="qpStart('${p.id}')">రాయి ▶</button>`}</div></div></div>`;}).join('');}
+function qpStart(id){const p=live('papers').find(x=>x.id===id);if(!p)return;if(qpMine(id))return toast('ఈ టెస్ట్ ఇప్పటికే రాశావు');
+ const qs=p.qs.map(q=>{const a=qpDec(q.k,p.id);return q.o?{q:q.q,o:q.o,a:q.o[a]!=null?q.o[a]:''}:{q:q.q,o:[],fr:1,a:String(a==null?'':a)};});
+ T={s:p.s,qs,i:0,ans:[],start:Date.now(),pid:p.id,ti:p.t,tm:+p.tm||0};go('testrun');
+ tick=setInterval(()=>{const e=$('#ttime');if(e)e.textContent=mmss((Date.now()-T.start)/1000);if(T.tm&&view==='testrun'&&Date.now()-T.start>T.tm*60000){clearInterval(tick);toast('⏱ సమయం ముగిసింది – జవాబులు సమర్పించాం');finishTest();}},1000);}
+function qpNorm(x){return String(x==null?'':x).toLowerCase().replace(/[\s,.₹'"`]/g,'').replace(/^0+(?=\d)/,'');}
+function frType(el){T.ans[T.i]=el.value;const b=document.getElementById('tnext');if(b)b.disabled=!el.value.trim();}
+
 TP.ws=()=>{const r=param.id&&live('results').find(x=>x.id===param.id&&x.kind==='ws');return r?wsTOne(r):wsTList();};
 TP.hw=()=>`<div class="card"><h3>కొత్త హోంవర్క్ ఇవ్వండి</h3><div class="g2"><div><label>తరగతి</label>${clsSel('hc')}</div><div><label>సబ్జెక్ట్</label><select id="hcs">${subjOpts(myCls()[0])}</select></div></div>
 <label>శీర్షిక</label><input id="ht" placeholder="ఉదా: ఎక్కాలు 2 నుండి 5 రాయండి"><label>వివరాలు (ఐచ్ఛికం)</label><textarea id="hx" rows="2"></textarea>
