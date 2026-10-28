@@ -411,6 +411,8 @@ button.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;c
 .acex{display:flex;justify-content:space-between;gap:10px;padding:10px;border-radius:12px;margin:6px 0;background:#f8fafc}.acex small{display:block;color:var(--mut);font-size:12px}.acex .r{text-align:right;flex:none}.acex.nx{background:#fef3c7;border:2px solid #f59e0b}.acex.done{opacity:.6}
 .acnbh{display:flex;align-items:center;gap:8px;margin-bottom:4px}.acnbh b{color:#1d4ed8}.acnbh span{font-weight:700;flex:1}.acnbh em{font-style:normal;background:#f59e0b;color:#fff;border-radius:8px;padding:1px 8px;font-size:12px}.acnb.nx{border:2px solid #f59e0b}.acnb.done{opacity:.6}
 .acnb .acrow b{min-width:120px;font-size:12.5px}.achl{display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;background:#f8fafc;margin:6px 0;text-decoration:none;color:var(--ink)}.achl b{font-size:18px;color:#b91c1c;min-width:110px}.achl span{flex:1;font-size:13.5px}.acsrc{margin:6px 4px 12px;font-size:12px}
+.pdfbar{height:12px;border-radius:8px;background:#e2e8f0;overflow:hidden;margin:10px 0 4px}.pdfbar i{display:block;height:100%}
+.pdfrow{display:flex;gap:8px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--line)}.pdfrow>div{flex:1;min-width:0}.pdfrow b{display:block;font-size:13.5px;word-break:break-all}.pdfrow small{color:var(--mut);font-size:12px}.pdfrow.un b{color:#b45309}
 /* అభ్యాస పత్రం */
 .wsdots{display:flex;flex-wrap:wrap;gap:5px;padding:10px 14px 0}
 .wsdots button{width:34px;height:34px;border-radius:50%;border:2px solid var(--c);background:#fff;color:var(--c);font-weight:700;font-size:13px}
@@ -532,7 +534,7 @@ function cleanT_(col, js, admin) {
 /* డేటా చదవడం (pull) */
 function doGet(e) {
   var p = (e && e.parameter) || {};
-  if (p.a === 'ping') return json_({ok:true, up:true, roster:true, qp:true});
+  if (p.a === 'ping') return json_({ok:true, up:true, roster:true, qp:true, pdfs:true});
   var w = who_(p.k);
   if (!w) return json_({ok:false, err:'key'});
   if (p.a === 'card') return card_(p, db_(), SpreadsheetApp.getActive().getName(), 'cardf_one');
@@ -566,6 +568,7 @@ function doPost(e) {
   if (!w) return json_({ok:false, err:'key'});
   if (b.a === 'up') return up_(b, w, '');
   if (b.a === 'rm') return rm_(b, w, '');
+  if (b.a === 'pdfs') return pdfs_(w, '', db_());
   var isT = w.isT, tch = false;
   var lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
@@ -602,7 +605,7 @@ function doPost(e) {
 function clean_(v, n) { return String(v == null ? '' : v).replace(/[<>]/g, '').trim().slice(0, n); }
 /* 📤 PDF అప్‌లోడ్ – యజమాని Google Drive లో “Raay_Vidyarthi_PDFs” ఫోల్డర్‌లో సేవ్ అవుతాయి.
    మొదటిసారి: పైన ఫంక్షన్ లిస్ట్‌లో driveSetup ఎంచుకుని ▶ Run → Allow చేయండి. */
-var UP_MAX_MB = 20, SCHOOL_MAX_MB = 500, UP_PER_HOUR = 40;
+var UP_MAX_MB = 20, SCHOOL_MAX_MB = 1000, UP_PER_HOUR = 40;  // ఒక పాఠశాలకు PDF స్థలం (MB) – మీ Drive ఖాళీని బట్టి పెంచుకోవచ్చు
 function driveSetup() { folder_('Raay_Vidyarthi_PDFs'); Logger.log('Drive అనుమతి సరే ✓'); }
 function folder_(name, parent) {
   var it = parent ? parent.getFoldersByName(name) : DriveApp.getFoldersByName(name);
@@ -648,7 +651,7 @@ function up_(b, a, sid) {
       name = 'answer_' + Utilities.formatDate(new Date(), 'Asia/Kolkata', 'yyyyMMdd_HHmmss') + '_' + u.slice(0, 6) + '.' + mime.split('/')[1].replace('jpeg', 'jpg');
     } else {
       if (!(bytes[0] === 37 && bytes[1] === 80 && bytes[2] === 68 && bytes[3] === 70)) return json_({ok: false, err: 'pdf'});
-      if (used_(sf) + bytes.length > SCHOOL_MAX_MB * 1048576) return json_({ok: false, err: 'quota'});
+      if (used_(sf) + bytes.length > SCHOOL_MAX_MB * 1048576) { try { cleanOrphans_(sid, db_(sid)); } catch (y) {} if (used_(sf) + bytes.length > SCHOOL_MAX_MB * 1048576) return json_({ok: false, err: 'quota'}); }
       name = clean_(b.name, 90).replace(/[\\\/:*?"|]/g, '-') || 'book.pdf';
       if (!/\.pdf$/i.test(name)) name += '.pdf';
     }
@@ -657,6 +660,28 @@ function up_(b, a, sid) {
     file.setDescription('Raay Vidyarthi ' + (sid || '') + ' – ' + (b.c || '') + 'వ తరగతి');
     return json_({ok: true, got: i, id: file.getId(), url: 'https://drive.google.com/file/d/' + file.getId() + '/view'});
   } catch (x) { return json_({ok: false, err: 'drive', msg: String(x).slice(0, 200)}); }
+}
+/* 📦 PDF స్థలం: పాఠశాల PDFల జాబితా, యాప్‌లో లేని (వృథా) ఫైళ్లు */
+function bookFids_(sh) {
+  var n = sh.getLastRow(), m = {}, out = {}; if (n < 2) return out;
+  var v = sh.getRange(2, 1, n - 1, 6).getValues();
+  for (var i = 0; i < v.length; i++) if (v[i][1] === 'notes') m[v[i][0]] = v[i][5];
+  for (var k in m) { try { var d = JSON.parse(m[k]); if (d && d.fid && !d.del) out[d.fid] = String(d.t || '1'); } catch (x) {} }
+  return out;
+}
+function pdfList_(sid, sh) {
+  var sf = upFolder_(sid), fids = bookFids_(sh), it = sf.getFiles(), L = [], tot = 0;
+  while (it.hasNext()) { var f = it.next(); if (f.isTrashed()) continue; var s = f.getSize(), id = f.getId(); tot += s; L.push({id: id, n: f.getName(), s: s, d: f.getDateCreated().getTime(), u: !!fids[id], t: fids[id] || ''}); }
+  return {L: L, tot: tot};
+}
+function pdfs_(a, sid, sh) {
+  if (!a.isT || a.admin === false) return json_({ok: false, err: 'key'});
+  try { var r = pdfList_(sid, sh); return json_({ok: true, files: r.L, used: r.tot, max: SCHOOL_MAX_MB * 1048576}); } catch (x) { return json_({ok: false, err: 'drive'}); }
+}
+function cleanOrphans_(sid, sh) {
+  var r = pdfList_(sid, sh), cut = Date.now() - 86400000, freed = 0;
+  r.L.forEach(function (f) { if (!f.u && f.d < cut) { DriveApp.getFileById(f.id).setTrashed(true); freed += f.s; } });
+  return freed;
 }
 function rm_(b, a, sid) {
   if (!a.isT) return json_({ok: false, err: 'key'});
@@ -819,7 +844,7 @@ function auth_(p) {
 /* డేటా చదవడం */
 function doGet(e) {
   var p = (e && e.parameter) || {};
-  if (p.a === 'ping') return json_({ok: true, multi: true, up: true, roster: true, qp: true});
+  if (p.a === 'ping') return json_({ok: true, multi: true, up: true, roster: true, qp: true, pdfs: true});
   if (p.a === 'join') {
     var c = CacheService.getScriptCache(), bad = Number(c.get('badjoin') || 0);
     if (bad > 300) return json_({ok: false, err: 'busy'});
@@ -858,6 +883,7 @@ function doPost(e) {
   if (a.err) return json_({ok: false, err: a.err});
   if (b.a === 'up') return up_(b, a, a.sc.id);
   if (b.a === 'rm') return rm_(b, a, a.sc.id);
+  if (b.a === 'pdfs') return pdfs_(a, a.sc.id, db_(a.sc.id));
   // ఒక్కో పాఠశాలకు వేరు తాళం – ఒక పాఠశాల పంపుతుంటే మిగతావి వేచి ఉండవు
   var unlock = slock_(a.sc.id);
   if (!unlock) return json_({ok: false, err: 'busy'});
@@ -898,7 +924,7 @@ function doPost(e) {
 
 /* 📤 PDF అప్‌లోడ్ – యజమాని Google Drive లో “Raay_Vidyarthi_PDFs” ఫోల్డర్‌లో సేవ్ అవుతాయి.
    మొదటిసారి: పైన ఫంక్షన్ లిస్ట్‌లో driveSetup ఎంచుకుని ▶ Run → Allow చేయండి. */
-var UP_MAX_MB = 20, SCHOOL_MAX_MB = 500, UP_PER_HOUR = 40;
+var UP_MAX_MB = 20, SCHOOL_MAX_MB = 1000, UP_PER_HOUR = 40;  // ఒక పాఠశాలకు PDF స్థలం (MB) – మీ Drive ఖాళీని బట్టి పెంచుకోవచ్చు
 function driveSetup() { folder_('Raay_Vidyarthi_PDFs'); Logger.log('Drive అనుమతి సరే ✓'); }
 function folder_(name, parent) {
   var it = parent ? parent.getFoldersByName(name) : DriveApp.getFoldersByName(name);
@@ -944,7 +970,7 @@ function up_(b, a, sid) {
       name = 'answer_' + Utilities.formatDate(new Date(), 'Asia/Kolkata', 'yyyyMMdd_HHmmss') + '_' + u.slice(0, 6) + '.' + mime.split('/')[1].replace('jpeg', 'jpg');
     } else {
       if (!(bytes[0] === 37 && bytes[1] === 80 && bytes[2] === 68 && bytes[3] === 70)) return json_({ok: false, err: 'pdf'});
-      if (used_(sf) + bytes.length > SCHOOL_MAX_MB * 1048576) return json_({ok: false, err: 'quota'});
+      if (used_(sf) + bytes.length > SCHOOL_MAX_MB * 1048576) { try { cleanOrphans_(sid, db_(sid)); } catch (y) {} if (used_(sf) + bytes.length > SCHOOL_MAX_MB * 1048576) return json_({ok: false, err: 'quota'}); }
       name = clean_(b.name, 90).replace(/[\\\/:*?"|]/g, '-') || 'book.pdf';
       if (!/\.pdf$/i.test(name)) name += '.pdf';
     }
@@ -953,6 +979,28 @@ function up_(b, a, sid) {
     file.setDescription('Raay Vidyarthi ' + (sid || '') + ' – ' + (b.c || '') + 'వ తరగతి');
     return json_({ok: true, got: i, id: file.getId(), url: 'https://drive.google.com/file/d/' + file.getId() + '/view'});
   } catch (x) { return json_({ok: false, err: 'drive', msg: String(x).slice(0, 200)}); }
+}
+/* 📦 PDF స్థలం: పాఠశాల PDFల జాబితా, యాప్‌లో లేని (వృథా) ఫైళ్లు */
+function bookFids_(sh) {
+  var n = sh.getLastRow(), m = {}, out = {}; if (n < 2) return out;
+  var v = sh.getRange(2, 1, n - 1, 6).getValues();
+  for (var i = 0; i < v.length; i++) if (v[i][1] === 'notes') m[v[i][0]] = v[i][5];
+  for (var k in m) { try { var d = JSON.parse(m[k]); if (d && d.fid && !d.del) out[d.fid] = String(d.t || '1'); } catch (x) {} }
+  return out;
+}
+function pdfList_(sid, sh) {
+  var sf = upFolder_(sid), fids = bookFids_(sh), it = sf.getFiles(), L = [], tot = 0;
+  while (it.hasNext()) { var f = it.next(); if (f.isTrashed()) continue; var s = f.getSize(), id = f.getId(); tot += s; L.push({id: id, n: f.getName(), s: s, d: f.getDateCreated().getTime(), u: !!fids[id], t: fids[id] || ''}); }
+  return {L: L, tot: tot};
+}
+function pdfs_(a, sid, sh) {
+  if (!a.isT || a.admin === false) return json_({ok: false, err: 'key'});
+  try { var r = pdfList_(sid, sh); return json_({ok: true, files: r.L, used: r.tot, max: SCHOOL_MAX_MB * 1048576}); } catch (x) { return json_({ok: false, err: 'drive'}); }
+}
+function cleanOrphans_(sid, sh) {
+  var r = pdfList_(sid, sh), cut = Date.now() - 86400000, freed = 0;
+  r.L.forEach(function (f) { if (!f.u && f.d < cut) { DriveApp.getFileById(f.id).setTrashed(true); freed += f.s; } });
+  return freed;
 }
 function rm_(b, a, sid) {
   if (!a.isT) return json_({ok: false, err: 'key'});
@@ -2205,7 +2253,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.10.28-3';
+const APPV='2026.10.28-4';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3695,7 +3743,7 @@ TP.lb=()=>{const bk=live('notes').filter(n=>n.kind==='book'&&canSee(n.c,n.s)),tl
 <div class="g2"><div><label>తరగతి</label>${clsSel('bkc')}</div><div><label>సబ్జెక్ట్</label><select id="bkcs">${subjOpts(myCls()[0])}</select></div></div>
 <label>పుస్తకం పేరు</label><input id="bkt" placeholder="ఉదా: తెలుగు వర్క్‌బుక్ – సెమిస్టర్ 1">
 <div class="upbox"><label class="upbtn">📤 PDF ఫైల్ ఎంచుకో<input type="file" id="bkf" accept="application/pdf,.pdf" hidden onchange="bkFile(this)"></label><small id="bkfn" class="mut">ఫైల్ ఎంచుకోలేదు</small></div>
-<div id="bkp" class="upprog" hidden><i></i><span></span></div>
+<div id="bkp" class="upprog" hidden><i></i><span></span></div>${S.cfg.type==='gs'&&isAdmin()?`<button class="btn ghost sm" style="margin-top:8px" onclick="pdfMgr()">📦 PDF స్థలం – ఎంత వాడాం / తొలగించు</button><div id="pdfm"></div>`:''}
 ${S.cfg.type==='gs'?'':'<p class="mut" style="margin:6px 0 0">⚠️ PDF అప్‌లోడ్‌కు ఆన్‌లైన్ సింక్ (Google Sheets) ఆన్ చేయాలి. అప్పటివరకు Drive లింక్ వాడండి.</p>'}
 <div class="orline">— లేదా —</div>
 <label>Google Drive లింక్</label><input id="bku" placeholder="https://drive.google.com/file/d/.../view"><button class="btn" id="bkbtn" onclick="addLib('book')">➕ పుస్తకం జోడించు</button>
@@ -3837,7 +3885,7 @@ const UPMAX=20*1048576,UPCH=2000000;let UPBUSY=false;
 function bkFile(inp){const f=inp.files&&inp.files[0];const n=document.getElementById('bkfn');if(!f){if(n)n.textContent='ఫైల్ ఎంచుకోలేదు';return;}
  if(n)n.innerHTML=`📄 <b>${esc(f.name)}</b> • ${mb(f.size)}${f.size>UPMAX?' <span style="color:#dc2626">(20 MB కంటే పెద్దది)</span>':''}`;const t=document.getElementById('bkt');if(t&&!t.value.trim())t.value=prettyName(f.name);}
 function upProg(p,msg){const b=document.getElementById('bkp');if(!b)return;b.hidden=false;const i=b.querySelector('i'),s=b.querySelector('span');if(p>=0)i.style.width=p+'%';i.style.background=p<0?'#fca5a5':'';s.textContent=msg;}
-function upErr(e){return {key:'అనుమతి లేదు – మీ తరగతికి మాత్రమే అప్‌లోడ్ చేయగలరు',big:'ఫైల్ 20 MB కంటే పెద్దది – Compress చేయండి',pdf:'ఇది PDF ఫైల్ కాదు',quota:'పాఠశాల PDF స్థలం (500 MB) నిండింది – పాత పుస్తకాలు తొలగించండి',busy:'ఈ గంటలో అప్‌లోడ్ పరిమితి దాటింది – కాసేపాగి ప్రయత్నించండి',drive:'సర్వర్‌కు Google Drive అనుమతి లేదు – యజమాని Apps Script లో driveSetup ▶ Run చేయాలి',part:'అప్‌లోడ్ మధ్యలో తెగింది – మళ్ళీ ప్రయత్నించండి',bad:'అప్‌లోడ్ అభ్యర్థన తప్పు – మళ్ళీ ప్రయత్నించండి'}[e]||gsErr(e);}
+function upErr(e){return {key:'అనుమతి లేదు – మీ తరగతికి మాత్రమే అప్‌లోడ్ చేయగలరు',big:'ఫైల్ 20 MB కంటే పెద్దది – Compress చేయండి',pdf:'ఇది PDF ఫైల్ కాదు',quota:'పాఠశాల PDF స్థలం నిండింది – కింద “📦 PDF స్థలం” లో వాడని / పాత PDFలు తొలగించండి, లేదా Google Drive లింక్ వాడండి',busy:'ఈ గంటలో అప్‌లోడ్ పరిమితి దాటింది – కాసేపాగి ప్రయత్నించండి',drive:'సర్వర్‌కు Google Drive అనుమతి లేదు – యజమాని Apps Script లో driveSetup ▶ Run చేయాలి',part:'అప్‌లోడ్ మధ్యలో తెగింది – మళ్ళీ ప్రయత్నించండి',bad:'అప్‌లోడ్ అభ్యర్థన తప్పు – మళ్ళీ ప్రయత్నించండి'}[e]||gsErr(e);}
 function b64File(f){return new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>{const s=String(r.result);ok(s.slice(s.indexOf(',')+1));};r.onerror=()=>no(new Error('ఫైల్ చదవలేకపోయాం'));r.readAsDataURL(f);});}
 const UPOLD='సర్వర్ కోడ్ పాతది – పబ్లిక్ సర్వర్ కోడ్ మార్చి New version Deploy చేయాలి';
 async function upPdf(f,c,prog){prog(1,'ఫైల్ సిద్ధం చేస్తోంది...');const data=await b64File(f);const n=Math.ceil(data.length/UPCH),u=uid();let j=null;
@@ -3857,6 +3905,25 @@ async function upBook(){const fi=document.getElementById('bkf'),f=fi&&fi.files&&
  try{const url=await upPdf(f,c,upProg);put('notes',{id:uid(),kind:'book',c,s,t,url,fid:driveId(url),up:1,x:''});toast('PDF అప్‌లోడ్ అయింది ✓ పిల్లలకు కనిపిస్తుంది');go('teacher',{t:'lb'});}
  catch(e){upProg(-1,'❌ '+e.message);toast(e.message);}
  finally{UPBUSY=false;const b2=document.getElementById('bkbtn');if(b2){b2.disabled=false;b2.textContent='➕ పుస్తకం జోడించు';}}}
+
+/* ---------- 📦 PDF స్థలం నిర్వహణ (ప్రధానోపాధ్యాయులు) ---------- */
+let PDFL=null;
+async function pdfMgr(){const box=document.getElementById('pdfm');if(!box)return;box.innerHTML='<p class="mut">⏳ Drive లో చూస్తోంది...</p>';
+ try{const j=await (await fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'pdfs',s:S.cfg.sid,k:GS.key(),dev:S.dev})})).json();
+  if(!j.ok)throw new Error(j.err==='key'?'ప్రధానోపాధ్యాయుల (మాస్టర్) కీతో మాత్రమే':j.err==='drive'?'సర్వర్‌కు Google Drive అనుమతి లేదు':UPOLD);PDFL=j;pdfDraw();}
+ catch(e){box.innerHTML=`<p class="ansErr">❌ ${esc(/Unexpected|JSON|undefined|fetch/.test(e.message)?UPOLD:e.message)}</p>`;}}
+function pdfDraw(){const box=document.getElementById('pdfm'),j=PDFL;if(!box||!j)return;const fs=j.files.slice().sort((a,b)=>(a.u-b.u)||(b.s-a.s)),un=fs.filter(f=>!f.u),pc=Math.min(100,Math.round(j.used*100/j.max));
+ const seen={};fs.forEach(f=>{const k=f.n+'|'+f.s;seen[k]=(seen[k]||0)+1;});
+ box.innerHTML=`<div class="pdfbar"><i style="width:${pc}%;background:${pc>=90?'#e5484d':pc>=70?'#f59e0b':'#16a34a'}"></i></div><p><b>${mb(j.used)||'0 MB'}</b> / ${mb(j.max)} వాడారు (${pc}%) • ${fs.length} PDFలు</p>
+${un.length?`<p class="warn" style="margin:6px 0">⚠️ ${un.length} PDFలు (${mb(un.reduce((a,f)=>a+f.s,0))}) యాప్‌లో ఏ పుస్తకానికీ లేవు – వృథా స్థలం.</p><button class="btn sm red" onclick="pdfDelAll()">🧹 వాడనివి అన్నీ తొలగించు</button>`:'<p class="szok">✅ వృథా PDFలు లేవు</p>'}
+${fs.map(f=>`<div class="pdfrow ${f.u?'':'un'}"><div><b>${esc(f.n)}</b><small>${mb(f.s)} • ${fmtD(new Date(f.d).toISOString())} • ${f.u?'📘 '+esc(f.t):'⚠️ యాప్‌లో లేదు'}${seen[f.n+'|'+f.s]>1?' • 🔁 రెండుసార్లు అప్‌లోడ్':''}</small></div><button class="ib" title="తొలగించు" onclick="pdfDel('${f.id}')">🗑️</button></div>`).join('')}
+<p class="mut" style="margin-top:6px">తొలగించిన PDFలు Drive “Trash” కి వెళ్తాయి. పుస్తకంగా ఉన్న PDF తొలగిస్తే ఆ పుస్తకం యాప్ నుండి కూడా పోతుంది.</p>`;}
+async function pdfRm(fid){const j=await (await fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'rm',s:S.cfg.sid,k:GS.key(),dev:S.dev,fid})})).json();if(!j.ok)throw new Error('తొలగించలేకపోయాం');
+ live('notes').filter(n=>n.kind==='book'&&n.fid===fid).forEach(n=>remove('notes',n.id));PDFL.files=PDFL.files.filter(f=>f.id!==fid);PDFL.used=PDFL.files.reduce((a,f)=>a+f.s,0);}
+async function pdfDel(fid){const f=PDFL&&PDFL.files.find(x=>x.id===fid);if(!f)return;if(!confirm((f.u?'ఈ PDF “'+f.t+'” పుస్తకంగా పిల్లలకు కనిపిస్తోంది. ':'')+'తొలగించాలా?\n'+f.n))return;
+ try{await pdfRm(fid);toast('🗑️ తొలగించాం');pdfDraw();}catch(e){toast('❌ '+e.message);}}
+async function pdfDelAll(){const un=(PDFL&&PDFL.files||[]).filter(f=>!f.u);if(!un.length||!confirm(un.length+' వాడని PDFలు తొలగించాలా?'))return;let k=0;
+ for(const f of un){try{await pdfRm(f.id);k++;}catch(e){}}toast(`🧹 ${k} PDFలు తొలగించాం`);pdfDraw();}
 function delBook(id){if(!confirm('తొలగించాలా?'))return;const n=live('notes').find(x=>x.id===id);
  if(n&&n.up&&n.fid&&S.cfg.type==='gs')fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'rm',s:S.cfg.sid,k:GS.key(),dev:S.dev,fid:n.fid})}).catch(()=>{});
  remove('notes',id);go('teacher',{t:'lb'});}
