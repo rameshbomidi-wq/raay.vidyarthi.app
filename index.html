@@ -479,6 +479,49 @@ button.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;c
 .wsdr .wc{width:36px;height:40px;font-size:24px}.wsdr .wc.pp{width:52px}
 .wsdr em{font-style:normal;font-size:12.5px;border-radius:8px;padding:2px 7px}.wsdr em.ys{background:#dcfce7;color:#166534}.wsdr em.no{background:#fef3c7;color:#92400e}
 .wsdr.sk{opacity:.75}
+/* 🐘 నేస్తం */
+.budov{position:fixed;inset:0;z-index:95;display:grid;place-items:center;background:rgba(6,58,91,.55);backdrop-filter:blur(2px);animation:budFade .3s ease;overflow:hidden}
+.budov.bye{animation:budFadeOut .4s ease forwards}
+.budbox{position:relative;width:min(340px,88vw);text-align:center}
+.budch{position:relative;z-index:2;width:150px;height:150px;margin:0 auto -22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--bc));display:grid;place-items:center;box-shadow:0 12px 30px rgba(0,0,0,.3),inset 0 -6px 0 rgba(0,0,0,.08)}
+.bude{font-size:92px;line-height:1;display:inline-block;animation:budIdle 1.6s ease-in-out 1.1s infinite}
+.budacc{position:absolute;right:-6px;top:4px;font-size:40px;animation:budFloat 2s ease-in-out infinite}
+.budwave{position:absolute;left:-10px;bottom:18px;font-size:42px;transform-origin:70% 90%;animation:budWave .9s ease-in-out 1s 4}
+.budbub{position:relative;background:#fff;border-radius:24px;padding:30px 18px 14px;box-shadow:0 18px 40px rgba(0,0,0,.25);animation:budBub .5s cubic-bezier(.3,1.5,.5,1) .55s both}
+.budbub small{display:block;color:#64748b;font-size:13px}.budbub b{display:block;font-size:26px;color:#0b5e73;margin:2px 0}
+.budbub p{font-size:16.5px;line-height:1.55;margin:6px 0;color:#1f2937}.budbub em{display:block;font-style:normal;background:#fff7ed;color:#c2410c;border-radius:12px;padding:5px;margin:6px 0;font-size:14px}
+.budme{display:block;font-size:12.5px;color:#7c3aed;margin-top:4px}
+.budbtns{display:flex;gap:8px;margin-top:10px}.budbtns button{flex:1;border:0;border-radius:14px;padding:10px;font-weight:700;background:#e0f2fe;color:#075985;font-size:14px}.budbtns button:last-child{background:#0b5e73;color:#fff}
+.budconf i{position:absolute;top:-20px;width:10px;height:16px;border-radius:3px;animation:budConf 2.6s linear forwards}
+.a-bounce .budch{animation:budBounce 1s cubic-bezier(.3,1.6,.5,1)}
+.a-spin .budch{animation:budSpin 1s ease-out}
+.a-fly .budch{animation:budFly 1.1s cubic-bezier(.2,1.2,.4,1)}
+.a-pop .budch{animation:budPop .8s cubic-bezier(.3,1.8,.5,1)}
+.a-swing .budch{transform-origin:50% -120px;animation:budSwing 1.4s ease-out}
+.a-jump .budch{animation:budJump 1.3s ease-out}
+@keyframes budFade{from{opacity:0}}@keyframes budFadeOut{to{opacity:0;transform:scale(1.05)}}
+@keyframes budBounce{0%{transform:translateY(-110vh)}60%{transform:translateY(20px)}80%{transform:translateY(-12px)}100%{transform:none}}
+@keyframes budSpin{0%{transform:scale(0) rotate(-720deg)}100%{transform:none}}
+@keyframes budFly{0%{transform:translateX(-120vw) rotate(-30deg)}70%{transform:translateX(20px) rotate(8deg)}100%{transform:none}}
+@keyframes budPop{0%{transform:scale(0)}60%{transform:scale(1.25)}100%{transform:none}}
+@keyframes budSwing{0%{transform:rotate(70deg) translateY(-60vh)}40%{transform:rotate(-25deg)}65%{transform:rotate(12deg)}85%{transform:rotate(-5deg)}100%{transform:none}}
+@keyframes budJump{0%{transform:translateY(60vh) scale(.6)}35%{transform:translateY(-60px)}55%{transform:translateY(0) scale(1.1,.9)}70%{transform:translateY(-30px)}85%{transform:translateY(0) scale(1.05,.95)}100%{transform:none}}
+@keyframes budIdle{0%,100%{transform:rotate(0)}25%{transform:rotate(-6deg) translateY(-3px)}75%{transform:rotate(6deg) translateY(-3px)}}
+@keyframes budFloat{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-10px) rotate(8deg)}}
+@keyframes budWave{0%,100%{transform:rotate(0)}50%{transform:rotate(30deg)}}
+@keyframes budBub{0%{opacity:0;transform:scale(.6) translateY(20px)}100%{opacity:1;transform:none}}
+@keyframes budConf{to{top:110%;transform:rotate(540deg) translateX(40px)}}
+#budHelp{position:fixed;left:max(8px,calc(50vw - 250px));flex-direction:row-reverse;bottom:calc(84px + env(safe-area-inset-bottom));z-index:60;display:flex;align-items:flex-end;gap:4px;max-width:min(330px,82vw);animation:bhIn .7s cubic-bezier(.3,1.5,.5,1)}
+#budHelp.out{animation:bhOut .65s ease-in forwards}
+.bh-ch{font-size:58px;line-height:1;cursor:pointer;filter:drop-shadow(0 6px 8px rgba(0,0,0,.25));animation:bhHop 1.1s ease-in-out infinite}
+.bh-bub{background:#fff;border:2.5px solid var(--bc);border-radius:18px 18px 18px 4px;padding:10px 12px;box-shadow:0 10px 26px rgba(0,0,0,.22)}
+.bh-bub b{display:block;color:#0b5e73;font-size:15px}.bh-bub p{margin:4px 0 8px;font-size:14px;line-height:1.5;color:#1f2937}
+.bh-btns{display:flex;gap:6px}.bh-btns button{border:0;border-radius:12px;padding:7px 10px;font-weight:700;font-size:13px;background:#f1f5f9;color:#334155}.bh-btns .go{background:#0b5e73;color:#fff;flex:1}
+@keyframes bhIn{0%{transform:translateX(-130%)}70%{transform:translateX(12px)}100%{transform:none}}
+@keyframes bhOut{0%{transform:none}30%{transform:translateY(-14px)}100%{transform:translateX(-140%) rotate(-15deg);opacity:0}}
+@keyframes bhHop{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px) rotate(-5deg)}}
+@media(prefers-reduced-motion:reduce){.budov *,#budHelp,#budHelp *{animation-duration:.01s!important;animation-iteration-count:1!important}}
+.tcsch{display:inline-block;background:linear-gradient(90deg,#0b5e73,#0e7490);color:#fff;font-weight:800;border-radius:12px;padding:6px 12px;margin:2px 0 8px;letter-spacing:.3px}.tcsch small{opacity:.8;font-weight:600;margin-left:6px}
 </style>
 </head>
 <body>
@@ -2252,6 +2295,7 @@ function slDownload(){const cv=document.getElementById('slCv');if(!cv||!cv.width
  x.drawImage(cv,0,0);const a=document.createElement('a');a.download='Raay_Palaka_'+SL.sec+'_page'+(SL.page+1)+'.png';a.href=o.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();toast('చిత్రం సేవ్ అయింది ⬇');}
 function render(){render0();slSync();}
 function render0(){const app=$('#app');
+ try{budHook();}catch(e){}
  if(view==='teacher'){app.innerHTML='<main>'+V.teacher()+'</main>'+footer();return;}
  if(view==='privacy'&&!S.cur){app.innerHTML='<main>'+V.privacy()+'</main>'+footer();return;}
  if(view==='welcome'||(!S.cur&&!S.cfg.type&&!S.offline)){app.innerHTML=V.welcome()+footer();return;}
@@ -2262,7 +2306,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.01-3';
+const APPV='2026.11.01-4';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -2302,8 +2346,8 @@ V.privacy=()=>`<div class="bar"><button class="ib" onclick="history.length>1&&vi
 V.welcome=()=>{const w=param.w||'';const ps=pubServer();const back=`<button class="link" onclick="go('welcome')">← వెనుకకు</button>`;
  if(w==='t'){if(!ps)return `<div class="wel"><div class="logo">⏳</div><h1>సర్వర్ లోడ్ అవుతోంది...</h1><p>ఇంటర్నెట్ ఆన్‌లో ఉందో చూసి, కాసేపటి తర్వాత మళ్ళీ ప్రయత్నించండి.</p>${back}</div>`;
   return `<div class="wel"><div class="logo">🏫</div><h1>పాఠశాల వివరాలు</h1><p>ఒక్కసారి నమోదు చేస్తే చాలు</p><div class="card" style="text-align:left">
-<label>పాఠశాల పేరు *</label><input id="rgn" maxlength="80" placeholder="ఉదా: ZPHS TV palli ">
-<label>మండలం, జిల్లా *</label><input id="rgp" maxlength="80" placeholder="ఉదా: గూడూరు, తిరుపతి">
+<label>పాఠశాల పేరు *</label><input id="rgn" maxlength="80" placeholder="ఉదా: ZPHS TV పల్లి">
+<label>మండలం, జిల్లా *</label><input id="rgp" maxlength="80" placeholder="ఉదా: గూడూరు, SPSR నెల్లూరు">
 <label>ఉపాధ్యాయుల పేరు *</label><input id="rgt" maxlength="60">
 <div class="g2"><div><label>ఫోన్ (ఐచ్ఛికం)</label><input id="rgph" inputmode="tel" maxlength="15"></div><div><label>ఈ ఫోన్ PIN (4 అంకెలు) *</label><input id="rgpin" inputmode="numeric" maxlength="8" type="password"></div></div>
 <label style="display:flex;gap:10px;align-items:flex-start;font-weight:500"><input type="checkbox" id="rgok" style="width:22px;height:22px;flex:none;margin-top:2px"><span>తల్లిదండ్రులకు తెలియజేసి, వారి అనుమతితో మాత్రమే పిల్లల పేర్లు నమోదు చేయిస్తాను. <a onclick="go('privacy')">గోప్యత & నిబంధనలు</a> చదివాను.</span></label>
@@ -2379,11 +2423,79 @@ ${S.cfg.type?'':`<button class="li" onclick="go('welcome',{w:'s'})">🏫 పా�
 <button class="li" onclick="go('teacher')">👩‍🏫 ఉపాధ్యాయుల ప్యానెల్</button>
 <button class="li" onclick="go('badges')">🏅 నా బ్యాడ్జీలు <span>${badgeCount()}</span></button>
 <button class="li" onclick="go('avatar')">${avOf(S.cur.n)} నా బొమ్మ మార్చు</button>
+<button class="li" onclick="toggleBud()">${S.budOff?'🙈':BUD[Math.max(0,BUDY.idx)].e} సహాయ నేస్తం <span>${S.budOff?'ఆఫ్':'ఆన్'}</span></button>
+<button class="li" onclick="budGreetAgain()">🎉 మళ్ళీ పలకరించు</button>
 <button class="li" onclick="toggleSound()">${S.sound===false?'🔇':'🔊'} శబ్దాలు <span>${S.sound===false?'ఆఫ్':'ఆన్'}</span></button>
 <button class="li" onclick="go('privacy')">🔒 గోప్యత & నిబంధనలు</button></div>`;
 V.cls=()=>`<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>తరగతి ఎంచుకో</h2></div><div class="card"><div class="clsrow">${CLASSES.map(c=>`<button class="cb ${S.cur.c===c?'on':''}" onclick="setCls(${c})">${c}</button>`).join('')}</div></div>`;
 function setCls(c){S.cur.c=c;const ex=S.local.find(s=>s.n===me());if(ex)ex.c=c;put('students',{id:sid(me())+'@'+S.dev.slice(0,8),n:me(),c});go('learn');toast(c+'వ తరగతి ఎంచుకున్నావు');}
 
+/* ================= 🐘 నేస్తం: పేరుతో సరదా పలకరింపు + అప్పుడప్పుడు సహాయ సలహా ================= */
+const BUD=[
+ {e:'🐘',n:'గజ్జూ ఏనుగు',c:'#c7d2fe',a:'🎈',l:'{n}, నా జ్ఞాపకశక్తి ఏనుగంత! నువ్వు నేర్చుకున్నది నేను మర్చిపోను 😄'},
+ {e:'🦁',n:'సింహం సిద్ధూ',c:'#fde68a',a:'👑',l:'గర్ర్ర్! {n}, ఈరోజు చదువులో నువ్వే రాజు 👑'},
+ {e:'🐒',n:'కోతి కిట్టు',c:'#fed7aa',a:'🍌',l:'{n}, నేను కొమ్మల మీద దూకుతా, నువ్వు పాఠాల మీద దూకు! 🍌'},
+ {e:'🦜',n:'చిలుక చిట్టి',c:'#bbf7d0',a:'🌶️',l:'చిలుక పలుకులు కాదు {n}, అర్థం చేసుకుని చదువు – నేను చెబుతున్నా! 🦜'},
+ {e:'🐼',n:'పాండా పండు',c:'#e5e7eb',a:'🎋',l:'{n}, నేను వెదురు తింటా, నువ్వు పుస్తకాలు తిను – అర్థాలతో సహా! 😋'},
+ {e:'🤖',n:'రోబో రాజు',c:'#bae6fd',a:'⚙️',l:'బీప్ బూప్! {n} ని గుర్తించాను ✅ చదువు మోడ్ ఆన్ అయింది!'},
+ {e:'🦉',n:'గుడ్లగూబ గురువు',c:'#ddd6fe',a:'📚',l:'{n}, నేను రాత్రంతా మేల్కొంటా – నువ్వు మాత్రం టైంకి నిద్రపో! 😴'},
+ {e:'🐢',n:'తాబేలు తాతయ్య',c:'#a7f3d0',a:'🏁',l:'నేను నెమ్మదిగా వచ్చా {n}, కానీ రోజూ కొంచెం చదివితే రేసు మనదే! 🏁'},
+ {e:'🐸',n:'కప్ప కన్నయ్య',c:'#d9f99d',a:'☔',l:'బెక బెక! {n}, ఈరోజు ఒక్క కొత్త పదం నేర్చుకుందాం 🐸'},
+ {e:'🐶',n:'కుక్కపిల్ల బుజ్జి',c:'#fecaca',a:'🦴',l:'{n} వచ్చేశారు! నా తోక ఆనందంతో ఊగిపోతోంది 🐾'},
+ {e:'🐰',n:'కుందేలు చింటూ',c:'#fbcfe8',a:'🥕',l:'{n}, కుందేలు లాగా గెంతుతూ పాఠాల్లోకి వెళ్దాం! 🥕'},
+ {e:'🐯',n:'పులి పుల్లయ్య',c:'#fdba74',a:'⚽',l:'{n}, పులి లాగా ధైర్యంగా – ఏ లెక్కకూ భయపడకు! 💪'}];
+const BUD_LINES=['హాయ్ {n}! ఈరోజు నీ మెదడు ఫుల్ ఛార్జ్ – 100% 🔋','{n} వచ్చేశారు! పుస్తకాలు సంతోషంతో పేజీలు తిప్పుకుంటున్నాయి 📚','అబ్బో {n}! నిన్ను చూసి లెక్కలు కూడా నవ్వుతున్నాయి ➕😄',
+ '{n}, ఈరోజు నువ్వే స్టార్ ⭐ – నేను నీ ఫ్యాన్!','నమస్తే {n}! నేను ఎప్పటి నుండో నీ కోసమే వెయిట్ చేస్తున్నా ⏰','{n}, చదువుదాం, ఆడుదాం, నవ్వుదాం – మూడూ మనవే! 🎉',
+ 'హాయ్ {n}! ఈరోజు ఒక్క కొత్త విషయం నేర్చుకుంటే చాలు, నేను డాన్స్ చేస్తా 💃','{n}, తప్పులకు భయపడకు – అవే మన టీచర్లు! 😉'];
+const BUD_ANI=['bounce','spin','fly','pop','swing','jump'];
+const BUDY={greeted:'',lastTip:Date.now(),tips:0,vSince:Date.now(),lastView:'',timer:null,lastId:'',idx:-1};
+function budPick(){if(BUDY.idx<0){let i=-1;try{i=+(localStorage.getItem('raiBudI')||-1);}catch(e){}BUDY.idx=(i+1)%BUD.length;try{localStorage.setItem('raiBudI',BUDY.idx);}catch(e){}}return BUD[BUDY.idx];}
+function budName(){return String((S.cur&&S.cur.n)||'').trim();}
+function budHook(){if(['testrun','gamerun','wsrun','book','teacher'].includes(view))budAway();if(view!==BUDY.lastView){BUDY.lastView=view;BUDY.vSince=Date.now();}
+ if(!S.cur||view==='teacher'||view==='welcome'||view==='privacy')return;
+ if(BUDY.greeted!==S.cur.n&&view==='home'){BUDY.greeted=S.cur.n;setTimeout(budGreet,350);}
+ if(!BUDY.timer)BUDY.timer=setInterval(budTick,10000);}
+function budGreet(){if(document.getElementById('budOv')||!S.cur)return;const b=budPick(),nm=esc(budName()),g=greet(),sk=streak(),ani=BUD_ANI[(BUDY.idx*5+new Date().getDate())%BUD_ANI.length];
+ const line=(Math.random()<.5?b.l:BUD_LINES[Math.floor(Math.random()*BUD_LINES.length)]).replace('{n}',nm);
+ const conf=Array.from({length:16},(_,i)=>`<i style="left:${Math.round(Math.random()*100)}%;background:${['#f43f5e','#f59e0b','#22c55e','#3b82f6','#a855f7','#06b6d4'][i%6]};animation-delay:${(Math.random()*.8).toFixed(2)}s;transform:rotate(${Math.round(Math.random()*90)}deg)"></i>`).join('');
+ const o=document.createElement('div');o.id='budOv';o.className='budov a-'+ani;o.onclick=budClose;
+ o.innerHTML=`<div class="budconf">${conf}</div><div class="budbox"><div class="budch" style="--bc:${b.c}"><span class="bude">${b.e}</span><span class="budacc">${b.a}</span><span class="budwave">👋</span></div>
+<div class="budbub"><small>${g[0]} ${g[1]}</small><b>హాయ్ ${nm}!</b><p>${line}</p>${sk>1?`<em>🔥 వరుసగా ${sk} రోజులు వచ్చావు – సూపర్!</em>`:''}<span class="budme">— నీ నేస్తం ${b.n}</span>
+<div class="budbtns"><button onclick="event.stopPropagation();speak(this.closest('.budbub').querySelector('p').textContent)">🔊 విను</button><button onclick="event.stopPropagation();budClose()">మొదలుపెడదాం ▶</button></div></div></div>`;
+ document.body.appendChild(o);clearTimeout(BUDY.gt);BUDY.gt=setTimeout(budClose,6500);try{beep('win');}catch(e){}}
+function budClose(){const o=document.getElementById('budOv');if(!o)return;clearTimeout(BUDY.gt);o.classList.add('bye');setTimeout(()=>o.remove(),400);}
+/* ---- సహాయ సలహాలు (సందర్భానికి తగ్గట్టు) ---- */
+function budTips(){const c=S.cur.c,out=[],h=new Date().getHours(),add=(id,t,lbl,fn,w)=>out.push({id,t,lbl,fn,w:w||1});
+ const nm=budName();
+ if(h>=21||h<5)add('night',`బాగా రాత్రయింది ${nm} 🌙 ఇక నిద్రపో – మెదడుకు నిద్ర కూడా చదువే!`,'',null,6);
+ const np=live('papers').filter(p=>p.on&&+p.c===+c&&!qpMine(p.id)).length;if(np)add('paper',`టీచర్ కొత్త టెస్ట్ ఇచ్చారు! 📝 ఒక్కసారే రాయాలి – ఇప్పుడే రాసేద్దామా?`,'టెస్ట్ రాయి ▶',"go('test')",view==='home'||view==='test'?5:3);
+ const ph=pendingHw();if(ph.length)add('hw',`${nm}, నీకు ${ph.length} హోంవర్క్ పెండింగ్‌లో ఉంది. ఒక్కటి ఇప్పుడే పూర్తి చేసేద్దాం! ✍️`,'హోంవర్క్ చూడు ▶',"go('homework')",view==='home'||view==='homework'?4:2);
+ if(typeof wsTodayRec==='function'&&!wsTodayRec())add('ws','నేటి లెక్కలు ఇంకా చేయలేదు – 5 నిమిషాల్లో అయిపోతాయి ⏱️ ర్యాంక్ కూడా వస్తుంది!','నేటి లెక్కలు ▶',"go('test')",view==='test'||view==='home'?3:1);
+ const st=stats(),weak=Object.entries(st.by).filter(([,p])=>p!=null&&p<60).sort((a,b)=>a[1]-b[1])[0];
+ if(weak)add('weak',`${SUBJ[weak[0]].n} లో నీ సగటు ${weak[1]}%. ఒక టెస్ట్ రాస్తే పెరుగుతుంది – నేను నీ వెంటే! 📈`,SUBJ[weak[0]].n+' టెస్ట్ ▶',`startTest('${weak[0]}')`,view==='test'?4:2);
+ const ur=subjectsFor(c).map(s=>[s,readPct(s)]).filter(([,p])=>p<100).sort((a,b)=>a[1]-b[1])[0];
+ if(ur)add('read',`${SUBJ[ur[0]].n} లో ఇంకా చదవని పాఠాలు ఉన్నాయి. ఒక్కటి చదువుదామా? 📖`,'పాఠాలు ▶',"go('learn')",view==='learn'||view==='subject'?4:1);
+ const ev=upcoming(3).find(e=>diffDays(e.d,todayS())<=2);if(ev){const w=ev.d===todayS()?'ఈరోజే':ev.d===addDays(todayS(),1)?'రేపే':'ఎల్లుండి';add('ev',`“${ev.t}” ${w}! మర్చిపోకు 📅`,'వివరాలు ▶',`go('evd',{id:'${ev.id}'})`,view==='home'||view==='schedule'?3:1);}
+ add('doubt','ఏదైనా అర్థం కాలేదా? 🤔 టీచర్‌ని అడుగు – పుస్తకం ఫోటో తీసి కూడా పంపవచ్చు!','సందేహం అడుగు ▶',"go('doubts')",view==='learn'||view==='subject'||view==='homework'?2:1);
+ add('slate','లెక్కలకు రఫ్ వర్క్ కావాలా? పక్కన ఉన్న ✏️ పలక వాడుకో – కాగితం అవసరం లేదు!','',null,view==='homework'||view==='test'?1:0.5);
+ if(view==='games')add('eyes','ఆట బాగుంది! కానీ 20 నిమిషాలకు ఒకసారి దూరంగా చూసి కళ్లకు విశ్రాంతి ఇవ్వు 👀','',null,3);
+ add('water','నీళ్లు తాగావా? 💧 చిన్న విరామం తీసుకుని మళ్ళీ మొదలుపెడదాం!','',null,0.7);
+ if(view==='result'){const r=live('results').find(x=>x.id===param.id);if(r&&r.s*100/r.t<50)add('retry','పర్వాలేదు! తప్పులు ఒకసారి చూసి మళ్ళీ ప్రయత్నించు – ప్రతి తప్పూ ఒక పాఠం 💪','',null,6);else if(r)add('great','అదిరింది! 🎉 ఈ సంతోషంలో ఇంకో సబ్జెక్టు ట్రై చేద్దామా?','టెస్టులు ▶',"go('test')",4);}
+ return out.filter(x=>x.w>0&&x.id!==BUDY.lastId);}
+function budTick(){if(document.hidden||S.budOff||!S.cur)return;const now=Date.now();
+ if(['teacher','welcome','privacy','testrun','gamerun','wsrun','book','login'].includes(view)||(typeof SL!=='undefined'&&SL.open))return;
+ if(document.getElementById('budOv')||document.getElementById('budHelp')||document.getElementById('zoom'))return;
+ const ae=document.activeElement;if(ae&&/^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName))return;
+ if(BUDY.tips>=4||now-BUDY.lastTip<(BUDY.tips?150000:45000)||now-BUDY.vSince<20000||Math.random()>.4)return;
+ const T=budTips();if(!T.length)return;let r=Math.random()*T.reduce((a,x)=>a+x.w,0),t=T[0];for(const x of T){r-=x.w;if(r<=0){t=x;break;}}budShow(t);}
+function budShow(t){const b=budPick();BUDY.lastTip=Date.now();BUDY.tips++;BUDY.lastId=t.id;BUDY.act=t.fn;
+ const h=document.createElement('div');h.id='budHelp';h.style.setProperty('--bc',b.c);
+ h.innerHTML=`<div class="bh-bub"><b>సహాయం కావాలా? 🤗</b><p>${esc(t.t)}</p><div class="bh-btns">${t.fn?`<button class="go" onclick="budAct()">${esc(t.lbl)}</button>`:''}<button onclick="budAway()">${t.fn?'తర్వాత':'సరే 👍'}</button></div></div><div class="bh-ch" onclick="budAway()">${b.e}</div>`;
+ document.body.appendChild(h);clearTimeout(BUDY.ht);BUDY.ht=setTimeout(budAway,13000);try{beep('ok');}catch(e){}}
+function budAct(){const f=BUDY.act;budAway();if(f)setTimeout(()=>{try{(new Function(f))();}catch(e){}},250);}
+function budAway(){const h=document.getElementById('budHelp');if(!h)return;clearTimeout(BUDY.ht);h.classList.add('out');setTimeout(()=>h.remove(),650);}
+function budGreetAgain(){BUDY.idx=-1;go('home');setTimeout(budGreet,400);}
+function toggleBud(){S.budOff=!S.budOff;save();if(S.budOff)budAway();toast(S.budOff?'🙈 నేస్తం విశ్రాంతి తీసుకుంటోంది':'🐘 నేస్తం మళ్ళీ వచ్చేశాడు!');render();if(!S.budOff){BUDY.lastTip=0;BUDY.vSince=0;setTimeout(()=>budShow({id:'hi',t:'హాయ్! నేను అప్పుడప్పుడు వచ్చి సలహాలు ఇస్తా. వద్దనుకుంటే మెనూలో ఆఫ్ చేయి 😊',lbl:'',fn:null}),400);}}
 /* ---------- హోమ్ ---------- */
 function tile(v,ic,t,s,bg,p){return `<button class="tile" style="background:${bg}" onclick="go('${v}'${p?','+p:''})"><span>${ic}</span><b>${t}</b><small>${s}</small></button>`;}
 const EVT={ev:'ఈవెంట్',test:'టెస్ట్',hol:'సెలవు',live:'లైవ్ క్లాస్'};
@@ -2833,7 +2945,7 @@ function addTeacher(){const n=$('#tcn').value.trim();if(!n)return toast('పే�
 function delTeacher(id){const t=live('teachers').find(x=>x.id===id);if(!t||!confirm(t.n+' గారిని తొలగించాలా? వారి కీ / లింక్ వెంటనే పనిచేయదు.'))return;remove('teachers',id);toast('తొలగించబడ్డారు');go('teacher',{t:'tc'});}
 function tpTc(){const c=S.cfg,list=live('teachers');
  return `${c.multiT===false?`<div class="warn" style="margin-bottom:10px">⚠️ సర్వర్ కోడ్ పాతది – <b>${c.sid?'అన్ని పాఠశాలల (పబ్లిక్) సర్వర్ షీట్':'మీ పాఠశాల సొంత Google Sheet'}</b> లో కొత్త కోడ్ ${c.sid?'(Raay_Vidyarthi_Public_Server.gs)':'(☁️ ఆన్‌లైన్ సింక్ → ⚙️ అధునాతనం → 📋 కోడ్ కాపీ)'} పెట్టి <b>Manage deployments → ✏️ → New version → Deploy</b> చేయండి.<br><button class="btn sm" onclick="Sync.running=false;Sync.run().then(()=>go('teacher',{t:'tc'}))">🔄 అప్‌డేట్ చేశాను – మళ్ళీ చెక్ చేయి</button></div>`:''}
-<div class="card"><h3>👥 ఉపాధ్యాయుని జోడించు</h3><p class="mut">ప్రతి ఉపాధ్యాయునికి సొంత లింక్ / కీ వస్తుంది. వారికి తమ తరగతులు, సబ్జెక్టుల హోంవర్క్, సందేహాలు, రిపోర్ట్ మాత్రమే కనిపిస్తాయి. పిల్లలకు అదే పాఠశాల కోడ్.</p>
+<div class="card"><h3>👥 ఉపాధ్యాయుని జోడించు</h3><div class="tcsch">🏫 ${esc(c.sname||c.school||'మీ పాఠశాల')}${c.sid?` <small>కోడ్: ${esc(c.sid)}</small>`:''}</div><p class="mut">ప్రతి ఉపాధ్యాయునికి సొంత లింక్ / కీ వస్తుంది. వారికి తమ తరగతులు, సబ్జెక్టుల హోంవర్క్, సందేహాలు, రిపోర్ట్ మాత్రమే కనిపిస్తాయి. పిల్లలకు అదే పాఠశాల కోడ్.</p>
 <label>పేరు</label><input id="tcn" maxlength="40" placeholder="ఉదా: లక్ష్మి టీచర్">
 <label>తరగతులు</label><div class="ckrow">${CLASSES.map(k=>`<label class="ck"><input type="checkbox" class="tcc" value="${k}"> ${k}వ</label>`).join('')}</div>
 <label>సబ్జెక్టులు</label><div class="ckrow"><label class="ck"><input type="checkbox" id="tcall" checked onchange="tcAll()"> అన్నీ (తరగతి టీచర్)</label>${ALLSUBJ.map(s=>`<label class="ck"><input type="checkbox" class="tcs" value="${s}" disabled> ${SUBJ[s].n}</label>`).join('')}</div>
@@ -3681,8 +3793,8 @@ function pubCards(){const c=S.cfg;const ps=pubServer();
  if(c.type==='gs'&&c.sid)return schoolCard()+(!c.isT?`<div class="card"><h3>🔑 టీచర్ లాగిన్</h3><div class="g2"><div><label>పాఠశాల కోడ్</label><input id="lgs" value="${esc(c.sid)}"></div><div><label>టీచర్ కీ</label><input id="lgk"></div></div><button class="btn" onclick="loginSchool()">లాగిన్</button></div>`:'');
  if(c.type)return '';
  return `<div class="card" style="border:2px solid #2aa6a6"><h3>🏫 కొత్త పాఠశాల నమోదు (1 నిమిషం)</h3><p class="mut">Google Sheet, కోడ్ ఏమీ అవసరం లేదు. నమోదు చేయగానే మీ పాఠశాలకు ప్రత్యేక కోడ్, టీచర్ కీ, విద్యార్థుల జాయిన్ లింక్ వస్తాయి. మీ పాఠశాల డేటా వేరుగా ఉంటుంది.</p>
-<label>పాఠశాల పేరు</label><input id="rgn" maxlength="80" placeholder="ఉదా: ZPHS TV PALLI">
-<label>మండలం, జిల్లా</label><input id="rgp" maxlength="80" placeholder="ఉదా: గూడూరు, తిరుపతి">
+<label>పాఠశాల పేరు</label><input id="rgn" maxlength="80" placeholder="ఉదా: ZPHS TV పల్లి">
+<label>మండలం, జిల్లా</label><input id="rgp" maxlength="80" placeholder="ఉదా: గూడూరు, SPSR నెల్లూరు">
 <div class="g2"><div><label>ఉపాధ్యాయుల పేరు</label><input id="rgt" maxlength="60"></div><div><label>ఫోన్ (ఐచ్ఛికం)</label><input id="rgph" inputmode="tel" maxlength="15"></div></div>
 <button class="btn" id="rgbtn" onclick="regSchool()">🏫 పాఠశాల నమోదు చేయి</button></div>
 <div class="card"><h3>🔑 ఇప్పటికే నమోదైన పాఠశాల – టీచర్ లాగిన్</h3><p class="mut">వేరే ఫోన్/కంప్యూటర్‌లో వాడటానికి.</p><div class="g2"><div><label>పాఠశాల కోడ్</label><input id="lgs" maxlength="10" style="text-transform:uppercase"></div><div><label>టీచర్ కీ</label><input id="lgk"></div></div><button class="btn" onclick="loginSchool()">లాగిన్</button></div>`;}
