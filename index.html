@@ -2302,7 +2302,7 @@ V.privacy=()=>`<div class="bar"><button class="ib" onclick="history.length>1&&vi
 V.welcome=()=>{const w=param.w||'';const ps=pubServer();const back=`<button class="link" onclick="go('welcome')">← వెనుకకు</button>`;
  if(w==='t'){if(!ps)return `<div class="wel"><div class="logo">⏳</div><h1>సర్వర్ లోడ్ అవుతోంది...</h1><p>ఇంటర్నెట్ ఆన్‌లో ఉందో చూసి, కాసేపటి తర్వాత మళ్ళీ ప్రయత్నించండి.</p>${back}</div>`;
   return `<div class="wel"><div class="logo">🏫</div><h1>పాఠశాల వివరాలు</h1><p>ఒక్కసారి నమోదు చేస్తే చాలు</p><div class="card" style="text-align:left">
-<label>పాఠశాల పేరు *</label><input id="rgn" maxlength="80" placeholder="ఉదా: MPPS రామాపురం">
+<label>పాఠశాల పేరు *</label><input id="rgn" maxlength="80" placeholder="ఉదా: ZPHS TV palli ">
 <label>మండలం, జిల్లా *</label><input id="rgp" maxlength="80" placeholder="ఉదా: గూడూరు, తిరుపతి">
 <label>ఉపాధ్యాయుల పేరు *</label><input id="rgt" maxlength="60">
 <div class="g2"><div><label>ఫోన్ (ఐచ్ఛికం)</label><input id="rgph" inputmode="tel" maxlength="15"></div><div><label>ఈ ఫోన్ PIN (4 అంకెలు) *</label><input id="rgpin" inputmode="numeric" maxlength="8" type="password"></div></div>
@@ -3681,7 +3681,7 @@ function pubCards(){const c=S.cfg;const ps=pubServer();
  if(c.type==='gs'&&c.sid)return schoolCard()+(!c.isT?`<div class="card"><h3>🔑 టీచర్ లాగిన్</h3><div class="g2"><div><label>పాఠశాల కోడ్</label><input id="lgs" value="${esc(c.sid)}"></div><div><label>టీచర్ కీ</label><input id="lgk"></div></div><button class="btn" onclick="loginSchool()">లాగిన్</button></div>`:'');
  if(c.type)return '';
  return `<div class="card" style="border:2px solid #2aa6a6"><h3>🏫 కొత్త పాఠశాల నమోదు (1 నిమిషం)</h3><p class="mut">Google Sheet, కోడ్ ఏమీ అవసరం లేదు. నమోదు చేయగానే మీ పాఠశాలకు ప్రత్యేక కోడ్, టీచర్ కీ, విద్యార్థుల జాయిన్ లింక్ వస్తాయి. మీ పాఠశాల డేటా వేరుగా ఉంటుంది.</p>
-<label>పాఠశాల పేరు</label><input id="rgn" maxlength="80" placeholder="ఉదా: MPPS రామాపురం">
+<label>పాఠశాల పేరు</label><input id="rgn" maxlength="80" placeholder="ఉదా: ZPHS TV PALLI">
 <label>మండలం, జిల్లా</label><input id="rgp" maxlength="80" placeholder="ఉదా: గూడూరు, తిరుపతి">
 <div class="g2"><div><label>ఉపాధ్యాయుల పేరు</label><input id="rgt" maxlength="60"></div><div><label>ఫోన్ (ఐచ్ఛికం)</label><input id="rgph" inputmode="tel" maxlength="15"></div></div>
 <button class="btn" id="rgbtn" onclick="regSchool()">🏫 పాఠశాల నమోదు చేయి</button></div>
