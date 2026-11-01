@@ -553,6 +553,10 @@ button.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;c
 .tbnav .btn{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tbed label small{color:#64748b;font-weight:500}.tbed textarea{font-size:14px;line-height:1.5}
 .tbmo{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}.tbmo label{display:inline-flex;align-items:center;gap:4px;background:#f1f5f9;border-radius:999px;padding:4px 10px;font-size:13px;margin:0}.tbmo input{width:auto;margin:0}
+.tbwb{border:2px dashed #f59e0b;background:#fffdf5}.tbwb h4 small{margin-left:auto;font-size:12px;color:#92400e;font-weight:600}
+.tbwi{display:flex;gap:8px;align-items:flex-start;padding:6px 4px;border-bottom:1px dashed #fde68a;font-size:14px;line-height:1.45;margin:0}.tbwi input{width:auto;margin:3px 0 0}.tbwi.ok span{color:#166534;text-decoration:line-through;text-decoration-color:#86efac}
+.tbmis{background:#fef2f2;border-left:4px solid #ef4444;border-radius:10px;padding:8px 10px;margin:10px 0 6px}.tbmis b{color:#b91c1c;font-size:14px}.tbmis p{margin:4px 0 0;font-size:14px;line-height:1.6}
+.tbwbb{background:#d97706;margin-top:8px}
 </style>
 </head>
 <body>
@@ -2337,7 +2341,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.01-7';
+const APPV='2026.11.01-8';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -2584,14 +2588,21 @@ ${L.gr&&(L.gr.p||[]).length?sec(s==='mat'?'🧮':(s==='tel'||en)?'✏️':'🔎'
 ${(L.qa||[]).length?sec('❓',en?'Questions & Answers':'ప్రశ్నలు – జవాబులు',L.qa.map(([q,a],j)=>`<details class="tbqa"><summary>${j+1}. ${esc(q)}</summary><p>✅ ${esc(a)}</p></details>`).join('')+'<small class="mut">👆 ముందు నువ్వే ఆలోచించి, తర్వాత జవాబు చూడు</small>'):''}
 ${L.act?sec('🎨',en?'Let us do (చేద్దాం)':'చేద్దాం',`<p class="tbp">${esc(L.act)}</p>`):''}
 ${L.kn?sec('💡',en?'Know more':'దీనిని కూడా తెలుసుకోండి',`<p class="tbp">${esc(L.kn)}</p>`):''}
-<div class="tbtest"><div><b>📝 ఈ పాఠం పై టెస్ట్</b><small>${Math.min(10,(L.qz||[]).length)} ప్రశ్నలు • ప్రతిసారీ కొత్త క్రమం</small></div><button class="btn" onclick="startLesTest('${s}','${L.id}')">ప్రారంభించు ▶</button></div>
+${tbWbSec(c,s,L)}<div class="tbtest"><div><b>📝 ఈ పాఠం పై టెస్ట్</b><small>${Math.min(10,(L.qz||[]).length)} ప్రశ్నలు • ప్రతిసారీ కొత్త క్రమం</small></div><button class="btn" onclick="startLesTest('${s}','${L.id}')">ప్రారంభించు ▶</button></div>
 <div class="row2"><button class="btn ${d?'ghost':''}" onclick="tbRead('${s}','${L.id}')">${d?'↺ మళ్ళీ చదవాలి':'✓ చదివాను'}</button><button class="btn ghost" onclick="go('doubts',{s:'${s}'})">💬 సందేహం</button></div>
 <div class="row2 tbnav">${pv?`<button class="btn ghost" onclick="go('tbl',{s:'${s}',id:'${pv.id}'})">◀ ${esc(pv.t)}</button>`:'<span></span>'}${nx?`<button class="btn ghost" onclick="go('tbl',{s:'${s}',id:'${nx.id}'})">${esc(nx.t)} ▶</button>`:'<span></span>'}</div>`;};
+function tbWbSec(c,s,L){const W=L.wb;if(!W)return '';const m=readMap(),done=(W.ws||[]).filter((x,i)=>m[tbKey(c,s,L.id)+'-w'+i]).length,b=tbBest(L.id+'_wb');
+ return `<div class="tbs tbwb"><h4>📒 వర్క్‌బుక్ సాధన <small>పేజీలు ${esc(W.pg||'')}</small></h4>
+<p class="mut" style="margin:0 0 6px">వర్క్‌బుక్‌లో ఈ పాఠం సాధనపత్రాలు చేసినవాటికి ✓ పెట్టు (${done}/${(W.ws||[]).length})</p>
+${(W.ws||[]).map((x,i)=>{const k=tbKey(c,s,L.id)+'-w'+i,d=!!m[k];return `<label class="tbwi ${d?'ok':''}"><input type="checkbox" ${d?'checked':''} onchange="tbWs('${k}',this.checked)"><span>${esc(x)}</span></label>`;}).join('')}
+${W.mis?`<div class="tbmis"><b>⚠️ చాలామంది చేసే తప్పు – నువ్వు చేయకు!</b><p>${esc(W.mis)}</p></div>`:''}
+${(W.qz||[]).length?`<button class="btn tbwbb" onclick="startLesTest('${s}','${L.id}',1)">📒 వర్క్‌బుక్ ప్రశ్నల టెస్ట్ (${Math.min(10,W.qz.length)})${b!=null?` • ${b}%`:''}</button>`:''}</div>`;}
+function tbWs(k,on){const m=readMap();if(on)m[k]=1;else delete m[k];save();if(on)toast('✓ బాగుంది!');}
 function tbSpeak(){const L=tbGet(S.cur.c,param.s,param.id);if(L)speak(L.t+'. '+L.sum);}
 function tbRead(s,id){const m=readMap(),k=tbKey(S.cur.c,s,id);if(m[k])delete m[k];else{m[k]=1;toast('బాగుంది! పాఠం పూర్తయింది ✓ ఇప్పుడు టెస్ట్ రాయి');}save();go('tbl',{s,id});}
-function startLesTest(s,id){const L=tbGet(S.cur.c,s,id);if(!L||!L.qz||!L.qz.length)return toast('ఈ పాఠానికి ప్రశ్నలు లేవు');
- const qs=shuffle(L.qz).slice(0,10).map(a=>({q:a[0],o:shuffle(a.slice(1,5)),a:a[1]}));
- T={s,qs,i:0,ans:[],start:Date.now(),ti:'📖 '+L.no+'. '+L.t,lt:id};go('testrun');
+function startLesTest(s,id,wb){const L=tbGet(S.cur.c,s,id),src=L&&(wb?(L.wb||{}).qz:L.qz);if(!src||!src.length)return toast('ఈ పాఠానికి ప్రశ్నలు లేవు');
+ const qs=shuffle(src).slice(0,10).map(a=>({q:a[0],o:shuffle(a.slice(1,5)),a:a[1]}));
+ T={s,qs,i:0,ans:[],start:Date.now(),ti:(wb?'📒 వర్క్‌బుక్: ':'📖 ')+L.no+'. '+L.t,lt:wb?id+'_wb':id};go('testrun');
  tick=setInterval(()=>{const e=$('#ttime');if(e)e.textContent=mmss((Date.now()-T.start)/1000);},1000);}
 /* ---------- హోమ్ ---------- */
 function tile(v,ic,t,s,bg,p){return `<button class="tile" style="background:${bg}" onclick="go('${v}'${p?','+p:''})"><span>${ic}</span><b>${t}</b><small>${s}</small></button>`;}
@@ -2711,7 +2722,7 @@ V.testrun=()=>{const q=T.qs[T.i],sel=T.ans[T.i];
 <div class="row2 qnav"><button class="btn ghost" ${T.i?'':'disabled'} onclick="T.i--;render()">◀ వెనుకకు</button><button class="btn" id="tnext" ${(q.fr?!String(sel==null?'':sel).trim():sel==null)?'disabled':''} onclick="nextQ()">${T.i===T.qs.length-1?'సమర్పించు ✓':'తర్వాత ▶'}</button></div>`;};
 function pickAns(j){T.ans[T.i]=j;render();}
 function nextQ(){if(T.i<T.qs.length-1){T.i++;render();}else finishTest();}
-function quitTest(){if(confirm('టెస్ట్ మధ్యలో ఆపేయాలా? జవాబులు సేవ్ కావు.')){if(T&&T.lt)go('tbl',{s:T.s,id:T.lt});else go('test');}}
+function quitTest(){if(confirm('టెస్ట్ మధ్యలో ఆపేయాలా? జవాబులు సేవ్ కావు.')){if(T&&T.lt)go('tbl',{s:T.s,id:String(T.lt).replace(/_wb$/,'')});else go('test');}}
 function finishTest(){const sec=Math.round((Date.now()-T.start)/1000);let sc=0;
  const rv=T.qs.map((q,i)=>{const y=q.fr?String(T.ans[i]==null?'':T.ans[i]).trim():q.o[T.ans[i]],ok=q.fr?(qpNorm(y)!==''&&qpNorm(y)===qpNorm(q.a)):y===q.a;if(ok)sc++;return {q:q.q,y:y||'',a:q.a,ok};});
  const r={id:uid(),n:me(),c:S.cur.c,sb:T.s,s:sc,t:T.qs.length,sec,d:new Date().toISOString(),rv};if(T.pid)Object.assign(r,{pid:T.pid,ti:T.ti,kind:'qp'});if(T.lt)Object.assign(r,{lt:T.lt,ti:T.ti});put('results',r);go('result',{id:r.id});if(sc*100/T.qs.length>=80){setTimeout(confetti,200);beep('win');}else beep('ok');}
@@ -2719,7 +2730,7 @@ V.result=()=>{const r=live('results').find(x=>x.id===param.id);if(!r)return '<di
  const msg=p>=80?'🌟 అద్భుతం!':p>=60?'👏 బాగుంది!':p>=40?'🙂 పర్వాలేదు, ఇంకా సాధన చేయి':'💪 మళ్ళీ ప్రయత్నించు!';
  return `<div class="bar"><button class="ib" onclick="go('test',{tab:'done'})">←</button><h2>${r.ti?esc(r.ti):SUBJ[r.sb].n} – ఫలితం</h2></div>
 <div class="card center">${ring(p,130,p>=80?'#16a34a':p>=50?'#f59e0b':'#e5484d')}<h3 style="margin-top:8px">${msg}</h3><p>సరైనవి: <b>${r.s} / ${r.t}</b> &nbsp;•&nbsp; సమయం: <b>${mmss(r.sec)}</b></p><p class="mut">${fmtD(r.d)}</p>
-<div class="row2">${r.pid?`<button class="btn" onclick="go('test')">📝 టెస్టులు</button>`:r.lt?`<button class="btn" onclick="startLesTest('${r.sb}','${r.lt}')">↻ మళ్ళీ రాయి</button>`:`<button class="btn" onclick="startTest('${r.sb}')">↻ మళ్ళీ రాయి</button>`}${r.lt?`<button class="btn ghost" onclick="go('tbl',{s:'${r.sb}',id:'${r.lt}'})">📖 పాఠం నోట్స్</button>`:`<button class="btn ghost" onclick="go('subject',{s:'${r.sb}'})">📖 పాఠాలు</button>`}</div></div>
+<div class="row2">${r.pid?`<button class="btn" onclick="go('test')">📝 టెస్టులు</button>`:r.lt?`<button class="btn" onclick="startLesTest('${r.sb}','${String(r.lt).replace(/_wb$/,'')}',${/_wb$/.test(r.lt)?1:0})">↻ మళ్ళీ రాయి</button>`:`<button class="btn" onclick="startTest('${r.sb}')">↻ మళ్ళీ రాయి</button>`}${r.lt?`<button class="btn ghost" onclick="go('tbl',{s:'${r.sb}',id:'${String(r.lt).replace(/_wb$/,'')}'})">📖 పాఠం నోట్స్</button>`:`<button class="btn ghost" onclick="go('subject',{s:'${r.sb}'})">📖 పాఠాలు</button>`}</div></div>
 <h4 class="sec">జవాబుల సమీక్ష</h4>${(r.rv||[]).map((x,i)=>{const ok=x.y===x.a;return `<div class="rv ${ok?'':'x'}"><p>${i+1}. ${esc(x.q)}</p><small>నీ జవాబు: <b>${esc(x.y||'—')}</b> ${ok?'✅':'❌'}</small>${ok?'':`<small>సరైన జవాబు: <b style="color:#166534">${esc(x.a)}</b></small>`}</div>`;}).join('')}`;};
 
 /* ---------- ✎ రోజువారీ లెక్కలు (+ − × ÷ – ఒక్కో ప్రక్రియకు 4) – వెంటనే జవాబు, మార్కులు, ర్యాంక్ ---------- */
@@ -3109,7 +3120,7 @@ async function tbSave(id){const v=k=>((document.getElementById(k)||{}).value||''
  if(qz.length<5)return toast('కనీసం 5 టెస్ట్ ప్రశ్నలు కావాలి (ఇప్పుడు '+qz.length+')');
  const pair=(k,sep)=>ln(k).map(x=>{const i=x.indexOf(sep);return i>0?[x.slice(0,i).trim(),x.slice(i+1).trim()]:null;}).filter(p=>p&&p[0]&&p[1]);
  const lid=id||('t'+Date.now().toString(36));
- const L={no:+v('te_no')||1,t,m,ty:v('te_ty'),th:v('te_th'),by:v('te_by'),sum,pts:ln('te_pts'),w:pair('te_w','='),gr:{t:v('te_grt'),p:ln('te_grp')},qa:pair('te_qa','|'),act:v('te_act'),kn:v('te_kn'),qz};if(s==='eng')L.te=v('te_te');
+ const L={no:+v('te_no')||1,t,m,ty:v('te_ty'),th:v('te_th'),by:v('te_by'),sum,pts:ln('te_pts'),w:pair('te_w','='),gr:{t:v('te_grt'),p:ln('te_grp')},qa:pair('te_qa','|'),act:v('te_act'),kn:v('te_kn'),qz};if(s==='eng')L.te=v('te_te');{const ob=id&&tbLes(c,s).find(x=>x.id===id);if(ob&&ob.wb)L.wb=ob.wb;}
  if(JSON.stringify(L).length>18000)return toast('నోట్స్ చాలా పెద్దగా ఉన్నాయి – కొంచెం తగ్గించండి');
  if(S.cfg.type==='gs'){toast('సర్వర్ చూస్తోంది...');const b2=await tbServerOk();if(b2)return toast('❌ '+b2);}
  put('tbx',{id:'tbx_'+c+'_'+s+'_'+lid,c,s,lid,L,t,byn:tName(),d:new Date().toISOString()});toast('💾 సేవ్ అయింది – సింక్ అయ్యాక పిల్లలకు కనిపిస్తుంది');go('teacher',{t:'tb'});}
