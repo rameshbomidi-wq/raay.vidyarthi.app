@@ -2342,7 +2342,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.02-2';
+const APPV='2026.11.02-3';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -4303,9 +4303,9 @@ async function upBook(){const fi=document.getElementById('bkf'),f=fi&&fi.files&&
 let PDFL=null;
 async function pdfMgr(){const box=document.getElementById('pdfm');if(!box)return;box.innerHTML='<p class="mut">⏳ Drive లో చూస్తోంది...</p>';
  try{const j=await (await fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'pdfs',s:S.cfg.sid,k:GS.key(),dev:S.dev})})).json();
-  if(!j.ok)throw new Error(j.err==='key'?'ప్రధానోపాధ్యాయుల (మాస్టర్) కీతో మాత్రమే':j.err==='drive'?'సర్వర్‌కు Google Drive అనుమతి లేదు':UPOLD);PDFL=j;pdfDraw();}
+  if(!j.ok)throw new Error(j.err==='key'?'ప్రధానోపాధ్యాయుల (మాస్టర్) కీతో మాత్రమే':j.err==='drive'?'సర్వర్‌కు Google Drive అనుమతి లేదు':UPOLD);PDFL=j;pdfMgrDraw();}
  catch(e){box.innerHTML=`<p class="ansErr">❌ ${esc(/Unexpected|JSON|undefined|fetch/.test(e.message)?UPOLD:e.message)}</p>`;}}
-function pdfDraw(){const box=document.getElementById('pdfm'),j=PDFL;if(!box||!j)return;const fs=j.files.slice().sort((a,b)=>(a.u-b.u)||(b.s-a.s)),un=fs.filter(f=>!f.u),pc=Math.min(100,Math.round(j.used*100/j.max));
+function pdfMgrDraw(){const box=document.getElementById('pdfm'),j=PDFL;if(!box||!j)return;const fs=j.files.slice().sort((a,b)=>(a.u-b.u)||(b.s-a.s)),un=fs.filter(f=>!f.u),pc=Math.min(100,Math.round(j.used*100/j.max));
  const seen={};fs.forEach(f=>{const k=f.n+'|'+f.s;seen[k]=(seen[k]||0)+1;});
  box.innerHTML=`<div class="pdfbar"><i style="width:${pc}%;background:${pc>=90?'#e5484d':pc>=70?'#f59e0b':'#16a34a'}"></i></div><p><b>${mb(j.used)||'0 MB'}</b> / ${mb(j.max)} వాడారు (${pc}%) • ${fs.length} PDFలు</p>
 ${un.length?`<p class="warn" style="margin:6px 0">⚠️ ${un.length} PDFలు (${mb(un.reduce((a,f)=>a+f.s,0))}) యాప్‌లో ఏ పుస్తకానికీ లేవు – వృథా స్థలం.</p><button class="btn sm red" onclick="pdfDelAll()">🧹 వాడనివి అన్నీ తొలగించు</button>`:'<p class="szok">✅ వృథా PDFలు లేవు</p>'}
@@ -4314,7 +4314,7 @@ ${fs.map(f=>`<div class="pdfrow ${f.u?'':'un'}"><div><b>${esc(f.n)}</b><small>${
 async function pdfRm(fid){const j=await (await fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'rm',s:S.cfg.sid,k:GS.key(),dev:S.dev,fid})})).json();if(!j.ok)throw new Error('తొలగించలేకపోయాం');
  live('notes').filter(n=>n.kind==='book'&&n.fid===fid).forEach(n=>remove('notes',n.id));PDFL.files=PDFL.files.filter(f=>f.id!==fid);PDFL.used=PDFL.files.reduce((a,f)=>a+f.s,0);}
 async function pdfDel(fid){const f=PDFL&&PDFL.files.find(x=>x.id===fid);if(!f)return;if(!confirm((f.u?'ఈ PDF “'+f.t+'” పుస్తకంగా పిల్లలకు కనిపిస్తోంది. ':'')+'తొలగించాలా?\n'+f.n))return;
- try{await pdfRm(fid);toast('🗑️ తొలగించాం');pdfDraw();}catch(e){toast('❌ '+e.message);}}
+ try{await pdfRm(fid);toast('🗑️ తొలగించాం');pdfMgrDraw();}catch(e){toast('❌ '+e.message);}}
 async function pdfDelAll(){const un=(PDFL&&PDFL.files||[]).filter(f=>!f.u);if(!un.length||!confirm(un.length+' వాడని PDFలు తొలగించాలా?'))return;let k=0;
  for(const f of un){try{await pdfRm(f.id);k++;}catch(e){}}toast(`🧹 ${k} PDFలు తొలగించాం`);pdfDraw();}
 function delBook(id){if(!confirm('తొలగించాలా?'))return;const n=live('notes').find(x=>x.id===id);
