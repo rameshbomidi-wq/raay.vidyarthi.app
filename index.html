@@ -536,7 +536,7 @@ button.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;c
 .tbcard.now{box-shadow:0 0 0 2px #fbbf24}.tbcard.done{border-left-color:#16a34a}
 .tbh{display:flex;gap:10px;align-items:center;padding:10px 12px;cursor:pointer}.tbh div{flex:1}.tbh b{display:block;font-size:16px}.tbh small{color:#64748b;font-size:12.5px}.tbh small i{font-style:normal;background:#fef3c7;color:#92400e;border-radius:6px;padding:0 5px;font-weight:700}.tbh em{color:#16a34a;font-style:normal;font-weight:900;font-size:18px}
 .tbno{width:34px;height:34px;border-radius:50%;background:var(--sb);color:var(--sc);display:grid;place-items:center;font-weight:900;font-size:16px;flex:none}
-.tbf{display:flex;justify-content:space-between;gap:8px;padding:0 12px 10px}
+.tbf{display:flex;justify-content:space-between;gap:6px;padding:0 12px 10px;flex-wrap:wrap}
 .tbhero{background:linear-gradient(135deg,var(--sb),#fff);border:2px solid var(--sc);border-radius:20px;padding:14px;margin-bottom:12px}
 .tbhero small{color:#64748b}.tbhero h2{margin:2px 0 8px;font-size:24px;color:var(--sc)}.tbhero p{margin:6px 0 0;font-size:13.5px;color:#334155}.tbhero .tbsc{color:#166534}
 .tbtags{display:flex;flex-wrap:wrap;gap:6px}.tbtags span{background:#fff;border-radius:999px;padding:3px 9px;font-size:12.5px;font-weight:600;color:#334155;box-shadow:0 1px 3px rgba(0,0,0,.08)}
@@ -2341,7 +2341,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.01-8';
+const APPV='2026.11.02-1';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -2573,9 +2573,9 @@ ${pk?`<div class="tbnext" onclick="go('tbl',{s:'${pk.s}',id:'${pk.L.id}'})"><spa
 function tbSubjectCards(c,s){const ls=tbLes(c,s);if(!ls.length)return '';
  return `<h4 class="sec">📖 పాఠ్యపుస్తకం పాఠాలు – నోట్స్ & టెస్ట్</h4>${ls.map(L=>{const d=isRead(tbKey(c,s,L.id)),b=tbBest(L.id),now=tbIsNow(L);
   return `<div class="tbcard ${d?'done':''} ${now?'now':''}" style="--sc:${SUBJ[s].col};--sb:${SUBJ[s].bg}"><div class="tbh" onclick="go('tbl',{s:'${s}',id:'${L.id}'})"><span class="tbno">${L.no}</span><div><b>${esc(L.t)}</b><small>📅 ${tbMonths(L)} • ${esc(L.ty)}${now?' • <i>ఈ నెల</i>':''}</small></div>${d?'<em>✓</em>':''}</div>
-<div class="tbf"><button class="lk" onclick="go('tbl',{s:'${s}',id:'${L.id}'})">📖 నోట్స్ చదువు</button><button class="lk b" onclick="startLesTest('${s}','${L.id}')">📝 టెస్ట్${b!=null?` • ${b}%`:''}</button></div></div>`;}).join('')}`;}
+<div class="tbf"><button class="lk" onclick="go('tbl',{s:'${s}',id:'${L.id}'})">📖 నోట్స్ చదువు</button>${L.wb?`<button class="lk" style="background:#fef3c7;color:#92400e" onclick="go('tbl',{s:'${s}',id:'${L.id}',wb:1})">📒 వర్క్‌బుక్</button>`:''}<button class="lk b" onclick="startLesTest('${s}','${L.id}')">📝 టెస్ట్${b!=null?` • ${b}%`:''}</button></div></div>`;}).join('')}`;}
 /* పాఠం నోట్స్ పేజీ */
-V.tbl=()=>{const c=S.cur.c,s=param.s,ls=tbLes(c,s),i=ls.findIndex(x=>x.id===param.id),L=ls[i];
+V.tbl=()=>{if(param.wb)setTimeout(()=>{const e=document.querySelector('.tbwb');if(e)window.scrollTo({top:e.getBoundingClientRect().top+window.scrollY-80,behavior:'smooth'});},150);const c=S.cur.c,s=param.s,ls=tbLes(c,s),i=ls.findIndex(x=>x.id===param.id),L=ls[i];
  if(!L)return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>పాఠం</h2></div><div class="empty">ఈ పాఠం నోట్స్ దొరకలేదు</div>`;
  const k=tbKey(c,s,L.id),d=isRead(k),b=tbBest(L.id),en=s==='eng',pv=ls[i-1],nx=ls[i+1];
  const sec=(ic,t,body,extra)=>`<div class="tbs"><h4>${ic} ${t}${extra||''}</h4>${body}</div>`;
