@@ -558,6 +558,22 @@ button.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;c
 .tbmis{background:#fef2f2;border-left:4px solid #ef4444;border-radius:10px;padding:8px 10px;margin:10px 0 6px}.tbmis b{color:#b91c1c;font-size:14px}.tbmis p{margin:4px 0 0;font-size:14px;line-height:1.6}
 .tbwbb{background:#d97706;margin-top:8px}
 .tbwbo{background:#0f766e;margin:2px 0 10px}
+/* ✏️ పుస్తకం మీద రాయడం */
+.bwrap{position:relative;display:inline-block;line-height:0}
+#bink{position:absolute;left:0;top:0;pointer-events:none;touch-action:auto;background:transparent!important;box-shadow:none!important}
+.inkon #bink{pointer-events:auto;touch-action:none;cursor:crosshair}
+#btxl{position:absolute;left:0;top:0;pointer-events:none;line-height:1.25;text-align:left}
+.btx{position:absolute;white-space:pre-wrap;font-weight:600;font-family:'Noto Sans Telugu',sans-serif;max-width:80%}
+.inkon .btx{pointer-events:auto;outline:1px dashed rgba(29,78,216,.35)}
+#inkbtn{font-size:13px;font-weight:800;width:auto;padding:0 10px}#inkbtn.on{background:#f59e0b;color:#111}
+#inkbar{display:none;gap:6px;justify-content:center;flex-wrap:wrap;padding:6px;background:#fff7ed;border-top:2px solid #f59e0b}
+.inkon #inkbar{display:flex}
+#inkbar button{min-width:38px;height:36px;border:0;border-radius:10px;background:#fff;font-weight:800;font-size:15px;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+#inkbar button.on{outline:3px solid #f59e0b}#inkbar button.ok{background:#0b5e73;color:#fff}
+#inkbar .ic{background:var(--c);width:36px;min-width:36px;border-radius:50%}
+#btxin{position:fixed;left:8px;right:8px;bottom:calc(120px + env(safe-area-inset-bottom));z-index:70;background:#fff;border-radius:14px;padding:8px;box-shadow:0 8px 30px rgba(0,0,0,.35);display:flex;gap:6px;align-items:flex-end}
+#btxin[hidden]{display:none}#btxin textarea{flex:1;min-height:44px;max-height:120px;font-size:16px;border:1.5px solid #cbd5e1;border-radius:10px;padding:6px}
+#btxin button{border:0;border-radius:10px;padding:10px 12px;font-weight:800;background:#0b5e73;color:#fff}#btxin button.x{background:#e2e8f0;color:#334155}
 </style>
 </head>
 <body>
@@ -2342,7 +2358,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.02-3';
+const APPV='2026.11.02-4';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -4100,13 +4116,52 @@ async function libLoad(force){if(view!=='library')return;const tab=param.tab||'b
 let LIB=[];
 function openItem(i){const it=LIB[i];if(!it)return;go('book',{u:it.u,t:it.t,k:it.k,back:{tab:param.tab||'books',c:param.c||S.cur.c}});if(it.k==='pdf')pdfInit();}
 V.book=()=>{const p=param,k=p.k;const ext=/^https?:/i.test(p.u);
- const top=`<div class="bvtop"><button class="ib" onclick="closeBook()" aria-label="మూసివేయి">✕</button><b>${esc(p.t||'')}</b>${k!=='pdf'?`<a class="ib" href="${esc(k==='drive'?'https://drive.google.com/file/d/'+driveId(p.u)+'/view':p.u)}" target="_blank" rel="noopener" aria-label="కొత్త ట్యాబ్">↗</a>`:`<a class="ib" href="${esc(p.u)}" target="_blank" rel="noopener" download aria-label="డౌన్‌లోడ్">⬇</a>`}</div>`;
+ const top=`<div class="bvtop"><button class="ib" onclick="closeBook()" aria-label="మూసివేయి">✕</button><b>${esc(p.t||'')}</b>${k!=='pdf'?`<a class="ib" href="${esc(k==='drive'?'https://drive.google.com/file/d/'+driveId(p.u)+'/view':p.u)}" target="_blank" rel="noopener" aria-label="కొత్త ట్యాబ్">↗</a>`:`<button class="ib" id="inkbtn" onclick="inkToggle()">✏️ రాయి</button><a class="ib" href="${esc(p.u)}" target="_blank" rel="noopener" download aria-label="డౌన్‌లోడ్">⬇</a>`}</div>`;
  if(k==='drive')return `<div class="bview">${top}<iframe class="bframe" src="https://drive.google.com/file/d/${esc(driveId(p.u))}/preview" allow="autoplay; fullscreen" referrerpolicy="no-referrer"></iframe></div>`;
  if(k==='tool')return `<div class="bview">${top}<iframe class="bframe" src="${esc(p.u)}" allow="autoplay; fullscreen; clipboard-write; microphone; camera" ${ext?'referrerpolicy="no-referrer"':''}></iframe></div>`;
- return `<div class="bview">${top}<div id="bbox" class="bbox"><div id="bmsg" class="bmsg">⏳ పుస్తకం తెరుస్తోంది...</div><canvas id="bcv"></canvas></div>
+ return `<div class="bview">${top}<div id="bbox" class="bbox"><div id="bmsg" class="bmsg">⏳ పుస్తకం తెరుస్తోంది...</div><div class="bwrap"><canvas id="bcv"></canvas><canvas id="bink"></canvas><div id="btxl"></div></div></div><div id="inkbar"></div><div id="btxin" hidden><textarea placeholder="✍️ జవాబు ఇక్కడ టైప్ చేయి" maxlength="300"></textarea><button class="x" onclick="inkTxNo()">✕</button><button onclick="inkTxOk()">✓</button></div>
 <div class="bvbot"><button onclick="pdfGo(-1)" aria-label="వెనుక పేజీ">◀</button><span><input id="bpg" inputmode="numeric" value="" onchange="pdfTo(this.value)"> <span id="bpn"></span></span><button onclick="pdfGo(1)" aria-label="తర్వాతి పేజీ">▶</button><button onclick="pdfZoom(0.8)">−</button><button onclick="pdfZoom(1.25)">+</button></div></div>`;};
 function bmsg(h){const m=document.getElementById('bmsg');if(m){m.innerHTML=h;m.style.display=h?'block':'none';}}
-async function pdfInit(){const u=param.u;BV={url:u,page:(S.bookPos||{})[u]||1,zoom:1,doc:null,tok:0};
+/* ===== ✏️ పుస్తకం / వర్క్‌బుక్ పేజీ మీద రాయడం (పెన్, టైప్, రబ్బరు) – ప్రతి విద్యార్థికి, ప్రతి పేజీకి వేరుగా సేవ్ ===== */
+const INK={on:false,tool:'pen',col:'#1d4ed8',w:3,d:null,key:'',cur:null,pid:null,dirty:false,sv:null};
+const INK_COL=['#1d4ed8','#dc2626','#111827','#16a34a'];
+function inkKey(){return 'ink|'+(S.cur?me():'t')+'|'+(BV.url||'')+'|'+(BV.page||1);}
+async function inkLoad(){const k=inkKey();if(INK.key===k&&INK.d)return;await inkFlush();INK.key=k;INK.d=null;inkDraw();const v=await slGet(k);if(INK.key!==k)return;INK.d=v&&v.s?v:{s:[],t:[]};inkDraw();}
+async function inkFlush(){clearTimeout(INK.sv);if(!INK.dirty||!INK.key||!INK.d)return;INK.dirty=false;const d=INK.d,empty=!d.s.length&&!d.t.length;await slPut(INK.key,empty?null:{s:d.s,t:d.t,u:Date.now()});}
+function inkSaveSoon(){INK.dirty=true;clearTimeout(INK.sv);INK.sv=setTimeout(inkFlush,800);}
+function inkSize(){const cv=document.getElementById('bcv'),ik=document.getElementById('bink');if(!cv||!ik)return null;const W=parseFloat(cv.style.width)||cv.width,H=parseFloat(cv.style.height)||cv.height;
+ if(ik.width!==cv.width||ik.height!==cv.height){ik.width=cv.width;ik.height=cv.height;}ik.style.width=W+'px';ik.style.height=H+'px';const tl=document.getElementById('btxl');if(tl){tl.style.width=W+'px';tl.style.height=H+'px';}return {W,H,r:cv.width/W,ik};}
+function inkDraw(){const z=inkSize();if(!z)return;const {W,H,r,ik}=z,x=ik.getContext('2d');x.setTransform(r,0,0,r,0,0);x.clearRect(0,0,W,H);x.lineCap='round';x.lineJoin='round';
+ const d=INK.d||{s:[],t:[]};d.s.concat(INK.cur?[INK.cur]:[]).forEach(s=>{if(!s.p.length)return;x.strokeStyle=s.c;x.lineWidth=Math.max(1,s.w*W);x.beginPath();x.moveTo(s.p[0][0]*W,s.p[0][1]*H);if(s.p.length===1)x.lineTo(s.p[0][0]*W+.1,s.p[0][1]*H);for(let i=1;i<s.p.length;i++)x.lineTo(s.p[i][0]*W,s.p[i][1]*H);x.stroke();});
+ const tl=document.getElementById('btxl');if(tl)tl.innerHTML=d.t.map((t,i)=>`<span class="btx" style="left:${t.x*100}%;top:${t.y*100}%;color:${t.c};font-size:${Math.max(9,t.z*W)}px" onclick="inkTxTap(event,${i})">${esc(t.t)}</span>`).join('');}
+function inkPos(e){const ik=document.getElementById('bink'),b=ik.getBoundingClientRect();return [Math.min(1,Math.max(0,(e.clientX-b.left)/b.width)),Math.min(1,Math.max(0,(e.clientY-b.top)/b.height))];}
+function inkBind(){const ik=document.getElementById('bink');if(!ik||ik._b)return;ik._b=1;
+ ik.addEventListener('pointerdown',e=>{if(!INK.on||INK.pid!=null||!INK.d)return;e.preventDefault();const p=inkPos(e);
+  if(INK.tool==='tx'){inkTxAsk(p);return;}
+  if(INK.tool==='er'){inkErase(p);INK.pid=e.pointerId;try{ik.setPointerCapture(e.pointerId);}catch(x){}return;}
+  INK.pid=e.pointerId;try{ik.setPointerCapture(e.pointerId);}catch(x){}const W=parseFloat(ik.style.width)||1;INK.cur={c:INK.col,w:INK.w/W,p:[p]};inkDraw();});
+ ik.addEventListener('pointermove',e=>{if(e.pointerId!==INK.pid)return;e.preventDefault();const p=inkPos(e);if(INK.tool==='er'){inkErase(p);return;}if(!INK.cur)return;const l=INK.cur.p[INK.cur.p.length-1];if(Math.abs(l[0]-p[0])+Math.abs(l[1]-p[1])<0.002)return;INK.cur.p.push(p);inkDraw();});
+ const up=e=>{if(e.pointerId!==INK.pid)return;INK.pid=null;if(INK.cur){INK.cur.p=INK.cur.p.map(q=>[+q[0].toFixed(4),+q[1].toFixed(4)]);INK.d.s.push(INK.cur);INK.cur=null;inkSaveSoon();inkDraw();}};
+ ik.addEventListener('pointerup',up);ik.addEventListener('pointercancel',up);}
+function inkErase(p){const d=INK.d;if(!d)return;const r=0.025,n=d.s.length;d.s=d.s.filter(s=>!s.p.some(q=>Math.abs(q[0]-p[0])<r&&Math.abs(q[1]-p[1])<r));if(d.s.length!==n){inkSaveSoon();inkDraw();}}
+function inkTxTap(e,i){if(!INK.on)return;e.stopPropagation();const d=INK.d,t=d&&d.t[i];if(!t)return;if(INK.tool==='er'){d.t.splice(i,1);inkSaveSoon();inkDraw();return;}inkTxAsk([t.x,t.y],i);}
+function inkTxAsk(p,i){const d=INK.d,old=i!=null?d.t[i]:null;INK.tp={p,i};const bx=document.getElementById('btxin');if(!bx)return;bx.hidden=false;const inp=bx.querySelector('textarea');inp.value=old?old.t:'';setTimeout(()=>inp.focus(),50);}
+function inkTxOk(){const bx=document.getElementById('btxin'),inp=bx.querySelector('textarea'),v=inp.value.trim(),d=INK.d,tp=INK.tp;bx.hidden=true;if(!tp||!d)return;
+ if(tp.i!=null){if(v)d.t[tp.i].t=v;else d.t.splice(tp.i,1);}else if(v)d.t.push({x:+tp.p[0].toFixed(4),y:+tp.p[1].toFixed(4),t:v.slice(0,300),c:INK.col,z:INK.tz||0.03});INK.tp=null;inkSaveSoon();inkDraw();}
+function inkTxNo(){const bx=document.getElementById('btxin');if(bx)bx.hidden=true;INK.tp=null;}
+function inkUndo(){const d=INK.d;if(!d)return;if(d.s.length)d.s.pop();else if(d.t.length)d.t.pop();else return toast('తీసేయడానికి ఏమీ లేదు');inkSaveSoon();inkDraw();}
+function inkClear(){const d=INK.d;if(!d||(!d.s.length&&!d.t.length))return;if(!confirm('ఈ పేజీ మీద నువ్వు రాసినదంతా తుడిచేయాలా?'))return;d.s=[];d.t=[];inkSaveSoon();inkDraw();}
+function inkToggle(){INK.on=!INK.on;if(!INK.on){inkFlush();inkTxNo();}inkBar();if(INK.on&&!S.inkTip){S.inkTip=1;save();toast('✏️ వేలితో పేజీ మీద రాయి • Aa తో టైప్ చేయి • పేజీ కదపాలంటే ✋ నొక్కు');}}
+function inkTool(t,c){INK.tool=t;if(c)INK.col=c;inkBar();}
+function inkBar(){const v=document.querySelector('.bview');if(v)v.classList.toggle('inkon',INK.on);const b=document.getElementById('inkbar');if(!b)return;
+ b.innerHTML=INK.on?`${INK_COL.map(c=>`<button class="ic ${INK.tool==='pen'&&INK.col===c?'on':''}" style="--c:${c}" onclick="inkTool('pen','${c}')" aria-label="పెన్"></button>`).join('')}<button class="${INK.tool==='tx'?'on':''}" onclick="inkTool('tx')">Aa</button><button class="${INK.tool==='er'?'on':''}" onclick="inkTool('er')">🧽</button><button onclick="inkUndo()">↶</button><button onclick="inkClear()">🗑</button><button onclick="inkShot()">📷</button><button class="ok" onclick="inkToggle()">✋</button>`:'';
+ const tb=document.getElementById('inkbtn');if(tb)tb.classList.toggle('on',INK.on);}
+async function inkShot(){const cv=document.getElementById('bcv'),ik=document.getElementById('bink');if(!cv||!cv.width)return;const o=document.createElement('canvas');o.width=cv.width;o.height=cv.height;const x=o.getContext('2d');x.drawImage(cv,0,0);x.drawImage(ik,0,0);
+ const W=parseFloat(cv.style.width)||cv.width,r=cv.width/W;(INK.d?INK.d.t:[]).forEach(t=>{x.fillStyle=t.c;x.font=`600 ${Math.max(9,t.z*W)*r}px 'Noto Sans Telugu',sans-serif`;x.textBaseline='top';String(t.t).split('\n').forEach((ln,i)=>x.fillText(ln,t.x*o.width,t.y*o.height+i*Math.max(9,t.z*W)*r*1.25));});
+ o.toBlob(async b=>{if(!b)return;const nm=(S.cur?me():'page')+'_'+(param.t||'book').replace(/[^\wఀ-౿]+/g,'_').slice(0,40)+'_p'+BV.page+'.png',f=new File([b],nm,{type:'image/png'});
+  try{if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:nm});return;}}catch(e){if(e&&e.name==='AbortError')return;}
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=nm;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},2000);toast('📷 పేజీ బొమ్మగా సేవ్ అయింది');},'image/png');}
+async function pdfInit(){INK.on=false;INK.key='';INK.d=null;const u=param.u;BV={url:u,page:(S.bookPos||{})[u]||1,zoom:1,doc:null,tok:0};
  try{const lib=await loadPdfjs();const task=lib.getDocument({url:u,disableRange:true,disableStream:true,cMapUrl:PDFJS.cmap,cMapPacked:true});
   task.onProgress=(p)=>{if(p&&p.total)bmsg('⏳ లోడ్ అవుతోంది '+Math.min(100,Math.round(p.loaded*100/p.total))+'%');};BV.task0=task;
   const doc=await task.promise;if(view!=='book'||param.u!==u){try{doc.destroy();}catch(e){}return;}
@@ -4119,11 +4174,11 @@ async function pdfDraw(){if(!BV.doc)return;const tok=++BV.tok,n=BV.page;const pg
   if(BV.rt){try{BV.rt.cancel();}catch(e){}}
   cv.width=Math.floor(vp.width*dpr);cv.height=Math.floor(vp.height*dpr);cv.style.width=Math.floor(vp.width)+'px';cv.style.height=Math.floor(vp.height)+'px';
   BV.rt=page.render({canvasContext:cv.getContext('2d'),viewport:vp,transform:dpr!==1?[dpr,0,0,dpr,0,0]:null});
-  await BV.rt.promise.catch(()=>{});if(tok!==BV.tok)return;box.scrollTop=0;S.bookPos=S.bookPos||{};S.bookPos[BV.url]=n;save();}catch(e){}}
+  await BV.rt.promise.catch(()=>{});if(tok!==BV.tok)return;box.scrollTop=0;try{inkSize();inkBind();inkBar();await inkLoad();inkDraw();}catch(e){}S.bookPos=S.bookPos||{};S.bookPos[BV.url]=n;save();}catch(e){}}
 function pdfGo(d){if(!BV.doc)return;const n=Math.min(BV.n,Math.max(1,BV.page+d));if(n!==BV.page){BV.page=n;pdfDraw();}}
 function pdfTo(v){if(!BV.doc)return;const n=parseInt(v,10);if(n>=1&&n<=BV.n){BV.page=n;pdfDraw();}else{const pg=document.getElementById('bpg');if(pg)pg.value=BV.page;}}
 function pdfZoom(f){if(!BV.doc)return;BV.zoom=Math.min(4,Math.max(0.6,BV.zoom*f));pdfDraw();}
-function closeBook(){try{BV.rt&&BV.rt.cancel();}catch(e){}try{BV.doc&&BV.doc.destroy();}catch(e){}try{BV.task0&&BV.task0.destroy();}catch(e){}const b=param.back||{};BV={};if(b.tbl)go('tbl',{s:b.s,id:b.id,wb:1});else go('library',b);}
+function closeBook(){try{inkFlush();}catch(e){}INK.on=false;INK.key='';INK.d=null;inkTxNo();try{BV.rt&&BV.rt.cancel();}catch(e){}try{BV.doc&&BV.doc.destroy();}catch(e){}try{BV.task0&&BV.task0.destroy();}catch(e){}const b=param.back||{};BV={};if(b.tbl)go('tbl',{s:b.s,id:b.id,wb:1});else go('library',b);}
 document.addEventListener('keydown',e=>{if(view!=='book'||param.k!=='pdf'||(e.target&&e.target.tagName==='INPUT'))return;
  if(e.key==='ArrowRight'||e.key==='PageDown'){pdfGo(1);e.preventDefault();}else if(e.key==='ArrowLeft'||e.key==='PageUp'){pdfGo(-1);e.preventDefault();}
  else if(e.key==='+'||e.key==='='){pdfZoom(1.25);}else if(e.key==='-'){pdfZoom(0.8);}else if(e.key==='Escape'||e.key==='Backspace'){closeBook();}});
