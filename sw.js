@@ -1,5 +1,5 @@
 /* రాయ్ విద్యార్థి యాప్ – Service Worker (ఆఫ్లైన్ పనిచేయడానికి) */
-const VER = 'rai-vidyarthi-v8';
+const VER = 'rai-vidyarthi-v9';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-96.png', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 const BASE = new URL('./', self.location).pathname;
 
@@ -27,7 +27,7 @@ self.addEventListener('fetch', e => {
     return;
   }
   // పాఠం నోట్స్ (notes-3.js …): ముందు నెట్‌వర్క్ (కొత్త నోట్స్ వెంటనే), లేకపోతే కాష్ (ఆఫ్లైన్)
-  if (same && /\/notes-\d+\.js$/.test(url.pathname)) {
+  if (same && /\/(notes|answers)-\d+\.js$/.test(url.pathname)) {
     e.respondWith(fetch(req, {cache: 'no-cache'}).then(r => keep(req, r)).catch(() => caches.match(req, {ignoreSearch: true})));
     return;
   }
