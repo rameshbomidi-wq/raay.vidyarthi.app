@@ -557,6 +557,7 @@ button.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;c
 .tbwi{display:flex;gap:8px;align-items:flex-start;padding:6px 4px;border-bottom:1px dashed #fde68a;font-size:14px;line-height:1.45;margin:0}.tbwi input{width:auto;margin:3px 0 0}.tbwi.ok span{color:#166534;text-decoration:line-through;text-decoration-color:#86efac}
 .tbmis{background:#fef2f2;border-left:4px solid #ef4444;border-radius:10px;padding:8px 10px;margin:10px 0 6px}.tbmis b{color:#b91c1c;font-size:14px}.tbmis p{margin:4px 0 0;font-size:14px;line-height:1.6}
 .tbwbb{background:#d97706;margin-top:8px}
+.tbwbo{background:#0f766e;margin:2px 0 10px}
 </style>
 </head>
 <body>
@@ -2341,7 +2342,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.02-1';
+const APPV='2026.11.02-2';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -2592,11 +2593,12 @@ ${tbWbSec(c,s,L)}<div class="tbtest"><div><b>📝 ఈ పాఠం పై టె
 <div class="row2"><button class="btn ${d?'ghost':''}" onclick="tbRead('${s}','${L.id}')">${d?'↺ మళ్ళీ చదవాలి':'✓ చదివాను'}</button><button class="btn ghost" onclick="go('doubts',{s:'${s}'})">💬 సందేహం</button></div>
 <div class="row2 tbnav">${pv?`<button class="btn ghost" onclick="go('tbl',{s:'${s}',id:'${pv.id}'})">◀ ${esc(pv.t)}</button>`:'<span></span>'}${nx?`<button class="btn ghost" onclick="go('tbl',{s:'${s}',id:'${nx.id}'})">${esc(nx.t)} ▶</button>`:'<span></span>'}</div>`;};
 function tbWbSec(c,s,L){const W=L.wb;if(!W)return '';const m=readMap(),done=(W.ws||[]).filter((x,i)=>m[tbKey(c,s,L.id)+'-w'+i]).length,b=tbBest(L.id+'_wb');
- return `<div class="tbs tbwb"><h4>📒 వర్క్‌బుక్ సాధన <small>పేజీలు ${esc(W.pg||'')}</small></h4>
+ return `<div class="tbs tbwb"><h4>📒 వర్క్‌బుక్ సాధన <small>పేజీలు ${esc(W.pg||'')}</small></h4>${W.f?`<button class="btn tbwbo" onclick="tbWbOpen('${s}','${L.id}')">📖 వర్క్‌బుక్ తెరువు – పేజీ ${parseInt(W.pg,10)||''}</button>`:''}
 <p class="mut" style="margin:0 0 6px">వర్క్‌బుక్‌లో ఈ పాఠం సాధనపత్రాలు చేసినవాటికి ✓ పెట్టు (${done}/${(W.ws||[]).length})</p>
 ${(W.ws||[]).map((x,i)=>{const k=tbKey(c,s,L.id)+'-w'+i,d=!!m[k];return `<label class="tbwi ${d?'ok':''}"><input type="checkbox" ${d?'checked':''} onchange="tbWs('${k}',this.checked)"><span>${esc(x)}</span></label>`;}).join('')}
 ${W.mis?`<div class="tbmis"><b>⚠️ చాలామంది చేసే తప్పు – నువ్వు చేయకు!</b><p>${esc(W.mis)}</p></div>`:''}
 ${(W.qz||[]).length?`<button class="btn tbwbb" onclick="startLesTest('${s}','${L.id}',1)">📒 వర్క్‌బుక్ ప్రశ్నల టెస్ట్ (${Math.min(10,W.qz.length)})${b!=null?` • ${b}%`:''}</button>`:''}</div>`;}
+function tbWbOpen(s,id){const L=tbGet(S.cur.c,s,id),W=L&&L.wb;if(!W||!W.f)return;S.bookPos=S.bookPos||{};S.bookPos[W.f]=W.p||1;save();go('book',{u:W.f,t:'📒 వర్క్‌బుక్ – '+L.t,k:'pdf',back:{tbl:1,s,id}});pdfInit();}
 function tbWs(k,on){const m=readMap();if(on)m[k]=1;else delete m[k];save();if(on)toast('✓ బాగుంది!');}
 function tbSpeak(){const L=tbGet(S.cur.c,param.s,param.id);if(L)speak(L.t+'. '+L.sum);}
 function tbRead(s,id){const m=readMap(),k=tbKey(S.cur.c,s,id);if(m[k])delete m[k];else{m[k]=1;toast('బాగుంది! పాఠం పూర్తయింది ✓ ఇప్పుడు టెస్ట్ రాయి');}save();go('tbl',{s,id});}
@@ -4121,7 +4123,7 @@ async function pdfDraw(){if(!BV.doc)return;const tok=++BV.tok,n=BV.page;const pg
 function pdfGo(d){if(!BV.doc)return;const n=Math.min(BV.n,Math.max(1,BV.page+d));if(n!==BV.page){BV.page=n;pdfDraw();}}
 function pdfTo(v){if(!BV.doc)return;const n=parseInt(v,10);if(n>=1&&n<=BV.n){BV.page=n;pdfDraw();}else{const pg=document.getElementById('bpg');if(pg)pg.value=BV.page;}}
 function pdfZoom(f){if(!BV.doc)return;BV.zoom=Math.min(4,Math.max(0.6,BV.zoom*f));pdfDraw();}
-function closeBook(){try{BV.rt&&BV.rt.cancel();}catch(e){}try{BV.doc&&BV.doc.destroy();}catch(e){}try{BV.task0&&BV.task0.destroy();}catch(e){}const b=param.back||{};BV={};go('library',b);}
+function closeBook(){try{BV.rt&&BV.rt.cancel();}catch(e){}try{BV.doc&&BV.doc.destroy();}catch(e){}try{BV.task0&&BV.task0.destroy();}catch(e){}const b=param.back||{};BV={};if(b.tbl)go('tbl',{s:b.s,id:b.id,wb:1});else go('library',b);}
 document.addEventListener('keydown',e=>{if(view!=='book'||param.k!=='pdf'||(e.target&&e.target.tagName==='INPUT'))return;
  if(e.key==='ArrowRight'||e.key==='PageDown'){pdfGo(1);e.preventDefault();}else if(e.key==='ArrowLeft'||e.key==='PageUp'){pdfGo(-1);e.preventDefault();}
  else if(e.key==='+'||e.key==='='){pdfZoom(1.25);}else if(e.key==='-'){pdfZoom(0.8);}else if(e.key==='Escape'||e.key==='Backspace'){closeBook();}});
