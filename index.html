@@ -2337,7 +2337,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.01-6';
+const APPV='2026.11.01-7';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -2580,7 +2580,7 @@ V.tbl=()=>{const c=S.cur.c,s=param.s,ls=tbLes(c,s),i=ls.findIndex(x=>x.id===para
 ${sec('📝',en?'Story in short (సారాంశం)':'పాఠం సారాంశం',`<p class="tbp">${esc(L.sum)}</p>${L.te?`<div class="tbte"><b>తెలుగులో:</b> ${esc(L.te)}</div>`:''}`,` <button class="spk sm" onclick="tbSpeak('sum')">🔊</button>`)}
 ${(L.pts||[]).length?sec('⭐',en?'Key points (ముఖ్యాంశాలు)':'ముఖ్యాంశాలు',`<ul class="tbul">${L.pts.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`):''}
 ${(L.w||[]).length?sec('📚',en?'Glossary (పదాలు – అర్థాలు)':'పదాలు – అర్థాలు',`<div class="tbw">${L.w.map(([a,m])=>`<button onclick="speak(this.dataset.t)" data-t="${esc(a+', '+m)}"><b>${esc(a)}</b><span>${esc(m)}</span></button>`).join('')}</div><small class="mut">👆 పదం నొక్కితే వినిపిస్తుంది</small>`):''}
-${L.gr&&(L.gr.p||[]).length?sec('✏️',(en?'Grammar: ':'భాషాంశాలు: ')+esc(L.gr.t||''),`<ul class="tbul">${L.gr.p.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`):''}
+${L.gr&&(L.gr.p||[]).length?sec(s==='mat'?'🧮':(s==='tel'||en)?'✏️':'🔎',(en?'Grammar: ':s==='tel'?'భాషాంశాలు: ':'')+esc(L.gr.t||''),`<ul class="tbul">${L.gr.p.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`):''}
 ${(L.qa||[]).length?sec('❓',en?'Questions & Answers':'ప్రశ్నలు – జవాబులు',L.qa.map(([q,a],j)=>`<details class="tbqa"><summary>${j+1}. ${esc(q)}</summary><p>✅ ${esc(a)}</p></details>`).join('')+'<small class="mut">👆 ముందు నువ్వే ఆలోచించి, తర్వాత జవాబు చూడు</small>'):''}
 ${L.act?sec('🎨',en?'Let us do (చేద్దాం)':'చేద్దాం',`<p class="tbp">${esc(L.act)}</p>`):''}
 ${L.kn?sec('💡',en?'Know more':'దీనిని కూడా తెలుసుకోండి',`<p class="tbp">${esc(L.kn)}</p>`):''}
