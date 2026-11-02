@@ -577,6 +577,7 @@ button.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;c
 .akrow{padding-top:0}.btx.key{text-decoration:underline wavy rgba(22,163,74,.6)}#akbtn{width:auto;padding:0 10px;font-size:13px;font-weight:800}#akbtn.on{background:#16a34a;color:#fff}
 .ansp{position:fixed;left:8px;right:8px;bottom:calc(76px + env(safe-area-inset-bottom));max-height:46vh;overflow:auto;z-index:66;background:#f0fdf4;border:2px solid #16a34a;border-radius:14px;padding:8px 10px;box-shadow:0 10px 30px rgba(0,0,0,.35)}.ansp[hidden]{display:none}.ansh{display:flex;align-items:center;justify-content:space-between;color:#166534}.ansh button{border:0;background:#dcfce7;border-radius:8px;padding:4px 10px;font-weight:800}.ansp ol{margin:6px 0;padding-left:20px}.ansp li{font-size:14px;line-height:1.55;margin-bottom:4px;color:#14532d}.ansp small{color:#475569}
 .ansl{list-style:none;padding-left:2px;margin:4px 0}.ansl li{margin:3px 0;line-height:1.5;font-size:14px}.ansl li.ah{font-weight:800;color:#166534;margin-top:8px;border-top:1px dashed #86efac;padding-top:4px}
+.akbook{border:2px dashed #16a34a;background:#f0fdf4}.akbook.on{background:#dcfce7}
 </style>
 </head>
 <body>
@@ -2371,7 +2372,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.02-7';
+const APPV='2026.11.02-8';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3118,7 +3119,7 @@ TP.tb=()=>{const cls=myCls();if(!cls.includes(TBE.c))TBE.c=cls.includes(3)?3:cls
  const ls=tbLes(c,s),st=TBL[c],hid=live('tbx').filter(x=>+x.c===c&&x.s===s&&x.hide);
  return `<div class="card"><h3>📘 పాఠ్యపుస్తకం నోట్స్ & టెస్ట్</h3><p class="mut">పిల్లల “నేర్చుకో”లో నెలవారీగా కనిపించే పాఠం నోట్స్, పాఠం టెస్ట్. ఏదైనా పదం, ప్రశ్న సరిచేయవచ్చు; కొత్త పాఠం (ఉదా: సెమిస్టర్-2) మీరే జోడించవచ్చు. సింక్ ద్వారా పిల్లలందరికీ చేరుతుంది.</p>
 <div class="row2"><div><label>తరగతి</label><select onchange="TBE.c=+this.value;go('teacher',{t:'tb'})">${cls.map(x=>`<option value="${x}" ${x===c?'selected':''}>${x}వ తరగతి</option>`).join('')}</select></div><div><label>సబ్జెక్టు</label><select onchange="TBE.s=this.value;go('teacher',{t:'tb'})">${subs.map(x=>`<option value="${x}" ${x===s?'selected':''}>${SUBJ[x].n}</option>`).join('')}</select></div></div></div>
-${st==='ld'?'<div class="empty">⏳ నోట్స్ లోడ్ అవుతున్నాయి...</div>':ls.map(L=>`<div class="tbcard" style="--sc:${SUBJ[s].col};--sb:${SUBJ[s].bg}"><div class="tbh"><span class="tbno">${L.no}</span><div><b>${esc(L.t)}</b><small>📅 ${tbMonths(L)} • ${(L.qz||[]).length} టెస్ట్ ప్రశ్నలు${L.tch?' • <i>✏️ టీచర్ మార్చారు</i>':''}</small></div></div><div class="tbf"><button class="lk b" onclick="go('teacher',{t:'tb',ed:'${L.id}'})">✏️ సరిచేయి</button><button class="lk" onclick="tbHide('${L.id}')">🙈 పిల్లలకు దాచు</button></div>${L.wb&&L.wb.f?(a=>`<div class="tbf akrow"><button class="lk" style="background:#dcfce7;color:#166534" onclick="akOpen('${s}','${L.id}')">🔑 జవాబులు ${a.ai?`చూడు/రాయి (AI: ${a.ai} పేజీలు${a.n?`, మీరు: ${a.n}`:''})`:`రాయి${a.n?` (${a.n} పేజీలు)`:''}`}</button>${(a.n||a.ai)?(a.on?`<button class="lk" style="background:#fef3c7;color:#92400e" onclick="akLock('${s}','${L.id}',0)">🔓 తెరిచారు – లాక్ చేయి</button>`:`<button class="lk b" onclick="akLock('${s}','${L.id}',1)">🔒 లాక్ – పిల్లలకు తెరువు</button>`):''}</div>`)(akLesson(L)):''}</div>`).join('')||'<div class="empty">ఈ తరగతి / సబ్జెక్టుకు ఇంకా నోట్స్ లేవు – కింద “➕ కొత్త పాఠం” తో మీరే జోడించవచ్చు</div>'}
+${ls.some(L=>L.wb&&L.wb.f)?(B=>`<div class="card akbook ${B?'on':''}"><b>📖 ${SUBJ[s].n} – మొత్తం వర్క్‌బుక్ జవాబులు</b><p class="mut" style="margin:4px 0 8px">${B?'🔓 తెరిచారు – పిల్లలు అన్ని పాఠాల జవాబులు చూడగలరు (రివిజన్ కోసం).':'🔒 లాక్ – కింద పాఠం వారీగా తెరిచినవి మాత్రమే పిల్లలకు కనిపిస్తాయి.'}</p><button class="btn sm ${B?'ghost':''}" onclick="akBookLock('${s}',${B?0:1})">${B?'🔒 మొత్తం పుస్తకం లాక్ చేయి':'📖 మొత్తం పుస్తకం జవాబులు తెరువు'}</button></div>`)(wbaBook(c,s)):''}${st==='ld'?'<div class="empty">⏳ నోట్స్ లోడ్ అవుతున్నాయి...</div>':ls.map(L=>`<div class="tbcard" style="--sc:${SUBJ[s].col};--sb:${SUBJ[s].bg}"><div class="tbh"><span class="tbno">${L.no}</span><div><b>${esc(L.t)}</b><small>📅 ${tbMonths(L)} • ${(L.qz||[]).length} టెస్ట్ ప్రశ్నలు${L.tch?' • <i>✏️ టీచర్ మార్చారు</i>':''}</small></div></div><div class="tbf"><button class="lk b" onclick="go('teacher',{t:'tb',ed:'${L.id}'})">✏️ సరిచేయి</button><button class="lk" onclick="tbHide('${L.id}')">🙈 పిల్లలకు దాచు</button></div>${L.wb&&L.wb.f?(a=>`<div class="tbf akrow"><button class="lk" style="background:#dcfce7;color:#166534" onclick="akOpen('${s}','${L.id}')">🔑 జవాబులు ${a.ai?`చూడు/రాయి (AI: ${a.ai} పేజీలు${a.n?`, మీరు: ${a.n}`:''})`:`రాయి${a.n?` (${a.n} పేజీలు)`:''}`}</button>${(a.n||a.ai)?(a.on?`<button class="lk" style="background:#fef3c7;color:#92400e" onclick="akLock('${s}','${L.id}',0)">🔓 తెరిచారు – లాక్ చేయి</button>`:`<button class="lk b" onclick="akLock('${s}','${L.id}',1)">🔒 లాక్ – పిల్లలకు తెరువు</button>`):''}</div>`)(akLesson(L)):''}</div>`).join('')||'<div class="empty">ఈ తరగతి / సబ్జెక్టుకు ఇంకా నోట్స్ లేవు – కింద “➕ కొత్త పాఠం” తో మీరే జోడించవచ్చు</div>'}
 ${hid.length?`<div class="card"><b>🙈 దాచిన పాఠాలు</b>${hid.map(x=>`<div class="r" style="margin-top:6px"><span>${esc(x.t||x.lid)}</span><button class="lk" onclick="tbReset('${x.lid}',1)">↺ మళ్ళీ చూపు</button></div>`).join('')}</div>`:''}
 <button class="btn" onclick="go('teacher',{t:'tb',ed:''})">➕ కొత్త పాఠం జోడించు</button>`;};
 function tbEditor(){const c=TBE.c,s=TBE.s,id=param.ed||'',L=id?tbLes(c,s).find(x=>x.id===id):null,base=id&&tbBase(c,s,id);
@@ -4189,7 +4190,7 @@ function akRange(L){const W=L&&L.wb;if(!W||!W.f)return null;const m=String(W.pg|
 function akLesson(L){const R=akRange(L);if(!R)return {n:0,ai:0,on:false};const rs=S.ak.filter(r=>!r.del&&r.f===R.f&&r.pg>=R.a&&r.pg<=R.b&&(r.h||(r.k||[]).length||(r.x||[]).length));return {n:new Set(rs.map(r=>r.pg)).size,ai:ansCount(L),on:wbaOpen(TBE.c,L.id)};}
 async function akLock(s,id,on){const L=tbGet(TBE.c,s,id),R=akRange(L);if(!R)return;const a=akLesson(L);if(!a.n&&!a.ai)return toast('ముందు జవాబులు రాయండి');
  if(on&&S.cfg.type==='gs'){toast('సర్వర్ చూస్తోంది...');const b=await akServerOk();if(b)return toast('❌ '+b);}
- S.ak.filter(r=>!r.del&&r.f===R.f&&r.pg>=R.a&&r.pg<=R.b).forEach(r=>put('ak',Object.assign({},r,{on:on?1:0})));put('ak',{id:'akl_'+TBE.c+'_'+id,c:TBE.c,sb:s,ln:id,on:on?1:0});
+ S.ak.filter(r=>!r.del&&r.f===R.f&&r.pg>=R.a&&r.pg<=R.b).forEach(r=>put('ak',Object.assign({},r,{on:(on||wbaBook(TBE.c,s))?1:0})));put('ak',{id:'akl_'+TBE.c+'_'+id,c:TBE.c,sb:s,ln:id,on:on?1:0});
  toast(on?'🔓 జవాబులు తెరిచాం – పిల్లలు వర్క్‌బుక్‌లో 🔑 నొక్కి చూసుకోవచ్చు':'🔒 జవాబులు లాక్ చేశాం');go('teacher',{t:'tb'});}
 async function akServerOk(){try{const j=await (await fetch(S.cfg.url+'?a=ping&_='+Date.now())).json();return j&&j.ak?'':'సర్వర్ కోడ్ పాతది – కొత్త సర్వర్ కోడ్ పెట్టి మూడు deployments కూ New version Deploy చేయండి';}catch(e){return 'సర్వర్ చేరలేదు – నెట్ చూడండి';}}
 function akOpen(s,id){const L=tbGet(TBE.c,s,id),W=L&&L.wb;if(!W||!W.f)return;S.bookPos=S.bookPos||{};S.bookPos[W.f]=W.p||1;save();
@@ -4203,12 +4204,18 @@ function ansFile(u){return String(u||'').split('/').pop();}
 function ansPage(u,pg){const A=window.RAAY_ANS[ansCls()];return A&&A[ansFile(u)]?A[ansFile(u)][pg]||null:null;}
 function ansLessonOf(u,pg){const c=ansCls();for(const s of subjectsFor(c))for(const L of tbLes(c,s)){const R=akRange(L);if(R&&ansFile(R.f)===ansFile(u)&&pg>=R.a&&pg<=R.b)return {s,L};}return null;}
 function wbaOpen(c,ln){const r=S.ak.find(x=>x.id==='akl_'+c+'_'+ln&&!x.del);return !!(r&&r.on);}
+function wbaBook(c,s){const r=S.ak.find(x=>x.id==='akb_'+c+'_'+s&&!x.del);return !!(r&&r.on);}
+async function akBookLock(s,on){const c=TBE.c,ls=tbLes(c,s).filter(L=>akRange(L));if(!ls.length)return;
+ if(on&&!confirm(SUBJ[s].n+' వర్క్‌బుక్‌లోని అన్ని పాఠాల జవాబులు పిల్లలకు తెరవాలా?'))return;
+ if(on&&S.cfg.type==='gs'){toast('సర్వర్ చూస్తోంది...');const b=await akServerOk();if(b)return toast('❌ '+b);}
+ ls.forEach(L=>{const R=akRange(L),o=on||wbaOpen(c,L.id);S.ak.filter(r=>!r.del&&r.f===R.f&&r.pg>=R.a&&r.pg<=R.b).forEach(r=>{if(!!r.on!==o)put('ak',Object.assign({},r,{on:o?1:0}));});});
+ put('ak',{id:'akb_'+c+'_'+s,c,sb:s,on:on?1:0});toast(on?'📖 మొత్తం పుస్తకం జవాబులు తెరిచాం':'🔒 మొత్తం పుస్తకం లాక్ – పాఠం వారీగా తెరిచినవి మాత్రమే కనిపిస్తాయి');go('teacher',{t:'tb'});}
 function ansCount(L){const R=akRange(L),A=window.RAAY_ANS[TBE.c];if(!R||!A||!A[ansFile(R.f)])return 0;let n=0;for(let p=R.a;p<=R.b;p++)if(A[ansFile(R.f)][p])n++;return n;}
-function ansPanel(){let el=document.getElementById('ansp');const a=ansPage(BV.url,BV.page);if(!el||!a){if(el)el.hidden=true;return;}
+function ansPanel(){let el=document.getElementById('ansp');const a=ansPage(BV.url,BV.page);if(!el||!a||!akState().open){if(el)el.hidden=true;return;}
  el.innerHTML=`<div class="ansh"><b>🔑 ఈ పేజీ జవాబులు</b><button onclick="INK.showAns=false;ansPanel();akShowBtn()">✕</button></div><ol class="ansl">${a.map(x=>/^— /.test(x)?`<li class="ah">${esc(x.replace(/^— | —$/g,''))}</li>`:`<li>${esc(x)}</li>`).join('')}</ol><small>👀 నీ జవాబుతో పోల్చి చూసుకో. తప్పు ఉంటే 🧽 తో తుడిచి సరిచేయి.</small>`;el.hidden=!INK.showAns;}
 /* విద్యార్థి: జవాబుల పొర చూపించడం */
 function akState(){const k=akGet(BV.url,BV.page),a=ansPage(BV.url,BV.page),lo=ansLessonOf(BV.url,BV.page),t=!!param.ak||view==='teacher';
- const open=t||!!(k&&k.on)||!!(lo&&wbaOpen(ansCls(),lo.L.id));return {k,a,open,has:!!((k&&k.has)||a)};}
+ const open=t||!!(k&&k.on)||!!(lo&&(wbaOpen(ansCls(),lo.L.id)||wbaBook(ansCls(),lo.s)));return {k,a,open,has:!!((k&&k.has)||a)};}
 function akShowBtn(){const b=document.getElementById('akbtn');if(!b)return;const st=akState();if(!st.has){b.hidden=true;ansPanel();return;}b.hidden=false;
  const on=INK.showKey||INK.showAns;b.textContent=st.open?(on?'🔑 దాచు':'🔑 జవాబులు'):'🔒 జవాబులు';b.classList.toggle('on',!!(st.open&&on));ansPanel();}
 function akToggle(){const st=akState();if(!st.has)return;if(!st.open)return toast('🔒 టీచర్ జవాబులు ఇంకా తెరవలేదు – ముందు నువ్వే రాయి!');const on=INK.showKey||INK.showAns;
