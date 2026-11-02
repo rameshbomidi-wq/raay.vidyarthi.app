@@ -576,6 +576,7 @@ button.upbtn{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;c
 #btxin button{border:0;border-radius:10px;padding:10px 12px;font-weight:800;background:#0b5e73;color:#fff}#btxin button.x{background:#e2e8f0;color:#334155}
 .akrow{padding-top:0}.btx.key{text-decoration:underline wavy rgba(22,163,74,.6)}#akbtn{width:auto;padding:0 10px;font-size:13px;font-weight:800}#akbtn.on{background:#16a34a;color:#fff}
 .ansp{position:fixed;left:8px;right:8px;bottom:calc(76px + env(safe-area-inset-bottom));max-height:46vh;overflow:auto;z-index:66;background:#f0fdf4;border:2px solid #16a34a;border-radius:14px;padding:8px 10px;box-shadow:0 10px 30px rgba(0,0,0,.35)}.ansp[hidden]{display:none}.ansh{display:flex;align-items:center;justify-content:space-between;color:#166534}.ansh button{border:0;background:#dcfce7;border-radius:8px;padding:4px 10px;font-weight:800}.ansp ol{margin:6px 0;padding-left:20px}.ansp li{font-size:14px;line-height:1.55;margin-bottom:4px;color:#14532d}.ansp small{color:#475569}
+.ansl{list-style:none;padding-left:2px;margin:4px 0}.ansl li{margin:3px 0;line-height:1.5;font-size:14px}.ansl li.ah{font-weight:800;color:#166534;margin-top:8px;border-top:1px dashed #86efac;padding-top:4px}
 </style>
 </head>
 <body>
@@ -2370,7 +2371,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.02-6';
+const APPV='2026.11.02-7';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3112,7 +3113,7 @@ const TP={};TP.tc=tpTc;
 const TBE={c:0,s:''};
 function tbBase(c,s,id){return ((window.RAAY_TB[+c]||{})[s]||[]).find(x=>x.id===id);}
 async function tbServerOk(){try{const j=await (await fetch(S.cfg.url+'?a=ping&_='+Date.now())).json();return j&&j.tbx?'':'సర్వర్ కోడ్ పాతది – కొత్త సర్వర్ కోడ్ పెట్టి మూడు deployments కూ New version Deploy చేయండి';}catch(e){return 'సర్వర్ చేరలేదు – నెట్ చూడండి';}}
-TP.tb=()=>{const cls=myCls();if(!cls.includes(TBE.c))TBE.c=cls.includes(3)?3:cls[0];const c=TBE.c;ansLoad(c);const subs=subjectsFor(c).filter(s=>canSee(c,s));if(!subs.includes(TBE.s))TBE.s=subs[0];const s=TBE.s;
+TP.tb=()=>{const cls=myCls();if(!cls.includes(TBE.c))TBE.c=cls.includes(3)?3:cls[0];const c=TBE.c;wbaLoad(c);const subs=subjectsFor(c).filter(s=>canSee(c,s));if(!subs.includes(TBE.s))TBE.s=subs[0];const s=TBE.s;
  if(param.ed!==undefined)return tbEditor();
  const ls=tbLes(c,s),st=TBL[c],hid=live('tbx').filter(x=>+x.c===c&&x.s===s&&x.hide);
  return `<div class="card"><h3>📘 పాఠ్యపుస్తకం నోట్స్ & టెస్ట్</h3><p class="mut">పిల్లల “నేర్చుకో”లో నెలవారీగా కనిపించే పాఠం నోట్స్, పాఠం టెస్ట్. ఏదైనా పదం, ప్రశ్న సరిచేయవచ్చు; కొత్త పాఠం (ఉదా: సెమిస్టర్-2) మీరే జోడించవచ్చు. సింక్ ద్వారా పిల్లలందరికీ చేరుతుంది.</p>
@@ -4185,7 +4186,7 @@ function akPut(f,pg,d){const base='ak_'+akHash(f)+'_'+pg,old=akRecs(f,pg),on=old
  old.filter(r=>(r.part||0)>=parts.length).forEach(r=>remove('ak',r.id));}
 function akHash(s){let h=0;for(const ch of String(s))h=(h*31+ch.charCodeAt(0))|0;return (h>>>0).toString(36);}
 function akRange(L){const W=L&&L.wb;if(!W||!W.f)return null;const m=String(W.pg||'').match(/(\d+)\D+(\d+)/);const a=W.p||1,b=m?a+(+m[2]-+m[1]):a;return {f:W.f,a,b};}
-function akLesson(L){const R=akRange(L);if(!R)return {n:0,ai:0,on:false};const rs=S.ak.filter(r=>!r.del&&r.f===R.f&&r.pg>=R.a&&r.pg<=R.b&&(r.h||(r.k||[]).length||(r.x||[]).length));return {n:new Set(rs.map(r=>r.pg)).size,ai:ansCount(L),on:ansOpen(TBE.c,L.id)};}
+function akLesson(L){const R=akRange(L);if(!R)return {n:0,ai:0,on:false};const rs=S.ak.filter(r=>!r.del&&r.f===R.f&&r.pg>=R.a&&r.pg<=R.b&&(r.h||(r.k||[]).length||(r.x||[]).length));return {n:new Set(rs.map(r=>r.pg)).size,ai:ansCount(L),on:wbaOpen(TBE.c,L.id)};}
 async function akLock(s,id,on){const L=tbGet(TBE.c,s,id),R=akRange(L);if(!R)return;const a=akLesson(L);if(!a.n&&!a.ai)return toast('ముందు జవాబులు రాయండి');
  if(on&&S.cfg.type==='gs'){toast('సర్వర్ చూస్తోంది...');const b=await akServerOk();if(b)return toast('❌ '+b);}
  S.ak.filter(r=>!r.del&&r.f===R.f&&r.pg>=R.a&&r.pg<=R.b).forEach(r=>put('ak',Object.assign({},r,{on:on?1:0})));put('ak',{id:'akl_'+TBE.c+'_'+id,c:TBE.c,sb:s,ln:id,on:on?1:0});
@@ -4195,25 +4196,25 @@ function akOpen(s,id){const L=tbGet(TBE.c,s,id),W=L&&L.wb;if(!W||!W.f)return;S.b
  go('book',{u:W.f,t:'🔑 జవాబులు – '+L.t,k:'pdf',ak:1,back:{tch:1}});INK.akm={c:TBE.c,s,ln:id};pdfInit();}
 /* ===== 🔑 వర్క్‌బుక్ జవాబుల పుస్తకం (answers-<తరగతి>.js) – టీచర్ పాఠం వారీగా తెరిచాకే పిల్లలకు ===== */
 window.RAAY_ANS=window.RAAY_ANS||{};const ANSL={};
-function ansLoad(c){c=+c;if(!c||ANSL[c])return;if(window.RAAY_ANS[c]){ANSL[c]='ok';return;}ANSL[c]='ld';const sc=document.createElement('script');sc.src='answers-'+c+'.js';sc.async=true;
+function wbaLoad(c){c=+c;if(!c||ANSL[c])return;if(window.RAAY_ANS[c]){ANSL[c]='ok';return;}ANSL[c]='ld';const sc=document.createElement('script');sc.src='answers-'+c+'.js';sc.async=true;
  sc.onload=()=>{ANSL[c]=window.RAAY_ANS[c]?'ok':'no';if(view==='book')akShowBtn();else if(view==='teacher'&&param.t==='tb')softRender();};sc.onerror=()=>{ANSL[c]='no';sc.remove();};document.head.appendChild(sc);}
 function ansCls(){return (view==='teacher'||param.ak)?(TBE.c||3):(S.cur?+S.cur.c:3);}
 function ansFile(u){return String(u||'').split('/').pop();}
 function ansPage(u,pg){const A=window.RAAY_ANS[ansCls()];return A&&A[ansFile(u)]?A[ansFile(u)][pg]||null:null;}
 function ansLessonOf(u,pg){const c=ansCls();for(const s of subjectsFor(c))for(const L of tbLes(c,s)){const R=akRange(L);if(R&&ansFile(R.f)===ansFile(u)&&pg>=R.a&&pg<=R.b)return {s,L};}return null;}
-function ansOpen(c,ln){const r=S.ak.find(x=>x.id==='akl_'+c+'_'+ln&&!x.del);return !!(r&&r.on);}
+function wbaOpen(c,ln){const r=S.ak.find(x=>x.id==='akl_'+c+'_'+ln&&!x.del);return !!(r&&r.on);}
 function ansCount(L){const R=akRange(L),A=window.RAAY_ANS[TBE.c];if(!R||!A||!A[ansFile(R.f)])return 0;let n=0;for(let p=R.a;p<=R.b;p++)if(A[ansFile(R.f)][p])n++;return n;}
 function ansPanel(){let el=document.getElementById('ansp');const a=ansPage(BV.url,BV.page);if(!el||!a){if(el)el.hidden=true;return;}
- el.innerHTML=`<div class="ansh"><b>🔑 ఈ పేజీ జవాబులు</b><button onclick="INK.showAns=false;ansPanel();akShowBtn()">✕</button></div><ol>${a.map(x=>`<li>${esc(x)}</li>`).join('')}</ol><small>👀 నీ జవాబుతో పోల్చి చూసుకో. తప్పు ఉంటే 🧽 తో తుడిచి సరిచేయి.</small>`;el.hidden=!INK.showAns;}
+ el.innerHTML=`<div class="ansh"><b>🔑 ఈ పేజీ జవాబులు</b><button onclick="INK.showAns=false;ansPanel();akShowBtn()">✕</button></div><ol class="ansl">${a.map(x=>/^— /.test(x)?`<li class="ah">${esc(x.replace(/^— | —$/g,''))}</li>`:`<li>${esc(x)}</li>`).join('')}</ol><small>👀 నీ జవాబుతో పోల్చి చూసుకో. తప్పు ఉంటే 🧽 తో తుడిచి సరిచేయి.</small>`;el.hidden=!INK.showAns;}
 /* విద్యార్థి: జవాబుల పొర చూపించడం */
 function akState(){const k=akGet(BV.url,BV.page),a=ansPage(BV.url,BV.page),lo=ansLessonOf(BV.url,BV.page),t=!!param.ak||view==='teacher';
- const open=t||!!(k&&k.on)||!!(lo&&ansOpen(ansCls(),lo.L.id));return {k,a,open,has:!!((k&&k.has)||a)};}
+ const open=t||!!(k&&k.on)||!!(lo&&wbaOpen(ansCls(),lo.L.id));return {k,a,open,has:!!((k&&k.has)||a)};}
 function akShowBtn(){const b=document.getElementById('akbtn');if(!b)return;const st=akState();if(!st.has){b.hidden=true;ansPanel();return;}b.hidden=false;
  const on=INK.showKey||INK.showAns;b.textContent=st.open?(on?'🔑 దాచు':'🔑 జవాబులు'):'🔒 జవాబులు';b.classList.toggle('on',!!(st.open&&on));ansPanel();}
 function akToggle(){const st=akState();if(!st.has)return;if(!st.open)return toast('🔒 టీచర్ జవాబులు ఇంకా తెరవలేదు – ముందు నువ్వే రాయి!');const on=INK.showKey||INK.showAns;
  if(!on&&!param.ak&&INK.d&&!INK.d.s.length&&!INK.d.t.length&&!confirm('నువ్వు ఈ పేజీలో ఇంకా ఏమీ రాయలేదు. ముందు రాసి తర్వాత చూస్తే బాగా నేర్చుకుంటావు. ఇప్పుడే జవాబులు చూడాలా?'))return;
  INK.showKey=!on&&!!(st.k&&st.k.has);INK.showAns=!on&&!!st.a;akShowBtn();inkDraw();if(!on)toast('జవాబులతో నీ జవాబు పోల్చి చూసుకో ✔');}
-async function pdfInit(){try{ansLoad(ansCls());}catch(e){}INK.showAns=false;INK.on=false;INK.key='';INK.d=null;INK.showKey=false;INK.col=param.ak?'#16a34a':'#1d4ed8';INK.tool='pen';if(!param.ak)INK.akm=null;const u=param.u;BV={url:u,page:(S.bookPos||{})[u]||1,zoom:1,doc:null,tok:0};
+async function pdfInit(){try{wbaLoad(ansCls());}catch(e){}INK.showAns=false;INK.on=false;INK.key='';INK.d=null;INK.showKey=false;INK.col=param.ak?'#16a34a':'#1d4ed8';INK.tool='pen';if(!param.ak)INK.akm=null;const u=param.u;BV={url:u,page:(S.bookPos||{})[u]||1,zoom:1,doc:null,tok:0};
  try{const lib=await loadPdfjs();const task=lib.getDocument({url:u,disableRange:true,disableStream:true,cMapUrl:PDFJS.cmap,cMapPacked:true});
   task.onProgress=(p)=>{if(p&&p.total)bmsg('⏳ లోడ్ అవుతోంది '+Math.min(100,Math.round(p.loaded*100/p.total))+'%');};BV.task0=task;
   const doc=await task.promise;if(view!=='book'||param.u!==u){try{doc.destroy();}catch(e){}return;}
