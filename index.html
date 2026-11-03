@@ -409,6 +409,7 @@ label.idck{display:flex;align-items:center;gap:8px}label.idck input{width:20px;h
 .idsubs{display:flex;flex-wrap:wrap;gap:6px}.idsubs button{border:1.5px solid var(--line);background:#fff;border-radius:16px;padding:6px 10px;font-size:13px}.idsubs button.on{background:#ccfbf1;border-color:#14b8a6;color:#0f766e;font-weight:700}
 .idadd{display:flex;gap:8px;align-items:center;margin-top:10px}.idadd .btn{margin:0;flex:none}
 .idpgn{display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:8px}.idpgn .btn{margin:0}
+.owst h3{display:flex;align-items:center;gap:10px}.owst h3 span{background:var(--teal);color:#fff;border-radius:50%;width:30px;height:30px;display:grid;place-items:center;font-size:16px;flex:none}.owtip{font-size:13px;margin-top:8px}
 #idPrint{display:none}
 @media print{body.idprint>*:not(#idPrint){display:none!important}body.idprint #idPrint{display:block!important}body.idprint,html:has(body.idprint){background:#fff!important;margin:0!important;padding:0!important}}
 #qpPrint{display:none}
@@ -614,13 +615,35 @@ label.idck{display:flex;align-items:center;gap:8px}label.idck input{width:20px;h
 <script type="text/plain" id="gs-code">
 /******************************************************************
  * రాయ్ ఎడ్యుకేషన్ – విద్యార్థి లెర్నింగ్ యాప్ సర్వర్ (Google Apps Script)
- * Google Sheet → Extensions → Apps Script లో ఈ కోడ్ పేస్ట్ చేసి
+ * పాఠశాల “సొంత సర్వర్” – మీ Google ఖాతాలో, మీ పాఠశాల డేటా మీ దగ్గరే (ఉచితం).
  * Deploy → New deployment → Web app
  *   Execute as: Me   |   Who has access: Anyone
+ * తర్వాత Web app లింక్‌ను యాప్‌లో “సొంత సర్వర్” పేజీలో పేస్ట్ చేయండి – కీలు యాప్ తనే సెట్ చేస్తుంది.
+ * కీలు మర్చిపోతే: Apps Script → ⚙️ Project Settings → Script Properties (SK = విద్యార్థుల కీ, TK = టీచర్ కీ)
  * PDF అప్‌లోడ్ కోసం: ఫంక్షన్ లిస్ట్‌లో driveSetup ఎంచుకుని ▶ Run → Allow
  ******************************************************************/
-var SCHOOL_KEY  = '__SCHOOL_KEY__';   // విద్యార్థుల కీ (జాయిన్ లింక్‌లో వెళ్తుంది)
+var SCHOOL_KEY  = '__SCHOOL_KEY__';   // విద్యార్థుల కీ (జాయిన్ లింక్‌లో వెళ్తుంది) – ఖాళీగా ఉంటే యాప్ మొదటిసారి సెట్ చేస్తుంది
 var TEACHER_KEY = '__TEACHER_KEY__';  // ఉపాధ్యాయుల కీ – ఎవరికీ ఇవ్వకండి
+var SRV_V = 2;  // సర్వర్ కోడ్ వెర్షన్ (యాప్ “సర్వర్ పాతది” అని చూపడానికి)
+function keys_() {
+  if (SCHOOL_KEY.indexOf('__') !== 0) return {s: SCHOOL_KEY, t: TEACHER_KEY};
+  var pr = PropertiesService.getScriptProperties();
+  return {s: pr.getProperty('SK') || '', t: pr.getProperty('TK') || ''};
+}
+function sname_() { var n = PropertiesService.getScriptProperties().getProperty('SN'); return n || SpreadsheetApp.getActive().getName(); }
+/* 🖥️ మొదటిసారి: యాప్ నుండి కీలు, పాఠశాల పేరు (ఒక్కసారే – తర్వాత మార్చలేరు) */
+function init_(b) {
+  var lock = LockService.getScriptLock(); lock.waitLock(20000);
+  try {
+    if (keys_().s) return json_({ok: false, err: 'done'});
+    var sk = String(b.skey || ''), tk = String(b.tkey || ''), nm = clean_(b.name, 80);
+    if (!/^sch-[a-z0-9]{6,20}$/.test(sk) || !/^tch-[a-z0-9]{12,30}$/.test(tk) || nm.length < 3) return json_({ok: false, err: 'bad'});
+    PropertiesService.getScriptProperties().setProperties({SK: sk, TK: tk, SN: nm, SP: clean_(b.place, 80)});
+    try { SpreadsheetApp.getActive().rename('రాయ్ విద్యార్థి సర్వర్ – ' + nm); } catch (x) {}
+    db_();
+    return json_({ok: true, name: nm});
+  } finally { lock.releaseLock(); }
+}
 var ALL_COLS = ['students','hw','events','doubts','notes','results','games','subs','teachers','roster','marks','qb','papers','tbx','ak'];
 var TEACHER_COLS = ['hw','events','notes','roster','marks','qb','papers','tbx','ak'];
 var PRIV = ['students','results','doubts','subs'];  // విద్యార్థికి తన డేటా మాత్రమే
@@ -633,6 +656,7 @@ function db_() {
     sh.getRange('A:F').setNumberFormat('@');
     sh.appendRow(['key','col','id','srv','upd','json']);
     sh.setFrozenRows(1);
+    try { if (sh.getMaxColumns() > 6) sh.deleteColumns(7, sh.getMaxColumns() - 6); } catch (x) {}
   }
   return sh;
 }
@@ -656,8 +680,10 @@ function tkeys_() {
   return out;
 }
 function who_(k) {
-  if (k && k === TEACHER_KEY) return {isT: true, admin: true};
-  if (k && k === SCHOOL_KEY) return {isT: false};
+  var K = keys_();
+  if (!K.s) return null;
+  if (k && k === K.t) return {isT: true, admin: true};
+  if (k && k === K.s) return {isT: false};
   var m = k ? tkeys_()[k] : null;
   return m ? {isT: true, admin: false, me: m} : null;
 }
@@ -669,13 +695,13 @@ function cleanT_(col, js, admin) {
 /* డేటా చదవడం (pull) */
 function doGet(e) {
   var p = (e && e.parameter) || {};
-  if (p.a === 'ping') return json_({ok:true, up:true, roster:true, qp:true, pdfs:true, tbx:true, ak:true});
+  if (p.a === 'ping') return json_({ok:true, up:true, roster:true, qp:true, pdfs:true, tbx:true, ak:true, own:true, v:SRV_V, init:!keys_().s});
   var w = who_(p.k);
   if (!w) return json_({ok:false, err:'key'});
-  if (p.a === 'card') return card_(p, db_(), SpreadsheetApp.getActive().getName(), 'cardf_one');
+  if (p.a === 'card') return card_(p, db_(), sname_(), 'cardf_one');
   var isT = w.isT, since = Number(p.since || 0), cc = CacheService.getScriptCache(), lc = Number(cc.get('chg') || 0);
   // ⚡ మార్పు లేకపోతే షీట్ చదవకుండానే జవాబు
-  if (since > 0 && lc > 0 && lc <= since) return json_({ok:true, now:since, rows:[], teacher:isT, admin:!!w.admin, me:w.me || null});
+  if (since > 0 && lc > 0 && lc <= since) return json_({ok:true, now:since, rows:[], teacher:isT, admin:!!w.admin, me:w.me || null, school:sname_(), skey:isT ? keys_().s : undefined});
   var lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
     var sh = db_(), n = sh.getLastRow(), max = since, rows = [];
@@ -691,7 +717,7 @@ function doGet(e) {
       }
     }
     if (!lc && max > 0) cc.put('chg', String(max), 21600);
-    return json_({ok:true, now:max, rows:rows, teacher:isT, admin:!!w.admin, me:w.me || null});
+    return json_({ok:true, now:max, rows:rows, teacher:isT, admin:!!w.admin, me:w.me || null, school:sname_(), skey:isT ? keys_().s : undefined});
   } finally { lock.releaseLock(); }
 }
 
@@ -699,6 +725,7 @@ function doGet(e) {
 function doPost(e) {
   var b;
   try { b = JSON.parse(e.postData.contents); } catch (x) { return json_({ok:false, err:'bad'}); }
+  if (b.a === 'init') return init_(b);
   var w = who_(b.k);
   if (!w) return json_({ok:false, err:'key'});
   if (b.a === 'up') return up_(b, w, '');
@@ -909,6 +936,7 @@ var COLS = ['students','hw','events','doubts','notes','results','games','subs','
 var TCOLS = ['hw','events','notes','roster','marks','qb','papers','tbx','ak'];
 var PRIV = ['students','results','doubts','subs'];  // విద్యార్థికి తన డేటా మాత్రమే
 var MAX_REG_PER_HOUR = 40;
+var MAX_SCHOOLS = 50;  // ఈ సర్వర్‌లో గరిష్ఠ పాఠశాలలు – నిండాక కొత్తవారికి “సొంత సర్వర్” (ఉచితం) సూచిస్తాం. అవసరమైతే మార్చుకోండి.
 var SUBJ = {tel:'తెలుగు', hin:'హిందీ', eng:'English', mat:'గణితం', evs:'పరిసరాల విజ్ఞానం', sci:'సైన్స్', phy:'భౌతిక శాస్త్రం', bio:'జీవ శాస్త్రం', soc:'సాంఘిక శాస్త్రం'};
 
 function ss_() { return SpreadsheetApp.getActive(); }
@@ -923,8 +951,21 @@ function schoolsSh_() {
     sh.getRange('A:H').setNumberFormat('@');
     sh.appendRow(['కోడ్', 'పాఠశాల', 'ప్రాంతం', 'ఉపాధ్యాయులు', 'నమోదు', 'విద్యార్థుల కీ', 'టీచర్ కీ', 'ఫోన్']);
     sh.setFrozenRows(1);
+    trim_(sh, 8);
   }
   return sh;
+}
+/* ✂️ ఖాళీ కాలమ్స్ / చివరి ఖాళీ వరుసలు తొలగింపు – 1 కోటి సెల్స్ పరిమితిలో 4 రెట్లు ఎక్కువ డేటా */
+function trim_(sh, cols) {
+  try {
+    var mc = sh.getMaxColumns(); if (mc > cols) sh.deleteColumns(cols + 1, mc - cols);
+    var lr = Math.max(sh.getLastRow(), 1), mr = sh.getMaxRows(); if (mr > lr + 200) sh.deleteRows(lr + 201, mr - lr - 200);
+  } catch (x) {}
+}
+function nSchools_() {
+  var c = CacheService.getScriptCache(), h = c.get('nsch');
+  if (h) return Number(h);
+  var n = Math.max(0, schoolsSh_().getLastRow() - 1); c.put('nsch', String(n), 600); return n;
 }
 function findSchool_(id) {
   if (!/^[A-Z0-9]{4,10}$/.test(id)) return null;
@@ -949,6 +990,10 @@ function db_(id) {
     sh.getRange('A:F').setNumberFormat('@');
     sh.appendRow(['key','col','id','srv','upd','json']);
     sh.setFrozenRows(1);
+    trim_(sh, 6);
+  } else {
+    var c = CacheService.getScriptCache();
+    if (!c.get('tr_' + id)) { c.put('tr_' + id, '1', 21600); if (sh.getMaxColumns() > 6 || sh.getMaxRows() > sh.getLastRow() + 400) trim_(sh, 6); }
   }
   return sh;
 }
@@ -984,7 +1029,7 @@ function auth_(p) {
 /* డేటా చదవడం */
 function doGet(e) {
   var p = (e && e.parameter) || {};
-  if (p.a === 'ping') return json_({ok: true, multi: true, up: true, roster: true, qp: true, pdfs: true, tbx: true, ak: true});
+  if (p.a === 'ping') { var ns = nSchools_(); return json_({ok: true, multi: true, up: true, roster: true, qp: true, pdfs: true, tbx: true, ak: true, cap: true, full: ns >= MAX_SCHOOLS, n: ns, max: MAX_SCHOOLS}); }
   if (p.a === 'join') {
     var c = CacheService.getScriptCache(), bad = Number(c.get('badjoin') || 0);
     if (bad > 300) return json_({ok: false, err: 'busy'});
@@ -1064,7 +1109,7 @@ function doPost(e) {
 
 /* 📤 PDF అప్‌లోడ్ – యజమాని Google Drive లో “Raay_Vidyarthi_PDFs” ఫోల్డర్‌లో సేవ్ అవుతాయి.
    మొదటిసారి: పైన ఫంక్షన్ లిస్ట్‌లో driveSetup ఎంచుకుని ▶ Run → Allow చేయండి. */
-var UP_MAX_MB = 20, SCHOOL_MAX_MB = 1000, UP_PER_HOUR = 40;  // ఒక పాఠశాలకు PDF స్థలం (MB) – మీ Drive ఖాళీని బట్టి పెంచుకోవచ్చు
+var UP_MAX_MB = 20, SCHOOL_MAX_MB = 300, UP_PER_HOUR = 40;  // ఒక పాఠశాలకు PDF స్థలం (MB) – మీ Drive ఖాళీని బట్టి పెంచుకోవచ్చు
 function driveSetup() { folder_('Raay_Vidyarthi_PDFs'); Logger.log('Drive అనుమతి సరే ✓'); }
 function folder_(name, parent) {
   var it = parent ? parent.getFoldersByName(name) : DriveApp.getFoldersByName(name);
@@ -1157,14 +1202,17 @@ function reg_(b) {
   var name = clean_(b.name, 80), place = clean_(b.place, 80), teacher = clean_(b.teacher, 60), phone = clean_(b.phone, 15);
   if (name.length < 3) return json_({ok: false, err: 'name'});
   var c = CacheService.getScriptCache(), cnt = Number(c.get('regcount') || 0);
+  if (nSchools_() >= MAX_SCHOOLS) return json_({ok: false, err: 'full'});
   if (cnt >= MAX_REG_PER_HOUR) return json_({ok: false, err: 'busy'});
   c.put('regcount', String(cnt + 1), 3600);
   var lock = LockService.getScriptLock(); lock.waitLock(25000);
   try {
+    if (Math.max(0, schoolsSh_().getLastRow() - 1) >= MAX_SCHOOLS) return json_({ok: false, err: 'full'});
     var id; do { id = rnd_(6); } while (findSchool_(id));
     var skey = 's' + rnd_(10), tkey = 't' + rnd_(14);
     schoolsSh_().appendRow([id, name, place, teacher, new Date().toISOString(), skey, tkey, phone]);
     db_(id);
+    c.remove('nsch');
     return json_({ok: true, id: id, skey: skey, tkey: tkey, name: name});
   } finally { lock.releaseLock(); }
 }
@@ -1218,7 +1266,19 @@ function onOpen() {
   SpreadsheetApp.getUi().createMenu('రాయ్ ఎడ్యుకేషన్')
     .addItem('📊 ఒక పాఠశాల రిపోర్ట్', 'schoolReport')
     .addItem('📦 పాత డేటా ఆర్కైవ్ (ఏడాది చివర)', 'archiveOld')
-    .addItem('📏 షీట్ సైజు చూడు', 'sizeReport').addToUi();
+    .addItem('📏 షీట్ సైజు చూడు', 'sizeReport')
+    .addItem('✂️ ఖాళీ స్థలం కుదించు (ఒక్కసారి)', 'trimAll').addToUi();
+}
+function trimAll() {
+  var before = 0, after = 0, n = 0;
+  ss_().getSheets().forEach(function (sh) {
+    before += sh.getMaxRows() * sh.getMaxColumns();
+    var nm = sh.getName();
+    if (/^S_[A-Z0-9]{4,10}$/.test(nm)) { var un = slock_(nm.slice(2)); if (!un) return; try { trim_(sh, 6); n++; } finally { un(); } }
+    else if (nm === 'Schools') trim_(sh, 8);
+    after += sh.getMaxRows() * sh.getMaxColumns();
+  });
+  SpreadsheetApp.getUi().alert('✂️ ' + n + ' పాఠశాలల ట్యాబ్‌లు కుదించాం.\nసెల్స్: ' + before.toLocaleString() + ' → ' + after.toLocaleString() + '\n(1 కోటిలో ' + Math.round(after / 100000) + '%)');
 }
 /* 📦 పాత టెస్ట్ ఫలితాలు, ఆటలు, హోంవర్క్ సమర్పణలు, సందేహాలు వేరే ఫైల్‌కు – ప్రధాన షీట్ తేలికగా, వేగంగా */
 function archiveOld() {
@@ -2193,7 +2253,7 @@ function notify(list){toast(list[0]+(list.length>1?` (+${list.length-1})`:''));
 function softRender(){if(view==='testrun'||view==='gamerun'||view==='book'||view==='wsrun')return;if(typeof PGDIRTY!=='undefined'&&PGDIRTY&&view==='teacher')return;const ae=document.activeElement;if(ae&&/^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName))return;const y=window.scrollY||0;render();try{window.scrollTo(0,y);}catch(e){}}
 
 /* Google Sheets (Apps Script) */
-function gsErr(e){return {key:'కీ తప్పు',school:'పాఠశాల కోడ్ తప్పు',busy:'సర్వర్ బిజీ – కాసేపటి తర్వాత ప్రయత్నించండి'}[e]||e;}
+function gsErr(e){return {key:'కీ తప్పు',school:'పాఠశాల కోడ్ తప్పు',busy:'సర్వర్ బిజీ – కాసేపటి తర్వాత ప్రయత్నించండి',full:'పబ్లిక్ సర్వర్ నిండింది – సొంత సర్వర్ (ఉచితం) తయారు చేసుకోండి',done:'ఈ సర్వర్ ఇప్పటికే సెటప్ అయింది',bad:'వివరాలు సరిగా లేవు'}[e]||e;}
 const GS={
  key(){return S.cfg.tkey||S.cfg.key;},
  async pull(){const u=S.cfg.url+'?a=pull'+(S.cfg.sid?'&s='+encodeURIComponent(S.cfg.sid):'')+'&k='+encodeURIComponent(this.key())+'&dev='+encodeURIComponent(S.dev)+'&since='+(S.last.gs||0)+'&_='+Date.now();
@@ -2399,7 +2459,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.03-3';
+const APPV='2026.11.03-4';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -2439,6 +2499,8 @@ V.privacy=()=>`<div class="bar"><button class="ib" onclick="history.length>1&&vi
 <p class="mut center">చివరి మార్పు: అక్టోబర్ 2026</p>`;
 V.welcome=()=>{const w=param.w||'';const ps=pubServer();const back=`<button class="link" onclick="go('welcome')">← వెనుకకు</button>`;
  if(w==='t'){if(!ps)return `<div class="wel"><div class="logo">⏳</div><h1>సర్వర్ లోడ్ అవుతోంది...</h1><p>ఇంటర్నెట్ ఆన్‌లో ఉందో చూసి, కాసేపటి తర్వాత మళ్ళీ ప్రయత్నించండి.</p>${back}</div>`;
+  pubCap();if(PUB.full)return `<div class="wel"><div class="logo">🖥️</div><h1>పబ్లిక్ సర్వర్ నిండింది 🙏</h1><p>రాయ్ ఎడ్యుకేషన్ ఉచిత పబ్లిక్ సర్వర్‌లో ${PUB.max||50} పాఠశాలలు ఉన్నాయి. మీ పాఠశాలకు <b>సొంత ఉచిత సర్వర్</b> 3 అడుగుల్లో తయారు చేసుకోండి – మీ పిల్లల డేటా మీ Google ఖాతాలోనే ఉంటుంది, పరిమితి ఉండదు.</p>
+<button class="btn" onclick="go('welcome',{w:'own'})">🖥️ సొంత సర్వర్ తయారు చేయి ▶</button><br><button class="link" onclick="go('welcome',{w:'tl'})">🔑 ఇప్పటికే నమోదు చేశాను – టీచర్ లాగిన్</button><br>${back}</div>`;
   return `<div class="wel"><div class="logo">🏫</div><h1>పాఠశాల వివరాలు</h1><p>ఒక్కసారి నమోదు చేస్తే చాలు</p><div class="card" style="text-align:left">
 <label>పాఠశాల పేరు *</label><input id="rgn" maxlength="80" placeholder="ఉదా: ZPHS TV పల్లి">
 <label>మండలం, జిల్లా *</label><input id="rgp" maxlength="80" placeholder="ఉదా: గూడూరు, SPSR నెల్లూరు">
@@ -2446,9 +2508,10 @@ V.welcome=()=>{const w=param.w||'';const ps=pubServer();const back=`<button clas
 <div class="g2"><div><label>ఫోన్ (ఐచ్ఛికం)</label><input id="rgph" inputmode="tel" maxlength="15"></div><div><label>ఈ ఫోన్ PIN (4 అంకెలు) *</label><input id="rgpin" inputmode="numeric" maxlength="8" type="password"></div></div>
 <label style="display:flex;gap:10px;align-items:flex-start;font-weight:500"><input type="checkbox" id="rgok" style="width:22px;height:22px;flex:none;margin-top:2px"><span>తల్లిదండ్రులకు తెలియజేసి, వారి అనుమతితో మాత్రమే పిల్లల పేర్లు నమోదు చేయిస్తాను. <a onclick="go('privacy')">గోప్యత & నిబంధనలు</a> చదివాను.</span></label>
 <button class="btn" id="rgbtn" onclick="regSchool(true)">💾 సేవ్ చేసి నమోదు చేయి</button></div>
-<button class="link" onclick="go('welcome',{w:'tl'})">🔑 ఇప్పటికే నమోదు చేశాను – టీచర్ లాగిన్</button><br>${back}</div>`;}
+<button class="link" onclick="go('welcome',{w:'tl'})">🔑 ఇప్పటికే నమోదు చేశాను – టీచర్ లాగిన్</button><br><button class="link" onclick="go('welcome',{w:'own'})">🖥️ మా సొంత సర్వర్‌తో నమోదు (మా డేటా మా దగ్గరే)</button><br>${back}</div>`;}
+ if(w==='own')return ownView(back);
  if(w==='tl')return `<div class="wel"><div class="logo">🔑</div><h1>టీచర్ లాగిన్</h1><p>సేవ్ నోట్‌లోని కోడ్, టీచర్ కీ ఇవ్వండి</p><div class="card" style="text-align:left">
-<label>పాఠశాల కోడ్</label><input id="lgs" maxlength="10" style="text-transform:uppercase"><label>టీచర్ కీ</label><input id="lgk">
+<label>పాఠశాల కోడ్ <small class="mut">(సొంత సర్వర్ అయితే దాని Web app లింక్)</small></label><input id="lgs" maxlength="200" autocapitalize="characters" spellcheck="false"><label>టీచర్ కీ</label><input id="lgk">
 <label>ఈ ఫోన్ PIN (4 అంకెలు)</label><input id="rgpin" inputmode="numeric" maxlength="8" type="password">
 <button class="btn" onclick="loginSchool(true)">లాగిన్</button></div>${back}</div>`;
  if(w==='s')return `<div class="wel"><div class="logo">🧒</div><h1>పాఠశాలలో చేరు</h1><p>మీ టీచర్ ఇచ్చిన <b>పాఠశాల కోడ్</b> రాయి</p><div class="card" style="text-align:left">
@@ -2463,13 +2526,84 @@ V.welcome=()=>{const w=param.w||'';const ps=pubServer();const back=`<button clas
 <button class="role" style="background:#ccf0ee" onclick="go('welcome',{w:'t'})"><span>👩‍🏫</span><div><b>నేను ఉపాధ్యాయుడు / ఉపాధ్యాయురాలు</b><small>పాఠశాల వివరాలు నమోదు చేసి, పిల్లలకు కోడ్ ఇవ్వండి</small></div></button>
 <button class="role" style="background:#fdeaa8" onclick="go('welcome',{w:'s'})"><span>🧒</span><div><b>నేను విద్యార్థి</b><small>టీచర్ ఇచ్చిన పాఠశాల కోడ్‌తో చేరు</small></div></button>
 <button class="link" onclick="S.offline=true;save();go('home')">పాఠశాల లేకుండా సొంతంగా వాడుకో →</button><br><button class="link" onclick="go('privacy')">🔒 గోప్యత & నిబంధనలు</button></div>`;};
-function noteData(){const c=S.cfg;return {name:c.sname||'',place:c.place||'',teacher:c.tname||'',sid:c.sid||'',tkey:c.tkey||'',join:joinLink(),app:appBase()};}
+/* ================= 🖥️ సొంత సర్వర్ – 3 అడుగులు (పాఠశాల Google ఖాతాలో, ఉచితం, పరిమితి లేదు) ================= */
+const OWN_V=2,OWN={chk:0,v:0};
+async function pubCap(){if(!pubServer()||Date.now()-PUB.capAt<300000)return;PUB.capAt=Date.now();
+ try{const j=await (await fetch(pubServer()+'?a=ping&_='+Date.now())).json();if(j&&j.cap){const was=PUB.full;PUB.full=!!j.full;PUB.n=j.n||0;PUB.max=j.max||0;if(was!==PUB.full&&view==='welcome')softRender();}}catch(e){}}
+function ownRawCode(){return document.getElementById('gs-code').textContent.trim();}
+function ownCodeCfg(){const c=S.cfg;if(!c.key||!c.tkey){toast('కీలు దొరకలేదు');return '';}return ownRawCode().replace('__SCHOOL_KEY__',()=>c.key).replace('__TEACHER_KEY__',()=>c.tkey);}
+function ownView(back){const mv=!!param.mv&&S.cfg.type==='gs'&&!!S.cfg.sid,c=S.cfg,needPin=!S.cur||!S.pin||S.pin==='1234';
+ const st1=PUB.tpl?`<a class="btn" style="display:block;text-align:center;text-decoration:none" href="${esc(PUB.tpl)}" target="_blank" rel="noopener">📄 నమూనా సర్వర్ కాపీ చేయి</a>
+<p class="mut owtip">Google లో <b>“Make a copy”</b> (కాపీ చేయి) నొక్కండి – సర్వర్ కోడ్‌తో సహా Sheet మీ ఖాతాలోకి వస్తుంది.</p>
+<details><summary class="mut">నమూనా తెరుచుకోకపోతే – చేతితో (ప్రత్యామ్నాయం)</summary>${ownManual()}</details>`:ownManual();
+ return `<div class="wel" style="text-align:left"><div class="logo" style="text-align:center">🖥️</div><h1 style="text-align:center">సొంత సర్వర్ – 3 అడుగులు</h1>
+<p style="text-align:center">ఉచితం • మీ పాఠశాల డేటా <b>మీ Google ఖాతాలోనే</b> • పాఠశాలల పరిమితి లేదు</p>
+${mv?`<div class="warn" style="margin-bottom:10px">🔁 <b>${esc(c.sname||'మీ పాఠశాల')}</b> డేటా (పిల్లలు, మార్కులు, హాజరు, హోంవర్క్…) పబ్లిక్ సర్వర్ నుండి మీ సొంత సర్వర్‌కు తరలుతుంది. ముందు <b>☁️ సింక్ పూర్తైందో</b> చూడండి.</div>`:''}
+<div class="owtip warn" style="background:#eff6ff;border-color:#bfdbfe;color:#1e3a8a">💻 అడుగు ② కోసం <b>కంప్యూటర్ / లాప్‌టాప్</b> వాడండి (ఫోన్ అయితే Chrome ⋮ → <b>Desktop site</b>). పాఠశాల పేరుతో ప్రత్యేక Gmail (ఉదా: <i>zphstvpalli.raay@gmail.com</i>) వాడితే, HM బదిలీ అయినా ఇబ్బంది ఉండదు.</div>
+<div class="card owst"><h3><span>1</span> నమూనా Sheet మీ ఖాతాలోకి</h3>${st1}</div>
+<div class="card owst"><h3><span>2</span> ఒక్కసారి Deploy</h3><ol class="steps">
+<li>కాపీ అయిన Sheet లో పైన <b>Extensions → Apps Script</b></li>
+<li>కుడి పైన నీలం బటన్ <b>Deploy → New deployment</b></li>
+<li>⚙️ (Select type) → <b>Web app</b></li>
+<li><b>Execute as: Me</b> • <b>Who has access: Anyone</b> → <b>Deploy</b></li>
+<li><b>Authorize access</b> → మీ Gmail ఎంచుకోండి</li>
+<li>⚠️ <i>“Google hasn’t verified this app”</i> వస్తే భయపడకండి – ఇది <b>మీ సొంత కోడ్</b>, సురక్షితమే: <b>Advanced → Go to … (unsafe) → Allow</b></li>
+<li>వచ్చిన <b>Web app URL</b> (…/exec తో ముగుస్తుంది) → <b>Copy</b></li></ol></div>
+<div class="card owst"><h3><span>3</span> లింక్ పేస్ట్ చేసి కనెక్ట్</h3>
+<label>Web app URL *</label><input id="owu" placeholder="https://script.google.com/macros/s/…/exec" spellcheck="false" autocapitalize="off">
+<label>పాఠశాల పేరు *</label><input id="own" maxlength="80" value="${esc(mv?c.sname||'':'')}" placeholder="ఉదా: ZPHS TV పల్లి">
+<label>మండలం, జిల్లా *</label><input id="owp" maxlength="80" value="${esc(mv?c.place||'':'')}" placeholder="ఉదా: గూడూరు, SPSR నెల్లూరు">
+<label>ఉపాధ్యాయుల పేరు *</label><input id="owt" maxlength="60" value="${esc(mv?c.tname||'':'')}">
+${needPin?`<label>ఈ ఫోన్ PIN (4 అంకెలు) *</label><input id="owpin" inputmode="numeric" maxlength="8" type="password">`:''}
+<label style="display:flex;gap:10px;align-items:flex-start;font-weight:500"><input type="checkbox" id="owok" style="width:22px;height:22px;flex:none;margin-top:2px"><span>తల్లిదండ్రులకు తెలియజేసి, వారి అనుమతితో మాత్రమే పిల్లల పేర్లు నమోదు చేయిస్తాను. ఈ సర్వర్ డేటాకు బాధ్యత మా పాఠశాలదే.</span></label>
+<button class="btn" id="owbtn" onclick="ownSetup()">✅ పరీక్షించి కనెక్ట్ చేయి</button><div id="owmsg"></div></div>
+<p class="mut owtip">🔑 కీలు యాప్ తనే తయారు చేస్తుంది. మర్చిపోతే: Apps Script → ⚙️ Project Settings → Script Properties (SK = విద్యార్థుల కీ, TK = టీచర్ కీ).</p>
+${back}</div>`;}
+function ownManual(){return `<ol class="steps"><li><a href="https://sheets.new" target="_blank" rel="noopener"><b>sheets.new</b></a> తో కొత్త Google Sheet తెరవండి</li><li><b>Extensions → Apps Script</b> → అక్కడ ఉన్నది అంతా తీసేసి, కింది కోడ్ పేస్ట్ → 💾 Save</li></ol>
+<div class="row2"><button class="btn sm ghost" onclick="copyText(ownRawCode())">📋 సర్వర్ కోడ్ కాపీ</button><button class="btn sm ghost" onclick="dl('Raay_Vidyarthi_Own_Server.gs',ownRawCode())">⬇ .gs ఫైల్</button></div>`;}
+async function ownSetup(){const v=id=>{const e=document.getElementById(id);return e?e.value.trim():'';};const msg=document.getElementById('owmsg'),b=document.getElementById('owbtn');
+ const url=v('owu'),name=v('own'),place=v('owp'),teacher=v('owt'),pin=v('owpin'),mv=!!param.mv&&S.cfg.type==='gs'&&!!S.cfg.sid;
+ const bad=t=>{msg.innerHTML=`<p class="ansErr">❌ ${t}</p>`;b.disabled=false;b.textContent='✅ పరీక్షించి కనెక్ట్ చేయి';};
+ if(!/^https:\/\/script\.google\.com\/.+\/exec$/.test(url))return bad('అడుగు ② లో వచ్చిన <b>…/exec</b> తో ముగిసే Web app లింక్ పేస్ట్ చేయండి');
+ if(name.length<3)return bad('పాఠశాల పేరు రాయండి');if(!place)return bad('మండలం, జిల్లా రాయండి');if(!teacher)return bad('మీ పేరు రాయండి');
+ if(document.getElementById('owpin')&&!/^\d{4,8}$/.test(pin))return bad('4 అంకెల PIN పెట్టండి');if(!document.getElementById('owok').checked)return bad('అనుమతి బాక్స్ టిక్ చేయండి');
+ b.disabled=true;b.textContent='⏳ సర్వర్ పరీక్షిస్తోంది...';msg.innerHTML='';
+ let j=null;try{j=await (await fetch(url+'?a=ping&_='+Date.now())).json();}catch(e){}
+ if(!j||!j.ok)return bad('సర్వర్ తెరుచుకోలేదు. Deploy లో <b>Who has access: Anyone</b> ఎంచుకున్నారో, లింక్ పూర్తిగా కాపీ అయిందో చూడండి.');
+ if(j.multi)return bad('ఇది పబ్లిక్ సర్వర్ లింక్ – మీ సొంత Sheet నుండి వచ్చిన లింక్ ఇవ్వండి.');
+ if(!j.own||!(j.v>=OWN_V))return bad('ఈ సర్వర్ కోడ్ పాతది – అడుగు ① లోని కొత్త నమూనా / కోడ్ వాడండి.');
+ if(!j.init)return bad('ఈ సర్వర్ ఇప్పటికే సెటప్ అయింది. వేరే ఫోన్ అయితే: నేను ఉపాధ్యాయుడు → <b>ఇప్పటికే నమోదు చేశాను</b> → సర్వర్ లింక్ + టీచర్ కీ.');
+ const skey='sch-'+rnd(8),tkey='tch-'+rnd(16);let r=null;
+ try{r=await (await fetch(url,{method:'POST',body:JSON.stringify({a:'init',skey,tkey,name,place})})).json();}catch(e){}
+ if(!r||!r.ok)return bad(r?gsErr(r.err):'ఇంటర్నెట్ చూసి మళ్ళీ ప్రయత్నించండి');
+ connectFresh({type:'gs',url,key:skey,tkey,sname:r.name||name,place,tname:teacher,isT:true,admin:true,multiT:true,own:true});
+ if(pin)S.pin=pin;S.offline=false;save();OWN.v=j.v;
+ toast(mv?'🔁 డేటా కొత్త సర్వర్‌కు తరలుతోంది… విద్యార్థులకు కొత్త జాయిన్ లింక్ పంపండి':'🎉 '+(r.name||name)+' – సొంత సర్వర్ సిద్ధం');go('welcome',{w:'note'});}
+async function loginOwn(url,tk,pin,fromWel){if(!tk)return toast('టీచర్ కీ ఇవ్వండి');if(fromWel&&!/^\d{4,8}$/.test(pin))return toast('4 అంకెల PIN పెట్టండి');
+ try{const j=await (await fetch(url+'?a=pull&k='+encodeURIComponent(tk)+'&since='+Date.now()+'&_='+Date.now())).json();
+  if(!j.ok)throw new Error(gsErr(j.err));if(!j.teacher)throw new Error('ఇది టీచర్ కీ కాదు');
+  connectFresh({type:'gs',url,key:j.skey||'',tkey:tk,sname:j.school||'',isT:true,multiT:('admin' in j),admin:('admin' in j)?!!j.admin:true,tme:j.me||null,own:true});if(pin)S.pin=pin;S.offline=false;save();
+  toast('✅ '+(j.school||'సొంత సర్వర్'));if(fromWel){tAuth=true;go('teacher',{t:'hw'});}else go('teacher',{t:'sy'});}
+ catch(e){toast('లాగిన్ కాలేదు: '+((e&&e.message)||'లింక్ / ఇంటర్నెట్ చూడండి'));}}
+function ownChk(){const c=S.cfg;if(c.type!=='gs'||c.sid||!c.url||OWN.chk)return;OWN.chk=1;
+ fetch(c.url+'?a=ping&_='+Date.now()).then(r=>r.json()).then(j=>{if(j&&j.ok){OWN.v=j.v||1;if(OWN.v<OWN_V&&view==='teacher')softRender();}}).catch(()=>{OWN.chk=0;});}
+function ownWarn(){setTimeout(ownChk,50);const c=S.cfg;if(c.type!=='gs'||c.sid||!OWN.v||OWN.v>=OWN_V)return '';
+ return `<div class="warn" style="margin-bottom:10px">⚠️ మీ <b>సొంత సర్వర్ కోడ్ పాతది</b> – కొత్త సౌకర్యాల కోసం అప్‌డేట్ చేయండి (2 నిమిషాలు). ${isAdmin()?`<a onclick="go('teacher',{t:'sy',upd:1})"><b>ఎలా? ▶</b></a>`:'ప్రధానోపాధ్యాయులకు చెప్పండి.'}</div>`;}
+function ownSyCard(){const c=S.cfg;
+ if(c.type==='gs'&&!c.sid&&c.url&&isAdmin()&&(param.upd||(OWN.v&&OWN.v<OWN_V)))return `<div class="card"><h3>🔄 సొంత సర్వర్ అప్‌డేట్ (డేటా పోదు)</h3><ol class="steps">
+<li>కింద <b>📋 కొత్త కోడ్ కాపీ</b> నొక్కండి (మీ కీలు అందులోనే ఉంటాయి – ఎవరికీ పంపకండి)</li>
+<li>సర్వర్ Sheet → <b>Extensions → Apps Script</b> → పాత కోడ్ అంతా తీసేసి పేస్ట్ → 💾 Save</li>
+<li><b>Deploy → Manage deployments → ✏️ → Version: New version → Deploy</b> (లింక్ మారదు)</li></ol>
+<div class="row2"><button class="btn sm" onclick="copyText(ownCodeCfg())">📋 కొత్త కోడ్ కాపీ</button><button class="btn sm ghost" onclick="OWN.chk=0;OWN.v=0;ownChk();toast('మళ్ళీ చూస్తున్నాం…')">✓ చేశాను – చూడు</button></div></div>`;
+ if(c.type==='gs'&&c.sid&&isAdmin())return `<div class="card"><h3>🖥️ సొంత సర్వర్‌కు మారాలా? (ఐచ్ఛికం)</h3><p class="mut">మీ పాఠశాల డేటా మీ సొంత Google ఖాతాలో – ఉచితం, పరిమితి లేదు. ఇప్పటి డేటా అంతా తరలుతుంది. తర్వాత విద్యార్థులకు కొత్త జాయిన్ లింక్ పంపాలి; ఇతర టీచర్లు కొత్త సర్వర్ లింక్ + తమ పాత టీచర్ కీతో లాగిన్ అవుతారు.</p><button class="btn sm ghost" onclick="go('welcome',{w:'own',mv:1})">🖥️ సొంత సర్వర్ తయారు చేసి తరలించు ▶</button></div>`;
+ return '';}
+function noteData(){const c=S.cfg;return {name:c.sname||'',place:c.place||'',teacher:c.tname||'',sid:c.sid||'',tkey:c.tkey||'',join:joinLink(),app:appBase(),own:c.type==='gs'&&!c.sid,url:c.url||''};}
 function noteHtml(){const d=noteData();return `<div class="note"><h3>🏫 ${esc(d.name)}</h3>${d.place?`<small>📍 ${esc(d.place)}${d.teacher?' • 👩‍🏫 '+esc(d.teacher):''}</small>`:''}
-<div class="row"><small>పాఠశాల కోడ్ (విద్యార్థులకు ఇవ్వండి)</small><div class="big">${esc(d.sid)}</div></div>
+${d.own?`<div class="row"><small>🖥️ సొంత సర్వర్ లింక్ (వేరే ఫోన్‌లో టీచర్ లాగిన్‌కు)</small><div class="lnk">${esc(d.url)}</div></div>`:`<div class="row"><small>పాఠశాల కోడ్ (విద్యార్థులకు ఇవ్వండి)</small><div class="big">${esc(d.sid)}</div></div>`}
 <div class="row"><small>టీచర్ కీ (రహస్యం – ఎవరికీ ఇవ్వకండి)</small><b style="font-size:18px;word-break:break-all">${esc(d.tkey)}</b></div>
 ${d.join?`<div class="row"><small>విద్యార్థుల జాయిన్ లింక్</small><div class="lnk">${esc(d.join)}</div></div>`:''}
 ${d.app?`<div class="row"><small>యాప్ లింక్</small><div class="lnk">${esc(d.app)}</div></div>`:''}</div>`;}
-function noteText(){const d=noteData();return `📚 రాయ్ విద్యార్థి లెర్నింగ్ యాప్ – సేవ్ నోట్\n\n🏫 పాఠశాల: ${d.name}\n📍 ${d.place}\n👩‍🏫 ఉపాధ్యాయులు: ${d.teacher}\n\n🔢 పాఠశాల కోడ్: ${d.sid}\n   (విద్యార్థులకు ఇవ్వండి)\n\n🔐 టీచర్ కీ: ${d.tkey}\n   (రహస్యం – ఎవరికీ ఇవ్వకండి)\n\n🔗 విద్యార్థుల జాయిన్ లింక్:\n${d.join}\n\n📲 యాప్ లింక్: ${d.app}\n\nవేరే ఫోన్‌లో టీచర్ లాగిన్: యాప్ → నేను ఉపాధ్యాయుడు → ఇప్పటికే నమోదు చేశాను → కోడ్ + టీచర్ కీ\n\n– రాయ్ ఎడ్యుకేషన్ (${SITE})`;}
+function noteText(){const d=noteData();return `📚 రాయ్ విద్యార్థి లెర్నింగ్ యాప్ – సేవ్ నోట్\n\n🏫 పాఠశాల: ${d.name}\n📍 ${d.place}\n👩‍🏫 ఉపాధ్యాయులు: ${d.teacher}${d.own?`\n\n🖥️ సొంత సర్వర్ లింక్ (టీచర్ లాగిన్‌కు):\n${d.url}`:`\n\n🔢 పాఠశాల కోడ్: ${d.sid}\n   (విద్యార్థులకు ఇవ్వండి)`}\n\n🔐 టీచర్ కీ: ${d.tkey}\n   (రహస్యం – ఎవరికీ ఇవ్వకండి)\n\n🔗 విద్యార్థుల జాయిన్ లింక్:\n${d.join}\n\n📲 యాప్ లింక్: ${d.app}\n\nవేరే ఫోన్‌లో టీచర్ లాగిన్: యాప్ → నేను ఉపాధ్యాయుడు → ఇప్పటికే నమోదు చేశాను → ${d.own?'సర్వర్ లింక్':'కోడ్'} + టీచర్ కీ\n\n– రాయ్ ఎడ్యుకేషన్ (${SITE})`;}
 function noteFile(ext){return 'Raay_Vidyarthi_School_Note_'+(S.cfg.sid||'school')+'.'+ext;}
 async function noteCanvas(){const d=noteData();const W=1080,cv=document.createElement('canvas');const ctx=cv.getContext('2d');
  const F=(w,s)=>`${w} ${s}px "Noto Sans Telugu","Poppins",sans-serif`;
@@ -3376,7 +3510,7 @@ V.teacher=()=>{if(!tAuth)return `<div class="login"><div class="logo">👩‍�
  const sec=param.t||'hw';const un=live('doubts').filter(d=>!d.r&&canSee(d.c,d.s)).length;
  return `<div class="bar"><button class="ib" onclick="tBack()">←</button><h2>👩‍🏫 ఉపాధ్యాయుల ప్యానెల్</h2></div>
 ${sec!=='sy'&&!S.cfg.type?`<div class="warn" style="margin-bottom:10px">📴 ఆఫ్లైన్ మోడ్ – మీరు ఇచ్చే హోంవర్క్ ఈ ఫోన్‌లోనే ఉంటుంది. విద్యార్థుల ఫోన్లకు చేరాలంటే <a onclick="go('teacher',{t:'sy'})">☁️ ఆన్‌లైన్ సింక్</a> సెటప్ చేయండి.</div>`:''}${sec!=='sy'&&S.cfg.type&&!S.cfg.isT?`<div class="warn" style="margin-bottom:10px">⚠️ సర్వర్‌లో ఉపాధ్యాయ అనుమతి లేదు – <a onclick="go('teacher',{t:'sy'})">సింక్ సెట్టింగ్స్</a> చూడండి.</div>`:''}
-${whoBanner()}<div class="tchips">${TSEC.filter(([k])=>k!=='tc'||(isAdmin()&&S.cfg.type==='gs')).map(([k,n])=>`<button class="${sec===k?'on':''}" onclick="go('teacher',{t:'${k}'})">${n}${k==='dq'&&un?' ('+un+')':''}${k==='ws'&&wsPendT().length?' ('+wsPendT().length+')':''}</button>`).join('')}</div>${TP[sec]()}`;};
+${whoBanner()}${ownWarn()}<div class="tchips">${TSEC.filter(([k])=>k!=='tc'||(isAdmin()&&S.cfg.type==='gs')).map(([k,n])=>`<button class="${sec===k?'on':''}" onclick="go('teacher',{t:'${k}'})">${n}${k==='dq'&&un?' ('+un+')':''}${k==='ws'&&wsPendT().length?' ('+wsPendT().length+')':''}</button>`).join('')}</div>${TP[sec]()}`;};
 const TP={};TP.tc=tpTc;
 /* ===== 📘 టీచర్: పాఠ్యపుస్తకం నోట్స్ & టెస్ట్ ప్రశ్నలు సరిచేయడం / కొత్త పాఠం ===== */
 const TBE={c:0,s:''};
@@ -4230,19 +4364,21 @@ function setAppUrl(){const v=$('#appu').value.trim();if(!/^https:\/\//.test(v))r
 function connectFresh(cfg){const keepApp=S.cfg.appUrl;S.cfg=Object.assign(cfg,{appUrl:cfg.appUrl||keepApp});S.q={};S.last={};S.lastSync=0;Sync.primed=false;queueAll();save();
  if(FBK.ready){location.reload();return;}Sync.start();}
 /* ---------- పబ్లిక్ సర్వర్: ఏ పాఠశాల అయినా నమోదు ---------- */
-const PUB={server:''};
+const PUB={server:'',tpl:'',full:false,n:0,max:0,capAt:0};
 function pubServer(){return PUB.server||S.pub||'';}
 async function loadPubCfg(){try{const r=await fetch('config.json?_='+Date.now(),{cache:'no-store'});if(!r.ok)return;const j=await r.json();
+ const t=String(j.ownTemplate||'').trim(),tm=t.match(/\/d\/([\w-]{20,})/)||t.match(/^([\w-]{25,})$/);PUB.tpl=tm?'https://docs.google.com/spreadsheets/d/'+tm[1]+'/copy':'';
  const u=String(j.publicServer||'').trim();if(/^https:\/\/script\.google\.com\/.+\/exec$/.test(u)){PUB.server=u;if(S.pub!==u){S.pub=u;save();}if(view==='teacher'||view==='welcome'||!S.cfg.type)softRender();}}catch(e){}}
 async function regSchool(fromWel){const name=$('#rgn').value.trim(),place=$('#rgp').value.trim(),teacher=$('#rgt').value.trim(),phone=$('#rgph').value.trim();const pin=fromWel?$('#rgpin').value.trim():'';
  if(name.length<3)return toast('పాఠశాల పేరు రాయండి');if(!place)return toast('మండలం/జిల్లా రాయండి');if(!teacher)return toast('మీ పేరు రాయండి');if(fromWel&&!/^\d{4,8}$/.test(pin))return toast('4 అంకెల PIN పెట్టండి');if(fromWel&&!$('#rgok').checked)return toast('అనుమతి బాక్స్ టిక్ చేయండి');
  const b=$('#rgbtn');if(b){b.disabled=true;b.textContent='నమోదు అవుతోంది...';}
  try{const j=await (await fetch(pubServer(),{method:'POST',body:JSON.stringify({a:'reg',name,place,teacher,phone})})).json();
+  if(!j.ok&&j.err==='full'){PUB.full=true;toast('🙏 '+gsErr('full'));go('welcome',{w:'own'});return;}
   if(!j.ok)throw new Error(gsErr(j.err)==='name'?'పాఠశాల పేరు సరిగా లేదు':gsErr(j.err));
   connectFresh({type:'gs',url:pubServer(),sid:j.id,key:j.skey,tkey:j.tkey,sname:j.name,place,tname:teacher,isT:true,pub:true});if(pin)S.pin=pin;S.offline=false;save();
   toast('🎉 '+j.name+' నమోదు అయింది');if(fromWel)go('welcome',{w:'note'});else go('teacher',{t:'sy',newreg:1});}
  catch(e){toast('నమోదు కాలేదు: '+((e&&e.message)||'ఇంటర్నెట్ చూడండి'));if(b){b.disabled=false;b.textContent='🏫 పాఠశాల నమోదు చేయి';}}}
-async function loginSchool(fromWel){const sid=$('#lgs').value.trim().toUpperCase(),tk=$('#lgk').value.trim();const pin=fromWel?$('#rgpin').value.trim():'';if(!sid||!tk)return toast('పాఠశాల కోడ్, టీచర్ కీ ఇవ్వండి');if(fromWel&&!/^\d{4,8}$/.test(pin))return toast('4 అంకెల PIN పెట్టండి');
+async function loginSchool(fromWel){const raw=$('#lgs').value.trim(),sid=raw.toUpperCase(),tk=$('#lgk').value.trim();const pin=fromWel?$('#rgpin').value.trim():'';if(/^https:\/\/script\.google\.com\//.test(raw))return loginOwn(raw,tk,pin,fromWel);if(!sid||!tk)return toast('పాఠశాల కోడ్, టీచర్ కీ ఇవ్వండి');if(fromWel&&!/^\d{4,8}$/.test(pin))return toast('4 అంకెల PIN పెట్టండి');
  try{const j=await (await fetch(pubServer()+'?a=pull&s='+encodeURIComponent(sid)+'&k='+encodeURIComponent(tk)+'&since='+Date.now()+'&_='+Date.now())).json();
   if(!j.ok)throw new Error(gsErr(j.err));if(!j.teacher)throw new Error('ఇది టీచర్ కీ కాదు');
   connectFresh({type:'gs',url:pubServer(),sid,key:j.skey||'',tkey:tk,sname:j.school,isT:true,pub:true,multiT:('admin' in j),admin:('admin' in j)?!!j.admin:true,tme:j.me||null});if(pin)S.pin=pin;S.offline=false;save();toast('✅ '+j.school);if(fromWel){tAuth=true;go('teacher',{t:'hw'});}else go('teacher',{t:'sy'});}
@@ -4320,7 +4456,7 @@ const FB_STEPS=`<ol class="steps">
 <p class="mut">ఉచిత Spark ప్లాన్: రోజుకు 50,000 రీడ్‌లు, 20,000 రైట్‌లు – ఒక పాఠశాలకు సరిపోతుంది. యాప్ తెరిచి ఉన్నప్పుడు మార్పులు వెంటనే (live) వస్తాయి.</p>`;
 
 TP.sy=()=>{const c=S.cfg,d=getDraft();const m=param.m||c.type||'gs';const pubMode=c.type==='gs'&&!!c.sid;
- const status=reconnectCard()+`<div class="card"><h3>☁️ సింక్ స్థితి</h3><div id="syncst">${syncLine()}</div>
+ const status=reconnectCard()+ownSyCard()+`<div class="card"><h3>☁️ సింక్ స్థితి</h3><div id="syncst">${syncLine()}</div>
 ${c.type?`<div class="row2"><button class="btn sm" onclick="Sync.run()">🔄 ఇప్పుడే సింక్</button><button class="btn sm red" onclick="disconnect()">సింక్ ఆపు</button></div>`:''}
 ${c.type&&!c.isT?`<div class="warn" style="margin-top:10px">⚠️ ఈ ఫోన్‌కు సర్వర్‌లో ఉపాధ్యాయ అనుమతి లేదు. ${pubMode?'కింద పాఠశాల కోడ్, టీచర్ కీతో లాగిన్ అవ్వండి.':c.type==='gs'?'కింద టీచర్ కీ బాక్స్‌లో Apps Script లోని <b>TEACHER_KEY</b> పెట్టి “సేవ్ & కనెక్ట్” నొక్కండి.':'కింద ఉపాధ్యాయ లాగిన్ చేయండి.'} అప్పటివరకు హోంవర్క్/ఈవెంట్లు/నోట్స్ విద్యార్థులకు చేరవు.</div>`:''}</div>`;
  const tabs=`<div class="tabs">${[['gs','📗 Google Sheets'],['fb','🔥 Firebase']].map(([k,n])=>`<button class="${m===k?'on':''}" onclick="keepDraft();go('teacher',{t:'sy',m:'${k}'})">${n}${c.type===k?' ✓':''}</button>`).join('')}</div>`;
