@@ -2459,7 +2459,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.03-4';
+const APPV='2026.11.03-5';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -2586,11 +2586,11 @@ async function loginOwn(url,tk,pin,fromWel){if(!tk)return toast('టీచర్
   toast('✅ '+(j.school||'సొంత సర్వర్'));if(fromWel){tAuth=true;go('teacher',{t:'hw'});}else go('teacher',{t:'sy'});}
  catch(e){toast('లాగిన్ కాలేదు: '+((e&&e.message)||'లింక్ / ఇంటర్నెట్ చూడండి'));}}
 function ownChk(){const c=S.cfg;if(c.type!=='gs'||c.sid||!c.url||OWN.chk)return;OWN.chk=1;
- fetch(c.url+'?a=ping&_='+Date.now()).then(r=>r.json()).then(j=>{if(j&&j.ok){OWN.v=j.v||1;if(OWN.v<OWN_V&&view==='teacher')softRender();}}).catch(()=>{OWN.chk=0;});}
+ fetch(c.url+'?a=ping&_='+Date.now()).then(r=>r.json()).then(j=>{if(j&&j.ok){OWN.v=j.multi?OWN_V:(j.v||1);if(OWN.v<OWN_V&&view==='teacher')softRender();}}).catch(()=>{OWN.chk=0;});}
 function ownWarn(){setTimeout(ownChk,50);const c=S.cfg;if(c.type!=='gs'||c.sid||!OWN.v||OWN.v>=OWN_V)return '';
  return `<div class="warn" style="margin-bottom:10px">⚠️ మీ <b>సొంత సర్వర్ కోడ్ పాతది</b> – కొత్త సౌకర్యాల కోసం అప్‌డేట్ చేయండి (2 నిమిషాలు). ${isAdmin()?`<a onclick="go('teacher',{t:'sy',upd:1})"><b>ఎలా? ▶</b></a>`:'ప్రధానోపాధ్యాయులకు చెప్పండి.'}</div>`;}
 function ownSyCard(){const c=S.cfg;
- if(c.type==='gs'&&!c.sid&&c.url&&isAdmin()&&(param.upd||(OWN.v&&OWN.v<OWN_V)))return `<div class="card"><h3>🔄 సొంత సర్వర్ అప్‌డేట్ (డేటా పోదు)</h3><ol class="steps">
+ if(c.type==='gs'&&!c.sid&&c.url&&c.url!==pubServer()&&isAdmin()&&(param.upd||(OWN.v&&OWN.v<OWN_V)))return `<div class="card"><h3>🔄 సొంత సర్వర్ అప్‌డేట్ (డేటా పోదు)</h3><ol class="steps">
 <li>కింద <b>📋 కొత్త కోడ్ కాపీ</b> నొక్కండి (మీ కీలు అందులోనే ఉంటాయి – ఎవరికీ పంపకండి)</li>
 <li>సర్వర్ Sheet → <b>Extensions → Apps Script</b> → పాత కోడ్ అంతా తీసేసి పేస్ట్ → 💾 Save</li>
 <li><b>Deploy → Manage deployments → ✏️ → Version: New version → Deploy</b> (లింక్ మారదు)</li></ol>
@@ -4790,7 +4790,7 @@ if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){navigator.
 
 /* ---------- ప్రారంభం ---------- */
 try{speechSynthesis.getVoices();}catch(e){}
-(function(){const h=location.hash||'';const m=h.match(/join=([A-Za-z0-9_\-]+)/);if(m)joinWith(m[1]);const g=h.match(/go=(\w+)/);if(g&&V[g[1]])view=g[1];if(m||g){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}})();
+(function(){const h=location.hash||'';const m=h.match(/join=([A-Za-z0-9_\-]+)/);if(m)joinWith(m[1]);const g=h.match(/go=(\w+)/);if(g&&V[g[1]])view=g[1];const ow=/^#own\b/.test(h);if(ow){view='welcome';param={w:'own'};}if(m||g||ow){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}})();
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')Sync.run();});
 window.addEventListener('online',()=>Sync.run());
 markDay();render();
