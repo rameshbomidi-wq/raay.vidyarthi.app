@@ -410,6 +410,10 @@ label.idck{display:flex;align-items:center;gap:8px}label.idck input{width:20px;h
 .idadd{display:flex;gap:8px;align-items:center;margin-top:10px}.idadd .btn{margin:0;flex:none}
 .idpgn{display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:8px}.idpgn .btn{margin:0}
 .owst h3{display:flex;align-items:center;gap:10px}.owst h3 span{background:var(--teal);color:#fff;border-radius:50%;width:30px;height:30px;display:grid;place-items:center;font-size:16px;flex:none}.owtip{font-size:13px;margin-top:8px}
+.hlpv video{width:100%;border-radius:12px;background:#000;max-height:52vh;object-fit:contain;display:block;margin:6px 0 4px}.hlpq{margin:4px 0 10px;font-size:16px}
+.hlph{margin:16px 0 8px;font-size:16px;color:var(--navy)}.hlp{background:#fff;border-radius:14px;margin-bottom:8px;box-shadow:0 1px 4px rgba(0,0,0,.05);overflow:hidden}
+.hlp summary{padding:12px 14px;font-weight:600;cursor:pointer;list-style:none;position:relative;padding-right:34px}.hlp summary::after{content:'▾';position:absolute;right:14px;top:12px;color:var(--mut)}.hlp[open] summary::after{content:'▴'}
+.hlp ol{margin:0 14px 10px 32px;font-size:14px;line-height:1.6}.hlp li{margin-bottom:4px}.hlp img{display:block;max-width:260px;width:70%;margin:6px auto 12px;border-radius:12px;border:1px solid var(--line)}
 #idPrint{display:none}
 @media print{body.idprint>*:not(#idPrint){display:none!important}body.idprint #idPrint{display:block!important}body.idprint,html:has(body.idprint){background:#fff!important;margin:0!important;padding:0!important}}
 #qpPrint{display:none}
@@ -2296,7 +2300,7 @@ const FBK={ready:false,user:null,
 
 /* ---------- సహాయక ఫంక్షన్లు ---------- */
 let view='home',param={},tick=null,T=null,G=null,tAuth=false;
-const PARENT={idmk:'learn',dict:'learn',tbl:'learn',evd:'home',card:'home',avatar:'home',badges:'home',library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',wsrun:'test',wsres:'test',wsboard:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
+const PARENT={help:'home',idmk:'learn',dict:'learn',tbl:'learn',evd:'home',card:'home',avatar:'home',badges:'home',library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',wsrun:'test',wsres:'test',wsboard:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
 function me(){return S.cur.n;}
 function lessonsOf(c,s){const tb=tbLes(c,s).map(x=>({k:'tb'+x.id,t:x.no+'. '+x.t,b:x.pts||[],tb:x}));const b=((L[c]||{})[s]||[]).map((x,i)=>({k:'b'+i,t:x[0],b:x[1].split('|')}));
  const n=live('notes').filter(x=>!x.kind&&x.c===c&&x.s===s).map(x=>({k:'n'+x.id,t:x.t,b:String(x.x||'').split('\n').filter(Boolean),tn:1,img:x.img||''}));return tb.concat(b,n);}
@@ -2451,6 +2455,7 @@ function render0(){const app=$('#app');
  try{budHook();}catch(e){}
  if(view==='teacher'){app.innerHTML='<main>'+V.teacher()+'</main>'+footer();return;}
  if(view==='privacy'&&!S.cur){app.innerHTML='<main>'+V.privacy()+'</main>'+footer();return;}
+ if(view==='help'&&!S.cur){app.innerHTML='<main>'+V.help()+'</main>'+footer();return;}
  if(view==='welcome'||(!S.cur&&!S.cfg.type&&!S.offline)){app.innerHTML=V.welcome()+footer();return;}
  if(!S.cur){app.innerHTML=V.login()+footer();return;}
  const full=view==='testrun'||view==='gamerun'||view==='book'||view==='wsrun';
@@ -2459,7 +2464,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.03-5';
+const APPV='2026.11.03-6';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -2525,7 +2530,7 @@ V.welcome=()=>{const w=param.w||'';const ps=pubServer();const back=`<button clas
  return `${reconnectCard()?'<div style="padding:14px 14px 0">'+reconnectCard()+'</div>':''}<div class="wel"><div class="logo">📚</div><h1>రాయ్ విద్యార్థి లెర్నింగ్ యాప్</h1><p>1 నుండి 10 తరగతులు • పాఠాలు, టెస్టులు, ఆటలు, హోంవర్క్</p>
 <button class="role" style="background:#ccf0ee" onclick="go('welcome',{w:'t'})"><span>👩‍🏫</span><div><b>నేను ఉపాధ్యాయుడు / ఉపాధ్యాయురాలు</b><small>పాఠశాల వివరాలు నమోదు చేసి, పిల్లలకు కోడ్ ఇవ్వండి</small></div></button>
 <button class="role" style="background:#fdeaa8" onclick="go('welcome',{w:'s'})"><span>🧒</span><div><b>నేను విద్యార్థి</b><small>టీచర్ ఇచ్చిన పాఠశాల కోడ్‌తో చేరు</small></div></button>
-<button class="link" onclick="S.offline=true;save();go('home')">పాఠశాల లేకుండా సొంతంగా వాడుకో →</button><br><button class="link" onclick="go('privacy')">🔒 గోప్యత & నిబంధనలు</button></div>`;};
+<button class="link" onclick="S.offline=true;save();go('home')">పాఠశాల లేకుండా సొంతంగా వాడుకో →</button><br><button class="link" onclick="go('help',{back:'welcome'})">❓ ఎలా వాడాలి (వీడియో)</button> • <button class="link" onclick="go('privacy')">🔒 గోప్యత & నిబంధనలు</button></div>`;};
 /* ================= 🖥️ సొంత సర్వర్ – 3 అడుగులు (పాఠశాల Google ఖాతాలో, ఉచితం, పరిమితి లేదు) ================= */
 const OWN_V=2,OWN={chk:0,v:0};
 async function pubCap(){if(!pubServer()||Date.now()-PUB.capAt<300000)return;PUB.capAt=Date.now();
@@ -2557,7 +2562,7 @@ ${mv?`<div class="warn" style="margin-bottom:10px">🔁 <b>${esc(c.sname||'మ�
 ${needPin?`<label>ఈ ఫోన్ PIN (4 అంకెలు) *</label><input id="owpin" inputmode="numeric" maxlength="8" type="password">`:''}
 <label style="display:flex;gap:10px;align-items:flex-start;font-weight:500"><input type="checkbox" id="owok" style="width:22px;height:22px;flex:none;margin-top:2px"><span>తల్లిదండ్రులకు తెలియజేసి, వారి అనుమతితో మాత్రమే పిల్లల పేర్లు నమోదు చేయిస్తాను. ఈ సర్వర్ డేటాకు బాధ్యత మా పాఠశాలదే.</span></label>
 <button class="btn" id="owbtn" onclick="ownSetup()">✅ పరీక్షించి కనెక్ట్ చేయి</button><div id="owmsg"></div></div>
-<p class="mut owtip">🔑 కీలు యాప్ తనే తయారు చేస్తుంది. మర్చిపోతే: Apps Script → ⚙️ Project Settings → Script Properties (SK = విద్యార్థుల కీ, TK = టీచర్ కీ).</p>
+<p class="mut owtip">❓ <a onclick="go('help',{back:'welcome',s:'hm'})">వివరంగా సహాయం / FAQ</a> • 🔑 కీలు యాప్ తనే తయారు చేస్తుంది. మర్చిపోతే: Apps Script → ⚙️ Project Settings → Script Properties (SK = విద్యార్థుల కీ, TK = టీచర్ కీ).</p>
 ${back}</div>`;}
 function ownManual(){return `<ol class="steps"><li><a href="https://sheets.new" target="_blank" rel="noopener"><b>sheets.new</b></a> తో కొత్త Google Sheet తెరవండి</li><li><b>Extensions → Apps Script</b> → అక్కడ ఉన్నది అంతా తీసేసి, కింది కోడ్ పేస్ట్ → 💾 Save</li></ol>
 <div class="row2"><button class="btn sm ghost" onclick="copyText(ownRawCode())">📋 సర్వర్ కోడ్ కాపీ</button><button class="btn sm ghost" onclick="dl('Raay_Vidyarthi_Own_Server.gs',ownRawCode())">⬇ .gs ఫైల్</button></div>`;}
@@ -2875,8 +2880,27 @@ V.dict=()=>{const c=S.cur.c;[1,2,3,4,5].forEach(k=>{try{tbLoad(k);}catch(e){}});
 ${res}
 ${H.length?`<div class="card"><div class="dbh"><b>🕘 ఇటీవల వెతికినవి</b><button class="link" onclick="dClearH()">తుడిచివేయి</button></div><div class="dchips">${H.map(w=>`<button onclick="dSearch(this.textContent)">${esc(w)}</button>`).join('')}</div></div>`:''}
 ${tbw.length?`<div class="card"><div class="dbh"><b>📗 ${c}వ తరగతి English పాఠాల పదాలు</b></div><div class="dchips">${tbw.map(w=>`<button onclick="dSearch(this.textContent)">${esc(w)}</button>`).join('')}</div></div>`:''}`;};
+/* ================= ❓ ఎలా వాడాలి (సహాయం) – help.js నుండి (help.html కూడా అదే వాడుతుంది) ================= */
+const HLP={st:0};
+function helpLoad(){if(window.RAAY_HELP||HLP.st===1)return;HLP.st=1;const sc=document.createElement('script');sc.src='help.js?v='+APPV;sc.async=true;
+ sc.onload=()=>{HLP.st=2;if(view==='help')softRender();};sc.onerror=()=>{HLP.st=3;sc.remove();if(view==='help')softRender();};document.head.appendChild(sc);}
+function helpItems(sec,q){const H=window.RAAY_HELP;if(!H)return '';q=String(q||'').trim().toLowerCase();let n=0;
+ const out=H.sec.filter(S2=>!sec||q||S2.id===sec).map(S2=>{const its=S2.items.filter(it=>!q||(it.q+' '+it.a.join(' ')).toLowerCase().includes(q));n+=its.length;if(!its.length)return '';
+  return `<h3 class="hlph">${S2.ic} ${esc(S2.t)}</h3>${its.map(it=>`<details class="hlp"${q||its.length===1?' open':''}><summary>${esc(it.q)}</summary><ol>${it.a.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>${it.img?`<img src="${esc(it.img)}" alt="" loading="lazy" onerror="this.remove()">`:''}</details>`).join('')}`;}).join('');
+ return n?out:'<div class="empty">ఏమీ దొరకలేదు – వేరే పదంతో వెతకండి</div>';}
+V.help=()=>{helpLoad();const H=window.RAAY_HELP,sec=param.s||'';
+ const bar=`<div class="bar"><button class="ib" onclick="param.back?go(param.back):go(S.cur?'menu':'welcome')">←</button><h2>❓ ఎలా వాడాలి</h2></div>`;
+ if(!H)return bar+`<div class="empty">${HLP.st===3?'📴 సహాయ పేజీ లోడ్ కాలేదు – నెట్ ఆన్ చేసి మళ్ళీ తెరవండి':'⏳ లోడ్ అవుతోంది...'}</div>`;
+ const pg=appBase().replace(/index\.html$/,'').replace(/\/?$/,'/')+'help.html';
+ return bar+`<div class="card hlpv"><h3>🎬 2 నిమిషాల వీడియో</h3><video controls preload="none" playsinline poster="help/img/poster.jpg" src="${esc(H.video)}"></video>
+<div class="row2"><button class="btn sm ghost" onclick="copyText('${esc(pg)}')">📋 సహాయ పేజీ లింక్</button><button class="btn sm" style="background:#25d366" onclick="window.open('https://wa.me/?text='+encodeURIComponent('📚 రాయ్ విద్యార్థి యాప్ – ఎలా వాడాలి (వీడియో + స్టెప్స్):\n${esc(pg)}'),'_blank')">WhatsApp</button></div></div>
+<input id="hlpq" class="hlpq" placeholder="🔍 వెతకండి – ఉదా: PIN, హోంవర్క్, ప్రింట్" oninput="document.getElementById('hlpL').innerHTML=helpItems('${sec}',this.value)">
+<div class="tchips">${[['','అన్నీ']].concat(H.sec.map(x=>[x.id,x.ic+' '+x.t])).map(([k,n])=>`<button class="${sec===k?'on':''}" onclick="go('help',Object.assign({},param,{s:'${k}'}))">${esc(n)}</button>`).join('')}</div>
+<div id="hlpL">${helpItems(sec,'')}</div>
+<p class="mut" style="text-align:center;margin:14px 0">ఇంకా సందేహం ఉంటే: <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a></p>`;};
 /* ---------- మెనూ & తరగతి ---------- */
 V.menu=()=>`<h2 class="pt">మెనూ</h2><div class="list">
+<button class="li" onclick="go('help')">❓ ఎలా వాడాలి <span>వీడియో • స్టెప్స్</span></button>
 <button class="li" onclick="go('cls')">🎓 తరగతి మార్చు <span>${S.cur.c}వ తరగతి</span></button>
 <button class="li" onclick="go('doubts')">💬 సందేహం అడుగు</button>
 <button class="li" onclick="go('library',{tab:'books'})">📚 పుస్తకాలు & టూల్స్</button>
@@ -3508,7 +3532,7 @@ function subjOpts(c){return mySubs(c).map(s=>`<option value="${s}">${SUBJ[s].n}<
 function fillSubj(cid,sid){const s=document.getElementById(sid);if(s)s.innerHTML=subjOpts(document.getElementById(cid).value);}
 V.teacher=()=>{if(!tAuth)return `<div class="login"><div class="logo">👩‍🏫</div><h1>ఉపాధ్యాయుల ప్యానెల్</h1><p>హోంవర్క్, ఈవెంట్లు, సందేహాలు, రిపోర్టులు</p><div class="card"><label>PIN నమోదు చేయండి</label><input id="tpin" type="password" inputmode="numeric" maxlength="8" onkeydown="if(event.key==='Enter')tLogin()"><button class="btn" onclick="tLogin()">ప్రవేశించు</button><p class="mut" style="margin-top:10px">మొదటి PIN: 1234 (సెట్టింగ్స్‌లో మార్చుకోండి)</p></div><button class="link" onclick="tBack()">← వెనుకకు</button></div>`;
  const sec=param.t||'hw';const un=live('doubts').filter(d=>!d.r&&canSee(d.c,d.s)).length;
- return `<div class="bar"><button class="ib" onclick="tBack()">←</button><h2>👩‍🏫 ఉపాధ్యాయుల ప్యానెల్</h2></div>
+ return `<div class="bar"><button class="ib" onclick="tBack()">←</button><h2>👩‍🏫 ఉపాధ్యాయుల ప్యానెల్</h2><button class="ib" style="background:#fff" onclick="go('help',{back:'teacher',s:'teacher'})" aria-label="సహాయం">❓</button></div>
 ${sec!=='sy'&&!S.cfg.type?`<div class="warn" style="margin-bottom:10px">📴 ఆఫ్లైన్ మోడ్ – మీరు ఇచ్చే హోంవర్క్ ఈ ఫోన్‌లోనే ఉంటుంది. విద్యార్థుల ఫోన్లకు చేరాలంటే <a onclick="go('teacher',{t:'sy'})">☁️ ఆన్‌లైన్ సింక్</a> సెటప్ చేయండి.</div>`:''}${sec!=='sy'&&S.cfg.type&&!S.cfg.isT?`<div class="warn" style="margin-bottom:10px">⚠️ సర్వర్‌లో ఉపాధ్యాయ అనుమతి లేదు – <a onclick="go('teacher',{t:'sy'})">సింక్ సెట్టింగ్స్</a> చూడండి.</div>`:''}
 ${whoBanner()}${ownWarn()}<div class="tchips">${TSEC.filter(([k])=>k!=='tc'||(isAdmin()&&S.cfg.type==='gs')).map(([k,n])=>`<button class="${sec===k?'on':''}" onclick="go('teacher',{t:'${k}'})">${n}${k==='dq'&&un?' ('+un+')':''}${k==='ws'&&wsPendT().length?' ('+wsPendT().length+')':''}</button>`).join('')}</div>${TP[sec]()}`;};
 const TP={};TP.tc=tpTc;
@@ -4790,7 +4814,7 @@ if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){navigator.
 
 /* ---------- ప్రారంభం ---------- */
 try{speechSynthesis.getVoices();}catch(e){}
-(function(){const h=location.hash||'';const m=h.match(/join=([A-Za-z0-9_\-]+)/);if(m)joinWith(m[1]);const g=h.match(/go=(\w+)/);if(g&&V[g[1]])view=g[1];const ow=/^#own\b/.test(h);if(ow){view='welcome';param={w:'own'};}if(m||g||ow){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}})();
+(function(){const h=location.hash||'';const m=h.match(/join=([A-Za-z0-9_\-]+)/);if(m)joinWith(m[1]);const g=h.match(/go=(\w+)/);if(g&&V[g[1]])view=g[1];const ow=/^#own\b/.test(h);if(ow){view='welcome';param={w:'own'};}const hp=/^#help\b/.test(h);if(hp){view='help';param={back:'welcome'};}if(m||g||ow||hp){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}})();
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')Sync.run();});
 window.addEventListener('online',()=>Sync.run());
 markDay();render();

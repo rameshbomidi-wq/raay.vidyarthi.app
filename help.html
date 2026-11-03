@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>రాయ్ విద్యార్థి యాప్ – ఎలా వాడాలి</title>
+<meta name="description" content="రాయ్ విద్యార్థి లెర్నింగ్ యాప్ – ఉపాధ్యాయులు, విద్యార్థులు, తల్లిదండ్రుల కోసం సహాయం: వీడియో, స్టెప్స్, తరచూ అడిగే ప్రశ్నలు.">
+<meta name="theme-color" content="#063a5b">
+<link rel="icon" type="image/png" href="icon-192.png?v=3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#063a5b;--teal:#2aa6a6;--teal2:#1d8c8c;--ink:#1f2937;--mut:#6b7280;--bg:#eef5f6;--line:#e5e7eb}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins','Noto Sans Telugu',system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;font-size:15.5px}
+a{color:var(--teal2)}
+header{background:linear-gradient(135deg,var(--navy),#0b5e73);color:#fff;padding:28px 16px 34px;text-align:center}
+header .logo{font-size:44px}header h1{font-size:26px;margin:6px 0 4px}header p{opacity:.9;font-size:15px}
+.cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.cta a{background:#fff;color:var(--navy);text-decoration:none;font-weight:700;padding:11px 18px;border-radius:30px;font-size:14.5px}
+.cta a.alt{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.7)}
+main{max-width:860px;margin:-18px auto 0;padding:0 16px 40px}
+.card{background:#fff;border-radius:18px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:14px}
+.card h2{font-size:18px;margin-bottom:8px}
+video{width:100%;max-height:78vh;border-radius:12px;background:#000;display:block}
+.vgrid{display:grid;grid-template-columns:minmax(0,340px) 1fr;gap:18px;align-items:start}
+.vtxt ul{margin:6px 0 0 18px}.vtxt li{margin-bottom:6px}
+@media(max-width:700px){.vgrid{grid-template-columns:1fr}}
+#q{width:100%;font:inherit;font-size:16px;padding:12px 14px;border:1.5px solid var(--line);border-radius:14px;margin:4px 0 10px;background:#fff}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.chips button{font:inherit;border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:6px 14px;cursor:pointer;font-size:14px}
+.chips button.on{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:600}
+h3.sh{margin:20px 0 8px;font-size:18px;color:var(--navy)}
+details{background:#fff;border-radius:14px;margin-bottom:8px;box-shadow:0 1px 5px rgba(0,0,0,.05);overflow:hidden}
+summary{padding:13px 40px 13px 16px;font-weight:600;cursor:pointer;list-style:none;position:relative}
+summary::-webkit-details-marker{display:none}summary::after{content:'▾';position:absolute;right:16px;top:13px;color:var(--mut)}
+details[open] summary::after{content:'▴'}
+details ol{margin:0 16px 12px 36px;font-size:15px}details li{margin-bottom:5px}
+details img{display:block;width:240px;max-width:70%;margin:4px auto 14px;border-radius:14px;border:1px solid var(--line)}
+.empty{text-align:center;color:var(--mut);padding:20px}
+footer{text-align:center;color:var(--mut);font-size:13.5px;padding:18px 16px 30px}
+footer a{font-weight:700;text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+ <div class="logo">📚</div>
+ <h1>రాయ్ విద్యార్థి యాప్ – ఎలా వాడాలి</h1>
+ <p>1–10 తరగతులు • పాఠాలు, టెస్టులు, ఆటలు, హోంవర్క్ • ఉపాధ్యాయులు, విద్యార్థులు, తల్లిదండ్రుల కోసం</p>
+ <div class="cta"><a href="./">📲 యాప్ తెరవండి</a><a class="alt" href="./#own">🖥️ సొంత సర్వర్ సెటప్</a></div>
+</header>
+<main>
+ <div class="card vgrid">
+  <video id="vid" controls preload="metadata" playsinline poster="help/img/poster.jpg"></video>
+  <div class="vtxt"><h2>🎬 2 నిమిషాల్లో మొత్తం యాప్</h2>
+   <ul><li>పాఠశాల నమోదు, సేవ్ నోట్</li><li>పిల్లలను చేర్చడం, హోంవర్క్, జవాబుల లాక్</li><li>విద్యార్థి: పాఠాలు, టెస్టులు, డిక్షనరీ, ID కార్డు</li><li>పెద్ద పాఠశాలలకు సొంత ఉచిత సర్వర్</li></ul>
+   <p style="margin-top:10px;color:var(--mut);font-size:14px">కింద వెతికి, మీ ప్రశ్నకు స్టెప్స్ చూడండి.</p></div>
+ </div>
+ <input id="q" placeholder="🔍 వెతకండి – ఉదా: PIN, హోంవర్క్, ప్రింట్, సర్వర్" autocomplete="off">
+ <div class="chips" id="chips"></div>
+ <div id="list"><div class="empty">⏳ లోడ్ అవుతోంది...</div></div>
+</main>
+<footer>© 2026 <a href="https://raayeducation.in" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a> • ఉపాధ్యాయులు తయారు చేసిన ఉచిత యాప్ (ప్రభుత్వ యాప్ కాదు)</footer>
+<script src="help.js"></script>
+<script>
+(function(){
+ var H=window.RAAY_HELP,sec='',list=document.getElementById('list'),q=document.getElementById('q'),chips=document.getElementById('chips');
+ function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+ if(!H){list.innerHTML='<div class="empty">సహాయం లోడ్ కాలేదు – పేజీ మళ్ళీ తెరవండి.</div>';return;}
+ document.getElementById('vid').src=H.video;
+ function draw(){var t=q.value.trim().toLowerCase(),n=0;
+  chips.innerHTML=[['','అన్నీ']].concat(H.sec.map(function(x){return [x.id,x.ic+' '+x.t];})).map(function(c){return '<button data-s="'+c[0]+'" class="'+(sec===c[0]?'on':'')+'">'+esc(c[1])+'</button>';}).join('');
+  list.innerHTML=H.sec.filter(function(s){return !sec||t||s.id===sec;}).map(function(s){
+   var its=s.items.filter(function(it){return !t||(it.q+' '+it.a.join(' ')).toLowerCase().indexOf(t)>=0;});n+=its.length;if(!its.length)return '';
+   return '<h3 class="sh">'+s.ic+' '+esc(s.t)+'</h3>'+its.map(function(it){return '<details'+(t?' open':'')+'><summary>'+esc(it.q)+'</summary><ol>'+it.a.map(function(a){return '<li>'+esc(a)+'</li>';}).join('')+'</ol>'+(it.img?'<img src="'+esc(it.img)+'" alt="" loading="lazy" onerror="this.remove()">':'')+'</details>';}).join('');
+  }).join('')||'<div class="empty">ఏమీ దొరకలేదు – వేరే పదంతో వెతకండి</div>';}
+ chips.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;sec=b.getAttribute('data-s');draw();});
+ q.addEventListener('input',draw);draw();
+})();
+</script>
+</body>
+</html>
