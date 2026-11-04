@@ -10,3 +10,5 @@
 - Class10_English_Workbook_Sem1.pdf – English వర్క్‌బుక్ (Units 1–7; PDF = ముద్రిత + 6)
 - Class10_English_SupplementaryReader_Sem1.pdf – Footprints without Feet (8 కథలు; PDF = ముద్రిత + 5)
 - Class10_Social_Economics_Textbook.pdf – సాంఘిక శాస్త్రం: అర్థశాస్త్రం (Understanding Economic Development, అధ్యాయాలు 1–5; PDF = ముద్రిత + 6; సరి పేజీలు English, బేసి తెలుగు)
+- Class10_Social_History_Textbook.pdf – సాంఘిక శాస్త్రం: చరిత్ర (India and the Contemporary World – II, అధ్యాయాలు 1–5; PDF = ముద్రిత + 6; సరి English, బేసి తెలుగు)
+- Class10_Social_Geography_Textbook.pdf – సాంఘిక శాస్త్రం: భూగోళం (Contemporary India – II, అధ్యాయాలు 1–7; PDF = ముద్రిత + 6)
