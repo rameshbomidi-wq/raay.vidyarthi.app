@@ -416,6 +416,7 @@ label.idck{display:flex;align-items:center;gap:8px}label.idck input{width:20px;h
 .hlp ol{margin:0 14px 10px 32px;font-size:14px;line-height:1.6}.hlp li{margin-bottom:4px}.hlp img{display:block;max-width:260px;width:70%;margin:6px auto 12px;border-radius:12px;border:1px solid var(--line)}
 #idPrint{display:none}
 @media print{body.idprint>*:not(#idPrint){display:none!important}body.idprint #idPrint{display:block!important}body.idprint,html:has(body.idprint){background:#fff!important;margin:0!important;padding:0!important}}
+.sscph{background:#eff6ff;border:1px dashed #93c5fd;border-radius:12px;padding:9px 12px;font-size:13.5px;margin:0 0 10px;cursor:pointer}.sscst{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}.sscst span{flex:1;min-width:58px;background:#f8fafc;border-radius:10px;padding:8px 4px;text-align:center}.sscst b{display:block;font-size:18px}.sscst small{color:var(--mut);font-size:11px}
 #sscPrint{display:none}
 @media print{body.sscprint>*:not(#sscPrint){display:none!important}body.sscprint #sscPrint{display:block!important}body.sscprint,html:has(body.sscprint){background:#fff!important}.sqpa{margin:3px 0 8px 4px;font-size:13px;color:#14532d}}
 .sscsub{margin:2px 0 0}.sscsub .chip{white-space:nowrap;flex:none}.chip.on{background:var(--teal);border-color:var(--teal);color:#fff}.chip small{opacity:.7;font-size:11px}
@@ -2478,7 +2479,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.05-2';
+const APPV='2026.11.05-3';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3110,21 +3111,46 @@ V.ssc=()=>{tbLoad(10);sscLoad(10);const bar=`<div class="bar"><button class="ib"
  const subs=sscSubs();if(!subs.includes(param.s))param.s=subs[0];const s=param.s,tab=param.tab||'q',me=sscMe(),lg=param.lang||(S.ssc.lang)||'te';param.lang=lg;param.n=param.n||25;
  const all=sscItems(s),hasEn=all.some(x=>x.qe),ls=[...new Set(all.map(x=>x.l))],cnt=k=>all.filter(x=>x.mk===k).length;
  const subRow=`<div class="hscroll sscsub">${subs.map(k=>`<button class="chip ${k===s?'on':''}" onclick="go('ssc',{s:'${k}',tab:'${tab}',lang:'${lg}'})">${SUBJ[k].ic} ${SUBJ[k].n}</button>`).join('')}</div>`;
- const tabs=`<div class="tabs">${[['q','📚 ప్రశ్నలు'],['quiz','🎯 క్విజ్'],['st','⭐ సేవ్ ('+all.filter(x=>me.st[x.id]).length+')']].map(([k,n])=>`<button class="${tab===k?'on':''}" onclick="go('ssc',{s:'${s}',tab:'${k}',lang:'${lg}',l:'${param.l||''}'})">${n}</button>`).join('')}</div>`;
- const lsel=`<select class="sscl" onchange="sscSet({l:this.value})"><option value="">📖 అన్ని పాఠాలు (${all.length})</option>${ls.map(id=>`<option value="${id}" ${param.l===id?'selected':''}>${esc(sscLName(s,id))}</option>`).join('')}</select>`;
+ const tabs=`<div class="tabs">${[['q','📚 ప్రశ్నలు'],['quiz','🎯 క్విజ్'],['st','⭐ సేవ్ ('+all.filter(x=>me.st[x.id]).length+')'],['rep','📊 రిపోర్ట్']].map(([k,n])=>`<button class="${tab===k?'on':''}" onclick="go('ssc',{s:'${s}',tab:'${k}',lang:'${lg}',l:'${param.l||''}'})">${n}</button>`).join('')}</div>`;
+ const lsel=`<select class="sscl" onchange="sscSet({l:this.value})"><option value="">📖 అన్ని పాఠాలు (${all.length})</option>${ls.map(id=>`<option value="${id}" ${param.l===id?'selected':''}>${esc(sscLName(s,id))} (${all.filter(x=>x.l===id).length})</option>`).join('')}</select>`;
+ const photo=`<p class="sscph" onclick="go('doubts',{s:'${s}'})">📷 పుస్తకం/పేపర్‌లోని ప్రశ్న అర్థం కాలేదా? <b>ఫోటో తీసి టీచర్‌కు పంపు ▸</b></p>`;
+ if(tab==='rep')return bar+subRow+tabs+sscReport(s,all,me);
  if(tab==='quiz'){const pool=all.filter(x=>x.o&&(!param.l||x.l===param.l));
   return bar+subRow+tabs+`<div class="card"><h3>🎯 1 మార్కు బహుళైచ్ఛిక క్విజ్</h3><p class="mut">పాఠం ఎంచుకో (లేదా అన్నీ). ప్రతిసారీ కొత్త ప్రశ్నలు random గా వస్తాయి.</p>${lsel}<p>అందుబాటులో ఉన్న ప్రశ్నలు: <b>${pool.length}</b></p>
 <div class="row2">${[10,20,30].map(n=>`<button class="btn ${n>10?'ghost':''}" ${pool.length?'':'disabled'} onclick="startSscQuiz('${s}',${n})">${n} ప్రశ్నలు ▶</button>`).join('')}</div></div>
-<div class="card"><h3>📊 ${SUBJ[s].n} – ప్రశ్నల బ్యాంక్</h3>${[1,2,4,8].map(k=>`<div class="sbar"><span>${k} మార్కు${k>1?'లు':''}</span><b>${cnt(k)}</b></div>`).join('')}<p class="mut" style="margin-top:6px">2/4/8 మార్కుల ప్రశ్నలకు “📚 ప్రశ్నలు” లో రాసి సాధన చేయి.</p></div>`;}
+<div class="card"><h3>📊 ${SUBJ[s].n} – ప్రశ్నల బ్యాంక్</h3>${[1,2,4,8].map(k=>`<div class="sbar"><span>${k} మార్కు${k>1?'లు':''}</span><b>${cnt(k)}</b></div>`).join('')}<p class="mut" style="margin-top:6px">2/4/8 మార్కుల ప్రశ్నలకు “📚 ప్రశ్నలు” లో రాసి సాధన చేయి.</p></div>
+<div class="card"><h3>🧾 మోడల్ పేపర్</h3><p class="mut">ఎంచుకున్న పాఠం/అన్ని పాఠాల నుండి random గా, అన్ని పాఠాలు కలిసేలా: 1 మార్కు × 12, 2 మార్కులు × 8, 4 మార్కులు × 8, 8 మార్కులు × 4 = 92 మార్కులు (సాంఘిక శాస్త్రంలో దీనికి 8 మార్కుల మ్యాప్ ప్రశ్న కలిపితే 100). సాధన కోసం – ప్రతిసారి కొత్త పేపర్.</p><div class="row2"><button class="btn" onclick="sscPaper('${s}',0)">🖨 ప్రశ్నాపత్రం</button><button class="btn ghost" onclick="sscPaper('${s}',1)">🖨 జవాబులతో</button></div></div>`+photo;}
  const list=sscFilter(s,me);SSCV=list;const show=list.slice(0,param.n);
  const flt=`<div class="card sscf">${tab==='q'?lsel:''}<div class="sscchips">${[0,1,2,4,8].map(k=>`<button class="chip ${(+param.mk||0)===k?'on':''}" onclick="sscSet({mk:${k}})">${k?k+' మా.':'అన్నీ'}${k?` <small>${cnt(k)}</small>`:''}</button>`).join('')}</div>
 ${hasEn?`<div class="sscchips">${[['te','తెలుగు'],['en','English'],['bi','ద్విభాషా']].map(([k,n])=>`<button class="chip ${lg===k?'on':''}" onclick="S.ssc.lang='${k}';save();sscSet({lang:'${k}'})">${n}</button>`).join('')}</div>`:''}
 <div class="sscsr"><input id="sscq" type="search" placeholder="🔍 ప్రశ్న / పదం వెతుకు" value="${esc(param.q||'')}" onkeydown="if(event.key==='Enter')this.blur()" onchange="sscSet({q:this.value})"><button class="btn sm ghost" onclick="sscPrint()">🖨 ప్రింట్</button><button class="btn sm ghost" onclick="sscTxt()">⬇️ TXT</button></div></div>`;
- return bar+subRow+tabs+flt+`<p class="mut" style="margin:4px 2px 8px">${list.length} ప్రశ్నలు${list.length>show.length?` • ${show.length} చూపుతున్నాం`:''}${hasEn&&lg!=='te'&&list.some(x=>!x.qe)?' • English లేనివి తెలుగులో':''}</p>`+
+ return bar+subRow+tabs+(tab==='q'?photo:'')+flt+`<p class="mut" style="margin:4px 2px 8px">${list.length} ప్రశ్నలు${list.length>show.length?` • ${show.length} చూపుతున్నాం`:''}${hasEn&&lg!=='te'&&list.some(x=>!x.qe)?' • English లేనివి తెలుగులో':''}</p>`+
  (show.length?show.map((x,i)=>sscCard(x,i+1,lg,me)).join(''):`<div class="empty">${tab==='st'?'ఇంకా ఏదీ సేవ్ చేయలేదు. ప్రశ్న పక్కన ☆ నొక్కు.':'ఈ ఎంపికలకు ప్రశ్నలు లేవు'}</div>`)+
  (list.length>show.length?`<button class="btn ghost" style="width:100%;margin:6px 0 14px" onclick="sscSet({n:${param.n+25}})">▾ ఇంకా ${Math.min(25,list.length-show.length)} చూపు</button>`:'');};
+/* 📊 SSC రిపోర్ట్ – క్విజ్ ఫలితాలు (results, r.ssc), పాఠం వారీ ఖచ్చితత్వం (rv[].l), రాసిన/సేవ్ జవాబులు */
+function sscReport(s,all,me){const rs=myRes().filter(r=>r.ssc),sr=rs.filter(r=>r.sb===s);
+ const pct=a=>a.t?Math.round(a.c*100/a.t):0,agg=list=>list.reduce((a,r)=>({c:a.c+r.s,t:a.t+r.t}),{c:0,t:0});
+ const by={};sr.forEach(r=>(r.rv||[]).forEach(x=>{if(!x.l)return;const o=by[x.l]||(by[x.l]={c:0,t:0});o.t++;if(x.ok)o.c++;}));
+ const ids=new Set(all.map(x=>x.id)),wr=Object.keys(me.my).filter(k=>ids.has(k)).length,sv=Object.keys(me.st).filter(k=>ids.has(k)).length;
+ const A=agg(sr),best=sr.length?Math.max(...sr.map(r=>Math.round(r.s*100/r.t))):0;
+ const ls=[...new Set(all.map(x=>x.l))],weak=ls.filter(l=>by[l]&&by[l].t>=3&&pct(by[l])<60);
+ const subs=sscSubs().map(k=>{const a=agg(rs.filter(r=>r.sb===k));return `<div class="sbar"><span>${SUBJ[k].ic} ${SUBJ[k].n}</span><span class="tr"><i style="width:${pct(a)}%;background:${SUBJ[k].col}"></i></span><b>${a.t?pct(a)+'%':'–'}</b></div>`;}).join('');
+ return `<div class="card"><h3>📊 ${SUBJ[s].n} – నా SSC ప్రగతి</h3><div class="sscst"><span><b>${sr.length}</b><small>క్విజ్‌లు</small></span><span><b>${A.t?pct(A)+'%':'–'}</b><small>సగటు</small></span><span><b>${sr.length?best+'%':'–'}</b><small>ఉత్తమం</small></span><span><b>${wr}</b><small>✍️ రాసినవి</small></span><span><b>${sv}</b><small>⭐ సేవ్</small></span></div></div>
+<div class="card"><h3>📖 పాఠం వారీ ఖచ్చితత్వం</h3>${ls.map(l=>{const a=by[l];return `<div class="sbar"><span>${esc(sscLName(s,l))}</span><span class="tr"><i style="width:${a?pct(a):0}%;background:${a&&pct(a)<60?'#e5484d':'#16a34a'}"></i></span><b>${a?pct(a)+'% <small class="mut">('+a.t+')</small>':'–'}</b></div>`;}).join('')}
+${weak.length?`<p style="margin-top:8px"><b>⚠️ ఇంకా సాధన కావాల్సిన పాఠాలు:</b></p>${weak.map(l=>`<button class="chip" onclick="go('ssc',{s:'${s}',tab:'quiz',l:'${l}'})">${esc(sscLName(s,l))} ▶</button>`).join('')}`:`<p class="mut" style="margin-top:6px">${sr.length?'👍 బలహీన పాఠాలు లేవు – ఇలాగే కొనసాగించు!':'ఇంకా క్విజ్ రాయలేదు – “🎯 క్విజ్” లో మొదలుపెట్టు.'}</p>`}</div>
+<div class="card"><h3>🗂 అన్ని సబ్జెక్టులు</h3>${subs}</div>
+${sr.length?`<h4 class="sec">ఇటీవలి క్విజ్‌లు</h4>${sr.slice(-8).reverse().map(r=>{const p=Math.round(r.s*100/r.t);return `<div class="tcard"><div class="tb">${esc(r.ti||'')}<div class="r"><span>${fmtD(r.d)} • ${r.s}/${r.t} • ${mmss(r.sec)}</span><span class="pct ${pctCls(p)}">${p}%</span></div><div class="r"><span></span><button class="lk" onclick="go('result',{id:'${r.id}'})">వివరాలు ▸</button></div></div></div>`;}).join('')}`:''}`;}
+/* 🧾 మోడల్ పేపర్ – 12×1 + 8×2 + 8×4 + 4×8 = 100 మార్కులు */
+function sscPaper(s,key){const pool=sscItems(s).filter(x=>!param.l||x.l===param.l),lg=param.lang||'te',P=[[1,12,'I'],[2,8,'II'],[4,8,'III'],[8,4,'IV']];
+ const pick=(mk,n)=>{const c=pool.filter(x=>x.mk===mk&&(mk>1||x.o));const by={};shuffle(c).forEach(x=>(by[x.l]=by[x.l]||[]).push(x));const ks=shuffle(Object.keys(by)),out=[];
+  while(out.length<n&&ks.some(k=>by[k].length))for(const k of ks){if(out.length>=n)break;const v=by[k].shift();if(v)out.push(v);}return out;};
+ const secs=P.map(([mk,n,r])=>({mk,r,qs:pick(mk,n)})),tot=secs.reduce((a,x)=>a+x.mk*x.qs.length,0);if(!tot)return toast('ప్రశ్నలు లేవు');
+ let k=0;const body=secs.filter(x=>x.qs.length).map(x=>`<h3 style="margin:10px 0 4px">విభాగం – ${x.r} (${x.qs.length} × ${x.mk} = ${x.qs.length*x.mk} మార్కులు)</h3><ol class="qpol" start="${k+1}">${x.qs.map(q=>{k++;const t=sscQA(q,lg);return `<li><div class="qq">${sscBr(t.q)}${t.q2?'<br>'+sscBr(t.q2):''} <i>[${x.mk}]</i></div>${q.o?`<div class="qo">${q.o.map((y,j)=>`<span>(${'ABCD'[j]}) ${esc(y)}</span>`).join('')}</div>`:''}${key?`<div class="sqpa"><b>జ:</b> ${q.o?'('+'ABCD'[q.o.indexOf(q.a)]+') ':''}${sscBr(t.a)}${t.a2?'<br>'+sscBr(t.a2):''}</div>`:''}</li>`;}).join('')}</ol>`).join('');
+ const box=document.getElementById('sscPrint')||document.body.appendChild(Object.assign(document.createElement('div'),{id:'sscPrint'}));
+ box.innerHTML=`<div class="qpsheet"><div class="qph"><b>${esc(S.cfg.sname||'')}</b><h2>SSC మోడల్ పేపర్ – ${SUBJ[s].n} (10వ తరగతి)${param.l?' – '+esc(sscLName(s,param.l)):''}</h2><div>మొత్తం మార్కులు: ${tot}${key?' • జవాబులతో':''}</div><div class="qpnm"><span>పేరు: ____________________</span><span>తేదీ: ________</span></div></div>${body}<div class="qpft">సాధన కోసం – రాయ్ విద్యార్థి యాప్ • రాయ్ ఎడ్యుకేషన్</div></div>`;
+ document.body.classList.add('sscprint');setTimeout(()=>{window.print();setTimeout(()=>{document.body.classList.remove('sscprint');box.innerHTML='';},600);},80);}
 function startSscQuiz(s,n){const pool=sscItems(s).filter(x=>x.o&&(!param.l||x.l===param.l));if(!pool.length)return toast('ప్రశ్నలు లేవు');
- const qs=shuffle(pool).slice(0,n||10).map(x=>({q:x.q,o:shuffle([x.a].concat(x.w)),a:x.a}));
+ const qs=shuffle(pool).slice(0,n||10).map(x=>({q:x.q,o:shuffle([x.a].concat(x.w)),a:x.a,l:x.l}));
  T={s,qs,i:0,ans:[],start:Date.now(),ti:'🎯 SSC క్విజ్ – '+SUBJ[s].n+(param.l?' • '+sscLName(s,param.l):''),ssc:1};go('testrun');
  tick=setInterval(()=>{const e=$('#ttime');if(e)e.textContent=mmss((Date.now()-T.start)/1000);},1000);}
 function sscOut(){const s=param.s,lg=param.lang||'te',me=sscMe();return {s,lg,me,list:SSCV.length?SSCV:sscFilter(s,me),
@@ -3256,7 +3282,7 @@ function pickAns(j){T.ans[T.i]=j;render();}
 function nextQ(){if(T.i<T.qs.length-1){T.i++;render();}else finishTest();}
 function quitTest(){if(confirm('టెస్ట్ మధ్యలో ఆపేయాలా? జవాబులు సేవ్ కావు.')){if(T&&T.ssc)go('ssc',{s:T.s,tab:'quiz'});else if(T&&T.lt)go('tbl',{s:T.s,id:String(T.lt).replace(/_wb$/,'')});else go('test');}}
 function finishTest(){const sec=Math.round((Date.now()-T.start)/1000);let sc=0;
- const rv=T.qs.map((q,i)=>{const y=q.fr?String(T.ans[i]==null?'':T.ans[i]).trim():q.o[T.ans[i]],ok=q.fr?(qpNorm(y)!==''&&qpNorm(y)===qpNorm(q.a)):y===q.a;if(ok)sc++;return {q:q.q,y:y||'',a:q.a,ok};});
+ const rv=T.qs.map((q,i)=>{const y=q.fr?String(T.ans[i]==null?'':T.ans[i]).trim():q.o[T.ans[i]],ok=q.fr?(qpNorm(y)!==''&&qpNorm(y)===qpNorm(q.a)):y===q.a;if(ok)sc++;return {q:q.q,y:y||'',a:q.a,ok,...(q.l?{l:q.l}:{})};});
  const r={id:uid(),n:me(),c:S.cur.c,sb:T.s,s:sc,t:T.qs.length,sec,d:new Date().toISOString(),rv};if(T.pid)Object.assign(r,{pid:T.pid,ti:T.ti,kind:'qp'});if(T.lt)Object.assign(r,{lt:T.lt,ti:T.ti});if(T.ssc)Object.assign(r,{ssc:1,ti:T.ti});put('results',r);go('result',{id:r.id});if(sc*100/T.qs.length>=80){setTimeout(confetti,200);beep('win');}else beep('ok');}
 V.result=()=>{const r=live('results').find(x=>x.id===param.id);if(!r)return '<div class="empty">ఫలితం దొరకలేదు</div>';if(r.kind==='ws'){param={id:r.id};return V.wsres();}const p=Math.round(r.s*100/r.t);
  const msg=p>=80?'🌟 అద్భుతం!':p>=60?'👏 బాగుంది!':p>=40?'🙂 పర్వాలేదు, ఇంకా సాధన చేయి':'💪 మళ్ళీ ప్రయత్నించు!';
