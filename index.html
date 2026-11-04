@@ -2036,11 +2036,14 @@ const SUBJ={
  sci:{n:'సైన్స్',ic:'🔬',bg:'#ccfbf1',col:'#0d9488',sh:'సైన్స్'},
  phy:{n:'భౌతిక శాస్త్రం',ic:'⚛️',bg:'#e0f2fe',col:'#0284c7',sh:'భౌ'},
  bio:{n:'జీవ శాస్త్రం',ic:'🧬',bg:'#dcfce7',col:'#16a34a',sh:'జీవ'},
- soc:{n:'సాంఘిక శాస్త్రం',ic:'🌍',bg:'#fef3c7',col:'#b45309',sh:'సాం'}
+ soc:{n:'సాంఘిక శాస్త్రం',ic:'🌍',bg:'#fef3c7',col:'#b45309',sh:'సాం'},
+ te2:{n:'తెలుగు (ద్వితీయ భాష)',ic:'ఆ',bg:'#fce7f3',col:'#be185d',sh:'తె2'}
 };
 const CLASSES=[1,2,3,4,5,6,7,8,9,10];
 const ALLSUBJ=['tel','hin','eng','mat','evs','sci','phy','bio','soc'];
 function subjectsFor(c){c=+c;return c<=2?['tel','eng','mat']:c<=5?['tel','eng','mat','evs']:c<=7?['tel','hin','eng','mat','sci','soc']:['tel','hin','eng','mat','phy','bio','soc'];}
+/* నేర్చుకో/పాఠ్యపుస్తకం కోసం: 10వ తరగతికి తెలుగు ద్వితీయ భాష (te2) అదనం – మార్కులు/ప్రగతి కార్డులో కాదు */
+function learnSubs(c){c=+c;const a=subjectsFor(c);return c===10?a.concat(['te2']):a;}
 
 /* ---------- పాఠాలు (Self Learn) ---------- */
 const L={
@@ -2464,7 +2467,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.04-2';
+const APPV='2026.11.04-3';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -2965,7 +2968,7 @@ function budTips(){const c=S.cur.c,out=[],h=new Date().getHours(),add=(id,t,lbl,
  if(typeof wsTodayRec==='function'&&!wsTodayRec())add('ws','నేటి లెక్కలు ఇంకా చేయలేదు – 5 నిమిషాల్లో అయిపోతాయి ⏱️ ర్యాంక్ కూడా వస్తుంది!','నేటి లెక్కలు ▶',"go('test')",view==='test'||view==='home'?3:1);
  const st=stats(),weak=Object.entries(st.by).filter(([,p])=>p!=null&&p<60).sort((a,b)=>a[1]-b[1])[0];
  if(weak)add('weak',`${SUBJ[weak[0]].n} లో నీ సగటు ${weak[1]}%. ఒక టెస్ట్ రాస్తే పెరుగుతుంది – నేను నీ వెంటే! 📈`,SUBJ[weak[0]].n+' టెస్ట్ ▶',`startTest('${weak[0]}')`,view==='test'?4:2);
- const ur=subjectsFor(c).map(s=>[s,readPct(s)]).filter(([,p])=>p<100).sort((a,b)=>a[1]-b[1])[0];
+ const ur=learnSubs(c).map(s=>[s,readPct(s)]).filter(([,p])=>p<100).sort((a,b)=>a[1]-b[1])[0];
  if(ur)add('read',`${SUBJ[ur[0]].n} లో ఇంకా చదవని పాఠాలు ఉన్నాయి. ఒక్కటి చదువుదామా? 📖`,'పాఠాలు ▶',"go('learn')",view==='learn'||view==='subject'?4:1);
  const ev=upcoming(3).find(e=>diffDays(e.d,todayS())<=2);if(ev){const w=ev.d===todayS()?'ఈరోజే':ev.d===addDays(todayS(),1)?'రేపే':'ఎల్లుండి';add('ev',`“${ev.t}” ${w}! మర్చిపోకు 📅`,'వివరాలు ▶',`go('evd',{id:'${ev.id}'})`,view==='home'||view==='schedule'?3:1);}
  const pk=tbPick(c);if(pk)add('tb',`${tbIsNow(pk.L)?'ఈ నెల పాఠం':'పాఠం'} “${pk.L.t}” నోట్స్ చదివావా? 📖 చదివాక 10 ప్రశ్నల టెస్ట్ రాయి!`,'పాఠం చదువు ▶',`go('tbl',{s:'${pk.s}',id:'${pk.L.id}'})`,view==='learn'||view==='home'?4:2);
@@ -3015,10 +3018,10 @@ function tbIsNow(L){return (L.m||[]).includes(tbNowM());}
 function tbSyl(c,m){try{if(+c>5||typeof ACAL==='undefined')return null;const mo=ACAL.MONTHS.find(x=>x.key.startsWith(TB_AB[m-1]));return mo&&mo.syl?mo.syl[String(c)]||null:null;}catch(e){return null;}}
 /* ఇప్పటి వరకు వచ్చిన నెలల్లో, చదవని పాఠం – తాజా నెలది ముందు */
 function tbPick(c){const now=tbAm(tbNowM());let best=null;
- subjectsFor(c).forEach(s=>tbLes(c,s).forEach(L=>{if(isRead(tbKey(c,s,L.id)))return;const am=Math.min(...(L.m||[1]).map(tbAm));if(am>now)return;if(!best||am>best.am||(am===best.am&&L.no<best.L.no))best={s,L,am};}));return best;}
+ learnSubs(c).forEach(s=>tbLes(c,s).forEach(L=>{if(isRead(tbKey(c,s,L.id)))return;const am=Math.min(...(L.m||[1]).map(tbAm));if(am>now)return;if(!best||am>best.am||(am===best.am&&L.no<best.L.no))best={s,L,am};}));return best;}
 function tbChip(c,s,L){const d=isRead(tbKey(c,s,L.id)),b=tbBest(L.id);
  return `<button class="tbchip ${d?'ok':''}" style="--sc:${SUBJ[s].col};--sb:${SUBJ[s].bg}" onclick="go('tbl',{s:'${s}',id:'${L.id}'})"><span>${SUBJ[s].ic}</span>${L.no}. ${esc(L.t)}${d?' ✓':''}${b!=null?` <em>${b}%</em>`:''}</button>`;}
-function tbMonthSec(){const c=S.cur.c,m=tbNowM(),sy=tbSyl(c,m),subs=subjectsFor(c);
+function tbMonthSec(){const c=S.cur.c,m=tbNowM(),sy=tbSyl(c,m),subs=learnSubs(c);
  const all=subs.some(s=>tbLes(c,s).length);if(!sy&&!all)return '';
  const rows=subs.map(s=>{const now=tbLes(c,s).filter(tbIsNow),txt=sy&&sy[TB_SK[s]];if(!now.length&&(!txt||txt==='—'))return '';
   return `<div class="tbrow"><b style="color:${SUBJ[s].col}">${SUBJ[s].ic} ${SUBJ[s].n}</b>${now.length?`<div class="tbchips">${now.map(L=>tbChip(c,s,L)).join('')}</div>`:`<small>${esc(txt)}</small>`}</div>`;}).join('');
@@ -3080,12 +3083,12 @@ ${dailyCards()}
 ${pend.length?`<h4 class="sec">పెండింగ్ హోంవర్క్</h4>${pend.slice(0,2).map(hwCard).join('')}`:''}`;};
 
 /* ---------- సెల్ఫ్ లెర్న్ ---------- */
-function recommend(){const c=S.cur.c;const pk=tbPick(c);if(pk)return `<div class="tcard"><div class="th" style="background:${SUBJ[pk.s].bg}"><span class="si" style="width:34px;height:34px;font-size:16px">${SUBJ[pk.s].ic}</span>${SUBJ[pk.s].n} • 📅 ${tbMonths(pk.L)}</div><div class="tb"><b>${pk.L.no}. ${esc(pk.L.t)}</b><div class="r"><small class="mut">నోట్స్ + ${Math.min(10,(pk.L.qz||[]).length)} ప్రశ్నల టెస్ట్</small><button class="lk b" onclick="go('tbl',{s:'${pk.s}',id:'${pk.L.id}'})">చదువు ▶</button></div></div></div>`;for(const s of subjectsFor(c)){const ls=lessonsOf(c,s);const i=ls.findIndex(l=>!isRead(c+'-'+s+'-'+l.k));if(i>=0){const l=ls[i];
+function recommend(){const c=S.cur.c;const pk=tbPick(c);if(pk)return `<div class="tcard"><div class="th" style="background:${SUBJ[pk.s].bg}"><span class="si" style="width:34px;height:34px;font-size:16px">${SUBJ[pk.s].ic}</span>${SUBJ[pk.s].n} • 📅 ${tbMonths(pk.L)}</div><div class="tb"><b>${pk.L.no}. ${esc(pk.L.t)}</b><div class="r"><small class="mut">నోట్స్ + ${Math.min(10,(pk.L.qz||[]).length)} ప్రశ్నల టెస్ట్</small><button class="lk b" onclick="go('tbl',{s:'${pk.s}',id:'${pk.L.id}'})">చదువు ▶</button></div></div></div>`;for(const s of learnSubs(c)){const ls=lessonsOf(c,s);const i=ls.findIndex(l=>!isRead(c+'-'+s+'-'+l.k));if(i>=0){const l=ls[i];
  return `<div class="tcard"><div class="th" style="background:${SUBJ[s].bg}"><span class="si" style="width:34px;height:34px;font-size:16px">${SUBJ[s].ic}</span>${SUBJ[s].n}</div><div class="tb"><b>${esc(l.t)}</b><div class="r"><small class="mut">${l.b.length} ముఖ్యాంశాలు</small><button class="lk b" onclick="go('subject',{s:'${s}',open:${i}})">చదువు ▶</button></div></div></div>`;}}
  return `<div class="empty">🎉 అన్ని పాఠాలు చదివావు! ఇప్పుడు టెస్ట్ రాయి.</div>`;}
 V.learn=()=>{const c=S.cur.c;return `<div class="lgrid"><button class="btn" style="background:#4f46e5" onclick="go('library',{tab:'books'})">📚 పుస్తకాలు</button><button class="btn" style="background:#0f766e" onclick="go('library',{tab:'tools'})">🧰 టూల్స్</button><button class="btn" style="background:#c2410c" onclick="go('dict')">📖 డిక్షనరీ</button><button class="btn" style="background:#7c3aed" onclick="go('idmk')">🪪 ID • ఫోటో • స్టిక్కర్</button></div><div class="doubt" onclick="go('doubts')"><h3>సందేహం అడుగు</h3><p>నీ సందేహాలను ఉపాధ్యాయులకు పంపి, త్వరగా జవాబులు పొందు.</p><span class="bub">💬</span><span class="play">▶</span></div>
 ${tbMonthSec()}<h4 class="sec">అన్ని సబ్జెక్టులు</h4><p class="mut" style="margin:-4px 2px 10px">ప్రస్తుతం చూస్తున్నది: <b>${c}వ తరగతి</b> (<a onclick="go('cls')">మార్చు</a>)</p>
-<div class="subs">${subjectsFor(c).map(s=>{const p=readPct(s);return `<button class="sub" style="background:${SUBJ[s].bg}" onclick="go('subject',{s:'${s}'})"><span class="si" style="color:${SUBJ[s].col}">${SUBJ[s].ic}</span><span><b>${SUBJ[s].n}</b><small>${p}% పూర్తి</small></span><i class="pb"><i style="width:${p}%"></i></i></button>`;}).join('')}</div>
+<div class="subs">${learnSubs(c).map(s=>{const p=readPct(s);return `<button class="sub" style="background:${SUBJ[s].bg}" onclick="go('subject',{s:'${s}'})"><span class="si" style="color:${SUBJ[s].col}">${SUBJ[s].ic}</span><span><b>${SUBJ[s].n}</b><small>${p}% పూర్తి</small></span><i class="pb"><i style="width:${p}%"></i></i></button>`;}).join('')}</div>
 <h4 class="sec">నీ కోసం సూచన</h4>${recommend()}`;};
 V.subject=()=>{const c=S.cur.c,s=param.s,ls=lessonsOf(c,s);
  return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>${SUBJ[s].ic} ${SUBJ[s].n} • ${c}వ తరగతి</h2></div>
@@ -3098,7 +3101,7 @@ function toggleRead(k,s,i){const m=readMap();if(m[k])delete m[k];else{m[k]=1;toa
 /* ---------- సందేహాలు ---------- */
 V.doubts=()=>{const mine=live('doubts').filter(d=>d.n===me()).slice().reverse();const sel=param.s||subjectsFor(S.cur.c)[0];
  return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>💬 సందేహం అడుగు</h2></div>
-<div class="card"><label>సబ్జెక్ట్</label><select id="dsub" onchange="const e=document.getElementById('dto');if(e)e.textContent='👩‍🏫 '+doubtTo(S.cur.c,this.value)+' గారికి వెళ్తుంది'">${subjectsFor(S.cur.c).map(s=>`<option value="${s}" ${s===sel?'selected':''}>${SUBJ[s].n}</option>`).join('')}</select>${S.cfg.type?`<small class="mut" id="dto">👩‍🏫 ${esc(doubtTo(S.cur.c,sel))} గారికి వెళ్తుంది</small>`:''}
+<div class="card"><label>సబ్జెక్ట్</label><select id="dsub" onchange="const e=document.getElementById('dto');if(e)e.textContent='👩‍🏫 '+doubtTo(S.cur.c,this.value)+' గారికి వెళ్తుంది'">${learnSubs(S.cur.c).map(s=>`<option value="${s}" ${s===sel?'selected':''}>${SUBJ[s].n}</option>`).join('')}</select>${S.cfg.type?`<small class="mut" id="dto">👩‍🏫 ${esc(doubtTo(S.cur.c,sel))} గారికి వెళ్తుంది</small>`:''}
 <label>నీ సందేహం రాయి</label><textarea id="dtx" rows="3" placeholder="ఉదా: భిన్నాలు ఎలా కలపాలి?"></textarea><button class="btn" onclick="askDoubt()">పంపు ➤</button></div>
 <h4 class="sec">నా సందేహాలు (${mine.length})</h4>${mine.length?mine.map(d=>`<div class="dq"><small>${SUBJ[d.s].n} • ${fmtD(d.d)}</small><p>❓ ${esc(d.q)}</p>${d.r?`<div class="ans">👩‍🏫 ${d.rb?'<b>'+esc(d.rb)+':</b> ':''}${esc(d.r)}${imgTag(d.ri,'ansimg',d.ris)}${d.ri?'<small style="display:block;margin-top:4px">👆 ఫోటో నొక్కితే పెద్దదిగా కనిపిస్తుంది</small>':''}</div>`:'<div class="wait">⏳ ఉపాధ్యాయుల జవాబు కోసం వేచి ఉంది</div>'}</div>`).join(''):'<div class="empty">ఇంకా సందేహాలు అడగలేదు</div>'}`;};
 function askDoubt(){const q=$('#dtx').value.trim();if(!q)return toast('సందేహం రాయి');put('doubts',{id:uid(),n:me(),c:S.cur.c,s:$('#dsub').value,q,d:new Date().toISOString(),r:''});toast('సందేహం ఉపాధ్యాయులకు పంపబడింది ✓');go('doubts');}
@@ -3161,7 +3164,7 @@ function buildQs(c,s){if(s==='mat'){const out=[],seen=new Set();let g=0;while(ou
 /* ---------- టెస్ట్ ---------- */
 V.test=()=>{const tab=param.tab||'new';const st=stats();const c=S.cur.c;
  let body='';
- if(tab==='new')body=qpStudentCards()+wsCard()+subjectsFor(c).map(s=>{const rs=myScored().filter(r=>r.sb===s&&r.kind!=='ws');const best=rs.length?Math.max(...rs.map(r=>Math.round(r.s*100/r.t))):null;const n=s==='mat'?10:((Q[c]||{})[s]||[]).length;
+ if(tab==='new')body=qpStudentCards()+wsCard()+learnSubs(c).map(s=>{const rs=myScored().filter(r=>r.sb===s&&r.kind!=='ws');const best=rs.length?Math.max(...rs.map(r=>Math.round(r.s*100/r.t))):null;const n=s==='mat'?10:((Q[c]||{})[s]||[]).length;
   return `<div class="tcard"><div class="th" style="background:${SUBJ[s].bg}"><span class="si" style="width:34px;height:34px;font-size:16px;color:${SUBJ[s].col}">${SUBJ[s].ic}</span>${SUBJ[s].n} టెస్ట్</div><div class="tb">${n} ప్రశ్నలు • ${rs.length} సార్లు రాశావు${best!=null?` • ఉత్తమం <span class="pct ${pctCls(best)}">${best}%</span>`:''}<div class="r"><small class="mut">${s==='mat'?'ప్రతిసారీ కొత్త లెక్కలు':'ప్రశ్నలు కలగలుపుగా'}</small><button class="lk b" onclick="startTest('${s}')">ప్రారంభించు ▶</button></div></div></div>`;}).join('');
  if(tab==='done'){const rs=myRes().slice().reverse();
   body=`<div class="card"><h3>సబ్జెక్టుల వారీ ప్రదర్శన</h3>${subjectsFor(c).map(s=>{const p=st.by[s];return `<div class="sbar"><span>${SUBJ[s].n}</span><span class="tr"><i style="width:${p||0}%;background:${SUBJ[s].col}"></i></span><b>${p==null?'–':p+'%'}</b></div>`;}).join('')}</div>`+
@@ -3493,7 +3496,7 @@ function tScope(){const c=S.cfg;return (c.type&&c.isT&&c.admin===false&&c.tme)?c
 function isAdmin(){const c=S.cfg;return !c.type||c.admin!==false;}
 function myCls(){const t=tScope();return t&&t.cls&&t.cls.length?t.cls.map(Number).sort((a,b)=>a-b):CLASSES.slice();}
 function mySubs(c){const t=tScope();const all=+c?subjectsFor(+c):ALLSUBJ.filter(x=>myCls().some(k=>subjectsFor(k).includes(x)));return t&&t.subs&&t.subs.length?all.filter(s=>t.subs.includes(s)):all;}
-function canSee(c,s){const t=tScope();if(!t)return true;if(+c&&!myCls().includes(+c))return false;if(s&&t.subs&&t.subs.length&&!t.subs.includes(s))return false;return true;}
+function canSee(c,s){const t=tScope();if(!t)return true;if(+c&&!myCls().includes(+c))return false;if(s&&t.subs&&t.subs.length&&!t.subs.includes(s)&&!(s==='te2'&&t.subs.includes('tel')))return false;return true;}
 function tName(){const c=S.cfg,t=tScope();return t?t.n:(c.tname||'ప్రధానోపాధ్యాయులు');}
 function subsTxt(a){return a&&a.length?a.map(s=>SUBJ[s]?SUBJ[s].n:s).join(', '):'అన్ని సబ్జెక్టులు';}
 function whoBanner(){const c=S.cfg;if(!c.type)return '';const t=tScope();
@@ -3538,7 +3541,7 @@ ${whoBanner()}${ownWarn()}<div class="tchips">${TSEC.filter(([k])=>k!=='tc'||(is
 const TP={};TP.tc=tpTc;
 /* ===== 📘 టీచర్: పాఠ్యపుస్తకం నోట్స్ & టెస్ట్ ప్రశ్నలు సరిచేయడం / కొత్త పాఠం ===== */
 const TBE={c:0,s:''};
-function tbGuide(c,s,id){if(!tbLes(c,s).some(x=>x.id===id)){const s2=subjectsFor(c).find(x=>tbLes(c,x).some(y=>y.id===id));if(s2){s=s2;TBE.s=s2;}}const L=tbLes(c,s).find(x=>x.id===id);if(!L)return '<div class="empty">పాఠం దొరకలేదు</div>';const G=L.tg||[];
+function tbGuide(c,s,id){if(!tbLes(c,s).some(x=>x.id===id)){const s2=learnSubs(c).find(x=>tbLes(c,x).some(y=>y.id===id));if(s2){s=s2;TBE.s=s2;}}const L=tbLes(c,s).find(x=>x.id===id);if(!L)return '<div class="empty">పాఠం దొరకలేదు</div>';const G=L.tg||[];
  return `<div class="bar"><button class="ib" onclick="go('teacher',{t:'tb'})">←</button><h2>📗 టీచర్ గైడ్ • ${c}వ • ${SUBJ[s].n}</h2></div>
 <div class="tbhero" style="--sc:${SUBJ[s].col};--sb:${SUBJ[s].bg}"><small>పాఠ్యపుస్తకంలోని కృత్యాలు, అభ్యాసాలకు జవాబులు (ఉపాధ్యాయులకు మాత్రమే)</small><h2>${L.no}. ${esc(L.t)}</h2><div class="tbtags"><span>📅 ${tbMonths(L)}</span><span>${G.length} భాగాలు</span></div></div>
 <div class="row2" style="margin-bottom:8px"><button class="btn sm ghost" onclick="document.querySelectorAll('.tgsec').forEach(d=>d.open=true)">▾ అన్నీ తెరువు</button><button class="btn sm ghost" onclick="window.print()">🖨 ప్రింట్</button></div>
@@ -3546,7 +3549,7 @@ ${G.map((g,i)=>`<details class="tgsec" ${i<2?'open':''}><summary>${/చిత్
 <p class="mut" style="margin-top:10px">“పిల్లల సొంత జవాబు” అని ఉన్నచోట ఇచ్చినది ఒక నమూనా మాత్రమే.</p>`;}
 function tbBase(c,s,id){return ((window.RAAY_TB[+c]||{})[s]||[]).find(x=>x.id===id);}
 async function tbServerOk(){try{const j=await (await fetch(S.cfg.url+'?a=ping&_='+Date.now())).json();return j&&j.tbx?'':'సర్వర్ కోడ్ పాతది – కొత్త సర్వర్ కోడ్ పెట్టి మూడు deployments కూ New version Deploy చేయండి';}catch(e){return 'సర్వర్ చేరలేదు – నెట్ చూడండి';}}
-TP.tb=()=>{const cls=myCls();if(!cls.includes(TBE.c))TBE.c=cls.includes(3)?3:cls[0];const c=TBE.c;wbaLoad(c);const subs=subjectsFor(c).filter(s=>canSee(c,s));if(!subs.includes(TBE.s))TBE.s=subs[0];const s=TBE.s;
+TP.tb=()=>{const cls=myCls();if(!cls.includes(TBE.c))TBE.c=cls.includes(3)?3:cls[0];const c=TBE.c;wbaLoad(c);const subs=learnSubs(c).filter(s=>canSee(c,s));if(!subs.includes(TBE.s))TBE.s=subs[0];const s=TBE.s;
  if(param.ed!==undefined)return tbEditor();
  if(param.tg)return tbGuide(c,s,param.tg);
  const ls=tbLes(c,s),st=TBL[c],hid=live('tbx').filter(x=>+x.c===c&&x.s===s&&x.hide);
@@ -4637,7 +4640,7 @@ function wbaLoad(c){c=+c;if(!c||ANSL[c])return;if(window.RAAY_ANS[c]){ANSL[c]='o
 function ansCls(){return (view==='teacher'||param.ak)?(TBE.c||3):(S.cur?+S.cur.c:3);}
 function ansFile(u){return String(u||'').split('/').pop();}
 function ansPage(u,pg){const A=window.RAAY_ANS[ansCls()];return A&&A[ansFile(u)]?A[ansFile(u)][pg]||null:null;}
-function ansLessonOf(u,pg){const c=ansCls();for(const s of subjectsFor(c))for(const L of tbLes(c,s)){const R=akRange(L);if(R&&ansFile(R.f)===ansFile(u)&&pg>=R.a&&pg<=R.b)return {s,L};}return null;}
+function ansLessonOf(u,pg){const c=ansCls();for(const s of learnSubs(c))for(const L of tbLes(c,s)){const R=akRange(L);if(R&&ansFile(R.f)===ansFile(u)&&pg>=R.a&&pg<=R.b)return {s,L};}return null;}
 function wbaOpen(c,ln){const r=S.ak.find(x=>x.id==='akl_'+c+'_'+ln&&!x.del);return !!(r&&r.on);}
 function wbaBook(c,s){const r=S.ak.find(x=>x.id==='akb_'+c+'_'+s&&!x.del);return !!(r&&r.on);}
 async function akBookLock(s,on){const c=TBE.c,ls=tbLes(c,s).filter(L=>akRange(L));if(!ls.length)return;

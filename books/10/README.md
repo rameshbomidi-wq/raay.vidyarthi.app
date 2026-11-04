@@ -3,3 +3,6 @@
 - Class10_Maths_Textbook_Sem2.pdf – గణితం పాఠ్యపుస్తకం సెమిస్టర్-2 (అధ్యాయాలు 8–14; PDF పేజీ = ముద్రిత పేజీ + 10)
 - Class10_Physical_Science_Textbook.pdf – భౌతిక శాస్త్రం (అధ్యాయాలు 1–4, 9–12; PDF పేజీ = ముద్రిత పేజీ + 6; సరి పేజీలు English, బేసి తెలుగు)
 - Class10_Biological_Science_Textbook.pdf – జీవ శాస్త్రం (అధ్యాయాలు 5–8, 13; PDF పేజీ = ముద్రిత పేజీ + 6)
+- Class10_Telugu_Textbook_Sem1.pdf – తెలుగు ప్రథమ భాష సెమ్-1 (తెలుగు పరిమళం; PDF = ముద్రిత + 8; ఒకే భాష)
+- Class10_Telugu_SecondLanguage_Textbook.pdf – తెలుగు ద్వితీయ భాష (PDF = ముద్రిత + 8)
+- Class10_Hindi_Textbook_Sem1.pdf – హిందీ (12 పాఠాలు)
