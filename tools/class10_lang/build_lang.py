@@ -2,7 +2,7 @@ import json, glob, importlib.util, os, sys
 H = os.path.dirname(os.path.abspath(__file__))
 REPO = '/home/claude/raay.vidyarthi.app'
 # subject -> (book file, pdf offset)
-BOOK = {'tel': ('Class10_Telugu_Textbook_Sem1.pdf', 8), 'te2': ('Class10_Telugu_SecondLanguage_Textbook.pdf', 8), 'hin': ('Class10_Hindi_Textbook_Sem1.pdf', 6)}
+BOOK = {'tel': ('Class10_Telugu_Textbook_Sem1.pdf', 8), 'te2': ('Class10_Telugu_SecondLanguage_Textbook.pdf', 8), 'hin': ('Class10_Hindi_Textbook_Sem1.pdf', 2)}
 
 def load(f):
     sp = importlib.util.spec_from_file_location(os.path.basename(f)[:-3], f)
