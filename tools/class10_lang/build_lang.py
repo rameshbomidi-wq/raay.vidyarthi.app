@@ -16,7 +16,9 @@ for f in sorted(glob.glob(f'{H}/ch/*.py')):
     a, b = getattr(m, 'WPAGES', m.PAGES)  # pdf page range shown as wb
     W = dict(L.get('wb', {})); W.update(pg=f'{a-off}–{b-off}', f=f'books/10/{bk}', p=a, lb=getattr(m, 'WLB', 'పాఠ్యపుస్తకం'))
     tg = []; ws = []
-    for sec in m.SEC:
+    SECS = list(m.SEC); wf = f'{H}/wbk/{os.path.basename(f)}'  # వర్క్‌బుక్ జవాబులు (wbk/<అదే పేరు>.py, SEC = [(pdf పేజీ, శీర్షిక, జవాబులు)])
+    if os.path.exists(wf): SECS += [('engw',) + tuple(x) for x in load(wf).SEC]
+    for sec in SECS:
         k, (pg, title, items) = (sec[0], sec[1:]) if len(sec) == 4 else (bkey, sec)
         sbk, soff = BOOK[k]; A = ANS.setdefault(sbk, {})
         lines = [p.strip() for it in items for p in it.split(' | ')]
