@@ -416,6 +416,17 @@ label.idck{display:flex;align-items:center;gap:8px}label.idck input{width:20px;h
 .hlp ol{margin:0 14px 10px 32px;font-size:14px;line-height:1.6}.hlp li{margin-bottom:4px}.hlp img{display:block;max-width:260px;width:70%;margin:6px auto 12px;border-radius:12px;border:1px solid var(--line)}
 #idPrint{display:none}
 @media print{body.idprint>*:not(#idPrint){display:none!important}body.idprint #idPrint{display:block!important}body.idprint,html:has(body.idprint){background:#fff!important;margin:0!important;padding:0!important}}
+#sscPrint{display:none}
+@media print{body.sscprint>*:not(#sscPrint){display:none!important}body.sscprint #sscPrint{display:block!important}body.sscprint,html:has(body.sscprint){background:#fff!important}.sqpa{margin:3px 0 8px 4px;font-size:13px;color:#14532d}}
+.sscsub{margin:2px 0 0}.sscsub .chip{white-space:nowrap;flex:none}.chip.on{background:var(--teal);border-color:var(--teal);color:#fff}.chip small{opacity:.7;font-size:11px}
+.sscf select,.sscl{width:100%;padding:9px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font-size:14px;margin:4px 0}
+.sscchips{margin:2px 0 4px}.sscsr{display:flex;gap:6px;margin-top:8px;align-items:center}.sscsr input{flex:1;min-width:0;padding:9px;border:1.5px solid var(--line);border-radius:10px;font-size:14px}
+.sscq{padding:12px 13px}.sqh{display:flex;align-items:center;gap:8px}.sqh small{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sqm{font-size:11.5px;font-weight:700;border-radius:8px;padding:3px 8px;background:#e0f2fe;color:#075985;flex:none}.sqm.m2{background:#dcfce7;color:#166534}.sqm.m4{background:#fef3c7;color:#92400e}.sqm.m8{background:#fde2e4;color:#9f1239}
+.sqst{border:0;background:none;font-size:20px;padding:0 2px;flex:none}.sqq{margin:8px 0 6px;line-height:1.55}.sqe{color:#475569;font-size:13.5px}
+.sqo{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13.5px;margin:0 0 6px}.sqmy{width:100%;box-sizing:border-box;border:1.5px dashed var(--line);border-radius:10px;padding:8px;font:inherit;font-size:14px;resize:vertical}
+.sqb{display:flex;gap:8px;margin-top:6px}.sqa{margin-top:8px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:9px 10px;line-height:1.6;font-size:14px}.sqa .sqe{margin-top:6px;border-top:1px dashed #bbf7d0;padding-top:6px}
+.sscbn{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:16px;padding:12px 14px;margin:12px 0;cursor:pointer}.sscbn b{display:block;font-size:15px}.sscbn span{font-size:30px}.sscbn small{color:#78350f}
 #qpPrint{display:none}
 @media print{body.qpprint>*:not(#qpPrint){display:none!important}body.qpprint #qpPrint{display:block!important}body.qpprint,html:has(body.qpprint){background:#fff!important}}
 .qpsheet{font-family:'Noto Sans Telugu',sans-serif;color:#000;padding:8px 14px;font-size:14px}.qpsheet .qph{text-align:center;border-bottom:2px solid #000;padding-bottom:6px;margin-bottom:8px}
@@ -2303,7 +2314,7 @@ const FBK={ready:false,user:null,
 
 /* ---------- సహాయక ఫంక్షన్లు ---------- */
 let view='home',param={},tick=null,T=null,G=null,tAuth=false;
-const PARENT={help:'home',idmk:'learn',dict:'learn',tbl:'learn',evd:'home',card:'home',avatar:'home',badges:'home',library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',wsrun:'test',wsres:'test',wsboard:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
+const PARENT={help:'home',ssc:'learn',idmk:'learn',dict:'learn',tbl:'learn',evd:'home',card:'home',avatar:'home',badges:'home',library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',wsrun:'test',wsres:'test',wsboard:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
 function me(){return S.cur.n;}
 function lessonsOf(c,s){const tb=tbLes(c,s).map(x=>({k:'tb'+x.id,t:x.no+'. '+x.t,b:x.pts||[],tb:x}));const b=((L[c]||{})[s]||[]).map((x,i)=>({k:'b'+i,t:x[0],b:x[1].split('|')}));
  const n=live('notes').filter(x=>!x.kind&&x.c===c&&x.s===s).map(x=>({k:'n'+x.id,t:x.t,b:String(x.x||'').split('\n').filter(Boolean),tn:1,img:x.img||''}));return tb.concat(b,n);}
@@ -2467,7 +2478,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.04-7';
+const APPV='2026.11.04-8';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3004,7 +3015,7 @@ const TBL={};
 function tbLoad(c){c=+c;if(!c||TBL[c])return;if(window.RAAY_TB[c]){TBL[c]='ok';return;}TBL[c]='ld';
  const sc=document.createElement('script');sc.src='notes-'+c+'.js';sc.async=true;
  sc.onload=()=>{TBL[c]=window.RAAY_TB[c]?'ok':'no';tbRefresh();};sc.onerror=()=>{TBL[c]='no';sc.remove();tbRefresh();};document.head.appendChild(sc);}
-function tbRefresh(){try{if(['learn','subject','tbl','home'].includes(view)||(view==='teacher'&&param.t==='tb'))softRender();}catch(e){}}
+function tbRefresh(){try{if(['learn','subject','tbl','home','ssc'].includes(view)||(view==='teacher'&&param.t==='tb'))softRender();}catch(e){}}
 /* ఫైల్ పాఠాలు + టీచర్ మార్పులు (tbx) కలిపి */
 function tbLes(c,s){c=+c;tbLoad(c);const base=((window.RAAY_TB[c]||{})[s]||[]);const ov=live('tbx').filter(x=>+x.c===c&&x.s===s);if(!ov.length)return base;
  const m=new Map(base.map(L=>[L.id,L]));ov.forEach(x=>{if(x.hide)m.delete(x.lid);else if(x.L)m.set(x.lid,Object.assign({},x.L,{id:x.lid,tch:1}));});
@@ -3065,6 +3076,66 @@ function startLesTest(s,id,wb){const L=tbGet(S.cur.c,s,id),src=L&&(wb?(L.wb||{})
  const qs=shuffle(src).slice(0,10).map(a=>({q:a[0],o:shuffle(a.slice(1,5)),a:a[1]}));
  T={s,qs,i:0,ans:[],start:Date.now(),ti:(wb?'📒 వర్క్‌బుక్: ':'📖 ')+L.no+'. '+L.t,lt:wb?id+'_wb':id};go('testrun');
  tick=setInterval(()=>{const e=$('#ttime');if(e)e.textContent=mmss((Date.now()-T.start)/1000);},1000);}
+/* ---------- 🎓 SSC ప్రశ్న–జవాబు (10వ తరగతి) – ssc-10.js (tools/ssc10/build_ssc.py) ----------
+   అంశం: [పాఠం id, మార్కులు, ప్రశ్న, జవాబు, తప్పు ఎంపికలు|0, ప్రశ్న(En), జవాబు(En)] */
+window.RAAY_SSC=window.RAAY_SSC||{};const SSCL={};let SSCV=[];
+function sscLoad(c){c=+c;if(SSCL[c])return;if(window.RAAY_SSC[c]){SSCL[c]='ok';return;}SSCL[c]='ld';
+ const sc=document.createElement('script');sc.src='ssc-'+c+'.js';sc.async=true;
+ sc.onload=()=>{SSCL[c]=window.RAAY_SSC[c]?'ok':'no';if(view==='ssc')softRender();};sc.onerror=()=>{SSCL[c]='no';sc.remove();if(view==='ssc')softRender();};document.head.appendChild(sc);}
+function sscH(t){let h=5381;for(let i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))|0;return (h>>>0).toString(36);}
+function sscMe(){S.ssc=S.ssc||{};return S.ssc[me()]||(S.ssc[me()]={st:{},my:{}});}
+function sscItems(s){const D=(window.RAAY_SSC[10]||{})[s]||[];return D.map(x=>{const id=s+'_'+sscH(x[2]);let o=null;if(x[4]&&x[4].length){o=x[4].slice();o.splice(parseInt(id.slice(-1),36)%(o.length+1),0,x[3]);}
+ return {id,s,l:x[0],mk:x[1],q:x[2],a:x[3],w:x[4]||0,o,qe:x[5]||'',ae:x[6]||''};});}
+function sscSubs(){const D=window.RAAY_SSC[10]||{};return learnSubs(10).filter(s=>D[s]&&D[s].length);}
+function sscLName(s,id){const L=tbLes(10,s).find(x=>x.id===id);return L?L.no+'. '+L.t:id;}
+function sscBr(t){return esc(t).replace(/\n/g,'<br>');}
+function sscSet(o){Object.assign(param,o);if(!('n' in o))param.n=25;render();}
+function sscQA(x,lg){const en=lg==='en'&&x.qe,bi=lg==='bi'&&x.qe;
+ return {q:en?x.qe:x.q,q2:bi?x.qe:'',a:en?(x.ae||x.a):x.a,a2:bi?x.ae:''};}
+function sscCard(x,k,lg,me){const t=sscQA(x,lg),st=me.st[x.id],my=me.my[x.id]||'';
+ return `<div class="card sscq"><div class="sqh"><span class="sqm m${x.mk}">${x.mk} ${x.mk>1?'మార్కులు':'మార్కు'}</span><small class="mut">${esc(sscLName(x.s,x.l))}</small><button class="sqst" onclick="sscStar('${x.id}',this)" aria-label="సేవ్">${st?'⭐':'☆'}</button></div>
+<p class="sqq"><b>${k}.</b> ${sscBr(t.q)}${t.q2?`<br><span class="sqe">${sscBr(t.q2)}</span>`:''}</p>${x.o?`<div class="sqo">${x.o.map((o,j)=>`<span>(${'ABCD'[j]}) ${esc(o)}</span>`).join('')}</div>`:''}
+<textarea class="sqmy" rows="${x.mk>2?4:2}" placeholder="✍️ ముందు నువ్వే జవాబు రాయి… (సేవ్ అవుతుంది)" onchange="sscMy('${x.id}',this.value)">${esc(my)}</textarea>
+<div class="sqb"><button class="btn sm" onclick="sscShow('${x.id}',this)">👁 జవాబు చూడు</button><button class="btn sm ghost" onclick="sscSpeak('${x.id}')">🔊 వినండి</button></div>
+<div class="sqa" id="sa_${x.id}" hidden><b>✅ జవాబు:</b> ${x.o?`(${'ABCD'[x.o.indexOf(x.a)]}) `:''}${sscBr(t.a)}${t.a2?`<div class="sqe">${sscBr(t.a2)}</div>`:''}</div></div>`;}
+function sscStar(id,b){const m=sscMe();if(m.st[id])delete m.st[id];else{m.st[id]=Date.now();toast('⭐ సేవ్ అయింది – “సేవ్ చేసినవి” లో చూడు');}save();if(b)b.textContent=m.st[id]?'⭐':'☆';if(param.tab==='st'&&!m.st[id])render();}
+function sscMy(id,v){const m=sscMe();v=String(v||'').slice(0,3000);if(v.trim())m.my[id]=v;else delete m.my[id];save();}
+function sscShow(id,b){const e=document.getElementById('sa_'+id);if(!e)return;const ta=b.closest('.sscq').querySelector('.sqmy');
+ if(e.hidden&&ta&&!ta.value.trim())toast('💡 ముందు నువ్వే రాసి చూడు, తర్వాత పోల్చుకో');e.hidden=!e.hidden;b.textContent=e.hidden?'👁 జవాబు చూడు':'🙈 జవాబు దాచు';}
+function sscSpeak(id){const x=SSCV.find(y=>y.id===id);if(!x)return;const t=sscQA(x,param.lang||'te');speak(t.q+'. '+t.a);}
+function sscFilter(s,me){const p=param,mk=+p.mk||0,q=String(p.q||'').trim().toLowerCase();
+ return sscItems(s).filter(x=>(p.tab!=='st'||me.st[x.id])&&(!p.l||x.l===p.l)&&(!mk||x.mk===mk)&&(!q||(x.q+' '+x.a+' '+x.qe+' '+x.ae).toLowerCase().includes(q)));}
+V.ssc=()=>{tbLoad(10);sscLoad(10);const bar=`<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>🎓 SSC ప్రశ్న–జవాబు</h2></div>`;
+ if(SSCL[10]!=='ok')return bar+(SSCL[10]==='no'?'<div class="empty">📶 ప్రశ్నల బ్యాంక్ లోడ్ కాలేదు. ఇంటర్నెట్ ఆన్ చేసి మళ్ళీ తెరువు.</div>':'<div class="empty">⏳ ప్రశ్నల బ్యాంక్ లోడ్ అవుతోంది…</div>');
+ const subs=sscSubs();if(!subs.includes(param.s))param.s=subs[0];const s=param.s,tab=param.tab||'q',me=sscMe(),lg=param.lang||(S.ssc.lang)||'te';param.lang=lg;param.n=param.n||25;
+ const all=sscItems(s),hasEn=all.some(x=>x.qe),ls=[...new Set(all.map(x=>x.l))],cnt=k=>all.filter(x=>x.mk===k).length;
+ const subRow=`<div class="hscroll sscsub">${subs.map(k=>`<button class="chip ${k===s?'on':''}" onclick="go('ssc',{s:'${k}',tab:'${tab}',lang:'${lg}'})">${SUBJ[k].ic} ${SUBJ[k].n}</button>`).join('')}</div>`;
+ const tabs=`<div class="tabs">${[['q','📚 ప్రశ్నలు'],['quiz','🎯 క్విజ్'],['st','⭐ సేవ్ ('+all.filter(x=>me.st[x.id]).length+')']].map(([k,n])=>`<button class="${tab===k?'on':''}" onclick="go('ssc',{s:'${s}',tab:'${k}',lang:'${lg}',l:'${param.l||''}'})">${n}</button>`).join('')}</div>`;
+ const lsel=`<select class="sscl" onchange="sscSet({l:this.value})"><option value="">📖 అన్ని పాఠాలు (${all.length})</option>${ls.map(id=>`<option value="${id}" ${param.l===id?'selected':''}>${esc(sscLName(s,id))}</option>`).join('')}</select>`;
+ if(tab==='quiz'){const pool=all.filter(x=>x.o&&(!param.l||x.l===param.l));
+  return bar+subRow+tabs+`<div class="card"><h3>🎯 1 మార్కు బహుళైచ్ఛిక క్విజ్</h3><p class="mut">పాఠం ఎంచుకో (లేదా అన్నీ). ప్రతిసారీ కొత్త ప్రశ్నలు random గా వస్తాయి.</p>${lsel}<p>అందుబాటులో ఉన్న ప్రశ్నలు: <b>${pool.length}</b></p>
+<div class="row2">${[10,20,30].map(n=>`<button class="btn ${n>10?'ghost':''}" ${pool.length?'':'disabled'} onclick="startSscQuiz('${s}',${n})">${n} ప్రశ్నలు ▶</button>`).join('')}</div></div>
+<div class="card"><h3>📊 ${SUBJ[s].n} – ప్రశ్నల బ్యాంక్</h3>${[1,2,4,8].map(k=>`<div class="sbar"><span>${k} మార్కు${k>1?'లు':''}</span><b>${cnt(k)}</b></div>`).join('')}<p class="mut" style="margin-top:6px">2/4/8 మార్కుల ప్రశ్నలకు “📚 ప్రశ్నలు” లో రాసి సాధన చేయి.</p></div>`;}
+ const list=sscFilter(s,me);SSCV=list;const show=list.slice(0,param.n);
+ const flt=`<div class="card sscf">${tab==='q'?lsel:''}<div class="sscchips">${[0,1,2,4,8].map(k=>`<button class="chip ${(+param.mk||0)===k?'on':''}" onclick="sscSet({mk:${k}})">${k?k+' మా.':'అన్నీ'}${k?` <small>${cnt(k)}</small>`:''}</button>`).join('')}</div>
+${hasEn?`<div class="sscchips">${[['te','తెలుగు'],['en','English'],['bi','ద్విభాషా']].map(([k,n])=>`<button class="chip ${lg===k?'on':''}" onclick="S.ssc.lang='${k}';save();sscSet({lang:'${k}'})">${n}</button>`).join('')}</div>`:''}
+<div class="sscsr"><input id="sscq" type="search" placeholder="🔍 ప్రశ్న / పదం వెతుకు" value="${esc(param.q||'')}" onkeydown="if(event.key==='Enter')this.blur()" onchange="sscSet({q:this.value})"><button class="btn sm ghost" onclick="sscPrint()">🖨 ప్రింట్</button><button class="btn sm ghost" onclick="sscTxt()">⬇️ TXT</button></div></div>`;
+ return bar+subRow+tabs+flt+`<p class="mut" style="margin:4px 2px 8px">${list.length} ప్రశ్నలు${list.length>show.length?` • ${show.length} చూపుతున్నాం`:''}${hasEn&&lg!=='te'&&list.some(x=>!x.qe)?' • English లేనివి తెలుగులో':''}</p>`+
+ (show.length?show.map((x,i)=>sscCard(x,i+1,lg,me)).join(''):`<div class="empty">${tab==='st'?'ఇంకా ఏదీ సేవ్ చేయలేదు. ప్రశ్న పక్కన ☆ నొక్కు.':'ఈ ఎంపికలకు ప్రశ్నలు లేవు'}</div>`)+
+ (list.length>show.length?`<button class="btn ghost" style="width:100%;margin:6px 0 14px" onclick="sscSet({n:${param.n+25}})">▾ ఇంకా ${Math.min(25,list.length-show.length)} చూపు</button>`:'');};
+function startSscQuiz(s,n){const pool=sscItems(s).filter(x=>x.o&&(!param.l||x.l===param.l));if(!pool.length)return toast('ప్రశ్నలు లేవు');
+ const qs=shuffle(pool).slice(0,n||10).map(x=>({q:x.q,o:shuffle([x.a].concat(x.w)),a:x.a}));
+ T={s,qs,i:0,ans:[],start:Date.now(),ti:'🎯 SSC క్విజ్ – '+SUBJ[s].n+(param.l?' • '+sscLName(s,param.l):''),ssc:1};go('testrun');
+ tick=setInterval(()=>{const e=$('#ttime');if(e)e.textContent=mmss((Date.now()-T.start)/1000);},1000);}
+function sscOut(){const s=param.s,lg=param.lang||'te',me=sscMe();return {s,lg,me,list:SSCV.length?SSCV:sscFilter(s,me),
+ head:'SSC ప్రశ్న–జవాబు – '+SUBJ[s].n+' (10వ తరగతి)'+(param.l?' – '+sscLName(s,param.l):'')+(+param.mk?' – '+param.mk+' మార్కులు':'')};}
+function sscTxt(){const o=sscOut();if(!o.list.length)return toast('ప్రశ్నలు లేవు');
+ const t=o.head+'\n'+'='.repeat(40)+'\n\n'+o.list.map((x,i)=>{const q=sscQA(x,o.lg);return `${i+1}. [${x.mk} మా.] ${q.q}${q.q2?'\n   '+q.q2:''}${x.o?'\n   '+x.o.map((y,j)=>'('+'ABCD'[j]+') '+y).join('   '):''}\nజవాబు: ${q.a}${q.a2?'\n'+q.a2:''}${o.me.my[x.id]?'\nనా జవాబు: '+o.me.my[x.id]:''}\n`;}).join('\n')+'\nరాయ్ విద్యార్థి యాప్ • రాయ్ ఎడ్యుకేషన్ – https://raayeducation.in\n';
+ dl('SSC_'+o.s+(param.l?'_'+param.l:'')+(+param.mk?'_'+param.mk+'M':'')+'.txt',t);toast('⬇️ TXT డౌన్‌లోడ్ అయింది');}
+function sscPrint(){const o=sscOut();if(!o.list.length)return toast('ప్రశ్నలు లేవు');const key=confirm('జవాబులతో కలిపి ప్రింట్ చేయాలా?\n(OK = జవాబులతో, Cancel = ప్రశ్నలు మాత్రమే)');const L=o.list.slice(0,400);
+ const box=document.getElementById('sscPrint')||document.body.appendChild(Object.assign(document.createElement('div'),{id:'sscPrint'}));
+ box.innerHTML=`<div class="qpsheet"><div class="qph"><b>${esc(S.cfg.sname||'')}</b><h2>${esc(o.head)}</h2></div><ol class="qpol">${L.map(x=>{const q=sscQA(x,o.lg);return `<li><div class="qq">${sscBr(q.q)}${q.q2?'<br>'+sscBr(q.q2):''} <i>[${x.mk}]</i></div>${x.o?`<div class="qo">${x.o.map((y,j)=>`<span>(${'ABCD'[j]}) ${esc(y)}</span>`).join('')}</div>`:''}${key?`<div class="sqpa"><b>జ:</b> ${sscBr(q.a)}${q.a2?'<br>'+sscBr(q.a2):''}</div>`:''}</li>`;}).join('')}</ol><div class="qpft">రాయ్ విద్యార్థి యాప్ • రాయ్ ఎడ్యుకేషన్</div></div>`;
+ document.body.classList.add('sscprint');setTimeout(()=>{window.print();setTimeout(()=>{document.body.classList.remove('sscprint');box.innerHTML='';},600);},80);}
 /* ---------- హోమ్ ---------- */
 function tile(v,ic,t,s,bg,p){return `<button class="tile" style="background:${bg}" onclick="go('${v}'${p?','+p:''})"><span>${ic}</span><b>${t}</b><small>${s}</small></button>`;}
 const EVT={ev:'ఈవెంట్',test:'టెస్ట్',hol:'సెలవు',live:'లైవ్ క్లాస్'};
@@ -3078,7 +3149,7 @@ ${reconnectCard()}${installBanner()}<div class="perf" onclick="go('test',{tab:'d
 <h4 class="sec">రాబోయే ఈవెంట్లు</h4><div class="hscroll">${up.length?up.map(evCard).join(''):`<div class="ecard"><span class="tag">ఈరోజు</span><b>కొత్త ఈవెంట్లు లేవు</b><small>షెడ్యూల్‌లో పీరియడ్లు చూడు</small><button class="lk2" onclick="go('schedule')">షెడ్యూల్ ▸</button></div>`}</div>
 <h4 class="sec">అన్ని విభాగాలు</h4><div class="tiles">
 ${tile('learn','📖','సెల్ఫ్ లెర్న్','పాఠాలు చదువు','#dbeafe')}${tile('doubts','💬','సందేహం','టీచర్‌ని అడుగు','#fde2e4')}${tile('test','📝','టెస్ట్','రాసి రిపోర్ట్ చూడు','#fdeaa8')}
-${tile('schedule','📅','షెడ్యూల్','పీరియడ్లు, ఈవెంట్లు','#ccf0ee')}${tile('games','🎮','ఆటలు','ఆడుతూ నేర్చుకో','#e0dcfd')}${tile('homework','📒','హోంవర్క్',pend.length+' పెండింగ్','#d1fae5')}${tile('library','📚','పుస్తకాలు','పాఠ్య, వర్క్‌బుక్స్','#fde2e4',"{tab:'books'}")}${tile('library','🧰','టూల్స్','లెర్నింగ్ టూల్స్','#e0e7ff',"{tab:'tools'}")}</div>
+${tile('schedule','📅','షెడ్యూల్','పీరియడ్లు, ఈవెంట్లు','#ccf0ee')}${tile('games','🎮','ఆటలు','ఆడుతూ నేర్చుకో','#e0dcfd')}${tile('homework','📒','హోంవర్క్',pend.length+' పెండింగ్','#d1fae5')}${tile('library','📚','పుస్తకాలు','పాఠ్య, వర్క్‌బుక్స్','#fde2e4',"{tab:'books'}")}${tile('library','🧰','టూల్స్','లెర్నింగ్ టూల్స్','#e0e7ff',"{tab:'tools'}")}${+S.cur.c===10?tile('ssc','🎓','SSC ప్రశ్న–జవాబు','1/2/4/8 మార్కులు','#fef3c7'):''}</div>
 ${dailyCards()}
 ${pend.length?`<h4 class="sec">పెండింగ్ హోంవర్క్</h4>${pend.slice(0,2).map(hwCard).join('')}`:''}`;};
 
@@ -3087,7 +3158,7 @@ function recommend(){const c=S.cur.c;const pk=tbPick(c);if(pk)return `<div class
  return `<div class="tcard"><div class="th" style="background:${SUBJ[s].bg}"><span class="si" style="width:34px;height:34px;font-size:16px">${SUBJ[s].ic}</span>${SUBJ[s].n}</div><div class="tb"><b>${esc(l.t)}</b><div class="r"><small class="mut">${l.b.length} ముఖ్యాంశాలు</small><button class="lk b" onclick="go('subject',{s:'${s}',open:${i}})">చదువు ▶</button></div></div></div>`;}}
  return `<div class="empty">🎉 అన్ని పాఠాలు చదివావు! ఇప్పుడు టెస్ట్ రాయి.</div>`;}
 V.learn=()=>{const c=S.cur.c;return `<div class="lgrid"><button class="btn" style="background:#4f46e5" onclick="go('library',{tab:'books'})">📚 పుస్తకాలు</button><button class="btn" style="background:#0f766e" onclick="go('library',{tab:'tools'})">🧰 టూల్స్</button><button class="btn" style="background:#c2410c" onclick="go('dict')">📖 డిక్షనరీ</button><button class="btn" style="background:#7c3aed" onclick="go('idmk')">🪪 ID • ఫోటో • స్టిక్కర్</button></div><div class="doubt" onclick="go('doubts')"><h3>సందేహం అడుగు</h3><p>నీ సందేహాలను ఉపాధ్యాయులకు పంపి, త్వరగా జవాబులు పొందు.</p><span class="bub">💬</span><span class="play">▶</span></div>
-${tbMonthSec()}<h4 class="sec">అన్ని సబ్జెక్టులు</h4><p class="mut" style="margin:-4px 2px 10px">ప్రస్తుతం చూస్తున్నది: <b>${c}వ తరగతి</b> (<a onclick="go('cls')">మార్చు</a>)</p>
+${+c===10?`<div class="sscbn" onclick="go('ssc')"><span>🎓</span><div><b>SSC ప్రశ్న–జవాబు</b><small>1 / 2 / 4 / 8 మార్కుల ప్రశ్నలు • క్విజ్ • ⭐ సేవ్ • ప్రింట్</small></div></div>`:''}${tbMonthSec()}<h4 class="sec">అన్ని సబ్జెక్టులు</h4><p class="mut" style="margin:-4px 2px 10px">ప్రస్తుతం చూస్తున్నది: <b>${c}వ తరగతి</b> (<a onclick="go('cls')">మార్చు</a>)</p>
 <div class="subs">${learnSubs(c).map(s=>{const p=readPct(s);return `<button class="sub" style="background:${SUBJ[s].bg}" onclick="go('subject',{s:'${s}'})"><span class="si" style="color:${SUBJ[s].col}">${SUBJ[s].ic}</span><span><b>${SUBJ[s].n}</b><small>${p}% పూర్తి</small></span><i class="pb"><i style="width:${p}%"></i></i></button>`;}).join('')}</div>
 <h4 class="sec">నీ కోసం సూచన</h4>${recommend()}`;};
 V.subject=()=>{const c=S.cur.c,s=param.s,ls=lessonsOf(c,s);
@@ -3164,7 +3235,7 @@ function buildQs(c,s){if(s==='mat'){const out=[],seen=new Set();let g=0;while(ou
 /* ---------- టెస్ట్ ---------- */
 V.test=()=>{const tab=param.tab||'new';const st=stats();const c=S.cur.c;
  let body='';
- if(tab==='new')body=qpStudentCards()+wsCard()+learnSubs(c).map(s=>{const rs=myScored().filter(r=>r.sb===s&&r.kind!=='ws');const best=rs.length?Math.max(...rs.map(r=>Math.round(r.s*100/r.t))):null;const n=s==='mat'?10:((Q[c]||{})[s]||[]).length;
+ if(tab==='new')body=qpStudentCards()+wsCard()+(+c===10?`<div class="sscbn" onclick="go('ssc',{tab:'quiz'})"><span>🎯</span><div><b>SSC క్విజ్</b><small>పాఠం వారీ 1 మార్కు ప్రశ్నలు – random గా</small></div></div>`:'')+learnSubs(c).map(s=>{const rs=myScored().filter(r=>r.sb===s&&r.kind!=='ws');const best=rs.length?Math.max(...rs.map(r=>Math.round(r.s*100/r.t))):null;const n=s==='mat'?10:((Q[c]||{})[s]||[]).length;
   return `<div class="tcard"><div class="th" style="background:${SUBJ[s].bg}"><span class="si" style="width:34px;height:34px;font-size:16px;color:${SUBJ[s].col}">${SUBJ[s].ic}</span>${SUBJ[s].n} టెస్ట్</div><div class="tb">${n} ప్రశ్నలు • ${rs.length} సార్లు రాశావు${best!=null?` • ఉత్తమం <span class="pct ${pctCls(best)}">${best}%</span>`:''}<div class="r"><small class="mut">${s==='mat'?'ప్రతిసారీ కొత్త లెక్కలు':'ప్రశ్నలు కలగలుపుగా'}</small><button class="lk b" onclick="startTest('${s}')">ప్రారంభించు ▶</button></div></div></div>`;}).join('');
  if(tab==='done'){const rs=myRes().slice().reverse();
   body=`<div class="card"><h3>సబ్జెక్టుల వారీ ప్రదర్శన</h3>${subjectsFor(c).map(s=>{const p=st.by[s];return `<div class="sbar"><span>${SUBJ[s].n}</span><span class="tr"><i style="width:${p||0}%;background:${SUBJ[s].col}"></i></span><b>${p==null?'–':p+'%'}</b></div>`;}).join('')}</div>`+
@@ -3183,15 +3254,15 @@ V.testrun=()=>{const q=T.qs[T.i],sel=T.ans[T.i];
 <div class="row2 qnav"><button class="btn ghost" ${T.i?'':'disabled'} onclick="T.i--;render()">◀ వెనుకకు</button><button class="btn" id="tnext" ${(q.fr?!String(sel==null?'':sel).trim():sel==null)?'disabled':''} onclick="nextQ()">${T.i===T.qs.length-1?'సమర్పించు ✓':'తర్వాత ▶'}</button></div>`;};
 function pickAns(j){T.ans[T.i]=j;render();}
 function nextQ(){if(T.i<T.qs.length-1){T.i++;render();}else finishTest();}
-function quitTest(){if(confirm('టెస్ట్ మధ్యలో ఆపేయాలా? జవాబులు సేవ్ కావు.')){if(T&&T.lt)go('tbl',{s:T.s,id:String(T.lt).replace(/_wb$/,'')});else go('test');}}
+function quitTest(){if(confirm('టెస్ట్ మధ్యలో ఆపేయాలా? జవాబులు సేవ్ కావు.')){if(T&&T.ssc)go('ssc',{s:T.s,tab:'quiz'});else if(T&&T.lt)go('tbl',{s:T.s,id:String(T.lt).replace(/_wb$/,'')});else go('test');}}
 function finishTest(){const sec=Math.round((Date.now()-T.start)/1000);let sc=0;
  const rv=T.qs.map((q,i)=>{const y=q.fr?String(T.ans[i]==null?'':T.ans[i]).trim():q.o[T.ans[i]],ok=q.fr?(qpNorm(y)!==''&&qpNorm(y)===qpNorm(q.a)):y===q.a;if(ok)sc++;return {q:q.q,y:y||'',a:q.a,ok};});
- const r={id:uid(),n:me(),c:S.cur.c,sb:T.s,s:sc,t:T.qs.length,sec,d:new Date().toISOString(),rv};if(T.pid)Object.assign(r,{pid:T.pid,ti:T.ti,kind:'qp'});if(T.lt)Object.assign(r,{lt:T.lt,ti:T.ti});put('results',r);go('result',{id:r.id});if(sc*100/T.qs.length>=80){setTimeout(confetti,200);beep('win');}else beep('ok');}
+ const r={id:uid(),n:me(),c:S.cur.c,sb:T.s,s:sc,t:T.qs.length,sec,d:new Date().toISOString(),rv};if(T.pid)Object.assign(r,{pid:T.pid,ti:T.ti,kind:'qp'});if(T.lt)Object.assign(r,{lt:T.lt,ti:T.ti});if(T.ssc)Object.assign(r,{ssc:1,ti:T.ti});put('results',r);go('result',{id:r.id});if(sc*100/T.qs.length>=80){setTimeout(confetti,200);beep('win');}else beep('ok');}
 V.result=()=>{const r=live('results').find(x=>x.id===param.id);if(!r)return '<div class="empty">ఫలితం దొరకలేదు</div>';if(r.kind==='ws'){param={id:r.id};return V.wsres();}const p=Math.round(r.s*100/r.t);
  const msg=p>=80?'🌟 అద్భుతం!':p>=60?'👏 బాగుంది!':p>=40?'🙂 పర్వాలేదు, ఇంకా సాధన చేయి':'💪 మళ్ళీ ప్రయత్నించు!';
  return `<div class="bar"><button class="ib" onclick="go('test',{tab:'done'})">←</button><h2>${r.ti?esc(r.ti):SUBJ[r.sb].n} – ఫలితం</h2></div>
 <div class="card center">${ring(p,130,p>=80?'#16a34a':p>=50?'#f59e0b':'#e5484d')}<h3 style="margin-top:8px">${msg}</h3><p>సరైనవి: <b>${r.s} / ${r.t}</b> &nbsp;•&nbsp; సమయం: <b>${mmss(r.sec)}</b></p><p class="mut">${fmtD(r.d)}</p>
-<div class="row2">${r.pid?`<button class="btn" onclick="go('test')">📝 టెస్టులు</button>`:r.lt?`<button class="btn" onclick="startLesTest('${r.sb}','${String(r.lt).replace(/_wb$/,'')}',${/_wb$/.test(r.lt)?1:0})">↻ మళ్ళీ రాయి</button>`:`<button class="btn" onclick="startTest('${r.sb}')">↻ మళ్ళీ రాయి</button>`}${r.lt?`<button class="btn ghost" onclick="go('tbl',{s:'${r.sb}',id:'${String(r.lt).replace(/_wb$/,'')}'})">📖 పాఠం నోట్స్</button>`:`<button class="btn ghost" onclick="go('subject',{s:'${r.sb}'})">📖 పాఠాలు</button>`}</div></div>
+<div class="row2">${r.ssc?`<button class="btn" onclick="go('ssc',{s:'${r.sb}',tab:'quiz'})">↻ మళ్ళీ క్విజ్</button><button class="btn ghost" onclick="go('ssc',{s:'${r.sb}'})">🎓 SSC ప్రశ్నలు</button>`:r.pid?`<button class="btn" onclick="go('test')">📝 టెస్టులు</button>`:r.lt?`<button class="btn" onclick="startLesTest('${r.sb}','${String(r.lt).replace(/_wb$/,'')}',${/_wb$/.test(r.lt)?1:0})">↻ మళ్ళీ రాయి</button>`:`<button class="btn" onclick="startTest('${r.sb}')">↻ మళ్ళీ రాయి</button>`}${r.ssc?'':r.lt?`<button class="btn ghost" onclick="go('tbl',{s:'${r.sb}',id:'${String(r.lt).replace(/_wb$/,'')}'})">📖 పాఠం నోట్స్</button>`:`<button class="btn ghost" onclick="go('subject',{s:'${r.sb}'})">📖 పాఠాలు</button>`}</div></div>
 <h4 class="sec">జవాబుల సమీక్ష</h4>${(r.rv||[]).map((x,i)=>{const ok=x.y===x.a;return `<div class="rv ${ok?'':'x'}"><p>${i+1}. ${esc(x.q)}</p><small>నీ జవాబు: <b>${esc(x.y||'—')}</b> ${ok?'✅':'❌'}</small>${ok?'':`<small>సరైన జవాబు: <b style="color:#166534">${esc(x.a)}</b></small>`}</div>`;}).join('')}`;};
 
 /* ---------- ✎ రోజువారీ లెక్కలు (+ − × ÷ – ఒక్కో ప్రక్రియకు 4) – వెంటనే జవాబు, మార్కులు, ర్యాంక్ ---------- */

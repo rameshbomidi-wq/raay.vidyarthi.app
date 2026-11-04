@@ -28,7 +28,7 @@ self.addEventListener('fetch', e => {
   }
   // పాఠం నోట్స్ (notes-3.js …): ముందు నెట్‌వర్క్ (కొత్త నోట్స్ వెంటనే), లేకపోతే కాష్ (ఆఫ్లైన్)
   if (/\.mp4$/i.test(url.pathname)) return;  // వీడియో: నేరుగా నెట్‌వర్క్ (కాష్ చేయం)
-  if (same && (/\/(notes|answers)-\d+\.js$/.test(url.pathname) || /\/help\.js$/.test(url.pathname))) {
+  if (same && (/\/(notes|answers|ssc)-\d+\.js$/.test(url.pathname) || /\/help\.js$/.test(url.pathname))) {
     e.respondWith(fetch(req, {cache: 'no-cache'}).then(r => keep(req, r)).catch(() => caches.match(req, {ignoreSearch: true})));
     return;
   }
