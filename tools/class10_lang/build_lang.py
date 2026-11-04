@@ -4,8 +4,8 @@ REPO = '/home/claude/raay.vidyarthi.app'
 # subject -> (book file, pdf offset)
 BOOK = {'tel': ('Class10_Telugu_Textbook_Sem1.pdf', 8), 'te2': ('Class10_Telugu_SecondLanguage_Textbook.pdf', 8), 'hin': ('Class10_Hindi_Textbook_Sem1.pdf', 2),
         'eng': ('Class10_English_Textbook_Sem1.pdf', 18), 'engw': ('Class10_English_Workbook_Sem1.pdf', 6), 'engr': ('Class10_English_SupplementaryReader_Sem1.pdf', 5),
-        'soc': ('Class10_Social_Economics_Textbook.pdf', 6)}
-BIL = {'soc'}  # ద్విభాషా పుస్తకం: సరి పేజీ English, తర్వాతి (బేసి) పేజీ తెలుగు – జవాబులు రెండింటికీ
+        'soc': ('Class10_Social_Economics_Textbook.pdf', 6), 'soch': ('Class10_Social_History_Textbook.pdf', 6), 'socg': ('Class10_Social_Geography_Textbook.pdf', 6)}
+BIL = {'soc', 'soch', 'socg'}  # ద్విభాషా పుస్తకం: సరి పేజీ English, తర్వాతి (బేసి) పేజీ తెలుగు – జవాబులు రెండింటికీ
 
 def load(f):
     sp = importlib.util.spec_from_file_location(os.path.basename(f)[:-3], f)
