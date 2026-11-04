@@ -2478,7 +2478,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.04-9';
+const APPV='2026.11.04-10';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3044,7 +3044,7 @@ ${pk?`<div class="tbnext" onclick="go('tbl',{s:'${pk.s}',id:'${pk.L.id}'})"><spa
 function tbSubjectCards(c,s){const ls=tbLes(c,s);if(!ls.length)return '';
  return `<h4 class="sec">📖 పాఠ్యపుస్తకం పాఠాలు – నోట్స్ & టెస్ట్</h4>${ls.map(L=>{const d=isRead(tbKey(c,s,L.id)),b=tbBest(L.id),now=tbIsNow(L);
   return `<div class="tbcard ${d?'done':''} ${now?'now':''}" style="--sc:${SUBJ[s].col};--sb:${SUBJ[s].bg}"><div class="tbh" onclick="go('tbl',{s:'${s}',id:'${L.id}'})"><span class="tbno">${L.no}</span><div><b>${esc(L.t)}</b><small>📅 ${tbMonths(L)} • ${esc(L.ty)}${now?' • <i>ఈ నెల</i>':''}</small></div>${d?'<em>✓</em>':''}</div>
-<div class="tbf"><button class="lk" onclick="go('tbl',{s:'${s}',id:'${L.id}'})">📖 నోట్స్ చదువు</button>${L.wb?`<button class="lk" style="background:#fef3c7;color:#92400e" onclick="go('tbl',{s:'${s}',id:'${L.id}',wb:1})">📒 వర్క్‌బుక్</button>`:''}<button class="lk b" onclick="startLesTest('${s}','${L.id}')">📝 టెస్ట్${b!=null?` • ${b}%`:''}</button></div></div>`;}).join('')}`;}
+<div class="tbf"><button class="lk" onclick="go('tbl',{s:'${s}',id:'${L.id}'})">📖 నోట్స్ చదువు</button>${L.wb?`<button class="lk" style="background:#fef3c7;color:#92400e" onclick="go('tbl',{s:'${s}',id:'${L.id}',wb:1})">📒 ${esc(L.wb.lb||'వర్క్‌బుక్')}</button>`:''}<button class="lk b" onclick="startLesTest('${s}','${L.id}')">📝 టెస్ట్${b!=null?` • ${b}%`:''}</button></div></div>`;}).join('')}`;}
 /* పాఠం నోట్స్ పేజీ */
 V.tbl=()=>{if(param.wb)setTimeout(()=>{const e=document.querySelector('.tbwb');if(e)window.scrollTo({top:e.getBoundingClientRect().top+window.scrollY-80,behavior:'smooth'});},150);const c=S.cur.c,s=param.s,ls=tbLes(c,s),i=ls.findIndex(x=>x.id===param.id),L=ls[i];
  if(!L)return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>పాఠం</h2></div><div class="empty">ఈ పాఠం నోట్స్ దొరకలేదు</div>`;

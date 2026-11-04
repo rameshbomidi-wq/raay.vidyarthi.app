@@ -3,7 +3,9 @@ H = os.path.dirname(os.path.abspath(__file__))
 REPO = '/home/claude/raay.vidyarthi.app'
 # subject -> (book file, pdf offset)
 BOOK = {'tel': ('Class10_Telugu_Textbook_Sem1.pdf', 8), 'te2': ('Class10_Telugu_SecondLanguage_Textbook.pdf', 8), 'hin': ('Class10_Hindi_Textbook_Sem1.pdf', 2),
-        'eng': ('Class10_English_Textbook_Sem1.pdf', 18), 'engw': ('Class10_English_Workbook_Sem1.pdf', 6), 'engr': ('Class10_English_SupplementaryReader_Sem1.pdf', 5)}
+        'eng': ('Class10_English_Textbook_Sem1.pdf', 18), 'engw': ('Class10_English_Workbook_Sem1.pdf', 6), 'engr': ('Class10_English_SupplementaryReader_Sem1.pdf', 5),
+        'soc': ('Class10_Social_Economics_Textbook.pdf', 6)}
+BIL = {'soc'}  # ద్విభాషా పుస్తకం: సరి పేజీ English, తర్వాతి (బేసి) పేజీ తెలుగు – జవాబులు రెండింటికీ
 
 def load(f):
     sp = importlib.util.spec_from_file_location(os.path.basename(f)[:-3], f)
@@ -25,6 +27,7 @@ for f in sorted(glob.glob(f'{H}/ch/*.py')):
         t = f'{title} (పుట {pg-soff})' + (' – వర్క్‌బుక్' if k == 'engw' else '')
         tg.append([t, lines]); ws.append(t)
         A.setdefault(str(pg), []).extend([f'— {title} —'] + lines)
+        if k in BIL: A.setdefault(str(pg + 1), []).extend([f'— {title} —'] + lines)
     W['ws'] = ws; L['wb'] = W; L['tg'] = tg
     assert len(L['qz']) >= 10, L['id']
     for z in L['qz'] + W.get('qz', []): assert len(z) == 5 and len(set(z[1:])) == 4, (L['id'], z)
