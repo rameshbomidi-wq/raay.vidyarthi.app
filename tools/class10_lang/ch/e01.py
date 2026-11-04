@@ -1,0 +1,86 @@
+S = 'eng'
+PAGES = (19, 32)
+WBK = 'engw'; WPAGES = (7, 22); WLB = 'వర్క్‌బుక్'
+L = dict(id='en1', no=1, t='A Letter to God + Dust of Snow (poem)', m=[6], ty='Story + Poem', th='Faith, Hope, Nature', by='G.L. Fuentes; Robert Frost (poem)',
+sum='Lencho, a poor farmer, lives in a house on the crest of a low hill. His field of ripe corn needs a downpour. The rain comes and he compares the big drops to new coins, but soon a strong wind and a huge hailstorm destroy the whole crop. Lencho has complete faith in God, so he writes a letter to God asking for a hundred pesos. The postmaster laughs at first, but is touched by Lencho\'s faith; he collects money from his employees and friends, gives part of his own salary, and sends seventy pesos signed "God". Lencho is not surprised; he counts the money, gets angry that thirty pesos are missing, and writes another letter asking God to send the rest not by mail because "the post office employees are a bunch of crooks". The irony: the people who helped him are called thieves. Poem – Dust of Snow: a crow shakes down a dust of snow from a hemlock tree on the poet; this small event changes his mood and saves part of a day he had regretted.',
+te='లెంచో ఒక పేద రైతు. పండిన మొక్కజొన్న పంటకు వర్షం కావాలనుకున్నాడు. వాన చినుకులను "కొత్త నాణేలు" అన్నాడు; కానీ వడగళ్ళ వాన పంటను పూర్తిగా నాశనం చేసింది. దేవునిపై గాఢ విశ్వాసంతో "వంద పెసోలు పంపు" అని దేవునికే ఉత్తరం రాశాడు. పోస్ట్‌మాస్టర్ అతని నమ్మకాన్ని చూసి చలించి, ఉద్యోగుల నుండి, తన జీతం నుండి డబ్బు సేకరించి "దేవుడు" పేరుతో 70 పెసోలు పంపాడు. లెంచో ఆశ్చర్యపోలేదు; 30 పెసోలు తక్కువ అని కోపంతో "మిగతా డబ్బు పోస్టాఫీసు ద్వారా పంపకు, ఉద్యోగులు దొంగలు" అని మళ్ళీ రాశాడు – ఇదే వ్యంగ్యం (irony). కవిత: కాకి హెమ్లాక్ చెట్టు నుండి మంచు రాల్చగానే కవి దిగులు మనసు మారింది.',
+pts=['Story by G.L. Fuentes (Mexico); characters: Lencho, his wife, sons, the postmaster, post office employees.',
+ 'Lencho compares raindrops to new coins: big drops = ten-cent pieces, little ones = fives.',
+ 'Hailstones looked like "frozen pearls"; the field became white "as if covered with salt".',
+ 'Two conflicts: humans vs nature (hailstorm) and humans vs humans (Lencho vs post office employees).',
+ 'Irony: Lencho calls his helpers "a bunch of crooks".',
+ 'Dust of Snow (Robert Frost) – crow and hemlock are usually symbols of sorrow/death, but here they bring joy; small things can change our mood.'],
+w=[['crest','top of a hill (శిఖరం)'],['downpour','heavy rainfall (కుండపోత వాన)'],['hailstones','small balls of ice (వడగళ్ళు)'],['locusts','insects that destroy crops (మిడతలు)'],['plague','a disaster'],['intimate','close, personal'],['amiable','friendly'],['conviction','firm belief'],['contentment','satisfaction'],['crooks','dishonest people, thieves'],['hemlock','a poisonous tree'],['rued','regretted (విచారించాడు)']],
+gr=dict(t='Thinking about Language', p=['Storm words: cyclone, gale, typhoon, tornado, hurricane, whirlwind.',
+ 'Relative clauses (which, who, whose, whom): "Lencho prayed to God, whose eyes see into our minds."',
+ 'Using negatives for emphasis: "Not a single leaf remained on the trees." "Never in his career had the postman seen such an address."',
+ 'Different meanings of "hope": wish, polite concern, expectation, little chance ("hoping against hope").']),
+qa=[['What did Lencho hope for?','A good downpour (shower of rain) for his ripe corn field.'],
+ ['Why did Lencho call the raindrops "new coins"?','Because the rain would give him a good harvest and money.'],
+ ['What happened to Lencho\'s fields?','Hailstones destroyed the crop completely; the field looked white as if covered with salt.'],
+ ['Who did Lencho have faith in?','God – he wrote a letter to God asking for a hundred pesos.'],
+ ['How much money did the postmaster send?','A little more than half – seventy pesos.'],
+ ['What is the irony in the story?','Lencho calls the post office employees "a bunch of crooks", though they gave him the money.']],
+act='Fill a money order form (workbook) and write a letter of thanks; collect stories of people with strong faith/hope.',
+kn='Money order: one of the cheapest ways to send money through the post office. Robert Frost (USA) won the Pulitzer Prize four times.',
+qz=[['Who wrote "A Letter to God"?','G.L. Fuentes','Robert Frost','Liam O\'Flaherty','Ruskin Bond'],
+ ['Where was Lencho\'s house?','On the crest of a low hill','Near a river','In a big town','In a forest'],
+ ['What did Lencho compare the raindrops to?','New coins','Frozen pearls','Salt','Diamonds'],
+ ['The hailstones looked like?','Frozen pearls','New coins','Cotton','Stones'],
+ ['How much money did Lencho ask for?','A hundred pesos','Seventy pesos','Fifty pesos','Thirty pesos'],
+ ['Who read Lencho\'s letter first?','The postmaster','A postman','His wife','The mayor'],
+ ['How much money did Lencho receive?','Seventy pesos','A hundred pesos','Thirty pesos','Nothing'],
+ ['Whom did Lencho call "a bunch of crooks"?','The post office employees','The farmers','His sons','God'],
+ ['Why did the postmaster sign the letter "God"?','To keep Lencho\'s faith in God alive','He was afraid','He liked jokes','It was the rule'],
+ ['What conflict is NOT in the story?','Man vs animals','Man vs nature','Man vs man','Faith vs reality'],
+ ['"Dust of Snow" is written by?','Robert Frost','Leslie Norris','John Berryman','Adrienne Rich'],
+ ['In "Dust of Snow", the crow shook snow from a?','Hemlock tree','Oak tree','Pine tree','Mango tree'],
+ ['"I had rued" means?','I had regretted','I had enjoyed','I had ruled','I had forgotten'],
+ ['A violent storm with a funnel-shaped cloud is a?','Tornado','Gale','Typhoon','Breeze'],
+ ['"Lencho prayed to God. His eyes see into our minds." Join with?','whose','which','whom','who'],
+ ['"Never in his career had the postman seen such an address" – this uses?','A negative for emphasis','A question','A relative clause','Passive voice']],
+wb=dict(mis='Relative pronoun: "who" for persons (subject), "whom" for persons (object), "whose" for possession, "which" for things. A non-defining clause takes commas.', qz=[
+ ['"This man cheated me. I trusted him." – joined?','This man, whom I trusted, cheated me.','This man, which I trusted, cheated me.','This man whose I trusted cheated me.','This man, who trusted me, cheated me.'],
+ ['An extremely strong wind is a?','Gale','Tornado','Hurricane','Drizzle'],
+ ['A violent storm in the western Atlantic is a?','Hurricane','Typhoon','Cyclone','Gale'],
+ ['"Not a single leaf remained on the trees" means?','The trees lost all their leaves','A few leaves remained','The trees were green','Leaves were single'],
+ ['"I hope you don\'t mind my saying…" shows?','Polite concern','Strong hope','Hopelessness','Anger'],
+ ['"I often go to Mumbai. Mumbai is the commercial capital." – joined with?','which','who','whose','whom']])
+)
+SEC = [
+ (23, 'Oral Comprehension Check 1', [
+  '1) Lencho hoped for a good downpour (or at least a shower) for his field of ripe corn.',
+  '2) He said the raindrops were like new coins because the rain would give him a good harvest, which would bring him money – big drops were ten-cent pieces, little ones fives.',
+  '3) The rain changed into a strong wind and very large hailstones began to fall. For an hour the hail fell; the field became white as if covered with salt, and the whole corn crop was totally destroyed.',
+  '4) His soul was filled with sadness. He felt hopeless and worried – "Not even the locusts would have left more than this… This year we will have nothing", and the family would go hungry.']),
+ (24, 'Oral Comprehension Check 2', [
+  '1) Lencho had complete faith in God (the eyes of God see everything, even what is deep in one\'s conscience). He wrote a letter to God asking for a hundred pesos to sow his field again and to live until the next crop.',
+  '2) The postmaster read the letter (after a postman showed it to him, laughing).',
+  '3) He first laughed, but then became serious; not wanting to shake Lencho\'s faith, he decided to answer the letter. He collected money from his employees and friends, gave part of his own salary, and sent the money signed "God".']),
+ (25, 'Oral Comprehension Check 3; Thinking about the Text', [
+  'OCC 1) No, Lencho was not surprised at all – such was his confidence (faith) in God.',
+  'OCC 2) He got angry because the money was less than what he had asked – only seventy pesos instead of a hundred. He thought God could not make a mistake, so the post office employees must have taken the rest.',
+  'TT 1) Lencho has complete faith in God. Sentences: "…he had a single hope: help from God, whose eyes, as he had been instructed, see everything, even what is deep in one\'s conscience." "Lencho showed not the slightest surprise on seeing the money; such was his confidence…" "God could not have made a mistake, nor could he have denied Lencho what he had requested."',
+  'TT 2) The postmaster sends money because he did not want to shake the writer\'s faith in God. He signs it "God" so that Lencho believes the reply came from God himself and his faith stays strong.',
+  'TT 3) No. He had such strong faith in God that he believed the money came from God; it never occurred to him that someone else could have sent it.',
+  'TT 4) Lencho thinks the post office employees have taken the rest of the money. The irony is that the very people who collected the money and helped him are called "a bunch of crooks" by him.']),
+ (26, 'Thinking about the Text (5–6); Thinking about Language', [
+  'TT 5) Yes, there are people like Lencho – simple, innocent, hardworking people with blind faith in God, who are sometimes ungrateful and suspicious of others. (Answers may vary – people with strong faith, unquestioning, honest.)',
+  'TT 6) Humans vs nature: Lencho vs the hailstorm that destroyed his crop. Humans vs humans: Lencho\'s suspicion of the post office employees – he calls them crooks.',
+  'Language I: 1) cyclone 2) gale 3) typhoon 4) tornado 5) hurricane 6) whirlwind',
+  'Language II (meanings of "hope"): 1) wanting something to happen and thinking it possible 2) showing concern that what you say should not upset someone (polite) 3) a feeling that something good will probably happen 4) wanting something to happen though it seems unlikely 5) thinking that this would happen (it may or may not have happened) 6) feeling that something good will probably not happen']),
+ (27, 'Thinking about Language – Relative clauses', [
+  '1) I often go to Mumbai, which is the commercial capital of India.',
+  '2) My mother, who cooks very well, is going to host a TV show on cooking.',
+  '3) These sportspersons, whose performance has been excellent, are going to meet the President.',
+  '4) Lencho prayed to God, whose eyes see into our minds.',
+  '5) This man, whom I trusted, cheated me.']),
+ (28, 'Using negatives for emphasis', [
+  '1) Not a single leaf remained on the trees.',
+  '2) The letter was addressed to none other than God himself.',
+  '3) Never in his career had the postman seen such an address.']),
+ (32, 'Dust of Snow – Thinking about the Poem', [
+  '1) "Dust of snow" means fine particles of snow. The sudden shower of snow shaken down on the poet by a crow from a hemlock tree changed his mood.',
+  '2) (i) Usually poets write about birds like the nightingale, peacock, cuckoo, and trees like the oak, maple, mango. (ii) The crow and hemlock are different – the crow is black and considered a bad omen; hemlock is poisonous. (iii) They represent sorrow, gloom and death. But here they bring a positive change in his mood – Frost shows that even ordinary or unpleasant things in nature can give joy.',
+  '3) Yes (personal answer) – e.g., when I failed in a test I felt sad; a friend\'s kind word/my pet\'s play/a beautiful sunset changed my mood and gave me hope.'])
+]

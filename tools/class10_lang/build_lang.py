@@ -2,7 +2,8 @@ import json, glob, importlib.util, os, sys
 H = os.path.dirname(os.path.abspath(__file__))
 REPO = '/home/claude/raay.vidyarthi.app'
 # subject -> (book file, pdf offset)
-BOOK = {'tel': ('Class10_Telugu_Textbook_Sem1.pdf', 8), 'te2': ('Class10_Telugu_SecondLanguage_Textbook.pdf', 8), 'hin': ('Class10_Hindi_Textbook_Sem1.pdf', 2)}
+BOOK = {'tel': ('Class10_Telugu_Textbook_Sem1.pdf', 8), 'te2': ('Class10_Telugu_SecondLanguage_Textbook.pdf', 8), 'hin': ('Class10_Hindi_Textbook_Sem1.pdf', 2),
+        'eng': ('Class10_English_Textbook_Sem1.pdf', 18), 'engw': ('Class10_English_Workbook_Sem1.pdf', 6), 'engr': ('Class10_English_SupplementaryReader_Sem1.pdf', 5)}
 
 def load(f):
     sp = importlib.util.spec_from_file_location(os.path.basename(f)[:-3], f)
@@ -10,13 +11,16 @@ def load(f):
 
 out = {}; ANS = {}
 for f in sorted(glob.glob(f'{H}/ch/*.py')):
-    m = load(f); L = dict(m.L); s = m.S; bk, off = BOOK[s]
-    a, b = m.PAGES  # pdf page range of lesson
-    W = dict(L.get('wb', {})); W.update(pg=f'{a-off}–{b-off}', f=f'books/10/{bk}', p=a, lb='పాఠ్యపుస్తకం')
-    tg = []; ws = []; A = ANS.setdefault(bk, {})
-    for (pg, title, items) in m.SEC:
+    m = load(f); L = dict(m.L); s = m.S; bkey = getattr(m, 'BK', s)
+    wkey = getattr(m, 'WBK', bkey); bk, off = BOOK[wkey]
+    a, b = getattr(m, 'WPAGES', m.PAGES)  # pdf page range shown as wb
+    W = dict(L.get('wb', {})); W.update(pg=f'{a-off}–{b-off}', f=f'books/10/{bk}', p=a, lb=getattr(m, 'WLB', 'పాఠ్యపుస్తకం'))
+    tg = []; ws = []
+    for sec in m.SEC:
+        k, (pg, title, items) = (sec[0], sec[1:]) if len(sec) == 4 else (bkey, sec)
+        sbk, soff = BOOK[k]; A = ANS.setdefault(sbk, {})
         lines = [p.strip() for it in items for p in it.split(' | ')]
-        t = f'{title} (పుట {pg-off})'
+        t = f'{title} (పుట {pg-soff})' + (' – వర్క్‌బుక్' if k == 'engw' else '')
         tg.append([t, lines]); ws.append(t)
         A.setdefault(str(pg), []).extend([f'— {title} —'] + lines)
     W['ws'] = ws; L['wb'] = W; L['tg'] = tg

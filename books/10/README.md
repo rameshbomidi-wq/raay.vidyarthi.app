@@ -6,3 +6,6 @@
 - Class10_Telugu_Textbook_Sem1.pdf – తెలుగు ప్రథమ భాష సెమ్-1 (తెలుగు పరిమళం; PDF = ముద్రిత + 8; ఒకే భాష)
 - Class10_Telugu_SecondLanguage_Textbook.pdf – తెలుగు ద్వితీయ భాష (PDF = ముద్రిత + 8)
 - Class10_Hindi_Textbook_Sem1.pdf – హిందీ (12 పాఠాలు)
+- Class10_English_Textbook_Sem1.pdf – English First Flight (Units 1–7 + poems; PDF = ముద్రిత + 18)
+- Class10_English_Workbook_Sem1.pdf – English వర్క్‌బుక్ (Units 1–7; PDF = ముద్రిత + 6)
+- Class10_English_SupplementaryReader_Sem1.pdf – Footprints without Feet (8 కథలు; PDF = ముద్రిత + 5)
