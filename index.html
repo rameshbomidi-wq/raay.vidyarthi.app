@@ -424,7 +424,7 @@ label.idck{display:flex;align-items:center;gap:8px}label.idck input{width:20px;h
 .sscchips{margin:2px 0 4px}.sscsr{display:flex;gap:6px;margin-top:8px;align-items:center}.sscsr input{flex:1;min-width:0;padding:9px;border:1.5px solid var(--line);border-radius:10px;font-size:14px}
 .sscq{padding:12px 13px}.sqh{display:flex;align-items:center;gap:8px}.sqh small{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sqm{font-size:11.5px;font-weight:700;border-radius:8px;padding:3px 8px;background:#e0f2fe;color:#075985;flex:none}.sqm.m2{background:#dcfce7;color:#166534}.sqm.m4{background:#fef3c7;color:#92400e}.sqm.m8{background:#fde2e4;color:#9f1239}
-.sqst{border:0;background:none;font-size:20px;padding:0 2px;flex:none}.sqq{margin:8px 0 6px;line-height:1.55}.sqe{color:#475569;font-size:13.5px}
+.sqsrc{font-size:12px;color:#7c3aed;margin-top:6px}.sqx{margin-top:6px;color:#334155;font-size:13.5px}.qor{text-align:center;font-weight:600;margin:4px 0;color:#475569}.sqst{border:0;background:none;font-size:20px;padding:0 2px;flex:none}.sqq{margin:8px 0 6px;line-height:1.55}.sqe{color:#475569;font-size:13.5px}
 .sqo{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13.5px;margin:0 0 6px}.sqmy{width:100%;box-sizing:border-box;border:1.5px dashed var(--line);border-radius:10px;padding:8px;font:inherit;font-size:14px;resize:vertical}
 .sqb{display:flex;gap:8px;margin-top:6px}.sqa{margin-top:8px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:9px 10px;line-height:1.6;font-size:14px}.sqa .sqe{margin-top:6px;border-top:1px dashed #bbf7d0;padding-top:6px}
 .sscbn{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:16px;padding:12px 14px;margin:12px 0;cursor:pointer}.sscbn b{display:block;font-size:15px}.sscbn span{font-size:30px}.sscbn small{color:#78350f}
@@ -2479,7 +2479,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.05-3';
+const APPV='2026.11.05-4';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3086,26 +3086,28 @@ function sscLoad(c){c=+c;if(SSCL[c])return;if(window.RAAY_SSC[c]){SSCL[c]='ok';r
 function sscH(t){let h=5381;for(let i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))|0;return (h>>>0).toString(36);}
 function sscMe(){S.ssc=S.ssc||{};return S.ssc[me()]||(S.ssc[me()]={st:{},my:{}});}
 function sscItems(s){const D=(window.RAAY_SSC[10]||{})[s]||[];return D.map(x=>{const id=s+'_'+sscH(x[2]);let o=null;if(x[4]&&x[4].length){o=x[4].slice();o.splice(parseInt(id.slice(-1),36)%(o.length+1),0,x[3]);}
- return {id,s,l:x[0],mk:x[1],q:x[2],a:x[3],w:x[4]||0,o,qe:x[5]||'',ae:x[6]||''};});}
+ return {id,s,l:x[0],mk:x[1],q:x[2],a:x[3],w:x[4]||0,o,qe:x[5]||'',ae:x[6]||'',bd:x[7]||'',ex:x[8]||'',exe:x[9]||''};});}
 function sscSubs(){const D=window.RAAY_SSC[10]||{};return learnSubs(10).filter(s=>D[s]&&D[s].length);}
 function sscLName(s,id){const L=tbLes(10,s).find(x=>x.id===id);return L?L.no+'. '+L.t:id;}
 function sscBr(t){return esc(t).replace(/\n/g,'<br>');}
 function sscSet(o){Object.assign(param,o);if(!('n' in o))param.n=25;render();}
 function sscQA(x,lg){const en=lg==='en'&&x.qe,bi=lg==='bi'&&x.qe;
- return {q:en?x.qe:x.q,q2:bi?x.qe:'',a:en?(x.ae||x.a):x.a,a2:bi?x.ae:''};}
-function sscCard(x,k,lg,me){const t=sscQA(x,lg),st=me.st[x.id],my=me.my[x.id]||'';
+ return {q:en?x.qe:x.q,q2:bi?x.qe:'',a:en?(x.ae||x.a):x.a,a2:bi?x.ae:'',ex:en?(x.exe||x.ex):x.ex,ex2:bi?x.exe:''};}
+function sscSrc(x){const b=x.bd;if(!b)return '';const m=b.match(/^MP(\d)-(\w+)/);if(m)return `📄 బోర్డు మోడల్ పేపర్-${m[1]} • ప్ర. ${m[2]}`;const q=b.match(/^QB(\d)/);return q?`📘 Mission March ప్రశ్నల బ్యాంక్ • ${q[1]==='1'?'⭐ Rising Star':'🌟 Shining Star'}`:'';}
+function sscCard(x,k,lg,me){const t=sscQA(x,lg),st=me.st[x.id],my=me.my[x.id]||'',src=sscSrc(x);
  return `<div class="card sscq"><div class="sqh"><span class="sqm m${x.mk}">${x.mk} ${x.mk>1?'మార్కులు':'మార్కు'}</span><small class="mut">${esc(sscLName(x.s,x.l))}</small><button class="sqst" onclick="sscStar('${x.id}',this)" aria-label="సేవ్">${st?'⭐':'☆'}</button></div>
-<p class="sqq"><b>${k}.</b> ${sscBr(t.q)}${t.q2?`<br><span class="sqe">${sscBr(t.q2)}</span>`:''}</p>${x.o?`<div class="sqo">${x.o.map((o,j)=>`<span>(${'ABCD'[j]}) ${esc(o)}</span>`).join('')}</div>`:''}
+${src?`<div class="sqsrc">${src}</div>`:''}<p class="sqq"><b>${k}.</b> ${sscBr(t.q)}${t.q2?`<br><span class="sqe">${sscBr(t.q2)}</span>`:''}</p>${x.o?`<div class="sqo">${x.o.map((o,j)=>`<span>(${'ABCD'[j]}) ${esc(o)}</span>`).join('')}</div>`:''}
 <textarea class="sqmy" rows="${x.mk>2?4:2}" placeholder="✍️ ముందు నువ్వే జవాబు రాయి… (సేవ్ అవుతుంది)" onchange="sscMy('${x.id}',this.value)">${esc(my)}</textarea>
 <div class="sqb"><button class="btn sm" onclick="sscShow('${x.id}',this)">👁 జవాబు చూడు</button><button class="btn sm ghost" onclick="sscSpeak('${x.id}')">🔊 వినండి</button></div>
-<div class="sqa" id="sa_${x.id}" hidden><b>✅ జవాబు:</b> ${x.o?`(${'ABCD'[x.o.indexOf(x.a)]}) `:''}${sscBr(t.a)}${t.a2?`<div class="sqe">${sscBr(t.a2)}</div>`:''}</div></div>`;}
+<div class="sqa" id="sa_${x.id}" hidden><b>✅ జవాబు:</b> ${x.o?`(${'ABCD'[x.o.indexOf(x.a)]}) `:''}${sscBr(t.a)}${t.a2?`<div class="sqe">${sscBr(t.a2)}</div>`:''}${t.ex?`<div class="sqx">💡 ${sscBr(t.ex)}</div>`:''}${t.ex2?`<div class="sqx sqe">💡 ${sscBr(t.ex2)}</div>`:''}</div></div>`;}
 function sscStar(id,b){const m=sscMe();if(m.st[id])delete m.st[id];else{m.st[id]=Date.now();toast('⭐ సేవ్ అయింది – “సేవ్ చేసినవి” లో చూడు');}save();if(b)b.textContent=m.st[id]?'⭐':'☆';if(param.tab==='st'&&!m.st[id])render();}
 function sscMy(id,v){const m=sscMe();v=String(v||'').slice(0,3000);if(v.trim())m.my[id]=v;else delete m.my[id];save();}
 function sscShow(id,b){const e=document.getElementById('sa_'+id);if(!e)return;const ta=b.closest('.sscq').querySelector('.sqmy');
  if(e.hidden&&ta&&!ta.value.trim())toast('💡 ముందు నువ్వే రాసి చూడు, తర్వాత పోల్చుకో');e.hidden=!e.hidden;b.textContent=e.hidden?'👁 జవాబు చూడు':'🙈 జవాబు దాచు';}
 function sscSpeak(id){const x=SSCV.find(y=>y.id===id);if(!x)return;const t=sscQA(x,param.lang||'te');speak(t.q+'. '+t.a);}
 function sscFilter(s,me){const p=param,mk=+p.mk||0,q=String(p.q||'').trim().toLowerCase();
- return sscItems(s).filter(x=>(p.tab!=='st'||me.st[x.id])&&(!p.l||x.l===p.l)&&(!mk||x.mk===mk)&&(!q||(x.q+' '+x.a+' '+x.qe+' '+x.ae).toLowerCase().includes(q)));}
+ const sr=p.src||'',okS=x=>!sr||(sr==='mp'?x.bd.startsWith('MP'):sr==='q1'?x.bd.startsWith('QB1'):sr==='q2'?x.bd.startsWith('QB2'):sr==='bk'?!x.bd:1);
+ return sscItems(s).filter(x=>(p.tab!=='st'||me.st[x.id])&&(!p.l||x.l===p.l)&&(!mk||x.mk===mk)&&okS(x)&&(!q||(x.q+' '+x.a+' '+x.qe+' '+x.ae).toLowerCase().includes(q)));}
 V.ssc=()=>{tbLoad(10);sscLoad(10);const bar=`<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>🎓 SSC ప్రశ్న–జవాబు</h2></div>`;
  if(SSCL[10]!=='ok')return bar+(SSCL[10]==='no'?'<div class="empty">📶 ప్రశ్నల బ్యాంక్ లోడ్ కాలేదు. ఇంటర్నెట్ ఆన్ చేసి మళ్ళీ తెరువు.</div>':'<div class="empty">⏳ ప్రశ్నల బ్యాంక్ లోడ్ అవుతోంది…</div>');
  const subs=sscSubs();if(!subs.includes(param.s))param.s=subs[0];const s=param.s,tab=param.tab||'q',me=sscMe(),lg=param.lang||(S.ssc.lang)||'te';param.lang=lg;param.n=param.n||25;
@@ -3119,9 +3121,11 @@ V.ssc=()=>{tbLoad(10);sscLoad(10);const bar=`<div class="bar"><button class="ib"
   return bar+subRow+tabs+`<div class="card"><h3>🎯 1 మార్కు బహుళైచ్ఛిక క్విజ్</h3><p class="mut">పాఠం ఎంచుకో (లేదా అన్నీ). ప్రతిసారీ కొత్త ప్రశ్నలు random గా వస్తాయి.</p>${lsel}<p>అందుబాటులో ఉన్న ప్రశ్నలు: <b>${pool.length}</b></p>
 <div class="row2">${[10,20,30].map(n=>`<button class="btn ${n>10?'ghost':''}" ${pool.length?'':'disabled'} onclick="startSscQuiz('${s}',${n})">${n} ప్రశ్నలు ▶</button>`).join('')}</div></div>
 <div class="card"><h3>📊 ${SUBJ[s].n} – ప్రశ్నల బ్యాంక్</h3>${[1,2,4,8].map(k=>`<div class="sbar"><span>${k} మార్కు${k>1?'లు':''}</span><b>${cnt(k)}</b></div>`).join('')}<p class="mut" style="margin-top:6px">2/4/8 మార్కుల ప్రశ్నలకు “📚 ప్రశ్నలు” లో రాసి సాధన చేయి.</p></div>
-<div class="card"><h3>🧾 మోడల్ పేపర్</h3><p class="mut">ఎంచుకున్న పాఠం/అన్ని పాఠాల నుండి random గా, అన్ని పాఠాలు కలిసేలా: 1 మార్కు × 12, 2 మార్కులు × 8, 4 మార్కులు × 8, 8 మార్కులు × 4 = 92 మార్కులు (సాంఘిక శాస్త్రంలో దీనికి 8 మార్కుల మ్యాప్ ప్రశ్న కలిపితే 100). సాధన కోసం – ప్రతిసారి కొత్త పేపర్.</p><div class="row2"><button class="btn" onclick="sscPaper('${s}',0)">🖨 ప్రశ్నాపత్రం</button><button class="btn ghost" onclick="sscPaper('${s}',1)">🖨 జవాబులతో</button></div></div>`+photo;}
+<div class="card"><h3>🧾 మోడల్ పేపర్</h3><p class="mut">${s==='mat'?'బోర్డు బ్లూప్రింట్ 2025-26 ప్రకారం (33 ప్రశ్నలు, 100 మార్కులు): 1 మా. × 12, 2 మా. × 8, 4 మా. × 8, 8 మా. × 5 (ప్రతి దానికి a/b అంతర్గత ఎంపిక) – అధ్యాయాల వెయిటేజ్ కూడా బోర్డు ప్రకారమే.':'ఎంచుకున్న పాఠం/అన్ని పాఠాల నుండి random గా, అన్ని పాఠాలు కలిసేలా: 1 మార్కు × 12, 2 మార్కులు × 8, 4 మార్కులు × 8, 8 మార్కులు × 4 = 92 మార్కులు (సాంఘిక శాస్త్రంలో దీనికి 8 మార్కుల మ్యాప్ ప్రశ్న కలిపితే 100).'} సాధన కోసం – ప్రతిసారి కొత్త పేపర్.</p><div class="row2"><button class="btn" onclick="sscPaper('${s}',0)">🖨 ప్రశ్నాపత్రం</button><button class="btn ghost" onclick="sscPaper('${s}',1)">🖨 జవాబులతో</button></div>
+${[1,2].filter(p=>all.some(x=>x.bd.startsWith('MP'+p+'-'))).map(p=>`<p style="margin:10px 0 4px"><b>📄 బోర్డు మోడల్ పేపర్ – ${p}</b> <small class="mut">(SSC 2025-26, ప్రభుత్వ పరీక్షల సంచాలకులు)</small></p><div class="row2"><button class="btn ghost" onclick="sscBoard('${s}',${p},0)">🖨 ప్రశ్నాపత్రం</button><button class="btn ghost" onclick="sscBoard('${s}',${p},1)">🖨 సాధనలతో</button><button class="btn ghost" onclick="sscSet({tab:'q',src:'mp',l:'',mk:0})">📚 చూడు</button></div>`).join('')}</div></div>`+photo;}
  const list=sscFilter(s,me);SSCV=list;const show=list.slice(0,param.n);
  const flt=`<div class="card sscf">${tab==='q'?lsel:''}<div class="sscchips">${[0,1,2,4,8].map(k=>`<button class="chip ${(+param.mk||0)===k?'on':''}" onclick="sscSet({mk:${k}})">${k?k+' మా.':'అన్నీ'}${k?` <small>${cnt(k)}</small>`:''}</button>`).join('')}</div>
+${all.some(x=>x.bd)?`<div class="sscchips">${[['','🗂 అన్నీ'],['mp','📄 బోర్డు పేపర్లు'],['q1','⭐ QB Rising'],['q2','🌟 QB Shining'],['bk','📖 పాఠ్యపుస్తకం']].filter(([k])=>!k||k==='bk'||all.some(x=>x.bd.startsWith({mp:'MP',q1:'QB1',q2:'QB2'}[k]))).map(([k,n])=>`<button class="chip ${(param.src||'')===k?'on':''}" onclick="sscSet({src:'${k}'})">${n}</button>`).join('')}</div>`:''}
 ${hasEn?`<div class="sscchips">${[['te','తెలుగు'],['en','English'],['bi','ద్విభాషా']].map(([k,n])=>`<button class="chip ${lg===k?'on':''}" onclick="S.ssc.lang='${k}';save();sscSet({lang:'${k}'})">${n}</button>`).join('')}</div>`:''}
 <div class="sscsr"><input id="sscq" type="search" placeholder="🔍 ప్రశ్న / పదం వెతుకు" value="${esc(param.q||'')}" onkeydown="if(event.key==='Enter')this.blur()" onchange="sscSet({q:this.value})"><button class="btn sm ghost" onclick="sscPrint()">🖨 ప్రింట్</button><button class="btn sm ghost" onclick="sscTxt()">⬇️ TXT</button></div></div>`;
  return bar+subRow+tabs+(tab==='q'?photo:'')+flt+`<p class="mut" style="margin:4px 2px 8px">${list.length} ప్రశ్నలు${list.length>show.length?` • ${show.length} చూపుతున్నాం`:''}${hasEn&&lg!=='te'&&list.some(x=>!x.qe)?' • English లేనివి తెలుగులో':''}</p>`+
@@ -3141,13 +3145,30 @@ ${weak.length?`<p style="margin-top:8px"><b>⚠️ ఇంకా సాధన క
 <div class="card"><h3>🗂 అన్ని సబ్జెక్టులు</h3>${subs}</div>
 ${sr.length?`<h4 class="sec">ఇటీవలి క్విజ్‌లు</h4>${sr.slice(-8).reverse().map(r=>{const p=Math.round(r.s*100/r.t);return `<div class="tcard"><div class="tb">${esc(r.ti||'')}<div class="r"><span>${fmtD(r.d)} • ${r.s}/${r.t} • ${mmss(r.sec)}</span><span class="pct ${pctCls(p)}">${p}%</span></div><div class="r"><span></span><button class="lk" onclick="go('result',{id:'${r.id}'})">వివరాలు ▸</button></div></div></div>`;}).join('')}`:''}`;}
 /* 🧾 మోడల్ పేపర్ – 12×1 + 8×2 + 8×4 + 4×8 = 100 మార్కులు */
-function sscPaper(s,key){const pool=sscItems(s).filter(x=>!param.l||x.l===param.l),lg=param.lang||'te',P=[[1,12,'I'],[2,8,'II'],[4,8,'III'],[8,4,'IV']];
- const pick=(mk,n)=>{const c=pool.filter(x=>x.mk===mk&&(mk>1||x.o));const by={};shuffle(c).forEach(x=>(by[x.l]=by[x.l]||[]).push(x));const ks=shuffle(Object.keys(by)),out=[];
-  while(out.length<n&&ks.some(k=>by[k].length))for(const k of ks){if(out.length>=n)break;const v=by[k].shift();if(v)out.push(v);}return out;};
- const secs=P.map(([mk,n,r])=>({mk,r,qs:pick(mk,n)})),tot=secs.reduce((a,x)=>a+x.mk*x.qs.length,0);if(!tot)return toast('ప్రశ్నలు లేవు');
- let k=0;const body=secs.filter(x=>x.qs.length).map(x=>`<h3 style="margin:10px 0 4px">విభాగం – ${x.r} (${x.qs.length} × ${x.mk} = ${x.qs.length*x.mk} మార్కులు)</h3><ol class="qpol" start="${k+1}">${x.qs.map(q=>{k++;const t=sscQA(q,lg);return `<li><div class="qq">${sscBr(t.q)}${t.q2?'<br>'+sscBr(t.q2):''} <i>[${x.mk}]</i></div>${q.o?`<div class="qo">${q.o.map((y,j)=>`<span>(${'ABCD'[j]}) ${esc(y)}</span>`).join('')}</div>`:''}${key?`<div class="sqpa"><b>జ:</b> ${q.o?'('+'ABCD'[q.o.indexOf(q.a)]+') ':''}${sscBr(t.a)}${t.a2?'<br>'+sscBr(t.a2):''}</div>`:''}</li>`;}).join('')}</ol>`).join('');
+/* గణితం బోర్డు బ్లూప్రింట్ 2025-26 (15E & 16E): విభాగం వారీ అధ్యాయాలు; IV లో a/b అంతర్గత ఎంపిక */
+const SSCBP={mat:{1:['ma1','ma2','ma2','ma3','ma4','ma5','ma6','ma8','ma9','ma10','ma12','ma14'],2:['ma2','ma4','ma6','ma7','ma8','ma9','ma10','ma12'],4:['ma2','ma4','ma5','ma8','ma10','ma12','ma13','ma14'],8:[['ma1','ma6'],['ma7','ma11'],['ma9','ma14'],['ma5','ma13'],['ma3','ma3']]}};
+function sscPaper(s,key){const pool=sscItems(s).filter(x=>!param.l||x.l===param.l),bp=!param.l&&SSCBP[s],used=new Set();
+ const P=s==='mat'?[[1,12,'I'],[2,8,'II'],[4,8,'III'],[8,5,'IV',1]]:[[1,12,'I'],[2,8,'II'],[4,8,'III'],[8,4,'IV']];
+ const wq=x=>/^(“|Meaning of the word|Which word means)/.test(x.q)?1:0,rk=x=>(x.bd?0:2)+wq(x)*3-(x.o?1:0);
+ const one=(mk,l)=>{let c=shuffle(pool.filter(x=>x.mk===mk&&!used.has(x.id)&&(!l||x.l===l)));if(mk===1)c.sort((a,b)=>rk(a)-rk(b)+(Math.random()-.5)*2.2);const v=c[0];if(v)used.add(v.id);return v;};
+ const pick=(mk,n)=>{const c=pool.filter(x=>x.mk===mk&&(mk>1||x.o));const by={};shuffle(c).sort((a,b)=>wq(a)-wq(b)).forEach(x=>(by[x.l]=by[x.l]||[]).push(x));const ks=shuffle(Object.keys(by)),out=[];
+  while(out.length<n&&ks.some(k=>by[k].length))for(const k of ks){if(out.length>=n)break;const v=by[k].shift();if(v&&!used.has(v.id)){used.add(v.id);out.push(v);}}return out;};
+ const secs=P.map(([mk,n,r,ch])=>{let qs;
+  if(bp)qs=ch?bp[mk].map(([a,b])=>[one(mk,a)||one(mk),one(mk,b)||one(mk)]).filter(x=>x[0]&&x[1]):bp[mk].map(l=>one(mk,l)||one(mk)).filter(Boolean);
+  else if(ch){const v=pick(mk,n*2);qs=[];for(let i=0;i+1<v.length;i+=2)qs.push([v[i],v[i+1]]);if(!qs.length&&v.length)qs=[v[0]];}
+  else qs=pick(mk,n);return {mk,r,qs};});
+ const tot=secs.reduce((a,x)=>a+x.mk*x.qs.length,0);if(!tot)return toast('ప్రశ్నలు లేవు');
+ sscSheet(`SSC మోడల్ పేపర్ – ${SUBJ[s].n} (10వ తరగతి)${param.l?' – '+sscLName(s,param.l):''}`,secs,key,tot+(s==='soc'&&!param.l?' (+ మ్యాప్ 8)':''),bp?'బోర్డు బ్లూప్రింట్ 2025-26 ప్రకారం అధ్యాయాలు • 3 గం. 15 ని.':'');}
+/* బోర్డు మోడల్ పేపర్ – ఉన్నది ఉన్నట్టు (tag MP<p>-<no>[a|b]) */
+function sscBoard(s,p,key){const it=sscItems(s).filter(x=>x.bd.startsWith('MP'+p+'-'));if(!it.length)return toast('ప్రశ్నలు లేవు');
+ const no=x=>parseInt(x.bd.split('-')[1]),by={};it.forEach(x=>(by[no(x)]=by[no(x)]||[]).push(x));
+ const secs=[[1,'I'],[2,'II'],[4,'III'],[8,'IV']].map(([mk,r])=>({mk,r,qs:Object.keys(by).map(Number).sort((a,b)=>a-b).filter(n=>by[n][0].mk===mk).map(n=>{const v=by[n].sort((a,b)=>a.bd<b.bd?-1:1);return v.length>1?v:v[0];})}));
+ sscSheet(`SSC పబ్లిక్ పరీక్షలు 2025-26 – ${SUBJ[s].n} బోర్డు మోడల్ పేపర్ – ${p}`,secs,key,100,'Director of Govt. Examinations, A.P. (15E & 16E) • 3 గం. 15 ని. • జవాబులు: రాయ్ విద్యార్థి (అధికారిక కీ కాదు)');}
+function sscSheet(title,secs,key,tot,sub){const lg=param.lang||'te';let k=0;
+ const qh=(q,mk)=>{const t=sscQA(q,lg);return `<div class="qq">${sscBr(t.q)}${t.q2?'<br>'+sscBr(t.q2):''} <i>[${mk}]</i></div>${q.o?`<div class="qo">${q.o.map((y,j)=>`<span>(${'ABCD'[j]}) ${esc(y)}</span>`).join('')}</div>`:''}${key?`<div class="sqpa"><b>జ:</b> ${q.o?'('+'ABCD'[q.o.indexOf(q.a)]+') ':''}${sscBr(t.a)}${t.a2?'<br>'+sscBr(t.a2):''}${t.ex?'<br>💡 '+sscBr(t.ex):''}</div>`:''}`;};
+ const body=secs.filter(x=>x.qs.length).map(x=>`<h3 style="margin:10px 0 4px">విభాగం – ${x.r} (${x.qs.length} × ${x.mk} = ${x.qs.length*x.mk} మార్కులు)${x.qs.some(Array.isArray)?' – ప్రతి ప్రశ్నకు అంతర్గత ఎంపిక':''}</h3><ol class="qpol" start="${k+1}">${x.qs.map(q=>{k++;return `<li>${Array.isArray(q)?`<b>a)</b> ${qh(q[0],x.mk)}<div class="qor">(లేదా / OR)</div><b>b)</b> ${qh(q[1],x.mk)}`:qh(q,x.mk)}</li>`;}).join('')}</ol>`).join('');
  const box=document.getElementById('sscPrint')||document.body.appendChild(Object.assign(document.createElement('div'),{id:'sscPrint'}));
- box.innerHTML=`<div class="qpsheet"><div class="qph"><b>${esc(S.cfg.sname||'')}</b><h2>SSC మోడల్ పేపర్ – ${SUBJ[s].n} (10వ తరగతి)${param.l?' – '+esc(sscLName(s,param.l)):''}</h2><div>మొత్తం మార్కులు: ${tot}${key?' • జవాబులతో':''}</div><div class="qpnm"><span>పేరు: ____________________</span><span>తేదీ: ________</span></div></div>${body}<div class="qpft">సాధన కోసం – రాయ్ విద్యార్థి యాప్ • రాయ్ ఎడ్యుకేషన్</div></div>`;
+ box.innerHTML=`<div class="qpsheet"><div class="qph"><b>${esc(S.cfg.sname||'')}</b><h2>${esc(title)}</h2>${sub?`<div class="mut">${esc(sub)}</div>`:''}<div>మొత్తం మార్కులు: ${tot}${key?' • జవాబులతో':''}</div><div class="qpnm"><span>పేరు: ____________________</span><span>తేదీ: ________</span></div></div>${body}<div class="qpft">సాధన కోసం – రాయ్ విద్యార్థి యాప్ • రాయ్ ఎడ్యుకేషన్</div></div>`;
  document.body.classList.add('sscprint');setTimeout(()=>{window.print();setTimeout(()=>{document.body.classList.remove('sscprint');box.innerHTML='';},600);},80);}
 function startSscQuiz(s,n){const pool=sscItems(s).filter(x=>x.o&&(!param.l||x.l===param.l));if(!pool.length)return toast('ప్రశ్నలు లేవు');
  const qs=shuffle(pool).slice(0,n||10).map(x=>({q:x.q,o:shuffle([x.a].concat(x.w)),a:x.a,l:x.l}));
