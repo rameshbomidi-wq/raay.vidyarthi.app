@@ -2479,7 +2479,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.05-6';
+const APPV='2026.11.05-7';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3116,6 +3116,8 @@ function figSVG(o){const v=o.v||[0,10,0,10],W=o.w||300,sc=W/(v[1]-v[0]),H=Math.r
   else if(k==='f'){const [,ex,lb,x0,x1,lx,ly,st]=e,cc=st?col(st):C[ci++%C.length];let fn;try{fn=new Function('x','return '+ex);}catch(_){continue;}const a=x0!=null?x0:v[0],b=x1!=null?x1:v[1],pts=[];
    for(let i=0;i<=160;i++){const x=a+(b-a)*i/160,y=fn(x);if(isFinite(y)&&y>v[2]-(v[3]-v[2])&&y<v[3]+(v[3]-v[2]))pts.push(X(x)+','+Y(y));}
    s+=`<polyline points="${pts.join(' ')}" fill="none" stroke="${cc}" stroke-width="2.2" clip-path="url(#${id}c)"/>`;if(lb)s+=T(X(lx),Y(ly),lb,'middle',12,cc,1);}
+  else if(k==='arc'){const [,x,y,rx,ry,a1,a2,st,fl]=e,R=Math.PI/180,pts=[];for(let i=0;i<=48;i++){const t=(a1+(a2-a1)*i/48)*R;pts.push(X(x+rx*Math.cos(t))+','+Y(y+ry*Math.sin(t)));}
+   s+=`<polyline points="${pts.join(' ')}" fill="${fl||'none'}" stroke="${col(st)}" stroke-width="${String(st||'').includes('b')?2.4:1.8}"${String(st||'').includes('d')?' stroke-dasharray="5 4"':''}/>`;}
   else if(k==='pg'){s+=`<polygon points="${e[1].map(p=>X(p[0])+','+Y(p[1])).join(' ')}" fill="${e[2]||'none'}" stroke="${e[3]||'#1f2937'}" stroke-width="1.8"/>`;}
   else if(k==='c'){s+=`<circle cx="${X(e[1])}" cy="${Y(e[2])}" r="${(e[3]*sc).toFixed(1)}" fill="${e[5]||'none'}" stroke="${col(e[4])}" stroke-width="1.8"${String(e[4]||'').includes('d')?' stroke-dasharray="5 4"':''}/>`;}
   else if(k==='a'){const [,x,y,r,a1,a2,lb,st]=e,R=Math.PI/180,P=a=>[X(x+r*Math.cos(a*R)),Y(y+r*Math.sin(a*R))],p1=P(a1),p2=P(a2),cc=st?col(st):'#b45309';

@@ -119,3 +119,9 @@ FIG = {
                          P(2, 0, 'C', 's'), P(6, 0, 'D', 'se'), M(0, 0, 0, 3.464, 'h', -1), T(1, -0.8, 'x', 'middle', 12, None, 1), T(4, -0.8, '40 మీ.', 'middle', 12, None, 1),
                          cap='BC = 60° వద్ద నీడ (x), BD = 30° వద్ద నీడ (x + 40) • x = 20, h = 20√3 మీ.', w=290)),
 }
+
+# అధ్యాయాలు 2, 3, 6, 7, 10–14 (గ్రాఫ్‌లు, పటాలు, పట్టికలు)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from figmat_ch import MORE
+assert not (set(MORE) & set(FIG)), set(MORE) & set(FIG)
+FIG.update(MORE)

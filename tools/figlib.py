@@ -35,3 +35,21 @@ def T(x, y, t, anchor='middle', sz=12, st=None, b=None): return ['t', x, y, t, a
 def ang(x1, y1, x2, y2):
     """(x1,y1) నుండి (x2,y2) దిశ కోణం (డిగ్రీలు)"""
     return math.degrees(math.atan2(y2 - y1, x2 - x1))
+
+def ARC(x, y, rx, ry, a1, a2, st='', fill=None): return ['arc', x, y, rx, ry, a1, a2, st, fill]  # దీర్ఘవృత్త/వృత్త చాపం (నమూనాలతో)
+def EL(x, y, rx, ry, st='', back_dashed=False):
+    """దీర్ఘవృత్తం; back_dashed=True అయితే వెనుక (పై) సగం చుక్కలు – 3D ఘనాకృతులకు"""
+    if back_dashed: return [ARC(x, y, rx, ry, 180, 360, st), ARC(x, y, rx, ry, 0, 180, (st or '') + 'd')]
+    return [ARC(x, y, rx, ry, 0, 360, st)]
+def SECTOR(x, y, r, a1, a2, fill='#fde68a', stroke='#1f2937'):
+    pts = [[x, y]] + [[round(x + r * math.cos(math.radians(a1 + (a2 - a1) * i / 30)), 3), round(y + r * math.sin(math.radians(a1 + (a2 - a1) * i / 30)), 3)] for i in range(31)]
+    return PG(pts, fill, stroke)
+def line_lbl(a, b, c, v, frac):
+    """ax+by+c=0 రేఖపై లేబుల్ స్థానం (వీక్షణలో frac భాగం వద్ద)"""
+    x = v[0] + (v[1] - v[0]) * frac
+    if abs(b) < 1e-9: return (-c / a + 0.3, v[2] + (v[3] - v[2]) * frac)
+    y = (-c - a * x) / b
+    if y > v[3] - 0.4 or y < v[2] + 0.4:
+        y = v[3] - (v[3] - v[2]) * 0.08 if y > v[3] - 0.4 else v[2] + (v[3] - v[2]) * 0.08
+        x = (-c - b * y) / a if abs(a) > 1e-9 else x
+    return (round(x, 2), round(y + (v[3] - v[2]) * 0.04, 2))
