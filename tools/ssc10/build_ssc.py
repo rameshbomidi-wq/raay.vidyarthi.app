@@ -65,6 +65,27 @@ for f in sorted(glob.glob(f'{H}/board_*.py')) + sorted(glob.glob(f'{H}/qb_*.py')
         assert mk in (1, 2, 4, 8) and any(L['id'] == lid for L in TB[s]) and tag not in tags, (f, tag, lid)
         if w: assert len(w) == 3 and a not in w and len(set(w)) == 3, (f, tag)
         tags.add(tag); out[s].append([lid, mk, q, a, list(w) if w else 0, qe, ae, tag, ex or '', exe or ''])
+# బొమ్మలు: figs_<sub>.py → FIG = {tag లేదా 'q:'+తెలుగు ప్రశ్న మొదలు: (ప్రశ్న బొమ్మ, జవాబు బొమ్మ)}
+for f in sorted(glob.glob(f'{H}/figs_*.py')):
+    sp = importlib.util.spec_from_file_location(os.path.basename(f)[:-3], f); m = importlib.util.module_from_spec(sp); sp.loader.exec_module(m)
+    s = os.path.basename(f)[5:-3]; used = set()
+    for it in out[s]:
+        tag = it[7] if len(it) > 7 else ''
+        key = tag if tag in m.FIG else next((k for k in m.FIG if k.startswith('q:') and it[2].startswith(k[2:])), None)
+        if not key: continue
+        used.add(key); qf, af = m.FIG[key]
+        if len(it) < 10: it += [''] * (10 - len(it))
+        if qf:
+            it[2] += '\n' + qf
+            if it[5]: it[5] += '\n' + qf
+        if af:
+            if it[4]:  # బహుళైచ్ఛికం – జవాబు ఎంపికతో సమానంగా ఉండాలి → వివరణలో
+                it[8] = (it[8] + '\n' if it[8] else '') + af; it[9] = (it[9] + '\n' if it[9] else '') + af
+            else:
+                it[3] += '\n' + af
+                if it[6]: it[6] += '\n' + af
+    miss = set(m.FIG) - used
+    assert not miss, ('బొమ్మకు ప్రశ్న దొరకలేదు', s, miss)
 order = {L['id']: i for s in TB for i, L in enumerate(TB[s])}
 for s in out: out[s].sort(key=lambda x: (order[x[0]], x[1]))
 js = '/* రాయ్ విద్యార్థి – 10వ తరగతి SSC ప్రశ్న–జవాబు బ్యాంక్ (1/2/4/8 మార్కులు) – tools/ssc10/build_ssc.py తో తయారు */\n(window.RAAY_SSC=window.RAAY_SSC||{})[10]=' + json.dumps(out, ensure_ascii=False, separators=(',', ':')) + ';\n'

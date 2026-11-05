@@ -424,7 +424,7 @@ label.idck{display:flex;align-items:center;gap:8px}label.idck input{width:20px;h
 .sscchips{margin:2px 0 4px}.sscsr{display:flex;gap:6px;margin-top:8px;align-items:center}.sscsr input{flex:1;min-width:0;padding:9px;border:1.5px solid var(--line);border-radius:10px;font-size:14px}
 .sscq{padding:12px 13px}.sqh{display:flex;align-items:center;gap:8px}.sqh small{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sqm{font-size:11.5px;font-weight:700;border-radius:8px;padding:3px 8px;background:#e0f2fe;color:#075985;flex:none}.sqm.m2{background:#dcfce7;color:#166534}.sqm.m4{background:#fef3c7;color:#92400e}.sqm.m8{background:#fde2e4;color:#9f1239}
-.sqsrc{font-size:12px;color:#7c3aed;margin-top:6px}.sqx{margin-top:6px;color:#334155;font-size:13.5px}.qor{text-align:center;font-weight:600;margin:4px 0;color:#475569}.sqst{border:0;background:none;font-size:20px;padding:0 2px;flex:none}.sqq{margin:8px 0 6px;line-height:1.55}.sqe{color:#475569;font-size:13.5px}
+.tbfg{margin:6px 0 14px}.tbfg>b{display:block;margin-bottom:2px}.rfig{margin:8px 0;text-align:center}.rfig svg{max-width:100%;height:auto;background:#fff;border:1px solid #e5e7eb;border-radius:10px}.rfig small{display:block;color:#64748b;font-size:12px}.rtw{overflow-x:auto;margin:6px 0}.rtbl{border-collapse:collapse;font-size:13px;background:#fff;color:#111}.rtbl th,.rtbl td{border:1px solid #cbd5e1;padding:4px 7px;text-align:center;white-space:nowrap}.rtbl th{background:#eef2ff}.sqsrc{font-size:12px;color:#7c3aed;margin-top:6px}.sqx{margin-top:6px;color:#334155;font-size:13.5px}.qor{text-align:center;font-weight:600;margin:4px 0;color:#475569}.sqst{border:0;background:none;font-size:20px;padding:0 2px;flex:none}.sqq{margin:8px 0 6px;line-height:1.55}.sqe{color:#475569;font-size:13.5px}
 .sqo{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13.5px;margin:0 0 6px}.sqmy{width:100%;box-sizing:border-box;border:1.5px dashed var(--line);border-radius:10px;padding:8px;font:inherit;font-size:14px;resize:vertical}
 .sqb{display:flex;gap:8px;margin-top:6px}.sqa{margin-top:8px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:9px 10px;line-height:1.6;font-size:14px}.sqa .sqe{margin-top:6px;border-top:1px dashed #bbf7d0;padding-top:6px}
 .sscbn{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:16px;padding:12px 14px;margin:12px 0;cursor:pointer}.sscbn b{display:block;font-size:15px}.sscbn span{font-size:30px}.sscbn small{color:#78350f}
@@ -2479,7 +2479,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.05-5';
+const APPV='2026.11.05-6';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3055,6 +3055,7 @@ V.tbl=()=>{if(param.wb)setTimeout(()=>{const e=document.querySelector('.tbwb');i
 <div class="tbhero" style="--sc:${SUBJ[s].col};--sb:${SUBJ[s].bg}"><small>${c}వ తరగతి • ${en?'Lesson':'పాఠం'} ${L.no}</small><h2>${esc(L.t)}</h2><div class="tbtags"><span>📅 ${tbMonths(L)}</span><span>✍️ ${esc(L.ty)}</span><span>💡 ${esc(L.th)}</span></div>${L.by?`<p>${esc(L.by)}</p>`:''}${b!=null?`<p class="tbsc">🏆 నీ ఉత్తమ స్కోరు: <b>${b}%</b></p>`:''}</div>
 ${sec('📝',en?'Story in short (సారాంశం)':'పాఠం సారాంశం',`<p class="tbp">${esc(L.sum)}</p>${L.te?`<div class="tbte"><b>తెలుగులో:</b> ${esc(L.te)}</div>`:''}`,` <button class="spk sm" onclick="tbSpeak('sum')">🔊</button>`)}
 ${(L.pts||[]).length?sec('⭐',en?'Key points (ముఖ్యాంశాలు)':'ముఖ్యాంశాలు',`<ul class="tbul">${L.pts.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`):''}
+${(L.fg||[]).length?sec('🖼',en?'Figures & tables':'పటాలు – పట్టికలు',L.fg.map(([t,f])=>`<div class="tbfg"><b>${esc(t)}</b>${richT(f)}</div>`).join('')):''}
 ${(L.w||[]).length?sec('📚',en?'Glossary (పదాలు – అర్థాలు)':'పదాలు – అర్థాలు',`<div class="tbw">${L.w.map(([a,m])=>`<button onclick="speak(this.dataset.t)" data-t="${esc(a+', '+m)}"><b>${esc(a)}</b><span>${esc(m)}</span></button>`).join('')}</div><small class="mut">👆 పదం నొక్కితే వినిపిస్తుంది</small>`):''}
 ${L.gr&&(L.gr.p||[]).length?sec(s==='mat'?'🧮':(s==='tel'||en)?'✏️':'🔎',(en?'Grammar: ':s==='tel'?'భాషాంశాలు: ':'')+esc(L.gr.t||''),`<ul class="tbul">${L.gr.p.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`):''}
 ${(L.qa||[]).length?sec('❓',en?'Questions & Answers':'ప్రశ్నలు – జవాబులు',L.qa.map(([q,a],j)=>`<details class="tbqa"><summary>${j+1}. ${esc(q)}</summary><p>✅ ${esc(a)}</p></details>`).join('')+'<small class="mut">👆 ముందు నువ్వే ఆలోచించి, తర్వాత జవాబు చూడు</small>'):''}
@@ -3085,11 +3086,48 @@ function sscLoad(c){c=+c;if(SSCL[c])return;if(window.RAAY_SSC[c]){SSCL[c]='ok';r
  sc.onload=()=>{SSCL[c]=window.RAAY_SSC[c]?'ok':'no';if(view==='ssc')softRender();};sc.onerror=()=>{SSCL[c]='no';sc.remove();if(view==='ssc')softRender();};document.head.appendChild(sc);}
 function sscH(t){let h=5381;for(let i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))|0;return (h>>>0).toString(36);}
 function sscMe(){S.ssc=S.ssc||{};return S.ssc[me()]||(S.ssc[me()]={st:{},my:{}});}
-function sscItems(s){const D=(window.RAAY_SSC[10]||{})[s]||[];return D.map(x=>{const id=s+'_'+sscH(x[2]);let o=null;if(x[4]&&x[4].length){o=x[4].slice();o.splice(parseInt(id.slice(-1),36)%(o.length+1),0,x[3]);}
+function sscItems(s){const D=(window.RAAY_SSC[10]||{})[s]||[];return D.map(x=>{const id=s+'_'+sscH(x[2].replace(/\n?⟦fig:[\s\S]*?⟧/g,''));let o=null;if(x[4]&&x[4].length){o=x[4].slice();o.splice(parseInt(id.slice(-1),36)%(o.length+1),0,x[3]);}
  return {id,s,l:x[0],mk:x[1],q:x[2],a:x[3],w:x[4]||0,o,qe:x[5]||'',ae:x[6]||'',bd:x[7]||'',ex:x[8]||'',exe:x[9]||''};});}
 function sscSubs(){const D=window.RAAY_SSC[10]||{};return learnSubs(10).filter(s=>D[s]&&D[s].length);}
 function sscLName(s,id){const L=tbLes(10,s).find(x=>x.id===id);return L?L.no+'. '+L.t:id;}
-function sscBr(t){return esc(t).replace(/\n/g,'<br>');}
+function sscBr(t){return richT(t);}
+/* 🖼 బొమ్మలు/పట్టికలు – టెక్స్ట్‌లో ⟦fig:{json}⟧ → SVG (figSVG), " | " తో 2+ వరుసలు → పట్టిక. plainT = వినడానికి/TXT/సర్వర్ కోసం */
+function plainT(t){return String(t==null?'':t).replace(/⟦fig:[\s\S]*?⟧/g,'[పటం]');}
+function richT(t){t=String(t==null?'':t);const out=[];let last=0;const re=/⟦fig:([\s\S]*?)⟧/g;let m;
+ const isT=(L,i)=>L[i]!=null&&L[i].includes(' | '),txt=u=>{const L=u.split('\n'),r=[];for(let i=0;i<L.length;){if(isT(L,i)&&(isT(L,i+1)||isT(L,i-1))){const rows=[];while(isT(L,i))rows.push(L[i++].split('|').map(c=>c.trim()));
+   r.push([1,`<div class="rtw"><table class="rtbl">${rows.map((row,j)=>`<tr>${row.map(c=>j?`<td>${esc(c)}</td>`:`<th>${esc(c)}</th>`).join('')}</tr>`).join('')}</table></div>`]);}else r.push([0,esc(L[i++])]);}
+  return r.map((x,i)=>(i&&!x[0]&&!r[i-1][0]?'<br>':'')+x[1]).join('');};
+ while((m=re.exec(t))){out.push(txt(t.slice(last,m.index)));let f='';try{f=figSVG(JSON.parse(m[1]));}catch(e){f='[పటం]';}out.push(f);last=re.lastIndex;}
+ out.push(txt(t.slice(last)));return out.join('');}
+function figSVG(o){const v=o.v||[0,10,0,10],W=o.w||300,sc=W/(v[1]-v[0]),H=Math.round((v[3]-v[2])*sc),id='f'+Math.random().toString(36).slice(2,8);
+ const X=x=>+((x-v[0])*sc).toFixed(1),Y=y=>+((v[3]-y)*sc).toFixed(1),C=['#2563eb','#dc2626','#16a34a','#9333ea','#ea580c'];let ci=0,s='';
+ const col=st=>{const d=String(st||'').match(/\d/);return d?C[+d[0]-1]:'#1f2937';},T=(x,y,t,a,sz,c,w)=>`<text x="${x}" y="${y}" text-anchor="${a||'middle'}" font-size="${sz||13}" fill="${c||'#111'}"${w?' font-weight="700"':''}>${esc(t)}</text>`;
+ if(o.g||o.ax){const st=o.st||1,n=o.n||st;
+  if(o.g){for(let x=Math.ceil(v[0]/st)*st;x<=v[1]+1e-9;x+=st)s+=`<line x1="${X(x)}" y1="0" x2="${X(x)}" y2="${H}" stroke="#e5e7eb"/>`;for(let y=Math.ceil(v[2]/st)*st;y<=v[3]+1e-9;y+=st)s+=`<line x1="0" y1="${Y(y)}" x2="${W}" y2="${Y(y)}" stroke="#e5e7eb"/>`;}
+  if(v[2]<=0&&v[3]>=0)s+=`<line x1="0" y1="${Y(0)}" x2="${W}" y2="${Y(0)}" stroke="#374151" stroke-width="1.3" marker-end="url(#${id}a)"${v[0]<0?` marker-start="url(#${id}b)"`:''}/>`+T(W-8,Y(0)-6,o.xl||'X','end',12)+(v[0]<0?T(10,Y(0)-6,"X'",'start',12):'');
+  if(v[0]<=0&&v[1]>=0)s+=`<line x1="${X(0)}" y1="${H}" x2="${X(0)}" y2="0" stroke="#374151" stroke-width="1.3" marker-end="url(#${id}a)"${v[2]<0?` marker-start="url(#${id}b)"`:''}/>`+T(X(0)+6,12,o.yl||'Y','start',12)+(v[2]<0?T(X(0)+6,H-4,"Y'",'start',12):'');
+  if(o.nt!==0){for(let x=Math.ceil(v[0]/n)*n;x<=v[1]-n/2;x+=n)if(Math.abs(x)>1e-9&&x>v[0]+n/3&&v[2]<=0&&v[3]>=0)s+=T(X(x),Y(0)+13,+x.toFixed(2),'middle',10,'#4b5563');
+   for(let y=Math.ceil(v[2]/n)*n;y<=v[3]-n/2;y+=n)if(Math.abs(y)>1e-9&&y>v[2]+n/3&&v[0]<=0&&v[1]>=0)s+=T(X(0)-4,Y(y)+4,+y.toFixed(2),'end',10,'#4b5563');
+   if(v[0]<=0&&v[2]<=0)s+=T(X(0)-4,Y(0)+13,'O','end',10,'#4b5563');}}
+ for(const e of (o.e||[])){const k=e[0];
+  if(k==='s'){const st=e[5]||'',c=col(st);s+=`<line x1="${X(e[1])}" y1="${Y(e[2])}" x2="${X(e[3])}" y2="${Y(e[4])}" stroke="${c}" stroke-width="${st.includes('b')?2.6:1.8}"${st.includes('d')?' stroke-dasharray="5 4"':''}${st.includes('a')||st.includes('A')?` marker-end="url(#${id}a)"`:''}${st.includes('A')?` marker-start="url(#${id}b)"`:''}/>`;}
+  else if(k==='l'){const [,a,b,c,lb,lx,ly,st]=e,cc=st?col(st):C[ci++%C.length];let p;if(Math.abs(b)>1e-9)p=[v[0],(-c-a*v[0])/b,v[1],(-c-a*v[1])/b];else p=[-c/a,v[2],-c/a,v[3]];
+   s+=`<line x1="${X(p[0])}" y1="${Y(p[1])}" x2="${X(p[2])}" y2="${Y(p[3])}" stroke="${cc}" stroke-width="2" clip-path="url(#${id}c)"/>`;if(lb)s+=T(X(lx),Y(ly),lb,'middle',12,cc,1);}
+  else if(k==='f'){const [,ex,lb,x0,x1,lx,ly,st]=e,cc=st?col(st):C[ci++%C.length];let fn;try{fn=new Function('x','return '+ex);}catch(_){continue;}const a=x0!=null?x0:v[0],b=x1!=null?x1:v[1],pts=[];
+   for(let i=0;i<=160;i++){const x=a+(b-a)*i/160,y=fn(x);if(isFinite(y)&&y>v[2]-(v[3]-v[2])&&y<v[3]+(v[3]-v[2]))pts.push(X(x)+','+Y(y));}
+   s+=`<polyline points="${pts.join(' ')}" fill="none" stroke="${cc}" stroke-width="2.2" clip-path="url(#${id}c)"/>`;if(lb)s+=T(X(lx),Y(ly),lb,'middle',12,cc,1);}
+  else if(k==='pg'){s+=`<polygon points="${e[1].map(p=>X(p[0])+','+Y(p[1])).join(' ')}" fill="${e[2]||'none'}" stroke="${e[3]||'#1f2937'}" stroke-width="1.8"/>`;}
+  else if(k==='c'){s+=`<circle cx="${X(e[1])}" cy="${Y(e[2])}" r="${(e[3]*sc).toFixed(1)}" fill="${e[5]||'none'}" stroke="${col(e[4])}" stroke-width="1.8"${String(e[4]||'').includes('d')?' stroke-dasharray="5 4"':''}/>`;}
+  else if(k==='a'){const [,x,y,r,a1,a2,lb,st]=e,R=Math.PI/180,P=a=>[X(x+r*Math.cos(a*R)),Y(y+r*Math.sin(a*R))],p1=P(a1),p2=P(a2),cc=st?col(st):'#b45309';
+   s+=`<path d="M${p1} A${(r*sc).toFixed(1)} ${(r*sc).toFixed(1)} 0 ${a2-a1>180?1:0} 0 ${p2}" fill="none" stroke="${cc}" stroke-width="1.6"/>`;if(lb){const m=(a1+a2)/2,rr=r+(e[8]||Math.max(r*0.7,13/sc));s+=T(X(x+rr*Math.cos(m*R)),Y(y+rr*Math.sin(m*R))+4,lb,'middle',12,cc,1);}}
+  else if(k==='r'){const [,x,y,a1,a2,z]=e,R=Math.PI/180,d=z||10/sc,u=[Math.cos(a1*R),Math.sin(a1*R)],w=[Math.cos(a2*R),Math.sin(a2*R)];
+   s+=`<polyline points="${X(x+d*u[0])},${Y(y+d*u[1])} ${X(x+d*(u[0]+w[0]))},${Y(y+d*(u[1]+w[1]))} ${X(x+d*w[0])},${Y(y+d*w[1])}" fill="none" stroke="#374151" stroke-width="1.3"/>`;}
+  else if(k==='m'){const [,x1,y1,x2,y2,lb,sd,st]=e,ax=X(x1),ay=Y(y1),bx=X(x2),by=Y(y2),dx=bx-ax,dy=by-ay,L=Math.hypot(dx,dy)||1,nx=-dy/L*(sd||1),ny=dx/L*(sd||1),hz=Math.abs(nx)>0.75,f=hz?7:14;
+   s+=T(((ax+bx)/2+nx*f).toFixed(1),((ay+by)/2+ny*f+4).toFixed(1),lb,hz?(nx>0?'start':'end'):'middle',12,st?col(st):'#7c2d12',1);}
+  else if(k==='p'){const [,x,y,lb,ps,st]=e,o2={n:[0,-8,'middle'],s:[0,17,'middle'],e:[7,4,'start'],w:[-7,4,'end'],ne:[5,-6,'start'],nw:[-5,-6,'end'],se:[5,15,'start'],sw:[-5,15,'end']}[ps||'ne'];
+   s+=`<circle cx="${X(x)}" cy="${Y(y)}" r="3.2" fill="${st?col(st):'#111'}"/>`;if(lb)s+=T(X(x)+o2[0],Y(y)+o2[1],lb,o2[2],12,'#111',1);}
+  else if(k==='t'){s+=T(X(e[1]),Y(e[2]),e[3],e[4]||'middle',e[5]||12,e[6]?col(e[6]):'#111',e[7]);}}
+ return `<div class="rfig"><svg viewBox="0 0 ${W} ${H}" width="${W}" role="img" aria-label="${esc(o.al||'పటం')}"><defs><clipPath id="${id}c"><rect width="${W}" height="${H}"/></clipPath><marker id="${id}a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#374151"/></marker><marker id="${id}b" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M10,0L0,5L10,10z" fill="#374151"/></marker></defs>${s}</svg>${o.cap?`<small>${esc(o.cap)}</small>`:''}</div>`;}
 function sscSet(o){Object.assign(param,o);if(!('n' in o))param.n=25;render();}
 function sscQA(x,lg){const en=lg==='en'&&x.qe,bi=lg==='bi'&&x.qe;
  return {q:en?x.qe:x.q,q2:bi?x.qe:'',a:en?(x.ae||x.a):x.a,a2:bi?x.ae:'',ex:en?(x.exe||x.ex):x.ex,ex2:bi?x.exe:''};}
@@ -3104,7 +3142,7 @@ function sscStar(id,b){const m=sscMe();if(m.st[id])delete m.st[id];else{m.st[id]
 function sscMy(id,v){const m=sscMe();v=String(v||'').slice(0,3000);if(v.trim())m.my[id]=v;else delete m.my[id];save();}
 function sscShow(id,b){const e=document.getElementById('sa_'+id);if(!e)return;const ta=b.closest('.sscq').querySelector('.sqmy');
  if(e.hidden&&ta&&!ta.value.trim())toast('💡 ముందు నువ్వే రాసి చూడు, తర్వాత పోల్చుకో');e.hidden=!e.hidden;b.textContent=e.hidden?'👁 జవాబు చూడు':'🙈 జవాబు దాచు';}
-function sscSpeak(id){const x=SSCV.find(y=>y.id===id);if(!x)return;const t=sscQA(x,param.lang||'te');speak(t.q+'. '+t.a);}
+function sscSpeak(id){const x=SSCV.find(y=>y.id===id);if(!x)return;const t=sscQA(x,param.lang||'te');speak(plainT(t.q+'. '+t.a));}
 function sscFilter(s,me){const p=param,mk=+p.mk||0,q=String(p.q||'').trim().toLowerCase();
  const sr=p.src||'',okS=x=>!sr||(sr==='mp'?x.bd.startsWith('MP'):sr==='q1'?x.bd.startsWith('QB1'):sr==='q2'?x.bd.startsWith('QB2'):sr==='bk'?!x.bd:1);
  return sscItems(s).filter(x=>(p.tab!=='st'||me.st[x.id])&&(!p.l||x.l===p.l)&&(!mk||x.mk===mk)&&okS(x)&&(!q||(x.q+' '+x.a+' '+x.qe+' '+x.ae).toLowerCase().includes(q)));}
@@ -3177,7 +3215,7 @@ function startSscQuiz(s,n){const pool=sscItems(s).filter(x=>x.o&&(!param.l||x.l=
 function sscOut(){const s=param.s,lg=param.lang||'te',me=sscMe();return {s,lg,me,list:SSCV.length?SSCV:sscFilter(s,me),
  head:'SSC ప్రశ్న–జవాబు – '+SUBJ[s].n+' (10వ తరగతి)'+(param.l?' – '+sscLName(s,param.l):'')+(+param.mk?' – '+param.mk+' మార్కులు':'')};}
 function sscTxt(){const o=sscOut();if(!o.list.length)return toast('ప్రశ్నలు లేవు');
- const t=o.head+'\n'+'='.repeat(40)+'\n\n'+o.list.map((x,i)=>{const q=sscQA(x,o.lg);return `${i+1}. [${x.mk} మా.] ${q.q}${q.q2?'\n   '+q.q2:''}${x.o?'\n   '+x.o.map((y,j)=>'('+'ABCD'[j]+') '+y).join('   '):''}\nజవాబు: ${q.a}${q.a2?'\n'+q.a2:''}${o.me.my[x.id]?'\nనా జవాబు: '+o.me.my[x.id]:''}\n`;}).join('\n')+'\nరాయ్ విద్యార్థి యాప్ • రాయ్ ఎడ్యుకేషన్ – https://raayeducation.in\n';
+ const t=o.head+'\n'+'='.repeat(40)+'\n\n'+o.list.map((x,i)=>{const q=sscQA(x,o.lg);return `${i+1}. [${x.mk} మా.] ${plainT(q.q)}${q.q2?'\n   '+plainT(q.q2):''}${x.o?'\n   '+x.o.map((y,j)=>'('+'ABCD'[j]+') '+y).join('   '):''}\nజవాబు: ${plainT(q.a)}${q.a2?'\n'+plainT(q.a2):''}${o.me.my[x.id]?'\nనా జవాబు: '+o.me.my[x.id]:''}\n`;}).join('\n')+'\nరాయ్ విద్యార్థి యాప్ • రాయ్ ఎడ్యుకేషన్ – https://raayeducation.in\n';
  dl('SSC_'+o.s+(param.l?'_'+param.l:'')+(+param.mk?'_'+param.mk+'M':'')+'.txt',t);toast('⬇️ TXT డౌన్‌లోడ్ అయింది');}
 function sscPrint(){const o=sscOut();if(!o.list.length)return toast('ప్రశ్నలు లేవు');const key=confirm('జవాబులతో కలిపి ప్రింట్ చేయాలా?\n(OK = జవాబులతో, Cancel = ప్రశ్నలు మాత్రమే)');const L=o.list.slice(0,400);
  const box=document.getElementById('sscPrint')||document.body.appendChild(Object.assign(document.createElement('div'),{id:'sscPrint'}));
@@ -3296,14 +3334,14 @@ function startTest(s){const qs=buildQs(S.cur.c,s);if(!qs.length)return toast('�
 V.testrun=()=>{const q=T.qs[T.i],sel=T.ans[T.i];
  return `<div class="trbar"><button class="ib" onclick="quitTest()">✕</button><b>${T.ti?esc(T.ti):SUBJ[T.s].n+' టెస్ట్'}</b><span>⏱ <span id="ttime">${mmss((Date.now()-T.start)/1000)}</span></span></div>
 <div class="prog"><i style="width:${(T.i+1)/T.qs.length*100}%"></i></div>
-<div class="qcard"><small>ప్రశ్న ${T.i+1} / ${T.qs.length}</small><h3>${esc(q.q)}</h3>${q.fr?`<input id="frin" class="frin" autocomplete="off" value="${esc(sel==null?'':sel)}" oninput="frType(this)" placeholder="✍️ జవాబు ఇక్కడ రాయి">`:`<div class="opts">${q.o.map((o,j)=>`<button class="opt ${sel===j?'sel':''}" onclick="pickAns(${j})"><span>${'ABCD'[j]}</span>${esc(o)}</button>`).join('')}</div>`}
-<button class="spk" onclick="speak(T.qs[T.i].q)">🔊 ప్రశ్న వినండి</button></div>
+<div class="qcard"><small>ప్రశ్న ${T.i+1} / ${T.qs.length}</small><h3>${richT(q.q)}</h3>${q.fr?`<input id="frin" class="frin" autocomplete="off" value="${esc(sel==null?'':sel)}" oninput="frType(this)" placeholder="✍️ జవాబు ఇక్కడ రాయి">`:`<div class="opts">${q.o.map((o,j)=>`<button class="opt ${sel===j?'sel':''}" onclick="pickAns(${j})"><span>${'ABCD'[j]}</span>${esc(o)}</button>`).join('')}</div>`}
+<button class="spk" onclick="speak(plainT(T.qs[T.i].q))">🔊 ప్రశ్న వినండి</button></div>
 <div class="row2 qnav"><button class="btn ghost" ${T.i?'':'disabled'} onclick="T.i--;render()">◀ వెనుకకు</button><button class="btn" id="tnext" ${(q.fr?!String(sel==null?'':sel).trim():sel==null)?'disabled':''} onclick="nextQ()">${T.i===T.qs.length-1?'సమర్పించు ✓':'తర్వాత ▶'}</button></div>`;};
 function pickAns(j){T.ans[T.i]=j;render();}
 function nextQ(){if(T.i<T.qs.length-1){T.i++;render();}else finishTest();}
 function quitTest(){if(confirm('టెస్ట్ మధ్యలో ఆపేయాలా? జవాబులు సేవ్ కావు.')){if(T&&T.ssc)go('ssc',{s:T.s,tab:'quiz'});else if(T&&T.lt)go('tbl',{s:T.s,id:String(T.lt).replace(/_wb$/,'')});else go('test');}}
 function finishTest(){const sec=Math.round((Date.now()-T.start)/1000);let sc=0;
- const rv=T.qs.map((q,i)=>{const y=q.fr?String(T.ans[i]==null?'':T.ans[i]).trim():q.o[T.ans[i]],ok=q.fr?(qpNorm(y)!==''&&qpNorm(y)===qpNorm(q.a)):y===q.a;if(ok)sc++;return {q:q.q,y:y||'',a:q.a,ok,...(q.l?{l:q.l}:{})};});
+ const rv=T.qs.map((q,i)=>{const y=q.fr?String(T.ans[i]==null?'':T.ans[i]).trim():q.o[T.ans[i]],ok=q.fr?(qpNorm(y)!==''&&qpNorm(y)===qpNorm(q.a)):y===q.a;if(ok)sc++;return {q:plainT(q.q),y:y||'',a:q.a,ok,...(q.l?{l:q.l}:{})};});
  const r={id:uid(),n:me(),c:S.cur.c,sb:T.s,s:sc,t:T.qs.length,sec,d:new Date().toISOString(),rv};if(T.pid)Object.assign(r,{pid:T.pid,ti:T.ti,kind:'qp'});if(T.lt)Object.assign(r,{lt:T.lt,ti:T.ti});if(T.ssc)Object.assign(r,{ssc:1,ti:T.ti});put('results',r);go('result',{id:r.id});if(sc*100/T.qs.length>=80){setTimeout(confetti,200);beep('win');}else beep('ok');}
 V.result=()=>{const r=live('results').find(x=>x.id===param.id);if(!r)return '<div class="empty">ఫలితం దొరకలేదు</div>';if(r.kind==='ws'){param={id:r.id};return V.wsres();}const p=Math.round(r.s*100/r.t);
  const msg=p>=80?'🌟 అద్భుతం!':p>=60?'👏 బాగుంది!':p>=40?'🙂 పర్వాలేదు, ఇంకా సాధన చేయి':'💪 మళ్ళీ ప్రయత్నించు!';
