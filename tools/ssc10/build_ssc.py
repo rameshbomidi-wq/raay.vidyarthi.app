@@ -56,14 +56,15 @@ for f in sorted(glob.glob(f'{H}/long_*.py')):
         out[s].append([lid, mk, q, a, 0, qe, ae])
 # బోర్డు మోడల్ పేపర్లు (board_<sub>.py) + Mission March ప్రశ్నల బ్యాంక్ (qb_<sub>.py):
 # ITEMS = [(tag, lid, marks, q_te, a_te, q_en, a_en, wrong_opts|None, explain_te, explain_en)] → [lid, mk, q, a, opts|0, qe, ae, tag, ex, exe]
-EXTRA = {}
+EXTRA = {}; BM = {}
 for f in sorted(glob.glob(f'{H}/board_*.py')) + sorted(glob.glob(f'{H}/qb_*.py')):
     sp = importlib.util.spec_from_file_location(os.path.basename(f)[:-3], f); m = importlib.util.module_from_spec(sp); sp.loader.exec_module(m)
     s = os.path.basename(f)[:-3].split('_', 1)[1]; tags = set()
+    if getattr(m, 'BOARD', None): BM[s] = {str(k): {**v, 'sec': [list(x) for x in v['sec']]} for k, v in m.BOARD.items()}   # బోర్డు పేపర్ విభాగాలు (క్రమంలో ప్రశ్నల సంఖ్య)
     for d in getattr(m, 'LESSONS', []):   # notes-10.js లో లేని పాఠాలు (ఉదా: పౌరశాస్త్రం) – పేరు మాత్రమే
         if not any(L['id'] == d['id'] for L in TB[s]): TB[s].append(d); EXTRA.setdefault(s, {})[d['id']] = f"{d['no']}. {d['t']}"
     for it in m.ITEMS:
-        it = list(it) + [None, '', ''][len(it) - 7:] if len(it) < 10 else list(it)
+        it = list(it) + ['', '', None, '', ''][len(it) - 5:] if len(it) < 10 else list(it)
         tag, lid, mk, q, a, qe, ae, w, ex, exe = it[:10]
         assert mk in (1, 2, 4, 8) and any(L['id'] == lid for L in TB[s]) and tag not in tags, (f, tag, lid)
         if w: assert len(w) in (2, 3) and a not in w and len(set(w)) == len(w), (f, tag)
@@ -91,7 +92,7 @@ for f in sorted(glob.glob(f'{H}/figs_*.py')):
     assert not miss, ('బొమ్మకు ప్రశ్న దొరకలేదు', s, miss)
 order = {L['id']: i for s in TB for i, L in enumerate(TB[s])}
 for s in out: out[s].sort(key=lambda x: (order[x[0]], x[1]))
-js = '/* రాయ్ విద్యార్థి – 10వ తరగతి SSC ప్రశ్న–జవాబు బ్యాంక్ (1/2/4/8 మార్కులు) – tools/ssc10/build_ssc.py తో తయారు */\n(window.RAAY_SSC=window.RAAY_SSC||{})[10]=' + json.dumps(out, ensure_ascii=False, separators=(',', ':')) + ';\n' + ('window.RAAY_SSC_LN=' + json.dumps(EXTRA, ensure_ascii=False, separators=(',', ':')) + ';\n' if EXTRA else '')
+js = '/* రాయ్ విద్యార్థి – 10వ తరగతి SSC ప్రశ్న–జవాబు బ్యాంక్ (1/2/4/8 మార్కులు) – tools/ssc10/build_ssc.py తో తయారు */\n(window.RAAY_SSC=window.RAAY_SSC||{})[10]=' + json.dumps(out, ensure_ascii=False, separators=(',', ':')) + ';\n' + ('window.RAAY_SSC_BM=' + json.dumps(BM, ensure_ascii=False, separators=(',', ':')) + ';\n' if BM else '') + ('window.RAAY_SSC_LN=' + json.dumps(EXTRA, ensure_ascii=False, separators=(',', ':')) + ';\n' if EXTRA else '')
 # 📅 Mission March రోజువారీ షెడ్యూల్ (mm_plan.py) → window.RAAY_MM
 if os.path.exists(f'{H}/mm_plan.py'):
     sp = importlib.util.spec_from_file_location('mm_plan', f'{H}/mm_plan.py'); m = importlib.util.module_from_spec(sp); sp.loader.exec_module(m)

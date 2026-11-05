@@ -2479,7 +2479,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.05-14';
+const APPV='2026.11.05-15';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3209,11 +3209,14 @@ function sscPaper(s,key){const pool=sscItems(s).filter(x=>!param.l||x.l===param.
 /* బోర్డు మోడల్ పేపర్ – ఉన్నది ఉన్నట్టు (tag MP<p>-<no>[a|b]) */
 function sscBoard(s,p,key){const it=sscItems(s).filter(x=>x.bd.startsWith('MP'+p+'-'));if(!it.length)return toast('ప్రశ్నలు లేవు');
  const no=x=>parseInt(x.bd.split('-')[1]),by={};it.forEach(x=>(by[no(x)]=by[no(x)]||[]).push(x));
- const secs=[[1,'I'],[2,'II'],[4,'III'],[8,'IV']].map(([mk,r])=>({mk,r,qs:Object.keys(by).map(Number).sort((a,b)=>a-b).filter(n=>by[n][0].mk===mk).map(n=>{const v=by[n].sort((a,b)=>a.bd<b.bd?-1:1);return v.length>1?v:v[0];})}));
- sscSheet(`SSC పబ్లిక్ పరీక్షలు 2025-26 – ${SUBJ[s].n} బోర్డు మోడల్ పేపర్ – ${p}`,secs,key,100,'Director of Govt. Examinations, A.P. (15E & 16E) • 3 గం. 15 ని. • జవాబులు: రాయ్ విద్యార్థి (అధికారిక కీ కాదు)');}
+ const one=n=>{const v=by[n].sort((a,b)=>a.bd<b.bd?-1:1);return v.length>1?v:v[0];},nums=Object.keys(by).map(Number).sort((a,b)=>a-b);
+ const M=((window.RAAY_SSC_BM||{})[s]||{})[p]; /* బోర్డు మెటా: sec = [[విభాగం, ప్రశ్నకు మార్కులు, ప్రశ్నల సంఖ్య, శీర్షిక?]] – క్రమంలో */
+ let secs,k=0;if(M){secs=M.sec.map(([r,mk,c,t])=>({r,mk,t,qs:nums.slice(k,k+=c).map(one)}));}
+ else secs=[[1,'I'],[2,'II'],[4,'III'],[8,'IV']].map(([mk,r])=>({mk,r,qs:nums.filter(n=>by[n][0].mk===mk).map(one)}));
+ sscSheet(`SSC పబ్లిక్ పరీక్షలు 2025-26 – ${M&&M.n||SUBJ[s].n} బోర్డు మోడల్ పేపర్ – ${p}`,secs,key,M?M.tot:100,`Director of Govt. Examinations, A.P. (${M?M.c:'15E & 16E'}) • ${M?M.tm:'3 గం. 15 ని.'} • జవాబులు: రాయ్ విద్యార్థి (అధికారిక కీ కాదు)`);}
 function sscSheet(title,secs,key,tot,sub){const lg=param.lang||'te';let k=0;
  const qh=(q,mk)=>{const t=sscQA(q,lg);return `<div class="qq">${sscBr(t.q)}${t.q2?'<br>'+sscBr(t.q2):''} <i>[${mk}]</i></div>${q.o?`<div class="qo">${q.o.map((y,j)=>`<span>(${'ABCD'[j]}) ${esc(y)}</span>`).join('')}</div>`:''}${key?`<div class="sqpa"><b>జ:</b> ${q.o?'('+'ABCD'[q.o.indexOf(q.a)]+') ':''}${sscBr(t.a)}${t.a2?'<br>'+sscBr(t.a2):''}${t.ex?'<br>💡 '+sscBr(t.ex):''}</div>`:''}`;};
- const body=secs.filter(x=>x.qs.length).map(x=>`<h3 style="margin:10px 0 4px">విభాగం – ${x.r} (${x.qs.length} × ${x.mk} = ${x.qs.length*x.mk} మార్కులు)${x.qs.some(Array.isArray)?' – ప్రతి ప్రశ్నకు అంతర్గత ఎంపిక':''}</h3><ol class="qpol" start="${k+1}">${x.qs.map(q=>{k++;return `<li>${Array.isArray(q)?`<b>a)</b> ${qh(q[0],x.mk)}<div class="qor">(లేదా / OR)</div><b>b)</b> ${qh(q[1],x.mk)}`:qh(q,x.mk)}</li>`;}).join('')}</ol>`).join('');
+ const body=secs.filter(x=>x.qs.length).map(x=>`<h3 style="margin:10px 0 4px">విభాగం – ${x.r}${x.t?' – '+esc(x.t):''} (${x.qs.length} × ${x.mk} = ${x.qs.length*x.mk} మార్కులు)${x.qs.every(Array.isArray)?' – ప్రతి ప్రశ్నకు అంతర్గత ఎంపిక':x.qs.some(Array.isArray)?' – ప్ర. '+x.qs.map((q,j)=>Array.isArray(q)?k+j+1:0).filter(Boolean).join(', ')+' కి మాత్రమే అంతర్గత ఎంపిక':''}</h3><ol class="qpol" start="${k+1}">${x.qs.map(q=>{k++;return `<li>${Array.isArray(q)?`<b>a)</b> ${qh(q[0],x.mk)}<div class="qor">(లేదా / OR)</div><b>b)</b> ${qh(q[1],x.mk)}`:qh(q,x.mk)}</li>`;}).join('')}</ol>`).join('');
  const box=document.getElementById('sscPrint')||document.body.appendChild(Object.assign(document.createElement('div'),{id:'sscPrint'}));
  box.innerHTML=`<div class="qpsheet"><div class="qph"><b>${esc(S.cfg.sname||'')}</b><h2>${esc(title)}</h2>${sub?`<div class="mut">${esc(sub)}</div>`:''}<div>మొత్తం మార్కులు: ${tot}${key?' • జవాబులతో':''}</div><div class="qpnm"><span>పేరు: ____________________</span><span>తేదీ: ________</span></div></div>${body}<div class="qpft">సాధన కోసం – రాయ్ విద్యార్థి యాప్ • రాయ్ ఎడ్యుకేషన్</div></div>`;
  document.body.classList.add('sscprint');setTimeout(()=>{window.print();setTimeout(()=>{document.body.classList.remove('sscprint');box.innerHTML='';},600);},80);}
