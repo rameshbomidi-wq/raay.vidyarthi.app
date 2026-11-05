@@ -53,3 +53,7 @@ def line_lbl(a, b, c, v, frac):
         y = v[3] - (v[3] - v[2]) * 0.08 if y > v[3] - 0.4 else v[2] + (v[3] - v[2]) * 0.08
         x = (-c - b * y) / a if abs(a) > 1e-9 else x
     return (round(x, 2), round(y + (v[3] - v[2]) * 0.04, 2))
+
+def IMG(path, cap=''):
+    """యాప్‌లో బొమ్మ (repo లోని jpg) – ⟦img:మార్గం|శీర్షిక⟧"""
+    return '⟦img:' + path + ('|' + cap if cap else '') + '⟧'
