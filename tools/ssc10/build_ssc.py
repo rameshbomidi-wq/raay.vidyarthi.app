@@ -68,7 +68,10 @@ for f in sorted(glob.glob(f'{H}/board_*.py')) + sorted(glob.glob(f'{H}/qb_*.py')
         tag, lid, mk, q, a, qe, ae, w, ex, exe = it[:10]
         assert mk in (1, 2, 4, 8) and any(L['id'] == lid for L in TB[s]) and tag not in tags, (f, tag, lid)
         if w: assert len(w) in (2, 3) and a not in w and len(set(w)) == len(w), (f, tag)
-        tags.add(tag); out[s].append([lid, mk, q, a, list(w) if w else 0, qe, ae, tag, ex or '', exe or ''])
+        rec = [lid, mk, q, a, list(w) if w else 0, qe, ae, tag, ex or '', exe or '']
+        od = getattr(m, 'ORDER', {}).get(tag)   # బోర్డు పేపర్‌లోని ఎంపికల క్రమం → సరైన జవాబు స్థానం (x[10])
+        if od: assert w and sorted(od) == sorted(list(w) + [a]), (f, tag); rec.append(od.index(a)); rec[4] = [o for o in od if o != a]
+        tags.add(tag); out[s].append(rec)
 # బొమ్మలు: figs_<sub>.py → FIG = {tag లేదా 'q:'+తెలుగు ప్రశ్న మొదలు: (ప్రశ్న బొమ్మ, జవాబు బొమ్మ)}
 for f in sorted(glob.glob(f'{H}/figs_*.py')):
     sp = importlib.util.spec_from_file_location(os.path.basename(f)[:-3], f); m = importlib.util.module_from_spec(sp); sp.loader.exec_module(m)

@@ -2479,7 +2479,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.05-16';
+const APPV='2026.11.05-17';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3086,7 +3086,7 @@ function sscLoad(c){c=+c;if(SSCL[c])return;if(window.RAAY_SSC[c]){SSCL[c]='ok';r
  sc.onload=()=>{SSCL[c]=window.RAAY_SSC[c]?'ok':'no';if(view==='ssc')softRender();};sc.onerror=()=>{SSCL[c]='no';sc.remove();if(view==='ssc')softRender();};document.head.appendChild(sc);}
 function sscH(t){let h=5381;for(let i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))|0;return (h>>>0).toString(36);}
 function sscMe(){S.ssc=S.ssc||{};return S.ssc[me()]||(S.ssc[me()]={st:{},my:{}});}
-function sscItems(s){const D=(window.RAAY_SSC[10]||{})[s]||[],seen=new Set();return D.map((x,i)=>{let id=s+'_'+sscH(x[2].replace(/\n?⟦(fig|img):[\s\S]*?⟧/g,''));if(seen.has(id))id+='_'+(x[7]||i);seen.add(id);let o=null;if(x[4]&&x[4].length){o=x[4].slice();o.splice(parseInt(id.slice(-1),36)%(o.length+1),0,x[3]);}
+function sscItems(s){const D=(window.RAAY_SSC[10]||{})[s]||[],seen=new Set();return D.map((x,i)=>{let id=s+'_'+sscH(x[2].replace(/\n?⟦(fig|img):[\s\S]*?⟧/g,''));if(seen.has(id))id+='_'+(x[7]||i);seen.add(id);let o=null;if(x[4]&&x[4].length){o=x[4].slice();o.splice(x[10]!=null?x[10]:parseInt(id.slice(-1),36)%(o.length+1),0,x[3]);}
  return {id,s,l:x[0],mk:x[1],q:x[2],a:x[3],w:x[4]||0,o,qe:x[5]||'',ae:x[6]||'',bd:x[7]||'',ex:x[8]||'',exe:x[9]||''};});}
 function sscSubs(){const D=window.RAAY_SSC[10]||{};return learnSubs(10).filter(s=>D[s]&&D[s].length);}
 function sscLName(s,id){const L=tbLes(10,s).find(x=>x.id===id),X=(window.RAAY_SSC_LN||{})[s]||{};return L?L.no+'. '+L.t:(X[id]||id);}
