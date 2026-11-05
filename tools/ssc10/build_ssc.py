@@ -66,7 +66,7 @@ for f in sorted(glob.glob(f'{H}/board_*.py')) + sorted(glob.glob(f'{H}/qb_*.py')
         it = list(it) + [None, '', ''][len(it) - 7:] if len(it) < 10 else list(it)
         tag, lid, mk, q, a, qe, ae, w, ex, exe = it[:10]
         assert mk in (1, 2, 4, 8) and any(L['id'] == lid for L in TB[s]) and tag not in tags, (f, tag, lid)
-        if w: assert len(w) == 3 and a not in w and len(set(w)) == 3, (f, tag)
+        if w: assert len(w) in (2, 3) and a not in w and len(set(w)) == len(w), (f, tag)
         tags.add(tag); out[s].append([lid, mk, q, a, list(w) if w else 0, qe, ae, tag, ex or '', exe or ''])
 # బొమ్మలు: figs_<sub>.py → FIG = {tag లేదా 'q:'+తెలుగు ప్రశ్న మొదలు: (ప్రశ్న బొమ్మ, జవాబు బొమ్మ)}
 for f in sorted(glob.glob(f'{H}/figs_*.py')):
