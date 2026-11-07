@@ -1,0 +1,1620 @@
+{
+  "paper_id": "class8-sa1-model1",
+  "class": 8,
+  "model": 1,
+  "source_filename": "Class8_Maths_SA1_Modelpaper_Set1_Solutions_2026-27.pdf",
+  "pages": 8,
+  "source_has_solutions": true,
+  "question_stems_complete": true,
+  "expected_qids": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27",
+    "28",
+    "29",
+    "30a",
+    "30b",
+    "31a",
+    "31b",
+    "32a",
+    "32b",
+    "33a",
+    "33b"
+  ],
+  "issues": [
+    "ఇది అందించిన Solutions PDF; దీనిని కొత్తగా రూపొందించిన లేదా అధికారిక పరీక్ష answer keyగా పరిగణించకూడదు.",
+    "మూల PDFలో ప్రశ్న stems, ఎంపికలు, OR ప్రత్యామ్నాయాలు మరియు పరిష్కారాలు ఉన్నాయి; question_stems_complete = true.",
+    "Python/SymPy మరియు exact arithmeticతో సంఖ్యా/బీజగణిత ఫలితాలు తనిఖీ చేయబడ్డాయి; మూల పరిష్కారాల్లో సరిదిద్దాల్సిన గణిత తప్పు కనబడలేదు."
+  ],
+  "records": [
+    {
+      "qid": "1",
+      "page": 1,
+      "answer_page": 1,
+      "marks": 1,
+      "question_en": "Given 125² = 15625, what is the value of 126²?",
+      "question_te": "125² = 15625 అయితే, 126² విలువ ఎంత?",
+      "answer_en": "15625 + 251",
+      "answer_te": "15625 + 251",
+      "steps_en": [
+        "Use (n + 1)² = n² + n + (n + 1).",
+        "For n = 125: 126² = 125² + 125 + 126 = 15625 + 251.",
+        "Final answer: 126² = 15625 + 251 (option D)."
+      ],
+      "steps_te": [
+        "(n + 1)² = n² + n + (n + 1) సూత్రాన్ని ఉపయోగిద్దాం.",
+        "n = 125 పెడితే: 126² = 125² + 125 + 126 = 15625 + 251.",
+        "చివరి జవాబు: 126² = 15625 + 251 (ఎంపిక D)."
+      ],
+      "options_en": [
+        "15625 + 126",
+        "15625 + 26²",
+        "15625 + 253",
+        "15625 + 251"
+      ],
+      "options_te": [
+        "15625 + 126",
+        "15625 + 26²",
+        "15625 + 253",
+        "15625 + 251"
+      ],
+      "correct_index": 3,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "15625 + 126",
+        "15625 + 26²",
+        "15625 + 253",
+        "15625 + 251"
+      ],
+      "source_answer_te": "D) 15625 + 251",
+      "source_options_en": [
+        "15625 + 126",
+        "15625 + 26²",
+        "15625 + 253",
+        "15625 + 251"
+      ],
+      "source_answer_en": "D) 15625 + 251"
+    },
+    {
+      "qid": "2",
+      "page": 1,
+      "answer_page": 1,
+      "marks": 1,
+      "question_en": "A sheet of paper has thickness v. If it is folded in half 10 times, the thickness of the folded paper is",
+      "question_te": "కాగితం మందం v. దానిని 10 సార్లు సగానికి మడిస్తే, మడిచిన కాగితం మందం ఎంత?",
+      "answer_en": "2¹⁰ × v",
+      "answer_te": "2¹⁰ × v",
+      "steps_en": [
+        "Each fold doubles the thickness.",
+        "After 10 folds, thickness = 2¹⁰ × v.",
+        "Final answer: 2¹⁰ × v (option D)."
+      ],
+      "steps_te": [
+        "ప్రతి మడతతో మందం రెండింతలు అవుతుంది.",
+        "10 మడతల తర్వాత మందం = 2¹⁰ × v.",
+        "చివరి జవాబు: 2¹⁰ × v (ఎంపిక D)."
+      ],
+      "options_en": [
+        "10 × v",
+        "10 + v",
+        "2 × 10 × v",
+        "2¹⁰ × v"
+      ],
+      "options_te": [
+        "10 × v",
+        "10 + v",
+        "2 × 10 × v",
+        "2¹⁰ × v"
+      ],
+      "correct_index": 3,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "10 × v",
+        "10 + v",
+        "2 × 10 × v",
+        "2¹⁰ × v"
+      ],
+      "source_answer_te": "D) 2¹⁰ × v",
+      "source_options_en": [
+        "10 × v",
+        "10 + v",
+        "2 × 10 × v",
+        "2¹⁰ × v"
+      ],
+      "source_answer_en": "D) 2¹⁰ × v"
+    },
+    {
+      "qid": "3",
+      "page": 1,
+      "answer_page": 1,
+      "marks": 1,
+      "question_en": "The base of the Mesopotamian (Babylonian) number system is",
+      "question_te": "మెసపొటేమియన్ (బాబిలోనియన్) సంఖ్యా పద్ధతి ఆధారం ఎంత?",
+      "answer_en": "60",
+      "answer_te": "60",
+      "steps_en": [
+        "Mesopotamians used a sexagesimal, or base-60, place-value system.",
+        "Therefore, the base is 60.",
+        "Final answer: 60 (option C)."
+      ],
+      "steps_te": [
+        "మెసపొటేమియన్లు సెక్సాజెసిమల్, అంటే ఆధారం 60 గల స్థాన విలువ పద్ధతిని వాడారు.",
+        "అందువల్ల ఆధారం 60.",
+        "చివరి జవాబు: 60 (ఎంపిక C)."
+      ],
+      "options_en": [
+        "10",
+        "20",
+        "60",
+        "100"
+      ],
+      "options_te": [
+        "10",
+        "20",
+        "60",
+        "100"
+      ],
+      "correct_index": 2,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "10",
+        "20",
+        "60",
+        "100"
+      ],
+      "source_answer_te": "C) 60",
+      "source_options_en": [
+        "10",
+        "20",
+        "60",
+        "100"
+      ],
+      "source_answer_en": "C) 60"
+    },
+    {
+      "qid": "4",
+      "page": 1,
+      "answer_page": 1,
+      "marks": 1,
+      "question_en": "The sum of the four interior angles of a quadrilateral is",
+      "question_te": "చతుర్భుజంలోని నాలుగు అంతర్గత కోణాల మొత్తం ఎంత?",
+      "answer_en": "360°",
+      "answer_te": "360°",
+      "steps_en": [
+        "A diagonal divides a quadrilateral into two triangles.",
+        "Angle sum = 180° + 180° = 360°.",
+        "Final answer: 360° (option C)."
+      ],
+      "steps_te": [
+        "ఒక కర్ణం చతుర్భుజాన్ని రెండు త్రిభుజాలుగా విభజిస్తుంది.",
+        "కోణాల మొత్తం = 180° + 180° = 360°.",
+        "చివరి జవాబు: 360° (ఎంపిక C)."
+      ],
+      "options_en": [
+        "180°",
+        "270°",
+        "360°",
+        "540°"
+      ],
+      "options_te": [
+        "180°",
+        "270°",
+        "360°",
+        "540°"
+      ],
+      "correct_index": 2,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "180°",
+        "270°",
+        "360°",
+        "540°"
+      ],
+      "source_answer_te": "C) 360°",
+      "source_options_en": [
+        "180°",
+        "270°",
+        "360°",
+        "540°"
+      ],
+      "source_answer_en": "C) 360°"
+    },
+    {
+      "qid": "5",
+      "page": 1,
+      "answer_page": 1,
+      "marks": 1,
+      "question_en": "Which of the following numbers is divisible by 9?",
+      "question_te": "క్రింది సంఖ్యలలో 9తో భాగించబడేది ఏది?",
+      "answer_en": "405",
+      "answer_te": "405",
+      "steps_en": [
+        "A number is divisible by 9 if its digit sum is divisible by 9.",
+        "Digit sums: 123 → 6, 405 → 9, 8888 → 32, 93547 → 28; only 405 qualifies.",
+        "Final answer: 405 (option B)."
+      ],
+      "steps_te": [
+        "ఒక సంఖ్య అంకెల మొత్తం 9తో భాగించబడితే ఆ సంఖ్య 9తో భాగించబడుతుంది.",
+        "అంకెల మొత్తాలు: 123 → 6, 405 → 9, 8888 → 32, 93547 → 28; 405 మాత్రమే సరిపోతుంది.",
+        "చివరి జవాబు: 405 (ఎంపిక B)."
+      ],
+      "options_en": [
+        "123",
+        "405",
+        "8888",
+        "93547"
+      ],
+      "options_te": [
+        "123",
+        "405",
+        "8888",
+        "93547"
+      ],
+      "correct_index": 1,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "123",
+        "405",
+        "8888",
+        "93547"
+      ],
+      "source_answer_te": "B) 405",
+      "source_options_en": [
+        "123",
+        "405",
+        "8888",
+        "93547"
+      ],
+      "source_answer_en": "B) 405"
+    },
+    {
+      "qid": "6",
+      "page": 1,
+      "answer_page": 1,
+      "marks": 1,
+      "question_en": "Using the identity (a + b)(a − b) = a² − b², the value of 45 × 55 is",
+      "question_te": "(a + b)(a − b) = a² − b² సూత్రాన్ని ఉపయోగించి 45 × 55 విలువ కనుగొనండి.",
+      "answer_en": "2475",
+      "answer_te": "2475",
+      "steps_en": [
+        "45 × 55 = (50 − 5)(50 + 5).",
+        "Using the identity: 50² − 5² = 2500 − 25 = 2475.",
+        "Final answer: 2475 (option C)."
+      ],
+      "steps_te": [
+        "45 × 55 = (50 − 5)(50 + 5).",
+        "సూత్రం ప్రకారం: 50² − 5² = 2500 − 25 = 2475.",
+        "చివరి జవాబు: 2475 (ఎంపిక C)."
+      ],
+      "options_en": [
+        "2375",
+        "2425",
+        "2475",
+        "2500"
+      ],
+      "options_te": [
+        "2375",
+        "2425",
+        "2475",
+        "2500"
+      ],
+      "correct_index": 2,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "2375",
+        "2425",
+        "2475",
+        "2500"
+      ],
+      "source_answer_te": "C) 2475",
+      "source_options_en": [
+        "2375",
+        "2425",
+        "2475",
+        "2500"
+      ],
+      "source_answer_en": "C) 2475"
+    },
+    {
+      "qid": "7",
+      "page": 1,
+      "answer_page": 1,
+      "marks": 1,
+      "question_en": "Anagh mixes 600 mL of orange juice with 900 mL of apple juice. The ratio of orange juice to apple juice in its simplest form is",
+      "question_te": "అనఘ్ 600 mL నారింజ రసాన్ని 900 mL ఆపిల్ రసంతో కలిపాడు. నారింజ రసం : ఆపిల్ రసం సరళ నిష్పత్తి ఎంత?",
+      "answer_en": "2 : 3",
+      "answer_te": "2 : 3",
+      "steps_en": [
+        "Ratio = 600 : 900.",
+        "HCF(600, 900) = 300; dividing both terms by 300 gives 2 : 3.",
+        "Final answer: 2 : 3 (option A)."
+      ],
+      "steps_te": [
+        "నిష్పత్తి = 600 : 900.",
+        "HCF(600, 900) = 300; రెండు పదాలను 300తో భాగిస్తే 2 : 3.",
+        "చివరి జవాబు: 2 : 3 (ఎంపిక A)."
+      ],
+      "options_en": [
+        "2 : 3",
+        "3 : 2",
+        "6 : 9",
+        "3 : 4"
+      ],
+      "options_te": [
+        "2 : 3",
+        "3 : 2",
+        "6 : 9",
+        "3 : 4"
+      ],
+      "correct_index": 0,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "2 : 3",
+        "3 : 2",
+        "6 : 9",
+        "3 : 4"
+      ],
+      "source_answer_te": "A) 2 : 3",
+      "source_options_en": [
+        "2 : 3",
+        "3 : 2",
+        "6 : 9",
+        "3 : 4"
+      ],
+      "source_answer_en": "A) 2 : 3"
+    },
+    {
+      "qid": "8",
+      "page": 1,
+      "answer_page": 1,
+      "marks": 1,
+      "question_en": "The number of natural numbers that lie between 16² and 17² is",
+      "question_te": "16² మరియు 17² మధ్య ఉన్న సహజ సంఖ్యల సంఖ్య ఎంత?",
+      "answer_en": "32",
+      "answer_te": "32",
+      "steps_en": [
+        "16² = 256 and 17² = 289.",
+        "The numbers are 257 through 288, so the count is 288 − 257 + 1 = 32.",
+        "Final answer: 32 (option C)."
+      ],
+      "steps_te": [
+        "16² = 256, 17² = 289.",
+        "సంఖ్యలు 257 నుండి 288 వరకు; సంఖ్య = 288 − 257 + 1 = 32.",
+        "చివరి జవాబు: 32 (ఎంపిక C)."
+      ],
+      "options_en": [
+        "30",
+        "31",
+        "32",
+        "33"
+      ],
+      "options_te": [
+        "30",
+        "31",
+        "32",
+        "33"
+      ],
+      "correct_index": 2,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "30",
+        "31",
+        "32",
+        "33"
+      ],
+      "source_answer_te": "C) 32",
+      "source_options_en": [
+        "30",
+        "31",
+        "32",
+        "33"
+      ],
+      "source_answer_en": "C) 32"
+    },
+    {
+      "qid": "9",
+      "page": 1,
+      "answer_page": 1,
+      "marks": 1,
+      "question_en": "A digital locker has an alpha-numeric passcode (digits 0–9 and letters A–Z) of length 5. The number of possible codes is",
+      "question_te": "డిజిటల్ లాకర్‌లో 0–9 అంకెలు, A–Z అక్షరాలతో 5 స్థానాల ఆల్ఫా-న్యూమరిక్ కోడ్ ఉంది. సాధ్యమైన కోడ్ల సంఖ్య ఎంత?",
+      "answer_en": "36⁵",
+      "answer_te": "36⁵",
+      "steps_en": [
+        "Each position has 10 + 26 = 36 choices.",
+        "For 5 positions, the number of codes is 36 × 36 × 36 × 36 × 36 = 36⁵.",
+        "Final answer: 36⁵ (option C)."
+      ],
+      "steps_te": [
+        "ప్రతి స్థానానికి 10 + 26 = 36 ఎంపికలు ఉన్నాయి.",
+        "5 స్థానాలకు కోడ్ల సంఖ్య 36 × 36 × 36 × 36 × 36 = 36⁵.",
+        "చివరి జవాబు: 36⁵ (ఎంపిక C)."
+      ],
+      "options_en": [
+        "36 × 5",
+        "5³⁶",
+        "36⁵",
+        "10⁵"
+      ],
+      "options_te": [
+        "36 × 5",
+        "5³⁶",
+        "36⁵",
+        "10⁵"
+      ],
+      "correct_index": 2,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "36 × 5",
+        "5³⁶",
+        "36⁵",
+        "10⁵"
+      ],
+      "source_answer_te": "C) 36⁵",
+      "source_options_en": [
+        "36 × 5",
+        "5³⁶",
+        "36⁵",
+        "10⁵"
+      ],
+      "source_answer_en": "C) 36⁵"
+    },
+    {
+      "qid": "10",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "The landmark numbers of the Hindu number system are 1, 10, 100, … . The fourth landmark number is",
+      "question_te": "హిందూ సంఖ్యా పద్ధతిలో landmark సంఖ్యలు 1, 10, 100, … . నాలుగవ landmark సంఖ్య ఏది?",
+      "answer_en": "1000",
+      "answer_te": "1000",
+      "steps_en": [
+        "The first three landmark numbers are 1, 10 and 100.",
+        "The fourth is 10 × 10 × 10 = 1000.",
+        "Final answer: 1000 (option C)."
+      ],
+      "steps_te": [
+        "మొదటి మూడు landmark సంఖ్యలు 1, 10, 100.",
+        "నాలుగవది 10 × 10 × 10 = 1000.",
+        "చివరి జవాబు: 1000 (ఎంపిక C)."
+      ],
+      "options_en": [
+        "40",
+        "400",
+        "1000",
+        "10000"
+      ],
+      "options_te": [
+        "40",
+        "400",
+        "1000",
+        "10000"
+      ],
+      "correct_index": 2,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "40",
+        "400",
+        "1000",
+        "10000"
+      ],
+      "source_answer_te": "C) 1000",
+      "source_options_en": [
+        "40",
+        "400",
+        "1000",
+        "10000"
+      ],
+      "source_answer_en": "C) 1000"
+    },
+    {
+      "qid": "11",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "In which quadrilateral are the diagonals always equal in length and bisect each other?",
+      "question_te": "ఏ చతుర్భుజంలో కర్ణాలు ఎల్లప్పుడూ సమాన పొడవు కలిగి ఒకదానినొకటి సమద్విఖండిస్తాయి?",
+      "answer_en": "Rectangle",
+      "answer_te": "దీర్ఘచతురస్రం",
+      "steps_en": [
+        "A parallelogram has bisecting diagonals, but they are not always equal; a rhombus has perpendicular bisecting diagonals; a kite does not have both diagonals bisecting each other.",
+        "A rectangle has equal diagonals that bisect each other.",
+        "Final answer: Rectangle (option C)."
+      ],
+      "steps_te": [
+        "సమాంతర చతుర్భుజంలో కర్ణాలు సమద్విఖండిస్తాయి కానీ ఎల్లప్పుడూ సమానం కావు; రాంబస్‌లో కర్ణాలు లంబంగా సమద్విఖండిస్తాయి; kiteలో రెండు కర్ణాలు పరస్పరం సమద్విఖండించవు.",
+        "దీర్ఘచతురస్రంలో కర్ణాలు సమానం మరియు ఒకదానినొకటి సమద్విఖండిస్తాయి.",
+        "చివరి జవాబు: దీర్ఘచతురస్రం (ఎంపిక C)."
+      ],
+      "options_en": [
+        "Parallelogram",
+        "Rhombus",
+        "Rectangle",
+        "Kite"
+      ],
+      "options_te": [
+        "సమాంతర చతుర్భుజం",
+        "రాంబస్",
+        "దీర్ఘచతురస్రం",
+        "kite"
+      ],
+      "correct_index": 2,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "సమాంతర చతుర్భుజం",
+        "రాంబస్",
+        "దీర్ఘచతురస్రం",
+        "kite"
+      ],
+      "source_answer_te": "C) దీర్ఘచతురస్రం",
+      "source_options_en": [
+        "Parallelogram",
+        "Rhombus",
+        "Rectangle",
+        "Kite"
+      ],
+      "source_answer_en": "C) Rectangle"
+    },
+    {
+      "qid": "12",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "A number that leaves remainder 3 when divided by 5 is of the form",
+      "question_te": "ఒక సంఖ్యను 5తో భాగించినప్పుడు శేషం 3 వస్తే, ఆ సంఖ్య ఏ రూపంలో ఉంటుంది?",
+      "answer_en": "5k + 3",
+      "answer_te": "5k + 3",
+      "steps_en": [
+        "Dividend = divisor × quotient + remainder.",
+        "Therefore, the number = 5 × k + 3 = 5k + 3.",
+        "Final answer: 5k + 3 (option D)."
+      ],
+      "steps_te": [
+        "భాజ్యం = భాజకం × భాగఫలం + శేషం.",
+        "అందువల్ల సంఖ్య = 5 × k + 3 = 5k + 3.",
+        "చివరి జవాబు: 5k + 3 (ఎంపిక D)."
+      ],
+      "options_en": [
+        "3k + 5",
+        "3k − 5",
+        "5k − 2",
+        "5k + 3"
+      ],
+      "options_te": [
+        "3k + 5",
+        "3k − 5",
+        "5k − 2",
+        "5k + 3"
+      ],
+      "correct_index": 3,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "3k + 5",
+        "3k − 5",
+        "5k − 2",
+        "5k + 3"
+      ],
+      "source_answer_te": "D) 5k + 3",
+      "source_options_en": [
+        "3k + 5",
+        "3k − 5",
+        "5k − 2",
+        "5k + 3"
+      ],
+      "source_answer_en": "D) 5k + 3"
+    },
+    {
+      "qid": "13",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "If both numbers a and b of the product a × b are increased by 1, the product increases by",
+      "question_te": "a × b లోని a, b రెండింటినీ 1 చొప్పున పెంచితే, ఉత్పత్తి ఎంత పెరుగుతుంది?",
+      "answer_en": "a + b + 1",
+      "answer_te": "a + b + 1",
+      "steps_en": [
+        "New product = (a + 1)(b + 1) = ab + a + b + 1.",
+        "Increase = (ab + a + b + 1) − ab = a + b + 1.",
+        "Final answer: a + b + 1 (option B)."
+      ],
+      "steps_te": [
+        "కొత్త ఉత్పత్తి = (a + 1)(b + 1) = ab + a + b + 1.",
+        "పెరుగుదల = (ab + a + b + 1) − ab = a + b + 1.",
+        "చివరి జవాబు: a + b + 1 (ఎంపిక B)."
+      ],
+      "options_en": [
+        "a + b",
+        "a + b + 1",
+        "ab + 1",
+        "1"
+      ],
+      "options_te": [
+        "a + b",
+        "a + b + 1",
+        "ab + 1",
+        "1"
+      ],
+      "correct_index": 1,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "a + b",
+        "a + b + 1",
+        "ab + 1",
+        "1"
+      ],
+      "source_answer_te": "B) a + b + 1",
+      "source_options_en": [
+        "a + b",
+        "a + b + 1",
+        "ab + 1",
+        "1"
+      ],
+      "source_answer_en": "B) a + b + 1"
+    },
+    {
+      "qid": "14",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "If 6 : 10 :: 18 : ?, then the missing term is",
+      "question_te": "6 : 10 :: 18 : ? అయితే, తప్పిపోయిన పదం ఎంత?",
+      "answer_en": "30",
+      "answer_te": "30",
+      "steps_en": [
+        "The first term changes from 6 to 18, which is 3 times.",
+        "Multiply the second term by 3: 10 × 3 = 30.",
+        "Final answer: 30 (option C)."
+      ],
+      "steps_te": [
+        "మొదటి పదం 6 నుండి 18కి 3 రెట్లు అయింది.",
+        "రెండవ పదాన్ని కూడా 3తో గుణిస్తే: 10 × 3 = 30.",
+        "చివరి జవాబు: 30 (ఎంపిక C)."
+      ],
+      "options_en": [
+        "20",
+        "25",
+        "30",
+        "36"
+      ],
+      "options_te": [
+        "20",
+        "25",
+        "30",
+        "36"
+      ],
+      "correct_index": 2,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "20",
+        "25",
+        "30",
+        "36"
+      ],
+      "source_answer_te": "C) 30",
+      "source_options_en": [
+        "20",
+        "25",
+        "30",
+        "36"
+      ],
+      "source_answer_en": "C) 30"
+    },
+    {
+      "qid": "15",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "In the Mayan number system, the third landmark number is",
+      "question_te": "మాయన్ సంఖ్యా పద్ధతిలో మూడవ landmark సంఖ్య ఏది?",
+      "answer_en": "360",
+      "answer_te": "360",
+      "steps_en": [
+        "The Mayan landmark numbers begin 1, 20, 18 × 20 = 360.",
+        "Therefore, the third landmark number is 360.",
+        "Final answer: 360 (option B)."
+      ],
+      "steps_te": [
+        "మాయన్ landmark సంఖ్యలు 1, 20, 18 × 20 = 360గా మొదలవుతాయి.",
+        "అందువల్ల మూడవ landmark సంఖ్య 360.",
+        "చివరి జవాబు: 360 (ఎంపిక B)."
+      ],
+      "options_en": [
+        "60",
+        "360",
+        "400",
+        "3600"
+      ],
+      "options_te": [
+        "60",
+        "360",
+        "400",
+        "3600"
+      ],
+      "correct_index": 1,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "60",
+        "360",
+        "400",
+        "3600"
+      ],
+      "source_answer_te": "B) 360",
+      "source_options_en": [
+        "60",
+        "360",
+        "400",
+        "3600"
+      ],
+      "source_answer_en": "B) 360"
+    },
+    {
+      "qid": "16",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "Which quadrilateral is both a kite and a parallelogram?",
+      "question_te": "ఏ చతుర్భుజం kite మరియు సమాంతర చతుర్భుజం రెండూ అవుతుంది?",
+      "answer_en": "Rhombus",
+      "answer_te": "రాంబస్",
+      "steps_en": [
+        "A rhombus has all four sides equal, so it has two pairs of equal adjacent sides and is a kite.",
+        "Its opposite sides are parallel, so it is also a parallelogram.",
+        "Final answer: Rhombus (option C)."
+      ],
+      "steps_te": [
+        "రాంబస్‌కు నాలుగు భుజాలు సమానం; కాబట్టి సమీప భుజాల రెండు జతలు సమానం, అందువల్ల అది kite.",
+        "దాని వ్యతిరేక భుజాలు సమాంతరంగా ఉంటాయి; కాబట్టి అది సమాంతర చతుర్భుజం కూడా.",
+        "చివరి జవాబు: రాంబస్ (ఎంపిక C)."
+      ],
+      "options_en": [
+        "Rectangle",
+        "Trapezium",
+        "Rhombus",
+        "None of these"
+      ],
+      "options_te": [
+        "దీర్ఘచతురస్రం",
+        "ట్రాపీజియం",
+        "రాంబస్",
+        "వీటిలో ఏదీ కాదు"
+      ],
+      "correct_index": 2,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "దీర్ఘచతురస్రం",
+        "ట్రాపీజియం",
+        "రాంబస్",
+        "వీటిలో ఏదీ కాదు"
+      ],
+      "source_answer_te": "C) రాంబస్",
+      "source_options_en": [
+        "Rectangle",
+        "Trapezium",
+        "Rhombus",
+        "None of these"
+      ],
+      "source_answer_en": "C) Rhombus"
+    },
+    {
+      "qid": "17",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "Which of the following numbers is divisible by 11?",
+      "question_te": "క్రింది సంఖ్యలలో 11తో భాగించబడేది ఏది?",
+      "answer_en": "90904",
+      "answer_te": "90904",
+      "steps_en": [
+        "For divisibility by 11, the difference between sums of alternate-place digits must be 0 or a multiple of 11.",
+        "For 90904: (4 + 9 + 9) − (0 + 0) = 22 = 2 × 11.",
+        "Final answer: 90904 (option D)."
+      ],
+      "steps_te": [
+        "11తో భాగింపబడటానికి బేసి, సరి స్థానాల అంకెల మొత్తాల తేడా 0 లేదా 11 యొక్క గుణిజం కావాలి.",
+        "90904కి: (4 + 9 + 9) − (0 + 0) = 22 = 2 × 11.",
+        "చివరి జవాబు: 90904 (ఎంపిక D)."
+      ],
+      "options_en": [
+        "158",
+        "841",
+        "481",
+        "90904"
+      ],
+      "options_te": [
+        "158",
+        "841",
+        "481",
+        "90904"
+      ],
+      "correct_index": 3,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "158",
+        "841",
+        "481",
+        "90904"
+      ],
+      "source_answer_te": "D) 90904",
+      "source_options_en": [
+        "158",
+        "841",
+        "481",
+        "90904"
+      ],
+      "source_answer_en": "D) 90904"
+    },
+    {
+      "qid": "18",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "The expansion of (a − b)² is",
+      "question_te": "(a − b)² విస్తరణ ఏది?",
+      "answer_en": "a² − 2ab + b²",
+      "answer_te": "a² − 2ab + b²",
+      "steps_en": [
+        "(a − b)² = (a − b)(a − b).",
+        "Expanding gives a² − ab − ba + b² = a² − 2ab + b².",
+        "Final answer: a² − 2ab + b² (option C)."
+      ],
+      "steps_te": [
+        "(a − b)² = (a − b)(a − b).",
+        "విస్తరిస్తే a² − ab − ba + b² = a² − 2ab + b².",
+        "చివరి జవాబు: a² − 2ab + b² (ఎంపిక C)."
+      ],
+      "options_en": [
+        "a² − b²",
+        "a² + 2ab + b²",
+        "a² − 2ab + b²",
+        "a² − ab + b²"
+      ],
+      "options_te": [
+        "a² − b²",
+        "a² + 2ab + b²",
+        "a² − 2ab + b²",
+        "a² − ab + b²"
+      ],
+      "correct_index": 2,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "a² − b²",
+        "a² + 2ab + b²",
+        "a² − 2ab + b²",
+        "a² − ab + b²"
+      ],
+      "source_answer_te": "C) a² − 2ab + b²",
+      "source_options_en": [
+        "a² − b²",
+        "a² + 2ab + b²",
+        "a² − 2ab + b²",
+        "a² − ab + b²"
+      ],
+      "source_answer_en": "C) a² − 2ab + b²"
+    },
+    {
+      "qid": "19",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "1 hectare = ______ square metres",
+      "question_te": "1 హెక్టారు = ______ చదరపు మీటర్లు",
+      "answer_en": "10,000",
+      "answer_te": "10,000",
+      "steps_en": [
+        "1 hectare is the area of a square of side 100 m.",
+        "Area = 100 × 100 = 10,000 m².",
+        "Final answer: 10,000 m² (option C)."
+      ],
+      "steps_te": [
+        "1 హెక్టారు అంటే భుజం 100 m గల చదరపు విస్తీర్ణం.",
+        "విస్తీర్ణం = 100 × 100 = 10,000 m².",
+        "చివరి జవాబు: 10,000 m² (ఎంపిక C)."
+      ],
+      "options_en": [
+        "100",
+        "1,000",
+        "10,000",
+        "1,00,000"
+      ],
+      "options_te": [
+        "100",
+        "1,000",
+        "10,000",
+        "1,00,000"
+      ],
+      "correct_index": 2,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "100",
+        "1,000",
+        "10,000",
+        "1,00,000"
+      ],
+      "source_answer_te": "C) 10,000",
+      "source_options_en": [
+        "100",
+        "1,000",
+        "10,000",
+        "1,00,000"
+      ],
+      "source_answer_en": "C) 10,000"
+    },
+    {
+      "qid": "20",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "In a rhombus ABCD, if ∠A = 50°, then ∠B =",
+      "question_te": "రాంబస్ ABCDలో ∠A = 50° అయితే, ∠B ఎంత?",
+      "answer_en": "130°",
+      "answer_te": "130°",
+      "steps_en": [
+        "Adjacent angles of a rhombus, which is a parallelogram, are supplementary.",
+        "∠B = 180° − 50° = 130°.",
+        "Final answer: 130° (option C)."
+      ],
+      "steps_te": [
+        "రాంబస్ సమాంతర చతుర్భుజం కాబట్టి సమీప కోణాల మొత్తం 180°.",
+        "∠B = 180° − 50° = 130°.",
+        "చివరి జవాబు: 130° (ఎంపిక C)."
+      ],
+      "options_en": [
+        "50°",
+        "100°",
+        "130°",
+        "310°"
+      ],
+      "options_te": [
+        "50°",
+        "100°",
+        "130°",
+        "310°"
+      ],
+      "correct_index": 2,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "50°",
+        "100°",
+        "130°",
+        "310°"
+      ],
+      "source_answer_te": "C) 130°",
+      "source_options_en": [
+        "50°",
+        "100°",
+        "130°",
+        "310°"
+      ],
+      "source_answer_en": "C) 130°"
+    },
+    {
+      "qid": "21",
+      "page": 3,
+      "answer_page": 3,
+      "marks": 2,
+      "question_en": "Find the length of the side of a square whose area is 441 m².",
+      "question_te": "విస్తీర్ణం 441 m² గల చదరపు భుజం పొడవు కనుగొనండి.",
+      "answer_en": "Side = 21 m",
+      "answer_te": "భుజం = 21 m",
+      "steps_en": [
+        "Given: area of square = 441 m²; to find side.",
+        "Prime factorisation: 441 = 3² × 7².",
+        "Formula and substitution: side = √441 = 3 × 7 = 21 m.",
+        "Final answer: side of the square = 21 m."
+      ],
+      "steps_te": [
+        "ఇవ్వబడింది: చదరపు విస్తీర్ణం = 441 m²; కనుగొనవలసింది భుజం.",
+        "అభాజ్య గుణక విభజన: 441 = 3² × 7².",
+        "సూత్రం, ప్రతిస్థాపన: భుజం = √441 = 3 × 7 = 21 m.",
+        "చివరి జవాబు: చదరపు భుజం = 21 m."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "22",
+      "page": 3,
+      "answer_page": 3,
+      "marks": 2,
+      "question_en": "Express 648 as a product of powers of its prime factors.",
+      "question_te": "648ను దాని అభాజ్య గుణకాల ఘాతాల గుణితంగా వ్యక్తపరచండి.",
+      "answer_en": "648 = 2³ × 3⁴",
+      "answer_te": "648 = 2³ × 3⁴",
+      "steps_en": [
+        "Repeated division gives 648 = 2 × 2 × 2 × 81.",
+        "Since 81 = 3 × 3 × 3 × 3, 648 = 2³ × 3⁴.",
+        "Final answer: 648 = 2³ × 3⁴."
+      ],
+      "steps_te": [
+        "పునరావృత భాగహారం ద్వారా 648 = 2 × 2 × 2 × 81.",
+        "81 = 3 × 3 × 3 × 3 కాబట్టి 648 = 2³ × 3⁴.",
+        "చివరి జవాబు: 648 = 2³ × 3⁴."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "23",
+      "page": 3,
+      "answer_page": 3,
+      "marks": 2,
+      "question_en": "What will be the digital root of the number 9a + 36b + 13? Give a reason.",
+      "question_te": "9a + 36b + 13 సంఖ్యకు digital root ఎంత? కారణం ఇవ్వండి.",
+      "answer_en": "Digital root = 4",
+      "answer_te": "Digital root = 4",
+      "steps_en": [
+        "9a and 36b are multiples of 9, so they do not change the digital root.",
+        "For the remaining term, 13 → 1 + 3 = 4; hence the digital root is 4.",
+        "Final answer: digital root = 4."
+      ],
+      "steps_te": [
+        "9a, 36bలు 9 యొక్క గుణిజాలు కాబట్టి digital rootను మార్చవు.",
+        "మిగిలిన 13కి 13 → 1 + 3 = 4; కాబట్టి digital root 4.",
+        "చివరి జవాబు: digital root = 4."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "24",
+      "page": 3,
+      "answer_page": 3,
+      "marks": 2,
+      "question_en": "Solve the cryptarithm JK × 6 = KKK, where each letter stands for a digit and J ≠ 0.",
+      "question_te": "JK × 6 = KKK అనే cryptarithmను పరిష్కరించండి; ప్రతి అక్షరం ఒక అంకెను సూచిస్తుంది, J ≠ 0.",
+      "answer_en": "J = 7, K = 4; therefore 74 × 6 = 444.",
+      "answer_te": "J = 7, K = 4; కాబట్టి 74 × 6 = 444.",
+      "steps_en": [
+        "Write JK = 10J + K and KKK = 111K: 6(10J + K) = 111K.",
+        "Then 60J + 6K = 111K, so 60J = 105K and 4J = 7K.",
+        "The digit solution with J ≠ 0 is J = 7, K = 4; check: 74 × 6 = 444.",
+        "Final answer: J = 7, K = 4."
+      ],
+      "steps_te": [
+        "JK = 10J + K, KKK = 111K అని రాస్తే: 6(10J + K) = 111K.",
+        "అప్పుడు 60J + 6K = 111K, కాబట్టి 60J = 105K మరియు 4J = 7K.",
+        "J ≠ 0 నిబంధనలో అంకెల పరిష్కారం J = 7, K = 4; తనిఖీ: 74 × 6 = 444.",
+        "చివరి జవాబు: J = 7, K = 4."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "25",
+      "page": 3,
+      "answer_page": 3,
+      "marks": 4,
+      "question_en": "Simplify and write the answers in exponential form: (i) 10⁻² × 10⁻⁵ (ii) 5⁷ ÷ 5⁴ (iii) 9⁻⁷ ÷ 9⁴ (iv) (13⁻²)⁻³.",
+      "question_te": "సరళీకరించి ఘాత రూపంలో రాయండి: (i) 10⁻² × 10⁻⁵ (ii) 5⁷ ÷ 5⁴ (iii) 9⁻⁷ ÷ 9⁴ (iv) (13⁻²)⁻³.",
+      "answer_en": "(i) 10⁻⁷  (ii) 5³  (iii) 9⁻¹¹  (iv) 13⁶",
+      "answer_te": "(i) 10⁻⁷  (ii) 5³  (iii) 9⁻¹¹  (iv) 13⁶",
+      "steps_en": [
+        "(i) Same-base multiplication: 10⁻² × 10⁻⁵ = 10⁻²⁺⁽⁻⁵⁾ = 10⁻⁷.",
+        "(ii) Same-base division: 5⁷ ÷ 5⁴ = 5⁷⁻⁴ = 5³.",
+        "(iii) 9⁻⁷ ÷ 9⁴ = 9⁻⁷⁻⁴ = 9⁻¹¹.",
+        "(iv) Power of a power: (13⁻²)⁻³ = 13⁽⁻²⁾×⁽⁻³⁾ = 13⁶.",
+        "Final answer: (i) 10⁻⁷, (ii) 5³, (iii) 9⁻¹¹, (iv) 13⁶."
+      ],
+      "steps_te": [
+        "(i) ఒకే ఆధార గుణకారం: 10⁻² × 10⁻⁵ = 10⁻²⁺⁽⁻⁵⁾ = 10⁻⁷.",
+        "(ii) ఒకే ఆధార భాగహారం: 5⁷ ÷ 5⁴ = 5⁷⁻⁴ = 5³.",
+        "(iii) 9⁻⁷ ÷ 9⁴ = 9⁻⁷⁻⁴ = 9⁻¹¹.",
+        "(iv) ఘాతంపై ఘాతం: (13⁻²)⁻³ = 13⁽⁻²⁾×⁽⁻³⁾ = 13⁶.",
+        "చివరి జవాబు: (i) 10⁻⁷, (ii) 5³, (iii) 9⁻¹¹, (iv) 13⁶."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "26",
+      "page": 3,
+      "answer_page": 3,
+      "marks": 4,
+      "question_en": "Write the following numbers in standard (scientific) form: (i) 59,853 (ii) 65,950 (iii) 34,30,000 (iv) 70,04,00,00,000.",
+      "question_te": "క్రింది సంఖ్యలను ప్రామాణిక (scientific) రూపంలో రాయండి: (i) 59,853 (ii) 65,950 (iii) 34,30,000 (iv) 70,04,00,00,000.",
+      "answer_en": "(i) 5.9853 × 10⁴  (ii) 6.595 × 10⁴  (iii) 3.43 × 10⁶  (iv) 7.004 × 10¹⁰",
+      "answer_te": "(i) 5.9853 × 10⁴  (ii) 6.595 × 10⁴  (iii) 3.43 × 10⁶  (iv) 7.004 × 10¹⁰",
+      "steps_en": [
+        "(i) 59,853 = 5.9853 × 10⁴.",
+        "(ii) 65,950 = 6.595 × 10⁴.",
+        "(iii) 34,30,000 = 3.43 × 10⁶.",
+        "(iv) 70,04,00,00,000 = 7.004 × 10¹⁰.",
+        "Final answer: 5.9853 × 10⁴, 6.595 × 10⁴, 3.43 × 10⁶, 7.004 × 10¹⁰ respectively."
+      ],
+      "steps_te": [
+        "(i) 59,853 = 5.9853 × 10⁴.",
+        "(ii) 65,950 = 6.595 × 10⁴.",
+        "(iii) 34,30,000 = 3.43 × 10⁶.",
+        "(iv) 70,04,00,00,000 = 7.004 × 10¹⁰.",
+        "చివరి జవాబు: వరుసగా 5.9853 × 10⁴, 6.595 × 10⁴, 3.43 × 10⁶, 7.004 × 10¹⁰."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "27",
+      "page": 3,
+      "answer_page": 3,
+      "marks": 4,
+      "question_en": "Write the following numbers in the Roman numeral system: (i) 1222 (ii) 2999 (iii) 302 (iv) 715.",
+      "question_te": "క్రింది సంఖ్యలను రోమన్ సంఖ్యా పద్ధతిలో రాయండి: (i) 1222 (ii) 2999 (iii) 302 (iv) 715.",
+      "answer_en": "(i) MCCXXII  (ii) MMCMXCIX  (iii) CCCII  (iv) DCCXV",
+      "answer_te": "(i) MCCXXII  (ii) MMCMXCIX  (iii) CCCII  (iv) DCCXV",
+      "steps_en": [
+        "Use I = 1, V = 5, X = 10, L = 50, C = 100, D = 500 and M = 1000.",
+        "1222 = 1000 + 200 + 20 + 2 = MCCXXII; 2999 = 2000 + 900 + 90 + 9 = MMCMXCIX.",
+        "302 = 300 + 2 = CCCII; 715 = 700 + 15 = DCCXV.",
+        "Final answer: (i) MCCXXII, (ii) MMCMXCIX, (iii) CCCII, (iv) DCCXV."
+      ],
+      "steps_te": [
+        "I = 1, V = 5, X = 10, L = 50, C = 100, D = 500, M = 1000 ఉపయోగించండి.",
+        "1222 = 1000 + 200 + 20 + 2 = MCCXXII; 2999 = 2000 + 900 + 90 + 9 = MMCMXCIX.",
+        "302 = 300 + 2 = CCCII; 715 = 700 + 15 = DCCXV.",
+        "చివరి జవాబు: (i) MCCXXII, (ii) MMCMXCIX, (iii) CCCII, (iv) DCCXV."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "28",
+      "page": 3,
+      "answer_page": 3,
+      "marks": 4,
+      "question_en": "(i) Add the Roman numerals and write the answer in Roman numerals: LXXXVII + LXXVIII. (ii) Write the Hindu-Arabic numeral 25 in base-8 and in base-5.",
+      "question_te": "(i) రోమన్ సంఖ్యలను కలిపి జవాబును రోమన్ సంఖ్యలో రాయండి: LXXXVII + LXXVIII. (ii) హిందూ-అరబిక్ సంఖ్య 25ను base-8, base-5లో రాయండి.",
+      "answer_en": "(i) CLXV  (ii) 25 = 31₈ = 100₅",
+      "answer_te": "(i) CLXV  (ii) 25 = 31₈ = 100₅",
+      "steps_en": [
+        "(i) LXXXVII + LXXVIII = 87 + 78 = 165; 165 in Roman numerals is CLXV.",
+        "(ii) Base 8: 25 = 3 × 8 + 1, so 25 = 31₈.",
+        "(iii) Base 5: 25 = 1 × 5² + 0 × 5 + 0, so 25 = 100₅.",
+        "Final answer: (i) CLXV; (ii) 31 in base 8 and 100 in base 5."
+      ],
+      "steps_te": [
+        "(i) LXXXVII + LXXVIII = 87 + 78 = 165; 165కు రోమన్ రూపం CLXV.",
+        "(ii) Base 8: 25 = 3 × 8 + 1, కాబట్టి 25 = 31₈.",
+        "(iii) Base 5: 25 = 1 × 5² + 0 × 5 + 0, కాబట్టి 25 = 100₅.",
+        "చివరి జవాబు: (i) CLXV; (ii) base 8లో 31, base 5లో 100."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "29",
+      "page": 3,
+      "answer_page": 3,
+      "marks": 4,
+      "question_en": "If 48a23b is a multiple of 18, list all possible pairs of values for a and b.",
+      "question_te": "48a23b సంఖ్య 18 యొక్క గుణిజం అయితే, a మరియు b విలువల అన్ని సాధ్య జతలను జాబితా చేయండి.",
+      "answer_en": "(a, b) = (1, 0), (2, 8), (4, 6), (6, 4), (8, 2)",
+      "answer_te": "(a, b) = (1, 0), (2, 8), (4, 6), (6, 4), (8, 2)",
+      "steps_en": [
+        "A multiple of 18 must be divisible by 2 and 9.",
+        "Divisibility by 2 gives b = 0, 2, 4, 6 or 8.",
+        "Digit sum = 4 + 8 + a + 2 + 3 + b = 17 + a + b; divisibility by 9 gives a + b = 1 or 10.",
+        "With b even, the pairs are (1, 0), (2, 8), (4, 6), (6, 4), (8, 2).",
+        "Final answer: (a, b) = (1, 0), (2, 8), (4, 6), (6, 4), (8, 2)."
+      ],
+      "steps_te": [
+        "18 యొక్క గుణిజం 2తోను 9తోను భాగించబడాలి.",
+        "2తో భాగింపబడటానికి b = 0, 2, 4, 6 లేదా 8.",
+        "అంకెల మొత్తం = 4 + 8 + a + 2 + 3 + b = 17 + a + b; 9తో భాగింపబడటానికి a + b = 1 లేదా 10.",
+        "b సరి అంకె కావడంతో జతలు (1, 0), (2, 8), (4, 6), (6, 4), (8, 2).",
+        "చివరి జవాబు: (a, b) = (1, 0), (2, 8), (4, 6), (6, 4), (8, 2)."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "30a",
+      "page": 4,
+      "answer_page": 4,
+      "marks": 8,
+      "question_en": "30(a) (i) Find the smallest number by which 9408 must be multiplied so that the product is a perfect square. Also find the square root of the new number. (ii) Find the cube roots of 27000 and 10648.",
+      "question_te": "30(a) (i) 9408ను ఏ కనిష్ఠ సంఖ్యతో గుణిస్తే గుణనఫలం పూర్ణవర్గం అవుతుంది? కొత్త సంఖ్య వర్గమూలాన్ని కూడా కనుగొనండి. (ii) 27000, 10648 యొక్క ఘనమూలాలను కనుగొనండి.",
+      "answer_en": "(i) Multiply by 3; new number = 28224 and √28224 = 168. (ii) ∛27000 = 30, ∛10648 = 22.",
+      "answer_te": "(i) 3తో గుణించాలి; కొత్త సంఖ్య = 28224, √28224 = 168. (ii) ∛27000 = 30, ∛10648 = 22.",
+      "steps_en": [
+        "(i) Given 9408; to find the least multiplier and the new square root.",
+        "(i) Prime factorisation: 9408 = 2⁶ × 3 × 7².",
+        "(i) The factor 3 is unpaired, so multiply by 3: 9408 × 3 = 28224 = 2⁶ × 3² × 7².",
+        "(i) √28224 = 2³ × 3 × 7 = 168.",
+        "(ii) 27000 = 2³ × 3³ × 5³, so ∛27000 = 2 × 3 × 5 = 30.",
+        "(ii) 10648 = 2³ × 11³, so ∛10648 = 2 × 11 = 22.",
+        "Final answer: multiplier = 3, square root = 168; cube roots are 30 and 22."
+      ],
+      "steps_te": [
+        "(i) ఇవ్వబడింది 9408; కనిష్ఠ గుణకం, కొత్త వర్గమూలం కనుగొనాలి.",
+        "(i) అభాజ్య గుణక విభజన: 9408 = 2⁶ × 3 × 7².",
+        "(i) 3 ఒక్కటే జతకాని గుణకం; కాబట్టి 3తో గుణిస్తే 9408 × 3 = 28224 = 2⁶ × 3² × 7².",
+        "(i) √28224 = 2³ × 3 × 7 = 168.",
+        "(ii) 27000 = 2³ × 3³ × 5³; కాబట్టి ∛27000 = 2 × 3 × 5 = 30.",
+        "(ii) 10648 = 2³ × 11³; కాబట్టి ∛10648 = 2 × 11 = 22.",
+        "చివరి జవాబు: గుణకం = 3, వర్గమూలం = 168; ఘనమూలాలు 30, 22."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "30b",
+      "page": 4,
+      "answer_page": 5,
+      "marks": 8,
+      "question_en": "30(b) (i) Find the smallest square number that is divisible by each of the numbers 4, 9 and 10. (ii) What number should 1323 be multiplied by so that the product is a perfect cube? Also find the cube root of the new number.",
+      "question_te": "30(b) (i) 4, 9, 10లలో ప్రతి దానితో భాగించబడే కనిష్ఠ పూర్ణవర్గ సంఖ్యను కనుగొనండి. (ii) 1323ను ఏ సంఖ్యతో గుణిస్తే గుణనఫలం పూర్ణఘనం అవుతుంది? కొత్త సంఖ్య ఘనమూలాన్ని కూడా కనుగొనండి.",
+      "answer_en": "(i) Smallest square number = 900. (ii) Multiply 1323 by 7; new number = 9261 and cube root = 21.",
+      "answer_te": "(i) కనిష్ఠ పూర్ణవర్గం = 900. (ii) 1323ను 7తో గుణించాలి; కొత్త సంఖ్య = 9261, ఘనమూలం = 21.",
+      "steps_en": [
+        "(i) LCM(4, 9, 10) = 2² × 3² × 5 = 180.",
+        "(i) In 180 = 2² × 3² × 5, factor 5 is unpaired; multiply by 5.",
+        "(i) 180 × 5 = 900 = 2² × 3² × 5² = 30².",
+        "(ii) 1323 = 3³ × 7²; one more factor 7 is needed for a perfect cube.",
+        "(ii) 1323 × 7 = 9261 = 3³ × 7³ and ∛9261 = 3 × 7 = 21.",
+        "Final answer: (i) 900; (ii) multiplier = 7 and cube root = 21."
+      ],
+      "steps_te": [
+        "(i) LCM(4, 9, 10) = 2² × 3² × 5 = 180.",
+        "(i) 180 = 2² × 3² × 5లో 5 జతకాని గుణకం; కాబట్టి 5తో గుణించాలి.",
+        "(i) 180 × 5 = 900 = 2² × 3² × 5² = 30².",
+        "(ii) 1323 = 3³ × 7²; పూర్ణఘనం కావాలంటే మరో 7 గుణకం అవసరం.",
+        "(ii) 1323 × 7 = 9261 = 3³ × 7³, మరియు ∛9261 = 3 × 7 = 21.",
+        "చివరి జవాబు: (i) 900; (ii) గుణకం = 7, ఘనమూలం = 21."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "31a",
+      "page": 5,
+      "answer_page": 5,
+      "marks": 8,
+      "question_en": "31(a) (i) Find all the other angles inside rectangle ABCD in Figure (i). The diagonals AC and BD meet at O and ∠CAB = 30°. (ii) Find all the other angles inside rectangle PQRS in Figure (ii). The diagonals PR and QS meet at O and ∠QOR = 110°.",
+      "question_te": "31(a) (i) చిత్రం (i)లోని దీర్ఘచతురస్రం ABCDలో మిగిలిన అన్ని అంతర్గత కోణాలను కనుగొనండి. AC, BD కర్ణాలు O వద్ద కలుస్తాయి మరియు ∠CAB = 30°. (ii) చిత్రం (ii)లోని దీర్ఘచతురస్రం PQRSలో మిగిలిన అన్ని అంతర్గత కోణాలను కనుగొనండి. PR, QS కర్ణాలు O వద్ద కలుస్తాయి మరియు ∠QOR = 110°.",
+      "answer_en": "In ABCD: vertex angles 90°; ∠DAC = ∠BCA = ∠OBC = ∠ADB = 60°; ∠OBA = ∠ACD = ∠BDC = 30°; ∠AOB = ∠COD = 120°; ∠BOC = ∠AOD = 60°. In PQRS: ∠POQ = ∠ROS = 70°, ∠POS = 110°; the four small triangle base angles near Q/R and P/S are 35°, and the remaining corner split angles are 55°.",
+      "answer_te": "ABCDలో: శీర్ష కోణాలు 90°; ∠DAC = ∠BCA = ∠OBC = ∠ADB = 60°; ∠OBA = ∠ACD = ∠BDC = 30°; ∠AOB = ∠COD = 120°; ∠BOC = ∠AOD = 60°. PQRSలో: ∠POQ = ∠ROS = 70°, ∠POS = 110°; Q/R మరియు P/S సమీప చిన్న త్రిభుజాల ఆధార కోణాలు 35°, మిగిలిన మూల విభజన కోణాలు 55°.",
+      "steps_en": [
+        "(i) Every rectangle angle is 90°. Thus ∠A = ∠B = ∠C = ∠D = 90°.",
+        "(i) ∠DAC = 90° − ∠CAB = 90° − 30° = 60°.",
+        "(i) OA = OB; in isosceles △OAB, ∠OBA = ∠OAB = 30°, so ∠AOB = 120° and ∠OBC = 90° − 30° = 60°.",
+        "(i) Vertically opposite/straight-line angles give ∠BOC = ∠AOD = 60° and ∠COD = ∠AOB = 120°; parallel sides give ∠ACD = ∠BDC = 30° and ∠BCA = ∠ADB = 60°.",
+        "(ii) PR is a straight line: ∠POQ = 180° − 110° = 70°; vertically opposite angles give ∠POS = 110° and ∠ROS = 70°.",
+        "(ii) OQ = OR, so ∠OQR = ∠ORQ = (180° − 110°)/2 = 35°; similarly ∠OPS = ∠OSP = 35°.",
+        "(ii) The remaining rectangle corner splits are ∠OQP = ∠QPO = ∠ORS = ∠OSR = (180° − 70°)/2 = 55°.",
+        "Final answer: all angles are the values listed above."
+      ],
+      "steps_te": [
+        "(i) ప్రతి దీర్ఘచతురస్ర కోణం 90°. కాబట్టి ∠A = ∠B = ∠C = ∠D = 90°.",
+        "(i) ∠DAC = 90° − ∠CAB = 90° − 30° = 60°.",
+        "(i) OA = OB; సమద్విబాహు △OABలో ∠OBA = ∠OAB = 30°, కాబట్టి ∠AOB = 120°, ∠OBC = 90° − 30° = 60°.",
+        "(i) వ్యతిరేక/సరళ రేఖ కోణాల వల్ల ∠BOC = ∠AOD = 60°, ∠COD = ∠AOB = 120°; సమాంతర భుజాల వల్ల ∠ACD = ∠BDC = 30°, ∠BCA = ∠ADB = 60°.",
+        "(ii) PR సరళ రేఖ: ∠POQ = 180° − 110° = 70°; వ్యతిరేక కోణాల వల్ల ∠POS = 110°, ∠ROS = 70°.",
+        "(ii) OQ = OR కాబట్టి ∠OQR = ∠ORQ = (180° − 110°)/2 = 35°; అలాగే ∠OPS = ∠OSP = 35°.",
+        "(ii) మిగిలిన మూల విభజన కోణాలు ∠OQP = ∠QPO = ∠ORS = ∠OSR = (180° − 70°)/2 = 55°.",
+        "చివరి జవాబు: పైగా ఇచ్చిన విలువలే అన్ని కోణాలు."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": 5,
+      "display_note_te": "చిత్ర వివరణ (మూల పేజీ 5): (i) ABCD దీర్ఘచతురస్రంలో AC, BD కర్ణాలు O వద్ద కలుస్తాయి; ∠CAB = 30°. (ii) PQRS దీర్ఘచతురస్రంలో PR, QS కర్ణాలు O వద్ద కలుస్తాయి; ∠QOR = 110°.",
+      "issue_notes": []
+    },
+    {
+      "qid": "31b",
+      "page": 5,
+      "answer_page": 6,
+      "marks": 8,
+      "question_en": "31(b) (i) Find the remaining angles in each parallelogram: Figure (i) PEAR, ∠P = 40°; Figure (ii) PQRS, ∠P = 110°. (ii) Using diagonal properties, construct a rhombus whose diagonals are 4 cm and 5 cm. Write the construction steps.",
+      "question_te": "31(b) (i) ప్రతి సమాంతర చతుర్భుజంలోని మిగిలిన కోణాలను కనుగొనండి: చిత్రం (i) PEAR, ∠P = 40°; చిత్రం (ii) PQRS, ∠P = 110°. (ii) కర్ణాల లక్షణాలను ఉపయోగించి 4 cm, 5 cm కర్ణాలు గల రాంబస్‌ను నిర్మించండి. నిర్మాణ దశలు రాయండి.",
+      "answer_en": "(i) PEAR: ∠E = 140°, ∠A = 40°, ∠R = 140°; PQRS: ∠Q = 70°, ∠R = 110°, ∠S = 70°. (ii) Draw AC = 5 cm, bisect it perpendicularly, mark OB = OD = 2 cm, and join the vertices.",
+      "answer_te": "(i) PEAR: ∠E = 140°, ∠A = 40°, ∠R = 140°; PQRS: ∠Q = 70°, ∠R = 110°, ∠S = 70°. (ii) AC = 5 cm గీయి, దాని లంబ సమద్విఖండకం గీయి, OB = OD = 2 cm గుర్తించి శీర్షాలను కలపాలి.",
+      "steps_en": [
+        "(i) In PEAR, adjacent angles are supplementary: ∠E = ∠R = 180° − 40° = 140°.",
+        "(i) Opposite angles are equal: ∠A = ∠P = 40°.",
+        "(i) In PQRS, ∠Q = ∠S = 180° − 110° = 70° and ∠R = ∠P = 110°.",
+        "(ii) Draw diagonal AC = 5 cm.",
+        "(ii) Construct the perpendicular bisector of AC meeting it at O, so OA = OC = 2.5 cm.",
+        "(ii) On the perpendicular bisector mark B and D on opposite sides with OB = OD = 2 cm, so BD = 4 cm.",
+        "(ii) Join AB, BC, CD and DA; the diagonals bisect at 90°, so ABCD is the required rhombus.",
+        "Final answer: angles and construction are as stated above."
+      ],
+      "steps_te": [
+        "(i) PEARలో సమీప కోణాలు అనుబంధాలు: ∠E = ∠R = 180° − 40° = 140°.",
+        "(i) వ్యతిరేక కోణాలు సమానం: ∠A = ∠P = 40°.",
+        "(i) PQRSలో ∠Q = ∠S = 180° − 110° = 70°, ∠R = ∠P = 110°.",
+        "(ii) AC = 5 cm కర్ణాన్ని గీయండి.",
+        "(ii) ACకు లంబ సమద్విఖండకం గీయండి; అది O వద్ద కలుస్తుంది, కాబట్టి OA = OC = 2.5 cm.",
+        "(ii) లంబ సమద్విఖండకంపై Oకు ఇరువైపులా OB = OD = 2 cmగా B, D గుర్తించండి; BD = 4 cm.",
+        "(ii) AB, BC, CD, DA కలపండి; కర్ణాలు 90° వద్ద సమద్విఖండించడంతో ABCD అవసరమైన రాంబస్.",
+        "చివరి జవాబు: పై కోణాలు మరియు నిర్మాణమే అవసరమైన జవాబు."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": 5,
+      "display_note_te": "చిత్ర వివరణ (మూల పేజీ 5): PEAR మరియు PQRS రెండు సమాంతర చతుర్భుజాలు; ఇచ్చిన మూల కోణాలు వరుసగా 40° మరియు 110°. నిర్మాణ చిత్రానికి మూల పేజీ 6.",
+      "issue_notes": []
+    },
+    {
+      "qid": "32a",
+      "page": 6,
+      "answer_page": 7,
+      "marks": 8,
+      "question_en": "32(a) (i) Find using identities: (a) 46² using (a + b)²; (b) 397 × 403 using (a + b)(a − b); (c) 91² using (a − b)²; (d) 43 × 45 using (a + b)(a − b). (ii) Expand (a + b)(a² + 2ab + b²).",
+      "question_te": "32(a) (i) సూత్రాలను ఉపయోగించి కనుగొనండి: (a) (a + b)²తో 46²; (b) (a + b)(a − b)తో 397 × 403; (c) (a − b)²తో 91²; (d) (a + b)(a − b)తో 43 × 45. (ii) (a + b)(a² + 2ab + b²)ను విస్తరించండి.",
+      "answer_en": "(i) 2116, 159991, 8281, 1935 respectively. (ii) a³ + 3a²b + 3ab² + b³.",
+      "answer_te": "(i) వరుసగా 2116, 159991, 8281, 1935. (ii) a³ + 3a²b + 3ab² + b³.",
+      "steps_en": [
+        "(i)(a) 46² = (40 + 6)² = 1600 + 480 + 36 = 2116.",
+        "(i)(b) 397 × 403 = (400 − 3)(400 + 3) = 400² − 3² = 159991.",
+        "(i)(c) 91² = (100 − 9)² = 10000 − 1800 + 81 = 8281.",
+        "(i)(d) 43 × 45 = (44 − 1)(44 + 1) = 44² − 1² = 1935.",
+        "(ii) Distribute: (a + b)(a² + 2ab + b²) = a³ + 2a²b + ab² + a²b + 2ab² + b³.",
+        "(ii) Combine like terms to get a³ + 3a²b + 3ab² + b³.",
+        "Final answer: (i) 2116, 159991, 8281, 1935; (ii) a³ + 3a²b + 3ab² + b³."
+      ],
+      "steps_te": [
+        "(i)(a) 46² = (40 + 6)² = 1600 + 480 + 36 = 2116.",
+        "(i)(b) 397 × 403 = (400 − 3)(400 + 3) = 400² − 3² = 159991.",
+        "(i)(c) 91² = (100 − 9)² = 10000 − 1800 + 81 = 8281.",
+        "(i)(d) 43 × 45 = (44 − 1)(44 + 1) = 44² − 1² = 1935.",
+        "(ii) పంపిణీ: (a + b)(a² + 2ab + b²) = a³ + 2a²b + ab² + a²b + 2ab² + b³.",
+        "(ii) సమాన పదాలు కలిపితే a³ + 3a²b + 3ab² + b³.",
+        "చివరి జవాబు: (i) 2116, 159991, 8281, 1935; (ii) a³ + 3a²b + 3ab² + b³."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "32b",
+      "page": 6,
+      "answer_page": 7,
+      "marks": 8,
+      "question_en": "32(b) (i) Evaluate using the fast-multiplication method: (a) 94 × 11 (b) 495 × 11 (c) 3279 × 11 (d) 89 × 101. (ii) In the figure, a square of side (m + n) is made of four identical rectangles of sides m and n, leaving a shaded square in the middle. Write the shaded-square area (a) as (m + n)² − 4mn and (b) as (n − m)². By expanding both, show that (m + n)² − 4mn = (n − m)².",
+      "question_te": "32(b) (i) వేగ గుణకార పద్ధతితో కనుగొనండి: (a) 94 × 11 (b) 495 × 11 (c) 3279 × 11 (d) 89 × 101. (ii) చిత్రంలో (m + n) భుజం గల చదరాన్ని m, n భుజాల నాలుగు సమాన దీర్ఘచతురస్రాలుగా అమర్చగా మధ్యలో ఛాయాచదరం మిగిలింది. దాని విస్తీర్ణాన్ని (a) (m + n)² − 4mn, (b) (n − m)²గా రాసి, రెండింటినీ విస్తరించి సమానత్వాన్ని చూపండి.",
+      "answer_en": "(i) 1034, 5445, 36069, 8989 respectively. (ii) (m + n)² − 4mn = (n − m)².",
+      "answer_te": "(i) వరుసగా 1034, 5445, 36069, 8989. (ii) (m + n)² − 4mn = (n − m)².",
+      "steps_en": [
+        "(i)(a) 94 × 11 = 94 × (10 + 1) = 1034.",
+        "(i)(b) 495 × 11 = 4950 + 495 = 5445.",
+        "(i)(c) 3279 × 11 = 32790 + 3279 = 36069.",
+        "(i)(d) 89 × 101 = 89 × (100 + 1) = 8989.",
+        "(ii) Big square area minus four rectangles = (m + n)² − 4mn.",
+        "(ii) The shaded square has side (n − m), so its area is (n − m)².",
+        "(ii) Expand: (m + n)² − 4mn = m² + 2mn + n² − 4mn = m² − 2mn + n²; (n − m)² = n² − 2mn + m².",
+        "Final answer: both equal m² − 2mn + n², hence (m + n)² − 4mn = (n − m)²."
+      ],
+      "steps_te": [
+        "(i)(a) 94 × 11 = 94 × (10 + 1) = 1034.",
+        "(i)(b) 495 × 11 = 4950 + 495 = 5445.",
+        "(i)(c) 3279 × 11 = 32790 + 3279 = 36069.",
+        "(i)(d) 89 × 101 = 89 × (100 + 1) = 8989.",
+        "(ii) పెద్ద చదరపు విస్తీర్ణం − నాలుగు దీర్ఘచతురస్రాల విస్తీర్ణం = (m + n)² − 4mn.",
+        "(ii) ఛాయాచదరపు భుజం (n − m), కాబట్టి దాని విస్తీర్ణం (n − m)².",
+        "(ii) విస్తరణ: (m + n)² − 4mn = m² + 2mn + n² − 4mn = m² − 2mn + n²; (n − m)² = n² − 2mn + m².",
+        "చివరి జవాబు: రెండూ m² − 2mn + n²కు సమానం; కాబట్టి (m + n)² − 4mn = (n − m)²."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": 7,
+      "display_note_te": "చిత్ర వివరణ (మూల పేజీ 7): (m + n) భుజం గల పెద్ద చదరంలో m×n పరిమాణం గల నాలుగు సమాన దీర్ఘచతురస్రాలు అమర్చబడి, మధ్యలో ఒక ఛాయాచదరం ఉంది.",
+      "issue_notes": []
+    },
+    {
+      "qid": "33a",
+      "page": 7,
+      "answer_page": 7,
+      "marks": 8,
+      "question_en": "33(a) (i) (a) Divide ₹4,500 into two parts in the ratio 2 : 3. (b) Acid and water are mixed in the ratio 1 : 5 to make a solution. How much acid and water does a 240 mL bottle contain? (ii) A 40 kg mixture contains sand and cement in the ratio 3 : 1. How much cement should be added to make the ratio of sand to cement 5 : 2?",
+      "question_te": "33(a) (i) (a) ₹4,500ను 2 : 3 నిష్పత్తిలో రెండు భాగాలుగా విభజించండి. (b) ద్రావణానికి ఆమ్లం : నీరు = 1 : 5. 240 mL సీసాలో ఆమ్లం, నీరు ఎంత? (ii) 40 kg మిశ్రమంలో ఇసుక : సిమెంట్ = 3 : 1. ఇసుక : సిమెంట్ = 5 : 2 కావాలంటే ఎంత సిమెంట్ కలపాలి?",
+      "answer_en": "(i)(a) ₹1,800 and ₹2,700. (i)(b) Acid = 40 mL, water = 200 mL. (ii) Add 2 kg cement.",
+      "answer_te": "(i)(a) ₹1,800, ₹2,700. (i)(b) ఆమ్లం = 40 mL, నీరు = 200 mL. (ii) 2 kg సిమెంట్ కలపాలి.",
+      "steps_en": [
+        "(i)(a) Total parts = 2 + 3 = 5; one part = ₹4500 ÷ 5 = ₹900.",
+        "(i)(a) Parts are 2 × ₹900 = ₹1800 and 3 × ₹900 = ₹2700.",
+        "(i)(b) Total parts = 1 + 5 = 6; one part = 240 ÷ 6 = 40 mL.",
+        "(i)(b) Acid = 1 × 40 = 40 mL; water = 5 × 40 = 200 mL.",
+        "(ii) Initially, sand = 30 kg and cement = 10 kg. Let x kg cement be added.",
+        "(ii) 30 : (10 + x) = 5 : 2; 30 × 2 = 5(10 + x), so 60 = 50 + 5x and x = 2 kg.",
+        "Final answer: ₹1800 and ₹2700; acid 40 mL and water 200 mL; add 2 kg cement."
+      ],
+      "steps_te": [
+        "(i)(a) మొత్తం భాగాలు = 2 + 3 = 5; ఒక భాగం = ₹4500 ÷ 5 = ₹900.",
+        "(i)(a) భాగాలు 2 × ₹900 = ₹1800, 3 × ₹900 = ₹2700.",
+        "(i)(b) మొత్తం భాగాలు = 1 + 5 = 6; ఒక భాగం = 240 ÷ 6 = 40 mL.",
+        "(i)(b) ఆమ్లం = 1 × 40 = 40 mL; నీరు = 5 × 40 = 200 mL.",
+        "(ii) మొదట ఇసుక = 30 kg, సిమెంట్ = 10 kg. x kg సిమెంట్ కలిపారని అనుకుందాం.",
+        "(ii) 30 : (10 + x) = 5 : 2; 30 × 2 = 5(10 + x), కాబట్టి 60 = 50 + 5x, x = 2 kg.",
+        "చివరి జవాబు: ₹1800, ₹2700; ఆమ్లం 40 mL, నీరు 200 mL; 2 kg సిమెంట్ కలపాలి."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "33b",
+      "page": 7,
+      "answer_page": 8,
+      "marks": 8,
+      "question_en": "33(b) (i) Blue and yellow paints are mixed in the ratio 3 : 5 to produce 40 mL green paint. How much of each is needed? If 20 mL yellow is added, what is the new ratio of blue to yellow? (ii) A car travels 90 km in 150 minutes. At the same speed, what distance will it cover in 4 hours?",
+      "question_te": "33(b) (i) నీలం : పసుపు రంగులను 3 : 5 నిష్పత్తిలో కలిపి 40 mL ఆకుపచ్చ రంగు తయారు చేస్తారు. ఒక్కో రంగు ఎంత? దీనికి 20 mL పసుపు కలిపితే కొత్త నీలం : పసుపు నిష్పత్తి ఎంత? (ii) ఒక కారు 150 నిమిషాల్లో 90 km ప్రయాణిస్తుంది. అదే వేగంతో 4 గంటల్లో ఎంత దూరం వెళుతుంది?",
+      "answer_en": "(i) Blue = 15 mL, yellow = 25 mL; after adding 20 mL yellow, ratio = 1 : 3. (ii) Distance = 144 km.",
+      "answer_te": "(i) నీలం = 15 mL, పసుపు = 25 mL; 20 mL పసుపు కలిపిన తర్వాత నిష్పత్తి = 1 : 3. (ii) దూరం = 144 km.",
+      "steps_en": [
+        "(i) Total parts = 3 + 5 = 8; one part = 40 ÷ 8 = 5 mL.",
+        "(i) Blue = 3 × 5 = 15 mL; yellow = 5 × 5 = 25 mL.",
+        "(i) After adding 20 mL yellow: blue = 15 mL, yellow = 25 + 20 = 45 mL; ratio = 15 : 45 = 1 : 3.",
+        "(ii) Convert time: 4 hours = 4 × 60 = 240 minutes.",
+        "(ii) Use direct proportion: 150 : 90 :: 240 : x, so x = (90 × 240) ÷ 150 = 144 km.",
+        "Final answer: blue 15 mL, yellow 25 mL, new ratio 1 : 3; distance in 4 hours = 144 km."
+      ],
+      "steps_te": [
+        "(i) మొత్తం భాగాలు = 3 + 5 = 8; ఒక భాగం = 40 ÷ 8 = 5 mL.",
+        "(i) నీలం = 3 × 5 = 15 mL; పసుపు = 5 × 5 = 25 mL.",
+        "(i) 20 mL పసుపు కలిపిన తర్వాత: నీలం = 15 mL, పసుపు = 25 + 20 = 45 mL; నిష్పత్తి = 15 : 45 = 1 : 3.",
+        "(ii) 4 గంటలు = 4 × 60 = 240 నిమిషాలు.",
+        "(ii) ప్రత్యక్ష అనుపాతం: 150 : 90 :: 240 : x, కాబట్టి x = (90 × 240) ÷ 150 = 144 km.",
+        "చివరి జవాబు: నీలం 15 mL, పసుపు 25 mL, కొత్త నిష్పత్తి 1 : 3; 4 గంటల్లో దూరం = 144 km."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    }
+  ]
+}

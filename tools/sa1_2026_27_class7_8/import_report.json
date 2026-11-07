@@ -1,0 +1,32 @@
+{
+  "batch": "sa1-2026-27-class7-8-pointwise",
+  "answer_style": "numbered-pointwise",
+  "papers": [
+    {
+      "paper_id": "class7-sa1-model1",
+      "class": 7,
+      "records": 37,
+      "unique_added": 37,
+      "quiz_items": 20,
+      "qa_items": 37,
+      "pages": 8,
+      "source_has_solutions": true,
+      "source_options_only": true
+    },
+    {
+      "paper_id": "class8-sa1-model1",
+      "class": 8,
+      "records": 37,
+      "unique_added": 37,
+      "quiz_items": 20,
+      "qa_items": 37,
+      "pages": 8,
+      "source_has_solutions": true,
+      "source_options_only": true
+    }
+  ],
+  "input_records": 74,
+  "unique_added": 74,
+  "duplicates": [],
+  "issues": []
+}
