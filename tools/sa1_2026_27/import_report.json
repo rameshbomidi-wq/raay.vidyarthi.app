@@ -1,0 +1,326 @@
+{
+  "batch": "sa1-2026-27",
+  "papers": [
+    {
+      "paper_id": "class9-sa1-model1",
+      "records": 38,
+      "unique_added": 38,
+      "duplicates_skipped": 0,
+      "quiz_items": 12,
+      "qa_items": 26,
+      "pages": 5,
+      "answer_key_present": false
+    },
+    {
+      "paper_id": "class9-sa1-model2",
+      "records": 38,
+      "unique_added": 38,
+      "duplicates_skipped": 0,
+      "quiz_items": 12,
+      "qa_items": 26,
+      "pages": 5,
+      "answer_key_present": false
+    },
+    {
+      "paper_id": "class9-sa1-model3",
+      "records": 38,
+      "unique_added": 38,
+      "duplicates_skipped": 0,
+      "quiz_items": 12,
+      "qa_items": 26,
+      "pages": 5,
+      "answer_key_present": false
+    },
+    {
+      "paper_id": "class10-sa1-model1",
+      "records": 38,
+      "unique_added": 36,
+      "duplicates_skipped": 2,
+      "quiz_items": 11,
+      "qa_items": 25,
+      "pages": 6,
+      "answer_key_present": false
+    },
+    {
+      "paper_id": "class10-sa1-model2",
+      "records": 38,
+      "unique_added": 35,
+      "duplicates_skipped": 3,
+      "quiz_items": 12,
+      "qa_items": 23,
+      "pages": 6,
+      "answer_key_present": false
+    },
+    {
+      "paper_id": "class10-sa1-model3",
+      "records": 38,
+      "unique_added": 37,
+      "duplicates_skipped": 1,
+      "quiz_items": 11,
+      "qa_items": 26,
+      "pages": 6,
+      "answer_key_present": false
+    }
+  ],
+  "input_records": 228,
+  "unique_added": {
+    "9": 114,
+    "10": 108
+  },
+  "duplicates": [
+    {
+      "record": "class10-sa1-model1:11",
+      "reference": "existing-ssc:1133",
+      "question_en": "A die is thrown once. The probability of getting a prime number is"
+    },
+    {
+      "record": "class10-sa1-model1:18",
+      "reference": "existing-ssc:1093",
+      "question_en": "Write the formula for the mode of grouped data and explain the meaning of each symbol used."
+    },
+    {
+      "record": "class10-sa1-model2:22",
+      "reference": "existing-ssc:342",
+      "question_en": "Find two numbers whose sum is 27 and product is 182."
+    },
+    {
+      "record": "class10-sa1-model2:25",
+      "reference": "existing-ssc:537",
+      "question_en": "A girl of height 90 cm walks away from the base of a lamp-post at a speed of 1.2 m/s. The lamp is 3.6 m above the ground. Find the length of her shadow after 4 seconds."
+    },
+    {
+      "record": "class10-sa1-model2:31b",
+      "reference": "existing-ssc:704",
+      "question_en": "Prove that: (sin θ + cosec θ)² + (cos θ + sec θ)² = 7 + tan² θ + cot² θ."
+    },
+    {
+      "record": "class10-sa1-model3:12",
+      "reference": "existing-ssc:524",
+      "question_en": "A vertical stick 6 m long casts a shadow 4 m long. At the same time a tower casts a shadow 28 m long. The height of the tower is"
+    }
+  ],
+  "issues": [
+    {
+      "record": "class9-sa1-model1:5",
+      "notes": [
+        "The source tests the school-text distinction between a general axiom/common notion and a geometry-specific postulate."
+      ]
+    },
+    {
+      "record": "class9-sa1-model1:13",
+      "notes": [
+        "Many valid pairs exist; √5 and √6 are model answers."
+      ]
+    },
+    {
+      "record": "class9-sa1-model1:22",
+      "notes": [
+        "Superscripts are transcribed from the printed expression; no ambiguity remains in the visual page."
+      ]
+    },
+    {
+      "record": "class9-sa1-model1:29a",
+      "notes": [
+        "Many valid sets exist; the listed numbers are one valid model set."
+      ]
+    },
+    {
+      "record": "class9-sa1-model1:29b",
+      "notes": [
+        "The midpoint proof uses the standard perpendicular-bisector construction; no construction diagram is supplied in the source."
+      ]
+    },
+    {
+      "record": "class9-sa1-model2:22",
+      "notes": [
+        "The PDF displays the four expressions with superscript fractional exponents; they are written explicitly with ^ notation here to preserve their meaning."
+      ]
+    },
+    {
+      "record": "class9-sa1-model2:31a",
+      "notes": [
+        "The source asks the student to draw a graph but supplies no pre-drawn diagram; the solution specifies the points and line to plot."
+      ]
+    },
+    {
+      "record": "class9-sa1-model2:32b",
+      "notes": [
+        "The source asks the student to draw the graphs but supplies no pre-drawn diagram; the solution gives all three intersection points."
+      ]
+    },
+    {
+      "record": "class9-sa1-model2:33a",
+      "notes": [
+        "The source asks the student to plot the points but supplies no pre-drawn diagram; the solution gives the coordinates and measurements."
+      ]
+    },
+    {
+      "record": "class9-sa1-model3:13",
+      "notes": [
+        "Many valid irrational numbers exist; √(5/2) is one valid choice."
+      ]
+    },
+    {
+      "record": "class9-sa1-model3:22",
+      "notes": [
+        "Superscripts were visually verified from the PDF: 8²⁄³, 81⁻¹⁄⁴, 2¹⁄³×2¹⁄⁶, and 2¹⁄²×3¹⁄²."
+      ]
+    },
+    {
+      "record": "class9-sa1-model3:26",
+      "notes": [
+        "The PDF contains no supplied graph; the coordinates, base, height, and resulting figure are described textually."
+      ]
+    },
+    {
+      "record": "class9-sa1-model3:27",
+      "notes": [
+        "This is open-ended: other correct Euclidean definitions are also acceptable."
+      ]
+    },
+    {
+      "record": "class9-sa1-model3:28",
+      "notes": [
+        "The PDF contains no line diagram; the corresponding-angle relationship and both angle expressions are stated in the solution."
+      ]
+    },
+    {
+      "record": "class9-sa1-model3:29a",
+      "notes": [
+        "The rational-number list and construction are not unique; any six valid rationals and any valid √3 construction are acceptable. The PDF has no supplied construction diagram."
+      ]
+    },
+    {
+      "record": "class9-sa1-model3:31a",
+      "notes": [
+        "The PDF has no supplied graph; the plotting table and required points are provided textually."
+      ]
+    },
+    {
+      "record": "class9-sa1-model3:32a",
+      "notes": [
+        "The PDF has no supplied transversal diagram; the proof names the relevant corresponding and vertically opposite angle relationships explicitly."
+      ]
+    },
+    {
+      "record": "class9-sa1-model3:32b",
+      "notes": [
+        "The PDF has no supplied graph; intercepts, intersection, and triangle dimensions are given textually."
+      ]
+    },
+    {
+      "record": "class9-sa1-model3:33a",
+      "notes": [
+        "The PDF has no supplied plotting diagram; coordinates determine the figure. “Total area” is interpreted as the union of square PQRS and attached triangle PQT, sharing only side PQ."
+      ]
+    },
+    {
+      "record": "class10-sa1-model1:13",
+      "notes": [
+        "Any nonzero scalar multiple is also a valid quadratic polynomial; the monic choice is given."
+      ]
+    },
+    {
+      "record": "class10-sa1-model1:20",
+      "notes": [
+        "The requested rough figure is represented textually: ground is the horizontal leg, the 60 m height is the vertical leg, and the string is the hypotenuse making 60° with the ground."
+      ]
+    },
+    {
+      "record": "class10-sa1-model1:21",
+      "notes": [
+        "The source diagram on PDF page 4 shows x-intercepts at −3 and 1; the extracted text alone does not contain the graph pixels."
+      ]
+    },
+    {
+      "record": "class10-sa1-model1:28",
+      "notes": [
+        "The prompt allows any four questions; these four valid questions are one selected set."
+      ]
+    },
+    {
+      "record": "class10-sa1-model1:29a",
+      "notes": [
+        "“Irrational” is translated as “అపరిమేయ సంఖ్య” here in the conventional school-maths sense of an irrational number."
+      ]
+    },
+    {
+      "record": "class10-sa1-model1:30a",
+      "notes": [
+        "The source gives class intervals in the usual school grouped-data convention. The result 32 uses lower boundary l=30; using a different continuity correction would change the convention-dependent numerical presentation."
+      ]
+    },
+    {
+      "record": "class10-sa1-model1:31b",
+      "notes": [
+        "The printed statement needs a sign/domain condition for the principal square root. The proof is valid under the usual acute-angle assumption (or whenever sinθ·tanθ≥0 and the expressions are defined)."
+      ]
+    },
+    {
+      "record": "class10-sa1-model1:33a",
+      "notes": [
+        "The graph is to be drawn by the learner; the source PDF contains no pre-drawn graph for this item. Plotting points/intercepts are given textually."
+      ]
+    },
+    {
+      "record": "class10-sa1-model1:33b",
+      "notes": [
+        "This uses the standard assumption that the building and tower stand on the same horizontal ground level and the horizontal separation is measured between their vertical bases."
+      ]
+    },
+    {
+      "record": "class10-sa1-model2:7",
+      "notes": [
+        "The quadrant of θ is not stated; the listed answer assumes θ is acute."
+      ]
+    },
+    {
+      "record": "class10-sa1-model2:12",
+      "notes": [
+        "The proportionality equation also has algebraic root x=−1/2, but it makes the stated segment lengths invalid; retaining only the geometrically valid x=1."
+      ]
+    },
+    {
+      "record": "class10-sa1-model2:28",
+      "notes": [
+        "The answer uses four valid example events; many other four-event choices are possible."
+      ]
+    },
+    {
+      "record": "class10-sa1-model3:14",
+      "notes": [
+        "Literal edge case: k=0 makes the expression 6=0, which is not a quadratic and has no roots; therefore the valid quadratic answer is k=6."
+      ]
+    },
+    {
+      "record": "class10-sa1-model3:17",
+      "notes": [
+        "The standard school convention treats A as an acute angle; without that convention, the signs would depend on the quadrant."
+      ]
+    },
+    {
+      "record": "class10-sa1-model3:20",
+      "notes": [
+        "The source requests a rough figure but supplies no printed diagram; the solution text specifies all labels and lengths needed to draw it."
+      ]
+    },
+    {
+      "record": "class10-sa1-model3:21",
+      "notes": [
+        "The printed graph is used literally: x-intercepts are −2 and 4 and the parabola opens downward."
+      ]
+    },
+    {
+      "record": "class10-sa1-model3:33a",
+      "notes": [
+        "The source asks the learner to draw the graph but supplies no printed graph; the two plotting points for each line and their intersection are specified in the solution text."
+      ]
+    },
+    {
+      "record": "class10-sa1-model3:33b",
+      "notes": [
+        "The wording is interpreted in the standard way: the tower is vertical on the 20 m building, and both elevation angles are measured from the same ground point."
+      ]
+    }
+  ]
+}

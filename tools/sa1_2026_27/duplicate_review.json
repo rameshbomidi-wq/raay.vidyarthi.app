@@ -1,0 +1,72 @@
+{
+  "class10-sa1-model1:11": {
+    "duplicate": true,
+    "reference": "existing-ssc:1133",
+    "reason": "Same one-die prime-number probability question; only wording differs."
+  },
+  "class10-sa1-model1:15": {
+    "duplicate": false,
+    "reference": "",
+    "reason": "SSS similarity criterion is different from the candidate's AAA criterion."
+  },
+  "class10-sa1-model1:18": {
+    "duplicate": true,
+    "reference": "existing-ssc:1093",
+    "reason": "Same grouped-data mode formula and explanation of its symbols; only wording differs."
+  },
+  "class10-sa1-model2:15": {
+    "duplicate": false,
+    "reference": "",
+    "reason": "SAS similarity criterion is different from both candidate criteria (SSS and AAA)."
+  },
+  "class10-sa1-model2:18": {
+    "duplicate": false,
+    "reference": "",
+    "reason": "Step-deviation mean formula is a different requested formula from grouped-data mode or median formula."
+  },
+  "class10-sa1-model2:22": {
+    "duplicate": true,
+    "reference": "existing-ssc:342",
+    "reason": "Same two-number problem with sum 27 and product 182; only Telugu wording differs."
+  },
+  "class10-sa1-model2:25": {
+    "duplicate": true,
+    "reference": "existing-ssc:537",
+    "reason": "Same lamp-post, girl, speed, time, and shadow-length problem; only wording differs."
+  },
+  "class10-sa1-model2:31b": {
+    "duplicate": true,
+    "reference": "existing-ssc:704",
+    "reason": "Same trigonometric identity to prove; only the angle variable name differs."
+  },
+  "class10-sa1-model3:12": {
+    "duplicate": true,
+    "reference": "existing-ssc:524",
+    "reason": "Same stick/tower shadow problem with lengths 6 m, 4 m, and 28 m; only wording differs."
+  },
+  "class10-sa1-model3:15": {
+    "duplicate": false,
+    "reference": "",
+    "reason": "The new item asks only to state Pythagoras, while the candidate asks to state and prove it; the requested proof subpart differs."
+  },
+  "class10-sa1-model3:24": {
+    "duplicate": false,
+    "reference": "",
+    "reason": "These are different trigonometric identities: tan/sin with sec versus cot/cos with cosec."
+  },
+  "class9-sa1-model2:1": {
+    "duplicate": false,
+    "reference": "",
+    "reason": "One asks for a rational number and the candidate asks for an irrational number; the requested property differs."
+  },
+  "class9-sa1-model3:13": {
+    "duplicate": false,
+    "reference": "",
+    "reason": "The intervals and requested counts differ: one irrational between √2 and √3 versus two irrationals between 2 and 3."
+  },
+  "class9-sa1-model3:27": {
+    "duplicate": false,
+    "reference": "",
+    "reason": "The new item asks for four Euclidean definitions, while the candidate asks for five Euclidean axioms; both topic and requested count differ."
+  }
+}
