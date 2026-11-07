@@ -1,0 +1,1495 @@
+{
+  "paper_id": "class7-sa1-model1",
+  "class": 7,
+  "model": 1,
+  "source_filename": "Class7_Maths_SA1_Set1_Solutions_2026-27.pdf",
+  "pages": 8,
+  "source_has_solutions": true,
+  "question_stems_complete": true,
+  "expected_qids": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27",
+    "28",
+    "29",
+    "30A",
+    "30B",
+    "31A",
+    "31B",
+    "32A",
+    "32B",
+    "33A",
+    "33B"
+  ],
+  "issues": [
+    "The source is a solutions PDF, not an independently verified official examination key; imported answers are attributed to the provided source.",
+    "The PDF labels 33 numbered questions; internal-choice alternatives are stored separately as 30A/30B through 33A/33B.",
+    "Question 32 relies on source figures; self-contained verbal descriptions and source page references are recorded in display_note_te.",
+    "MCQ correct_index values are zero-based to match the options array order."
+  ],
+  "records": [
+    {
+      "qid": "1",
+      "page": 1,
+      "answer_page": 1,
+      "marks": 1,
+      "question_en": "The number name of 5,04,085 is",
+      "question_te": "5,04,085 సంఖ్యా పేరును ఎంచుకోండి.",
+      "answer_en": "five lakh four thousand eighty five",
+      "answer_te": "ఐదు లక్షల నాలుగు వేల ఎనభై ఐదు",
+      "steps_en": [
+        "Read the number in the Indian place-value system: 5 lakh, 4 thousand and 85.",
+        "Therefore, the number name is five lakh four thousand eighty five."
+      ],
+      "steps_te": [
+        "భారతీయ స్థాన విలువ విధానంలో సంఖ్యను చదివితే: 5 లక్షలు, 4 వేలు, 85.",
+        "కాబట్టి సంఖ్యా పేరు ఐదు లక్షల నాలుగు వేల ఎనభై ఐదు."
+      ],
+      "options_en": [
+        "five lakh forty thousand eighty five",
+        "five lakh four thousand eighty five",
+        "fifty lakh four thousand eighty five",
+        "five lakh four hundred eighty five"
+      ],
+      "options_te": [
+        "ఐదు లక్షల నలభై వేల ఎనభై ఐదు",
+        "ఐదు లక్షల నాలుగు వేల ఎనభై ఐదు",
+        "యాభై లక్షల నాలుగు వేల ఎనభై ఐదు",
+        "ఐదు లక్షల నాలుగు వందల ఎనభై ఐదు"
+      ],
+      "correct_index": 1,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) ఐదు లక్షల నలభై వేల ఎనభై ఐదు",
+        "B) ఐదు లక్షల నాలుగు వేల ఎనభై ఐదు",
+        "C) యాభై లక్షల నాలుగు వేల ఎనభై ఐదు",
+        "D) ఐదు లక్షల నాలుగు వందల ఎనభై ఐదు"
+      ],
+      "source_answer_te": "B) ఐదు లక్షల నాలుగు వేల ఎనభై ఐదు.",
+      "source_options_en": [
+        "A) five lakh forty thousand eighty five",
+        "B) five lakh four thousand eighty five",
+        "C) fifty lakh four thousand eighty five",
+        "D) five lakh four hundred eighty five"
+      ],
+      "source_answer_en": "B) five lakh four thousand eighty five"
+    },
+    {
+      "qid": "2",
+      "page": 1,
+      "answer_page": 1,
+      "marks": 1,
+      "question_en": "1 crore = ______ lakhs",
+      "question_te": "1 కోటి = ______ లక్షలు",
+      "answer_en": "100",
+      "answer_te": "100",
+      "steps_en": [
+        "1 crore = 1,00,00,000 and 1 lakh = 1,00,000.",
+        "Formula and substitution: 1,00,00,000 ÷ 1,00,000 = 100."
+      ],
+      "steps_te": [
+        "1 కోటి = 1,00,00,000 మరియు 1 లక్ష = 1,00,000.",
+        "సూత్రం మరియు ప్రతిక్షేపణ: 1,00,00,000 ÷ 1,00,000 = 100."
+      ],
+      "options_en": [
+        "10",
+        "100",
+        "1000",
+        "10,000"
+      ],
+      "options_te": [
+        "10",
+        "100",
+        "1000",
+        "10,000"
+      ],
+      "correct_index": 1,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) 10",
+        "B) 100",
+        "C) 1000",
+        "D) 10,000"
+      ],
+      "source_answer_te": "B) 100",
+      "source_options_en": [
+        "A) 10",
+        "B) 100",
+        "C) 1000",
+        "D) 10,000"
+      ],
+      "source_answer_en": "B) 100"
+    },
+    {
+      "qid": "3",
+      "page": 1,
+      "answer_page": 1,
+      "marks": 1,
+      "question_en": "In the international (American) system, 1,00,00,000 is written as",
+      "question_te": "అంతర్జాతీయ (అమెరికన్) విధానంలో 1,00,00,000 ను ఇలా వ్రాస్తారు:",
+      "answer_en": "10,000,000",
+      "answer_te": "10,000,000",
+      "steps_en": [
+        "1,00,00,000 is one crore, which equals ten million.",
+        "In the international system, commas are placed after every three digits from the right: 10,000,000."
+      ],
+      "steps_te": [
+        "1,00,00,000 ఒక కోటి; ఇది పది మిలియన్లకు సమానం.",
+        "అంతర్జాతీయ విధానంలో కుడి నుంచి ప్రతి మూడు అంకెల తర్వాత కామా పెడతారు: 10,000,000."
+      ],
+      "options_en": [
+        "10,000,000",
+        "100,000,000",
+        "1,000,000",
+        "1,000,000,000"
+      ],
+      "options_te": [
+        "10,000,000",
+        "100,000,000",
+        "1,000,000",
+        "1,000,000,000"
+      ],
+      "correct_index": 0,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) 10,000,000",
+        "B) 100,000,000",
+        "C) 1,000,000",
+        "D) 1,000,000,000"
+      ],
+      "source_answer_te": "A) 10,000,000",
+      "source_options_en": [
+        "A) 10,000,000",
+        "B) 100,000,000",
+        "C) 1,000,000",
+        "D) 1,000,000,000"
+      ],
+      "source_answer_en": "A) 10,000,000"
+    },
+    {
+      "qid": "4",
+      "page": 1,
+      "answer_page": 1,
+      "marks": 1,
+      "question_en": "The value of 18 + 4 × 5 is",
+      "question_te": "18 + 4 × 5 విలువ ఎంత?",
+      "answer_en": "38",
+      "answer_te": "38",
+      "steps_en": [
+        "Use order of operations: multiplication is done before addition.",
+        "4 × 5 = 20; then 18 + 20 = 38."
+      ],
+      "steps_te": [
+        "క్రియల క్రమాన్ని ఉపయోగించండి: ముందుగా గుణకారం చేయాలి.",
+        "4 × 5 = 20; తరువాత 18 + 20 = 38."
+      ],
+      "options_en": [
+        "110",
+        "38",
+        "90",
+        "27"
+      ],
+      "options_te": [
+        "110",
+        "38",
+        "90",
+        "27"
+      ],
+      "correct_index": 1,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) 110",
+        "B) 38",
+        "C) 90",
+        "D) 27"
+      ],
+      "source_answer_te": "B) 38",
+      "source_options_en": [
+        "A) 110",
+        "B) 38",
+        "C) 90",
+        "D) 27"
+      ],
+      "source_answer_en": "B) 38"
+    },
+    {
+      "qid": "5",
+      "page": 1,
+      "answer_page": 1,
+      "marks": 1,
+      "question_en": "The expression 14 − (12 + 10) is equal to",
+      "question_te": "14 − (12 + 10) దేనికి సమానం?",
+      "answer_en": "14 − 12 − 10",
+      "answer_te": "14 − 12 − 10",
+      "steps_en": [
+        "A minus sign before a bracket changes the signs of all terms inside it.",
+        "14 − (12 + 10) = 14 − 12 − 10 = −8."
+      ],
+      "steps_te": [
+        "బ్రాకెట్ ముందు మైనస్ ఉంటే, లోపల ఉన్న ప్రతి పదం యొక్క గుర్తు మారుతుంది.",
+        "14 − (12 + 10) = 14 − 12 − 10 = −8."
+      ],
+      "options_en": [
+        "14 + 12 + 10",
+        "14 − 12 + 10",
+        "14 − 12 − 10",
+        "14 + 12 − 10"
+      ],
+      "options_te": [
+        "14 + 12 + 10",
+        "14 − 12 + 10",
+        "14 − 12 − 10",
+        "14 + 12 − 10"
+      ],
+      "correct_index": 2,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) 14 + 12 + 10",
+        "B) 14 − 12 + 10",
+        "C) 14 − 12 − 10",
+        "D) 14 + 12 − 10"
+      ],
+      "source_answer_te": "C) 14 − 12 − 10",
+      "source_options_en": [
+        "A) 14 + 12 + 10",
+        "B) 14 − 12 + 10",
+        "C) 14 − 12 − 10",
+        "D) 14 + 12 − 10"
+      ],
+      "source_answer_en": "C) 14 − 12 − 10"
+    },
+    {
+      "qid": "6",
+      "page": 1,
+      "answer_page": 1,
+      "marks": 1,
+      "question_en": "The value of 7 × 45 + 3 × 45 is",
+      "question_te": "7 × 45 + 3 × 45 విలువ ఎంత?",
+      "answer_en": "450",
+      "answer_te": "450",
+      "steps_en": [
+        "Use the distributive property: 7 × 45 + 3 × 45 = (7 + 3) × 45.",
+        "(7 + 3) × 45 = 10 × 45 = 450."
+      ],
+      "steps_te": [
+        "వితరణ గుణక ధర్మాన్ని ఉపయోగించండి: 7 × 45 + 3 × 45 = (7 + 3) × 45.",
+        "(7 + 3) × 45 = 10 × 45 = 450."
+      ],
+      "options_en": [
+        "315",
+        "450",
+        "135",
+        "495"
+      ],
+      "options_te": [
+        "315",
+        "450",
+        "135",
+        "495"
+      ],
+      "correct_index": 1,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) 315",
+        "B) 450",
+        "C) 135",
+        "D) 495"
+      ],
+      "source_answer_te": "B) 450",
+      "source_options_en": [
+        "A) 315",
+        "B) 450",
+        "C) 135",
+        "D) 495"
+      ],
+      "source_answer_en": "B) 450"
+    },
+    {
+      "qid": "7",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "The place value of 5 in the decimal number 7.05 is",
+      "question_te": "దశాంశ సంఖ్య 7.05లో 5 యొక్క స్థాన విలువ ఎంత?",
+      "answer_en": "5 hundredths",
+      "answer_te": "5 శతాంశాలు",
+      "steps_en": [
+        "After the decimal point, 0 is in the tenths place and 5 is in the hundredths place.",
+        "Therefore, the place value of 5 is 5 hundredths = 0.05."
+      ],
+      "steps_te": [
+        "దశాంశ బిందువు తర్వాత 0 పదాంశ స్థానంలో, 5 శతాంశ స్థానంలో ఉన్నాయి.",
+        "కాబట్టి 5 యొక్క స్థాన విలువ 5 శతాంశాలు = 0.05."
+      ],
+      "options_en": [
+        "5 ones",
+        "5 tenths",
+        "5 hundredths",
+        "5 thousandths"
+      ],
+      "options_te": [
+        "5 ఏకాలు",
+        "5 పదాంశాలు",
+        "5 శతాంశాలు",
+        "5 సహస్రాంశాలు"
+      ],
+      "correct_index": 2,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) 5 ఏకాలు",
+        "B) 5 పదాంశాలు",
+        "C) 5 శతాంశాలు",
+        "D) 5 సహస్రాంశాలు"
+      ],
+      "source_answer_te": "C) 5 శతాంశాలు",
+      "source_options_en": [
+        "A) 5 ones",
+        "B) 5 tenths",
+        "C) 5 hundredths",
+        "D) 5 thousandths"
+      ],
+      "source_answer_en": "C) 5 hundredths"
+    },
+    {
+      "qid": "8",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "5.6 cm = ______ mm",
+      "question_te": "5.6 cm = ______ mm",
+      "answer_en": "56",
+      "answer_te": "56",
+      "steps_en": [
+        "Use the conversion 1 cm = 10 mm.",
+        "5.6 cm = 5.6 × 10 mm = 56 mm."
+      ],
+      "steps_te": [
+        "1 cm = 10 mm మార్పిడి సూత్రాన్ని ఉపయోగించండి.",
+        "5.6 cm = 5.6 × 10 mm = 56 mm."
+      ],
+      "options_en": [
+        "5.6",
+        "56",
+        "560",
+        "0.56"
+      ],
+      "options_te": [
+        "5.6",
+        "56",
+        "560",
+        "0.56"
+      ],
+      "correct_index": 1,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) 5.6",
+        "B) 56",
+        "C) 560",
+        "D) 0.56"
+      ],
+      "source_answer_te": "B) 56",
+      "source_options_en": [
+        "A) 5.6",
+        "B) 56",
+        "C) 560",
+        "D) 0.56"
+      ],
+      "source_answer_en": "B) 56"
+    },
+    {
+      "qid": "9",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "Which of the following is the greatest?",
+      "question_te": "క్రింది వాటిలో అతి పెద్దది ఏది?",
+      "answer_en": "4.505",
+      "answer_te": "4.505",
+      "steps_en": [
+        "Write all numbers to three decimal places: 4.500, 4.050, 4.505, 4.055.",
+        "Compare the thousandths after the equal tenths comparison: 4.505 > 4.500, so 4.505 is greatest."
+      ],
+      "steps_te": [
+        "అన్ని సంఖ్యలను మూడు దశాంశ స్థానాలుగా వ్రాయండి: 4.500, 4.050, 4.505, 4.055.",
+        "పదాంశాలు సమానంగా ఉన్న వాటిలో సహస్రాంశాలను పోల్చితే 4.505 > 4.500; కాబట్టి 4.505 అతి పెద్దది."
+      ],
+      "options_en": [
+        "4.5",
+        "4.05",
+        "4.505",
+        "4.055"
+      ],
+      "options_te": [
+        "4.5",
+        "4.05",
+        "4.505",
+        "4.055"
+      ],
+      "correct_index": 2,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) 4.5",
+        "B) 4.05",
+        "C) 4.505",
+        "D) 4.055"
+      ],
+      "source_answer_te": "C) 4.505",
+      "source_options_en": [
+        "A) 4.5",
+        "B) 4.05",
+        "C) 4.505",
+        "D) 4.055"
+      ],
+      "source_answer_en": "C) 4.505"
+    },
+    {
+      "qid": "10",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "5.3 + 2.6 =",
+      "question_te": "5.3 + 2.6 =",
+      "answer_en": "7.9",
+      "answer_te": "7.9",
+      "steps_en": [
+        "Add tenths: 3 + 6 = 9 tenths.",
+        "Add ones: 5 + 2 = 7, so 5.3 + 2.6 = 7.9."
+      ],
+      "steps_te": [
+        "పదాంశాలను కలపండి: 3 + 6 = 9 పదాంశాలు.",
+        "ఏకాలను కలపండి: 5 + 2 = 7; కాబట్టి 5.3 + 2.6 = 7.9."
+      ],
+      "options_en": [
+        "7.9",
+        "7.8",
+        "8.9",
+        "7.19"
+      ],
+      "options_te": [
+        "7.9",
+        "7.8",
+        "8.9",
+        "7.19"
+      ],
+      "correct_index": 0,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) 7.9",
+        "B) 7.8",
+        "C) 8.9",
+        "D) 7.19"
+      ],
+      "source_answer_te": "A) 7.9",
+      "source_options_en": [
+        "A) 7.9",
+        "B) 7.8",
+        "C) 8.9",
+        "D) 7.19"
+      ],
+      "source_answer_en": "A) 7.9"
+    },
+    {
+      "qid": "11",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "Which of the following represents “4 less than a number x”?",
+      "question_te": "“x అనే సంఖ్య కంటే 4 తక్కువ”ను క్రింది వాటిలో ఏది సూచిస్తుంది?",
+      "answer_en": "x − 4",
+      "answer_te": "x − 4",
+      "steps_en": [
+        "“4 less than x” means subtract 4 from x.",
+        "Therefore, the expression is x − 4, not 4 − x."
+      ],
+      "steps_te": [
+        "“x కంటే 4 తక్కువ” అంటే x నుంచి 4 తీసివేయాలి.",
+        "కాబట్టి వ్యక్తీకరణ x − 4; 4 − x కాదు."
+      ],
+      "options_en": [
+        "4 − x",
+        "x − 4",
+        "4x",
+        "x + 4"
+      ],
+      "options_te": [
+        "4 − x",
+        "x − 4",
+        "4x",
+        "x + 4"
+      ],
+      "correct_index": 1,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) 4 − x",
+        "B) x − 4",
+        "C) 4x",
+        "D) x + 4"
+      ],
+      "source_answer_te": "B) x − 4",
+      "source_options_en": [
+        "A) 4 − x",
+        "B) x − 4",
+        "C) 4x",
+        "D) x + 4"
+      ],
+      "source_answer_en": "B) x − 4"
+    },
+    {
+      "qid": "12",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "The simplified form of 3a + 5a − 2a is",
+      "question_te": "3a + 5a − 2a యొక్క సరళ రూపం ఏమిటి?",
+      "answer_en": "6a",
+      "answer_te": "6a",
+      "steps_en": [
+        "All terms are like terms, so combine their coefficients: 3 + 5 − 2 = 6.",
+        "Thus, 3a + 5a − 2a = 6a."
+      ],
+      "steps_te": [
+        "అన్ని పదాలు సమపదాలు; కాబట్టి గుణకాలను కలపండి: 3 + 5 − 2 = 6.",
+        "అందువల్ల 3a + 5a − 2a = 6a."
+      ],
+      "options_en": [
+        "6a",
+        "10a",
+        "8a",
+        "6"
+      ],
+      "options_te": [
+        "6a",
+        "10a",
+        "8a",
+        "6"
+      ],
+      "correct_index": 0,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) 6a",
+        "B) 10a",
+        "C) 8a",
+        "D) 6"
+      ],
+      "source_answer_te": "A) 6a",
+      "source_options_en": [
+        "A) 6a",
+        "B) 10a",
+        "C) 8a",
+        "D) 6"
+      ],
+      "source_answer_en": "A) 6a"
+    },
+    {
+      "qid": "13",
+      "page": 2,
+      "answer_page": 2,
+      "marks": 1,
+      "question_en": "The perimeter of a regular pentagon of side s units is",
+      "question_te": "s యూనిట్ల భుజం గల సమ పంచభుజం పరిధి ఎంత?",
+      "answer_en": "5s",
+      "answer_te": "5s",
+      "steps_en": [
+        "A regular pentagon has 5 equal sides of length s.",
+        "Perimeter = s + s + s + s + s = 5s."
+      ],
+      "steps_te": [
+        "సమ పంచభుజానికి s పొడవు గల 5 సమాన భుజాలు ఉంటాయి.",
+        "పరిధి = s + s + s + s + s = 5s."
+      ],
+      "options_en": [
+        "s + 5",
+        "5s",
+        "s⁵",
+        "5 − s"
+      ],
+      "options_te": [
+        "s + 5",
+        "5s",
+        "s⁵",
+        "5 − s"
+      ],
+      "correct_index": 1,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) s + 5",
+        "B) 5s",
+        "C) s⁵",
+        "D) 5 − s"
+      ],
+      "source_answer_te": "B) 5s",
+      "source_options_en": [
+        "A) s + 5",
+        "B) 5s",
+        "C) s⁵",
+        "D) 5 − s"
+      ],
+      "source_answer_en": "B) 5s"
+    },
+    {
+      "qid": "14",
+      "page": 2,
+      "answer_page": 3,
+      "marks": 1,
+      "question_en": "Two lines intersect at a point. If one of the four angles formed is 70°, the angle vertically opposite to it is",
+      "question_te": "రెండు రేఖలు ఒక బిందువులో కలుస్తాయి. ఏర్పడిన నాలుగు కోణాలలో ఒకటి 70° అయితే, దానికి శీర్షాభిముఖ కోణం ఎంత?",
+      "answer_en": "70°",
+      "answer_te": "70°",
+      "steps_en": [
+        "Vertically opposite angles formed by two intersecting lines are equal.",
+        "Therefore, the vertically opposite angle is 70°."
+      ],
+      "steps_te": [
+        "రెండు ఛేదించే రేఖలతో ఏర్పడే శీర్షాభిముఖ కోణాలు సమానం.",
+        "కాబట్టి శీర్షాభిముఖ కోణం 70°."
+      ],
+      "options_en": [
+        "110°",
+        "70°",
+        "20°",
+        "290°"
+      ],
+      "options_te": [
+        "110°",
+        "70°",
+        "20°",
+        "290°"
+      ],
+      "correct_index": 1,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) 110°",
+        "B) 70°",
+        "C) 20°",
+        "D) 290°"
+      ],
+      "source_answer_te": "B) 70°",
+      "source_options_en": [
+        "A) 110°",
+        "B) 70°",
+        "C) 20°",
+        "D) 290°"
+      ],
+      "source_answer_en": "B) 70°"
+    },
+    {
+      "qid": "15",
+      "page": 3,
+      "answer_page": 3,
+      "marks": 1,
+      "question_en": "When two parallel lines are cut by a transversal, each pair of corresponding angles is",
+      "question_te": "రెండు సమాంతర రేఖలను ఒక ఛేదిక ఛేదించినప్పుడు, ప్రతి అనురూప కోణాల జత ______.",
+      "answer_en": "equal",
+      "answer_te": "సమానం",
+      "steps_en": [
+        "For two parallel lines cut by a transversal, corresponding angles are equal.",
+        "Hence the correct choice is equal."
+      ],
+      "steps_te": [
+        "ఒక ఛేదిక రెండు సమాంతర రేఖలను ఛేదించినప్పుడు అనురూప కోణాలు సమానం.",
+        "అందువల్ల సరైన సమాధానం “సమానం”."
+      ],
+      "options_en": [
+        "equal",
+        "complementary",
+        "a linear pair",
+        "unequal"
+      ],
+      "options_te": [
+        "సమానం",
+        "పూరక కోణాలు",
+        "రేఖీయ జత",
+        "అసమానం"
+      ],
+      "correct_index": 0,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) సమానం",
+        "B) పూరక కోణాలు",
+        "C) రేఖీయ జత",
+        "D) అసమానం"
+      ],
+      "source_answer_te": "A) సమానం",
+      "source_options_en": [
+        "A) equal",
+        "B) complementary",
+        "C) a linear pair",
+        "D) unequal"
+      ],
+      "source_answer_en": "A) equal"
+    },
+    {
+      "qid": "16",
+      "page": 3,
+      "answer_page": 3,
+      "marks": 1,
+      "question_en": "Two angles form a linear pair. If one of them is 45°, the other is",
+      "question_te": "రెండు కోణాలు రేఖీయ జతను ఏర్పరుస్తాయి. ఒకటి 45° అయితే మరొకటి ఎంత?",
+      "answer_en": "135°",
+      "answer_te": "135°",
+      "steps_en": [
+        "Angles in a linear pair add to 180°.",
+        "Other angle = 180° − 45° = 135°."
+      ],
+      "steps_te": [
+        "రేఖీయ జతలోని కోణాల మొత్తం 180°.",
+        "మరొక కోణం = 180° − 45° = 135°."
+      ],
+      "options_en": [
+        "45°",
+        "135°",
+        "55°",
+        "90°"
+      ],
+      "options_te": [
+        "45°",
+        "135°",
+        "55°",
+        "90°"
+      ],
+      "correct_index": 1,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) 45°",
+        "B) 135°",
+        "C) 55°",
+        "D) 90°"
+      ],
+      "source_answer_te": "B) 135°",
+      "source_options_en": [
+        "A) 45°",
+        "B) 135°",
+        "C) 55°",
+        "D) 90°"
+      ],
+      "source_answer_en": "B) 135°"
+    },
+    {
+      "qid": "17",
+      "page": 3,
+      "answer_page": 3,
+      "marks": 1,
+      "question_en": "The sum of two odd numbers is always",
+      "question_te": "రెండు బేసి సంఖ్యల మొత్తం ఎల్లప్పుడూ ______.",
+      "answer_en": "even",
+      "answer_te": "సరి",
+      "steps_en": [
+        "An odd number is of the form 2n + 1; the sum of two odd numbers is (2m + 1) + (2n + 1) = 2(m + n + 1).",
+        "This is divisible by 2, so the sum is even."
+      ],
+      "steps_te": [
+        "బేసి సంఖ్యను 2n + 1 రూపంలో వ్రాయవచ్చు; రెండు బేసి సంఖ్యల మొత్తం (2m + 1) + (2n + 1) = 2(m + n + 1).",
+        "ఈ మొత్తం 2తో భాగించబడుతుంది; కాబట్టి అది సరి సంఖ్య."
+      ],
+      "options_en": [
+        "odd",
+        "even",
+        "prime",
+        "a multiple of 3"
+      ],
+      "options_te": [
+        "బేసి",
+        "సరి",
+        "ప్రధాన",
+        "3 యొక్క గుణిజం"
+      ],
+      "correct_index": 1,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) బేసి",
+        "B) సరి",
+        "C) ప్రధాన",
+        "D) 3 యొక్క గుణిజం"
+      ],
+      "source_answer_te": "B) సరి",
+      "source_options_en": [
+        "A) odd",
+        "B) even",
+        "C) prime",
+        "D) a multiple of 3"
+      ],
+      "source_answer_en": "B) even"
+    },
+    {
+      "qid": "18",
+      "page": 3,
+      "answer_page": 3,
+      "marks": 1,
+      "question_en": "The magic sum of a 3 × 3 magic square made using the numbers 1 to 9 is",
+      "question_te": "1 నుంచి 9 సంఖ్యలతో చేసిన 3 × 3 మాయా చతురస్రం యొక్క మాయా మొత్తం ఎంత?",
+      "answer_en": "15",
+      "answer_te": "15",
+      "steps_en": [
+        "Sum of 1 to 9 = 45, and the three rows have the same sum.",
+        "Magic sum = 45 ÷ 3 = 15."
+      ],
+      "steps_te": [
+        "1 నుంచి 9 వరకు మొత్తం = 45; మూడు వరుసల మొత్తాలు సమానం.",
+        "మాయా మొత్తం = 45 ÷ 3 = 15."
+      ],
+      "options_en": [
+        "12",
+        "15",
+        "18",
+        "45"
+      ],
+      "options_te": [
+        "12",
+        "15",
+        "18",
+        "45"
+      ],
+      "correct_index": 1,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) 12",
+        "B) 15",
+        "C) 18",
+        "D) 45"
+      ],
+      "source_answer_te": "B) 15",
+      "source_options_en": [
+        "A) 12",
+        "B) 15",
+        "C) 18",
+        "D) 45"
+      ],
+      "source_answer_en": "B) 15"
+    },
+    {
+      "qid": "19",
+      "page": 3,
+      "answer_page": 3,
+      "marks": 1,
+      "question_en": "The sum of the three angles of a triangle is",
+      "question_te": "త్రిభుజంలోని మూడు కోణాల మొత్తం ఎంత?",
+      "answer_en": "180°",
+      "answer_te": "180°",
+      "steps_en": [
+        "By the angle-sum property of a triangle, its three angles add to 180°.",
+        "Therefore, the sum is 180°."
+      ],
+      "steps_te": [
+        "త్రిభుజ కోణాల మొత్తం ధర్మం ప్రకారం, దాని మూడు కోణాల మొత్తం 180°.",
+        "కాబట్టి మొత్తం 180°."
+      ],
+      "options_en": [
+        "90°",
+        "180°",
+        "270°",
+        "360°"
+      ],
+      "options_te": [
+        "90°",
+        "180°",
+        "270°",
+        "360°"
+      ],
+      "correct_index": 1,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) 90°",
+        "B) 180°",
+        "C) 270°",
+        "D) 360°"
+      ],
+      "source_answer_te": "B) 180°",
+      "source_options_en": [
+        "A) 90°",
+        "B) 180°",
+        "C) 270°",
+        "D) 360°"
+      ],
+      "source_answer_en": "B) 180°"
+    },
+    {
+      "qid": "20",
+      "page": 3,
+      "answer_page": 3,
+      "marks": 1,
+      "question_en": "Which of the following sets of lengths (in cm) can be the sides of a triangle?",
+      "question_te": "క్రింది పొడవులలో (సెం.మీ.) ఏ సమితి త్రిభుజ భుజాలుగా ఉండగలదు?",
+      "answer_en": "10, 20, 25",
+      "answer_te": "10, 20, 25",
+      "steps_en": [
+        "A triangle is possible only when the sum of any two sides is greater than the third.",
+        "For 10, 20, 25: 10 + 20 = 30 > 25, and the other pair sums are also greater."
+      ],
+      "steps_te": [
+        "ఏ రెండు భుజాల మొత్తమైనా మూడవ భుజం కంటే ఎక్కువగా ఉన్నప్పుడే త్రిభుజం సాధ్యం.",
+        "10, 20, 25 కోసం: 10 + 20 = 30 > 25; మిగతా జతల మొత్తాలు కూడా ఎక్కువ."
+      ],
+      "options_en": [
+        "3, 6, 9",
+        "5, 10, 20",
+        "10, 20, 25",
+        "10, 20, 35"
+      ],
+      "options_te": [
+        "3, 6, 9",
+        "5, 10, 20",
+        "10, 20, 25",
+        "10, 20, 35"
+      ],
+      "correct_index": 2,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": [],
+      "source_options_te": [
+        "A) 3, 6, 9",
+        "B) 5, 10, 20",
+        "C) 10, 20, 25",
+        "D) 10, 20, 35"
+      ],
+      "source_answer_te": "C) 10, 20, 25",
+      "source_options_en": [
+        "A) 3, 6, 9",
+        "B) 5, 10, 20",
+        "C) 10, 20, 25",
+        "D) 10, 20, 35"
+      ],
+      "source_answer_en": "C) 10, 20, 25"
+    },
+    {
+      "qid": "21",
+      "page": 3,
+      "answer_page": 4,
+      "marks": 2,
+      "question_en": "Find 98 × 15 using the distributive property.",
+      "question_te": "వితరణ గుణక ధర్మాన్ని ఉపయోగించి 98 × 15 కనుగొనండి.",
+      "answer_en": "98 × 15 = 1470",
+      "answer_te": "98 × 15 = 1470",
+      "steps_en": [
+        "Write 98 as 100 − 2: 98 × 15 = (100 − 2) × 15.",
+        "Distribute and substitute: (100 − 2) × 15 = 100 × 15 − 2 × 15 = 1500 − 30 = 1470."
+      ],
+      "steps_te": [
+        "98 ను 100 − 2గా వ్రాయండి: 98 × 15 = (100 − 2) × 15.",
+        "వితరణ చేసి ప్రతిక్షేపించండి: (100 − 2) × 15 = 100 × 15 − 2 × 15 = 1500 − 30 = 1470."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "22",
+      "page": 4,
+      "answer_page": 4,
+      "marks": 2,
+      "question_en": "Remove the brackets and write the expression having the same value: (i) 25 − (8 + 6) (ii) 25 − (8 − 6).",
+      "question_te": "బ్రాకెట్లను తొలగించి అదే విలువ గల వ్యక్తీకరణను వ్రాయండి: (i) 25 − (8 + 6) (ii) 25 − (8 − 6).",
+      "answer_en": "(i) 25 − 8 − 6  (ii) 25 − 8 + 6",
+      "answer_te": "(i) 25 − 8 − 6  (ii) 25 − 8 + 6",
+      "steps_en": [
+        "(i) A minus before the bracket changes both inner signs: 25 − (8 + 6) = 25 − 8 − 6.",
+        "(ii) 25 − (8 − 6) = 25 − 8 + 6; the check values are 11 and 23 respectively."
+      ],
+      "steps_te": [
+        "(i) బ్రాకెట్ ముందు మైనస్ ఉన్నందున లోపలి రెండు గుర్తులు మారతాయి: 25 − (8 + 6) = 25 − 8 − 6.",
+        "(ii) 25 − (8 − 6) = 25 − 8 + 6; పరిశీలన విలువలు వరుసగా 11, 23."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "23",
+      "page": 4,
+      "answer_page": 4,
+      "marks": 2,
+      "question_en": "Fill in the blanks with “odd” or “even”: (i) The sum of an odd number of even numbers is ______. (ii) The sum of an even number of odd numbers is ______.",
+      "question_te": "“బేసి” లేదా “సరి”తో ఖాళీలను పూరించండి: (i) బేసి సంఖ్యలో సరి సంఖ్యల మొత్తం ______. (ii) సరి సంఖ్యలో బేసి సంఖ్యల మొత్తం ______.",
+      "answer_en": "(i) even  (ii) even",
+      "answer_te": "(i) సరి  (ii) సరి",
+      "steps_en": [
+        "(i) Every even number is divisible by 2, so a sum of any number of even numbers is even.",
+        "(ii) Pair the even number of odd terms; each pair has an even sum, so the total is even."
+      ],
+      "steps_te": [
+        "(i) ప్రతి సరి సంఖ్య 2తో భాగిస్తుంది; కాబట్టి ఎన్ని సరి సంఖ్యల మొత్తమైనా సరి.",
+        "(ii) బేసి పదాలను జతలుగా తీసుకుంటే ప్రతి జత మొత్తం సరి; కాబట్టి మొత్తం సరి."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "24",
+      "page": 4,
+      "answer_page": 4,
+      "marks": 2,
+      "question_en": "Check whether a triangle can be formed with the following side lengths: (i) 4 cm, 5 cm, 8 cm (ii) 3 cm, 5 cm, 9 cm.",
+      "question_te": "క్రింది భుజాల పొడవులతో త్రిభుజం ఏర్పడుతుందో లేదో పరిశీలించండి: (i) 4 సెం.మీ., 5 సెం.మీ., 8 సెం.మీ. (ii) 3 సెం.మీ., 5 సెం.మీ., 9 సెం.మీ.",
+      "answer_en": "(i) Possible  (ii) Not possible",
+      "answer_te": "(i) సాధ్యం  (ii) సాధ్యం కాదు",
+      "steps_en": [
+        "Use the triangle inequality: the sum of the two smaller sides must be greater than the largest side.",
+        "(i) 4 + 5 = 9 > 8, so possible; (ii) 3 + 5 = 8 < 9, so not possible."
+      ],
+      "steps_te": [
+        "త్రిభుజ అసమానతను ఉపయోగించండి: చిన్న రెండు భుజాల మొత్తం పెద్ద భుజం కంటే ఎక్కువగా ఉండాలి.",
+        "(i) 4 + 5 = 9 > 8 కాబట్టి సాధ్యం; (ii) 3 + 5 = 8 < 9 కాబట్టి సాధ్యం కాదు."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "25",
+      "page": 4,
+      "answer_page": 4,
+      "marks": 4,
+      "question_en": "Read the following numbers in Indian place value notation and write their number names in both the Indian and American systems: (a) 4050678 (b) 48121620.",
+      "question_te": "క్రింది సంఖ్యలను భారతీయ స్థాన విలువ విధానంలో చదివి, భారతీయ మరియు అమెరికన్ విధానాల్లో వాటి సంఖ్యా పేర్లు వ్రాయండి: (a) 4050678 (b) 48121620.",
+      "answer_en": "(a) Indian: 40,50,678 — forty lakh fifty thousand six hundred seventy-eight; American: 4,050,678 — four million fifty thousand six hundred seventy-eight. (b) Indian: 4,81,21,620 — four crore eighty-one lakh twenty-one thousand six hundred twenty; American: 48,121,620 — forty-eight million one hundred twenty-one thousand six hundred twenty.",
+      "answer_te": "(a) భారతీయ: 40,50,678 — నలభై లక్షల యాభై వేల ఆరు వందల డెబ్బై ఎనిమిది; అమెరికన్: 4,050,678 — నాలుగు మిలియన్ల యాభై వేల ఆరు వందల డెబ్బై ఎనిమిది. (b) భారతీయ: 4,81,21,620 — నాలుగు కోట్ల ఎనభై ఒక లక్ష ఇరవై ఒక వేల ఆరు వందల ఇరవై; అమెరికన్: 48,121,620 — నలభై ఎనిమిది మిలియన్ల ఒక వంద ఇరవై ఒక వేల ఆరు వందల ఇరవై.",
+      "steps_en": [
+        "(a) 4050678 = 40,50,678 in Indian notation and 4,050,678 in American notation.",
+        "(a) Names: forty lakh fifty thousand six hundred seventy-eight; four million fifty thousand six hundred seventy-eight.",
+        "(b) 48121620 = 4,81,21,620 in Indian notation and 48,121,620 in American notation.",
+        "(b) Names: four crore eighty-one lakh twenty-one thousand six hundred twenty; forty-eight million one hundred twenty-one thousand six hundred twenty."
+      ],
+      "steps_te": [
+        "(a) 4050678 = భారతీయ విధానంలో 40,50,678; అమెరికన్ విధానంలో 4,050,678.",
+        "(a) పేర్లు: నలభై లక్షల యాభై వేల ఆరు వందల డెబ్బై ఎనిమిది; నాలుగు మిలియన్ల యాభై వేల ఆరు వందల డెబ్బై ఎనిమిది.",
+        "(b) 48121620 = భారతీయ విధానంలో 4,81,21,620; అమెరికన్ విధానంలో 48,121,620.",
+        "(b) పేర్లు: నాలుగు కోట్ల ఎనభై ఒక లక్ష ఇరవై ఒక వేల ఆరు వందల ఇరవై; నలభై ఎనిమిది మిలియన్ల ఒక వంద ఇరవై ఒక వేల ఆరు వందల ఇరవై."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "26",
+      "page": 4,
+      "answer_page": 4,
+      "marks": 4,
+      "question_en": "Hasantika says that the sum of 4,63,128 and 4,19,682 is near 8,00,000, and Srestha says that it is near 9,00,000. Find the exact sum. Whose estimate is closer to the sum?",
+      "question_te": "4,63,128 మరియు 4,19,682 మొత్తం 8,00,000కు దగ్గరగా ఉందని హసంతిక, 9,00,000కు దగ్గరగా ఉందని శ్రేష్ఠ అంటున్నారు. ఖచ్చితమైన మొత్తాన్ని కనుగొని, ఎవరి అంచనా దగ్గరగా ఉందో చెప్పండి.",
+      "answer_en": "Exact sum = 8,82,810; Srestha’s estimate, 9,00,000, is closer.",
+      "answer_te": "ఖచ్చితమైన మొత్తం = 8,82,810; శ్రేష్ఠ అంచనా 9,00,000 దగ్గరగా ఉంది.",
+      "steps_en": [
+        "Add column-wise from the right: 4,63,128 + 4,19,682 = 8,82,810.",
+        "Distances: |8,82,810 − 8,00,000| = 82,810 and |9,00,000 − 8,82,810| = 17,190.",
+        "Since 17,190 < 82,810, Srestha’s estimate is closer."
+      ],
+      "steps_te": [
+        "కుడి వైపు నుంచి స్థానాలవారీగా కలపండి: 4,63,128 + 4,19,682 = 8,82,810.",
+        "దూరాలు: |8,82,810 − 8,00,000| = 82,810; |9,00,000 − 8,82,810| = 17,190.",
+        "17,190 < 82,810 కాబట్టి శ్రేష్ఠ అంచనా దగ్గరగా ఉంది."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "27",
+      "page": 5,
+      "answer_page": 5,
+      "marks": 4,
+      "question_en": "Find the values of the following expressions and say whether the two expressions in each pair have the same value: (i) (6 + 10) − 2 and 6 + (10 − 2) (ii) 16 − (8 − 3) and (16 − 8) − 3.",
+      "question_te": "క్రింది ప్రతి జత వ్యక్తీకరణల విలువలు కనుగొని, అవి సమాన విలువ కలవో చెప్పండి: (i) (6 + 10) − 2 మరియు 6 + (10 − 2) (ii) 16 − (8 − 3) మరియు (16 − 8) − 3.",
+      "answer_en": "(i) 14 and 14 — same value. (ii) 11 and 5 — different values.",
+      "answer_te": "(i) 14 మరియు 14 — సమాన విలువ. (ii) 11 మరియు 5 — వేర్వేరు విలువలు.",
+      "steps_en": [
+        "(i) (6 + 10) − 2 = 16 − 2 = 14; 6 + (10 − 2) = 6 + 8 = 14, so they are equal.",
+        "(ii) 16 − (8 − 3) = 16 − 5 = 11; (16 − 8) − 3 = 8 − 3 = 5, so they are not equal."
+      ],
+      "steps_te": [
+        "(i) (6 + 10) − 2 = 16 − 2 = 14; 6 + (10 − 2) = 6 + 8 = 14, కాబట్టి సమానం.",
+        "(ii) 16 − (8 − 3) = 16 − 5 = 11; (16 − 8) − 3 = 8 − 3 = 5, కాబట్టి సమానం కాదు."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "28",
+      "page": 5,
+      "answer_page": 5,
+      "marks": 4,
+      "question_en": "Create a 3 × 3 magic square using each of the numbers 2 to 10 exactly once, and write its magic sum. (Use the grid given below.)",
+      "question_te": "2 నుంచి 10 వరకు ప్రతి సంఖ్యను ఒక్కసారి మాత్రమే ఉపయోగించి 3 × 3 మాయా చతురస్రం తయారు చేసి, దాని మాయా మొత్తాన్ని వ్రాయండి. (క్రింద ఇచ్చిన గ్రిడ్‌ను ఉపయోగించండి.)",
+      "answer_en": "Magic sum = 18; one valid square is 9 2 7 / 4 6 8 / 5 10 3.",
+      "answer_te": "మాయా మొత్తం = 18; ఒక సరైన చతురస్రం: 9 2 7 / 4 6 8 / 5 10 3.",
+      "steps_en": [
+        "Sum of 2 through 10 = 54; with 3 equal rows, magic sum = 54 ÷ 3 = 18.",
+        "Fill the grid so every row, column and diagonal totals 18: 9 2 7 / 4 6 8 / 5 10 3.",
+        "Check: rows, columns and diagonals each add to 18."
+      ],
+      "steps_te": [
+        "2 నుంచి 10 వరకు మొత్తం = 54; 3 సమాన వరుసలు ఉన్నందున మాయా మొత్తం = 54 ÷ 3 = 18.",
+        "ప్రతి వరుస, నిలువు వరుస, కర్ణం మొత్తం 18 వచ్చేలా గ్రిడ్ నింపండి: 9 2 7 / 4 6 8 / 5 10 3.",
+        "పరిశీలన: ప్రతి వరుస, నిలువు వరుస, కర్ణం మొత్తం 18."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "గ్రిడ్‌లో వరుసలు/నిలువు వరుసలు/కర్ణాలు 18 వచ్చేలా అమరికను చూపించాలి; మూల PDFలో ప్రశ్న గ్రిడ్ పేజీ 5లో ఉంది.",
+      "issue_notes": []
+    },
+    {
+      "qid": "29",
+      "page": 5,
+      "answer_page": 5,
+      "marks": 4,
+      "question_en": "Two consecutive numbers in the Virahanka sequence are 987 and 1597. What are the next 2 numbers in the sequence? What are the previous 2 numbers in the sequence? (In the Virahanka sequence 1, 2, 3, 5, 8, 13, …, every number is the sum of the two numbers before it.)",
+      "question_te": "విరహాంక శ్రేణిలో వరుసగా ఉన్న రెండు సంఖ్యలు 987, 1597. తరువాతి 2 సంఖ్యలు ఏమిటి? ముందు ఉన్న 2 సంఖ్యలు ఏమిటి? (విరహాంక శ్రేణిలో ప్రతి సంఖ్య దాని ముందు రెండు సంఖ్యల మొత్తం.)",
+      "answer_en": "Next two: 2584, 4181. Previous two: 377, 610.",
+      "answer_te": "తరువాతి రెండు: 2584, 4181. ముందు ఉన్న రెండు: 377, 610.",
+      "steps_en": [
+        "Next: 987 + 1597 = 2584; then 1597 + 2584 = 4181.",
+        "Previous: number before 987 = 1597 − 987 = 610; number before 610 = 987 − 610 = 377.",
+        "Check: 377 + 610 = 987."
+      ],
+      "steps_te": [
+        "తరువాతి సంఖ్యలు: 987 + 1597 = 2584; తరువాత 1597 + 2584 = 4181.",
+        "ముందరి సంఖ్యలు: 987కు ముందు = 1597 − 987 = 610; 610కు ముందు = 987 − 610 = 377.",
+        "పరిశీలన: 377 + 610 = 987."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "30A",
+      "page": 5,
+      "answer_page": 6,
+      "marks": 8,
+      "question_en": "A) (i) Find the sums: (a) 2.15 + 5.26 (b) 6.236 + 0.487 (2 + 2). (ii) Find the differences: (a) 17 − 16.198 (b) 34.505 − 18.1 (2 + 2).",
+      "question_te": "A) (i) మొత్తాలు కనుగొనండి: (a) 2.15 + 5.26 (b) 6.236 + 0.487 (2 + 2). (ii) తేడాలు కనుగొనండి: (a) 17 − 16.198 (b) 34.505 − 18.1 (2 + 2).",
+      "answer_en": "(i)(a) 7.41 (b) 6.723; (ii)(a) 0.802 (b) 16.405.",
+      "answer_te": "(i)(a) 7.41 (b) 6.723; (ii)(a) 0.802 (b) 16.405.",
+      "steps_en": [
+        "(i)(a) Align decimal points: 2.15 + 5.26 = 7.41.",
+        "(i)(b) 6.236 + 0.487: thousandths 13, carry 1; hundredths 12, carry 1; result = 6.723.",
+        "(ii)(a) Write 17 as 17.000 and subtract: 17.000 − 16.198 = 0.802.",
+        "(ii)(b) Write 18.1 as 18.100; 34.505 − 18.100 = 16.405."
+      ],
+      "steps_te": [
+        "(i)(a) దశాంశ బిందువులను ఒకే నిలువు వరుసలో పెట్టండి: 2.15 + 5.26 = 7.41.",
+        "(i)(b) 6.236 + 0.487: సహస్రాంశాల్లో 13, 1 క్యారీ; శతాంశాల్లో 12, 1 క్యారీ; ఫలితం = 6.723.",
+        "(ii)(a) 17ను 17.000గా వ్రాసి తీసివేయండి: 17.000 − 16.198 = 0.802.",
+        "(ii)(b) 18.1ను 18.100గా వ్రాయండి; 34.505 − 18.100 = 16.405."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "30B",
+      "page": 5,
+      "answer_page": 6,
+      "marks": 8,
+      "question_en": "B) (i) Arrange the following decimal numbers in descending order: 2.567, 2.675, 2.768, 2.499, 2.698 (4). (ii) Pratap purchases 0.25 kg of beans, 0.3 kg of carrots, 0.5 kg of potatoes, 0.2 kg of capsicums and 0.05 kg of ginger. Calculate the total weight of the items he bought (4).",
+      "question_te": "B) (i) క్రింది దశాంశ సంఖ్యలను అవరోహణ క్రమంలో అమర్చండి: 2.567, 2.675, 2.768, 2.499, 2.698 (4). (ii) ప్రతాప్ 0.25 kg బీన్స్, 0.3 kg క్యారెట్లు, 0.5 kg బంగాళాదుంపలు, 0.2 kg క్యాప్సికమ్స్, 0.05 kg అల్లం కొన్నాడు. మొత్తం బరువు కనుగొనండి (4).",
+      "answer_en": "(i) 2.768, 2.698, 2.675, 2.567, 2.499. (ii) Total weight = 1.30 kg (1.3 kg).",
+      "answer_te": "(i) 2.768, 2.698, 2.675, 2.567, 2.499. (ii) మొత్తం బరువు = 1.30 kg (1.3 kg).",
+      "steps_en": [
+        "(i) Compare tenths and then hundredths: 2.768 > 2.698 > 2.675 > 2.567 > 2.499.",
+        "(ii) Write equal decimal places: 0.25 + 0.30 + 0.50 + 0.20 + 0.05.",
+        "Add: 0.25 + 0.30 = 0.55; 0.55 + 0.50 + 0.20 + 0.05 = 1.30 kg."
+      ],
+      "steps_te": [
+        "(i) ముందుగా పదాంశాలు, తరువాత శతాంశాలను పోల్చండి: 2.768 > 2.698 > 2.675 > 2.567 > 2.499.",
+        "(ii) సమాన దశాంశ స్థానాలుగా వ్రాయండి: 0.25 + 0.30 + 0.50 + 0.20 + 0.05.",
+        "కలపండి: 0.25 + 0.30 = 0.55; 0.55 + 0.50 + 0.20 + 0.05 = 1.30 kg."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "31A",
+      "page": 6,
+      "answer_page": 6,
+      "marks": 8,
+      "question_en": "A) (i) Simplify: 3(8a − 5b) − 8a − 4b − 16 (4). (ii) Add the expressions: 4d − 7c + 9 and 8c − 11 + 9d (4).",
+      "question_te": "A) (i) సరళీకరించండి: 3(8a − 5b) − 8a − 4b − 16 (4). (ii) 4d − 7c + 9 మరియు 8c − 11 + 9d వ్యక్తీకరణలను కలపండి (4).",
+      "answer_en": "(i) 16a − 19b − 16. (ii) 13d + c − 2.",
+      "answer_te": "(i) 16a − 19b − 16. (ii) 13d + c − 2.",
+      "steps_en": [
+        "(i) Distribute: 3(8a − 5b) = 24a − 15b; expression = 24a − 15b − 8a − 4b − 16.",
+        "Collect like terms: (24a − 8a) + (−15b − 4b) − 16 = 16a − 19b − 16.",
+        "(ii) Add and collect: (4d + 9d) + (−7c + 8c) + (9 − 11) = 13d + c − 2."
+      ],
+      "steps_te": [
+        "(i) వితరణ చేయండి: 3(8a − 5b) = 24a − 15b; వ్యక్తీకరణ = 24a − 15b − 8a − 4b − 16.",
+        "సమపదాలను కలపండి: (24a − 8a) + (−15b − 4b) − 16 = 16a − 19b − 16.",
+        "(ii) కలిపి సమపదాలను కలపండి: (4d + 9d) + (−7c + 8c) + (9 − 11) = 13d + c − 2."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "31B",
+      "page": 6,
+      "answer_page": 6,
+      "marks": 8,
+      "question_en": "B) (i) Subtract 9a − 6b + 14 from 6a + 9b − 18 (4). (ii) One plate of Jowar roti costs ₹30 and one plate of Pulao costs ₹20. If x plates of Jowar roti and y plates of Pulao are ordered in a day, write an algebraic expression for the total cost. Find the total cost when x = 3 and y = 2 (4).",
+      "question_te": "B) (i) 6a + 9b − 18 నుంచి 9a − 6b + 14 ను తీసివేయండి (4). (ii) ఒక జొన్న రొట్టె ప్లేట్ ధర ₹30, ఒక పులావ్ ప్లేట్ ధర ₹20. రోజుకు x జొన్న రొట్టె ప్లేట్లు, y పులావ్ ప్లేట్లు ఆర్డర్ చేస్తే మొత్తం ఖర్చు వ్యక్తీకరణ వ్రాసి, x = 3, y = 2 వద్ద ఖర్చు కనుగొనండి (4).",
+      "answer_en": "(i) −3a + 15b − 32. (ii) Total cost = 30x + 20y; at x = 3, y = 2, cost = ₹130.",
+      "answer_te": "(i) −3a + 15b − 32. (ii) మొత్తం ఖర్చు = 30x + 20y; x = 3, y = 2 వద్ద ఖర్చు = ₹130.",
+      "steps_en": [
+        "(i) Set up subtraction: (6a + 9b − 18) − (9a − 6b + 14).",
+        "Change every sign in the second bracket: 6a + 9b − 18 − 9a + 6b − 14 = −3a + 15b − 32.",
+        "(ii) Jowar cost = 30x and Pulao cost = 20y, so total = 30x + 20y rupees.",
+        "Substitute x = 3, y = 2: 30(3) + 20(2) = 90 + 40 = ₹130."
+      ],
+      "steps_te": [
+        "(i) తీసివేతను ఏర్పాటు చేయండి: (6a + 9b − 18) − (9a − 6b + 14).",
+        "రెండవ బ్రాకెట్‌లోని ప్రతి గుర్తు మార్చండి: 6a + 9b − 18 − 9a + 6b − 14 = −3a + 15b − 32.",
+        "(ii) జొన్న రొట్టె ఖర్చు = 30x, పులావ్ ఖర్చు = 20y; కాబట్టి మొత్తం = 30x + 20y రూపాయలు.",
+        "x = 3, y = 2 ప్రతిక్షేపణ: 30(3) + 20(2) = 90 + 40 = ₹130."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "32A",
+      "page": 6,
+      "answer_page": 7,
+      "marks": 8,
+      "question_en": "A) In the figure, the parallel lines l and m are intersected by the transversal t. If ∠3 = 65°, find: (a) ∠1, ∠2 and ∠4 (3); (b) ∠5, ∠6, ∠7 and ∠8 (4); (c) Which angle is the alternate angle of ∠3? Is it equal to ∠3? (1).",
+      "question_te": "A) చిత్రంలో సమాంతర రేఖలు l, mలను ఛేదిక t ఛేదిస్తుంది. ∠3 = 65° అయితే: (a) ∠1, ∠2, ∠4 (3); (b) ∠5, ∠6, ∠7, ∠8 (4); (c) ∠3కు ప్రత్యామ్నర కోణం ఏది? అది ∠3కు సమానమా? (1).",
+      "answer_en": "(a) ∠1 = 65°, ∠2 = 115°, ∠4 = 115°. (b) ∠5 = 65°, ∠6 = 115°, ∠7 = 65°, ∠8 = 115°. (c) Alternate angle is ∠5; yes, equal.",
+      "answer_te": "(a) ∠1 = 65°, ∠2 = 115°, ∠4 = 115°. (b) ∠5 = 65°, ∠6 = 115°, ∠7 = 65°, ∠8 = 115°. (c) ప్రత్యామ్నర కోణం ∠5; అవును, సమానం.",
+      "steps_en": [
+        "(a) ∠1 and ∠3 are vertically opposite, so ∠1 = 65°. ∠2 is a linear pair with ∠3: 180° − 65° = 115°. ∠4 = ∠2 = 115° vertically opposite.",
+        "(b) With l ∥ m, corresponding angles give ∠5 = 65°, ∠6 = 115°, ∠7 = 65°, ∠8 = 115°.",
+        "(c) The alternate interior angle of ∠3 is ∠5; alternate angles between parallel lines are equal, so ∠5 = ∠3 = 65°."
+      ],
+      "steps_te": [
+        "(a) ∠1, ∠3 శీర్షాభిముఖాలు కాబట్టి ∠1 = 65°. ∠2, ∠3 రేఖీయ జత: 180° − 65° = 115°. శీర్షాభిముఖంగా ∠4 = ∠2 = 115°.",
+        "(b) l ∥ m కాబట్టి అనురూప కోణాల ద్వారా ∠5 = 65°, ∠6 = 115°, ∠7 = 65°, ∠8 = 115°.",
+        "(c) ∠3కు ప్రత్యామ్నర అంతర్గత కోణం ∠5; సమాంతర రేఖల్లో అవి సమానం, కాబట్టి ∠5 = ∠3 = 65°."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": 6,
+      "display_note_te": "చిత్ర వివరణ: t అనే వాలు ఛేదిక l (పై సమాంతర రేఖ), m (కింది సమాంతర రేఖ)లను ఛేదిస్తుంది; పై ఛేదన వద్ద ∠1 పై-ఎడమ, ∠2 పై-కుడి, ∠3 కింది-కుడి, ∠4 కింది-ఎడమ; కింది ఛేదన వద్ద ∠5 పై-ఎడమ, ∠6 పై-కుడి, ∠7 కింది-కుడి, ∠8 కింది-ఎడమ. మూల చిత్రం పేజీలు 6–7లో ఉంది.",
+      "issue_notes": []
+    },
+    {
+      "qid": "32B",
+      "page": 7,
+      "answer_page": 7,
+      "marks": 8,
+      "question_en": "B) In the figure, AB ∥ CD and AD ∥ BC. If ∠DAC = 40° and ∠ADC = 70°, find ∠DAB, ∠CAB, ∠BCD and ∠ABC (2 + 2 + 2 + 2).",
+      "question_te": "B) చిత్రంలో AB ∥ CD మరియు AD ∥ BC. ∠DAC = 40°, ∠ADC = 70° అయితే ∠DAB, ∠CAB, ∠BCD, ∠ABC కనుగొనండి (2 + 2 + 2 + 2).",
+      "answer_en": "∠DAB = 110°, ∠CAB = 70°, ∠BCD = 110°, ∠ABC = 70°.",
+      "answer_te": "∠DAB = 110°, ∠CAB = 70°, ∠BCD = 110°, ∠ABC = 70°.",
+      "steps_en": [
+        "In triangle ADC, ∠DCA = 180° − 70° − 40° = 70°.",
+        "Since AB ∥ DC, ∠CAB = ∠DCA = 70° and ∠DAB = ∠DAC + ∠CAB = 40° + 70° = 110°.",
+        "Since AD ∥ BC, ∠BCD = 180° − ∠ADC = 110°.",
+        "Since AB ∥ DC, ∠ABC = 180° − ∠BCD = 70°."
+      ],
+      "steps_te": [
+        "త్రిభుజం ADCలో ∠DCA = 180° − 70° − 40° = 70°.",
+        "AB ∥ DC కాబట్టి ∠CAB = ∠DCA = 70°; ∠DAB = ∠DAC + ∠CAB = 40° + 70° = 110°.",
+        "AD ∥ BC కాబట్టి ∠BCD = 180° − ∠ADC = 110°.",
+        "AB ∥ DC కాబట్టి ∠ABC = 180° − ∠BCD = 70°."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": 7,
+      "display_note_te": "చిత్ర వివరణ: ABCD సమాంతర చతుర్భుజం; AB ∥ CD, AD ∥ BC, మరియు AC వికర్ణం. మూల చిత్రం పేజీ 7లో ఉంది.",
+      "issue_notes": []
+    },
+    {
+      "qid": "33A",
+      "page": 7,
+      "answer_page": 8,
+      "marks": 8,
+      "question_en": "A) (i) Construct a triangle ABC with BC = 5 cm, AB = 6 cm and CA = 5 cm. Write the steps of construction (4). (ii) In triangle PQR, ∠P = 50° and ∠Q = 65°. Find ∠R. If side QR is extended to S, find exterior angle ∠PRS (4).",
+      "question_te": "A) (i) BC = 5 సెం.మీ., AB = 6 సెం.మీ., CA = 5 సెం.మీ. గల త్రిభుజం ABC నిర్మించి, నిర్మాణ దశలు వ్రాయండి (4). (ii) త్రిభుజం PQRలో ∠P = 50°, ∠Q = 65°. ∠R కనుగొనండి. QRను S వరకు పొడిగిస్తే బాహ్య కోణం ∠PRS కనుగొనండి (4).",
+      "answer_en": "(i) Draw BC = 5 cm; arcs of radii 6 cm from B and 5 cm from C meet at A; join AB, AC. (ii) ∠R = 65° and ∠PRS = 115°.",
+      "answer_te": "(i) BC = 5 సెం.మీ. గీయండి; B కేంద్రంగా 6 సెం.మీ., C కేంద్రంగా 5 సెం.మీ. వ్యాసార్థాల ఆర్క్‌లు A వద్ద కలిసేలా గీయండి; AB, AC కలపండి. (ii) ∠R = 65°, ∠PRS = 115°.",
+      "steps_en": [
+        "(i) Draw BC = 5 cm. With B as centre radius 6 cm and C as centre radius 5 cm, draw arcs meeting at A; join AB and AC.",
+        "(ii) Triangle angle sum: ∠R = 180° − 50° − 65° = 65°.",
+        "Exterior angle property: ∠PRS = ∠P + ∠Q = 50° + 65° = 115°."
+      ],
+      "steps_te": [
+        "(i) BC = 5 సెం.మీ. గీయండి. B కేంద్రంగా 6 సెం.మీ., C కేంద్రంగా 5 సెం.మీ. వ్యాసార్థాలతో A వద్ద కలిసే ఆర్క్‌లు గీసి AB, AC కలపండి.",
+        "(ii) త్రిభుజ కోణాల మొత్తం: ∠R = 180° − 50° − 65° = 65°.",
+        "బాహ్య కోణ ధర్మం: ∠PRS = ∠P + ∠Q = 50° + 65° = 115°."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    },
+    {
+      "qid": "33B",
+      "page": 8,
+      "answer_page": 8,
+      "marks": 8,
+      "question_en": "B) (i) Construct a triangle TRY with RY = 4 cm, TR = 7 cm and ∠R = 140°. Write the steps of construction (4). (ii) Which of the following sets of lengths can be the sides of a triangle? Give reasons: (a) 5 cm, 6 cm, 7 cm (b) 3 cm, 6 cm, 9 cm (c) 7 cm, 10 cm, 20 cm (d) 6 cm, 6 cm, 6 cm (4).",
+      "question_te": "B) (i) RY = 4 సెం.మీ., TR = 7 సెం.మీ., ∠R = 140° గల త్రిభుజం TRY నిర్మించి, నిర్మాణ దశలు వ్రాయండి (4). (ii) క్రింది పొడవులలో ఏ సమితులు త్రిభుజ భుజాలుగా ఉండగలవు? కారణాలు ఇవ్వండి: (a) 5, 6, 7 సెం.మీ. (b) 3, 6, 9 సెం.మీ. (c) 7, 10, 20 సెం.మీ. (d) 6, 6, 6 సెం.మీ. (4).",
+      "answer_en": "(i) Draw RY = 4 cm; at R draw a 140° ray; mark T on it with RT = 7 cm; join TY. (ii) (a) possible (b) not possible (c) not possible (d) possible.",
+      "answer_te": "(i) RY = 4 సెం.మీ. గీయండి; R వద్ద 140° కిరణం గీయండి; దానిపై RT = 7 సెం.మీ.గా T గుర్తించండి; TY కలపండి. (ii) (a) సాధ్యం (b) సాధ్యం కాదు (c) సాధ్యం కాదు (d) సాధ్యం.",
+      "steps_en": [
+        "(i) Draw RY = 4 cm. At R, draw ray RX so ∠YRX = 140°; mark T on RX with RT = 7 cm; join TY.",
+        "(ii) Use the triangle inequality: the sum of any two sides must be greater than the third.",
+        "(a) 5 + 6 = 11 > 7, possible; (b) 3 + 6 = 9, not greater than 9, not possible.",
+        "(c) 7 + 10 = 17 < 20, not possible; (d) 6 + 6 = 12 > 6 for every pair, possible."
+      ],
+      "steps_te": [
+        "(i) RY = 4 సెం.మీ. గీయండి. R వద్ద ∠YRX = 140° అయ్యేలా RX కిరణం గీయండి; RXపై RT = 7 సెం.మీ.గా T గుర్తించి TY కలపండి.",
+        "(ii) త్రిభుజ అసమానత: ఏ రెండు భుజాల మొత్తమైనా మూడవ భుజం కంటే ఎక్కువగా ఉండాలి.",
+        "(a) 5 + 6 = 11 > 7, సాధ్యం; (b) 3 + 6 = 9, 9 కంటే ఎక్కువ కాదు, సాధ్యం కాదు.",
+        "(c) 7 + 10 = 17 < 20, సాధ్యం కాదు; (d) ప్రతి జతకు 6 + 6 = 12 > 6, సాధ్యం."
+      ],
+      "options_en": [],
+      "options_te": [],
+      "correct_index": null,
+      "source_solution_present": true,
+      "diagram_page": null,
+      "display_note_te": "",
+      "issue_notes": []
+    }
+  ]
+}
