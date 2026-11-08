@@ -72,6 +72,9 @@
   భవిష్యత్తు (పెద్దదైతే): VPS (Hostinger KVM1 + PocketBase) లేదా Firebase.
   ❓ సహాయం ✅ (2026.11.03-6): కంటెంట్ ఒక్కచోట `help.js` (RAAY_HELP – సెక్షన్లు/ప్రశ్నలు/స్టెప్స్/img) → app `V.help` (☰ మెనూ, welcome, టీచర్ బార్ ❓, `#help`) + `help.html` (వెబ్ పేజీ). బొమ్మలు `help/img/*.jpg`, వీడియో `help/raay_vidyarthi_ela_vadali.mp4` (2:01, 720×1280, తెలుగు captions, నిశ్శబ్దం – యూజర్ వాయిస్ పంపితే `-c:v copy` తో కలపాలి). ఫీచర్లు మారితే help.js కూడా అప్‌డేట్ చేయాలి. sw.js: help.js network-first, .mp4 కాష్ చేయదు (VER v10).
 
+- 🎨 కొత్త రూపం (2026.11.08) – ⏳ యూజర్ ఆమోదం కోసం `preview.html` లో (live). హోమ్: 📈 ప్రగతి 4 టైల్స్ (hStats), 👉 తదుపరి పాఠం, 📖 చదువు కొనసాగించు (subjProg/contLearn), ⚡ త్వరిత యాక్సెస్ 4×2 (qa); నేర్చుకో: “📚 నోట్స్ ఉన్న అన్ని పాఠాలు” = పెద్ద సబ్జెక్టు కార్డులు → పాఠాల వరుసలు + 📝 టెస్ట్ (lsubCard); టీచర్: 17 చిప్స్ బదులు డాష్‌బోర్డ్ (tDash: హోంవర్క్ హీరో, 4 గణాంకాలు, ఈ వారం, TGRP గుంపుల టైల్స్; విభాగంలో ← డాష్‌బోర్డ్). ఆమోదిస్తే: preview.html లోని appBase/footer ప్రివ్యూ మార్పులు తీసి index.html గా, APPV పెంచి, preview.html తొలగించాలి.
+- help: item లో `vid` (వీడియో) – `help/విద్యార్థి ఎలా చేరాలి.mp4` (యూజర్ పంపిన 2:45 విద్యార్థి వాడకం వీడియో).
+
 ## పరీక్ష
 - `python3 -m http.server` + Playwright (chromium ముందే ఉంది). `node --check` అన్ని `<script>` blocks.
 - pdf.js CDN sandbox లో అందదు → `/opt/npm-tools/node_modules/pdfjs-dist/legacy/build/` ని route చేసి పరీక్షించాలి.

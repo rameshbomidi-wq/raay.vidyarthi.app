@@ -36,6 +36,7 @@ summary{padding:13px 40px 13px 16px;font-weight:600;cursor:pointer;list-style:no
 summary::-webkit-details-marker{display:none}summary::after{content:'▾';position:absolute;right:16px;top:13px;color:var(--mut)}
 details[open] summary::after{content:'▴'}
 details ol{margin:0 16px 12px 36px;font-size:15px}details li{margin-bottom:5px}
+details video{display:block;width:280px;max-width:80%;margin:4px auto 14px;border-radius:14px;background:#000}
 details img{display:block;width:240px;max-width:70%;margin:4px auto 14px;border-radius:14px;border:1px solid var(--line)}
 .empty{text-align:center;color:var(--mut);padding:20px}
 footer{text-align:center;color:var(--mut);font-size:13.5px;padding:18px 16px 30px}
@@ -72,7 +73,7 @@ footer a{font-weight:700;text-decoration:none}
   chips.innerHTML=[['','అన్నీ']].concat(H.sec.map(function(x){return [x.id,x.ic+' '+x.t];})).map(function(c){return '<button data-s="'+c[0]+'" class="'+(sec===c[0]?'on':'')+'">'+esc(c[1])+'</button>';}).join('');
   list.innerHTML=H.sec.filter(function(s){return !sec||t||s.id===sec;}).map(function(s){
    var its=s.items.filter(function(it){return !t||(it.q+' '+it.a.join(' ')).toLowerCase().indexOf(t)>=0;});n+=its.length;if(!its.length)return '';
-   return '<h3 class="sh">'+s.ic+' '+esc(s.t)+'</h3>'+its.map(function(it){return '<details'+(t?' open':'')+'><summary>'+esc(it.q)+'</summary><ol>'+it.a.map(function(a){return '<li>'+esc(a)+'</li>';}).join('')+'</ol>'+(it.img?'<img src="'+esc(it.img)+'" alt="" loading="lazy" onerror="this.remove()">':'')+'</details>';}).join('');
+   return '<h3 class="sh">'+s.ic+' '+esc(s.t)+'</h3>'+its.map(function(it){return '<details'+(t?' open':'')+'><summary>'+esc(it.q)+'</summary><ol>'+it.a.map(function(a){return '<li>'+esc(a)+'</li>';}).join('')+'</ol>'+(it.vid?'<video controls preload="none" playsinline src="'+esc(encodeURI(it.vid))+'"></video>':'')+(it.img?'<img src="'+esc(it.img)+'" alt="" loading="lazy" onerror="this.remove()">':'')+'</details>';}).join('');
   }).join('')||'<div class="empty">ఏమీ దొరకలేదు – వేరే పదంతో వెతకండి</div>';}
  chips.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;sec=b.getAttribute('data-s');draw();});
  q.addEventListener('input',draw);draw();
