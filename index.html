@@ -728,6 +728,7 @@ details.lsub[open]>summary{border-radius:22px 22px 0 0;margin:0}details.lsub[ope
 .exov{position:fixed;inset:0;z-index:100000;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;padding:20px;animation:pop .2s both}
 .exbox{background:#fff;border-radius:24px;padding:22px 18px 16px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.3)}
 .exbox h3{margin:6px 0 4px;font-size:20px}.exbox p{margin:0 0 14px;color:var(--mut);font-size:13.5px}.exbox .row2 .btn{margin:0}
+.semtabs{margin:-2px 0 12px}
 </style>
 </head>
 <body>
@@ -2626,7 +2627,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.09-3';
+const APPV='2026.11.09-4';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -4926,7 +4927,7 @@ const APBOOKS={"1":[["వర్క్‌బుక్ — SEM1","WORK BOOK FOR CL
 V.library=()=>{const tab=param.tab||'books';const c=param.c||S.cur.c;
  return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>📚 లైబ్రరీ</h2><button class="ib" style="background:#fff" onclick="libLoad(true)" aria-label="రిఫ్రెష్">🔄</button></div>
 <div class="tabs">${[['books','📘 పుస్తకాలు'],['tools','🧰 లెర్నింగ్ టూల్స్']].map(([k,n])=>`<button class="${tab===k?'on':''}" onclick="go('library',{tab:'${k}',c:${c}})">${n}</button>`).join('')}</div>
-${tab==='books'?`<div class="tchips">${CLASSES.map(k=>`<button class="${k===c?'on':''}" onclick="go('library',{tab:'books',c:${k}})">${k}వ తరగతి</button>`).join('')}</div>`:''}
+${tab==='books'?`<div class="tchips">${CLASSES.map(k=>`<button class="${k===c?'on':''}" onclick="go('library',{tab:'books',c:${k},sem:'${param.sem||'all'}'})">${k}వ తరగతి</button>`).join('')}</div><div class="tabs semtabs">${[['all','📚 అన్నీ'],['1','1️⃣ SEM 1'],['2','2️⃣ SEM 2']].map(([k,n])=>`<button class="${(param.sem||'all')===k?'on':''}" onclick="go('library',{tab:'books',c:${c},sem:'${k}'})">${n}</button>`).join('')}</div>`:''}
 <div id="libList"><div class="empty">⏳ లోడ్ అవుతోంది...</div></div>`;};
 async function libLoad(force){if(view!=='library')return;const tab=param.tab||'books',c=param.c||S.cur.c;const box=document.getElementById('libList');if(!box)return;
  const token=++LIB_LOAD;
@@ -4953,10 +4954,17 @@ async function libLoad(force){if(view!=='library')return;const tab=param.tab||'b
   return it.k==='aplink'?`<a class="li" style="text-decoration:none;color:inherit" href="${esc(it.u)}" target="_blank" rel="noopener noreferrer">${content}<span aria-hidden="true">↗</span></a>`:`<button class="li" onclick="openItem(${i})">${content}<span>▶</span></button>`;};
  const ap=items.map((it,i)=>[it,i]).filter(([it])=>it.k==='aplink'),local=items.map((it,i)=>[it,i]).filter(([it])=>it.k!=='aplink');
  const catalog=ap.length?`<div class="sect"><h3>AP పుస్తకాల లింకులు — 2026–2027</h3><p class="mut">${c}వ తరగతి • ${ap.length} లింకులు. పుస్తకాన్ని కొత్త ట్యాబ్‌లో తెరవడానికి ఇంటర్నెట్ అవసరం. PDF విషయాలు/మీడియం/ఎడిషన్ ఇంకా ధృవీకరించలేదు.</p>${pendingLocal?'<p class="mut">స్థానిక PDFల జాబితా లోడ్ అవుతోంది...</p>':offline?'<p class="mut">స్థానిక PDFల జాబితా ఇప్పుడు లోడ్ కాలేదు. నెట్ వచ్చిన తర్వాత రిఫ్రెష్ చేయండి.</p>':''}<small>లింకు తెరవకపోతే <a href="https://cse.ap.gov.in/loadacademictextbookpublicview" target="_blank" rel="noopener noreferrer">అధికారిక CSE పోర్టల్</a>లో చూడండి.</small></div><div class="list">${ap.map(([it,i])=>row(it,i)).join('')}</div>`:'';
+ const semF=tab==='books'?(param.sem||'all'):'all';
+ if(semF!=='all'){const so=it=>semOf(it.k==='aplink'?it.sub+' '+it.t:decodeURIComponent(it.u)+' '+it.t),all=items.map((it,i)=>[it,i]),sp=all.filter(([it])=>so(it)===+semF),yr=all.filter(([it])=>so(it)===0);
+  box.innerHTML=`<div class="sect"><h3>${semF==='1'?'1️⃣':'2️⃣'} SEM ${semF} పుస్తకాలు — ${c}వ తరగతి</h3>${pendingLocal?'<p class="mut">స్థానిక PDFల జాబితా లోడ్ అవుతోంది...</p>':''}</div>`
+   +(sp.length?`<div class="list">${sp.map(([it,i])=>row(it,i)).join('')}</div>`:`<div class="warn" style="margin-bottom:12px">📢 ${c}వ తరగతి SEM ${semF} పుస్తకాలు ఇంకా అధికారిక CSE పోర్టల్‌లో రాలేదు. వచ్చిన వెంటనే ఇక్కడ చేరుస్తాం.<br><a href="https://cse.ap.gov.in/loadacademictextbookpublicview" target="_blank" rel="noopener noreferrer">అధికారిక CSE పోర్టల్ ↗</a></div>`)
+   +(yr.length?`<h3>📗 సంవత్సరం మొత్తం <small class="mut" style="font-weight:600">(SEM గుర్తు లేని పుస్తకాలు)</small></h3><div class="list">${yr.map(([it,i])=>row(it,i)).join('')}</div>`:'');return;}
  box.innerHTML=items.length?catalog+(local.length?`${ap.length?'<h3>ఈ appలో PDFs / టీచర్ జోడించిన పుస్తకాలు</h3>':''}<div class="list">${local.map(([it,i])=>row(it,i)).join('')}</div>`:'')
   :`<div class="empty">${tab==='books'?'ఈ తరగతికి పుస్తకాలు ఇంకా జోడించలేదు 📚':'టూల్స్ ఇంకా జోడించలేదు 🧰'}</div>`;}
 }
 let LIB=[],LIB_LOAD=0;
+/* పుస్తకం పేరు/ఫైల్ పేరులో SEM1/SEM2 గుర్తు → 1/2; లేకపోతే 0 (సంవత్సరం మొత్తం) */
+function semOf(x){x=String(x||'');if(/SEM[\s_-]*2(?!\d)/i.test(x))return 2;if(/SEM[\s_-]*1(?!\d)/i.test(x))return 1;return 0;}
 function openItem(i){const it=LIB[i];if(!it)return;if(it.k==='aplink'){window.open(it.u,'_blank','noopener,noreferrer');return;}go('book',{u:it.u,t:it.t,k:it.k,back:{tab:param.tab||'books',c:param.c||S.cur.c}});if(it.k==='pdf')pdfInit();}
 V.book=()=>{const p=param,k=p.k;const ext=/^https?:/i.test(p.u);
  const top=`<div class="bvtop"><button class="ib" onclick="closeBook()" aria-label="మూసివేయి">✕</button><b>${esc(p.t||'')}</b>${k!=='pdf'?`<a class="ib" href="${esc(k==='drive'?'https://drive.google.com/file/d/'+driveId(p.u)+'/view':p.u)}" target="_blank" rel="noopener" aria-label="కొత్త ట్యాబ్">↗</a>`:`<button class="ib" id="akbtn" hidden onclick="akToggle()">🔑</button><button class="ib" id="inkbtn" onclick="inkToggle()">${p.ak?'✏️ జవాబు రాయి':'✏️ రాయి'}</button><a class="ib" href="${esc(p.u)}" target="_blank" rel="noopener" download aria-label="డౌన్‌లోడ్">⬇</a>`}</div>`;
