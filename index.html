@@ -2504,8 +2504,14 @@ function perfMsg(a,n){if(!n)return 'ఇంకా టెస్ట్ రాయల
 function myHw(){return live('hw').filter(h=>h.c===S.cur.c).sort((a,b)=>a.due<b.due?-1:1);}
 function subOf(h){const x=live('subs').find(s=>s.hw===h.id&&s.n===me()&&(!s.o||s.o===S.dev));return x&&x.d;}
 function pendingHw(){return myHw().filter(h=>!subOf(h));}
-function eventsOn(d){return live('events').filter(e=>e.d===d&&(e.c===0||e.c===S.cur.c)).sort((a,b)=>(a.tm||'')<(b.tm||'')?-1:1);}
-function upcoming(n){const t=todayS();return live('events').filter(e=>e.d>=t&&(e.c===0||e.c===S.cur.c)).sort((a,b)=>(a.d+a.tm)<(b.d+b.tm)?-1:1).slice(0,n);}
+/* 🎉 యాప్ ప్రారంభం – 14 నవంబర్ 2026 బాలల దినోత్సవం: అన్ని పాఠశాలల విద్యార్థులకు యాప్ తరఫు ఈవెంట్ + స్లైడ్ (7–21 నవంబర్) + ఆ రోజు కాన్ఫెట్టి. సర్వర్/పాఠశాల డేటాలో కాదు */
+const LAUNCH={d:'2026-11-14',a:'2026-11-07',b:'2026-11-21'};
+function launchOn(){const t=todayS();return t>=LAUNCH.a&&t<=LAUNCH.b;}
+const APP_EV=[{id:'app-launch-2026',c:0,d:LAUNCH.d,tm:'',ty:'ev',app:1,t:'🎉 బాలల దినోత్సవం – రాయ్ విద్యార్థి యాప్ ప్రారంభం',x:'పిల్లలందరికీ బాలల దినోత్సవ శుభాకాంక్షలు! 🎈 ఈరోజు నుండి రాయ్ విద్యార్థి యాప్ అందరికీ ఉచితం. రోజూ ఒక పాఠం చదువు, ఒక టెస్ట్ రాయి – ⭐ స్టార్లు గెలుచుకో. సందేహం వస్తే 💬 సందేహం లో టీచర్‌ను అడుగు.'}];
+function evAll(){return live('events').concat(APP_EV);}
+function launchHello(){if(todayS()!==LAUNCH.d)return;let k='';try{k=localStorage.getItem('raiLaunch');}catch(e){}if(k===LAUNCH.d)return;try{localStorage.setItem('raiLaunch',LAUNCH.d);}catch(e){}setTimeout(()=>{try{confetti();}catch(e){}toast('🎈 హ్యాపీ చిల్డ్రన్స్ డే! రాయ్ విద్యార్థి యాప్ ప్రారంభం 🎉');},900);}
+function eventsOn(d){return evAll().filter(e=>e.d===d&&(e.c===0||e.c===S.cur.c)).sort((a,b)=>(a.tm||'')<(b.tm||'')?-1:1);}
+function upcoming(n){const t=todayS();return evAll().filter(e=>e.d>=t&&(e.c===0||e.c===S.cur.c)).sort((a,b)=>(a.d+a.tm)<(b.d+b.tm)?-1:1).slice(0,n);}
 function dueText(h){const sd=subOf(h);const d=diffDays(h.due,todayS());
  if(sd)return `<span class="st okc">✓ సమర్పించారు: ${fmtD(sd)}</span>`;
  if(d<0)return `<span class="st late">${-d} రోజులు ఆలస్యం (గడువు: ${fmtD(h.due)})</span>`;
@@ -2694,7 +2700,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.09-8';
+const APPV='2026.11.09-9';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3494,7 +3500,7 @@ function bkb(v,p,t){return `<button class="bkb" onclick="go('${v}'${p?','+p:''})
 function schip(c,s){const p=subjProg(c,s);if(!p.n)return '';return `<button class="sch" style="--sc:${SUBJ[s].col}" onclick="go('learn',{open:'${s}'})"><span class="si2">${SUBJ[s].ic}</span><span><b>${SUBJ[s].n}</b><small>${p.d}/${p.n} పాఠాలు</small></span></button>`;}
 /* 🏠 హోమ్ – చిన్న పేరు పెట్టె (అందులో ఈవెంట్లు/సూక్తి/టూల్స్/ID/ప్రగతి కార్డు/బ్యాడ్జీలు), ఫ్లాష్ న్యూస్, తదుపరి పాఠం, సబ్జెక్టులు (ఒకే వరుస), ప్రగతి, త్వరిత యాక్సెస్, ఫ్లాష్ ఫోటోలు.
    కింది నావ్‌లో ఉన్నవి (నేర్చుకో/టెస్ట్/ఆటలు/హోంవర్క్) ఇక్కడ మళ్ళీ పెట్టం – ఒకే చోటుకి రెండు బటన్లు ఉండకూడదు */
-V.home=()=>{setTimeout(checkBadges,50);const g=greet(),stc=stars(),c=S.cur.c,sl=learnSubs(c).map(s=>schip(c,s)).join(''),t=todayS(),evT=live('events').filter(e=>e.d===t&&(e.c===0||e.c===S.cur.c)).length;
+V.home=()=>{setTimeout(checkBadges,50);launchHello();const g=greet(),stc=stars(),c=S.cur.c,sl=learnSubs(c).map(s=>schip(c,s)).join(''),t=todayS(),evT=evAll().filter(e=>e.d===t&&(e.c===0||e.c===S.cur.c)).length;
  const hi=(v,ic,tx,p,b)=>`<button onclick="go('${v}'${p?','+p:''})"><span>${ic}</span>${tx}${b?`<i>${b}</i>`:''}</button>`;
  return `<section class="hero hsm"><div class="htop"><div><small>${g[0]} ${g[1]}${S.cfg.sname?' • 🏫 '+esc(S.cfg.sname):''}</small><h2>${esc(S.cur.n)}</h2><p class="motto">నేర్చుకో • సాధన చేయి • ఎదుగు</p></div><span class="starb" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐ ${stc}</span><div class="mascot bob" onclick="go('avatar')" title="బొమ్మ మార్చు">${avOf(S.cur.n)}<i class="edit">✏️</i></div></div>
 <div class="hico">${hi('events','📅','ఈవెంట్లు','',evT?'ఈరోజు':'')}${hi('daily','💡','సూక్తి')}${hi('library','🧰','టూల్స్',"{tab:'tools'}")}${hi('idmk','🪪','ID కార్డు')}${hi('card','🎓','ప్రగతి కార్డు')}${hi('badges','🏅','బ్యాడ్జీలు','',badgeCount()||'')}${+c===10?hi('ssc','📝','SSC'):''}</div></section>
@@ -3504,7 +3510,7 @@ ${hStats()}
 <h4 class="sec">⚡ త్వరిత యాక్సెస్</h4><div class="qgrid">${qb('doubts','💬','సందేహం','p')}${qb('schedule','📅','షెడ్యూల్','t')}${qb('library','📚','పుస్తకాలు','b',"{tab:'books'}")}${qb('dict','🔤','డిక్షనరీ','o')}</div>
 `;};
 /* 📅 ఈవెంట్లు – పెద్ద కార్డులు */
-V.events=()=>{const t=todayS(),es=live('events').filter(e=>e.d>=t&&(e.c===0||e.c===S.cur.c)).sort((a,b)=>(a.d+(a.tm||''))<(b.d+(b.tm||''))?-1:1);
+V.events=()=>{const t=todayS(),es=evAll().filter(e=>e.d>=t&&(e.c===0||e.c===S.cur.c)).sort((a,b)=>(a.d+(a.tm||''))<(b.d+(b.tm||''))?-1:1);
  const col={test:'#dc2626',hol:'#16a34a',live:'#7c3aed'};
  return `<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>📅 ఈవెంట్లు</h2></div>
 ${es.length?es.map(e=>{const lbl=e.d===t?'ఈరోజు':e.d===addDays(t,1)?'రేపు':fmtD(e.d),ok=/^https:\/\//.test(e.link||'');
@@ -3885,7 +3891,7 @@ V.schedule=()=>{const t=todayS();const sel=param.d||t;const base=param.w||sel;co
   const s=periodSubj(S.cur.c,wd,x);return `<div class="period"><div class="tm">${minTo12(st)}</div><div class="pc ${isNow?'now':''}" style="border-left-color:${SUBJ[s].col}">${isNow?'<span class="now-tag">ఇప్పుడు</span>':''}<small>పీరియడ్ ${x+1}</small><b>${SUBJ[s].ic} ${SUBJ[s].n}</b><span>${du} ని. • ${TEACH[s]} • తరగతి గదిలో</span></div></div>`;}).join('');
  return `<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>📅 నా షెడ్యూల్</h2></div>
 <div class="month"><b>${MON[d.getMonth()]}, ${d.getFullYear()}</b>${sel!==t?`<button class="lk" onclick="go('schedule')">ఈరోజుకు ▸</button>`:''}</div>
-<div class="strip"><button class="ar" onclick="go('schedule',{d:'${sel}',w:'${addDays(base,-7)}'})">‹</button><div class="days">${days.map(x=>{const dd=parseD(x);const hasEv=live('events').some(e=>e.d===x&&(e.c===0||e.c===S.cur.c));
+<div class="strip"><button class="ar" onclick="go('schedule',{d:'${sel}',w:'${addDays(base,-7)}'})">‹</button><div class="days">${days.map(x=>{const dd=parseD(x);const hasEv=evAll().some(e=>e.d===x&&(e.c===0||e.c===S.cur.c));
   return `<button class="day ${x===sel?'on':''} ${x===t?'td':''} ${hasEv?'ev':''}" onclick="go('schedule',{d:'${x}',w:'${base}'})">${DAYS[dd.getDay()]}<b>${dd.getDate()}</b></button>`;}).join('')}</div><button class="ar" onclick="go('schedule',{d:'${sel}',w:'${addDays(base,7)}'})">›</button></div>
 <h4 class="sec">${fmtLong(sel)}</h4>
 ${ev.length?`<div class="hscroll">${ev.map(evCard).join('')}</div>`:''}
@@ -4532,7 +4538,7 @@ async function addEv(){const t=$('#et').value.trim();if(!t)return toast('శీ�
  if(S.cfg.type==='gs'&&JSON.stringify(rec).length>19000)return toast('వివరాలు చాలా పెద్దవి – కొంచెం తగ్గించండి');
  put('events',rec);EVPH=[];toast('ఈవెంట్ జోడించబడింది ✓');go('teacher',{t:'ev'});}
 function evImgs(e,cls){return (e.ph||[]).map(p=>imgTag(p.u||p.s,cls||'evimg',p.s)).join('');}
-V.evd=()=>{const e=live('events').find(x=>x.id===param.id);const bar=`<div class="bar"><button class="ib" onclick="go(param.back||'events')">←</button><h2>📅 ఈవెంట్</h2></div>`;if(!e)return bar+'<div class="empty">ఈవెంట్ దొరకలేదు</div>';
+V.evd=()=>{const e=evAll().find(x=>x.id===param.id);const bar=`<div class="bar"><button class="ib" onclick="go(param.back||'events')">←</button><h2>📅 ఈవెంట్</h2></div>`;if(!e)return bar+'<div class="empty">ఈవెంట్ దొరకలేదు</div>';
  const ok=/^https:\/\//.test(e.link||'');return bar+`<div class="card evd"><span class="tag ${({test:'t',hol:'h',live:'l'}[e.ty]||'')}">${EVT[e.ty]||''}</span><h3>${esc(e.t)}</h3>
 <p class="mut">🗓️ ${fmtLong(e.d)}${e.tm?' • ⏰ '+to12(e.tm):''} • ${e.c?e.c+'వ తరగతి':'అన్ని తరగతులు'}</p>${e.x?`<p class="evx">${esc(e.x)}</p>`:''}
 ${e.ph&&e.ph.length?`<div class="evgal">${evImgs(e)}</div><p class="mut" style="font-size:12px">ఫోటో తాకితే పెద్దగా కనిపిస్తుంది</p>`:''}
@@ -5279,7 +5285,7 @@ const DEF_SLIDES=[['📚','రోజూ కొంచెం చదువు','న
  ['📝','టెస్ట్ రాసి ⭐ గెలుచుకో','80% పైన వస్తే 3 స్టార్లు','test','linear-gradient(135deg,#16a34a,#84cc16)'],['💬','సందేహమా? టీచర్‌ని అడుగు','జవాబు నీ ఫోన్‌కే వస్తుంది','doubts','linear-gradient(135deg,#9333ea,#ec4899)']];
 function slidesHtml(){const ph=live('notes').filter(n=>n.kind==='photo'&&(!n.c||n.c===S.cur.c)).sort((a,b)=>(b.upd||0)-(a.upd||0)).slice(0,12);
  const sl=ph.map(p=>`<div class="slide"><img src="${esc(p.img||imgSrc(p.url))}" alt="${esc(p.t||'')}" loading="lazy" onerror="this.parentNode.classList.add('noimg')">${p.t?`<div class="cap">${esc(p.t)}</div>`:''}</div>`)
-  .concat(DEF_SLIDES.map(([i,t,s,v,bg])=>`<div class="slide def" style="background:${bg}" onclick="go('${v}')"><span>${i}</span><b>${t}</b><small>${s}</small></div>`));
+  .concat((launchOn()?[['🎉','బాలల దినోత్సవం – 14 నవంబర్','రాయ్ విద్యార్థి యాప్ ప్రారంభం • హ్యాపీ చిల్డ్రన్స్ డే 🎈','events','linear-gradient(135deg,#f59e0b,#ec4899 60%,#8b5cf6)']]:[]).concat(DEF_SLIDES).map(([i,t,s,v,bg])=>`<div class="slide def" style="background:${bg}" onclick="go('${v}')"><span>${i}</span><b>${t}</b><small>${s}</small></div>`));
  return `<div class="car" id="car"><div class="car-in" id="carIn">${sl.join('')}</div><div class="dots" id="dots">${sl.map((_,i)=>`<i class="${i?'':'on'}" onclick="carTo(${i})"></i>`).join('')}</div><button class="carp" id="carP" onclick="carToggle()" aria-label="ఆపు / నడుపు">⏸</button></div>`;}
 function flashItems(){const t=todayS(),out=[];
  live('notes').filter(n=>n.kind==='flash'&&(!n.c||n.c===S.cur.c)&&(!n.until||n.until>=t)).sort((a,b)=>(b.upd||0)-(a.upd||0)).forEach(n=>out.push('📢 '+n.t));
