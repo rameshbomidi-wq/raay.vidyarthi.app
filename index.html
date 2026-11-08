@@ -185,7 +185,7 @@ main{padding:14px}
 .link{border:0;background:none;color:var(--teal2);font-weight:600;margin-top:10px;padding:10px}
 .bn{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:#fff;display:flex;border-top:1px solid var(--line);z-index:30;padding-bottom:env(safe-area-inset-bottom)}
 .bn button{flex:1;border:0;background:none;padding:8px 0 9px;font-size:11px;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:1px}
-.bn button span{font-size:21px;filter:grayscale(1);opacity:.7}
+.bn button span{font-size:21px;filter:grayscale(1);opacity:.7}.bn button.on span{filter:none;opacity:1}
 .bn button.on{color:var(--teal2);font-weight:700}.bn button.on span{filter:none;opacity:1}
 .ft{text-align:center;padding:18px 10px 8px;font-size:13px;color:var(--mut)}
 .ft a{color:var(--teal2);font-weight:700;text-decoration:none}
@@ -622,6 +622,75 @@ label.idck{display:flex;align-items:center;gap:8px}label.idck input{width:20px;h
 .tgbtn{background:#ede9fe!important;color:#5b21b6!important;width:100%}
 .tgsec{background:#fff;border:1.5px solid #ddd6fe;border-radius:14px;padding:8px 12px;margin-bottom:8px}.tgsec summary{font-weight:800;color:#5b21b6;font-size:15px;cursor:pointer;line-height:1.5}.tgsec ul{margin:6px 0 2px;padding-left:18px}.tgsec li{font-size:14.5px;line-height:1.6;margin-bottom:4px}
 @media print{.tgsec{break-inside:avoid}.tgsec[open] summary~*{display:block}}
+
+/* ===== కొత్త రూపం v2 (2026.11.08): HD రంగులు, చిన్న హోమ్, మరిన్ని పేజీ, పెద్ద పాఠాల కార్డులు, టీచర్ డాష్‌బోర్డ్ ===== */
+:root{--g1:linear-gradient(135deg,#3b82f6,#1d4ed8);--g2:linear-gradient(135deg,#22c55e,#15803d);--g3:linear-gradient(135deg,#fbbf24,#f97316);--g4:linear-gradient(135deg,#f472b6,#db2777);--shine:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,0) 55%)}
+.hero{background:linear-gradient(135deg,#0d9488 0%,#0e7490 55%,#1e3a8a 100%);box-shadow:0 10px 26px rgba(14,116,144,.35);position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:-40px;top:-60px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.22),rgba(255,255,255,0) 70%);pointer-events:none}
+.hstw{background:#fff;border-radius:22px;padding:14px;margin-top:14px;box-shadow:0 4px 18px rgba(15,23,42,.08)}
+.hstw .hh{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.hstw h3{margin:0;font-size:17px}
+.hstw .hh a{font-size:13px;font-weight:800;color:#1d4ed8;cursor:pointer}
+.hst{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.hst>*{border:0;background:var(--b);color:#fff;border-radius:18px;padding:10px 4px 9px;text-align:center;position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;box-shadow:0 6px 14px var(--sh);font:inherit;overflow:hidden}
+.hst>*::before{content:'';position:absolute;inset:0;background:var(--shine);pointer-events:none}
+.hst i{font-style:normal;font-size:20px;line-height:1.2}.hst b{font-size:24px;line-height:1.15;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.18)}
+.hst small{font-size:11px;font-weight:700;line-height:1.25;opacity:.96}
+.hst button{cursor:pointer}.hst button::after{content:'›';position:absolute;right:7px;top:4px;font-size:16px;opacity:.85}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ct{border:0;background:#fff;border-radius:20px;padding:12px;text-align:left;color:var(--ink);box-shadow:0 4px 16px rgba(15,23,42,.08);display:flex;flex-direction:column;gap:6px;font:inherit;cursor:pointer;position:relative;overflow:hidden}
+.ct::before{content:'';position:absolute;left:0;top:0;right:0;height:5px;background:var(--sc)}
+.ct .ci{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:23px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--sc),color-mix(in srgb,var(--sc) 60%,#000));box-shadow:0 5px 12px color-mix(in srgb,var(--sc) 40%,transparent)}
+.ct b{font-size:16px;line-height:1.25}.ct small{font-size:12px;color:var(--mut)}
+.ct .pb{height:7px;background:#eef2f7;border-radius:7px;overflow:hidden}.ct .pb i{display:block;height:100%;background:var(--sc);border-radius:7px;min-width:4px}
+.ct em{font-style:normal;font-size:12px;font-weight:800;color:#15803d}
+.qgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.qa{border:0;background:#fff;border-radius:20px;padding:12px 2px 10px;display:flex;flex-direction:column;align-items:center;gap:7px;font:inherit;font-size:12.5px;font-weight:700;color:#1f2937;box-shadow:0 4px 16px rgba(15,23,42,.08);line-height:1.25;text-align:center;cursor:pointer}
+.qa span{width:54px;height:54px;border-radius:18px;display:grid;place-items:center;font-size:27px;position:relative;background:var(--q);box-shadow:0 6px 14px var(--qs);overflow:hidden}
+.qa span::before{content:'';position:absolute;inset:0;background:var(--shine)}
+.qa span i{position:absolute;top:2px;right:2px;background:#ef4444;color:#fff;font-style:normal;font-size:10.5px;font-weight:800;border-radius:9px;padding:0 5px;border:2px solid #fff;line-height:1.5;z-index:1}
+.qa:active,.ct:active,.hst button:active,.lrm:active,.lrt:active{transform:scale(.97)}
+.sec small{font-weight:600;letter-spacing:0;color:var(--mut);font-size:12px;margin-left:6px}
+.morebtn{display:flex;align-items:center;gap:12px;width:100%;border:0;margin-top:14px;padding:14px 16px;border-radius:20px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;font:inherit;text-align:left;box-shadow:0 8px 20px rgba(79,70,229,.3);cursor:pointer}
+.morebtn span{font-size:28px}.morebtn b{display:block;font-size:16px}.morebtn small{opacity:.9;font-size:12.5px}.morebtn em{margin-left:auto;font-style:normal;font-size:22px}
+/* నేర్చుకో – పెద్ద పాఠాల కార్డులు */
+.cl{width:100%;border:0;background:#fff;border-radius:22px;padding:16px;display:grid;grid-template-columns:auto 1fr auto;gap:2px 14px;align-items:center;text-align:left;color:var(--ink);box-shadow:0 4px 16px rgba(15,23,42,.08);margin-bottom:12px;cursor:pointer;font:inherit;position:relative;overflow:hidden}
+.clic{width:62px;height:62px;border-radius:19px;display:grid;place-items:center;font-size:30px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--sc),color-mix(in srgb,var(--sc) 60%,#000));box-shadow:0 6px 14px color-mix(in srgb,var(--sc) 40%,transparent);position:relative;overflow:hidden}
+.clic::before{content:'';position:absolute;inset:0;background:var(--shine)}
+.clt b{display:block;font-size:19px;line-height:1.3}.clt small{color:var(--mut);font-size:13.5px}
+.clar{width:34px;height:34px;border-radius:50%;background:#f1f5f9;display:grid;place-items:center;font-size:16px;color:#475569;transition:transform .2s}
+.clpb{grid-column:1/-1;height:9px;background:#eef2f7;border-radius:9px;overflow:hidden;margin-top:10px;display:block}.clpb i{display:block;height:100%;border-radius:9px;min-width:5px;background:linear-gradient(90deg,var(--sc),color-mix(in srgb,var(--sc) 65%,#fff))}
+.cl em{grid-column:1/-1;justify-self:end;font-style:normal;font-size:13px;font-weight:800;color:#15803d}
+details.lsub{margin-bottom:14px}details.lsub>summary{list-style:none;margin:0}details.lsub>summary::-webkit-details-marker{display:none}
+details.lsub[open]>summary{border-radius:22px 22px 0 0;margin:0}details.lsub[open] .clar{transform:rotate(180deg);background:var(--sc);color:#fff}
+.lrows{background:#fff;border-radius:0 0 22px 22px;padding:2px 12px 14px;box-shadow:0 10px 16px rgba(15,23,42,.06)}
+.lrow{display:flex;gap:9px;align-items:stretch;padding:6px 0}
+.lrm{flex:1;border:2px solid transparent;background:color-mix(in srgb,var(--sc) 11%,#fff);border-radius:18px;padding:14px 13px;display:flex;gap:12px;align-items:center;text-align:left;color:var(--ink);min-height:80px;font:inherit;cursor:pointer}
+.lrm b{display:block;font-size:17px;line-height:1.35}.lrm small{display:block;font-size:13px;color:#4b5563;margin-top:3px}
+.lno{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--sc),color-mix(in srgb,var(--sc) 60%,#000));color:#fff;display:grid;place-items:center;font-weight:900;font-size:19px;flex:none;box-shadow:0 4px 10px color-mix(in srgb,var(--sc) 35%,transparent)}
+.lrow.ok .lno{background:linear-gradient(135deg,#22c55e,#15803d)}.lrow.now .lrm{border-color:var(--sc)}
+.lrt{flex:none;width:84px;border:0;border-radius:18px;background:linear-gradient(135deg,#334155,#0f172a);color:#fff;font:inherit;font-weight:800;font-size:14px;line-height:1.4;cursor:pointer;box-shadow:0 5px 12px rgba(15,23,42,.25)}
+.lrt.g{background:linear-gradient(135deg,#22c55e,#15803d)}.lrt.y{background:linear-gradient(135deg,#fbbf24,#ea580c)}.lrt.r{background:linear-gradient(135deg,#f87171,#dc2626)}
+.lmore{display:block;width:100%;margin-top:8px;border:0;background:#f1f5f9;border-radius:14px;padding:12px;font:inherit;font-size:14px;font-weight:700;color:#334155;cursor:pointer}
+.tbchip{padding:10px 14px;font-size:14.5px;min-height:44px}
+.hlpvid{display:block;width:100%;max-width:320px;margin:4px auto 14px;border-radius:14px;background:#000}
+/* కింది నావ్ */
+.bn button span{width:48px;height:30px;border-radius:15px;display:grid;place-items:center;transition:background .2s;position:relative}
+.bn button.on span{background:linear-gradient(135deg,#ccfbf1,#a5f3fc)}
+.bn button span i{position:absolute;top:-3px;right:2px;background:#ef4444;color:#fff;font-style:normal;font-size:10px;font-weight:800;border-radius:9px;padding:0 5px;line-height:1.5;filter:none}
+/* బలహీన పాఠాలు */
+.wkl{background:#fff;border-radius:18px;padding:12px 14px;margin-bottom:10px;box-shadow:0 4px 14px rgba(15,23,42,.07);border-left:6px solid var(--sc)}
+.wkl b{display:block;font-size:16px}.wkl small{color:var(--mut)}.wkl .row2{margin-top:10px}
+/* టీచర్ డాష్‌బోర్డ్ */
+.thero{background:linear-gradient(135deg,#0d9488 0%,#0e7490 55%,#1e3a8a 100%);color:#fff;border-radius:24px;padding:20px 18px;display:flex;align-items:center;gap:8px;box-shadow:0 10px 26px rgba(14,116,144,.35);margin-bottom:14px;position:relative;overflow:hidden}
+.thero::after{content:'';position:absolute;right:-50px;top:-70px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.22),rgba(255,255,255,0) 70%)}
+.thero h3{margin:0 0 6px;font-size:21px;line-height:1.3}.thero p{margin:0 0 14px;opacity:.93;font-size:14px;line-height:1.45}
+.thero button{border:0;background:#fff;color:#0e7490;font:inherit;font-weight:800;border-radius:30px;padding:11px 20px;font-size:15px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.18);position:relative;z-index:1}
+.thero>span{font-size:62px;flex:none;position:relative;z-index:1}
+.wk{background:#fff;border-radius:20px;padding:10px 6px;display:flex;gap:2px;box-shadow:0 4px 16px rgba(15,23,42,.08)}
+.wk button{border:0;background:none;flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font:inherit;font-size:11.5px;color:var(--mut);padding:7px 0;border-radius:14px;cursor:pointer}
+.wk b{font-size:17px;color:var(--ink)}.wk button.td{background:linear-gradient(135deg,#14b8a6,#0e7490);color:#fff;box-shadow:0 5px 12px rgba(14,116,144,.3)}.wk button.td b{color:#fff}
+.wk i{width:7px;height:7px;border-radius:50%;background:#f97316;display:block}.wk i.no{visibility:hidden}
+@media(max-width:350px){.qgrid{grid-template-columns:repeat(3,1fr)}.hst{grid-template-columns:1fr 1fr}.thero>span{display:none}.lrt{width:70px}}
 </style>
 </head>
 <body>
@@ -2315,7 +2384,7 @@ const FBK={ready:false,user:null,
 
 /* ---------- సహాయక ఫంక్షన్లు ---------- */
 let view='home',param={},tick=null,T=null,G=null,tAuth=false;
-const PARENT={help:'home',ssc:'learn',idmk:'learn',dict:'learn',tbl:'learn',evd:'home',card:'home',avatar:'home',badges:'home',library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',wsrun:'test',wsres:'test',wsboard:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
+const PARENT={more:'home',weak:'home',help:'home',ssc:'learn',idmk:'learn',dict:'learn',tbl:'learn',evd:'home',card:'home',avatar:'home',badges:'home',library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',wsrun:'test',wsres:'test',wsboard:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
 function me(){return S.cur.n;}
 function lessonsOf(c,s){const tb=tbLes(c,s).map(x=>({k:'tb'+x.id,t:x.no+'. '+x.t,b:x.pts||[],tb:x}));const b=((L[c]||{})[s]||[]).map((x,i)=>({k:'b'+i,t:x[0],b:x[1].split('|')}));
  const n=live('notes').filter(x=>!x.kind&&x.c===c&&x.s===s).map(x=>({k:'n'+x.id,t:x.t,b:String(x.x||'').split('\n').filter(Boolean),tn:1,img:x.img||''}));return tb.concat(b,n);}
@@ -2478,8 +2547,8 @@ function render0(){const app=$('#app');
  if(view==='library')setTimeout(()=>libLoad(),0);if(view==='card')setTimeout(()=>cardLoad(false),0);}
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
- return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.08-1';
+ const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
+const APPV='2026.11.08-2';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -2901,7 +2970,7 @@ function helpLoad(){if(window.RAAY_HELP||HLP.st===1)return;HLP.st=1;const sc=doc
  sc.onload=()=>{HLP.st=2;if(view==='help')softRender();};sc.onerror=()=>{HLP.st=3;sc.remove();if(view==='help')softRender();};document.head.appendChild(sc);}
 function helpItems(sec,q){const H=window.RAAY_HELP;if(!H)return '';q=String(q||'').trim().toLowerCase();let n=0;
  const out=H.sec.filter(S2=>!sec||q||S2.id===sec).map(S2=>{const its=S2.items.filter(it=>!q||(it.q+' '+it.a.join(' ')).toLowerCase().includes(q));n+=its.length;if(!its.length)return '';
-  return `<h3 class="hlph">${S2.ic} ${esc(S2.t)}</h3>${its.map(it=>`<details class="hlp"${q||its.length===1?' open':''}><summary>${esc(it.q)}</summary><ol>${it.a.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>${it.img?`<img src="${esc(it.img)}" alt="" loading="lazy" onerror="this.remove()">`:''}</details>`).join('')}`;}).join('');
+  return `<h3 class="hlph">${S2.ic} ${esc(S2.t)}</h3>${its.map(it=>`<details class="hlp"${q||its.length===1?' open':''}><summary>${esc(it.q)}</summary><ol>${it.a.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>${it.vid?`<video class="hlpvid" controls preload="none" playsinline src="${esc(encodeURI(it.vid))}"></video>`:''}${it.img?`<img src="${esc(it.img)}" alt="" loading="lazy" onerror="this.remove()">`:''}</details>`).join('')}`;}).join('');
  return n?out:'<div class="empty">ఏమీ దొరకలేదు – వేరే పదంతో వెతకండి</div>';}
 V.help=()=>{helpLoad();const H=window.RAAY_HELP,sec=param.s||'';
  const bar=`<div class="bar"><button class="ib" onclick="param.back?go(param.back):go(S.cur?'menu':'welcome')">←</button><h2>❓ ఎలా వాడాలి</h2></div>`;
@@ -3038,9 +3107,8 @@ function tbMonthSec(){const c=S.cur.c,m=tbNowM(),sy=tbSyl(c,m),subs=learnSubs(c)
  const rows=subs.map(s=>{const now=tbLes(c,s).filter(tbIsNow),txt=sy&&sy[TB_SK[s]];if(!now.length&&(!txt||txt==='—'))return '';
   return `<div class="tbrow"><b style="color:${SUBJ[s].col}">${SUBJ[s].ic} ${SUBJ[s].n}</b>${now.length?`<div class="tbchips">${now.map(L=>tbChip(c,s,L)).join('')}</div>`:`<small>${esc(txt)}</small>`}</div>`;}).join('');
  const pk=tbPick(c);
- const rev=all?`<details class="tball"><summary>📚 నోట్స్ ఉన్న అన్ని పాఠాలు</summary>${subs.filter(s=>tbLes(c,s).length).map(s=>`<div class="tbchips">${tbLes(c,s).map(L=>tbChip(c,s,L)).join('')}</div>`).join('')}</details>`:'';
  return `<div class="tbmon"><h3>📅 ${TB_MN[m-1]} నెల పాఠాలు <small>${c}వ తరగతి</small></h3>${rows||'<p class="mut">ఈ నెల పాఠాల నోట్స్ త్వరలో వస్తాయి.</p>'}
-${pk?`<div class="tbnext" onclick="go('tbl',{s:'${pk.s}',id:'${pk.L.id}'})"><span>👉</span><div><small>${tbIsNow(pk.L)?'ఈ నెల చదవాల్సింది':'ఇంకా చదవని పాఠం'} • ${SUBJ[pk.s].n}</small><b>${pk.L.no}. ${esc(pk.L.t)}</b></div><em>చదువు ▶</em></div>`:''}${rev}</div>`;}
+${pk?`<div class="tbnext" onclick="go('tbl',{s:'${pk.s}',id:'${pk.L.id}'})"><span>👉</span><div><small>${tbIsNow(pk.L)?'ఈ నెల చదవాల్సింది':'ఇంకా చదవని పాఠం'} • ${SUBJ[pk.s].n}</small><b>${pk.L.no}. ${esc(pk.L.t)}</b></div><em>చదువు ▶</em></div>`:''}</div>`;}
 /* సబ్జెక్టు పేజీలో పాఠ్యపుస్తకం పాఠాల కార్డులు */
 function tbSubjectCards(c,s){const ls=tbLes(c,s);if(!ls.length)return '';
  return `<h4 class="sec">📖 పాఠ్యపుస్తకం పాఠాలు – నోట్స్ & టెస్ట్</h4>${ls.map(L=>{const d=isRead(tbKey(c,s,L.id)),b=tbBest(L.id),now=tbIsNow(L);
@@ -3239,25 +3307,59 @@ const EVT={ev:'ఈవెంట్',test:'టెస్ట్',hol:'సెలవ�
 function evCard(e){const t=todayS();const lbl=e.d===t?'ఈరోజు':e.d===addDays(t,1)?'రేపు':fmtD(e.d);const tc={test:'t',hol:'h',live:'l'}[e.ty]||'';const ok=/^https:\/\//.test(e.link||'');
  const ph=e.ph&&e.ph[0],more=!!(e.x||(e.ph&&e.ph.length));
  return `<div class="ecard">${ph?`<div class="ethumb" onclick="go('evd',{id:'${e.id}'})">${imgTag(ph.u||ph.s,'evthumb',ph.s)}${e.ph.length>1?`<em>+${e.ph.length-1}</em>`:''}</div>`:''}<span class="tag ${tc}">${e.ty==='live'?'🔴 LIVE • ':''}${lbl}</span><b>${esc(e.t)}</b><small>${e.tm?to12(e.tm):''} ${e.ty!=='ev'?'• '+EVT[e.ty]:''}</small>${e.x?`<small class="ex">${esc(e.x.length>70?e.x.slice(0,70)+'…':e.x)}</small>`:''}${ok?`<a class="lk2" href="${esc(e.link)}" target="_blank" rel="noopener">ఇప్పుడే చేరండి ▶</a>`:more?`<button class="lk2" onclick="go('evd',{id:'${e.id}'})">వివరాలు, ఫోటోలు ▸</button>`:`<button class="lk2" onclick="go('schedule',{d:'${e.d}'})">వివరాలు చూడు ▸</button>`}</div>`;}
-V.home=()=>{setTimeout(checkBadges,50);const st=stats();const up=upcoming(6);const pend=pendingHw();const g=greet(),stc=stars();
- return `<section class="hero"><div><small>${g[0]} ${g[1]}</small><h2>${esc(S.cur.n)}</h2><p>${S.cfg.sname?'🏫 '+esc(S.cfg.sname):'నేర్చుకో ఎప్పుడైనా, ఎక్కడైనా!'}</p><span class="starb" onclick="event.stopPropagation();toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐ ${stc} స్టార్లు</span> <span class="starb" onclick="event.stopPropagation();toast('వరుసగా ఎన్ని రోజులు యాప్ వాడావో')">🔥 ${streak()}</span> <span class="starb" onclick="event.stopPropagation();go('badges')">🏅 ${badgeCount()}</span></div><div class="mascot bob" onclick="go('avatar')" title="బొమ్మ మార్చు">${avOf(S.cur.n)}<i class="edit">✏️</i></div></section>
-${tickerHtml()}${slidesHtml()}
-${reconnectCard()}${installBanner()}<div class="perf" onclick="go('test',{tab:'done'})"><div><h3>మొత్తం ప్రదర్శన</h3><p>${perfMsg(st.avg,st.n)}</p><b class="more">మరిన్ని వివరాలు ▸</b></div>${ring(st.avg)}</div>
-<h4 class="sec">రాబోయే ఈవెంట్లు</h4><div class="hscroll">${up.length?up.map(evCard).join(''):`<div class="ecard"><span class="tag">ఈరోజు</span><b>కొత్త ఈవెంట్లు లేవు</b><small>షెడ్యూల్‌లో పీరియడ్లు చూడు</small><button class="lk2" onclick="go('schedule')">షెడ్యూల్ ▸</button></div>`}</div>
-<h4 class="sec">అన్ని విభాగాలు</h4><div class="tiles">
-${tile('learn','📖','సెల్ఫ్ లెర్న్','పాఠాలు చదువు','#dbeafe')}${tile('doubts','💬','సందేహం','టీచర్‌ని అడుగు','#fde2e4')}${tile('test','📝','టెస్ట్','రాసి రిపోర్ట్ చూడు','#fdeaa8')}
-${tile('schedule','📅','షెడ్యూల్','పీరియడ్లు, ఈవెంట్లు','#ccf0ee')}${tile('games','🎮','ఆటలు','ఆడుతూ నేర్చుకో','#e0dcfd')}${tile('homework','📒','హోంవర్క్',pend.length+' పెండింగ్','#d1fae5')}${tile('library','📚','పుస్తకాలు','పాఠ్య, వర్క్‌బుక్స్','#fde2e4',"{tab:'books'}")}${tile('library','🧰','టూల్స్','లెర్నింగ్ టూల్స్','#e0e7ff',"{tab:'tools'}")}${+S.cur.c===10?tile('ssc','🎓','SSC ప్రశ్న–జవాబు','1/2/4/8 మార్కులు','#fef3c7'):''}</div>
-${dailyCards()}
-${pend.length?`<h4 class="sec">పెండింగ్ హోంవర్క్</h4>${pend.slice(0,2).map(hwCard).join('')}`:''}`;};
+/* సబ్జెక్టు ప్రగతి: పాఠ్యపుస్తకం పాఠాలు ఉంటే అవి, లేకపోతే పాత పాఠాలు */
+function subjProg(c,s){const tl=tbLes(c,s);if(tl.length)return {n:tl.length,d:tl.filter(L=>isRead(tbKey(c,s,L.id))).length,t:tl.filter(L=>tbBest(L.id)!=null).length};
+ const ls=lessonsOf(c,s);return {n:ls.length,d:ls.filter(l=>isRead(c+'-'+s+'-'+l.k)).length,t:0};}
+/* ఇంకా సాధన కావాల్సినవి = ఉత్తమ స్కోరు 60% లోపు ఉన్న పాఠం/సబ్జెక్టు టెస్టులు */
+function weakList(){const by={};myRes().forEach(x=>{if(!x.t||x.kind==='ws')return;const k=x.lt?'L|'+x.sb+'|'+x.lt:'S|'+x.sb;(by[k]=by[k]||[]).push(Math.round(x.s*100/x.t));});
+ return Object.entries(by).map(([k,a])=>({k,b:Math.max(...a),n:a.length})).filter(x=>x.b<60).sort((a,b)=>a.b-b.b);}
+function hStats(){const st=stats(),w=weakList().length;
+ return `<div class="hstw"><div class="hh"><h3>📈 నీ ప్రగతి</h3><a onclick="go('test',{tab:'done'})">📊 రిపోర్ట్ ▸</a></div><div class="hst">
+<div style="--b:var(--g1);--sh:rgba(37,99,235,.3)"><i>📝</i><b>${st.n}</b><small>టెస్టులు</small></div>
+<div style="--b:var(--g2);--sh:rgba(22,163,74,.3)"><i>⭐</i><b>${st.n?st.avg+'%':'—'}</b><small>సగటు</small></div>
+<div style="--b:var(--g3);--sh:rgba(249,115,22,.3)"><i>🔥</i><b>${streak()}</b><small>రోజులు</small></div>
+<button style="--b:var(--g4);--sh:rgba(219,39,119,.3)" onclick="go('weak')"><i>🎯</i><b>${w}</b><small>సాధన</small></button></div></div>`;}
+function qa(v,ic,t,q,qs,p,badge){return `<button class="qa" onclick="go('${v}'${p?','+p:''})"><span style="--q:${q};--qs:${qs}">${ic}${badge?`<i>${badge}</i>`:''}</span>${t}</button>`;}
+const QG={b:['linear-gradient(135deg,#60a5fa,#2563eb)','rgba(37,99,235,.3)'],g:['linear-gradient(135deg,#4ade80,#16a34a)','rgba(22,163,74,.3)'],o:['linear-gradient(135deg,#fdba74,#f97316)','rgba(249,115,22,.3)'],p:['linear-gradient(135deg,#f9a8d4,#db2777)','rgba(219,39,119,.3)'],v:['linear-gradient(135deg,#c4b5fd,#7c3aed)','rgba(124,58,237,.3)'],t:['linear-gradient(135deg,#5eead4,#0d9488)','rgba(13,148,136,.3)'],y:['linear-gradient(135deg,#fde047,#eab308)','rgba(234,179,8,.3)'],s:['linear-gradient(135deg,#7dd3fc,#0284c7)','rgba(2,132,199,.3)'],r:['linear-gradient(135deg,#fca5a5,#dc2626)','rgba(220,38,38,.3)'],i:['linear-gradient(135deg,#a5b4fc,#4f46e5)','rgba(79,70,229,.3)'],l:['linear-gradient(135deg,#bef264,#65a30d)','rgba(101,163,13,.3)'],z:['linear-gradient(135deg,#cbd5e1,#475569)','rgba(71,85,105,.3)']};
+function qb(v,ic,t,c,p,badge){return qa(v,ic,t,QG[c][0],QG[c][1],p,badge);}
+function ctTile(c,s){const p=subjProg(c,s);if(!p.n)return '';const pc=Math.round(p.d*100/p.n);
+ return `<button class="ct" style="--sc:${SUBJ[s].col}" onclick="go('learn',{open:'${s}'})"><span class="ci">${SUBJ[s].ic}</span><b>${SUBJ[s].n}</b><small>${p.n} పాఠాలు</small><i class="pb"><i style="width:${pc}%"></i></i><em>${p.d} / ${p.n} చదివావు</em></button>`;}
+function nextLes(){const pk=tbPick(S.cur.c);return pk?`<div class="tbnext" style="margin-top:14px" onclick="go('tbl',{s:'${pk.s}',id:'${pk.L.id}'})"><span>👉</span><div><small>${tbIsNow(pk.L)?'ఈ నెల చదవాల్సింది':'ఇంకా చదవని పాఠం'} • ${SUBJ[pk.s].n}</small><b>${pk.L.no}. ${esc(pk.L.t)}</b></div><em>చదువు ▶</em></div>`:'';}
+const SSCBN=`<div class="sscbn" onclick="go('ssc')"><span>🎓</span><div><b>SSC ప్రశ్న–జవాబు</b><small>1 / 2 / 4 / 8 మార్కుల ప్రశ్నలు • క్విజ్ • ⭐ సేవ్ • ప్రింట్</small></div></div>`;
+/* 🏠 హోమ్ – ముఖ్యమైనవి మాత్రమే; మిగతావి “➕ మరిన్ని” పేజీలో. కింది నావ్‌లో ఉన్నవి (నేర్చుకో/టెస్ట్/ఆటలు/హోంవర్క్) ఇక్కడ మళ్ళీ పెట్టం */
+V.home=()=>{setTimeout(checkBadges,50);const g=greet(),stc=stars(),c=S.cur.c,cts=learnSubs(c).map(s=>ctTile(c,s)).join(''),ev=upcoming(9).length;
+ return `<section class="hero"><div><small>${g[0]} ${g[1]}</small><h2>${esc(S.cur.n)}</h2><p>${S.cfg.sname?'🏫 '+esc(S.cfg.sname):'నేర్చుకో ఎప్పుడైనా, ఎక్కడైనా!'}</p><span class="starb" onclick="event.stopPropagation();toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐ ${stc} స్టార్లు</span> <span class="starb" onclick="event.stopPropagation();go('badges')">🏅 ${badgeCount()}</span></div><div class="mascot bob" onclick="go('avatar')" title="బొమ్మ మార్చు">${avOf(S.cur.n)}<i class="edit">✏️</i></div></section>
+${tickerHtml()}${reconnectCard()}${installBanner()}${hStats()}${nextLes()}
+${cts?`<h4 class="sec">📖 నా సబ్జెక్టులు <small>${c}వ తరగతి</small></h4><div class="cgrid">${cts}</div>`:''}
+<h4 class="sec">⚡ త్వరిత యాక్సెస్</h4><div class="qgrid">${qb('doubts','💬','సందేహం','p')}${qb('schedule','📅','షెడ్యూల్','t')}${qb('library','📚','పుస్తకాలు','b',"{tab:'books'}")}${qb('dict','🔤','డిక్షనరీ','o')}</div>
+<button class="morebtn" onclick="go('more')"><span>✨</span><div><b>మరిన్ని</b><small>ఈవెంట్లు${ev?' ('+ev+')':''} • ఫోటోలు • నేటి సూక్తి • టూల్స్ • ID కార్డు${+c===10?' • SSC':''}</small></div><em>›</em></button>`;};
+/* ✨ మరిన్ని */
+V.more=()=>{const up=upcoming(6),c=S.cur.c;
+ return `<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>✨ మరిన్ని</h2></div>${+c===10?SSCBN:''}
+<div class="qgrid">${qb('library','🧰','టూల్స్','s',"{tab:'tools'}")}${qb('idmk','🪪','ID • ఫోటో','v')}${qb('card','🎓','ప్రగతి కార్డు','g')}${qb('badges','🏅','బ్యాడ్జీలు','y')}</div>
+<h4 class="sec">📅 రాబోయే ఈవెంట్లు</h4><div class="hscroll">${up.length?up.map(evCard).join(''):`<div class="ecard"><span class="tag">ఈరోజు</span><b>కొత్త ఈవెంట్లు లేవు</b><small>టీచర్ పెట్టగానే ఇక్కడ వస్తాయి</small></div>`}</div>
+${slidesHtml()}${dailyCards()}`;};
+/* 🎯 ఇంకా సాధన కావాల్సిన పాఠాలు */
+V.weak=()=>{const c=S.cur.c,wl=weakList();
+ return `<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>🎯 ఇంకా సాధన కావాల్సినవి</h2></div><p class="mut" style="margin:0 2px 12px">60% కంటే తక్కువ వచ్చిన టెస్టులు – నోట్స్ మళ్ళీ చదివి, మళ్ళీ రాయి. 60% దాటితే ఇక్కడి నుండి పోతాయి.</p>
+${wl.length?wl.map(x=>{const [t,s,id]=x.k.split('|');if(!SUBJ[s])return '';const L=t==='L'?tbGet(c,s,id):null;if(t==='L'&&!L)return '';
+ return `<div class="wkl" style="--sc:${SUBJ[s].col}"><b>${SUBJ[s].ic} ${L?L.no+'. '+esc(L.t):SUBJ[s].n+' టెస్ట్'}</b><small>ఉత్తమ స్కోరు <span class="pct ${pctCls(x.b)}">${x.b}%</span> • ${x.n} సార్లు రాశావు</small><div class="row2">${L?`<button class="btn sm ghost" onclick="go('tbl',{s:'${s}',id:'${id}'})">📖 నోట్స్ చదువు</button><button class="btn sm" onclick="startLesTest('${s}','${id}')">📝 మళ్ళీ టెస్ట్</button>`:`<button class="btn sm" onclick="startTest('${s}')">📝 మళ్ళీ టెస్ట్</button>`}</div></div>`;}).join(''):`<div class="empty">🎉 అన్నీ బాగున్నాయి! 60% కంటే తక్కువ వచ్చిన టెస్ట్ ఏదీ లేదు.</div>`}`;};
 
 /* ---------- సెల్ఫ్ లెర్న్ ---------- */
 function recommend(){const c=S.cur.c;const pk=tbPick(c);if(pk)return `<div class="tcard"><div class="th" style="background:${SUBJ[pk.s].bg}"><span class="si" style="width:34px;height:34px;font-size:16px">${SUBJ[pk.s].ic}</span>${SUBJ[pk.s].n} • 📅 ${tbMonths(pk.L)}</div><div class="tb"><b>${pk.L.no}. ${esc(pk.L.t)}</b><div class="r"><small class="mut">నోట్స్ + ${Math.min(10,(pk.L.qz||[]).length)} ప్రశ్నల టెస్ట్</small><button class="lk b" onclick="go('tbl',{s:'${pk.s}',id:'${pk.L.id}'})">చదువు ▶</button></div></div></div>`;for(const s of learnSubs(c)){const ls=lessonsOf(c,s);const i=ls.findIndex(l=>!isRead(c+'-'+s+'-'+l.k));if(i>=0){const l=ls[i];
  return `<div class="tcard"><div class="th" style="background:${SUBJ[s].bg}"><span class="si" style="width:34px;height:34px;font-size:16px">${SUBJ[s].ic}</span>${SUBJ[s].n}</div><div class="tb"><b>${esc(l.t)}</b><div class="r"><small class="mut">${l.b.length} ముఖ్యాంశాలు</small><button class="lk b" onclick="go('subject',{s:'${s}',open:${i}})">చదువు ▶</button></div></div></div>`;}}
  return `<div class="empty">🎉 అన్ని పాఠాలు చదివావు! ఇప్పుడు టెస్ట్ రాయి.</div>`;}
-V.learn=()=>{const c=S.cur.c;return `<div class="lgrid"><button class="btn" style="background:#4f46e5" onclick="go('library',{tab:'books'})">📚 పుస్తకాలు</button><button class="btn" style="background:#0f766e" onclick="go('library',{tab:'tools'})">🧰 టూల్స్</button><button class="btn" style="background:#c2410c" onclick="go('dict')">📖 డిక్షనరీ</button><button class="btn" style="background:#7c3aed" onclick="go('idmk')">🪪 ID • ఫోటో • స్టిక్కర్</button></div><div class="doubt" onclick="go('doubts')"><h3>సందేహం అడుగు</h3><p>నీ సందేహాలను ఉపాధ్యాయులకు పంపి, త్వరగా జవాబులు పొందు.</p><span class="bub">💬</span><span class="play">▶</span></div>
-${+c===10?`<div class="sscbn" onclick="go('ssc')"><span>🎓</span><div><b>SSC ప్రశ్న–జవాబు</b><small>1 / 2 / 4 / 8 మార్కుల ప్రశ్నలు • క్విజ్ • ⭐ సేవ్ • ప్రింట్</small></div></div>`:''}${tbMonthSec()}<h4 class="sec">అన్ని సబ్జెక్టులు</h4><p class="mut" style="margin:-4px 2px 10px">ప్రస్తుతం చూస్తున్నది: <b>${c}వ తరగతి</b> (<a onclick="go('cls')">మార్చు</a>)</p>
-<div class="subs">${learnSubs(c).map(s=>{const p=readPct(s);return `<button class="sub" style="background:${SUBJ[s].bg}" onclick="go('subject',{s:'${s}'})"><span class="si" style="color:${SUBJ[s].col}">${SUBJ[s].ic}</span><span><b>${SUBJ[s].n}</b><small>${p}% పూర్తి</small></span><i class="pb"><i style="width:${p}%"></i></i></button>`;}).join('')}</div>
-<h4 class="sec">నీ కోసం సూచన</h4>${recommend()}`;};
+function lsubCard(c,s,open){const tl=tbLes(c,s),p=subjProg(c,s);if(!p.n)return '';const pc=Math.round(p.d*100/p.n);
+ const h=`<span class="clic">${SUBJ[s].ic}</span><span class="clt"><b>${SUBJ[s].n}</b><small>${p.n} పాఠాలు${p.t?' • '+p.t+' టెస్టులు రాశావు':''}</small></span><span class="clar">${tl.length?'▼':'▶'}</span><i class="clpb"><i style="width:${pc}%"></i></i><em>${p.d} / ${p.n} చదివావు</em>`;
+ if(!tl.length)return `<button class="cl" id="ls-${s}" style="--sc:${SUBJ[s].col}" onclick="go('subject',{s:'${s}'})">${h}</button>`;
+ return `<details class="lsub" id="ls-${s}" style="--sc:${SUBJ[s].col}"${open?' open':''}><summary class="cl">${h}</summary><div class="lrows">${tl.map(L=>{const d=isRead(tbKey(c,s,L.id)),b=tbBest(L.id),now=tbIsNow(L);
+  return `<div class="lrow ${d?'ok':''} ${now?'now':''}"><button class="lrm" onclick="go('tbl',{s:'${s}',id:'${L.id}'})"><span class="lno">${d?'✓':L.no}</span><span><b>${esc(L.t)}</b><small>📖 నోట్స్ చదువు • 📅 ${tbMonths(L)}${now?' • <b style="display:inline;font-size:13px;color:var(--sc)">ఈ నెల</b>':''}</small></span></button><button class="lrt ${b!=null?pctCls(b):''}" onclick="startLesTest('${s}','${L.id}')">📝<br>${b!=null?b+'%':'టెస్ట్'}</button></div>`;}).join('')}
+<button class="lmore" onclick="go('subject',{s:'${s}'})">${tl.some(L=>L.wb)?'📒 '+esc(tl.find(L=>L.wb).wb.lb||'వర్క్‌బుక్')+' & ':''}✏️ అదనపు అభ్యాసం ▸</button></div></details>`;}
+V.learn=()=>{const c=S.cur.c,ms=tbMonthSec(),op=param.open||'';if(op)setTimeout(()=>{const e=document.getElementById('ls-'+op);if(e)window.scrollTo({top:e.getBoundingClientRect().top+window.scrollY-70,behavior:'smooth'});},120);
+ return `${+c===10?SSCBN:''}${ms}
+<h4 class="sec">📚 నోట్స్ ఉన్న అన్ని పాఠాలు <small>${c}వ తరగతి • <a onclick="go('cls')">మార్చు</a></small></h4>
+<p class="mut" style="margin:-4px 2px 12px;font-size:13.5px">సబ్జెక్టు నొక్కు → పాఠాలు తెరుచుకుంటాయి. పాఠం నొక్కితే నోట్స్, 📝 నొక్కితే టెస్ట్.</p>
+${learnSubs(c).map(s=>lsubCard(c,s,s===op)).join('')}${ms?'':`<h4 class="sec">నీ కోసం సూచన</h4>${recommend()}`}`;};
 V.subject=()=>{const c=S.cur.c,s=param.s,ls=lessonsOf(c,s);
  return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>${SUBJ[s].ic} ${SUBJ[s].n} • ${c}వ తరగతి</h2></div>
 <p class="mut" style="margin:-6px 2px 12px">చదివిన పాఠాలు: ${readPct(s)}%</p>
@@ -3701,11 +3803,25 @@ const TSEC=[['sy','☁️ ఆన్‌లైన్ సింక్'],['tc','👥
 function clsSel(id,all){return `<select id="${id}" onchange="fillSubj('${id}','${id}s')">${all&&isAdmin()?'<option value="0">అన్ని తరగతులు</option>':''}${myCls().map(c=>`<option value="${c}">${c}వ తరగతి</option>`).join('')}</select>`;}
 function subjOpts(c){return mySubs(c).map(s=>`<option value="${s}">${SUBJ[s].n}</option>`).join('');}
 function fillSubj(cid,sid){const s=document.getElementById(sid);if(s)s.innerHTML=subjOpts(document.getElementById(cid).value);}
+/* 👩‍🏫 టీచర్ డాష్‌బోర్డ్ – ప్రతి బటన్ వేరే చోటుకి (ఒకే చోటుకి రెండు బటన్లు లేవు) */
+const TIC={sy:['☁️','ఆన్‌లైన్ సింక్','s'],tc:['👥','ఉపాధ్యాయులు','i'],pg:['🧑‍🎓','విద్యార్థులు & మార్కులు','o'],ac:['🗓️','అకాడమిక్ క్యాలెండర్','t'],hw:['📒','హోంవర్క్','g'],ev:['📅','ఈవెంట్ / టెస్ట్','v'],qp:['📝','ప్రశ్నాపత్రం','r'],dq:['💬','సందేహాలు','p'],ws:['🔢','రోజువారీ లెక్కలు','l'],nt:['📖','పాఠం నోట్స్','s'],tb:['📘','పాఠ్యపుస్తకం నోట్స్ & టెస్ట్','b'],yg:['🧘','యోగా & ఆటలు','l'],lb:['📚','పుస్తకాలు / టూల్స్','i'],fl:['📢','ఫ్లాష్ / ఫోటోలు','y'],rp:['📊','రిపోర్ట్','t'],st:['⚙️','సెట్టింగ్స్','z']};
+const TGRP=[['📌 రోజువారీ పనులు',['dq','pg','qp','ws']],['📘 పాఠాలు',['tb','nt','ac','yg']],['🏫 పాఠశాల',['ev','fl','lb','rp']],['⚙️ సెటప్',['sy','tc','st']]];
+function tSecOk(k){return k!=='tc'||(isAdmin()&&S.cfg.type==='gs');}
+function tBadge(k){if(k==='dq')return live('doubts').filter(d=>!d.r&&canSee(d.c,d.s)).length;if(k==='ws')return wsPendT().length;return 0;}
+function tDayInfo(d){const e=live('events').filter(x=>x.d===d&&(!+x.c||canSee(x.c))).map(x=>'📅 '+x.t),h=live('hw').filter(x=>x.due===d&&canSee(x.c,x.s)).map(x=>'📒 '+x.c+'వ: '+x.t);const a=e.concat(h);toast(a.length?a.slice(0,3).join(' • ')+(a.length>3?' …':''):fmtD(d)+' – ఏమీ లేవు');}
+function tWeek(){const t=todayS(),d0=addDays(t,-parseD(t).getDay()),DN=['ఆది','సోమ','మంగళ','బుధ','గురు','శుక్ర','శని'];
+ const ev=new Set(live('events').filter(e=>!+e.c||canSee(e.c)).map(e=>e.d)),hw=new Set(live('hw').filter(h=>canSee(h.c,h.s)).map(h=>h.due));
+ return `<div class="wk">${[0,1,2,3,4,5,6].map(i=>{const d=addDays(d0,i);return `<button class="${d===t?'td':''}" onclick="tDayInfo('${d}')">${DN[i]}<b>${parseD(d).getDate()}</b><i class="${ev.has(d)||hw.has(d)?'':'no'}"></i></button>`;}).join('')}</div>`;}
+function tDash(){const t=todayS(),stu=live('students').filter(x=>canSee(x.c)).length,hwA=live('hw').filter(h=>canSee(h.c,h.s)&&h.due>=t).length;
+ return `<div class="thero"><div><h3>📒 హోంవర్క్</h3><p>${hwA} నడుస్తున్నాయి • ${stu} విద్యార్థులు<br>కొత్తది ఇవ్వండి – 1 నిమిషంలో పిల్లల ఫోన్లకు.</p><button onclick="go('teacher',{t:'hw'})">➕ హోంవర్క్ ఇవ్వు / చూడు</button></div><span>🧑‍🏫</span></div>
+<h4 class="sec">📅 ఈ వారం <small>• రోజు నొక్కితే ఆ రోజు ఈవెంట్/హోంవర్క్</small></h4>${tWeek()}
+${TGRP.map(([g,ks])=>{const its=ks.filter(tSecOk);if(g.includes('సెటప్'))its.push('help');
+ return `<h4 class="sec">${g}</h4><div class="qgrid">${its.map(k=>k==='help'?`<button class="qa" onclick="go('help',{back:'teacher',s:'teacher'})"><span style="--q:${QG.y[0]};--qs:${QG.y[1]}">❓</span>సహాయం</button>`:`<button class="qa" onclick="go('teacher',{t:'${k}'})"><span style="--q:${QG[TIC[k][2]][0]};--qs:${QG[TIC[k][2]][1]}">${TIC[k][0]}${tBadge(k)?`<i>${tBadge(k)}</i>`:''}</span>${TIC[k][1]}</button>`).join('')}</div>`;}).join('')}`;}
 V.teacher=()=>{if(!tAuth)return `<div class="login"><div class="logo">👩‍🏫</div><h1>ఉపాధ్యాయుల ప్యానెల్</h1><p>హోంవర్క్, ఈవెంట్లు, సందేహాలు, రిపోర్టులు</p><div class="card"><label>PIN నమోదు చేయండి</label><input id="tpin" type="password" inputmode="numeric" maxlength="8" onkeydown="if(event.key==='Enter')tLogin()"><button class="btn" onclick="tLogin()">ప్రవేశించు</button><p class="mut" style="margin-top:10px">మొదటి PIN: 1234 (సెట్టింగ్స్‌లో మార్చుకోండి)</p></div><button class="link" onclick="tBack()">← వెనుకకు</button></div>`;
- const sec=param.t||'hw';const un=live('doubts').filter(d=>!d.r&&canSee(d.c,d.s)).length;
- return `<div class="bar"><button class="ib" onclick="tBack()">←</button><h2>👩‍🏫 ఉపాధ్యాయుల ప్యానెల్</h2><button class="ib" style="background:#fff" onclick="go('help',{back:'teacher',s:'teacher'})" aria-label="సహాయం">❓</button></div>
+ const sec=TP[param.t]?param.t:'home';
+ return `<div class="bar"><button class="ib" onclick="${sec==='home'?'tBack()':"go('teacher')"}">←</button><h2>${sec==='home'?'👩‍🏫 ఉపాధ్యాయుల ప్యానెల్':TIC[sec][0]+' '+TIC[sec][1]}</h2><button class="ib" style="background:#fff" onclick="go('help',{back:'teacher',s:'teacher'})" aria-label="సహాయం">❓</button></div>
 ${sec!=='sy'&&!S.cfg.type?`<div class="warn" style="margin-bottom:10px">📴 ఆఫ్లైన్ మోడ్ – మీరు ఇచ్చే హోంవర్క్ ఈ ఫోన్‌లోనే ఉంటుంది. విద్యార్థుల ఫోన్లకు చేరాలంటే <a onclick="go('teacher',{t:'sy'})">☁️ ఆన్‌లైన్ సింక్</a> సెటప్ చేయండి.</div>`:''}${sec!=='sy'&&S.cfg.type&&!S.cfg.isT?`<div class="warn" style="margin-bottom:10px">⚠️ సర్వర్‌లో ఉపాధ్యాయ అనుమతి లేదు – <a onclick="go('teacher',{t:'sy'})">సింక్ సెట్టింగ్స్</a> చూడండి.</div>`:''}
-${whoBanner()}${ownWarn()}<div class="tchips">${TSEC.filter(([k])=>k!=='tc'||(isAdmin()&&S.cfg.type==='gs')).map(([k,n])=>`<button class="${sec===k?'on':''}" onclick="go('teacher',{t:'${k}'})">${n}${k==='dq'&&un?' ('+un+')':''}${k==='ws'&&wsPendT().length?' ('+wsPendT().length+')':''}</button>`).join('')}</div>${TP[sec]()}`;};
+${sec==='home'?whoBanner()+ownWarn()+tDash():TP[sec]()}`;};
 const TP={};TP.tc=tpTc;
 /* ===== 📘 టీచర్: పాఠ్యపుస్తకం నోట్స్ & టెస్ట్ ప్రశ్నలు సరిచేయడం / కొత్త పాఠం ===== */
 const TBE={c:0,s:''};
