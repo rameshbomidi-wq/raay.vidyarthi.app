@@ -746,6 +746,11 @@ details.lsub[open]>summary{border-radius:22px 22px 0 0;margin:0}details.lsub[ope
 .offc{background:#fff;border-radius:20px;padding:14px;margin-top:16px;box-shadow:0 4px 16px rgba(15,23,42,.08);border:1.5px dashed #94a3b8}
 .offc h4{margin:0 0 4px;font-size:16px}.offc p{margin:0 0 10px;font-size:12.5px;color:var(--mut)}.offc .row2 .btn{margin:0}
 .offc .st{font-size:12.5px;font-weight:700;color:#15803d;margin-top:8px}
+
+.aib{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:6px 0 8px}.aib span{font-size:12.5px;font-weight:800;color:#6d28d9}
+.aib button{border:0;border-radius:12px;padding:7px 12px;font:inherit;font-size:13px;font-weight:700;color:#fff;background:linear-gradient(135deg,#a78bfa,#6d28d9);box-shadow:0 3px 8px rgba(109,40,217,.25);cursor:pointer}
+.aib button:nth-child(3){background:linear-gradient(135deg,#60a5fa,#1d4ed8)}.aib button:last-child{background:#f1f5f9;color:#334155;box-shadow:none}
+.aitip{background:linear-gradient(135deg,#f5f3ff,#eef2ff);border:1.5px solid #ddd6fe;border-radius:16px;padding:10px 12px;font-size:12.5px;line-height:1.5;margin-bottom:10px;color:#3b0764}
 </style>
 </head>
 <body>
@@ -2644,7 +2649,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.09-6';
+const APPV='2026.11.09-7';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -4718,6 +4723,15 @@ const DQSEL=new Set();
 const DQSTOP=new Set(['అంటే','ఏమిటి','ఏమి','ఎలా','ఎందుకు','ఎక్కడ','ఎవరు','ఎప్పుడు','ఎన్ని','సార్','మేడం','టీచర్','గారు','నాకు','అర్థం','కాలేదు','చెప్పండి','చేయాలి','ఇది','అది','ఒక','మరియు','what','is','how','why','the','a','an','of','to','in','sir','madam','teacher','please','do','does','meaning']);
 function dqTok(q){return new Set(String(q).toLowerCase().replace(/[?.,!;:'"“”()\-–]/g,' ').split(/\s+/).filter(w=>w.length>1&&!DQSTOP.has(w)).map(w=>w.slice(0,3)));}
 function dqSim(a,b){if(a.c!==b.c||a.s!==b.s)return false;const A=dqTok(a.q),B=dqTok(b.q);if(!A.size||!B.size)return false;let n=0;A.forEach(w=>{if(B.has(w))n++;});return n>0&&n/Math.min(A.size,B.size)>=0.6;}
+/* 🤖 టీచర్ + AI: పిల్లలు నేరుగా AI వాడరు. టీచర్ సందేహాన్ని ChatGPT/Gemini లో అడిగి, జవాబు చదివి సరిచేసి, app లోనే పిల్లలకు పంపుతారు (ఉచితం, సర్వర్ మార్పు లేదు) */
+function aiPrompt(d){const sub=SUBJ[d.s]?SUBJ[d.s].n:'';return `నేను ఆంధ్రప్రదేశ్ ప్రభుత్వ పాఠశాల ఉపాధ్యాయుడిని. ${d.c}వ తరగతి ${sub} విద్యార్థి ఈ సందేహం అడిగారు:\n"${d.q}"\n\n${d.c}వ తరగతి పిల్లలకు అర్థమయ్యేలా సులభమైన తెలుగులో, 3–6 చిన్న నంబర్ పాయింట్లలో జవాబు ఇవ్వు. AP పాఠ్యపుస్తకం ప్రకారం ఉండాలి. గణితమైతే దశలవారీగా లెక్క చూపించు. ఒక చిన్న ఉదాహరణ ఇవ్వు. 120 పదాల లోపు.`;}
+function aiAsk(id,w){const d=live('doubts').find(x=>x.id===id);if(!d)return;const p=aiPrompt(d);
+ try{navigator.clipboard&&navigator.clipboard.writeText(p).catch(()=>{});}catch(e){}
+ if(w==='c')window.open('https://chatgpt.com/?q='+encodeURIComponent(p),'_blank','noopener');
+ else{window.open('https://gemini.google.com/app','_blank','noopener');}
+ toast('ప్రశ్న కాపీ అయింది – AI లో రాకపోతే పేస్ట్ చేయండి');
+ const t=document.getElementById('r_'+id);if(t)t.placeholder='AI జవాబు చదివి, సరిచేసి ఇక్కడ పేస్ట్ చేయండి...';}
+function aiCopy(id){const d=live('doubts').find(x=>x.id===id);if(d)copyText(aiPrompt(d));}
 TP.dq=()=>{const f=param.f||'open',fc=+param.fc||0;const all=live('doubts').filter(d=>canSee(d.c,d.s)&&(!fc||d.c===fc));
  const open=all.filter(d=>!d.r),done=all.filter(d=>d.r);[...DQSEL].forEach(id=>{if(!open.some(d=>d.id===id))DQSEL.delete(id);});
  const list=(f==='open'?open:f==='done'?done:all).slice().sort((a,b)=>(!!a.r)-(!!b.r)||a.c-b.c||String(a.s).localeCompare(b.s)||(a.d<b.d?1:-1));
@@ -4727,9 +4741,9 @@ TP.dq=()=>{const f=param.f||'open',fc=+param.fc||0;const all=live('doubts').filt
   return `<div class="card dqc ${on?'sel':''}">${!d.r?`<label class="dqck"><input type="checkbox" ${on?'checked':''} onchange="dqPick('${d.id}',this.checked)"> ఎంచుకో</label>`:''}<small class="mut">👤 ${esc(d.n)} • ${d.c}వ • ${SUBJ[d.s]?SUBJ[d.s].n:''} • ${fmtD(d.d)}</small>
 <p style="margin:6px 0;font-weight:600">❓ ${esc(d.q)}</p>${sim?`<button class="simb" onclick="dqSimSel('${d.id}')">🔁 ఇలాంటి సందేహాలు ఇంకా ${sim} – అన్నీ ఎంచుకో</button>`:''}
 ${d.r?`<div class="ans">👩‍🏫 ${d.rb?'<b>'+esc(d.rb)+':</b> ':''}${esc(d.r)}${imgTag(d.ri,'ansimg sm',d.ris)}</div>`:''}
-<textarea id="r_${d.id}" rows="2" maxlength="1500" placeholder="జవాబు టైప్ చేయండి...">${d.r&&!d.ri?esc(d.r):''}</textarea>
+${!d.r?`<div class="aib"><span>🤖 AI సూచన</span><button onclick="aiAsk('${d.id}','c')">ChatGPT</button><button onclick="aiAsk('${d.id}','g')">Gemini</button><button onclick="aiCopy('${d.id}')" aria-label="కాపీ">📋</button></div>`:''}<textarea id="r_${d.id}" rows="2" maxlength="1500" placeholder="జవాబు టైప్ చేయండి...">${d.r&&!d.ri?esc(d.r):''}</textarea>
 <div class="dqbtns"><button class="btn sm" onclick="replyD('${d.id}')">➤ ${d.r?'మార్చు':'పంపు'}</button><button class="btn sm ghost" onclick="ansOpen(['${d.id}'])">📷 ✏️ ఫోటో / రాసి</button><button class="del" onclick="delItem('doubts','${d.id}')">🗑️</button></div></div>`;};
- return `<div class="tchips"><button class="${f==='open'?'on':''}" onclick="go('teacher',{t:'dq',f:'open',fc:${fc}})">⏳ జవాబు ఇవ్వాల్సినవి (${open.length})</button><button class="${f==='done'?'on':''}" onclick="go('teacher',{t:'dq',f:'done',fc:${fc}})">✅ ఇచ్చినవి (${done.length})</button><button class="${f==='all'?'on':''}" onclick="go('teacher',{t:'dq',f:'all',fc:${fc}})">అన్నీ</button></div>
+ return `<div class="aitip">🤖 <b>AI సూచన:</b> ప్రశ్న ChatGPT/Gemini లో తెరుచుకుంటుంది (మీ ఫోన్‌లో, మీ ఖాతాతో). జవాబు <b>చదివి, సరిచూసి</b> పేస్ట్ చేసి పంపండి – పిల్లలకు app లోనే చేరుతుంది. పిల్లల పేర్లు AI కి వెళ్లవు.</div><div class="tchips"><button class="${f==='open'?'on':''}" onclick="go('teacher',{t:'dq',f:'open',fc:${fc}})">⏳ జవాబు ఇవ్వాల్సినవి (${open.length})</button><button class="${f==='done'?'on':''}" onclick="go('teacher',{t:'dq',f:'done',fc:${fc}})">✅ ఇచ్చినవి (${done.length})</button><button class="${f==='all'?'on':''}" onclick="go('teacher',{t:'dq',f:'all',fc:${fc}})">అన్నీ</button></div>
 ${cls.length>1?`<div class="tchips">${[0].concat(cls).map(c=>`<button class="${fc===c?'on':''}" onclick="go('teacher',{t:'dq',f:'${f}',fc:${c}})">${c?c+'వ తరగతి':'అన్ని తరగతులు'}</button>`).join('')}</div>`:''}
 ${open.length>1&&f!=='done'?`<p class="mut" style="margin:-2px 2px 10px">💡 ఒకే రకం సందేహాలను ☑ ఎంచుకుని ఒకేసారి జవాబు ఇవ్వండి – ప్రతి ఒక్కరికీ వేరుగా రాయనవసరం లేదు.</p>`:''}
 ${Object.entries(groups).map(([k,ds])=>{const [c,s]=k.split('|');const op=ds.filter(d=>!d.r);return `<div class="dqgrp"><b>${c}వ తరగతి • ${SUBJ[s]?SUBJ[s].ic+' '+SUBJ[s].n:s} (${ds.length})</b>${op.length>1?`<button onclick="dqGrpSel('${c}','${s}')">☑ అన్నీ ఎంచుకో</button>`:''}</div>${ds.map(card).join('')}`;}).join('')||'<div class="empty">సందేహాలు లేవు 🎉</div>'}
