@@ -2708,7 +2708,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.09-12';
+const APPV='2026.11.09-13';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3100,7 +3100,7 @@ function dAudio(){if(!DR||!DR.au)return;try{new Audio(DR.au).play().catch(()=>dS
 function dMic(){const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return toast('ఈ ఫోన్‌లో మైక్ టైపింగ్ లేదు');
  try{const r=new R();r.lang=DLG[DMIC].v;r.interimResults=false;r.maxAlternatives=1;toast('🎤 '+DLG[DMIC].n+' లో పదం చెప్పండి…');
   r.onresult=e=>{const t=e.results[0][0].transcript;dSearch(t);};r.onerror=()=>toast('వినిపించలేదు – మళ్ళీ ప్రయత్నించండి');r.start();}catch(e){toast('మైక్ తెరవలేకపోయాం');}}
-function dClearH(){dPutLS('raay_dict_h',[]);render();}
+function dClearH(){if(!confirm('వెతికిన పదాల జాబితా తుడిచేయాలా?'))return;dPutLS('raay_dict_h',[]);render();}
 V.dict=()=>{const c=S.cur.c;[1,2,3,4,5].forEach(k=>{try{tbLoad(k);}catch(e){}});const R=DR,H=dHist();
  const say=(t,lg,cls)=>`<button class="dsay ${cls||''}" onclick='dSay(${JSON.stringify(String(t)).replace(/'/g,"&#39;")},"${lg}")' aria-label="వినండి">🔊</button>`;
  const slow=(t,lg)=>`<button class="dsay" onclick='dSay(${JSON.stringify(String(t)).replace(/'/g,"&#39;")},"${lg}",1)' aria-label="నెమ్మదిగా">🐢</button>`;
@@ -3552,7 +3552,7 @@ async function offSave(c,pdf){if(OFFBUSY)return;if(!('caches' in window))return 
   try{const r=await fetch(files[i],{cache:'no-cache'});if(!r.ok&&r.status!==404)throw 0;if(r.ok){const b=await r.clone().blob();bytes+=b.size;await cache.put(files[i],r);ok++;}}catch(e){bad++;}}
  OFFBUSY=0;offMark(c,{d:todayS(),mb:+(bytes/1048576).toFixed(1),pdf:!!pdf});
  say(bad?`⚠️ ${ok} సేవ్, ${bad} కాలేదు – నెట్ చూసి మళ్ళీ నొక్కండి`:`✅ సేవ్ అయింది – ${(bytes/1048576).toFixed(1)} MB. నెట్ లేకపోయినా చదవవచ్చు.`);toast(bad?'కొన్ని ఫైళ్లు సేవ్ కాలేదు':'✅ ఆఫ్‌లైన్‌కు సేవ్ అయింది');}
-async function offClear(c){try{const cache=await caches.open(OFFC),ks=await cache.keys();for(const k of ks){const u=new URL(k.url).pathname;if(new RegExp('/(notes|answers|ssc)-'+c+'(-|\\.)').test(u)||u.includes('/books/'+c+'/'))await cache.delete(k);}offMark(c,null);toast('ఆఫ్‌లైన్ ఫైళ్లు తీసేశాం');softRender();}catch(e){}}
+async function offClear(c){const o=offInfo(c);if(!confirm(`📥 ${c}వ తరగతి ఆఫ్‌లైన్ ఫైళ్లు${o&&o.mb?' ('+o.mb+' MB)':''} ఈ ఫోన్ నుండి తీసేయాలా?\n\nతీసేశాక నెట్ లేకపోతే పాఠాలు, టెస్టులు తెరుచుకోవు. మళ్ళీ కావాలంటే నెట్ ఉన్నప్పుడు సేవ్ చేయాలి.`))return;try{const cache=await caches.open(OFFC),ks=await cache.keys();for(const k of ks){const u=new URL(k.url).pathname;if(new RegExp('/(notes|answers|ssc)-'+c+'(-|\\.)').test(u)||u.includes('/books/'+c+'/'))await cache.delete(k);}offMark(c,null);toast('ఆఫ్‌లైన్ ఫైళ్లు తీసేశాం');softRender();}catch(e){}}
 function offCard(c){const o=offInfo(c);return `<div class="offc"><h4>📥 ఆఫ్‌లైన్ డౌన్‌లోడ్ – ${c}వ తరగతి</h4><p>బడిలో Wi-Fi/నెట్ ఉన్నప్పుడు ఒక్కసారి సేవ్ చేస్తే, ఇంట్లో నెట్ లేకపోయినా పాఠాలు, టెస్టులు${c===10?', SSC ప్రశ్నలు':''} పనిచేస్తాయి.</p>
 <div class="row2"><button class="btn" onclick="offSave(${c},0)">📘 నోట్స్ & టెస్టులు</button><button class="btn ghost" onclick="offSave(${c},1)">📚 + పుస్తకాలు PDF</button></div>
 <div class="st" id="offSt">${o?`✅ ${fmtD(o.d)} న సేవ్ చేశారు (${o.mb} MB${o.pdf?' • పుస్తకాలతో':''}) <a onclick="offClear(${c})" style="color:#dc2626;margin-left:6px">తీసేయి</a>`:'<span style="color:#64748b">ఇంకా సేవ్ చేయలేదు</span>'}</div></div>`;}
@@ -4405,7 +4405,7 @@ function qpBuild(){qpRead();qpFix();const f=QP.f,N=Math.min(60,Math.max(1,parseI
 function qpDefTitle(){const f=QP.f,T=qpTopics(f.c,f.s).find(x=>x.k===f.t),st=T&&T.sub.find(x=>x.k===f.st);return SUBJ[f.s].n+(T?' – '+(st?st.n:T.n).split(' – ')[0]:'')+' పరీక్ష';}
 function qpSwap(i){const cur=QP.qs[i];if(!cur)return;const src=qpSrc(QP.f),used=new Set(QP.qs.map(q=>q.k)),txt=new Set(QP.qs.map(q=>q.q));
  const q=qpDraw(src.filter(x=>x.auto||x.k!==cur.k),cur.d,{[cur.b]:1},used,txt,{},QP.f.ty);if(!q)return toast('ఇదే స్థాయిలో వేరే ప్రశ్న లేదు');QP.qs[i]=q;qpSave();go('teacher',{t:'qp'});}
-function qpDel(i){QP.qs.splice(i,1);qpSave();go('teacher',{t:'qp'});}
+function qpDel(i){if(!confirm('ఈ ప్రశ్నను ప్రశ్నాపత్రం నుండి తీసేయాలా?'))return;QP.qs.splice(i,1);qpSave();go('teacher',{t:'qp'});}
 function qpAdd(){const src=qpSrc(QP.f),used=new Set(QP.qs.map(q=>q.k)),txt=new Set(QP.qs.map(q=>q.q)),q=qpDraw(src,0,{},used,txt,{},QP.f.ty);if(!q)return toast('ఇంకా ప్రశ్నలు లేవు');QP.qs.push(q);qpSave();go('teacher',{t:'qp'});}
 /* జవాబులు కొద్దిగా దాచి పంపుతాం */
 function qpEnc(v,id){const s=unescape(encodeURIComponent(JSON.stringify(v)));let o='';for(let i=0;i<s.length;i++)o+=String.fromCharCode(s.charCodeAt(i)^(id.charCodeAt(i%id.length)%31+1));return btoa(o);}
@@ -4868,7 +4868,7 @@ ${same?`<label class="ck" style="margin-top:10px"><input type="checkbox" id="ans
  document.getElementById('ansTx').value=txt||'';document.getElementById('ansVid').value=ANS.v||'';if(ANS.pad)ansPadInit();}
 function ansAdd(q){const t=document.getElementById('ansTx');t.value=(t.value&&!/\s$/.test(t.value)?t.value+' ':t.value)+q;t.focus();}
 function qrSave(){const v=(document.getElementById('ansTx').value||'').trim();if(!v)return toast('ముందు జవాబు రాయండి');const m=qrMine().filter(x=>x!==v);m.unshift(v);try{localStorage.setItem('raiQR',JSON.stringify(m.slice(0,12)));}catch(e){}ansRender();toast('⭐ సేవ్ అయింది – ఇకపై ఒక్క నొక్కుతో వస్తుంది');}
-function qrDel(i){const m=qrMine();m.splice(i,1);try{localStorage.setItem('raiQR',JSON.stringify(m));}catch(e){}ansRender();}
+function qrDel(i){if(!confirm('ఈ త్వరిత జవాబు తొలగించాలా?'))return;const m=qrMine();m.splice(i,1);try{localStorage.setItem('raiQR',JSON.stringify(m));}catch(e){}ansRender();}
 function ansDrop(id){ANS.ids=ANS.ids.filter(x=>x!==id);DQSEL.delete(id);if(!ANS.ids.length)return ansClose();ansRender();}
 function ansClose(){const el=document.getElementById('ansSheet');if(el)el.remove();ANS.ids=[];}
 async function ansPhoto(inp){const f=inp.files&&inp.files[0];if(!f)return;const box=document.getElementById('ansImgBox');if(box)box.innerHTML='<p class="mut">⏳ ఫోటో స్పష్టంగా, చిన్నదిగా చేస్తోంది...</p>';
@@ -4931,7 +4931,7 @@ function delStudent(n,c){if(!confirm(n+' ('+c+'వ తరగతి) – ఈ వ�
  let k=0;['students','results','doubts','subs','games'].forEach(col=>live(col).filter(r=>r.n===n&&(r.c===c||r.c==null||col==='subs')).forEach(r=>{remove(col,r.id);k++;}));
  toast(k+' రికార్డులు తొలగించబడ్డాయి ✓');go('teacher',{t:'rp',f:param.f||0});}
 function chPin(){const v=$('#np').value.trim();if(!/^\d{4,8}$/.test(v))return toast('4–8 అంకెల PIN ఇవ్వండి');S.pin=v;save();toast('PIN మార్చబడింది ✓');go('teacher',{t:'st'});}
-function delItem(k,id){if(!confirm('తొలగించాలా?'))return;const was=(S[k]||[]).find(x=>x.id===id);remove(k,id);if(was&&was.kind){go('teacher',{t:was.kind==='flash'||was.kind==='photo'?'fl':'lb'});return;}go('teacher',{t:{hw:'hw',events:'ev',doubts:'dq',notes:'nt'}[k]});}
+function delItem(k,id){if(!confirm('తొలగించాలా?'))return;const was=(S[k]||[]).find(x=>x.id===id);remove(k,id);if(was&&was.kind==='vid'){go('teacher',{t:'vl',vc:was.c,vs:was.s,vl:was.l||'_',vo:was.l?'':was.lt});return;}if(was&&was.kind){go('teacher',{t:was.kind==='flash'||was.kind==='photo'?'fl':'lb'});return;}go('teacher',{t:{hw:'hw',events:'ev',doubts:'dq',notes:'nt'}[k]});}
 function exportData(){const b=new Blob([JSON.stringify(S,null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='Rai_Vidyarthi_App_Backup_'+todayS()+'.json';document.body.appendChild(a);a.click();a.remove();}
 function importData(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||typeof d!=='object')throw 0;S=migrate(Object.assign(def(),d));save();toast('బ్యాకప్ పునరుద్ధరించబడింది ✓');go('teacher',{t:'st'});}catch(e){toast('ఫైల్ సరిగా లేదు');}};r.readAsText(f);}
 function resetAll(){if(!confirm('నిజంగా మొత్తం డేటా తొలగించాలా?'))return;if(!confirm('మళ్ళీ అడుగుతున్నాం – ఇది తిరిగి రాదు. కొనసాగించాలా?'))return;try{localStorage.removeItem(LS);}catch(e){}S=def();seed();tAuth=false;go('home');toast('డేటా తొలగించబడింది');}
