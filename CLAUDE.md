@@ -21,6 +21,7 @@
 - వర్క్‌బుక్ PDFలు: `books/<c>/Class<c>_Workbook_*_Sem<n>.pdf` (`qpdf --linearize`).
 - అకాడమిక్ క్యాలెండర్ `ACAL` (1–5) లో తప్పు తెలుగు పాఠం పేర్లను పుస్తకం చూసి సరిచేయాలి.
 - PDF text: English/Maths ఫాంట్లు shift cipher (chr+29 లేదా −2) – decode చేయాలి; తెలుగు పేజీలు బొమ్మలుగా చదవాలి.
+- AP 2026–2027 Telugu-English పుస్తకాల మూల లింకులు: `books/AP_Textbook_Links_2026-27_Telugu-English.md` (66 URLs; యూజర్ ఇచ్చిన సూచిక మాత్రమే, PDF విషయాలు/edition/medium/reachability ధృవీకరించలేదు). `books/README.md`లో source-label సందేహాలు ఉన్నాయి. PDF తెరిచి ధృవీకరించిన తర్వాతే కొత్త content చేయాలి; existing పుస్తకాల page offsetsను కొత్త PDFకు ఊహించి వర్తింపజేయకూడదు.
 
 ## జవాబుల రచన — యూజర్ preference (2026-11-07)
 - ఇకపై study answers పెద్ద పేరాగ్రాఫ్‌లుగా కాకుండా విద్యార్థికి సులభంగా అర్థమయ్యే చిన్న, నంబర్‌డ్ పాయింట్లుగా రాయాలి. ఒక్క పాయింట్‌లో ఒక్క ముఖ్యమైన విషయం ఉండాలి.
