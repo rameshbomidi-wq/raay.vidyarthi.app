@@ -2452,9 +2452,12 @@ function dueText(h){const sd=subOf(h);const d=diffDays(h.due,todayS());
 const NAVH={st:[],pop:0,exit:0,cw:null,armed:0,noAsk:0,skip:0};
 const NAV_ROOT=['home','learn','test','games','homework','welcome','login'],NAV_SKIP=['testrun','wsrun','gamerun','book'];
 function navKey(v,p){p=p||{};return v+'|'+(p.t||p.tab||p.s||'')+'|'+(p.id||'');}
-function navRec(v,p){if(NAVH.pop){NAVH.pop=0;return;}NAVH.exit=0;if(!NAVH.cw&&!NAVH.armed&&!NAVH.exit)setTimeout(navWatch,0);
+/* వెనక్కి వచ్చినప్పుడు పాత స్క్రోల్ స్థానం (పైకి వెళ్ళకుండా అక్కడే ఆగాలి) */
+const SCR={};
+function navRec(v,p){if(view)SCR[navKey(view,param)]=window.scrollY;if(NAVH.pop){NAVH.pop=0;NAVH.back=1;return;}NAVH.exit=0;if(!NAVH.cw&&!NAVH.armed&&!NAVH.exit)setTimeout(navWatch,0);
+ const k0=navKey(v,p),top=NAVH.st[NAVH.st.length-1];if((top&&navKey(top.v,top.p)===k0)||(view&&navKey(view,param)===k0))NAVH.back=1;
  if(NAV_ROOT.includes(v)){NAVH.st=(v==='home'||v==='welcome'||v==='login'||!S.cur)?[]:[{v:'home',p:{}}];return;}
- const k=navKey(v,p),i=NAVH.st.map(e=>navKey(e.v,e.p)).lastIndexOf(k);if(i>=0){NAVH.st=NAVH.st.slice(0,i);return;}
+ const k=k0,i=NAVH.st.map(e=>navKey(e.v,e.p)).lastIndexOf(k);if(i>=0){NAVH.st=NAVH.st.slice(0,i);NAVH.back=1;return;}
  if(view&&!NAV_SKIP.includes(view)&&navKey(view,param)!==k)NAVH.st.push({v:view,p:Object.assign({},param)});if(NAVH.st.length>40)NAVH.st.shift();}
 function navWatch(){if(NAVH.exit||document.getElementById('exitOv'))return;
  /* రెండూ: CloseWatcher (Android back) + history guard (iframe లోపల టచ్ చేసినప్పుడు back history ద్వారా వస్తుంది) */
@@ -2481,7 +2484,10 @@ function exitDo(){const o=document.getElementById('exitOv');if(o)o.remove();NAVH
   setTimeout(()=>{if(document.visibilityState==='visible'){toast('మూసేయడానికి ఫోన్ ← బ్యాక్ మళ్ళీ నొక్కండి');}},700);},150);}
 /* బ్రౌజర్ ట్యాబ్ ✕ మూసినా అడుగుతుంది (యాప్‌గా ఇన్‌స్టాల్ చేస్తే బ్యాక్ బటన్ పై డైలాగ్ చాలు) */
 window.addEventListener('beforeunload',e=>{if(NAVH.exit||NAVH.noAsk||isStandalone())return;e.preventDefault();e.returnValue='';});
-function go(v,p){navRec(v,p||{});if(typeof PGDIRTY!=='undefined')PGDIRTY=false;clearInterval(tick);tick=null;try{speechSynthesis.cancel();}catch(e){}view=v;param=p||{};render();window.scrollTo(0,0);}
+function go(v,p){navRec(v,p||{});if(typeof PGDIRTY!=='undefined')PGDIRTY=false;clearInterval(tick);tick=null;try{speechSynthesis.cancel();}catch(e){}view=v;param=p||{};render();const y=NAVH.back?(SCR[navKey(v,param)]||0):0;NAVH.back=0;window.scrollTo(0,y);if(y)scrRestore(y);}
+/* పేజీ ఆలస్యంగా లోడ్ అయినా (నోట్స్/బొమ్మలు) అదే స్థానానికి – 2 సెకన్ల వరకు ప్రయత్నం, యూజర్ తాకితే ఆపుతుంది */
+function scrRestore(y){const t=Date.now(),vw=view;let stop=0;const s1=()=>{stop=1;};window.addEventListener('touchstart',s1,{once:true,passive:true});window.addEventListener('wheel',s1,{once:true,passive:true});
+ const f=()=>{if(stop||view!==vw)return;window.scrollTo(0,y);if(Math.abs(window.scrollY-y)>2&&Date.now()-t<2000)setTimeout(f,120);};setTimeout(f,60);}
 /* ---------- ✏️ పలక & 📝 నోట్ – ప్రతి విభాగానికి వేరుగా, అవసరమైనప్పుడే తెరుచుకుంటుంది ---------- */
 const SL={open:false,full:false,tab:'d',bg:'slate',col:'#ffffff',w:4,er:false,strokes:[],base:null,bw:0,sec:'',key:'',cur:null,pid:null,dpr:1,W:0,H:0,th:null,sv:null};
 const SLBG={slate:{n:'⬛ నల్ల పలక',c:'#22312b'},white:{n:'⬜ తెల్ల పేజీ',c:'#ffffff'},lines:{n:'📄 గీతల పేజీ',c:'#ffffff'},grid:{n:'🔲 గడుల పేజీ',c:'#ffffff'}};
@@ -2620,7 +2626,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.09-2';
+const APPV='2026.11.09-3';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3044,8 +3050,9 @@ function helpItems(sec,q){const H=window.RAAY_HELP;if(!H)return '';q=String(q||'
  const out=H.sec.filter(S2=>!sec||q||S2.id===sec).map(S2=>{const its=S2.items.filter(it=>!q||(it.q+' '+it.a.join(' ')).toLowerCase().includes(q));n+=its.length;if(!its.length)return '';
   return `<h3 class="hlph">${S2.ic} ${esc(S2.t)}</h3>${its.map(it=>`<details class="hlp"${q||its.length===1?' open':''}><summary>${esc(it.q)}</summary><ol>${it.a.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>${it.vid?`<video class="hlpvid" controls preload="none" playsinline src="${esc(encodeURI(it.vid))}"></video>`:''}${it.img?`<img src="${esc(it.img)}" alt="" loading="lazy" onerror="this.remove()">`:''}</details>`).join('')}`;}).join('');
  return n?out:'<div class="empty">ఏమీ దొరకలేదు – వేరే పదంతో వెతకండి</div>';}
+function helpBack(){if(NAVH.st.length){navBack();return;}param.back?go(param.back):go(S.cur?'menu':'welcome');}
 V.help=()=>{helpLoad();const H=window.RAAY_HELP,sec=param.s||'';
- const bar=`<div class="bar"><button class="ib" onclick="param.back?go(param.back):go(S.cur?'menu':'welcome')">←</button><h2>❓ ఎలా వాడాలి</h2></div>`;
+ const bar=`<div class="bar"><button class="ib" onclick="helpBack()">←</button><h2>❓ ఎలా వాడాలి</h2></div>`;
  if(!H)return bar+`<div class="empty">${HLP.st===3?'📴 సహాయ పేజీ లోడ్ కాలేదు – నెట్ ఆన్ చేసి మళ్ళీ తెరవండి':'⏳ లోడ్ అవుతోంది...'}</div>`;
  const pg=appBase().replace(/index\.html$/,'').replace(/\/?$/,'/')+'help.html';
  return bar+`<div class="card hlpv"><h3>🎬 2 నిమిషాల వీడియో</h3><video controls preload="none" playsinline poster="help/img/poster.jpg" src="${esc(H.video)}"></video>
