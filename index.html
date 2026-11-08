@@ -691,6 +691,30 @@ details.lsub[open]>summary{border-radius:22px 22px 0 0;margin:0}details.lsub[ope
 .wk b{font-size:17px;color:var(--ink)}.wk button.td{background:linear-gradient(135deg,#14b8a6,#0e7490);color:#fff;box-shadow:0 5px 12px rgba(14,116,144,.3)}.wk button.td b{color:#fff}
 .wk i{width:7px;height:7px;border-radius:50%;background:#f97316;display:block}.wk i.no{visibility:hidden}
 @media(max-width:350px){.qgrid{grid-template-columns:repeat(3,1fr)}.hst{grid-template-columns:1fr 1fr}.thero>span{display:none}.lrt{width:70px}}
+
+/* ===== హోమ్ v3 (2026.11.08): చిన్న పేరు పెట్టె + అందులో చిన్న ఐకాన్లు, ఒకే వరుస సబ్జెక్టులు, ఈవెంట్ల పెద్ద పేజీ, కింద వెనక్కి బటన్ ===== */
+.hero.hsm{display:block;padding:12px 14px 10px;border-radius:20px}
+.hsm .htop{display:flex;align-items:center;gap:10px}.hsm .htop>div:first-child{flex:1;min-width:0}
+.hsm small{font-size:12px}.hsm h2{font-size:19px;line-height:1.2;margin:1px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hsm p{font-size:12px;margin:1px 0 0}
+.hsm .starb{margin-top:0;padding:3px 10px;font-size:12px}
+.hsm .mascot{font-size:38px;line-height:1}.hsm .mascot .edit{width:18px;height:18px;font-size:10px;right:-6px;bottom:-4px}
+.hico{display:flex;gap:6px;margin-top:10px;overflow-x:auto;scrollbar-width:none;position:relative;z-index:1}.hico::-webkit-scrollbar{display:none}
+.hico button{flex:1 0 44px;border:0;background:rgba(255,255,255,.17);color:#fff;border-radius:13px;padding:6px 2px 5px;font:inherit;font-size:10.5px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.2;cursor:pointer;position:relative;backdrop-filter:blur(2px)}
+.hico button span{font-size:19px;line-height:1.15}.hico button i{position:absolute;top:2px;right:6px;background:#ef4444;color:#fff;font-style:normal;font-size:9.5px;border-radius:8px;padding:0 4px;line-height:1.5}
+.hico button:active{transform:scale(.94)}
+.sline{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none}.sline::-webkit-scrollbar{display:none}
+.sch{flex:none;border:0;background:#fff;border-radius:16px;padding:7px 12px 7px 7px;display:flex;align-items:center;gap:8px;font:inherit;color:var(--ink);box-shadow:0 3px 10px rgba(15,23,42,.08);cursor:pointer;border-bottom:3px solid var(--sc)}
+.sch .si2{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:16px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--sc),color-mix(in srgb,var(--sc) 60%,#000))}
+.sch b{display:block;font-size:13.5px;line-height:1.2;text-align:left}.sch small{display:block;font-size:11px;color:var(--mut);text-align:left}
+.sch:active{transform:scale(.96)}
+.home .hstw{margin-top:4px}
+.bkb{display:block;width:100%;margin:18px 0 6px;border:2px solid #0e7490;background:#fff;color:#0e7490;border-radius:16px;padding:14px;font:inherit;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(14,116,144,.15)}
+.bkb:active{transform:scale(.98)}
+.evb{background:#fff;border-radius:22px;padding:16px;margin-bottom:14px;box-shadow:0 4px 16px rgba(15,23,42,.08);border-left:7px solid var(--ec);cursor:pointer}
+.evb.td{background:linear-gradient(135deg,#fff7ed,#fff)}
+.evb .tag{font-size:13px}.evb h3{font-size:20px;line-height:1.35;margin:8px 0 6px}.evb p{font-size:15px;line-height:1.55;margin:4px 0}
+.evb .evgal{margin-top:8px}.evb .lk2{margin-top:10px}
+.dly .card,.dly>div{margin-bottom:12px}
 </style>
 </head>
 <body>
@@ -2384,7 +2408,7 @@ const FBK={ready:false,user:null,
 
 /* ---------- సహాయక ఫంక్షన్లు ---------- */
 let view='home',param={},tick=null,T=null,G=null,tAuth=false;
-const PARENT={more:'home',weak:'home',help:'home',ssc:'learn',idmk:'learn',dict:'learn',tbl:'learn',evd:'home',card:'home',avatar:'home',badges:'home',library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',wsrun:'test',wsres:'test',wsboard:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
+const PARENT={events:'home',daily:'home',weak:'home',help:'home',ssc:'learn',idmk:'learn',dict:'learn',tbl:'learn',evd:'home',card:'home',avatar:'home',badges:'home',library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',wsrun:'test',wsres:'test',wsboard:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
 function me(){return S.cur.n;}
 function lessonsOf(c,s){const tb=tbLes(c,s).map(x=>({k:'tb'+x.id,t:x.no+'. '+x.t,b:x.pts||[],tb:x}));const b=((L[c]||{})[s]||[]).map((x,i)=>({k:'b'+i,t:x[0],b:x[1].split('|')}));
  const n=live('notes').filter(x=>!x.kind&&x.c===c&&x.s===s).map(x=>({k:'n'+x.id,t:x.t,b:String(x.x||'').split('\n').filter(Boolean),tn:1,img:x.img||''}));return tb.concat(b,n);}
@@ -2548,7 +2572,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.08-2';
+const APPV='2026.11.08-3';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3326,24 +3350,33 @@ function ctTile(c,s){const p=subjProg(c,s);if(!p.n)return '';const pc=Math.round
  return `<button class="ct" style="--sc:${SUBJ[s].col}" onclick="go('learn',{open:'${s}'})"><span class="ci">${SUBJ[s].ic}</span><b>${SUBJ[s].n}</b><small>${p.n} పాఠాలు</small><i class="pb"><i style="width:${pc}%"></i></i><em>${p.d} / ${p.n} చదివావు</em></button>`;}
 function nextLes(){const pk=tbPick(S.cur.c);return pk?`<div class="tbnext" style="margin-top:14px" onclick="go('tbl',{s:'${pk.s}',id:'${pk.L.id}'})"><span>👉</span><div><small>${tbIsNow(pk.L)?'ఈ నెల చదవాల్సింది':'ఇంకా చదవని పాఠం'} • ${SUBJ[pk.s].n}</small><b>${pk.L.no}. ${esc(pk.L.t)}</b></div><em>చదువు ▶</em></div>`:'';}
 const SSCBN=`<div class="sscbn" onclick="go('ssc')"><span>🎓</span><div><b>SSC ప్రశ్న–జవాబు</b><small>1 / 2 / 4 / 8 మార్కుల ప్రశ్నలు • క్విజ్ • ⭐ సేవ్ • ప్రింట్</small></div></div>`;
-/* 🏠 హోమ్ – ముఖ్యమైనవి మాత్రమే; మిగతావి “➕ మరిన్ని” పేజీలో. కింది నావ్‌లో ఉన్నవి (నేర్చుకో/టెస్ట్/ఆటలు/హోంవర్క్) ఇక్కడ మళ్ళీ పెట్టం */
-V.home=()=>{setTimeout(checkBadges,50);const g=greet(),stc=stars(),c=S.cur.c,cts=learnSubs(c).map(s=>ctTile(c,s)).join(''),ev=upcoming(9).length;
- return `<section class="hero"><div><small>${g[0]} ${g[1]}</small><h2>${esc(S.cur.n)}</h2><p>${S.cfg.sname?'🏫 '+esc(S.cfg.sname):'నేర్చుకో ఎప్పుడైనా, ఎక్కడైనా!'}</p><span class="starb" onclick="event.stopPropagation();toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐ ${stc} స్టార్లు</span> <span class="starb" onclick="event.stopPropagation();go('badges')">🏅 ${badgeCount()}</span></div><div class="mascot bob" onclick="go('avatar')" title="బొమ్మ మార్చు">${avOf(S.cur.n)}<i class="edit">✏️</i></div></section>
-${tickerHtml()}${reconnectCard()}${installBanner()}${hStats()}${nextLes()}
-${cts?`<h4 class="sec">📖 నా సబ్జెక్టులు <small>${c}వ తరగతి</small></h4><div class="cgrid">${cts}</div>`:''}
+function bkb(v,p,t){return `<button class="bkb" onclick="go('${v}'${p?','+p:''})">← ${t||'వెనక్కి'}</button>`;}
+function schip(c,s){const p=subjProg(c,s);if(!p.n)return '';return `<button class="sch" style="--sc:${SUBJ[s].col}" onclick="go('learn',{open:'${s}'})"><span class="si2">${SUBJ[s].ic}</span><span><b>${SUBJ[s].n}</b><small>${p.d}/${p.n} పాఠాలు</small></span></button>`;}
+/* 🏠 హోమ్ – చిన్న పేరు పెట్టె (అందులో ఈవెంట్లు/సూక్తి/టూల్స్/ID/ప్రగతి కార్డు/బ్యాడ్జీలు), ఫ్లాష్ న్యూస్, తదుపరి పాఠం, సబ్జెక్టులు (ఒకే వరుస), ప్రగతి, త్వరిత యాక్సెస్, ఫ్లాష్ ఫోటోలు.
+   కింది నావ్‌లో ఉన్నవి (నేర్చుకో/టెస్ట్/ఆటలు/హోంవర్క్) ఇక్కడ మళ్ళీ పెట్టం – ఒకే చోటుకి రెండు బటన్లు ఉండకూడదు */
+V.home=()=>{setTimeout(checkBadges,50);const g=greet(),stc=stars(),c=S.cur.c,sl=learnSubs(c).map(s=>schip(c,s)).join(''),t=todayS(),evT=live('events').filter(e=>e.d===t&&(e.c===0||e.c===S.cur.c)).length;
+ const hi=(v,ic,tx,p,b)=>`<button onclick="go('${v}'${p?','+p:''})"><span>${ic}</span>${tx}${b?`<i>${b}</i>`:''}</button>`;
+ return `<section class="hero hsm"><div class="htop"><div><small>${g[0]} ${g[1]}</small><h2>${esc(S.cur.n)}</h2><p>${S.cfg.sname?'🏫 '+esc(S.cfg.sname):c+'వ తరగతి'}</p></div><span class="starb" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐ ${stc}</span><div class="mascot bob" onclick="go('avatar')" title="బొమ్మ మార్చు">${avOf(S.cur.n)}<i class="edit">✏️</i></div></div>
+<div class="hico">${hi('events','📅','ఈవెంట్లు','',evT?'ఈరోజు':'')}${hi('daily','💡','సూక్తి')}${hi('library','🧰','టూల్స్',"{tab:'tools'}")}${hi('idmk','🪪','ID కార్డు')}${hi('card','🎓','ప్రగతి కార్డు')}${hi('badges','🏅','బ్యాడ్జీలు','',badgeCount()||'')}${+c===10?hi('ssc','📝','SSC'):''}</div></section>
+${tickerHtml()}${slidesHtml()}${reconnectCard()}${installBanner()}${nextLes()}
+${sl?`<h4 class="sec">📖 నా సబ్జెక్టులు <small>${c}వ తరగతి</small></h4><div class="sline">${sl}</div>`:''}
+${hStats()}
 <h4 class="sec">⚡ త్వరిత యాక్సెస్</h4><div class="qgrid">${qb('doubts','💬','సందేహం','p')}${qb('schedule','📅','షెడ్యూల్','t')}${qb('library','📚','పుస్తకాలు','b',"{tab:'books'}")}${qb('dict','🔤','డిక్షనరీ','o')}</div>
-<button class="morebtn" onclick="go('more')"><span>✨</span><div><b>మరిన్ని</b><small>ఈవెంట్లు${ev?' ('+ev+')':''} • ఫోటోలు • నేటి సూక్తి • టూల్స్ • ID కార్డు${+c===10?' • SSC':''}</small></div><em>›</em></button>`;};
-/* ✨ మరిన్ని */
-V.more=()=>{const up=upcoming(6),c=S.cur.c;
- return `<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>✨ మరిన్ని</h2></div>${+c===10?SSCBN:''}
-<div class="qgrid">${qb('library','🧰','టూల్స్','s',"{tab:'tools'}")}${qb('idmk','🪪','ID • ఫోటో','v')}${qb('card','🎓','ప్రగతి కార్డు','g')}${qb('badges','🏅','బ్యాడ్జీలు','y')}</div>
-<h4 class="sec">📅 రాబోయే ఈవెంట్లు</h4><div class="hscroll">${up.length?up.map(evCard).join(''):`<div class="ecard"><span class="tag">ఈరోజు</span><b>కొత్త ఈవెంట్లు లేవు</b><small>టీచర్ పెట్టగానే ఇక్కడ వస్తాయి</small></div>`}</div>
-${slidesHtml()}${dailyCards()}`;};
+`;};
+/* 📅 ఈవెంట్లు – పెద్ద కార్డులు */
+V.events=()=>{const t=todayS(),es=live('events').filter(e=>e.d>=t&&(e.c===0||e.c===S.cur.c)).sort((a,b)=>(a.d+(a.tm||''))<(b.d+(b.tm||''))?-1:1);
+ const col={test:'#dc2626',hol:'#16a34a',live:'#7c3aed'};
+ return `<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>📅 ఈవెంట్లు</h2></div>
+${es.length?es.map(e=>{const lbl=e.d===t?'ఈరోజు':e.d===addDays(t,1)?'రేపు':fmtD(e.d),ok=/^https:\/\//.test(e.link||'');
+ return `<div class="evb ${e.d===t?'td':''}" style="--ec:${col[e.ty]||'#0e7490'}" onclick="go('evd',{id:'${e.id}',back:'events'})"><span class="tag ${({test:'t',hol:'h',live:'l'}[e.ty]||'')}">${e.ty==='live'?'🔴 LIVE • ':''}${lbl}${EVT[e.ty]?' • '+EVT[e.ty]:''}</span><h3>${esc(e.t)}</h3><p class="mut">🗓️ ${fmtLong(e.d)}${e.tm?' • ⏰ '+to12(e.tm):''}</p>${e.x?`<p>${esc(e.x)}</p>`:''}${e.ph&&e.ph.length?`<div class="evgal" onclick="event.stopPropagation()">${evImgs(e)}</div>`:''}${ok?`<a class="lk2" onclick="event.stopPropagation()" href="${esc(e.link)}" target="_blank" rel="noopener">ఇప్పుడే చేరండి ▶</a>`:''}</div>`;}).join(''):`<div class="empty">📭 రాబోయే ఈవెంట్లు లేవు – టీచర్ పెట్టగానే ఇక్కడ కనిపిస్తాయి.</div>`}
+${bkb('home','','హోమ్‌కి వెనక్కి')}`;};
+/* 💡 నేటి సూక్తి & ఇంగ్లీష్ పదం */
+V.daily=()=>`<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>💡 నేటి సూక్తి & పదం</h2></div><div class="dly">${dailyCards()}</div>${bkb('home','','హోమ్‌కి వెనక్కి')}`;
 /* 🎯 ఇంకా సాధన కావాల్సిన పాఠాలు */
 V.weak=()=>{const c=S.cur.c,wl=weakList();
  return `<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>🎯 ఇంకా సాధన కావాల్సినవి</h2></div><p class="mut" style="margin:0 2px 12px">60% కంటే తక్కువ వచ్చిన టెస్టులు – నోట్స్ మళ్ళీ చదివి, మళ్ళీ రాయి. 60% దాటితే ఇక్కడి నుండి పోతాయి.</p>
 ${wl.length?wl.map(x=>{const [t,s,id]=x.k.split('|');if(!SUBJ[s])return '';const L=t==='L'?tbGet(c,s,id):null;if(t==='L'&&!L)return '';
- return `<div class="wkl" style="--sc:${SUBJ[s].col}"><b>${SUBJ[s].ic} ${L?L.no+'. '+esc(L.t):SUBJ[s].n+' టెస్ట్'}</b><small>ఉత్తమ స్కోరు <span class="pct ${pctCls(x.b)}">${x.b}%</span> • ${x.n} సార్లు రాశావు</small><div class="row2">${L?`<button class="btn sm ghost" onclick="go('tbl',{s:'${s}',id:'${id}'})">📖 నోట్స్ చదువు</button><button class="btn sm" onclick="startLesTest('${s}','${id}')">📝 మళ్ళీ టెస్ట్</button>`:`<button class="btn sm" onclick="startTest('${s}')">📝 మళ్ళీ టెస్ట్</button>`}</div></div>`;}).join(''):`<div class="empty">🎉 అన్నీ బాగున్నాయి! 60% కంటే తక్కువ వచ్చిన టెస్ట్ ఏదీ లేదు.</div>`}`;};
+ return `<div class="wkl" style="--sc:${SUBJ[s].col}"><b>${SUBJ[s].ic} ${L?L.no+'. '+esc(L.t):SUBJ[s].n+' టెస్ట్'}</b><small>ఉత్తమ స్కోరు <span class="pct ${pctCls(x.b)}">${x.b}%</span> • ${x.n} సార్లు రాశావు</small><div class="row2">${L?`<button class="btn sm ghost" onclick="go('tbl',{s:'${s}',id:'${id}'})">📖 నోట్స్ చదువు</button><button class="btn sm" onclick="startLesTest('${s}','${id}')">📝 మళ్ళీ టెస్ట్</button>`:`<button class="btn sm" onclick="startTest('${s}')">📝 మళ్ళీ టెస్ట్</button>`}</div></div>`;}).join(''):`<div class="empty">🎉 అన్నీ బాగున్నాయి! 60% కంటే తక్కువ వచ్చిన టెస్ట్ ఏదీ లేదు.</div>`}${bkb('home','','హోమ్‌కి వెనక్కి')}`;};
 
 /* ---------- సెల్ఫ్ లెర్న్ ---------- */
 function recommend(){const c=S.cur.c;const pk=tbPick(c);if(pk)return `<div class="tcard"><div class="th" style="background:${SUBJ[pk.s].bg}"><span class="si" style="width:34px;height:34px;font-size:16px">${SUBJ[pk.s].ic}</span>${SUBJ[pk.s].n} • 📅 ${tbMonths(pk.L)}</div><div class="tb"><b>${pk.L.no}. ${esc(pk.L.t)}</b><div class="r"><small class="mut">నోట్స్ + ${Math.min(10,(pk.L.qz||[]).length)} ప్రశ్నల టెస్ట్</small><button class="lk b" onclick="go('tbl',{s:'${pk.s}',id:'${pk.L.id}'})">చదువు ▶</button></div></div></div>`;for(const s of learnSubs(c)){const ls=lessonsOf(c,s);const i=ls.findIndex(l=>!isRead(c+'-'+s+'-'+l.k));if(i>=0){const l=ls[i];
@@ -4293,11 +4326,11 @@ async function addEv(){const t=$('#et').value.trim();if(!t)return toast('శీ�
  if(S.cfg.type==='gs'&&JSON.stringify(rec).length>19000)return toast('వివరాలు చాలా పెద్దవి – కొంచెం తగ్గించండి');
  put('events',rec);EVPH=[];toast('ఈవెంట్ జోడించబడింది ✓');go('teacher',{t:'ev'});}
 function evImgs(e,cls){return (e.ph||[]).map(p=>imgTag(p.u||p.s,cls||'evimg',p.s)).join('');}
-V.evd=()=>{const e=live('events').find(x=>x.id===param.id);const bar=`<div class="bar"><button class="ib" onclick="history.length>1&&param.back?go(param.back):go('home')">←</button><h2>📅 ఈవెంట్</h2></div>`;if(!e)return bar+'<div class="empty">ఈవెంట్ దొరకలేదు</div>';
+V.evd=()=>{const e=live('events').find(x=>x.id===param.id);const bar=`<div class="bar"><button class="ib" onclick="go(param.back||'events')">←</button><h2>📅 ఈవెంట్</h2></div>`;if(!e)return bar+'<div class="empty">ఈవెంట్ దొరకలేదు</div>';
  const ok=/^https:\/\//.test(e.link||'');return bar+`<div class="card evd"><span class="tag ${({test:'t',hol:'h',live:'l'}[e.ty]||'')}">${EVT[e.ty]||''}</span><h3>${esc(e.t)}</h3>
 <p class="mut">🗓️ ${fmtLong(e.d)}${e.tm?' • ⏰ '+to12(e.tm):''} • ${e.c?e.c+'వ తరగతి':'అన్ని తరగతులు'}</p>${e.x?`<p class="evx">${esc(e.x)}</p>`:''}
 ${e.ph&&e.ph.length?`<div class="evgal">${evImgs(e)}</div><p class="mut" style="font-size:12px">ఫోటో తాకితే పెద్దగా కనిపిస్తుంది</p>`:''}
-${ok?`<a class="btn" style="text-align:center;text-decoration:none" href="${esc(e.link)}" target="_blank" rel="noopener">ఇప్పుడే చేరండి ▶</a>`:''}</div>`;};
+${ok?`<a class="btn" style="text-align:center;text-decoration:none" href="${esc(e.link)}" target="_blank" rel="noopener">ఇప్పుడే చేరండి ▶</a>`:''}</div>${bkb(param.back||'events','',param.back==='schedule'?'షెడ్యూల్‌కి వెనక్కి':'ఈవెంట్లకు వెనక్కి')}`;};
 /* ================= 🧑‍🎓 విద్యార్థుల జాబితా + ప్రగతి (FA-1 → SA-2, హాజరు) ================= */
 const PG_A=['FA1','FA2','SA1','FA3','FA4','SA2'],PG_AL={FA1:'FA-1',FA2:'FA-2',SA1:'SA-1',FA3:'FA-3',FA4:'FA-4',SA2:'SA-2',ANN:'వార్షికం'};
 const PG_TOOLS=['ప్రతిస్పందనలు','రాత అంశాలు','ప్రాజెక్ట్','రాత పరీక్ష'];
