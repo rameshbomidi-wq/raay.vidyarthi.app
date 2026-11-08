@@ -747,7 +747,12 @@ details.lsub[open]>summary{border-radius:22px 22px 0 0;margin:0}details.lsub[ope
 .offc h4{margin:0 0 4px;font-size:16px}.offc p{margin:0 0 10px;font-size:12.5px;color:var(--mut)}.offc .row2 .btn{margin:0}
 .offc .st{font-size:12.5px;font-weight:700;color:#15803d;margin-top:8px}
 
-.dq.dqs{display:block}.dqvid{margin:8px 0 2px}.dqvid .vbox{position:relative;width:100%;padding-top:56.25%;border-radius:12px;overflow:hidden;background:#0f172a;box-shadow:0 4px 14px rgba(15,23,42,.18)}.dqvid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.dqvid a{display:inline-block;margin-top:6px;font-size:12.5px;font-weight:700;color:#dc2626;text-decoration:none}
+.dq.dqs{display:block}.vlbn{background:linear-gradient(135deg,#fee2e2,#fecaca)}.vlbn small{color:#7f1d1d}
+.vlg{background:#fff;border-radius:16px;padding:4px 12px 8px;margin:0 0 12px;box-shadow:0 2px 10px rgba(15,23,42,.06)}.vlg>summary{cursor:pointer;font-weight:800;font-size:15px;padding:10px 0;color:#0f172a}.vlg>summary small{color:var(--mut);font-weight:600}
+.vlc{display:flex;gap:10px;align-items:center;padding:8px 0;border-top:1px solid #f1f5f9}.vlc.on{display:block}.vlth{position:relative;flex:none;width:128px;height:72px;border:0;padding:0;border-radius:10px;overflow:hidden;background:linear-gradient(135deg,#ef4444,#7f1d1d);cursor:pointer}
+.vlth img{width:100%;height:100%;object-fit:cover;display:block}.vlth i{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;background:rgba(220,38,38,.92);color:#fff;font-style:normal;font-size:15px;line-height:34px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.vlm{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;position:relative}.vlm b{font-size:14.5px;line-height:1.35}.vlm small{color:var(--mut);font-size:12px}.vlm .del{align-self:flex-start;margin:2px 0 0}.vlc.on .vlm{margin-top:4px}
+.tbs .vlc:first-of-type{border-top:0}.dqvid{margin:8px 0 2px}.dqvid .vbox{position:relative;width:100%;padding-top:56.25%;border-radius:12px;overflow:hidden;background:#0f172a;box-shadow:0 4px 14px rgba(15,23,42,.18)}.dqvid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.dqvid a{display:inline-block;margin-top:6px;font-size:12.5px;font-weight:700;color:#dc2626;text-decoration:none}
 .vrow{display:flex;gap:6px;margin:6px 0 2px}.vrow input{flex:1;min-width:0;margin:0;font-size:13.5px;padding:9px 10px;border:1.5px dashed #fca5a5;border-radius:10px;background:#fff7f7}.vrow button{flex:none;border:0;border-radius:10px;padding:0 10px;font-weight:800;font-size:12.5px;color:#fff;background:linear-gradient(135deg,#ef4444,#b91c1c)}
 .vchip{display:inline-block;margin-top:6px;font-size:12.5px;font-weight:700;color:#b91c1c;background:#fee2e2;border-radius:999px;padding:3px 10px;text-decoration:none}
 .aib{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:6px 0 8px}.aib span{font-size:12.5px;font-weight:800;color:#6d28d9}
@@ -2492,7 +2497,7 @@ const FBK={ready:false,user:null,
 
 /* ---------- సహాయక ఫంక్షన్లు ---------- */
 let view='home',param={},tick=null,T=null,G=null,tAuth=false;
-const PARENT={events:'home',daily:'home',weak:'home',help:'home',ssc:'learn',idmk:'learn',dict:'learn',tbl:'learn',evd:'home',card:'home',avatar:'home',badges:'home',library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',wsrun:'test',wsres:'test',wsboard:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
+const PARENT={vids:'learn',events:'home',daily:'home',weak:'home',help:'home',ssc:'learn',idmk:'learn',dict:'learn',tbl:'learn',evd:'home',card:'home',avatar:'home',badges:'home',library:'learn',book:'learn',privacy:'home',sync:'home',subject:'learn',doubts:'learn',testrun:'test',result:'test',wsrun:'test',wsres:'test',wsboard:'test',gamerun:'games',cls:'home',menu:'home',schedule:'home'};
 function me(){return S.cur.n;}
 function lessonsOf(c,s){const tb=tbLes(c,s).map(x=>({k:'tb'+x.id,t:x.no+'. '+x.t,b:x.pts||[],tb:x}));const b=((L[c]||{})[s]||[]).map((x,i)=>({k:'b'+i,t:x[0],b:x[1].split('|')}));
  const n=live('notes').filter(x=>!x.kind&&x.c===c&&x.s===s).map(x=>({k:'n'+x.id,t:x.t,b:String(x.x||'').split('\n').filter(Boolean),tn:1,img:x.img||''}));return tb.concat(b,n);}
@@ -2703,7 +2708,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.09-11';
+const APPV='2026.11.09-12';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3252,7 +3257,7 @@ function tbFull(c,s){c=+c;if(!TB_SPLIT[c]||!s)return true;const k=c+'|'+s;if(TBF
  sc.onerror=()=>{TBF[k]='';sc.remove();delete TBW[k];toast('📴 పాఠం లోడ్ కాలేదు – నెట్ ఆన్ చేసి మళ్ళీ ప్రయత్నించండి');tbRefresh();};document.head.appendChild(sc);return false;}
 function tbWhenFull(c,s,f){if(tbFull(c,s))return f();const k=+c+'|'+s;(TBW[k]=TBW[k]||[]).push(f);toast('⏳ పాఠం లోడ్ అవుతోంది...');}
 const TBWAIT='<div class="empty">⏳ పాఠం లోడ్ అవుతోంది...</div>';
-function tbRefresh(){try{if(['learn','subject','tbl','home','ssc'].includes(view)||(view==='teacher'&&param.t==='tb'))softRender();}catch(e){}}
+function tbRefresh(){try{if(['learn','subject','tbl','home','ssc','vids'].includes(view)||(view==='teacher'&&(param.t==='tb'||param.t==='vl')))softRender();}catch(e){}}
 /* ఫైల్ పాఠాలు + టీచర్ మార్పులు (tbx) కలిపి */
 function tbLes(c,s){c=+c;tbLoad(c);const base=((window.RAAY_TB[c]||{})[s]||[]);const ov=live('tbx').filter(x=>+x.c===c&&x.s===s);if(!ov.length)return base;
  const m=new Map(base.map(L=>[L.id,L]));ov.forEach(x=>{if(x.hide)m.delete(x.lid);else if(x.L)m.set(x.lid,Object.assign({},x.L,{id:x.lid,tch:1}));});
@@ -3291,7 +3296,7 @@ V.tbl=()=>{if(param.wb)setTimeout(()=>{const e=document.querySelector('.tbwb');i
 <div class="tbhero" style="--sc:${SUBJ[s].col};--sb:${SUBJ[s].bg}"><small>${c}వ తరగతి • ${en?'Lesson':'పాఠం'} ${L.no}</small><h2>${esc(L.t)}</h2><div class="tbtags"><span>📅 ${tbMonths(L)}</span><span>✍️ ${esc(L.ty)}</span><span>💡 ${esc(L.th)}</span></div>${L.by?`<p>${esc(L.by)}</p>`:''}${b!=null?`<p class="tbsc">🏆 నీ ఉత్తమ స్కోరు: <b>${b}%</b></p>`:''}</div>
 ${sec('📝',en?'Story in short (సారాంశం)':'పాఠం సారాంశం',`<p class="tbp">${esc(L.sum)}</p>${L.te?`<div class="tbte"><b>తెలుగులో:</b> ${esc(L.te)}</div>`:''}`,` <button class="spk sm" onclick="tbSpeak('sum')">🔊</button>`)}
 ${(L.pts||[]).length?sec('⭐',en?'Key points (ముఖ్యాంశాలు)':'ముఖ్యాంశాలు',`<ul class="tbul">${L.pts.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`):''}
-${(L.fg||[]).length?sec('🖼',en?'Figures & tables':'పటాలు – పట్టికలు',L.fg.map(([t,f])=>`<div class="tbfg"><b>${esc(t)}</b>${richT(f)}</div>`).join('')):''}
+${vlSec(c,s,L)}${(L.fg||[]).length?sec('🖼',en?'Figures & tables':'పటాలు – పట్టికలు',L.fg.map(([t,f])=>`<div class="tbfg"><b>${esc(t)}</b>${richT(f)}</div>`).join('')):''}
 ${(L.w||[]).length?sec('📚',en?'Glossary (పదాలు – అర్థాలు)':'పదాలు – అర్థాలు',`<div class="tbw">${L.w.map(([a,m])=>`<button onclick="speak(this.dataset.t)" data-t="${esc(a+', '+m)}"><b>${esc(a)}</b><span>${esc(m)}</span></button>`).join('')}</div><small class="mut">👆 పదం నొక్కితే వినిపిస్తుంది</small>`):''}
 ${L.gr&&(L.gr.p||[]).length?sec(s==='mat'?'🧮':(s==='tel'||en)?'✏️':'🔎',(en?'Grammar: ':s==='tel'?'భాషాంశాలు: ':'')+esc(L.gr.t||''),`<ul class="tbul">${L.gr.p.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`):''}
 ${(L.qa||[]).length?sec('❓',en?'Questions & Answers':'ప్రశ్నలు – జవాబులు',L.qa.map(([q,a],j)=>`<details class="tbqa"><summary>${j+1}. ${esc(q)}</summary><p>✅ ${esc(a)}</p></details>`).join('')+'<small class="mut">👆 ముందు నువ్వే ఆలోచించి, తర్వాత జవాబు చూడు</small>'):''}
@@ -3559,9 +3564,14 @@ function lsubCard(c,s,open){const tl=tbLes(c,s),p=subjProg(c,s);if(!p.n)return '
 <button class="lmore" onclick="go('subject',{s:'${s}'})">${tl.some(L=>L.wb)?'📒 '+esc(tl.find(L=>L.wb).wb.lb||'వర్క్‌బుక్')+' & ':''}✏️ అదనపు అభ్యాసం ▸</button></div></details>`;}
 V.learn=()=>{const c=S.cur.c,ms=tbMonthSec(),op=param.open||'';if(op)setTimeout(()=>{const e=document.getElementById('ls-'+op);if(e)window.scrollTo({top:e.getBoundingClientRect().top+window.scrollY-70,behavior:'smooth'});},120);
  return `${+c===10?SSCBN:''}${ms}
-<h4 class="sec">📚 నోట్స్ ఉన్న అన్ని పాఠాలు <small>${c}వ తరగతి • <a onclick="go('cls')">మార్చు</a></small></h4>
+${vlBanner(c)}<h4 class="sec">📚 నోట్స్ ఉన్న అన్ని పాఠాలు <small>${c}వ తరగతి • <a onclick="go('cls')">మార్చు</a></small></h4>
 <p class="mut" style="margin:-4px 2px 12px;font-size:13.5px">సబ్జెక్టు నొక్కు → పాఠాలు తెరుచుకుంటాయి. పాఠం నొక్కితే నోట్స్, 📝 నొక్కితే టెస్ట్.</p>
 ${learnSubs(c).map(s=>lsubCard(c,s,s===op)).join('')}${ms?'':`<h4 class="sec">నీ కోసం సూచన</h4>${recommend()}`}${offCard(+c)}`;};
+V.vids=()=>{const c=S.cur.c,subs=learnSubs(c),all=vlAll(c);const s=subs.includes(param.s)?param.s:(subs.find(x=>all.some(n=>n.s===x))||subs[0]);
+ return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>🎬 వీడియో పాఠాలు</h2></div>
+<p class="mut" style="margin:-4px 2px 10px">${c}వ తరగతి • ఉపాధ్యాయులు ఎంచుకున్న వీడియోలు మాత్రమే. ▶ నొక్కితే ఇక్కడే ప్లే అవుతుంది.</p>
+<div class="tchips vlsub">${subs.map(x=>{const k=all.filter(n=>n.s===x).length;return `<button class="${x===s?'on':''}" onclick="go('vids',{s:'${x}'})">${SUBJ[x].ic} ${SUBJ[x].n}${k?' ('+k+')':''}</button>`;}).join('')}</div>
+${vlFolders(c,s,all.filter(n=>n.s===s))||'<div class="empty">ఈ సబ్జెక్టుకు ఇంకా వీడియోలు లేవు – ఉపాధ్యాయులు పెడతారు 🎬</div>'}${bkb('learn','','నేర్చుకో')}`;};
 V.subject=()=>{const c=S.cur.c,s=param.s,ls=lessonsOf(c,s);
  return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>${SUBJ[s].ic} ${SUBJ[s].n} • ${c}వ తరగతి</h2></div>
 <p class="mut" style="margin:-6px 2px 12px">చదివిన పాఠాలు: ${readPct(s)}%</p>
@@ -4051,8 +4061,8 @@ function tAtHero(){const cls=pgCls();if(!cls.length)return '';const d=todayS();
  const st=cls.map(c=>{const L=pgRoster(c),mk=L.some(r=>atDay(r,d)!=null),p=L.filter(r=>atDay(r,d)===1).length;return `<span class="${mk?'ok':''}">${c}వ: ${mk?p+'/'+L.length+' ✓':'వేయలేదు'}</span>`;}).join('');
  return `<div class="thero at"><div><h3>✅ ఈరోజు హాజరు</h3><p class="atst">${st}</p><button onclick="go('teacher',{t:'at'})">✔ హాజరు వేయండి</button></div><span>📋</span></div>`;}
 /* 👩‍🏫 టీచర్ డాష్‌బోర్డ్ – ప్రతి బటన్ వేరే చోటుకి (ఒకే చోటుకి రెండు బటన్లు లేవు) */
-const TIC={at:['✅','ఈరోజు హాజరు','g'],sy:['☁️','ఆన్‌లైన్ సింక్','s'],tc:['👥','ఉపాధ్యాయులు','i'],pg:['🧑‍🎓','విద్యార్థులు & మార్కులు','o'],ac:['🗓️','అకాడమిక్ క్యాలెండర్','t'],hw:['📒','హోంవర్క్','g'],ev:['📅','ఈవెంట్ / టెస్ట్','v'],qp:['📝','ప్రశ్నాపత్రం','r'],dq:['💬','సందేహాలు','p'],ws:['🔢','రోజువారీ లెక్కలు','l'],nt:['📖','పాఠం నోట్స్','s'],tb:['📘','పాఠ్యపుస్తకం నోట్స్ & టెస్ట్','b'],yg:['🧘','యోగా & ఆటలు','l'],lb:['📚','పుస్తకాలు / టూల్స్','i'],fl:['📢','ఫ్లాష్ / ఫోటోలు','y'],rp:['📊','రిపోర్ట్','t'],st:['⚙️','సెట్టింగ్స్','z']};
-const TGRP=[['📌 రోజువారీ పనులు',['dq','pg','qp','ws']],['📘 పాఠాలు',['tb','nt','ac','yg']],['🏫 పాఠశాల',['ev','fl','lb','rp']],['⚙️ సెటప్',['sy','tc','st']]];
+const TIC={at:['✅','ఈరోజు హాజరు','g'],sy:['☁️','ఆన్‌లైన్ సింక్','s'],tc:['👥','ఉపాధ్యాయులు','i'],pg:['🧑‍🎓','విద్యార్థులు & మార్కులు','o'],ac:['🗓️','అకాడమిక్ క్యాలెండర్','t'],hw:['📒','హోంవర్క్','g'],ev:['📅','ఈవెంట్ / టెస్ట్','v'],qp:['📝','ప్రశ్నాపత్రం','r'],dq:['💬','సందేహాలు','p'],ws:['🔢','రోజువారీ లెక్కలు','l'],nt:['📖','పాఠం నోట్స్','s'],tb:['📘','పాఠ్యపుస్తకం నోట్స్ & టెస్ట్','b'],vl:['🎬','వీడియో పాఠాలు','r'],yg:['🧘','యోగా & ఆటలు','l'],lb:['📚','పుస్తకాలు / టూల్స్','i'],fl:['📢','ఫ్లాష్ / ఫోటోలు','y'],rp:['📊','రిపోర్ట్','t'],st:['⚙️','సెట్టింగ్స్','z']};
+const TGRP=[['📌 రోజువారీ పనులు',['dq','pg','qp','ws']],['📘 పాఠాలు',['tb','vl','nt','ac','yg']],['🏫 పాఠశాల',['ev','fl','lb','rp']],['⚙️ సెటప్',['sy','tc','st']]];
 function tSecOk(k){return k!=='tc'||(isAdmin()&&S.cfg.type==='gs');}
 function tBadge(k){if(k==='dq')return live('doubts').filter(d=>!d.r&&canSee(d.c,d.s)).length;if(k==='ws')return wsPendT().length;return 0;}
 function tDayInfo(d){const e=live('events').filter(x=>x.d===d&&(!+x.c||canSee(x.c))).map(x=>'📅 '+x.t),h=live('hw').filter(x=>x.due===d&&canSee(x.c,x.s)).map(x=>'📒 '+x.c+'వ: '+x.t);const a=e.concat(h);toast(a.length?a.slice(0,3).join(' • ')+(a.length>3?' …':''):fmtD(d)+' – ఏమీ లేవు');}
@@ -4889,6 +4899,23 @@ TP.nt=()=>`<div class="card"><h3>పాఠం నోట్ జోడించం
 <label>పాఠం పేరు</label><input id="ntt" placeholder="ఉదా: మన గ్రామం"><label>ముఖ్యాంశాలు (ఒక్కో లైన్ = ఒక పాయింట్)</label><textarea id="ntx" rows="5"></textarea><button class="btn" onclick="addNote()">➕ జోడించు</button></div>
 <h4 class="sec">టీచర్ నోట్స్ (${live('notes').filter(n=>!n.kind&&canSee(n.c,n.s)).length})</h4>${live('notes').filter(n=>!n.kind&&canSee(n.c,n.s)).map(n=>`<div class="titem"><div><b>${esc(n.t)}</b><small>${n.c}వ తరగతి • ${SUBJ[n.s].n}</small></div><button class="del" onclick="delItem('notes','${n.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}`;
 function addNote(){const t=$('#ntt').value.trim(),x=$('#ntx').value.trim();if(!t||!x)return toast('పేరు, ముఖ్యాంశాలు రాయండి');put('notes',{id:uid(),c:+$('#nc').value,s:$('#ncs').value,t,x});toast('పాఠం జోడించబడింది ✓');go('teacher',{t:'nt'});}
+TP.vl=()=>{const cs=myCls(),c=cs.includes(+param.vc)?+param.vc:cs[0];const subs=learnSubs(c).filter(x=>canSee(c,x));const s=subs.includes(param.vs)?param.vs:subs[0];
+ const ls=s?tbLes(c,s):[],mine=s?vlAll(c,s):[],sl=param.vl||(ls[0]?ls[0].id:'_');
+ return `<div class="card"><h3>🎬 వీడియో లింక్ జోడించండి</h3><p class="mut">YouTube / Google Drive లింకులు మాత్రమే. పిల్లలకు <b>నేర్చుకో → 🎬 వీడియో పాఠాలు</b> లో సబ్జెక్టు → పాఠం (📁) వారీగా, పాఠం నోట్స్ పేజీలో కూడా – app లోనే ప్లే అవుతాయి.</p>
+<div class="g2"><div><label>తరగతి</label><select id="vlc" onchange="go('teacher',{t:'vl',vc:+this.value})">${cs.map(x=>`<option value="${x}" ${x===c?'selected':''}>${x}వ తరగతి</option>`).join('')}</select></div><div><label>సబ్జెక్ట్</label><select id="vls" onchange="go('teacher',{t:'vl',vc:${c},vs:this.value})">${subs.map(x=>`<option value="${x}" ${x===s?'selected':''}>${SUBJ[x].n}</option>`).join('')}</select></div></div>
+<label>పాఠం (📁 ఫోల్డర్)</label><select id="vll" onchange="document.getElementById('vlo').hidden=this.value!=='_'">${ls.map(L=>`<option value="${L.id}" ${L.id===sl?'selected':''}>${esc(vlLT(s,L))}</option>`).join('')}<option value="_" ${sl==='_'?'selected':''}>✏️ వేరే పాఠం / అంశం (పేరు రాయండి)</option></select>
+<input id="vlo" ${sl==='_'?'':'hidden'} maxlength="60" placeholder="పాఠం / అంశం పేరు" value="${esc(param.vo||'')}">
+<label>వీడియో పేరు</label><input id="vlt" maxlength="80" placeholder="ఉదా: భిన్నాల కూడిక – సులభంగా">
+<label>వీడియో లింక్</label><div class="vrow"><input id="vlu" type="url" inputmode="url" placeholder="https://youtu.be/...  లేదా  Drive లింక్"><button onclick="vlFind()">🔎 YouTube</button></div>
+<button class="btn" onclick="vlAdd()">➕ జోడించు</button></div>
+<h4 class="sec">📁 ${c}వ తరగతి • ${s?SUBJ[s].n:''} – వీడియోలు (${mine.length})</h4>${vlFolders(c,s,mine,1)||'<div class="empty">ఇంకా వీడియోలు లేవు</div>'}`;};
+function vlAdd(){const c=+$('#vlc').value,s=$('#vls').value,l=$('#vll').value,u=$('#vlu').value.trim(),t=$('#vlt').value.trim();
+ if(!s)return toast('సబ్జెక్ట్ ఎంచుకోండి');if(!u)return toast('వీడియో లింక్ పేస్ట్ చేయండి');if(!vidEmbed(u))return toast('🎬 YouTube లేదా Google Drive లింక్ మాత్రమే (https://...)');
+ let lt='';if(l==='_'){lt=$('#vlo').value.trim();if(!lt)return toast('పాఠం / అంశం పేరు రాయండి');}else{const L=tbLes(c,s).find(x=>x.id===l);lt=L?vlLT(s,L):'';}
+ const ll=l==='_'?'':l;if(vlAll(c,s).some(n=>n.url===u&&(n.l||'')===ll&&(ll||n.lt===lt)))return toast('ఈ వీడియో ఇప్పటికే ఈ పాఠంలో ఉంది');
+ put('notes',{id:uid(),kind:'vid',c,s,l:ll,lt,t:(t||'వీడియో').slice(0,80),url:u.slice(0,300),by:tName()});toast('🎬 వీడియో జోడించాం ✓');go('teacher',{t:'vl',vc:c,vs:s,vl:l,vo:l==='_'?lt:''});}
+function vlFind(){const c=+$('#vlc').value,s=$('#vls').value,l=$('#vll').value;const L=tbLes(c,s).find(x=>x.id===l);const lt=l==='_'?($('#vlo').value||''):(L?L.t:'');
+ window.open('https://www.youtube.com/results?search_query='+encodeURIComponent((c+'వ తరగతి '+(SUBJ[s]?SUBJ[s].n:'')+' '+lt).replace(/\s+/g,' ').trim()),'_blank','noopener');toast('వీడియో తెరిచి Share → Copy link చేసి “వీడియో లింక్” పెట్టెలో పేస్ట్ చేయండి',5000);}
 TP.rp=()=>{const f=param.f||0;const seen={};const st=live('students').filter(s=>myCls().includes(+s.c)&&(!f||s.c===f)&&!seen[s.n+'|'+s.c]&&(seen[s.n+'|'+s.c]=1));
  const rows=st.map(s=>{const rs=live('results').filter(r=>r.n===s.n&&r.c===s.c);const avg=avgOf(rs);const by=subjectsFor(s.c).map(sb=>{const x=rs.filter(r=>r.sb===sb);return SUBJ[sb].sh+' '+(x.length?avgOf(x)+'%':'–');});
   const hw=live('hw').filter(h=>h.c===s.c);const sub=hw.filter(h=>live('subs').some(x=>x.hw===h.id&&x.n===s.n)).length;const rd=Object.keys(S.read[s.n]||{}).filter(k=>k.startsWith(s.c+'-')).length;
@@ -5088,13 +5115,24 @@ function bookIcon(n){const l=String(n).toLowerCase();return /work/.test(l)?'📗
 function mb(b){return b?(b/1048576).toFixed(b>10485760?0:1)+' MB':'';}
 /* 🎬 సందేహాల జవాబు వీడియో – YouTube / Google Drive లింక్ (సర్వర్ మార్పు లేదు; d.rv) */
 function vidEmbed(u){u=String(u||'').trim();if(!/^https:\/\//i.test(u))return null;let m=u.match(/^https:\/\/(?:www\.|m\.)?(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/|live\/))([\w-]{11})/i);
- if(m){const t=(u.match(/[?&]t=(\d+)/)||[])[1];return {k:'yt',src:'https://www.youtube-nocookie.com/embed/'+m[1]+'?rel=0&playsinline=1'+(t?'&start='+t:''),open:'https://www.youtube.com/watch?v='+m[1]};}
- const d=/^https:\/\/(drive|docs)\.google\.com\//i.test(u)?driveId(u):'';if(d)return {k:'dr',src:'https://drive.google.com/file/d/'+d+'/preview',open:'https://drive.google.com/file/d/'+d+'/view'};return null;}
-function vidHtml(u){const v=vidEmbed(u);if(!v)return '';return `<div class="dqvid"><div class="vbox"><iframe src="${v.src}" title="జవాబు వీడియో" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div><a href="${v.open}" target="_blank" rel="noopener">↗ ${v.k==='yt'?'YouTube':'Google Drive'} లో తెరువు</a></div>`;}
+ if(m){const t=(u.match(/[?&]t=(\d+)/)||[])[1];return {k:'yt',id:m[1],src:'https://www.youtube-nocookie.com/embed/'+m[1]+'?rel=0&playsinline=1'+(t?'&start='+t:''),open:'https://www.youtube.com/watch?v='+m[1]};}
+ const d=/^https:\/\/(drive|docs)\.google\.com\//i.test(u)?driveId(u):'';if(d)return {k:'dr',id:d,src:'https://drive.google.com/file/d/'+d+'/preview',open:'https://drive.google.com/file/d/'+d+'/view'};return null;}
+function vidHtml(u,ap){const v=vidEmbed(u);if(!v)return '';return `<div class="dqvid"><div class="vbox"><iframe src="${v.src}${ap&&v.k==='yt'?'&autoplay=1':''}" title="వీడియో" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div><a href="${v.open}" target="_blank" rel="noopener">↗ ${v.k==='yt'?'YouTube':'Google Drive'} లో తెరువు</a></div>`;}
 function vidChip(u){const v=vidEmbed(u);return v?`<a class="vchip" href="${v.open}" target="_blank" rel="noopener">🎬 వీడియో జతచేశారు ↗</a>`:'';}
 function vidRead(el){const v=el?el.value.trim():'';if(v&&!vidEmbed(v)){toast('🎬 YouTube లేదా Google Drive వీడియో లింక్ మాత్రమే (https://...)');return null;}return v;}
 function ytFind(id){const d=live('doubts').find(x=>x.id===id);if(!d)return;const q=(d.c+'వ తరగతి '+(SUBJ[d.s]?SUBJ[d.s].n:'')+' '+String(d.q||'')).replace(/\s+/g,' ').slice(0,140);
  window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(q),'_blank','noopener');toast('వీడియో తెరిచి Share → Copy link చేసి 🎬 పెట్టెలో పేస్ట్ చేయండి',6000);}
+/* 🎬 వీడియో పాఠాలు – తరగతి → సబ్జెక్టు → పాఠం (📁) వారీ లింకులు మాత్రమే. notes collection లో kind:'vid' {c,s,l(పాఠం id),lt(పాఠం పేరు),t,url,by} – సర్వర్ మార్పు లేదు */
+function vlAll(c,s){return live('notes').filter(n=>n.kind==='vid'&&+n.c===+c&&(!s||n.s===s));}
+function vlLT(s,L){return (L.no!=null&&L.no!==''?(s==='eng'?'Lesson ':'పాఠం ')+L.no+' – ':'')+L.t;}
+function vlGroups(c,s,list){const ls=tbLes(c,s),g={};list.slice().sort((a,b)=>(a.upd||0)-(b.upd||0)).forEach(n=>{const L=n.l?ls.find(x=>x.id===n.l):null;const k=L?'a'+String(ls.indexOf(L)).padStart(3,'0'):'z'+(n.lt||'');
+ (g[k]=g[k]||{t:L?vlLT(s,L):(n.lt||'ఇతర వీడియోలు'),n:[]}).n.push(n);});return Object.keys(g).sort().map(k=>g[k]);}
+function vlCard(n,tch){const v=vidEmbed(n.url);if(!v)return '';const th=v.k==='yt'?'https://i.ytimg.com/vi/'+v.id+'/mqdefault.jpg':'https://drive.google.com/thumbnail?id='+v.id+'&sz=w640';
+ return `<div class="vlc" id="vl_${n.id}"><button class="vlth" onclick="vlPlay('${n.id}')" aria-label="ప్లే"><img src="${th}" alt="" loading="lazy" onerror="this.remove()"><i>▶</i></button><div class="vlm"><b>${esc(n.t||'వీడియో')}</b><small>${v.k==='yt'?'▶ YouTube':'📁 Google Drive'}${n.by?' • 👩‍🏫 '+esc(n.by):''}</small>${tch?`<button class="del" onclick="delItem('notes','${n.id}')">🗑️</button>`:''}</div></div>`;}
+function vlPlay(id){const n=live('notes').find(x=>x.id===id),e=document.getElementById('vl_'+id);if(!n||!e)return;const b=e.querySelector('.vlth');if(b)b.outerHTML=vidHtml(n.url,1);e.classList.add('on');}
+function vlFolders(c,s,list,tch){return vlGroups(c,s,list).map(g=>`<details class="vlg" open><summary>📁 ${esc(g.t)} <small>(${g.n.length})</small></summary>${g.n.map(n=>vlCard(n,tch)).join('')}</details>`).join('');}
+function vlBanner(c){const k=vlAll(c).length;return `<div class="sscbn vlbn" onclick="go('vids')"><span>🎬</span><div><b>వీడియో పాఠాలు${k?' ('+k+')':''}</b><small>${k?'సబ్జెక్టు → పాఠం వారీగా • app లోనే చూడు':'ఉపాధ్యాయులు పెట్టే వీడియోలు ఇక్కడ వస్తాయి'}</small></div></div>`;}
+function vlSec(c,s,L){const vs=vlAll(c,s).filter(n=>n.l===L.id);return vs.length?`<div class="tbs"><h4>🎬 ${s==='eng'?'Video lessons':'వీడియో పాఠాలు'} (${vs.length})</h4>${vs.map(n=>vlCard(n)).join('')}</div>`:'';}
 function driveId(u){const m=String(u).match(/\/d\/([\w-]{20,})/)||String(u).match(/[?&]id=([\w-]{20,})/);return m?m[1]:'';}
 function tKind(u){return driveId(u)?'drive':/\.pdf(\?|#|$)/i.test(u)?'pdf':'tool';}
 /* APBOOKS-DATA-START: generated by tools/book_links/build_links.py */
