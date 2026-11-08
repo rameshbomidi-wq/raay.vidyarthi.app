@@ -1,5 +1,6 @@
 /* రాయ్ విద్యార్థి యాప్ – Service Worker (ఆఫ్లైన్ పనిచేయడానికి) */
 const VER = 'rai-vidyarthi-v11';
+// 'raay-offline' = యాప్‌లోని “📥 ఆఫ్‌లైన్ డౌన్‌లోడ్” సేవ్ చేసిన ఫైళ్లు – అప్‌డేట్‌లో తొలగించం
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-96.png', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 const BASE = new URL('./', self.location).pathname;
 
@@ -7,7 +8,7 @@ self.addEventListener('install', e => {
   e.waitUntil(caches.open(VER).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== VER).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== VER && k !== 'raay-offline').map(k => caches.delete(k)))).then(() => self.clients.claim()));
 });
 function keep(req, r) {
   if (r && r.status === 200) { const cp = r.clone(); caches.open(VER).then(c => c.put(req, cp)).catch(() => {}); }
