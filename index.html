@@ -2627,7 +2627,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.09-4';
+const APPV='2026.11.09-5';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3162,9 +3162,20 @@ function tbNowM(){return new Date().getMonth()+1;}
 /* నోట్స్ ఫైళ్లు: notes-<తరగతి>.js – అవసరమైనప్పుడే లోడ్ (విద్యార్థికి తన తరగతిది మాత్రమే) */
 window.RAAY_TB=window.RAAY_TB||{};
 const TBL={};
+/* ⚡ పెద్ద తరగతులు (10): ముందు చిన్న సూచిక (notes-10-idx.js – పాఠాల పేర్లు మాత్రమే, _lite), పూర్తి పాఠం ఆ సబ్జెక్టు తెరిచినప్పుడే (notes-10-<sub>.js) */
+const TB_SPLIT={10:1},TBF={},TBW={};
 function tbLoad(c){c=+c;if(!c||TBL[c])return;if(window.RAAY_TB[c]){TBL[c]='ok';return;}TBL[c]='ld';
- const sc=document.createElement('script');sc.src='notes-'+c+'.js';sc.async=true;
- sc.onload=()=>{TBL[c]=window.RAAY_TB[c]?'ok':'no';tbRefresh();};sc.onerror=()=>{TBL[c]='no';sc.remove();tbRefresh();};document.head.appendChild(sc);}
+ const sc=document.createElement('script');sc.src='notes-'+c+(TB_SPLIT[c]?'-idx':'')+'.js';sc.async=true;
+ sc.onload=()=>{TBL[c]=window.RAAY_TB[c]?'ok':'no';Object.keys(TBW).filter(k=>k.startsWith(c+'|')).forEach(k=>{TBF[k]='';tbFull(c,k.split('|')[1]);});tbRefresh();};sc.onerror=()=>{TBL[c]='no';sc.remove();tbRefresh();};document.head.appendChild(sc);}
+function tbFull(c,s){c=+c;if(!TB_SPLIT[c]||!s)return true;const k=c+'|'+s;if(TBF[k]==='ok')return true;
+ const cur=((window.RAAY_TB[c]||{})[s]||[]);if(window.RAAY_TB[c]&&!cur.some(L=>L._lite)){TBF[k]='ok';return true;}
+ if(TBF[k]==='ld'||TBF[k]==='wait')return false;
+ if(!window.RAAY_TB[c]){TBF[k]='wait';TBW[k]=TBW[k]||[];tbLoad(c);return false;}
+ TBF[k]='ld';const sc=document.createElement('script');sc.src='notes-'+c+'-'+s+'.js';sc.async=true;
+ sc.onload=()=>{const F=((window.RAAY_TBF||{})[c]||{})[s];if(F){window.RAAY_TB[c][s]=F;TBF[k]='ok';}else TBF[k]='no';const w=TBW[k]||[];delete TBW[k];tbRefresh();w.forEach(f=>{try{f();}catch(e){}});};
+ sc.onerror=()=>{TBF[k]='';sc.remove();delete TBW[k];toast('📴 పాఠం లోడ్ కాలేదు – నెట్ ఆన్ చేసి మళ్ళీ ప్రయత్నించండి');tbRefresh();};document.head.appendChild(sc);return false;}
+function tbWhenFull(c,s,f){if(tbFull(c,s))return f();const k=+c+'|'+s;(TBW[k]=TBW[k]||[]).push(f);toast('⏳ పాఠం లోడ్ అవుతోంది...');}
+const TBWAIT='<div class="empty">⏳ పాఠం లోడ్ అవుతోంది...</div>';
 function tbRefresh(){try{if(['learn','subject','tbl','home','ssc'].includes(view)||(view==='teacher'&&param.t==='tb'))softRender();}catch(e){}}
 /* ఫైల్ పాఠాలు + టీచర్ మార్పులు (tbx) కలిపి */
 function tbLes(c,s){c=+c;tbLoad(c);const base=((window.RAAY_TB[c]||{})[s]||[]);const ov=live('tbx').filter(x=>+x.c===c&&x.s===s);if(!ov.length)return base;
@@ -3196,7 +3207,8 @@ function tbSubjectCards(c,s){const ls=tbLes(c,s);if(!ls.length)return '';
 <div class="tbf"><button class="lk" onclick="go('tbl',{s:'${s}',id:'${L.id}'})">📖 నోట్స్ చదువు</button>${L.wb?`<button class="lk" style="background:#fef3c7;color:#92400e" onclick="go('tbl',{s:'${s}',id:'${L.id}',wb:1})">📒 ${esc(L.wb.lb||'వర్క్‌బుక్')}</button>`:''}<button class="lk b" onclick="startLesTest('${s}','${L.id}')">📝 టెస్ట్${b!=null?` • ${b}%`:''}</button></div></div>`;}).join('')}`;}
 /* పాఠం నోట్స్ పేజీ */
 V.tbl=()=>{if(param.wb)setTimeout(()=>{const e=document.querySelector('.tbwb');if(e)window.scrollTo({top:e.getBoundingClientRect().top+window.scrollY-80,behavior:'smooth'});},150);const c=S.cur.c,s=param.s,ls=tbLes(c,s),i=ls.findIndex(x=>x.id===param.id),L=ls[i];
- if(!L)return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>పాఠం</h2></div><div class="empty">ఈ పాఠం నోట్స్ దొరకలేదు</div>`;
+ if(!L)return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>పాఠం</h2></div>${TBL[+c]==='ld'?TBWAIT:'<div class="empty">ఈ పాఠం నోట్స్ దొరకలేదు</div>'}`;
+ if(L._lite&&!tbFull(c,s))return `<div class="bar"><button class="ib" onclick="go('subject',{s:'${s}'})">←</button><h2>${SUBJ[s].ic} ${SUBJ[s].n} • పాఠం ${L.no}</h2></div>${TBWAIT}`;
  const k=tbKey(c,s,L.id),d=isRead(k),b=tbBest(L.id),en=s==='eng',pv=ls[i-1],nx=ls[i+1];
  const sec=(ic,t,body,extra)=>`<div class="tbs"><h4>${ic} ${t}${extra||''}</h4>${body}</div>`;
  return `<div class="bar"><button class="ib" onclick="go('subject',{s:'${s}'})">←</button><h2>${SUBJ[s].ic} ${SUBJ[s].n} • పాఠం ${L.no}</h2></div>
@@ -3222,21 +3234,26 @@ function tbWbOpen(s,id){const L=tbGet(S.cur.c,s,id),W=L&&L.wb;if(!W||!W.f)return
 function tbWs(k,on){const m=readMap();if(on)m[k]=1;else delete m[k];save();if(on)toast('✓ బాగుంది!');}
 function tbSpeak(){const L=tbGet(S.cur.c,param.s,param.id);if(L)speak(L.t+'. '+L.sum);}
 function tbRead(s,id){const m=readMap(),k=tbKey(S.cur.c,s,id);if(m[k])delete m[k];else{m[k]=1;toast('బాగుంది! పాఠం పూర్తయింది ✓ ఇప్పుడు టెస్ట్ రాయి');}save();go('tbl',{s,id});}
-function startLesTest(s,id,wb){const L=tbGet(S.cur.c,s,id),src=L&&(wb?(L.wb||{}).qz:L.qz);if(!src||!src.length)return toast('ఈ పాఠానికి ప్రశ్నలు లేవు');
+function startLesTest(s,id,wb){{const L0=tbGet(S.cur.c,s,id);if(L0&&L0._lite)return tbWhenFull(S.cur.c,s,()=>startLesTest(s,id,wb));}const L=tbGet(S.cur.c,s,id),src=L&&(wb?(L.wb||{}).qz:L.qz);if(!src||!src.length)return toast('ఈ పాఠానికి ప్రశ్నలు లేవు');
  const qs=shuffle(src).slice(0,10).map(a=>({q:a[0],o:shuffle(a.slice(1,5)),a:a[1]}));
  T={s,qs,i:0,ans:[],start:Date.now(),ti:(wb?'📒 వర్క్‌బుక్: ':'📖 ')+L.no+'. '+L.t,lt:wb?id+'_wb':id};go('testrun');
  tick=setInterval(()=>{const e=$('#ttime');if(e)e.textContent=mmss((Date.now()-T.start)/1000);},1000);}
 /* ---------- 🎓 SSC ప్రశ్న–జవాబు (10వ తరగతి) – ssc-10.js (tools/ssc10/build_ssc.py) ----------
    అంశం: [పాఠం id, మార్కులు, ప్రశ్న, జవాబు, తప్పు ఎంపికలు|0, ప్రశ్న(En), జవాబు(En)] */
 window.RAAY_SSC=window.RAAY_SSC||{};const SSCL={};let SSCV=[];
-function sscLoad(c){c=+c;if(SSCL[c])return;if(window.RAAY_SSC[c]){SSCL[c]='ok';return;}SSCL[c]='ld';
- const sc=document.createElement('script');sc.src='ssc-'+c+'.js';sc.async=true;
+/* ⚡ SSC: ముందు సూచిక (ssc-10-idx.js – సబ్జెక్టుల సంఖ్యలు, షెడ్యూల్, బోర్డు మెటా), ప్రశ్నలు సబ్జెక్టు తెరిచినప్పుడే (ssc-10-<sub>.js) */
+const SSC_SPLIT={10:1},SSCF={};
+function sscHave(s){return !SSC_SPLIT[10]||!!((window.RAAY_SSC[10]||{})[s]);}
+function sscNeed(s){const k=s;if(sscHave(s)||SSCF[k]==='ld')return;SSCF[k]='ld';const sc=document.createElement('script');sc.src='ssc-10-'+s+'.js';sc.async=true;
+ sc.onload=()=>{SSCF[k]=sscHave(s)?'ok':'no';if(view==='ssc')softRender();};sc.onerror=()=>{SSCF[k]='no';sc.remove();if(view==='ssc')softRender();};document.head.appendChild(sc);}
+function sscLoad(c){c=+c;if(SSCL[c])return;if(window.RAAY_SSC[c]&&(!SSC_SPLIT[c]||(window.RAAY_SSC_N||{})[c])){SSCL[c]='ok';return;}SSCL[c]='ld';
+ const sc=document.createElement('script');sc.src='ssc-'+c+(SSC_SPLIT[c]?'-idx':'')+'.js';sc.async=true;
  sc.onload=()=>{SSCL[c]=window.RAAY_SSC[c]?'ok':'no';if(view==='ssc')softRender();};sc.onerror=()=>{SSCL[c]='no';sc.remove();if(view==='ssc')softRender();};document.head.appendChild(sc);}
 function sscH(t){let h=5381;for(let i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))|0;return (h>>>0).toString(36);}
 function sscMe(){S.ssc=S.ssc||{};return S.ssc[me()]||(S.ssc[me()]={st:{},my:{}});}
 function sscItems(s){const D=(window.RAAY_SSC[10]||{})[s]||[],seen=new Set();return D.map((x,i)=>{let id=s+'_'+sscH(x[2].replace(/\n?⟦(fig|img):[\s\S]*?⟧/g,''));if(seen.has(id))id+='_'+(x[7]||i);seen.add(id);let o=null;if(x[4]&&x[4].length){o=x[4].slice();o.splice(x[10]!=null?x[10]:parseInt(id.slice(-1),36)%(o.length+1),0,x[3]);}
  return {id,s,l:x[0],mk:x[1],q:x[2],a:x[3],w:x[4]||0,o,qe:x[5]||'',ae:x[6]||'',bd:x[7]||'',ex:x[8]||'',exe:x[9]||''};});}
-function sscSubs(){const D=window.RAAY_SSC[10]||{};return learnSubs(10).filter(s=>D[s]&&D[s].length);}
+function sscSubs(){const D=window.RAAY_SSC[10]||{},N=(window.RAAY_SSC_N||{})[10];return learnSubs(10).filter(s=>N?N[s]>0:(D[s]&&D[s].length));}
 function sscLName(s,id){const L=tbLes(10,s).find(x=>x.id===id),X=(window.RAAY_SSC_LN||{})[s]||{};return L?L.no+'. '+L.t:(X[id]||id);}
 function sscBr(t){return richT(t);}
 /* 🖼 బొమ్మలు/పట్టికలు – టెక్స్ట్‌లో ⟦fig:{json}⟧ → SVG (figSVG), " | " తో 2+ వరుసలు → పట్టిక. plainT = వినడానికి/TXT/సర్వర్ కోసం */
@@ -3305,7 +3322,7 @@ function sscFilter(s,me){const p=param,mk=+p.mk||0,q=String(p.q||'').trim().toLo
  return sscItems(s).filter(x=>(p.tab!=='st'||me.st[x.id])&&(!p.l||x.l===p.l)&&(!mk||x.mk===mk)&&okS(x)&&(!q||(x.q+' '+x.a+' '+x.qe+' '+x.ae).toLowerCase().includes(q)));}
 V.ssc=()=>{tbLoad(10);sscLoad(10);const bar=`<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>🎓 SSC ప్రశ్న–జవాబు</h2></div>`;
  if(SSCL[10]!=='ok')return bar+(SSCL[10]==='no'?'<div class="empty">📶 ప్రశ్నల బ్యాంక్ లోడ్ కాలేదు. ఇంటర్నెట్ ఆన్ చేసి మళ్ళీ తెరువు.</div>':'<div class="empty">⏳ ప్రశ్నల బ్యాంక్ లోడ్ అవుతోంది…</div>');
- const subs=sscSubs();if(!subs.includes(param.s))param.s=subs[0];const s=param.s,tab=param.tab||'q',me=sscMe(),lg=param.lang||(S.ssc.lang)||'te';param.lang=lg;param.n=param.n||25;
+ const subs=sscSubs();if(!subs.includes(param.s))param.s=subs[0];if(!sscHave(param.s)){sscNeed(param.s);return bar+(SSCF[param.s]==='no'?'<div class="empty">📶 ప్రశ్నలు లోడ్ కాలేదు. ఇంటర్నెట్ ఆన్ చేసి మళ్ళీ తెరువు.</div>':'<div class="empty">⏳ '+SUBJ[param.s].n+' ప్రశ్నలు లోడ్ అవుతున్నాయి…</div>');}const s=param.s,tab=param.tab||'q',me=sscMe(),lg=param.lang||(S.ssc.lang)||'te';param.lang=lg;param.n=param.n||25;
  const all=sscItems(s),hasEn=all.some(x=>x.qe),ls=[...new Set(all.map(x=>x.l))],cnt=k=>all.filter(x=>x.mk===k).length;
  const subRow=`<div class="hscroll sscsub">${subs.map(k=>`<button class="chip ${k===s?'on':''}" onclick="go('ssc',{s:'${k}',tab:'${tab}',lang:'${lg}'})">${SUBJ[k].ic} ${SUBJ[k].n}</button>`).join('')}</div>`;
  const tabs=`<div class="tabs">${[['q','📚 ప్రశ్నలు'],['quiz','🎯 క్విజ్'],['st','⭐ సేవ్ ('+all.filter(x=>me.st[x.id]).length+')'],['rep','📊 రిపోర్ట్']].map(([k,n])=>`<button class="${tab===k?'on':''}" onclick="go('ssc',{s:'${s}',tab:'${k}',lang:'${lg}',l:'${param.l||''}'})">${n}</button>`).join('')}</div>`;
@@ -3917,7 +3934,7 @@ ${sec==='home'?whoBanner()+ownWarn()+tDash():TP[sec]()}`;};
 const TP={};TP.tc=tpTc;
 /* ===== 📘 టీచర్: పాఠ్యపుస్తకం నోట్స్ & టెస్ట్ ప్రశ్నలు సరిచేయడం / కొత్త పాఠం ===== */
 const TBE={c:0,s:''};
-function tbGuide(c,s,id){if(!tbLes(c,s).some(x=>x.id===id)){const s2=learnSubs(c).find(x=>tbLes(c,x).some(y=>y.id===id));if(s2){s=s2;TBE.s=s2;}}const L=tbLes(c,s).find(x=>x.id===id);if(!L)return '<div class="empty">పాఠం దొరకలేదు</div>';const G=L.tg||[];
+function tbGuide(c,s,id){if(!tbLes(c,s).some(x=>x.id===id)){const s2=learnSubs(c).find(x=>tbLes(c,x).some(y=>y.id===id));if(s2){s=s2;TBE.s=s2;}}const L=tbLes(c,s).find(x=>x.id===id);if(!L)return '<div class="empty">పాఠం దొరకలేదు</div>';if(L._lite&&!tbFull(c,s))return TBWAIT;const G=L.tg||[];
  return `<div class="bar"><button class="ib" onclick="go('teacher',{t:'tb'})">←</button><h2>📗 టీచర్ గైడ్ • ${c}వ • ${SUBJ[s].n}</h2></div>
 <div class="tbhero" style="--sc:${SUBJ[s].col};--sb:${SUBJ[s].bg}"><small>పాఠ్యపుస్తకంలోని కృత్యాలు, అభ్యాసాలకు జవాబులు (ఉపాధ్యాయులకు మాత్రమే)</small><h2>${L.no}. ${esc(L.t)}</h2><div class="tbtags"><span>📅 ${tbMonths(L)}</span><span>${G.length} భాగాలు</span></div></div>
 <div class="row2" style="margin-bottom:8px"><button class="btn sm ghost" onclick="document.querySelectorAll('.tgsec').forEach(d=>d.open=true)">▾ అన్నీ తెరువు</button><button class="btn sm ghost" onclick="window.print()">🖨 ప్రింట్</button></div>
@@ -3926,6 +3943,7 @@ ${G.map((g,i)=>`<details class="tgsec" ${i<2?'open':''}><summary>${/చిత్
 function tbBase(c,s,id){return ((window.RAAY_TB[+c]||{})[s]||[]).find(x=>x.id===id);}
 async function tbServerOk(){try{const j=await (await fetch(S.cfg.url+'?a=ping&_='+Date.now())).json();return j&&j.tbx?'':'సర్వర్ కోడ్ పాతది – కొత్త సర్వర్ కోడ్ పెట్టి మూడు deployments కూ New version Deploy చేయండి';}catch(e){return 'సర్వర్ చేరలేదు – నెట్ చూడండి';}}
 TP.tb=()=>{const cls=myCls();if(!cls.includes(TBE.c))TBE.c=cls.includes(3)?3:cls[0];const c=TBE.c;wbaLoad(c);const subs=learnSubs(c).filter(s=>canSee(c,s));if(!subs.includes(TBE.s))TBE.s=subs[0];const s=TBE.s;
+ if(!tbFull(c,s))return '<div class="card">'+TBWAIT+'</div>';
  if(param.ed!==undefined)return tbEditor();
  if(param.tg)return tbGuide(c,s,param.tg);
  const ls=tbLes(c,s),st=TBL[c],hid=live('tbx').filter(x=>+x.c===c&&x.s===s&&x.hide);
