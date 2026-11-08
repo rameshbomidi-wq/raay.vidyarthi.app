@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>గణిత పుస్తకం – ఆడుతూ నేర్చుకునే గణితం | రాయ్ ఎడ్యుకేషన్</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@500;700;800&family=Noto+Sans+Telugu:wght@400;600;700&family=Tiro+Telugu&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6ZG763KFGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-6ZG763KFGF');</script>
+<style>
+:root{--desk:#c7d7cb;--paper:#fffdf6;--ink:#2b2b2b;--muted:#6b6b6b;--edge:#e8a23a;--acc:#3a7bd5;--red:#e85d75;--grn:#2e9e5b;--org:#f08a24;--yel:#f6c453;--line:#d9d2c3}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:'Noto Sans Telugu',sans-serif;background:var(--desk);color:var(--ink);min-height:100vh;display:flex;flex-direction:column}
+button{font-family:inherit}
+header{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#ffffffb8;position:sticky;top:0;z-index:30;box-shadow:0 1px 6px #0001}
+header h1{font:800 1.25rem 'Baloo Tamma 2',sans-serif;margin:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header h1 small{font:600 .8rem 'Noto Sans Telugu';color:var(--muted);margin-left:6px}
+.hbtn{min-width:44px;min-height:44px;border:0;border-radius:12px;background:#fff;box-shadow:0 1px 4px #0002;font-size:1.05rem;cursor:pointer;padding:0 10px}
+.hbtn.on{background:#dff3e6;outline:2px solid var(--grn)}
+.stars{font:700 1rem 'Baloo Tamma 2';background:#fff6d6;border-radius:12px;padding:8px 10px;white-space:nowrap}
+.stage{flex:1;display:flex;justify-content:center;align-items:flex-start;padding:14px 10px 8px}
+.book{position:relative;display:grid;grid-template-columns:1fr 1fr;width:min(1240px,100%);perspective:2400px;background:linear-gradient(#f2b14c,var(--edge));padding:6px 6px 12px;border-radius:8px;box-shadow:0 22px 44px #0003,0 4px 0 #c9852a inset}
+.page{background:var(--paper);min-height:min(78vh,640px);padding:22px 26px 26px;position:relative;overflow:hidden}
+.page.left{border-radius:5px 0 0 5px;box-shadow:inset -22px 0 26px -18px #0004;border-right:1px solid #e7dfcd}
+.page.right{border-radius:0 5px 5px 0;box-shadow:inset 22px 0 26px -18px #0004}
+.page::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(transparent 0 31px,#00000006 31px 32px)}
+.leaf{position:absolute!important;top:6px;bottom:12px;width:calc(50% - 6px);z-index:8;pointer-events:none;backface-visibility:hidden;min-height:0!important}
+.leaf-next{left:50%;transform-origin:left center;animation:flipN .75s cubic-bezier(.45,.05,.55,.95) forwards}
+.leaf-prev{left:6px;transform-origin:right center;animation:flipP .75s cubic-bezier(.45,.05,.55,.95) forwards}
+@keyframes flipN{0%{transform:rotateY(0);filter:brightness(1)}100%{transform:rotateY(-180deg);filter:brightness(.7)}}
+@keyframes flipP{0%{transform:rotateY(0);filter:brightness(1)}100%{transform:rotateY(180deg);filter:brightness(.7)}}
+.slide-l{animation:sl .45s ease}.slide-r{animation:sr .45s ease}
+@keyframes sl{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+@keyframes sr{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+/* left page */
+.chno{font:700 .85rem 'Baloo Tamma 2';color:var(--muted);letter-spacing:.5px;text-transform:uppercase}
+.ctitle{font:800 1.9rem/1.2 'Baloo Tamma 2',sans-serif;margin:2px 0 6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.cls{font:600 .8rem 'Noto Sans Telugu';background:#eef4ff;color:var(--acc);border-radius:20px;padding:3px 10px}
+.key{font:700 1.25rem 'Baloo Tamma 2';margin:10px 0 14px;padding:8px 14px;border-left:5px solid var(--edge);background:#fff4df;border-radius:0 10px 10px 0}
+.body p{font-family:'Tiro Telugu',serif;font-size:1.08rem;line-height:1.75;margin:0 0 8px}
+.tip{display:flex;gap:10px;align-items:flex-start;margin:14px 0;padding:10px 12px;border:1.5px dashed #c9bfa8;border-radius:12px;font-size:.95rem;background:#fffaf0}
+.chal{margin-top:12px;padding:12px 14px;border-radius:14px;background:#eef8f1;border:1.5px solid #bfe3cc}
+.chal h4{margin:0 0 6px;font:700 1.05rem 'Baloo Tamma 2'}
+.chal .q{font-size:1.02rem;margin-bottom:8px;line-height:1.6}
+.qrow{display:flex;gap:8px;flex-wrap:wrap}
+.qrow input{font:700 1.3rem 'Baloo Tamma 2';width:120px;min-height:46px;border:2px solid #9cc9ad;border-radius:10px;padding:0 10px;text-align:center}
+.fb{min-height:1.6em;font-weight:700;margin-top:6px}
+.fb.ok,.ok{color:var(--grn)}.fb.no,.warn{color:#c0392b}.muted{color:var(--muted)}
+.spk{position:absolute;right:16px;top:16px;z-index:2}
+/* right page */
+.mt{display:none;font:800 1.3rem 'Baloo Tamma 2';margin-bottom:6px}
+.fig{width:100%;height:auto;display:block;margin:6px auto;max-height:52vh;touch-action:manipulation}
+.row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:8px 0}
+.ctl{display:flex;gap:8px 14px;flex-wrap:wrap;justify-content:center;margin:4px 0 8px}
+.btn{min-height:44px;min-width:44px;border:0;border-radius:12px;padding:0 16px;font-weight:700;font-size:1rem;cursor:pointer;background:var(--acc);color:#fff;box-shadow:0 3px 0 #2a5ea8;transition:transform .08s}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #2a5ea8}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.ghost{background:#fff;color:var(--ink);box-shadow:0 2px 0 #cfc6b4,0 0 0 1.5px #d8cfbd inset}
+.btn.chip{background:#fff;color:var(--ink);box-shadow:0 0 0 1.5px #d8cfbd inset;border-radius:22px}
+.btn.chip.on{background:var(--ink);color:#fff;box-shadow:none}
+.btn.sm{padding:0;width:44px;font-size:1.3rem}
+.stp{display:flex;align-items:center;gap:6px;background:#fff;border-radius:14px;padding:4px 6px 4px 12px;box-shadow:0 0 0 1.5px #e3dccb inset}
+.stp-l{font-size:.92rem;font-weight:600}
+.stp-v{font:800 1.35rem 'Baloo Tamma 2';min-width:30px;text-align:center}
+.bigline{display:flex;align-items:baseline;justify-content:center;gap:12px;flex-wrap:wrap;margin:4px 0}
+.bigline .num{font:800 3rem/1 'Baloo Tamma 2';color:var(--red)}
+.bigline .word{font:700 1.4rem 'Tiro Telugu'}
+.bigline .sub{font-size:.98rem;color:var(--muted);width:100%;text-align:center}
+.eq{text-align:center;font:600 1.15rem/1.7 'Baloo Tamma 2','Noto Sans Telugu';min-height:2.2em;margin:6px 0}
+.eq b{color:var(--red);font-size:1.3em}
+.flash{text-align:center;min-height:1.6em;font-weight:700;color:var(--org)}
+.flash.go{animation:pop .6s}
+@keyframes pop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.15);opacity:1}100%{transform:scale(1)}}
+/* svg sketch style */
+.fig text{font-family:'Baloo Tamma 2','Noto Sans Telugu';fill:var(--ink)}
+.frame{fill:#fff;stroke:var(--ink);stroke-width:2.5}
+.cellbox{fill:transparent;stroke:var(--ink);stroke-width:1.5;cursor:pointer}
+.cell:hover .cellbox{fill:#00000008}
+.seed{opacity:0;transform:scale(.2);transform-box:fill-box;transform-origin:center;transition:.25s;stroke:var(--ink);stroke-width:2;pointer-events:none}
+.seed.on{opacity:1;transform:scale(1)}
+.seed.a{fill:var(--red)}.seed.b{fill:#4c8bf5}
+.nl{stroke:var(--ink);stroke-width:3}.tick{stroke:var(--ink);stroke-width:1.6}
+.tl{font-size:11px;text-anchor:middle}.tl.b{font-size:14px;font-weight:800}
+.arc{fill:none;stroke:var(--org);stroke-width:2.5;stroke-dasharray:6 5}
+.arcl{font-size:14px;font-weight:800;text-anchor:middle;fill:var(--org)!important}
+.ink{stroke:var(--ink);stroke-width:2}
+/* money */
+.shop{display:flex;justify-content:center;margin:4px 0}
+.item{display:flex;gap:14px;align-items:center;background:#fff;border-radius:16px;padding:10px 18px;box-shadow:0 2px 0 #e3dccb,0 0 0 1.5px #e3dccb inset;font-weight:700;font-size:1.05rem}
+.item .emo{font-size:3rem}
+.price{font:800 1.6rem 'Baloo Tamma 2';color:var(--red)}
+.tray{min-height:86px;margin:10px auto;padding:10px;border:2.5px dashed #b9ad94;border-radius:18px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;background:#fffaf0;max-width:520px}
+.tray .hint{color:var(--muted);font-size:.95rem}
+.purse{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0}
+.coin,.note{border:2px solid var(--ink);cursor:pointer;font:800 1rem 'Baloo Tamma 2';color:var(--ink);display:inline-flex;align-items:center;justify-content:center;transition:transform .1s}
+.coin:active,.note:active{transform:scale(.9)}
+.coin{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#cfd4da 70%)}
+.coin.c10{background:radial-gradient(circle at 50% 50%,#d8dde3 0 45%,#e9c46a 46%)}
+.coin.c5{background:radial-gradient(circle at 35% 30%,#fff3c4,#e7b84a 75%)}
+.coin.c1{width:44px;height:44px}
+.note{width:84px;height:46px;border-radius:6px}
+.note.n20{background:#e6f2b8}.note.n50{background:#bfe9ef}.note.n100{background:#d9cff3}
+/* place value controls */
+.pvctl{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:460px;margin:4px auto}
+.pvc{display:flex;align-items:center;justify-content:center;gap:4px;background:#fff;border-radius:14px;padding:4px;box-shadow:0 0 0 1.5px #e3dccb inset}
+.pvc b{font:800 1.4rem 'Baloo Tamma 2';min-width:24px;text-align:center}
+/* column arithmetic */
+.colgrid{display:grid;justify-content:center;gap:2px 4px;margin:12px auto;font:800 2.1rem/1 'Baloo Tamma 2'}
+.colgrid>div{min-height:50px;display:flex;align-items:center;justify-content:center;position:relative;border-radius:8px;transition:background .25s}
+.colgrid .lab{font:700 .8rem 'Noto Sans Telugu';color:var(--muted);min-height:24px}
+.colgrid .cr{font-size:1.3rem;color:var(--red);min-height:30px}
+.colgrid .res{border-top:3px solid var(--ink);border-radius:0;color:var(--grn)}
+.colgrid .hi{background:#fff1c9}
+.colgrid .sg{color:var(--muted)}
+.colgrid .pre{font-size:1.15rem;color:var(--red);margin-right:1px;align-self:flex-start;margin-top:6px}
+.colgrid .add{font-size:.95rem;color:var(--red);position:absolute;top:-2px;right:-6px}
+.colgrid .faded{opacity:.25}
+.newd{animation:pop .5s}
+.stepmsg{background:#fff;border-radius:14px;padding:10px 14px;box-shadow:0 0 0 1.5px #e3dccb inset;font-size:1.05rem;line-height:1.6;min-height:3.4em;max-width:560px;margin:8px auto}
+.stepmsg .sn{display:inline-block;font:700 .8rem 'Baloo Tamma 2';background:var(--ink);color:#fff;border-radius:10px;padding:0 8px;margin-right:6px}
+/* division */
+.ldbox{display:block;margin:10px auto;max-width:600px}
+.ldhead{text-align:center;font:800 2.2rem 'Baloo Tamma 2';margin:6px 0}
+.ldhead .dv{color:var(--acc)}.ldhead .qq{color:var(--grn)}
+.ldhead .cur{background:#fff1c9;border-radius:6px;padding:0 3px}
+.ldhead .z{opacity:.3}
+.ldwrap{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.ldlog{margin:0;padding-left:22px;flex:1;min-width:220px;font-size:.98rem;line-height:1.7}
+.ldlog li{margin-bottom:4px}
+.tagv{background:#d9f2e2;color:#1d7a43;border-radius:8px;padding:0 6px;font-weight:700}
+.tagr{background:#ffe3cc;color:#b35a00;border-radius:8px;padding:0 6px;font-weight:700}
+.ldtbl{display:grid;grid-template-columns:auto;gap:2px;font:700 1rem 'Baloo Tamma 2';background:#fff;border-radius:12px;padding:8px 12px;box-shadow:0 0 0 1.5px #e3dccb inset;align-self:flex-start}
+.ldtbl div{padding:0 8px;border-radius:6px}
+.ldtbl .v{background:#bdebcf}.ldtbl .r{background:#ffd7b0}
+.colgrid small{font-size:.8rem;font-weight:800}
+.colgrid .cj1{color:#3a7bd5}.colgrid .cj2{color:#8e44ad}.colgrid .ck{color:var(--grn)}
+.colgrid .dim{opacity:.28}
+.colgrid .pp{color:#8a5a00}
+.colgrid .ph{color:#9b59b6;opacity:.75}
+.colgrid .topline{border-top:3px solid var(--ink);border-radius:0}
+.mulgrid{font-size:1.9rem}
+@media (max-width:899px){.mulgrid{font-size:1.45rem}.mulgrid>div{min-height:40px}.mulgrid .cr{min-height:24px}}
+/* horizontal multiplication */
+.hmarea{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;align-items:flex-start;margin:8px 0;min-height:120px}
+.hlines{flex:1 1 280px;max-width:540px}
+.hl{font:700 1.45rem/1.5 'Baloo Tamma 2',sans-serif;padding:3px 10px;border-radius:10px;word-break:break-word}
+.hl.cur{background:#fff1c9}
+.hl b{color:var(--red)}
+.hl.sm{font-size:1.05rem;font-weight:600;border-bottom:1px dashed #e3dccb;border-radius:0;padding:5px 4px}
+.hside{flex:1 1 240px;max-width:420px;background:#fff;border-radius:14px;padding:8px 10px;box-shadow:0 0 0 1.5px #e3dccb inset}
+.hst{font:700 .9rem 'Noto Sans Telugu';color:var(--muted)}
+.hmsvg{max-width:520px;max-height:none}
+.hmsvg .hmd{font:800 30px 'Baloo Tamma 2',sans-serif}
+.hmsvg .hma{font:800 32px 'Baloo Tamma 2';fill:var(--grn)}
+.hmsvg .hmc{font:800 18px 'Baloo Tamma 2';fill:var(--red)}
+.hmsvg .hmt{font:700 21px 'Baloo Tamma 2';fill:#8a5a00}
+.hmsvg .hmt.on{fill:#c45500;font-weight:800}
+.hmsvg .hml{font:600 12px 'Noto Sans Telugu';fill:var(--muted)}
+.hmsvg .op{fill:var(--muted)}
+.hmsvg .z{opacity:.28}
+.hmsvg .newd{transform-box:fill-box;transform-origin:center}
+.grow2{animation:fadein .5s}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@media (max-width:899px){.hl{font-size:1.15rem}}
+.hdir{display:flex;flex-direction:column;gap:6px;align-items:flex-start;width:100%;overflow-x:auto;padding-bottom:4px}
+.hrow{display:flex;align-items:flex-end;gap:2px;padding:4px 10px;border-radius:12px;flex-wrap:nowrap;margin:0 auto;flex:none}
+.hrow.sum{flex-wrap:wrap;justify-content:flex-end;max-width:100%}.hbr{flex-basis:100%;height:0}
+.hrow.sum .hc b{font-size:1.55rem}.hrow.sum .hop{font-size:1.3rem;padding:0 3px}.hrow.sum .hc{min-width:22px}.hrow.sum .hc b,.hrow.sum .hc.slot b{min-width:22px}
+.hrow.act{background:#fff8e6;box-shadow:0 0 0 2px #f6c453 inset}
+.hrow.done{opacity:.75}
+.hc{display:flex;flex-direction:column;align-items:center;min-width:30px}
+.hc .hcar{font:800 1rem/1.2 'Baloo Tamma 2';color:var(--red);font-style:normal;min-height:1.2em}
+.hc b{font:800 2rem/1.2 'Baloo Tamma 2',sans-serif;padding:0 3px;border-radius:8px;min-width:30px;text-align:center}
+.hc.hi b{background:#fff1c9;box-shadow:0 0 0 2px #f0b53a inset}
+.hc.hi2 b{color:var(--grn)}
+.hc.slot b{border-bottom:3px solid #c9bfa8;color:var(--grn);border-radius:6px 6px 0 0;min-width:32px}
+.hc.slot.empty b{color:transparent}
+.hc.zz b{color:#9b59b6}
+.hc .newd{display:inline-block}
+.hop{font:800 1.7rem/1.2 'Baloo Tamma 2';color:var(--muted);padding:0 6px}
+@media (max-width:899px){.hrow.sum .hc b{font-size:1.15rem;min-width:15px;padding:0 1px}.hrow.sum .hc,.hrow.sum .hc.slot b{min-width:15px}.hc b{font-size:1.45rem;min-width:22px}.hc{min-width:22px}.hc.slot b{min-width:22px}.hop{font-size:1.3rem;padding:0 3px}.hrow{padding:4px 4px}}
+.hmsvg.board{max-width:600px;border-radius:14px;box-shadow:0 0 0 6px #a8682c,0 6px 16px #0003;margin:10px auto}
+.board .bd{font:800 34px 'Baloo Tamma 2',sans-serif;fill:#f4f4f4}
+.board .bd.op{fill:#bfc7c2}
+.board .bd.ans{fill:#ffe27a}
+.board .bnum{font:800 14px 'Baloo Tamma 2',sans-serif}
+.board .bcar{font:800 18px 'Baloo Tamma 2',sans-serif}
+/* clock 24h */
+.fig text.hnow{fill:#e85d75!important;font-size:30px}
+.conv{text-align:center;font:600 1.1rem/1.6 'Baloo Tamma 2','Noto Sans Telugu';margin:4px 0}
+.conv b{color:var(--red)}
+.daybar{position:relative;height:30px;max-width:520px;margin:10px auto 26px;border-radius:15px;cursor:pointer;border:2px solid var(--ink);background:linear-gradient(90deg,#1d2b53 0%,#2c3e7a 16%,#f7a072 24%,#ffe9a8 34%,#fff6c9 50%,#ffe39a 64%,#f08a24 75%,#5b3a8c 82%,#1d2b53 100%)}
+.dmark{position:absolute;top:50%;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;background:#fff;border:3px solid var(--red);display:flex;align-items:center;justify-content:center;font-size:1rem;transition:left .3s;pointer-events:none}
+.dl{position:absolute;top:32px;transform:translateX(-50%);font:700 .75rem 'Baloo Tamma 2';color:var(--muted)}
+.uses{margin:14px auto 4px;max-width:620px;background:#f6f0ff;border:1.5px solid #dccbf2;border-radius:16px;padding:10px 12px}
+.uses h4{margin:0 0 4px;font:800 1.1rem 'Baloo Tamma 2'}
+.uses p{margin:0 0 8px;font-size:.92rem}
+.ugrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.ucard{display:flex;flex-direction:column;align-items:center;gap:2px;background:#fff;border:0;border-radius:14px;padding:8px 6px;box-shadow:0 2px 0 #dccbf2,0 0 0 1.5px #e6dcf5 inset;cursor:pointer;text-align:center;font-family:inherit;color:var(--ink);min-height:44px}
+.ucard:active{transform:scale(.97)}
+.ucard .uic{font-size:1.8rem}.ucard b{font-size:.9rem}.ucard .ud{font-size:.75rem;color:var(--muted)}
+.ucard .ut{font:800 1.2rem 'Baloo Tamma 2';color:#8e44ad}.ucard .ut small{display:block;font:600 .72rem 'Noto Sans Telugu';color:var(--ink)}
+/* measurements */
+.mplay{margin:4px 0 10px}
+.mh{font:800 1.1rem 'Baloo Tamma 2';margin:12px 0 6px;text-align:center}
+.mh small{font:600 .8rem 'Noto Sans Telugu'}
+.bigline .num small{font-size:1.1rem;color:var(--ink)}
+.water{fill:#6fb6f2cc;transform-box:fill-box;transform-origin:center bottom;transition:transform .45s ease}
+.coin.wt{width:auto;height:40px;border-radius:20px;padding:0 10px;background:#c9d2da;font-size:.85rem}
+.mconv{background:#eef8f4;border:1.5px solid #bfe3d3;border-radius:16px;padding:6px 10px 10px;margin:12px auto;max-width:640px}
+.fig.stair{max-height:none;max-width:440px}
+.mrow{justify-content:center;margin:6px 0}
+.mrow input{width:90px}
+.u2{font-weight:700;font-size:.9rem}
+.msteps{font:600 1.02rem/1.8 'Baloo Tamma 2','Noto Sans Telugu'}
+.mres{font:800 1.6rem 'Baloo Tamma 2';color:var(--grn);margin-top:4px}
+/* geometry */
+.gpane{margin-top:4px}
+.tinfo{font-size:1rem}
+.swatch{width:40px;height:40px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px #bbb;cursor:pointer}
+.swatch.on{box-shadow:0 0 0 3px var(--ink)}
+.lgrid .ucard{cursor:pointer}.lgrid .fig{max-height:70px;margin:0}
+/* data handling */
+.dq{text-align:center;font:700 1.15rem 'Noto Sans Telugu';margin:6px 0}
+.dqi{font:700 1.05rem 'Noto Sans Telugu';width:min(420px,90%);min-height:44px;border:1.5px dashed #b9a4d6;border-radius:12px;padding:0 10px;text-align:center}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px;margin:6px 0}
+.vcard{background:#fff;border-radius:14px;padding:6px;text-align:center;box-shadow:0 0 0 1.5px #e3dccb inset;display:flex;flex-direction:column;align-items:center;gap:2px}
+.vcard .ve{font-size:1.8rem}.vcard .vn{font-size:.9rem}
+.vni{width:100%;font:700 .85rem 'Noto Sans Telugu';border:1px dashed #bbb;border-radius:8px;text-align:center;min-height:32px}
+.vrow{display:flex;align-items:center;gap:4px}.vc{font:800 1.3rem 'Baloo Tamma 2';min-width:28px}
+.dview{background:#fff;border-radius:16px;padding:8px;box-shadow:0 0 0 1.5px #e3dccb inset;margin:6px auto;max-width:600px;overflow-x:auto}
+.dtab{border-collapse:collapse;width:100%;font-size:.95rem}
+.dtab th,.dtab td{border:1.5px solid #d9d0bd;padding:4px 8px;text-align:left;vertical-align:middle}
+.dtab th{background:#f6f0ff}.dtab td.num{font:800 1.2rem 'Baloo Tamma 2';text-align:center;width:60px}
+.dtab tr.tot td{background:#fff6d6;font-weight:800}
+.fig.tally{display:inline-block;margin:0;height:30px;max-height:30px;vertical-align:middle}
+.dtab.pic .pics{font-size:1.5rem;line-height:1.3}
+.pc{display:inline-block}.pc.part{width:calc(var(--f) * 1.25em);overflow:hidden;vertical-align:bottom;white-space:nowrap}
+.barsvg{max-width:520px}.barr{transition:height .3s,y .3s}
+.dfind{font-size:1rem;line-height:1.7}
+/* long division with arrows */
+.ldwrap{align-items:flex-start}
+.ldsvg{flex:1 1 300px;width:100%;height:auto;display:block;margin:4px auto}
+.ldsvg text{font-family:'Baloo Tamma 2',sans-serif;font-weight:800;font-size:30px;fill:var(--ink)}
+.ldsvg .ldd{fill:var(--acc)}.ldsvg .ldq{fill:var(--grn)}.ldsvg .ldm{fill:#8a5a00}.ldsvg .ldr{fill:var(--red)}
+.ldsvg .z{opacity:.28}.ldsvg .ldp{font-size:26px;fill:var(--muted)}.ldsvg .ldlab{font:700 16px 'Noto Sans Telugu';fill:var(--red)}
+.ldsvg .cur{fill:#c45500}.ldsvg .ldbd{fill:#c45500}
+.ldbr{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.ldline{stroke:var(--ink);stroke-width:2.5}
+.ldarr{stroke:var(--org);stroke-width:2.5;stroke-dasharray:5 4}
+.ldarrh{fill:var(--org)}
+.ldhi{fill:#fff1c9}.ldhi2{fill:#e7f5ec}
+.ldsvg .newd{transform-box:fill-box;transform-origin:center}
+.ldarr.grow{animation:grow .6s ease-out}
+@keyframes grow{from{stroke-dashoffset:-200;opacity:0}to{stroke-dashoffset:0;opacity:1}}
+.ldtbl .th{font:700 .8rem 'Noto Sans Telugu';color:var(--muted);text-align:center}
+.sel{min-height:44px;border-radius:12px;border:1.5px solid #d8cfbd;padding:0 10px;font:600 .95rem 'Noto Sans Telugu',sans-serif;background:#fff;color:var(--ink)}
+.own{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center}
+.own input,.ldprac input{font:700 1.1rem 'Baloo Tamma 2';width:96px;min-height:44px;border:1.5px solid #d8cfbd;border-radius:12px;padding:0 8px;text-align:center}
+.ldprac{max-width:560px;margin:8px auto}
+.ldprac .qrow{margin:6px 0}
+#wsPrint{display:none}
+@media print{body.wsmode>*:not(#wsPrint){display:none!important}body.wsmode #wsPrint{display:block}
+ #wsPrint{font-family:'Noto Sans Telugu',sans-serif;color:#000}
+ #wsPrint h2{font:800 22px 'Baloo Tamma 2';margin:0 0 6px}.wsi{font-size:13px;margin:4px 0 10px}
+ .wsg{display:grid;grid-template-columns:repeat(3,1fr)}
+ .wsb{height:225px;border:1px dashed #999;padding:8px 10px;font:800 22px 'Baloo Tamma 2'}
+ .wsn{font-size:14px;color:#555;margin-right:4px}
+ .wsk{page-break-before:always;break-before:page;font:600 16px/2 'Baloo Tamma 2','Noto Sans Telugu'}
+ .wsf{text-align:center;font-size:12px;margin-top:8px}}
+/* fractions */
+.frwrap{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+.frwrap .roti{width:min(260px,62vw);margin:0}
+.slice{fill:#fff3dc;stroke:var(--ink);stroke-width:2;cursor:pointer;transition:fill .2s}
+.slice.on{fill:var(--org)}
+.frac{text-align:center;min-width:120px}
+.fnum,.fden{font:800 3rem/1.05 'Baloo Tamma 2'}
+.fnum{color:var(--org);border-bottom:4px solid var(--ink);padding:0 10px}
+.fname{font-size:1rem;margin-top:6px;color:var(--muted)}
+.fig.bar{max-width:420px}
+/* clock */
+.hand{stroke-linecap:round}
+/* area */
+.gcell{fill:#fff;stroke:#d6cdb9;stroke-width:1;cursor:pointer}
+.acell{fill:#cfe3ff;stroke:#8bb2e8;stroke-width:1;pointer-events:none}
+.per{fill:none;stroke:var(--org);stroke-width:5;stroke-linejoin:round;pointer-events:none}
+.anum{font-size:13px;text-anchor:middle;fill:#3a5f99!important;pointer-events:none}
+.pnum{font-size:12px;font-weight:800;text-anchor:middle;fill:var(--red)!important;pointer-events:none}
+/* 3d */
+.c3d{width:100%;height:320px;display:block;touch-action:none;cursor:grab;border-radius:12px;background:radial-gradient(circle at 50% 40%,#fff,#f5efe2)}
+.counts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0}
+.cnt{background:#fff;border-radius:14px;padding:6px 12px;box-shadow:0 0 0 1.5px #e3dccb inset;text-align:center;cursor:pointer;min-width:84px}
+.cnt b{display:block;font:800 1.7rem/1.1 'Baloo Tamma 2'}
+.cnt.on{box-shadow:0 0 0 3px var(--ink) inset}
+/* contents */
+.cover-t{font:800 2.6rem/1.15 'Baloo Tamma 2';margin:6px 0}
+.cover-s{font:600 1.05rem 'Tiro Telugu';color:var(--muted)}
+.toc{list-style:none;margin:0;padding:0}
+.toc li{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:10px;cursor:pointer;border-bottom:1px dotted #d9d0bd}
+.toc li:hover,.toc li.sel{background:#fff1c9}
+.toc .dot{width:14px;height:14px;border-radius:4px;flex:none;border:1.5px solid var(--ink)}
+.toc .n{font:800 1rem 'Baloo Tamma 2';width:22px;color:var(--muted)}
+.toc .tt{flex:1;font-weight:600}
+.toc .cl{font-size:.75rem;color:var(--muted);white-space:nowrap}
+.howto{font-size:.95rem;line-height:1.8;padding-left:20px}
+/* bottom bar */
+.bar{position:sticky;bottom:0;z-index:25;display:flex;align-items:center;gap:6px;justify-content:center;padding:8px;background:#ffffffd0;box-shadow:0 -1px 6px #0001}
+.bar .ttl{font:700 1rem 'Baloo Tamma 2';min-width:0;flex:0 1 380px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prog{position:absolute;left:0;top:0;height:3px;background:var(--org);transition:width .4s}
+/* menu */
+.menu{position:fixed;inset:0 auto 0 0;width:min(360px,88vw);background:var(--paper);z-index:60;transform:translateX(-105%);transition:transform .25s;overflow:auto;padding:14px;box-shadow:4px 0 20px #0003}
+.menu.open{transform:none}
+.menu h3{font:800 1.3rem 'Baloo Tamma 2';margin:4px 0 10px;display:flex;justify-content:space-between;align-items:center}
+.scrim{position:fixed;inset:0;background:#0004;z-index:55;display:none}
+.scrim.open{display:block}
+footer{text-align:center;padding:10px 8px 14px;font-size:.9rem;color:#35503e}
+footer a{color:#1d5f37;font-weight:800;text-decoration:none;border-bottom:2px solid #1d5f3755}
+@media (max-width:899px){
+ .book{grid-template-columns:1fr;padding:5px}
+ .page{min-height:0;padding:16px 14px 18px}
+ .page.right{order:-1;border-radius:5px 5px 0 0;box-shadow:none;border-bottom:2px dashed #e3d9c4}
+ .page.left{border-radius:0 0 5px 5px;box-shadow:none;border-right:0}
+ .mt{display:block;padding-right:50px}
+ .ctitle{font-size:1.5rem}
+ .cover-t{font-size:2rem}
+ .colgrid{font-size:1.7rem}
+ .ldhead{font-size:1.7rem}
+ header h1 small{display:none}
+ .bigline .num{font-size:2.4rem}
+ .c3d{height:280px}
+}
+@media (prefers-reduced-motion:reduce){.leaf{display:none}*{animation-duration:.01s!important}}
+@media print{header,.bar,.menu,.scrim,footer,.spk{display:none!important}body{background:#fff}.book{box-shadow:none;background:none}}
+</style>
+</head>
+<body>
+<header>
+  <button class="hbtn" id="mBtn" title="విషయ సూచిక (Esc)">☰</button>
+  <h1>📐 గణిత పుస్తకం<small>ఆడుతూ నేర్చుకునే గణితం · 1–5 తరగతులు</small></h1>
+  <span class="stars" id="stars" title="గెలిచిన నక్షత్రాలు">⭐ 0</span>
+  <button class="hbtn" id="vBtn" title="ఆటో వాయిస్">🔈</button>
+</header>
+<main class="stage"><div class="book" id="book"><section class="page left" id="L"></section><section class="page right" id="R"></section></div></main>
+<nav class="bar">
+  <div class="prog" id="prog"></div>
+  <button class="hbtn" id="pBtn" title="వెనుక పేజీ (←)">◀</button>
+  <div class="ttl" id="ttl"></div>
+  <button class="hbtn" id="nBtn" title="తర్వాత పేజీ (→)">▶</button>
+  <button class="hbtn" id="sBtn" title="ఈ పేజీ వినండి (Enter)">🔊</button>
+  <button class="hbtn" id="fBtn" title="పూర్తి తెర">⛶</button>
+</nav>
+<footer>© <a href="https://raayeducation.in" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a> · Raay Education · ఆడుతూ నేర్చుకునే గణితం</footer>
+<div class="scrim" id="scrim"></div>
+<aside class="menu" id="menu"><h3>విషయ సూచిక <button class="hbtn" id="mClose">✕</button></h3><ul class="toc" id="mList"></ul></aside>
+
+<script>
+(function(){
+'use strict';
+/* ---------- helpers ---------- */
+const SVGNS='http://www.w3.org/2000/svg';
+function mk(ns){return (tag,a,p)=>{const e=ns?document.createElementNS(ns,tag):document.createElement(tag);a=a||{};for(const k in a){const v=a[k];if(v==null)continue;if(k==='text')e.textContent=v;else if(k==='html')e.innerHTML=v;else if(k.slice(0,2)==='on')e.addEventListener(k.slice(2),v);else e.setAttribute(k,v);}if(p)p.appendChild(e);return e;};}
+const h=mk(),s=mk(SVGNS);
+const $=id=>document.getElementById(id);
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const pick=a=>a[rnd(0,a.length-1)];
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function anim(ms,fn){return new Promise(res=>{const t0=performance.now();function f(now){const t=Math.min(1,(now-t0)/ms);fn(t);if(t<1)requestAnimationFrame(f);else res();}requestAnimationFrame(f);});}
+function svgBox(p,vb,cls){return s('svg',{viewBox:vb,class:'fig '+(cls||''),preserveAspectRatio:'xMidYMid meet'},p);}
+function btn(p,label,fn,cls){return h('button',{class:'btn '+(cls||''),html:label,onclick:fn},p);}
+function stepper(p,label,min,max,val,on){const w=h('div',{class:'stp'},p);h('span',{class:'stp-l',text:label},w);let v=val;btn(w,'−',()=>set(v-1),'ghost sm');const out=h('b',{class:'stp-v'},w);btn(w,'+',()=>set(v+1),'ghost sm');function set(x,silent){const nv=Math.max(min,Math.min(max,x));const ch=nv!==v;v=nv;out.textContent=v;if(!silent&&ch)on(v);}set(val,true);return{get:()=>v,set};}
+const store={get(k,d){try{const v=localStorage.getItem('ganitham_'+k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set(k,v){try{localStorage.setItem('ganitham_'+k,JSON.stringify(v));}catch(e){}}};
+const U=['సున్నా','ఒకటి','రెండు','మూడు','నాలుగు','ఐదు','ఆరు','ఏడు','ఎనిమిది','తొమ్మిది','పది','పదకొండు','పన్నెండు','పదమూడు','పద్నాలుగు','పదిహేను','పదహారు','పదిహేడు','పద్దెనిమిది','పందొమ్మిది'];
+const T=['','','ఇరవై','ముప్పై','నలభై','యాభై','అరవై','డెబ్బై','ఎనభై','తొంభై'];
+function tw(n){if(n<20)return U[n];if(n<100)return T[Math.floor(n/10)]+(n%10?' '+U[n%10]:'');if(n<1000){const hh=Math.floor(n/100),r=n%100;if(!r)return hh===1?'వంద':U[hh]+' వందలు';return(hh===1?'నూట':U[hh]+' వందల')+' '+tw(r);}return String(n);}
+const PLACE=['ఒకట్ల స్థానం','పదుల స్థానం','వందల స్థానం','వేల స్థానం'];
+const PL=['ఒ','ప','వం','వే'];
+const dg=(n,p)=>{const st=String(n);return p<st.length?+st[st.length-1-p]:null;};
+
+/* ---------- voice ---------- */
+let voiceOn=store.get('voice',false);
+function speak(t,lang){
+  try{if(!('speechSynthesis' in window)||!t)return;lang=lang||'te-IN';
+    t=String(t).replace(/<[^>]+>/g,' ').replace(/×/g,' ఇంటూ ').replace(/÷/g,' భాగహారం ').replace(/−/g,' తీసివేత ').replace(/\+/g,' కూడిక ').replace(/=/g,' సమానం ').replace(/₹/g,' రూపాయలు ').replace(/[🎵✓✗⭐🔄🐸🐜➡⬅▶◀]/gu,' ');
+    speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=lang;u.rate=.92;
+    const vs=speechSynthesis.getVoices();const v=vs.find(x=>x.lang&&x.lang.replace('_','-').toLowerCase()===lang.toLowerCase())||vs.find(x=>x.lang&&x.lang.toLowerCase().startsWith(lang.slice(0,2)));if(v)u.voice=v;
+    speechSynthesis.speak(u);}catch(e){}
+}
+const say=t=>{if(voiceOn)speak(t);};
+if('speechSynthesis' in window){try{speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices();}catch(e){}}
+
+/* ---------- stars ---------- */
+let stars=store.get('stars',0);
+function showStars(){$('stars').textContent='⭐ '+stars;}
+function addStar(){stars++;store.set('stars',stars);showStars();const e=$('stars');e.classList.remove('flash','go');void e.offsetWidth;e.classList.add('flash','go');}
+
+/* ---------- challenge helpers ---------- */
+function quiz(C,gen){
+  h('h4',{text:'🎯 సవాలు'},C);const q=h('div',{class:'q'},C);const row=h('div',{class:'qrow'},C);
+  const inp=h('input',{type:'number',inputmode:'numeric',placeholder:'జవాబు','aria-label':'జవాబు'},row);
+  btn(row,'చూడు ✓',check);btn(row,'మరొకటి',next,'ghost');const fb=h('div',{class:'fb'},C);let cur,tries=0;
+  function next(){cur=gen();q.innerHTML=cur.q;inp.value='';fb.textContent='';fb.className='fb';tries=0;}
+  function check(){if(inp.value==='')return;if(+inp.value===cur.a){fb.textContent='✓ సరైన జవాబు! శభాష్! ⭐';fb.className='fb ok';addStar();say('శభాష్! సరైన జవాబు');setTimeout(next,1600);}else{tries++;fb.textContent=tries>=2?'✗ సరైన జవాబు: '+cur.a:'✗ మళ్ళీ ప్రయత్నించండి';fb.className='fb no';say(tries>=2?'సరైన జవాబు '+cur.a:'మళ్ళీ ప్రయత్నించండి');}}
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.stopPropagation();check();}});
+  next();
+}
+function goal(C,make){
+  h('h4',{text:'🎯 సవాలు – బొమ్మలో చూపించండి'},C);const q=h('div',{class:'q'},C);const fb=h('div',{class:'fb'},C);
+  let g,done=false;btn(h('div',{class:'qrow'},C),'కొత్త సవాలు',next,'ghost');
+  function next(){g=make();q.innerHTML=g.text;fb.textContent='';fb.className='fb';done=false;}
+  next();
+  return{check(st){if(!done&&g.test(st)){done=true;fb.textContent='✓ సరిగ్గా చూపించారు! ⭐';fb.className='fb ok';addStar();say('శభాష్! సరిగ్గా చూపించారు');setTimeout(()=>{if(C.isConnected)next();},2200);}}};
+}
+
+/* ---------- cleanup registry ---------- */
+let CL=[];const onClean=f=>CL.push(f);
+
+/* ---------- step demo engine (column add / sub / mul / division) ---------- */
+function stepDemo(R,o){
+  const top=h('div',{class:'row'},R);let lvl=0;
+  const chips=o.levels.map((L,i)=>btn(top,L.label,()=>{lvl=i;chips.forEach((c,j)=>c.classList.toggle('on',j===i));fresh();},'chip'+(i===0?' on':'')));
+  const grid=h('div',{class:'colgrid'},R);const msg=h('div',{class:'stepmsg'},R);const ctr=h('div',{class:'row'},R);
+  btn(ctr,'🔄 కొత్త లెక్క',fresh,'ghost');const bk=btn(ctr,'◀',()=>show(i-1),'ghost');const nx=btn(ctr,'తర్వాత అడుగు ▶',()=>show(i+1));btn(ctr,'▶▶',()=>show(frames.length-1),'ghost');
+  let prob,frames,i=0;
+  function fresh(){prob=o.levels[lvl].gen();frames=o.frames(prob);show(0,true);}
+  function show(k,quiet){if(k<0||k>=frames.length)return;const prev=i;i=k;const f=frames[i];o.draw(grid,prob,f,k>prev);msg.innerHTML='<span class=sn>'+i+'/'+(frames.length-1)+'</span> '+f.msg;nx.disabled=i===frames.length-1;bk.disabled=i===0;if(!quiet)say(f.msg);}
+  fresh();
+}
+function recorder(){const st={carry:{},res:{},pre:{},add:{}};const frames=[];return{frames,push(o){['carry','res','pre','add'].forEach(k=>{if(o[k])Object.assign(st[k],o[k]);});frames.push({hi:o.hi,msg:o.msg,carry:{...st.carry},res:{...st.res},pre:{...st.pre},add:{...st.add},newKey:o.newKey});}};}
+function drawCols(grid,W,rows,hi,newKey){
+  grid.className='colgrid';grid.style.gridTemplateColumns='34px repeat('+W+',minmax(36px,54px))';grid.innerHTML='';
+  rows.forEach(r=>{h('div',{class:'sg '+(r.cls||''),html:r.sign||''},grid);for(let c=0;c<W;c++){const p=W-1-c;const v=r.cell(p);const d=h('div',{class:(r.cls||'')+(p===hi?' hi':''),html:v==null?'':v},grid);if(newKey&&newKey===r.key+p)d.classList.add('newd');}});
+}
+
+/* ---------- chapters ---------- */
+const CH=[
+/* 1 Ten frame */
+{t:'పది చట్రం – లెక్కపెడదాం',c:'1–2 తరగతి',col:'#e85d75',key:'10 + 3 = 13',
+ body:['పది చట్రంలో 10 గడులు ఉంటాయి – పైన 5, కింద 5.','ఒక చట్రం పూర్తిగా నిండితే అది ఒక <b>పది</b>. రెండో చట్రంలో ఉన్నవి <b>ఒకట్లు</b>.','13 అంటే ఒక పది, మూడు ఒకట్లు.'],
+ tip:'గడిని తాకితే గింజ పడుతుంది. నిండిన గడిని తాకితే అక్కడి నుండి తీసేస్తుంది.',
+ build(R,C){
+  let n=0;const g=goal(C,()=>{const t=rnd(1,20);return{text:'పది చట్రంలో <b>'+t+'</b> ('+tw(t)+') గింజలు పెట్టండి',test:v=>v===t};});
+  const big=h('div',{class:'bigline'},R);const sv=svgBox(R,'0 0 340 248');const cells=[];
+  for(let f=0;f<2;f++){s('rect',{x:14,y:10+f*122,width:312,height:106,rx:10,class:'frame'},sv);
+   for(let r=0;r<2;r++)for(let c=0;c<5;c++){const i=f*10+r*5+c,x=20+c*60,y=16+f*122+r*47;const gg=s('g',{class:'cell',onclick:()=>{n=i<n?i:i+1;upd();}},sv);s('rect',{x,y,width:60,height:47,class:'cellbox'},gg);cells.push(s('circle',{cx:x+30,cy:y+23.5,r:16,class:'seed '+(f?'b':'a')},gg));}}
+  const row=h('div',{class:'row'},R);btn(row,'− 1',()=>{n=Math.max(0,n-1);upd();},'ghost');btn(row,'+ 1',()=>{n=Math.min(20,n+1);upd();});btn(row,'ఖాళీ',()=>{n=0;upd();},'ghost');
+  function upd(q){cells.forEach((c,i)=>c.classList.toggle('on',i<n));
+   const sub=n>10?'= 1 పది + '+(n-10)+' ఒకట్లు = 10 + '+(n-10):n===10?'ఒక పూర్తి పది! 🎉':n===20?'రెండు పదులు = 20':n>0?'పది కావాలంటే ఇంకా '+(10-n):'గడిని తాకండి';
+   big.innerHTML='<span class=num>'+n+'</span><span class=word>'+tw(n)+'</span><span class=sub>'+(n===20?'రెండు పూర్తి పదులు = 20 🎉':sub)+'</span>';if(!q)say(tw(n));g.check(n);}
+  upd(true);
+ }},
+/* 2 Number line frog */
+{t:'సంఖ్యా రేఖ – కప్ప గెంతులు',c:'1–3 తరగతి',col:'#2e9e5b',key:'5 + 3 + 3 = 11',
+ body:['సంఖ్యా రేఖ మీద <b>కుడి వైపు</b> వెళ్తే సంఖ్య పెరుగుతుంది – అది కూడిక.','<b>ఎడమ వైపు</b> వెళ్తే సంఖ్య తగ్గుతుంది – అది తీసివేత.','ఒకే పొడవు గెంతులు మళ్ళీ మళ్ళీ వేస్తే అది గుణకారం: 3 చొప్పున 4 గెంతులు = 3 × 4 = 12.'],
+ tip:'మొదలు, గెంతు పొడవు, గెంతుల సంఖ్య ఎంచుకుని 🐸 గెంతు! నొక్కండి.',
+ build(R,C){
+  const ctl=h('div',{class:'ctl'},R);const st=stepper(ctl,'మొదలు',0,30,3,draw0),ln=stepper(ctl,'గెంతు పొడవు',1,6,3,draw0),ct=stepper(ctl,'గెంతులు',1,8,3,draw0);
+  let dir=1;const dr=h('div',{class:'row'},R);const bp=btn(dr,'➡ ముందుకు (+)',()=>{dir=1;du();draw0();},'chip on'),bm=btn(dr,'⬅ వెనుకకు (−)',()=>{dir=-1;du();draw0();},'chip');
+  function du(){bp.classList.toggle('on',dir>0);bm.classList.toggle('on',dir<0);}
+  const sv=svgBox(R,'0 0 640 196');const X=i=>20+i*20;
+  s('line',{x1:8,y1:150,x2:632,y2:150,class:'nl'},sv);
+  for(let i=0;i<=30;i++){s('line',{x1:X(i),y1:i%5?145:139,x2:X(i),y2:i%5?155:161,class:'tick'},sv);s('text',{x:X(i),y:180,class:'tl'+(i%5?'':' b'),text:i},sv);}
+  const arcs=s('g',{},sv);const frog=s('g',{},sv);
+  s('ellipse',{cx:-9,cy:-4,rx:7,ry:4,fill:'#3f9b4b',class:'ink'},frog);s('ellipse',{cx:9,cy:-4,rx:7,ry:4,fill:'#3f9b4b',class:'ink'},frog);
+  s('ellipse',{cx:0,cy:-14,rx:15,ry:11,fill:'#5cbf5c',class:'ink'},frog);
+  [-7,7].forEach(x=>{s('circle',{cx:x,cy:-25,r:5,fill:'#fff',class:'ink'},frog);s('circle',{cx:x,cy:-25,r:2,fill:'#222'},frog);});
+  s('path',{d:'M-6 -10 Q0 -6 6 -10',fill:'none',class:'ink'},frog);
+  const eq=h('div',{class:'eq'},R);const jb=btn(h('div',{class:'row'},R),'🐸 గెంతు!',jump);
+  let busy=false,alive=true;onClean(()=>alive=false);
+  const place=(x,y)=>frog.setAttribute('transform','translate('+x+','+y+')');
+  function draw0(){if(busy)return;arcs.innerHTML='';place(X(st.get()),150);const end=st.get()+dir*ln.get()*ct.get();
+   eq.innerHTML=(end<0||end>30)?'<span class=warn>కప్ప రేఖ దాటిపోతుంది ('+end+')! విలువలు మార్చండి.</span>':st.get()+' '+(dir>0?'+':'−')+' ('+ln.get()+' × '+ct.get()+') = <b>?</b>';}
+  async function jump(){if(busy)return;const a=st.get(),L=ln.get(),k=ct.get(),end=a+dir*L*k;if(end<0||end>30){speak('కప్ప రేఖ దాటిపోతుంది');return;}
+   busy=true;jb.disabled=true;arcs.innerHTML='';let pos=a;const sg=dir>0?'+':'−';
+   for(let j=0;j<k;j++){const nx=pos+dir*L,x1=X(pos),x2=X(nx),hg=26+L*9;
+    s('path',{d:'M'+x1+' 148 Q'+((x1+x2)/2)+' '+(148-hg*2)+' '+x2+' 148',class:'arc'},arcs);s('text',{x:(x1+x2)/2,y:142-hg,class:'arcl',text:sg+L},arcs);
+    await anim(480,t=>place(x1+(x2-x1)*t,150-4*hg*t*(1-t)));if(!alive)return;pos=nx;say(String(pos));await wait(220);if(!alive)return;}
+   eq.innerHTML=a+' '+Array(k).fill(sg+' '+L).join(' ')+' = <b>'+end+'</b><br><small>'+a+' '+sg+' ('+L+' × '+k+') = '+a+' '+sg+' '+(L*k)+' = '+end+'</small>';
+   busy=false;jb.disabled=false;}
+  draw0();
+  quiz(C,()=>{const L=rnd(2,5),k=rnd(2,4),d=Math.random()<.6?1:-1;const a=d>0?rnd(0,30-L*k):rnd(L*k,30);return{q:'కప్ప <b>'+a+'</b> దగ్గర ఉంది. '+L+' చొప్పున '+k+' గెంతులు <b>'+(d>0?'ముందుకు':'వెనుకకు')+'</b> వేసింది. ఎక్కడ ఆగుతుంది?',a:a+d*L*k};});
+ }},
+/* 3 Money */
+{t:'డబ్బు – అంగడి ఆట',c:'1–3 తరగతి',col:'#e9c46a',key:'₹20 + ₹5 + ₹2 = ₹27',
+ body:['మన డబ్బు రూపాయలలో (₹) ఉంటుంది. నాణేలు: ₹1, ₹2, ₹5, ₹10. నోట్లు: ₹20, ₹50, ₹100.','వస్తువు ధరకు సరిపడా నాణేలు, నోట్లు ఇవ్వాలి.','ఎక్కువ ఇస్తే మిగిలిన డబ్బు <b>చిల్లర</b>గా తిరిగి వస్తుంది.'],
+ tip:'కింది నాణెం/నోటును తాకితే సంచిలోకి వెళ్తుంది. సంచిలో దాన్ని తాకితే తిరిగి వస్తుంది.',
+ build(R,C){
+  const ITEMS=[['పెన్సిల్','✏️'],['నోట్ పుస్తకం','📒'],['బంతి','⚽'],['అరటిపండ్లు','🍌'],['పాల ప్యాకెట్','🥛'],['బిస్కెట్లు','🍪'],['బొమ్మ','🧸'],['పెన్ను','🖊️'],['ఆపిల్','🍎'],['గాలిపటం','🪁'],['జామపండ్లు','🍐'],['బలపాలు','🖍️']];
+  const VALS=[1,2,5,10,20,50,100];
+  const shop=h('div',{class:'shop'},R);const tray=h('div',{class:'tray'},R);const stat=h('div',{class:'eq'},R);const purse=h('div',{class:'purse'},R);
+  const money=v=>h('button',{class:v>=20?'note n'+v:'coin c'+v,html:'₹'+v,'aria-label':v+' రూపాయలు'});
+  let price,bag=[],solved=false;
+  VALS.forEach(v=>{const m=money(v);m.onclick=()=>{if(bag.length<24){bag.push(v);upd();}};purse.appendChild(m);});
+  btn(h('div',{class:'row'},R),'🛒 కొత్త వస్తువు',newItem,'ghost');
+  const minC=p=>{const r=[];for(const v of VALS.slice().reverse())while(p>=v){r.push(v);p-=v;}return r;};
+  function newItem(){const it=pick(ITEMS);price=rnd(3,99);bag=[];solved=false;shop.innerHTML='<div class=item><span class=emo>'+it[1]+'</span><div><div>'+it[0]+'</div><div class=price>ధర ₹'+price+'</div></div></div>';upd(true);}
+  function upd(q){tray.innerHTML='';if(!bag.length)h('span',{class:'hint',text:'కింది నాణేలు / నోట్లు తాకి ఇక్కడ పెట్టండి 👇'},tray);
+   bag.forEach((v,i)=>{const m=money(v);m.onclick=()=>{bag.splice(i,1);upd();};tray.appendChild(m);});
+   const tot=bag.reduce((a,b)=>a+b,0);let t='ఇచ్చినది: <b>₹'+tot+'</b>'+(bag.length>1?' = '+bag.map(v=>'₹'+v).join(' + '):'')+'<br>';
+   if(tot<price)t+='<span class=muted>ఇంకా ₹'+(price-tot)+' కావాలి</span>';
+   else if(tot>price)t+='<span class=warn>₹'+(tot-price)+' ఎక్కువ – అది చిల్లరగా తిరిగి వస్తుంది</span>';
+   else{t+='<span class=ok>✓ సరిగ్గా ₹'+price+'! శభాష్!</span><br><small>తక్కువ నాణేలతో: '+minC(price).map(v=>'₹'+v).join(' + ')+'</small>';if(!solved){solved=true;addStar();say('శభాష్! సరిగ్గా '+price+' రూపాయలు');}}
+   stat.innerHTML=t;if(!q&&tot!==price)say(tot+' రూపాయలు');}
+  newItem();
+  quiz(C,()=>{const p=rnd(5,95);const g=[10,20,50,100].find(x=>x>p);return{q:'₹'+p+' వస్తువు కొని ₹'+g+' నోటు ఇచ్చాం. చిల్లర ఎంత రావాలి?',a:g-p};});
+ }},
+/* 4 Place value */
+{t:'స్థాన విలువ – బ్లాకులు',c:'2–4 తరగతి',col:'#f6c453',key:'357 = 300 + 50 + 7',
+ body:['10 ఒకట్లు = 1 పది. 10 పదులు = 1 వంద.','ఒక అంకె విలువ అది ఉన్న <b>స్థానాన్ని</b> బట్టి మారుతుంది. 357 లో 5 విలువ 50.','విస్తృత రూపం: 3 వందలు + 5 పదులు + 7 ఒకట్లు.'],
+ tip:'+ నొక్కి బ్లాకులు పెంచండి. 9 తర్వాత ఇంకొకటి కలిపితే పది కలిసి పక్క స్థానానికి వెళ్తాయి.',
+ build(R,C){
+  let H=1,Tn=2,O=4;const val=()=>H*100+Tn*10+O;
+  const g=goal(C,()=>{const t=rnd(101,999);return{text:'బ్లాకులతో <b>'+t+'</b> చూపించండి<br><small>'+tw(t)+'</small>',test:v=>v===t};});
+  const big=h('div',{class:'bigline'},R);const sv=svgBox(R,'0 0 420 252');
+  [['వందలు',88],['పదులు',245],['ఒకట్లు',362]].forEach(([t,x])=>s('text',{x,y:20,'text-anchor':'middle','font-size':15,'font-weight':800,text:t},sv));
+  s('line',{x1:178,y1:6,x2:178,y2:248,stroke:'#d8cfbd','stroke-width':2},sv);s('line',{x1:310,y1:6,x2:310,y2:248,stroke:'#d8cfbd','stroke-width':2},sv);
+  const gH=s('g',{},sv),gT=s('g',{},sv),gO=s('g',{},sv);
+  function blk(p,x,y,w,hh,fill,lines,vert){s('path',{d:'M'+x+' '+y+' l4 -4 h'+w+' v'+hh+' l-4 4 z',fill:'#00000030'},p);s('rect',{x,y,width:w,height:hh,fill,class:'ink'},p);
+   for(let i=1;i<lines;i++){if(vert!==2)s('line',{x1:x,y1:y+hh*i/lines,x2:x+w,y2:y+hh*i/lines,stroke:'#0004'},p);if(vert===1||vert===2)s('line',{x1:x+w*i/lines,y1:y,x2:x+w*i/lines,y2:y+hh,stroke:'#0004'},p);}}
+  function draw(){gH.innerHTML=gT.innerHTML=gO.innerHTML='';
+   for(let i=0;i<H;i++)blk(gH,14+(i%3)*54,36+Math.floor(i/3)*68,48,48,'#f6c453',10,1);
+   for(let i=0;i<Tn;i++)blk(gT,190+i*13,42,10,130,'#6fb6f2',10,0);
+   for(let i=0;i<O;i++)blk(gO,324+(i%3)*28,52+Math.floor(i/3)*28,18,18,'#ef7d8f',1,0);}
+  const ctl=h('div',{class:'pvctl'},R);const outs=[];
+  [2,1,0].forEach(k=>{const c=h('div',{class:'pvc'},ctl);btn(c,'−',()=>dec(k),'ghost sm');outs[k]=h('b',{},c);btn(c,'+',()=>inc(k),'sm');});
+  const fl=h('div',{class:'flash'},R);
+  function flash(t){fl.textContent=t;fl.classList.remove('go');void fl.offsetWidth;fl.classList.add('go');say(t);}
+  function inc(k){const v=val()+[1,10,100][k];if(v>999){flash('999 – మూడు అంకెల్లో ఇదే పెద్ద సంఖ్య');return;}const b=[O,Tn,H];O=v%10;Tn=Math.floor(v/10)%10;H=Math.floor(v/100);
+   const c1=k===0&&b[0]===9,c2=Tn===0&&b[1]===9&&(k===1||c1);upd(true);if(c2)flash('🔄 10 పదులు కలిసి 1 వంద అయింది!');else if(c1)flash('🔄 10 ఒకట్లు కలిసి 1 పది అయింది!');else say(tw(val()));}
+  function dec(k){if(k===0&&O>0)O--;else if(k===1&&Tn>0)Tn--;else if(k===2&&H>0)H--;else return;upd();}
+  function upd(q){draw();outs[0].textContent=O;outs[1].textContent=Tn;outs[2].textContent=H;const v=val();
+   big.innerHTML='<span class=num>'+v+'</span><span class=word>'+tw(v)+'</span><span class=sub>'+H+' వందలు + '+Tn+' పదులు + '+O+' ఒకట్లు = '+(H*100)+' + '+(Tn*10)+' + '+O+'</span>';
+   if(!q)say(tw(v));g.check(v);}
+  upd(true);
+ }},
+/* 5 Column addition */
+{t:'కూడిక – నిలువు పద్ధతి',c:'2–4 తరగతి',col:'#3a7bd5',key:'47 + 38 = 85',
+ body:['<b>ఒకట్ల స్థానం</b> నుండి మొదలు పెట్టి ఎడమ వైపు కూడాలి.','ఒక స్థానంలో మొత్తం 10 లేదా అంతకంటే ఎక్కువ అయితే – <b>ముందు</b> పదుల అంకెను పక్క స్థానం <b>పైన</b> రాయాలి, <b>తర్వాత</b> ఒకట్ల అంకెను కింద రాయాలి.','పైన రాసిన అంకెను ఆ స్థానం కూడికలో కలపడం మర్చిపోవద్దు.'],
+ tip:'“తర్వాత అడుగు ▶” నొక్కుతూ ఒక్కో అడుగు చూడండి. ఎరుపు అంకె = పైన రాసే అంకె.',
+ build(R,C){
+  const mkp=(lo,hi)=>()=>{let a,b;do{a=rnd(lo,hi);b=rnd(lo,hi);}while(!((a%10)+(b%10)>=10||(Math.floor(a/10)%10)+(Math.floor(b/10)%10)>=10));return{a,b};};
+  stepDemo(R,{levels:[{label:'2 అంకెలు',gen:mkp(10,99)},{label:'3 అంకెలు',gen:mkp(100,999)}],
+   frames({a,b}){const n=Math.max(String(a).length,String(b).length);const r=recorder();let c=0;
+    r.push({msg:'రెండు సంఖ్యలను స్థానాల వారీగా ఒకదాని కింద ఒకటి రాశాం. <b>ఒకట్ల స్థానం</b> నుండి మొదలు పెడదాం.'});
+    for(let p=0;p<n;p++){const x=dg(a,p)||0,y=dg(b,p)||0,sm=x+y+c;
+     r.push({hi:p,msg:PLACE[p]+': '+x+' + '+y+(c?' + '+c+' (పైన రాసినది)':'')+' = <b>'+sm+'</b>'});
+     if(sm>=10){r.push({hi:p,carry:{[p+1]:1},newKey:'c'+(p+1),msg:sm+' – <b>ముందు</b> 1 ని '+PLACE[p+1]+' <b>పైన</b> రాయాలి.'});r.push({hi:p,res:{[p]:sm%10},newKey:'r'+p,msg:'<b>తర్వాత</b> '+(sm%10)+' ని '+PLACE[p]+' కింద రాయాలి.'});c=1;}
+     else{r.push({hi:p,res:{[p]:sm},newKey:'r'+p,msg:sm+' ని '+PLACE[p]+' కింద రాయాలి.'});c=0;}}
+    if(c)r.push({hi:n,res:{[n]:1},newKey:'r'+n,msg:'పైన ఉన్న 1 ని కిందకు దించి '+PLACE[n]+' లో రాయాలి.'});
+    r.push({msg:'✓ జవాబు: '+a+' + '+b+' = <b>'+(a+b)+'</b>'});return r.frames;},
+   draw(grid,{a,b},f){const n=Math.max(String(a).length,String(b).length);drawCols(grid,n+1,[
+     {cls:'lab',cell:p=>PL[p]},{cls:'cr',key:'c',cell:p=>f.carry[p]||''},{cell:p=>dg(a,p)},{sign:'+',cell:p=>dg(b,p)},{cls:'res',key:'r',cell:p=>f.res[p]!=null?f.res[p]:''}],f.hi,f.newKey);}});
+  quiz(C,()=>{const a=rnd(15,499),b=rnd(15,499);return{q:'కూడండి: <b>'+a+' + '+b+'</b> = ?',a:a+b};});
+ }},
+/* 6 Subtraction equal addition */
+{t:'తీసివేత – సమాన కూడిక పద్ధతి',c:'2–4 తరగతి',col:'#9b59b6',key:'53 − 28 = 25',
+ body:['<b>ఒకట్ల స్థానం</b> నుండి మొదలు పెట్టాలి.','పై అంకె చిన్నదైతే: <b>ముందు</b> పై అంకె ముందు <b>1</b> రాయాలి (3 → 13).','<b>తర్వాత</b> పక్క స్థానంలో <b>కింది అంకెకు 1</b> కలపాలి (2 → 2+1 = 3). కొట్టివేతలు అవసరం లేదు!'],
+ tip:'ఎరుపు “1” = పై అంకె ముందు రాసినది. ఎరుపు “+1” = కింది అంకెకు కలిపినది.',
+ build(R,C){
+  const mkp=(lo,hi)=>()=>{let a,b;do{a=rnd(lo+1,hi);b=rnd(Math.max(1,Math.floor(lo/ (Math.random()<.8?1:10))),a-1);}while(!Array.from({length:3},(_,p)=>(dg(a,p)||0)<(dg(b,p)||0)).some(Boolean));return{a,b};};
+  stepDemo(R,{levels:[{label:'2 అంకెలు',gen:mkp(10,99)},{label:'3 అంకెలు',gen:mkp(100,999)}],
+   frames({a,b}){const n=String(a).length;const r=recorder();let ad=0;
+    r.push({msg:'పెద్ద సంఖ్య పైన, చిన్న సంఖ్య కింద రాశాం. <b>ఒకట్ల స్థానం</b> నుండి మొదలు.'});
+    for(let p=0;p<n;p++){const t=dg(a,p),b0=dg(b,p)||0,bb=b0+ad;
+     r.push({hi:p,msg:PLACE[p]+': పై అంకె <b>'+t+'</b>, కింది అంకె <b>'+b0+'</b>'+(ad?' + 1 = <b>'+bb+'</b>':'')});
+     if(t<bb){r.push({hi:p,pre:{[p]:1},newKey:'t'+p,msg:t+' నుండి '+bb+' తీయలేం. <b>ముందు</b> '+t+' ముందు <b>1</b> రాయాలి → <b>'+(t+10)+'</b>'});
+      r.push({hi:p,add:{[p+1]:1},newKey:'b'+(p+1),msg:'<b>తర్వాత</b> పక్కనే ఉన్న '+PLACE[p+1]+' లో <b>కింది అంకెకు 1</b> కలపాలి.'});
+      r.push({hi:p,res:{[p]:t+10-bb},newKey:'r'+p,msg:(t+10)+' − '+bb+' = <b>'+(t+10-bb)+'</b> – కింద రాయాలి.'});ad=1;}
+     else{r.push({hi:p,res:{[p]:t-bb},newKey:'r'+p,msg:t+' − '+bb+' = <b>'+(t-bb)+'</b> – కింద రాయాలి.'});ad=0;}}
+    r.push({msg:'✓ జవాబు: '+a+' − '+b+' = <b>'+(a-b)+'</b>'});return r.frames;},
+   draw(grid,{a,b},f){const n=String(a).length;const lead=p=>{for(let q=n-1;q>p;q--)if(f.res[q]==null||f.res[q]!==0)return false;return true;};
+    drawCols(grid,n,[{cls:'lab',cell:p=>PL[p]},
+     {key:'t',cell:p=>(f.pre[p]?'<span class=pre>1</span>':'')+dg(a,p)},
+     {sign:'−',key:'b',cell:p=>{const d=dg(b,p);if(d==null&&!f.add[p])return'';return(d==null?'<span class=faded>0</span>':d)+(f.add[p]?'<span class=add>+1</span>':'');}},
+     {cls:'res',key:'r',cell:p=>f.res[p]==null?'':(f.res[p]===0&&p>0&&lead(p)?'<span class=faded>0</span>':f.res[p])}],f.hi,f.newKey);}});
+  quiz(C,()=>{const a=rnd(120,999),b=rnd(15,a-5);return{q:'తీసివేయండి: <b>'+a+' − '+b+'</b> = ?',a:a-b};});
+ }},
+/* 7 Multiplication arrays */
+{t:'గుణకారం – వరుసలు',c:'2–4 తరగతి',col:'#f08a24',key:'4 × 6 = 6 + 6 + 6 + 6 = 24',
+ body:['గుణకారం అంటే ఒకే సంఖ్యను మళ్ళీ మళ్ళీ కూడటం.','4 వరుసలు, ప్రతి వరుసలో 6 మామిడిపండ్లు → 4 × 6 = 24.','వరుసలు, నిలువులు మార్చినా జవాబు మారదు: 4 × 6 = 6 × 4.'],
+ tip:'ఒక వరుసను తాకితే అక్కడి వరకు దాటవేసి లెక్కింపు (6, 12, 18 …) చూపుతుంది. 🔄 తో తిప్పండి.',
+ build(R,C){
+  let rw=4,cl=6,upto=0;const ctl=h('div',{class:'ctl'},R);
+  const rS=stepper(ctl,'వరుసలు',1,10,rw,v=>{rw=v;upto=0;draw();}),cS=stepper(ctl,'ప్రతి వరుసలో',1,10,cl,v=>{cl=v;upto=0;draw();});
+  btn(h('div',{class:'row'},R),'🔄 తిప్పు (వరుసలు ↔ నిలువులు)',()=>{[rw,cl]=[cl,rw];rS.set(rw,true);cS.set(cl,true);upto=0;draw();say('తిప్పినా జవాబు అదే');},'ghost');
+  const sv=svgBox(R,'0 0 420 320');const eq=h('div',{class:'eq'},R);
+  function draw(){sv.innerHTML='';const cw=Math.min(38,380/cl),ch=Math.min(30,300/rw),r=Math.min(cw,ch)*.36,ox=(420-cw*cl)/2,oy=(320-ch*rw)/2;
+   for(let i=0;i<rw;i++){const g=s('g',{style:'cursor:pointer',onclick:()=>{upto=i+1;draw();say(String((i+1)*cl));}},sv);
+    s('rect',{x:ox-6,y:oy+i*ch+1,width:cw*cl+12,height:ch-2,rx:8,fill:i<upto?'#fff1c9':'transparent'},g);
+    for(let j=0;j<cl;j++){const cx=ox+j*cw+cw/2,cy=oy+i*ch+ch/2;s('ellipse',{cx,cy,rx:r,ry:r*1.12,fill:i<upto?'#f08a24':'#f7b267',class:'ink','stroke-width':1.5},g);s('path',{d:'M'+cx+' '+(cy-r*1.1)+' q'+(r*.6)+' '+(-r*.7)+' '+(r*1.1)+' '+(-r*.4),fill:'none',stroke:'#2e9e5b','stroke-width':2},g);}
+    if(i<upto)s('text',{x:ox+cw*cl+10,y:oy+i*ch+ch/2+5,'font-size':14,'font-weight':800,text:(i+1)*cl},g);}
+   const rep=rw<=8?Array(rw).fill(cl).join(' + '):cl+' + '+cl+' + … ('+rw+' సార్లు)';
+   eq.innerHTML=rw+' × '+cl+' = <b>'+(rw*cl)+'</b><br><small>'+rep+' = '+(rw*cl)+(upto?' · దాటవేసి లెక్కింపు: '+Array.from({length:upto},(_,k)=>(k+1)*cl).join(', '):'')+'</small>';}
+  draw();
+  quiz(C,()=>{const a=rnd(2,10),b=rnd(2,10);return{q:a+' వరుసలు, ప్రతి వరుసలో '+b+' పండ్లు. మొత్తం ఎన్ని? <b>'+a+' × '+b+'</b>',a:a*b};});
+ }},
+/* 8 Column multiplication – multi-digit */
+{t:'గుణకారం – నిలువు పద్ధతి',c:'3–5 తరగతి',col:'#d35400',key:'234 × 65 = 15210',
+ body:['గుణకంలోని <b>ఒక్కో అంకెతో</b> పై సంఖ్య మొత్తాన్ని ఒకట్ల స్థానం నుండి గుణించాలి.','లబ్ధం 10 లేదా ఎక్కువ అయితే – <b>ముందు</b> పదుల అంకెను పక్క అంకె <b>పైన</b> రాయాలి, <b>తర్వాత</b> ఒకట్ల అంకెను కింద రాయాలి.','పదుల అంకెతో గుణించేటప్పుడు ఒకట్ల స్థానంలో <b>0</b>, వందల అంకెతో అయితే <b>0, 0</b> రాసి మొదలు పెట్టాలి. చివరగా వరుసలన్నీ <b>కూడాలి</b>.'],
+ tip:'ఒక్కో గుణక అంకెకు పైన రాసే అంకెలు వేరే రంగు వరుసలో వస్తాయి. “నా లెక్క” లో 234 × 657 లాంటి మీ సంఖ్యలు ఇవ్వవచ్చు.',
+ build(R,C){
+  const PLX=['ఒకట్ల','పదుల','వందల','వేల','పదివేల','లక్షల','పది లక్షల'],PLS=['ఒ','ప','వం','వే','ప.వే','ల'];
+  const LV=[{l:'2 అంకెలు × 1',a:[12,99],b:[2,9]},{l:'3 అంకెలు × 1',a:[102,999],b:[2,9]},{l:'2 అంకెలు × 2',a:[12,99],b:[12,99]},{l:'3 అంకెలు × 2',a:[102,999],b:[12,99]},{l:'3 అంకెలు × 3',a:[102,999],b:[102,999]}];
+  let lvl=store.get('mul_lvl',2),prob,frames,i=0,autoOn=false,timer=null,alive=true,gap=3;if(!LV[lvl])lvl=2;
+  onClean(()=>{alive=false;clearTimeout(timer);});
+  const lr=h('div',{class:'row'},R);const lb=[];LV.forEach((L,k)=>{const b=btn(lr,L.l,()=>{lvl=k;store.set('mul_lvl',k);lb.forEach(x=>x.classList.toggle('on',x===b));fresh();},'chip'+(k===lvl?' on':''));lb.push(b);});
+  const own=h('div',{class:'own'},h('div',{class:'row'},R));const aIn=h('input',{type:'number',inputmode:'numeric',placeholder:'సంఖ్య','aria-label':'గుణ్యం'},own);h('b',{text:'×'},own);const bIn=h('input',{type:'number',inputmode:'numeric',placeholder:'గుణకం','aria-label':'గుణకం'},own);btn(own,'నా లెక్క ✓',ownCalc,'ghost');
+  [aIn,bIn].forEach(x=>x.addEventListener('keydown',e=>{if(e.key==='Enter'){e.stopPropagation();ownCalc();}}));
+  const grid=h('div',{class:'colgrid mulgrid'},R);const msg=h('div',{class:'stepmsg'},R);
+  const ctr=h('div',{class:'row'},R);btn(ctr,'🔄 కొత్త లెక్క',fresh,'ghost');const bk=btn(ctr,'◀',()=>show(i-1),'ghost');const nx=btn(ctr,'తర్వాత అడుగు ▶',()=>show(i+1));btn(ctr,'▶▶',()=>show(frames.length-1),'ghost');
+  const xr=h('div',{class:'row'},R);const aB=btn(xr,'▶ ఆటో',()=>{autoOn=!autoOn;aB.innerHTML=autoOn?'⏸ ఆపు':'▶ ఆటో';aB.classList.toggle('on',autoOn);tick();},'chip');
+  const gS=h('select',{class:'sel','aria-label':'వేగం'},xr);[2,3,5,8].forEach(g=>h('option',{value:g,text:g+' సెకన్లు'},gS));gS.value=gap;gS.onchange=()=>{gap=+gS.value;};
+  function tick(){clearTimeout(timer);if(!alive||!autoOn)return;timer=setTimeout(()=>{if(!alive||!autoOn)return;if(i<frames.length-1)show(i+1);else fresh();tick();},gap*1000);}
+  function gen(){const L=LV[lvl];let a,b,k=0;do{a=rnd(L.a[0],L.a[1]);b=rnd(L.b[0],L.b[1]);k++;}while(k<300&&((a%10)*(b%10)<10||(String(b).length>1&&b%10===0)));return{a,b};}
+  function ownCalc(){const a=Math.floor(+aIn.value),b=Math.floor(+bIn.value);if(!(a>=1&&a<=9999&&b>=1&&b<=999&&String(a).length+String(b).length<=7)){msg.innerHTML='<span class=warn>సంఖ్య 1–9999, గుణకం 1–999 మధ్య ఇవ్వండి.</span>';return;}load({a,b});}
+  function load(p){prob=p;frames=mk(p);show(0,true);}
+  function fresh(){load(gen());}
+  function mk({a,b}){const la=String(a).length,nb=String(b).length,st={},F=[];
+   const push=(msg,set,hi,nk,ph)=>{if(set)for(const k in set){st[k]=st[k]||{};Object.assign(st[k],set[k]);}F.push({msg,st:JSON.parse(JSON.stringify(st)),hi:hi||[],nk:nk||'',ph:ph||0});};
+   push('<b>'+a+' × '+b+'</b>. '+(nb>1?'గుణకం '+b+' లోని ఒక్కో అంకెతో '+a+' ని గుణిద్దాం – ':'')+'<b>ఒకట్ల స్థానం</b> నుండి మొదలు.',null,[],'',0);
+   for(let j=0;j<nb;j++){const bj=dg(b,j),P='P'+j,CR='c'+j;
+    if(nb>1){const z={};for(let k=0;k<j;k++)z[k]=0;push(PLX[j]+' అంకె <b>'+bj+'</b> తో గుణిద్దాం.'+(j?' ముందు '+(j===1?'ఒకట్ల స్థానంలో <b>0</b>':'ఒకట్లు, పదుల స్థానాల్లో <b>0, 0</b>')+' రాయాలి.':''),j?{[P]:z}:null,[['B',j]],j?P+':0':'',j+1);}
+    if(bj===0){const z={};for(let k=0;k<la;k++)z[k+j]=0;push('0 తో గుణిస్తే అన్నీ <b>0</b> – ఈ వరుసలో 0 లు రాయాలి.',{[P]:z},[['B',j]],'',j+1);continue;}
+    let c=0;for(let k=0;k<la;k++){const x=dg(a,k),pr=x*bj,s=pr+c,p=k+j,hi=[['A',k],['B',j],[CR,k]];
+     push(x+' × '+bj+' = '+pr+(c?' , + '+c+' (పైన రాసినది) = <b>'+s+'</b>':''),null,hi,'',j+1);
+     if(s>=10){const cc=Math.floor(s/10);push(s+' – <b>ముందు</b> '+cc+' ని '+(k<la-1?'పక్క అంకె':'ఎడమ వైపు')+' <b>పైన</b> రాయాలి.',{[CR]:{[k+1]:cc}},hi,CR+':'+(k+1),j+1);
+      push('<b>తర్వాత</b> '+(s%10)+' ని కింద రాయాలి.',{[P]:{[p]:s%10}},hi.concat([[P,p]]),P+':'+p,j+1);c=cc;}
+     else{push(s+' ని కింద రాయాలి.',{[P]:{[p]:s}},hi.concat([[P,p]]),P+':'+p,j+1);c=0;}}
+    if(c)push('పైన ఉన్న '+c+' ని కిందకు దించి రాయాలి.',{[P]:{[la+j]:c}},[[CR,la],[P,la+j]],P+':'+(la+j),j+1);
+    if(nb>1)push('వరుస '+(j+1)+': '+a+' × '+(bj*Math.pow(10,j))+' = <b>'+(a*bj*Math.pow(10,j))+'</b>'+(j<nb-1?' · తర్వాత '+PLX[j+1]+' అంకె.':''),null,[],'',j+1);}
+   if(nb>1){push('ఇప్పుడు వరుసలన్నీ <b>కూడాలి</b> – ఒకట్ల స్థానం నుండి.',null,[],'',9);let c=0;
+    for(let p=0;p<la+nb;p++){const ds=[];for(let j=0;j<nb;j++){const v=st['P'+j]&&st['P'+j][p];if(v!=null)ds.push(v);}if(!ds.length&&!c)break;
+     const s=ds.reduce((x,y)=>x+y,0)+c,col=[['col',p]];
+     push(PLX[p]+' స్థానం: '+(ds.length?ds.join(' + '):'')+(c?(ds.length?' + ':'')+c+' (పైన)':'')+' = <b>'+s+'</b>',null,col,'',9);
+     if(s>=10){const cc=Math.floor(s/10);push('<b>ముందు</b> '+cc+' ని '+PLX[p+1]+' స్థానం <b>పైన</b> రాయాలి.',{K:{[p+1]:cc}},col,'K:'+(p+1),9);push('<b>తర్వాత</b> '+(s%10)+' ని కింద రాయాలి.',{S:{[p]:s%10}},col,'S:'+p,9);c=cc;}
+     else{push(s+' ని కింద రాయాలి.',{S:{[p]:s}},col,'S:'+p,9);c=0;}}}
+   push('✓ జవాబు: '+a+' × '+b+' = <b>'+(a*b)+'</b>',null,[],'',10);return F;}
+  function show(k,quiet){if(k<0||k>=frames.length)return;i=k;draw();const f=frames[i];msg.innerHTML='<span class=sn>'+i+'/'+(frames.length-1)+'</span> '+f.msg;nx.disabled=i===frames.length-1;bk.disabled=i===0;if(!quiet)say(f.msg);}
+  function draw(){const {a,b}=prob,f=frames[i],st=f.st,la=String(a).length,nb=String(b).length,W=la+nb,fin=frames[frames.length-1].st;
+   const isHi=(k,p)=>f.hi.some(([kk,pp])=>pp===p&&(kk===k||(kk==='col'&&(k[0]==='P'||k==='S'||k==='K'))));
+   const val=(k,p)=>st[k]&&st[k][p]!=null?st[k][p]:null;
+   const rows=[{k:'lab',cls:'lab',cell:p=>PLS[p]||''}];
+   for(let j=nb-1;j>=0;j--)if(fin['c'+j])rows.push({k:'c'+j,sign:nb>1?'<small>×'+dg(b,j)+'</small>':'',cls:'cr cj'+j+(nb>1&&f.ph!==j+1&&f.ph!==10?' dim':''),cell:p=>{const v=val('c'+j,p);return v==null?'':v;}});
+   rows.push({k:'A',cell:p=>dg(a,p)});rows.push({k:'B',sign:'×',cell:p=>dg(b,p)});
+   let first=true;
+   if(nb>1&&fin.K)rows.push({k:'K',sign:'<small>+</small>',cls:'cr ck'+(f.ph!==9&&f.ph!==10?' dim':''),cell:p=>{const v=val('K',p);return v==null?'':v;}});
+   for(let j=0;j<nb;j++)rows.push({k:'P'+j,sign:nb>1&&j===nb-1?'+':'',cls:nb===1?'res':'pp',cell:p=>{const v=val('P'+j,p);return v==null?'':(p<j?'<span class=ph>'+v+'</span>':v);}});
+   if(nb>1)rows.push({k:'S',cls:'res',cell:p=>{const v=val('S',p);return v==null?'':v;}});
+   grid.innerHTML='';grid.style.gridTemplateColumns='34px repeat('+W+',minmax(28px,50px))';
+   rows.forEach(r=>{let cls=r.cls||'';if(first&&r.k!=='lab'&&r.k!=='A'&&r.k!=='B'&&r.k[0]!=='c'){if(!/res/.test(cls))cls+=' topline';first=false;}
+    h('div',{class:'sg '+cls,html:r.sign||''},grid);
+    for(let c=0;c<W;c++){const p=W-1-c,v=r.cell(p);const d=h('div',{class:cls+(isHi(r.k,p)?' hi':''),html:v==null?'':String(v)},grid);if(f.nk===r.k+':'+p)d.classList.add('newd');}});}
+  fresh();
+  quiz(C,()=>{const two=Math.random()<.6,a=two?rnd(12,99):rnd(102,999),b=two?rnd(12,99):rnd(2,9);return{q:'గుణించండి: <b>'+a+' × '+b+'</b> = ?',a:a*b};});
+ }},
+/* 8b Horizontal multiplication – 3 methods */
+{t:'అడ్డు గుణకారం – 3 పద్ధతులు',c:'3–5 తరగతి',col:'#e67e22',key:'28 × 65 → 140 + 1680 = 1820',
+ body:['<b>అడ్డు (గీతలతో) పద్ధతి:</b> 28 × 65 అని అడ్డంగా రాసి కింద గీత గీయాలి. ముందు 5 నుండి 8 కి ① గీత, 2 కి ② గీత గీస్తూ గుణించి జవాబు 140 కింద రాయాలి. తర్వాత 6 నుండి కింది వైపు గీతలు గీస్తూ గుణించి 168 ని ఒక స్థానం ఎడమకు జరిపి రాయాలి. చివరగా కూడితే 1820.','<b>నిలువు–అడ్డు (వేద గణితం):</b> ముందు ఒకట్లు × ఒకట్లు (నిలువుగా), తర్వాత అడ్డంగా X లాగా గుణించి కూడాలి, చివరగా పదులు × పదులు.','<b>జాలక (లాటిస్) పద్ధతి:</b> గడుల్లో లబ్ధాలు రాసి, ఏటవాలు వరుసల (కర్ణాల) వెంట కూడాలి.'],
+ tip:'పైన పద్ధతి ఎంచుకోండి. “తర్వాత అడుగు ▶” తో ఒక్కో అడుగు చూడండి. “నా లెక్క” లో మీ సంఖ్యలు ఇవ్వవచ్చు.',
+ build(R,C){
+  const LV=[{l:'2 అంకెలు × 1',a:[12,99],b:[3,9]},{l:'2 అంకెలు × 2',a:[12,99],b:[12,99]},{l:'3 అంకెలు × 2',a:[102,999],b:[12,99]},{l:'3 అంకెలు × 3',a:[102,999],b:[102,999]}];
+  const MD=[['h','↷ అడ్డు (గీతలతో)'],['v','✖ నిలువు–అడ్డు'],['l','▦ జాలక']];
+  let mode=store.get('hm_mode','h'),lvl=store.get('hm_lvl',1),prob,frames,i=0,autoOn=false,timer=null,alive=true,gap=3;if(!LV[lvl])lvl=1;
+  onClean(()=>{alive=false;clearTimeout(timer);});
+  function chips(opts,cur,on){const row=h('div',{class:'row'},R);const bs=[];opts.forEach(([v,l])=>{const b=btn(row,l,()=>{bs.forEach(x=>x.classList.toggle('on',x===b));on(v);},'chip'+(v===cur?' on':''));bs.push(b);});}
+  chips(MD,mode,v=>{mode=v;store.set('hm_mode',v);load(prob);});
+  chips(LV.map((L,k)=>[k,L.l]),lvl,v=>{lvl=v;store.set('hm_lvl',v);fresh();});
+  const own=h('div',{class:'own'},h('div',{class:'row'},R));const aIn=h('input',{type:'number',inputmode:'numeric',placeholder:'సంఖ్య','aria-label':'గుణ్యం'},own);h('b',{text:'×'},own);const bIn=h('input',{type:'number',inputmode:'numeric',placeholder:'గుణకం','aria-label':'గుణకం'},own);btn(own,'నా లెక్క ✓',ownCalc,'ghost');
+  [aIn,bIn].forEach(x=>x.addEventListener('keydown',e=>{if(e.key==='Enter'){e.stopPropagation();ownCalc();}}));
+  const area=h('div',{class:'hmarea'},R);const msg=h('div',{class:'stepmsg'},R);
+  const ctr=h('div',{class:'row'},R);btn(ctr,'🔄 కొత్త లెక్క',fresh,'ghost');const bk=btn(ctr,'◀',()=>show(i-1),'ghost');const nx=btn(ctr,'తర్వాత అడుగు ▶',()=>show(i+1));btn(ctr,'▶▶',()=>show(frames.length-1),'ghost');
+  const xr=h('div',{class:'row'},R);const aB=btn(xr,'▶ ఆటో',()=>{autoOn=!autoOn;aB.innerHTML=autoOn?'⏸ ఆపు':'▶ ఆటో';aB.classList.toggle('on',autoOn);tick();},'chip');
+  const gS=h('select',{class:'sel','aria-label':'వేగం'},xr);[2,3,5,8].forEach(g=>h('option',{value:g,text:g+' సెకన్లు'},gS));gS.value=gap;gS.onchange=()=>{gap=+gS.value;};
+  function tick(){clearTimeout(timer);if(!alive||!autoOn)return;timer=setTimeout(()=>{if(!alive||!autoOn)return;if(i<frames.length-1)show(i+1);else fresh();tick();},gap*1000);}
+  function gen(){const L=LV[lvl];let a,b,k=0;do{a=rnd(L.a[0],L.a[1]);b=rnd(L.b[0],L.b[1]);k++;}while(k<200&&((a%10)*(b%10)<10||b%10===0||a%10===0));return{a,b};}
+  function ownCalc(){const a=Math.floor(+aIn.value),b=Math.floor(+bIn.value);if(!(a>=1&&a<=999&&b>=1&&b<=999)){msg.innerHTML='<span class=warn>రెండు సంఖ్యలు 1–999 మధ్య ఇవ్వండి.</span>';return;}load({a,b});}
+  function fresh(){load(gen());}
+  function load(p){prob=p;frames=(mode==='h'?mkH:mode==='v'?mkV:mkL)(p);show(0,true);}
+  function show(k,quiet){if(k<0||k>=frames.length)return;i=k;const f=frames[i];(mode==='h'?drawH:mode==='v'?drawV:drawL)(f);msg.innerHTML='<span class=sn>'+i+'/'+(frames.length-1)+'</span> '+f.msg;nx.disabled=i===frames.length-1;bk.disabled=i===0;if(!quiet)say(f.msg);}
+  const expand=n=>{const st=String(n),r=[];for(let k=0;k<st.length;k++){const d=+st[k];if(d)r.push(d*Math.pow(10,st.length-1-k));}return r.length?r:[0];};
+  const zeros=n=>n?String(n).length-String(n).replace(/0+$/,'').length:0;
+  /* ---- 1. horizontal – direct, with arrow lines (as on the blackboard) ---- */
+  const PLX=['ఒకట్ల','పదుల','వందల','వేల','పదివేల','లక్షల','పది లక్షల'];
+  function mkH({a,b}){const la=String(a).length,nb=String(b).length,st={rows:{},arcs:{},order:[],sum:null},F=[];
+   const P=(msg,hi)=>F.push({msg,st:JSON.parse(JSON.stringify(st)),hi:hi||{}});
+   P('<b>'+a+' × '+b+'</b> ని అడ్డంగా రాసి కింద గీత గీశాం. గుణకం '+b+' లోని ఒక్కో అంకె నుండి '+a+' లోని అంకెలకు <b>గీతలు</b> గీస్తూ గుణిద్దాం – కుడి నుండి ఎడమకు.');
+   for(let j=0;j<nb;j++){const bj=dg(b,j);if(bj===0&&nb>1){P(PLX[j]+' అంకె 0 – దానితో గుణిస్తే 0, కాబట్టి ఈ వరుస అవసరం లేదు.',{});continue;}
+    st.rows[j]={car:{},ans:{}};st.arcs[j]=[];st.order.push(j);
+    P(PLX[j]+' అంకె <b>'+bj+'</b> తో గుణిద్దాం.'+(j?' దీని జవాబు <b>'+j+' స్థానం'+(j>1?'లు':'')+' ఎడమకు జరిపి</b> రాయాలి.':' జవాబు గీత కింద రాయాలి.'),{j});
+    let c=0;
+    for(let k=0;k<la;k++){const x=dg(a,k),pr=bj*x,s=pr+c,p=k+j;st.arcs[j].push(k);
+     P('గీత <b>'+(k+1)+'</b>: '+bj+' × '+x+' = '+pr+(c?' , + '+c+' (గుర్తు పెట్టినది) = <b>'+s+'</b>':''),{j,k,arc:k});
+     if(k<la-1){if(s>=10){const cc=Math.floor(s/10);st.rows[j].car[k+1]=cc;P('<b>ముందు</b> '+cc+' ని తర్వాతి అంకె '+dg(a,k+1)+' దగ్గర <b>గుర్తుగా</b> రాయాలి.',{j,k,nc:k+1});st.rows[j].ans[p]=s%10;P('<b>తర్వాత</b> '+(s%10)+' ని గీత కింద రాయాలి.',{j,k,na:p});c=cc;}
+      else{st.rows[j].ans[p]=s;P(s+' ని గీత కింద రాయాలి.',{j,k,na:p});c=0;}}
+     else{st.rows[j].ans[p]=s%10;if(s>=10)st.rows[j].ans[p+1]=Math.floor(s/10);P(s>=10?'చివరి అంకె కాబట్టి <b>'+s+'</b> మొత్తం కింద రాయాలి.':s+' ని కింద రాయాలి.',{j,k,na:p,nb2:s>=10});}}
+    P(a+' × '+bj+' = <b>'+(a*bj)+'</b>'+(j?' ('+j+' స్థానం'+(j>1?'లు':'')+' ఎడమకు జరిపి రాశాం)':''),{j});}
+   if(st.order.length>1||st.order[0]>0){const len=String(a*b).length;st.sum={car:{},ans:{}};P('ఇప్పుడు కింద మరో గీత గీసి వరుసలను <b>కూడాలి</b> – కుడి నుండి.',{sum:1});let c=0;
+    for(let p=0;p<len;p++){const ds=st.order.map(j=>st.rows[j].ans[p]).filter(v=>v!=null);const s=ds.reduce((x,y)=>x+y,0)+c;
+     P(PLX[p]+' స్థానం: '+(ds.length?ds.join(' + '):(c?'':'ఖాళీ → 0'))+(c?(ds.length?' + ':'')+c+' (పైన)':'')+' = <b>'+s+'</b>',{sum:1,p});
+     if(s>=10&&p<len-1){const cc=Math.floor(s/10);st.sum.car[p+1]=cc;P('<b>ముందు</b> '+cc+' ని ఎడమ పక్క <b>పైన</b> రాయాలి.',{sum:1,p,nc:p+1});st.sum.ans[p]=s%10;P('<b>తర్వాత</b> '+(s%10)+' ని రాయాలి.',{sum:1,p,na:p});c=cc;}
+     else{st.sum.ans[p]=s;P(s+' ని రాయాలి.',{sum:1,p,na:p});c=0;}}}
+   P('✓ జవాబు: '+a+' × '+b+' = <b>'+(a*b)+'</b>',{end:1});return F;}
+  function drawH(f){area.innerHTML='';const {a,b}=prob,As=String(a),Bs=String(b),la=As.length,nb=Bs.length,st=f.st,hi=f.hi;
+   const CW=46,COL=['#ffb05c','#ff8fc8','#7cc8ff'],RH=48;
+   const W=(la+nb+1)*CW+70,right=W-34;const xE=e=>right-e*CW;
+   const hFor=(x1,x2,j)=>14+(x1-x2)*.24+(j>=2?22:0);
+   const maxD=xE(0)-xE(nb+la);const HA=hFor(maxD,0,nb>2?2:0)+26,HB=nb>1?hFor(maxD,0,0)+24:16;
+   const y0=HA+40,lineY=y0+HB+8,nr=st.order.length;
+   const rowY=r=>lineY+40+r*RH;const sumLine=rowY(Math.max(0,st.order.length-1))+16;const H=(st.sum||nb>1?sumLine+86:rowY(0)+24)+10;
+   const sv=svgBox(area,'0 0 '+W+' '+H,'hmsvg board');
+   s('rect',{x:0,y:0,width:W,height:H,rx:14,fill:'#23302a'},sv);
+   const T=(x,y,t,cls,extra)=>s('text',Object.assign({x,y,'text-anchor':'middle',class:cls,text:t},extra||{}),sv);
+   const curJ=hi.j;
+   // highlight current digits
+   if(hi.k!=null){s('circle',{cx:xE(nb+1+hi.k),cy:y0-13,r:23,fill:'#ffffff1f',stroke:COL[hi.j%3],'stroke-width':2},sv);}
+   if(curJ!=null&&!hi.sum&&!hi.end&&st.rows[curJ])s('circle',{cx:xE(curJ),cy:y0-13,r:23,fill:'#ffffff1f',stroke:COL[curJ%3],'stroke-width':2},sv);
+   // arcs
+   Object.keys(st.arcs).map(Number).forEach(j=>{const up=j%2===0,op=(j===curJ&&!hi.sum&&!hi.end)?1:.28,col=COL[j%3];
+    st.arcs[j].forEach(k=>{const x1=xE(j)-4,x2=xE(nb+1+k)+4,hh=hFor(x1,x2,j),ys=up?y0-36:y0+12,cy=up?ys-2*hh:ys+2*hh,ap=up?ys-hh:ys+hh,mx=(x1+x2)/2,nw=hi.arc===k&&j===curJ;
+     const g=s('g',{opacity:op,class:nw?'grow2':''},sv);
+     s('path',{d:'M'+x1+' '+ys+' Q'+mx+' '+cy+' '+x2+' '+ys,fill:'none',stroke:col,'stroke-width':3.2,'stroke-linecap':'round'},g);
+     s('path',{d:up?'M'+(x2-7)+' '+(ys-11)+' L'+(x2+7)+' '+(ys-11)+' L'+x2+' '+(ys+1)+' Z':'M'+(x2-7)+' '+(ys+11)+' L'+(x2+7)+' '+(ys+11)+' L'+x2+' '+(ys-1)+' Z',fill:col},g);
+     s('circle',{cx:mx,cy:ap,r:12,fill:'#23302a',stroke:col,'stroke-width':2.5},g);
+     s('text',{x:mx,y:ap+5,'text-anchor':'middle',class:'bnum',style:'fill:'+col,text:k+1},g);});});
+   // expression
+   for(let k=0;k<la;k++)T(xE(nb+1+k),y0,As[la-1-k],'bd');
+   T(xE(nb),y0-2,'×','bd op');for(let j=0;j<nb;j++)T(xE(j),y0,Bs[nb-1-j],'bd');
+   // carry marks near multiplicand digits
+   Object.keys(st.rows).map(Number).forEach(j=>{const up=j%2===0,op=(j===curJ&&!hi.sum&&!hi.end)?1:.3;Object.keys(st.rows[j].car).forEach(k=>{k=+k;const x=xE(nb+1+k)+(j>=2?-19:19),y=up?y0-30:y0+14;
+    T(x,y,st.rows[j].car[k],'bcar'+(hi.nc===k&&j===curJ?' newd':''),{style:'fill:'+COL[j%3],opacity:op});});});
+   s('line',{x1:20,y1:lineY,x2:W-14,y2:lineY,stroke:'#f2f2f2','stroke-width':3,'stroke-linecap':'round'},sv);
+   // partial rows
+   st.order.forEach((j,r)=>{const y=rowY(r);Object.keys(st.rows[j].ans).forEach(p=>{p=+p;const nw=j===curJ&&(hi.na===p||(hi.nb2&&p===hi.na+1));T(xE(p),y,st.rows[j].ans[p],'bd row'+(nw?' newd':''),{style:'fill:'+COL[j%3]});});
+    if(st.sum&&r===st.order.length-1)T(28,y,'+','bd op');});
+   if(st.sum){s('line',{x1:20,y1:sumLine,x2:W-14,y2:sumLine,stroke:'#f2f2f2','stroke-width':3,'stroke-linecap':'round'},sv);
+    if(hi.p!=null&&hi.sum)s('rect',{x:xE(hi.p)-CW/2+3,y:lineY+12,width:CW-6,height:sumLine-lineY+58,rx:10,fill:'#ffffff14'},sv);
+    Object.keys(st.sum.car).forEach(p=>{p=+p;T(xE(p)+15,sumLine+22,st.sum.car[p],'bcar'+(hi.nc===p?' newd':''),{style:'fill:#ff6b6b'});});
+    Object.keys(st.sum.ans).forEach(p=>{p=+p;T(xE(p),sumLine+62,st.sum.ans[p],'bd ans'+(hi.na===p?' newd':''));});}
+  }
+  /* ---- 2. vertical & crosswise (Vedic) ---- */
+  function mkV({a,b}){const n=Math.max(String(a).length,String(b).length),A=[],B=[];for(let k=0;k<n;k++){A[k]=dg(a,k)||0;B[k]=dg(b,k)||0;}
+   const F=[],ans={},car={};let c=0;const P=(msg,o)=>F.push(Object.assign({msg,n,A,B,ans:{...ans},car:{...car},pairs:[],nk:''},o||{}));
+   P('<b>నిలువు–అడ్డు</b> పద్ధతి: అంకెలను జతలుగా గుణించి కూడతాం – కుడి నుండి ఎడమకు.'+(String(a).length!==String(b).length?' అంకెలు సమానంగా ఉండేలా చిన్న సంఖ్య ముందు <b>0</b> పెట్టాం.':''));
+   const last=2*n-2;
+   for(let k=0;k<=last;k++){const pairs=[];for(let x=0;x<n;x++){const y=k-x;if(y>=0&&y<n)pairs.push([x,y]);}
+    const s=pairs.reduce((t,[x,y])=>t+A[x]*B[y],0)+c;const how=pairs.length===1?'నిలువుగా ↕':'అడ్డంగా ✖';
+    P('అడుగు '+(k+1)+' ('+how+'): '+pairs.map(([x,y])=>A[x]+'×'+B[y]).join(' + ')+(c?' + '+c+' (పైన)':'')+' = <b>'+s+'</b>',{pairs});
+    if(k<last&&s>=10){const cc=Math.floor(s/10);car[k+1]=cc;P('<b>ముందు</b> '+cc+' ని ఎడమ వైపు <b>పైన</b> రాయాలి.',{pairs,nk:'c'+(k+1)});ans[k]=s%10;P('<b>తర్వాత</b> '+(s%10)+' ని జవాబులో రాయాలి.',{pairs,nk:'a'+k});c=cc;}
+    else if(k<last){ans[k]=s;P(s+' ని జవాబులో రాయాలి.',{pairs,nk:'a'+k});c=0;}
+    else{ans[k]=s%10;if(s>=10)ans[k+1]=Math.floor(s/10);P('చివరి అడుగు కాబట్టి <b>'+s+'</b> మొత్తం రాయాలి.',{pairs,nk:'a'+k});}}
+   P('✓ జవాబు: '+a+' × '+b+' = <b>'+(a*b)+'</b>');return F;}
+  function drawV(f){area.innerHTML='';const n=f.n,CW=58,cols=2*n,W=cols*CW+70,H=296;const sv=svgBox(area,'0 0 '+W+' '+H,'hmsvg');
+   const X=p=>W-30-p*CW-CW/2;const yA=48,yB=156;
+   const COL=['#e85d75','#3a7bd5','#2e9e5b','#8e44ad','#f08a24'];
+   f.pairs.forEach(([x,y],k)=>s('line',{x1:X(x),y1:yA+14,x2:X(y),y2:yB-36,stroke:COL[k%5],'stroke-width':4,'stroke-linecap':'round',class:'grow2'},sv));
+   const inP=(row,p)=>f.pairs.some(([x,y])=>row==='A'?x===p:y===p);
+   for(let p=0;p<n;p++){[['A',f.A[p],yA],['B',f.B[p],yB]].forEach(([r,v,y])=>{if(inP(r,p))s('circle',{cx:X(p),cy:y-11,r:22,fill:'#fff1c9',stroke:'#f0b53a','stroke-width':2},sv);s('text',{x:X(p),y,'text-anchor':'middle',class:'hmd'+((r==='A'?p>=String(prob.a).length:p>=String(prob.b).length)?' z':''),text:v},sv);});}
+   s('text',{x:X(n-1)-CW*.85,y:yB,'text-anchor':'middle',class:'hmd op',text:'×'},sv);
+   s('line',{x1:X(cols-1)-CW/2,y1:yB+22,x2:X(0)+CW/2,y2:yB+22,stroke:'#2b2b2b','stroke-width':3},sv);
+   const top=Math.max(-1,...Object.keys(f.ans).map(Number));
+   for(let p=0;p<cols;p++){if(f.car[p]!=null)s('text',{x:X(p),y:yB+56,'text-anchor':'middle',class:'hmc'+(f.nk==='c'+p?' newd':''),text:f.car[p]},sv);
+    if(f.ans[p]!=null){let z=p>0&&f.ans[p]===0&&f.ans[p+1]==null&&p===top;if(!z&&p>0&&f.ans[p]===0){z=true;for(let q=p+1;q<=top;q++)if(f.ans[q]!==0){z=false;break;}}
+     s('text',{x:X(p),y:yB+108,'text-anchor':'middle',class:'hma'+(z?' z':'')+(f.nk==='a'+p?' newd':''),text:f.ans[p]},sv);}}
+   s('text',{x:14,y:yB+56,class:'hml',text:'పైన'},sv);s('text',{x:14,y:yB+108,class:'hml',text:'జవాబు'},sv);}
+  /* ---- 3. lattice ---- */
+  function mkL({a,b}){const As=String(a),Bs=String(b),la=As.length,lb=Bs.length,F=[],cells={},ans={},car={};let c=0;
+   const P=(msg,o)=>F.push(Object.assign({msg,la,lb,As,Bs,cells:JSON.parse(JSON.stringify(cells)),ans:{...ans},car:{...car},hc:null,dia:-1,nk:''},o||{}));
+   P('<b>జాలక పద్ధతి:</b> '+a+' ని పైన, '+b+' ని కుడి వైపు రాశాం. ప్రతి గడిలో ఏటవాలు గీత ఉంది.');
+   for(let r=0;r<lb;r++)for(let k=0;k<la;k++){const pr=(+As[k])*(+Bs[r]);cells[k+','+r]=[Math.floor(pr/10),pr%10];P(As[k]+' × '+Bs[r]+' = <b>'+pr+'</b> → పదులు <b>'+Math.floor(pr/10)+'</b> పైన త్రికోణంలో, ఒకట్లు <b>'+(pr%10)+'</b> కింద త్రికోణంలో.',{hc:[k,r],nk:'g'+k+','+r});}
+   P('ఇప్పుడు <b>ఏటవాలు వరుసల</b> వెంట కూడాలి – కుడి కింది మూల నుండి.');
+   const D=la+lb-1;
+   for(let d=0;d<=D;d++){const vals=[];for(let r=0;r<lb;r++)for(let k=0;k<la;k++){const pc=la-1-k,pr=lb-1-r;if(pc+pr===d)vals.push(cells[k+','+r][1]);if(pc+pr===d-1)vals.push(cells[k+','+r][0]);}
+    const s=vals.reduce((x,y)=>x+y,0)+c;
+    P('ఏటవాలు వరుస '+(d+1)+': '+(vals.join(' + ')||'0')+(c?' + '+c+' (పైన)':'')+' = <b>'+s+'</b>',{dia:d});
+    if(s>=10&&d<D){const cc=Math.floor(s/10);car[d+1]=cc;P('<b>ముందు</b> '+cc+' ని తర్వాతి ఏటవాలు వరుస <b>పైన</b> రాయాలి.',{dia:d,nk:'c'+(d+1)});ans[d]=s%10;P('<b>తర్వాత</b> '+(s%10)+' ని రాయాలి.',{dia:d,nk:'a'+d});c=cc;}
+    else{ans[d]=s;P(s+' ని రాయాలి.',{dia:d,nk:'a'+d});c=0;}}
+   P('✓ జవాబు ఎడమ పై నుండి కిందకు, తర్వాత కుడి వైపుకు చదవాలి: '+a+' × '+b+' = <b>'+(a*b)+'</b>');return F;}
+  function drawL(f){area.innerHTML='';const la=f.la,lb=f.lb,w=66,x0=62,y0=48,W=x0+la*w+52,H=y0+lb*w+56;const sv=svgBox(area,'0 0 '+W+' '+H,'hmsvg');
+   const inDia=(k,r,part)=>{if(f.dia<0)return false;const pc=la-1-k,pr=lb-1-r;return part===1?pc+pr===f.dia:pc+pr===f.dia-1;};
+   for(let k=0;k<la;k++)s('text',{x:x0+k*w+w/2,y:y0-12,'text-anchor':'middle',class:'hmd',text:f.As[k]},sv);
+   for(let r=0;r<lb;r++)s('text',{x:x0+la*w+24,y:y0+r*w+w/2+11,'text-anchor':'middle',class:'hmd',text:f.Bs[r]},sv);
+   for(let r=0;r<lb;r++)for(let k=0;k<la;k++){const x=x0+k*w,y=y0+r*w,hc=f.hc&&f.hc[0]===k&&f.hc[1]===r;
+    s('rect',{x,y,width:w,height:w,fill:hc?'#fff1c9':'#fff',stroke:'#2b2b2b','stroke-width':2.5},sv);
+    if(inDia(k,r,1))s('path',{d:'M'+(x+w)+' '+y+' L'+(x+w)+' '+(y+w)+' L'+x+' '+(y+w)+' Z',fill:'#ffe0c2'},sv);
+    if(inDia(k,r,0))s('path',{d:'M'+x+' '+y+' L'+(x+w)+' '+y+' L'+x+' '+(y+w)+' Z',fill:'#ffe0c2'},sv);
+    s('line',{x1:x+w,y1:y,x2:x,y2:y+w,stroke:'#2b2b2b','stroke-width':1.5},sv);
+    if(r===lb-1||k===0)s('line',{x1:x,y1:y+w,x2:x-18,y2:y+w+18,stroke:'#999','stroke-width':1.5,'stroke-dasharray':'3 3'},sv);
+    const cv=f.cells[k+','+r];if(cv){const nw=f.nk==='g'+k+','+r;s('text',{x:x+w*.3,y:y+w*.45,'text-anchor':'middle',class:'hmt'+(inDia(k,r,0)?' on':'')+(nw?' newd':''),text:cv[0]},sv);s('text',{x:x+w*.7,y:y+w*.88,'text-anchor':'middle',class:'hmt'+(inDia(k,r,1)?' on':'')+(nw?' newd':''),text:cv[1]},sv);}}
+   const pos=d=>d<la?[x0+(la-1-d)*w+w*.28,y0+lb*w+34]:[x0-26,y0+(lb-1-(d-la))*w+w*.42];
+   const D=la+lb-1;let top=-1;for(let d=D;d>=0;d--)if(f.ans[d]!=null){top=d;break;}
+   for(let d=0;d<=D;d++){const [x,y]=pos(d);if(f.car[d]!=null)s('text',{x:x+(d<la?-14:14),y:y-(d<la?18:16),'text-anchor':'middle',class:'hmc'+(f.nk==='c'+d?' newd':''),text:f.car[d]},sv);
+    if(f.ans[d]!=null){const z=f.ans[d]===0&&d===D;s('text',{x,y:y+8,'text-anchor':'middle',class:'hma'+(z?' z':'')+(f.nk==='a'+d?' newd':''),text:f.ans[d]},sv);}}}
+  fresh();
+  quiz(C,()=>{const a=rnd(12,99),b=rnd(12,99);return{q:'అడ్డంగా గుణించండి: <b>'+a+' × '+b+'</b> = ?',a:a*b};});
+ }},
+/* 9 Sharing */
+{t:'భాగహారం – సమానంగా పంచుదాం',c:'2–4 తరగతి',col:'#16a085',key:'17 ÷ 5 = 3, శేషం 2',
+ body:['భాగహారం అంటే <b>సమానంగా పంచడం</b>.','ప్రతి ప్లేటుకు ఒక్కొక్కటి చొప్పున వరుసగా పంచాలి. అందరికీ ఇంకొకటి ఇవ్వలేనంత మిగిలితే అది <b>శేషం</b>.','సరిచూడటం: 5 × 3 + 2 = 17.'],
+ tip:'లడ్డూలు, ప్లేట్లు ఎంచుకుని “పంచు ▶” నొక్కండి.',
+ build(R,C){
+  const ctl=h('div',{class:'ctl'},R);const nS=stepper(ctl,'లడ్డూలు',1,30,17,reset),pS=stepper(ctl,'ప్లేట్లు',1,6,5,reset);
+  const sv=svgBox(R,'0 0 640 400');const pileG=s('g',{},sv),plG=s('g',{},sv),mvG=s('g',{},sv);
+  const eq=h('div',{class:'eq'},R);const row=h('div',{class:'row'},R);const gb=btn(row,'పంచు ▶',deal);btn(row,'↺ మళ్ళీ',reset,'ghost');
+  let token=0,pile=[],labels=[];onClean(()=>token++);
+  const pxy=i=>[150+(i%10)*26,34+Math.floor(i/10)*26];
+  const pX=(j,p)=>20+(600/p)*j+300/p;
+  const slot=(j,k,p)=>[pX(j,p)-27+(k%4)*18,346-Math.floor(k/4)*18];
+  const lad=(p,x,y)=>s('circle',{cx:x,cy:y,r:9,fill:'#f4a62a',class:'ink','stroke-width':1.5},p);
+  function reset(){token++;gb.disabled=false;const n=nS.get(),p=pS.get();pileG.innerHTML=plG.innerHTML=mvG.innerHTML='';
+   s('text',{x:30,y:62,'font-size':16,'font-weight':800,text:'కుప్ప'},pileG);pile=[];for(let i=0;i<n;i++)pile.push(lad(pileG,...pxy(i)));
+   labels=[];for(let j=0;j<p;j++){const x=pX(j,p);s('ellipse',{cx:x,cy:362,rx:Math.min(300/p-8,48),ry:12,fill:'#fff',class:'ink'},plG);labels.push(s('text',{x,y:392,'text-anchor':'middle','font-size':14,'font-weight':700,text:'ప్లేటు '+(j+1)+': 0'},plG));}
+   eq.innerHTML=n+' లడ్డూలను '+p+' ప్లేట్లకు సమానంగా పంచుదాం. ఒక్కొక్కరికి ఎన్ని?';}
+  async function deal(){const my=++token;gb.disabled=true;const n=nS.get(),p=pS.get();let left=n;const cnt=Array(p).fill(0);mvG.innerHTML='';
+   while(left>=p){for(let j=0;j<p;j++){const el=pile[left-1];el.style.display='none';const [x0,y0]=pxy(left-1),[x1,y1]=slot(j,cnt[j],p);left--;const m=lad(mvG,x0,y0);
+     await anim(200,t=>{m.setAttribute('cx',x0+(x1-x0)*t);m.setAttribute('cy',y0+(y1-y0)*t-60*Math.sin(Math.PI*t));});if(my!==token)return;cnt[j]++;labels[j].textContent='ప్లేటు '+(j+1)+': '+cnt[j];}
+    say(String(cnt[0]));await wait(150);if(my!==token)return;}
+   for(let i=0;i<left;i++)pile[i].setAttribute('fill','#e85d75');
+   const q=Math.floor(n/p),r=n%p;
+   eq.innerHTML=n+' ÷ '+p+' = <b>'+q+'</b>, శేషం <b>'+r+'</b>'+(q===0?'<br><small>ప్లేట్లు ఎక్కువ – ఒక్కొక్కటి కూడా రాదు.</small>':'')+'<br><small>సరిచూడు: '+p+' × '+q+' + '+r+' = '+n+' ✓'+(r?' · ఎరుపు లడ్డూలు = శేషం':'')+'</small>';
+   say(n+' భాగహారం '+p+' సమానం '+q+'. శేషం '+r);}
+  reset();
+  quiz(C,()=>{const p=rnd(2,6),q=rnd(2,6),r=rnd(0,p-1);return{q:(p*q+r)+' లడ్డూలు '+p+' మందికి సమానంగా పంచితే <b>శేషం</b> ఎంత?',a:r};});
+ }},
+/* 10 Long division vastundi/raadu – with ↓ arrows */
+{t:'భాగహారం – వస్తుంది / రాదు 🎵',c:'3–5 తరగతి',col:'#2c3e50',key:'928 ÷ 8 = 116',
+ body:['విభాజ్యంలోని <b>ప్రతి అంకెకు ఒకసారి</b> భాగించాలి – ఎడమ నుండి కుడికి.','ఆ సంఖ్య భాజకం ఎక్కంలో ఉంటే <b>“వస్తుంది!”</b>. లేకపోతే <b>“రాదు!”</b> అని పాడుతూ దగ్గరి <b>చిన్న</b> ఎక్కం విలువను తీసుకుని తీసివేయాలి.','శేషం పక్కకు తర్వాతి అంకెను <b>↓ బాణం గుర్తుతో</b> కిందకు దించాలి. మళ్ళీ పాడాలి!'],
+ tip:'✍ “మీరే చేయండి” ఆన్ చేస్తే ప్రతి అడుగులో పిల్లలే జవాబు రాయాలి. ▶ ఆటో = TV లో తనంతట నడుస్తుంది. 🖨 = వర్క్‌షీట్ + జవాబులు ప్రింట్.',
+ build(R,C){
+  const LV=[{l:'2 అంకెలు ÷ 1',lo:20,hi:99,dl:2,dh:9},{l:'3 అంకెలు ÷ 1',lo:100,hi:999,dl:2,dh:9},{l:'4 అంకెలు ÷ 1',lo:1000,hi:9999,dl:2,dh:9},{l:'3 అంకెలు ÷ 2 అంకెలు',lo:100,hi:999,dl:11,dh:25}];
+  let lvl=store.get('ld_lvl',1),remMode=store.get('ld_rem','any'),fixD=store.get('ld_d',0),practice=false,autoOn=false,gap=3,timer=null,alive=true,prob,frames,i=0,errs=0,awarded=false;
+  if(!LV[lvl])lvl=1;
+  onClean(()=>{alive=false;clearTimeout(timer);});
+  function chipRow(opts,cur,on){const row=h('div',{class:'row'},R);const bs=[];opts.forEach(([v,l])=>{const b=btn(row,l,()=>{bs.forEach(x=>x.classList.toggle('on',x===b));on(v);},'chip'+(v===cur?' on':''));bs.push(b);});return row;}
+  chipRow(LV.map((L,k)=>[k,L.l]),lvl,v=>{lvl=v;store.set('ld_lvl',v);dSel.disabled=LV[v].dh>9;fresh();});
+  chipRow([['any','శేషం: ఏదైనా'],['zero','శేషం 0'],['rem','శేషం ఉండాలి']],remMode,v=>{remMode=v;store.set('ld_rem',v);fresh();});
+  const orow=h('div',{class:'row'},R);
+  const dSel=h('select',{class:'sel','aria-label':'భాజకం'},orow);h('option',{value:0,text:'భాజకం: ఏదైనా'},dSel);for(let k=2;k<=9;k++)h('option',{value:k,text:k+' ఎక్కం మాత్రమే'},dSel);
+  dSel.value=fixD;dSel.disabled=LV[lvl].dh>9;dSel.onchange=()=>{fixD=+dSel.value;store.set('ld_d',fixD);fresh();};
+  const own=h('div',{class:'own'},orow);const nIn=h('input',{type:'number',inputmode:'numeric',placeholder:'విభాజ్యం','aria-label':'విభాజ్యం'},own);h('b',{text:'÷'},own);const dIn=h('input',{type:'number',inputmode:'numeric',placeholder:'భాజకం','aria-label':'భాజకం'},own);btn(own,'నా లెక్క ✓',ownCalc,'ghost');
+  [nIn,dIn].forEach(x=>x.addEventListener('keydown',e=>{if(e.key==='Enter'){e.stopPropagation();ownCalc();}}));
+  const wrap=h('div',{class:'ldwrap'},R);const sv=s('svg',{class:'ldsvg',preserveAspectRatio:'xMidYMin meet'},wrap);const tbl=h('div',{class:'ldtbl'},wrap);
+  const msg=h('div',{class:'stepmsg'},R);const prac=h('div',{class:'chal ldprac'},R);prac.style.display='none';
+  const ctr=h('div',{class:'row'},R);btn(ctr,'🔄 కొత్త లెక్క',fresh,'ghost');const bk=btn(ctr,'◀',()=>{prac.style.display='none';show(i-1);},'ghost');const nx=btn(ctr,'తర్వాత అడుగు ▶',next);const allB=btn(ctr,'▶▶',()=>{prac.style.display='none';show(frames.length-1);},'ghost');
+  const xrow=h('div',{class:'row'},R);
+  const pB=btn(xrow,'✍ మీరే చేయండి',()=>{practice=!practice;pB.classList.toggle('on',practice);if(practice&&autoOn)toggleAuto();allB.disabled=practice;speak(practice?'ఇప్పుడు మీరే చేయండి':'చూపించే పద్ధతి');fresh();},'chip');
+  const aB=btn(xrow,'▶ ఆటో',toggleAuto,'chip');
+  const gSel=h('select',{class:'sel','aria-label':'వేగం'},xrow);[2,3,5,8].forEach(g=>h('option',{value:g,text:g+' సెకన్లు'},gSel));gSel.value=gap;gSel.onchange=()=>{gap=+gSel.value;};
+  btn(xrow,'🖨 వర్క్‌షీట్',worksheet,'ghost');
+  function steps(N,d){let rem=0;return String(N).split('').map(ch=>{const digit=+ch,prev=rem,cur=rem*10+digit,q=Math.floor(cur/d),prod=q*d,r=cur-prod;rem=r;return{digit,prev,cur,q,prod,rem:r,kind:cur===0?'z':(r===0?'v':'r')};});}
+  function gen(){const L=LV[lvl];for(let k=0;k<800;k++){const d=(fixD&&L.dh<10)?fixD:rnd(L.dl,L.dh);const N=rnd(L.lo,L.hi);if(N<d)continue;const r=N%d;if(remMode==='zero'&&r)continue;if(remMode==='rem'&&!r)continue;const st=steps(N,d);if(k<500&&!(st.some(x=>x.kind==='v')&&st.some(x=>x.kind==='r')))continue;return{N,d,st};}
+   const d=(fixD&&L.dh<10)?fixD:rnd(L.dl,L.dh);const q=rnd(Math.ceil(L.lo/d),Math.floor((L.hi-d)/d));const N=d*q+(remMode==='zero'?0:rnd(remMode==='rem'?1:0,d-1));return{N,d,st:steps(N,d)};}
+  function ownCalc(){const N=Math.floor(+nIn.value),d=Math.floor(+dIn.value);if(!(N>0&&N<=99999&&d>=2&&d<=99)){msg.innerHTML='<span class=warn>విభాజ్యం 1–99999, భాజకం 2–99 మధ్య ఇవ్వండి.</span>';return;}if(N<d){msg.innerHTML='<span class=warn>విభాజ్యం భాజకం కంటే పెద్దదిగా ఉండాలి.</span>';return;}load({N,d,st:steps(N,d)});}
+  function mkFrames({N,d,st}){const f=[{i:-1,ph:'s',msg:'<b>'+N+' ÷ '+d+'</b>. ఎడమ నుండి ఒక్కో అంకె తీసుకుని పాడుదాం: వస్తుంది… రాదు…'}];
+   st.forEach((x,k)=>{f.push({i:k,ph:'a',msg:k===0?'మొదటి అంకె <b>'+x.digit+'</b> తీసుకున్నాం. ఇది '+d+' ఎక్కంలో ఉందా?':'↓ తర్వాతి అంకె <b>'+x.digit+'</b> ని <b>బాణం గుర్తుతో</b> కిందకు దించాం → <b>'+x.cur+'</b>. ఇది '+d+' ఎక్కంలో ఉందా?'});
+    let m;if(x.kind==='v')m='🎵 <b>'+x.cur+' – వస్తుంది!</b> '+d+' × '+x.q+' = '+x.prod+'. భాగఫలంలో <b>'+x.q+'</b>. '+x.cur+' − '+x.prod+' = <b>0</b>.';
+    else if(x.kind==='z')m='🎵 0 – భాగఫలంలో <b>0</b>.';
+    else if(x.q===0)m='🎵 <b>'+x.cur+' – రాదు!</b> '+d+' కంటే చిన్నది. భాగఫలంలో <b>0</b>'+(k===0?' (ముందు సున్నా రాయనవసరం లేదు)':'')+'. '+x.cur+' − 0 = <b>'+x.rem+'</b>.';
+    else m='🎵 <b>'+x.cur+' – రాదు!</b> దగ్గరి చిన్న విలువ '+d+' × '+x.q+' = '+x.prod+'. భాగఫలంలో <b>'+x.q+'</b>. '+x.cur+' − '+x.prod+' = <b>'+x.rem+'</b>.';
+    f.push({i:k,ph:'b',msg:m});});
+   const Q=Math.floor(N/d),Rm=N%d;f.push({i:st.length,ph:'e',msg:'✓ భాగఫలం <b>'+Q+'</b>, శేషం <b>'+Rm+'</b>. సరిచూడు: '+d+' × '+Q+' + '+Rm+' = '+N});return f;}
+  function load(p){prob=p;frames=mkFrames(p);errs=0;awarded=false;prac.style.display='none';show(0,true);}
+  function fresh(){load(gen());}
+  function next(){if(!frames||i>=frames.length-1)return;const nf=frames[i+1];if(practice&&nf.ph==='b'){ask(nf.i);return;}show(i+1);}
+  function show(k,quiet){if(k<0||k>=frames.length)return;i=k;const f=frames[i];draw();msg.innerHTML='<span class=sn>'+i+'/'+(frames.length-1)+'</span> '+f.msg;
+   if(f.ph==='e'&&practice&&!awarded){awarded=true;if(errs===0){addStar();msg.innerHTML+='<br><span class=ok>⭐ తప్పులు లేకుండా చేశారు! శభాష్!</span>';}else msg.innerHTML+='<br><span class=muted>'+errs+' చోట్ల సరిచేసుకున్నారు. మళ్ళీ ప్రయత్నించండి!</span>';}
+   nx.disabled=i===frames.length-1;bk.disabled=i===0;if(!quiet)say(f.msg);}
+  function ask(k){const x=prob.st[k],d=prob.d;prac.innerHTML='';prac.style.display='block';let kind='';
+   h('h4',{html:'✍ మీ వంతు: <b>'+x.cur+' ÷ '+d+'</b>'},prac);
+   const kr=h('div',{class:'qrow'},prac);const vb=btn(kr,'🎵 వస్తుంది',()=>{kind='v';vb.classList.add('on');rb.classList.remove('on');},'chip'),rb=btn(kr,'🎵 రాదు',()=>{kind='r';rb.classList.add('on');vb.classList.remove('on');},'chip');
+   const row=h('div',{class:'qrow'},prac);const qi=h('input',{type:'number',inputmode:'numeric',placeholder:'భాగఫలం','aria-label':'భాగఫలం అంకె'},row);const ri=h('input',{type:'number',inputmode:'numeric',placeholder:'శేషం','aria-label':'శేషం'},row);btn(row,'చూడు ✓',chk);
+   const fb=h('div',{class:'fb'},prac);let tries=0;
+   [qi,ri].forEach(e=>e.addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.stopPropagation();chk();}}));
+   say(x.cur+' భాగహారం '+d+'. వస్తుందా రాదా?');setTimeout(()=>{try{qi.focus({preventScroll:true});}catch(e){}},50);
+   function chk(){const okK=x.kind==='z'||kind===x.kind,okQ=qi.value!==''&&+qi.value===x.q,okR=ri.value!==''&&+ri.value===x.rem;
+    if(okK&&okQ&&okR){fb.textContent='✓ సరిగ్గా!';fb.className='fb ok';say('సరిగ్గా');setTimeout(()=>{if(!alive)return;prac.style.display='none';show(i+1);},700);return;}
+    tries++;errs++;const parts=[];if(!okK)parts.push(kind?'వస్తుందా / రాదా':'ముందు వస్తుంది / రాదు ఎంచుకోండి');if(!okQ)parts.push('భాగఫలం అంకె');if(!okR)parts.push('శేషం');
+    if(tries>=2){fb.textContent='✗ సరైనది: '+(x.kind==='v'?'వస్తుంది':'రాదు')+', భాగఫలం '+x.q+', శేషం '+x.rem;fb.className='fb no';say('సరైనది: భాగఫలం '+x.q+', శేషం '+x.rem);setTimeout(()=>{if(!alive)return;prac.style.display='none';show(i+1);},2600);}
+    else{fb.textContent='✗ సరిచూడండి: '+parts.join(', ');fb.className='fb no';say('మళ్ళీ చూడండి');}}}
+  function toggleAuto(){autoOn=!autoOn;aB.innerHTML=autoOn?'⏸ ఆపు':'▶ ఆటో';aB.classList.toggle('on',autoOn);if(autoOn&&practice){practice=false;pB.classList.remove('on');allB.disabled=false;}tick();}
+  function tick(){clearTimeout(timer);if(!alive||!autoOn)return;timer=setTimeout(()=>{if(!alive||!autoOn)return;if(i<frames.length-1)show(i+1);else fresh();tick();},gap*1000);}
+  function draw(){const {N,d,st}=prob,f=frames[i],n=st.length,DS=String(d),NS=String(N);
+   const CW=38,RH=44,X0=18+DS.length*24+26,Y0=6,QX=X0+n*CW+28,W=QX+n*CW*.8+14,H=Y0+(2*n+1)*RH+8;
+   sv.setAttribute('viewBox','0 0 '+W+' '+H);sv.style.maxWidth=Math.min(560,W*1.25)+'px';sv.innerHTML='';
+   const started=k=>f.ph==='e'||(f.i>=0&&k<=f.i),done=k=>f.ph==='e'||k<f.i||(k===f.i&&f.ph==='b');
+   const cx=c=>X0+c*CW+CW/2,by=r=>Y0+r*RH+RH*.74;
+   const txt=(x,y,t,cls,anc)=>s('text',{x,y,class:cls||'','text-anchor':anc||'middle',text:t},sv);
+   const num=(str,end,row,cls)=>{for(let k=0;k<str.length;k++)txt(cx(end-(str.length-1-k)),by(row),str[k],cls);};
+   const curLen=k=>k===0?1:String(st[k-1].rem).length+1;
+   if(f.ph==='a'||f.ph==='b'){const k=f.i,L=curLen(k);s('rect',{x:cx(k-L+1)-CW/2+2,y:Y0+2*k*RH+3,width:L*CW-4,height:RH-6,rx:9,class:'ldhi'},sv);
+    if(f.ph==='b')s('rect',{x:cx(k-Math.max(L,String(st[k].prod).length)+1)-CW/2+2,y:Y0+(2*k+1)*RH+3,width:Math.max(L,String(st[k].prod).length)*CW-4,height:RH-6,rx:9,class:'ldhi2'},sv);}
+   txt(X0-28,by(0),DS,'ldd','end');s('path',{d:'M'+(X0-18)+' '+(Y0+4)+' Q'+(X0-4)+' '+(Y0+RH/2)+' '+(X0-18)+' '+(Y0+RH-4),class:'ldbr'},sv);
+   NS.split('').forEach((ch,k)=>txt(cx(k),by(0),ch,'ldn'+((f.ph==='a'||f.ph==='b')&&k===f.i?' cur':'')));
+   s('path',{d:'M'+(X0+n*CW+16)+' '+(Y0+4)+' Q'+(X0+n*CW+2)+' '+(Y0+RH/2)+' '+(X0+n*CW+16)+' '+(Y0+RH-4),class:'ldbr'},sv);
+   let lead=true;st.forEach((x,k)=>{if(!done(k))return;const z=x.q===0&&lead;if(x.q)lead=false;txt(QX+k*CW*.8+CW*.4,by(0),String(x.q),'ldq'+(z?' z':'')+(k===f.i&&f.ph==='b'?' newd':''));});
+   st.forEach((x,k)=>{
+    if(k>0&&started(k)){const X=cx(k),y1=Y0+RH*.9,y2=Y0+2*k*RH+RH*.16,nw=k===f.i&&f.ph==='a';
+     s('line',{x1:X,y1,x2:X,y2:y2-9,class:'ldarr'+(nw?' grow':'')},sv);s('path',{d:'M'+(X-7)+' '+(y2-11)+' L'+(X+7)+' '+(y2-11)+' L'+X+' '+(y2+1)+' Z',class:'ldarrh'+(nw?' newd':'')},sv);
+     num(String(x.digit),k,2*k,'ldn ldbd'+(nw?' newd':''));}
+    if(done(k)){const ps=String(x.prod),L=Math.max(curLen(k),ps.length),nw=k===f.i&&f.ph==='b',last=k===n-1;
+     num(ps,k,2*k+1,'ldm'+(nw?' newd':''));txt(cx(k-L+1)-CW/2-6,by(2*k+1),'−','ldp');
+     s('line',{x1:cx(k-L+1)-CW/2+2,y1:Y0+(2*k+2)*RH+1,x2:cx(k)+CW/2-2,y2:Y0+(2*k+2)*RH+1,class:'ldline'},sv);
+     num(String(x.rem),k,2*k+2,(last?'ldr':'ldn')+(x.rem===0&&!last&&started(k+1)?' z':'')+(nw?' newd':''));
+     if(last&&f.ph==='e')txt(cx(k)+CW/2+6,by(2*k+2),'← శేషం','ldlab','start');}
+   });
+   const cur=f.ph==='b'?st[f.i]:null;tbl.innerHTML='';h('div',{class:'th',text:d+' ఎక్కం'},tbl);
+   for(let k=1;k<=9;k++)h('div',{class:cur&&cur.q===k?(cur.kind==='v'?'v':'r'):'',text:d+' × '+k+' = '+(d*k)},tbl);}
+  function worksheet(){const L=LV[lvl];const ps=[];for(let k=0;k<12;k++)ps.push(gen());let ws=document.getElementById('wsPrint');if(!ws){ws=h('div',{id:'wsPrint'},document.body);}
+   ws.innerHTML='<div class=wsh><h2>భాగహారం వర్క్‌షీట్ – '+L.l+'</h2><div>పేరు: ______________________ &nbsp; తరగతి: ______ &nbsp; తేదీ: ____________</div><div class=wsi>వస్తుంది / రాదు పాడుతూ, ↓ బాణం గుర్తుతో అంకెలు దించుతూ భాగించండి.</div></div>'+
+    '<div class=wsg>'+ps.map((p,k)=>'<div class=wsb><span class=wsn>'+(k+1)+'.</span> '+p.d+' ) '+p.N+' (</div>').join('')+'</div><div class=wsf>రాయ్ ఎడ్యుకేషన్ · raayeducation.in</div>'+
+    '<div class=wsk><h3>జవాబులు – '+L.l+'</h3>'+ps.map((p,k)=>'<div>'+(k+1)+'. '+p.N+' ÷ '+p.d+' = <b>'+Math.floor(p.N/p.d)+'</b>, శేషం <b>'+(p.N%p.d)+'</b></div>').join('')+'<div class=wsf>రాయ్ ఎడ్యుకేషన్ · raayeducation.in</div></div>';
+   document.body.classList.add('wsmode');const off=()=>document.body.classList.remove('wsmode');window.addEventListener('afterprint',off,{once:true});setTimeout(()=>{try{window.print();}catch(e){}},80);}
+  fresh();
+  quiz(C,()=>{const d=rnd(2,9),q=rnd(11,99);return{q:'భాగించండి: <b>'+(d*q)+' ÷ '+d+'</b> = ?',a:q};});
+ }},
+/* 11 Fractions */
+{t:'భిన్నాలు – రొట్టె ముక్కలు',c:'3–5 తరగతి',col:'#f39c12',key:'3/4 = నాలుగు భాగాల్లో మూడు',
+ body:['ఒక వస్తువును <b>సమాన భాగాలు</b> చేస్తే ఒక్కో భాగం ఒక భిన్నం.','కింది సంఖ్య (<b>హారం</b>) = మొత్తం సమాన భాగాలు. పై సంఖ్య (<b>లవం</b>) = తీసుకున్న భాగాలు.','1/2 = సగం, 1/4 = పావు, 3/4 = ముప్పావు.'],
+ tip:'రొట్టె ముక్కను లేదా కింది పట్టీ గడిని తాకితే రంగు పడుతుంది.',
+ build(R,C){
+  let n=4;const sh=new Set([0,1,2]);const ctl=h('div',{class:'ctl'},R);
+  stepper(ctl,'సమాన భాగాలు',2,12,4,v=>{n=v;[...sh].forEach(i=>{if(i>=n)sh.delete(i);});draw();});
+  btn(ctl,'అన్నీ తుడువు',()=>{sh.clear();draw();},'ghost');
+  const g=goal(C,()=>{const d=rnd(2,8),u=rnd(1,d-1);return{text:'రొట్టెలో <b>'+u+'/'+d+'</b> భాగానికి రంగు వేయండి<br><small>(ముందు సమాన భాగాలు '+d+' చేయండి)</small>',test:st=>st.n===d&&st.k===u};});
+  const wrap=h('div',{class:'frwrap'},R);const sv=svgBox(wrap,'0 0 260 260','roti');const fr=h('div',{class:'frac'},wrap);const bar=svgBox(R,'0 0 404 54','bar');
+  const gcd=(a,b)=>b?gcd(b,a%b):a;
+  function tog(i){sh.has(i)?sh.delete(i):sh.add(i);draw();say(sh.size+' బై '+n);}
+  function draw(q){sv.innerHTML='';bar.innerHTML='';const cx=130,cy=130,r=118;
+   for(let i=0;i<n;i++){const a0=-Math.PI/2+i*2*Math.PI/n,a1=a0+2*Math.PI/n;const p='M'+cx+' '+cy+' L'+(cx+r*Math.cos(a0))+' '+(cy+r*Math.sin(a0))+' A'+r+' '+r+' 0 0 1 '+(cx+r*Math.cos(a1))+' '+(cy+r*Math.sin(a1))+' Z';s('path',{d:p,class:'slice'+(sh.has(i)?' on':''),onclick:()=>tog(i)},sv);
+    s('rect',{x:2+i*400/n,y:4,width:400/n,height:46,class:'slice'+(sh.has(i)?' on':''),onclick:()=>tog(i)},bar);}
+   [[-40,-30],[30,-50],[45,35],[-30,50],[0,5],[-60,15],[65,-5]].forEach(([x,y])=>s('circle',{cx:cx+x,cy:cy+y,r:3,fill:'#a0612b',opacity:.5,'pointer-events':'none'},sv));
+   const k=sh.size,gg=gcd(k,n)||1;const NM={'1/2':'సగం','1/4':'పావు','3/4':'ముప్పావు','1/3':'మూడో వంతు','2/3':'మూడింట రెండు వంతులు'};const red=(k/gg)+'/'+(n/gg);
+   fr.innerHTML='<div class=fnum>'+k+'</div><div class=fden>'+n+'</div><div class=fname>'+n+' భాగాల్లో '+k+' భాగాలు'+(k===n?'<br><b>పూర్తి రొట్టె = 1</b>':k===0?'':(gg>1?'<br>= '+red:'')+(NM[red]?' ('+NM[red]+')':''))+'</div>';
+   if(!q)g.check({n,k});}
+  draw(true);
+ }},
+/* 12 Clock – 12 & 24 hours */
+{t:'గడియారం – 12 & 24 గంటలు',c:'2–5 తరగతి',col:'#8e44ad',key:'3:30 = మూడున్నర · 15:30 = మధ్యాహ్నం 3:30',
+ body:['<b>చిన్న ముల్లు</b> గంటలు, <b>పెద్ద ముల్లు</b> నిమిషాలు చూపుతాయి. పెద్ద ముల్లు ఒక అంకె నుండి తర్వాతి అంకెకు వెళ్తే 5 నిమిషాలు. 15 = పావు, 30 = అర, 45 = ముప్పావు గంట.','ఒక రోజు = <b>24 గంటలు</b>. చిన్న ముల్లు రోజుకు <b>రెండుసార్లు</b> తిరుగుతుంది – అందుకే 12 గంటల పద్ధతిలో ఉదయం / సాయంత్రం అని చెప్పాలి.','<b>24 గంటల పద్ధతి:</b> అర్ధరాత్రి 00:00 నుండి 23:59 వరకు. మధ్యాహ్నం 12 తర్వాత <b>12 కలపాలి</b> (3 + 12 = 15:00). 24 నుండి 12 కి మార్చాలంటే <b>12 తీసివేయాలి</b> (18 − 12 = సాయంత్రం 6).'],
+ tip:'పెద్ద ముల్లును తిప్పండి – 12 దాటితే గంట మారుతుంది. కింద “ఎక్కడ వాడతారు?” కార్డును తాకితే ఆ సమయం గడియారంలో వస్తుంది.',
+ build(R,C){
+  let H=9,M=0,prevM=0,drag=false,is24=store.get('clk24',true);const pad=m=>(m<10?'0':'')+m;
+  const h12=h=>h%12===0?12:h%12;
+  const part=h=>h<4?['రాత్రి','🌙']:h<6?['తెల్లవారుజాము','🌅']:h<12?['ఉదయం','🌤️']:h<16?['మధ్యాహ్నం','☀️']:h<19?['సాయంత్రం','🌇']:['రాత్రి','🌙'];
+  const rd=(h,m)=>{const w=U[h],nx=h===12?'ఒంటిగంట':U[h+1];if(m===0)return h===1?'ఒంటి గంట':w+' గంటలు';if(m===15)return h===1?'ఒంటిగంటంపావు':w+'ంపావు';if(m===30)return w+'న్నర';if(m===45)return 'పావు తక్కువ '+nx;return(h===1?'ఒంటి':w)+' గంటల '+m+' నిమిషాలు';};
+  const read=(hh,m)=>hh===0&&m===0?'అర్ధరాత్రి 12 గంటలు':hh===12&&m===0?'మధ్యాహ్నం 12 గంటలు':part(hh)[0]+' '+rd(h12(hh),m);
+  const t24=(hh,m)=>pad(hh)+':'+pad(m);
+  const mr=h('div',{class:'row'},R);const c12=btn(mr,'🕛 12 గంటలు',()=>setMode(false),'chip'),c24=btn(mr,'🕓 24 గంటలు',()=>setMode(true),'chip');
+  function setMode(v){is24=v;store.set('clk24',v);c12.classList.toggle('on',!v);c24.classList.toggle('on',v);ring.style.display=v?'':'none';upd(true);}
+  const g=goal(C,()=>{const th=is24?rnd(0,23):rnd(1,12),tm=pick([0,15,30,45,rnd(1,11)*5]);return is24?{text:'గడియారంలో <b>'+t24(th,tm)+'</b> చూపించండి<br><small>('+read(th,tm)+')</small>',test:st=>st.h===th&&st.m===tm}:{text:'గడియారంలో <b>'+rd(th,tm)+'</b> ('+th+':'+pad(tm)+') చూపించండి',test:st=>h12(st.h)===th&&st.m===tm};});
+  const big=h('div',{class:'bigline'},R);
+  const sv=svgBox(R,'0 0 300 300');sv.style.touchAction='none';sv.style.maxWidth='340px';
+  s('circle',{cx:150,cy:150,r:140,fill:'#fff',stroke:'#2b2b2b','stroke-width':5},sv);
+  for(let i=0;i<60;i++){const a=i*6*Math.PI/180,r1=i%5?128:120;s('line',{x1:150+r1*Math.sin(a),y1:150-r1*Math.cos(a),x2:150+134*Math.sin(a),y2:150-134*Math.cos(a),stroke:'#2b2b2b','stroke-width':i%5?1.2:3},sv);}
+  const outer=[];for(let i=1;i<=12;i++){const a=i*30*Math.PI/180;outer[i%12]=s('text',{x:150+102*Math.sin(a),y:150-102*Math.cos(a)+9,'text-anchor':'middle','font-size':26,'font-weight':800,text:i},sv);}
+  const ring=s('g',{},sv);const inner=[];s('circle',{cx:150,cy:150,r:82,fill:'none',stroke:'#d9c8ee','stroke-width':1.5,'stroke-dasharray':'4 4'},ring);
+  for(let i=1;i<=12;i++){const a=i*30*Math.PI/180;inner[i%12]=s('text',{x:150+68*Math.sin(a),y:150-68*Math.cos(a)+6,'text-anchor':'middle','font-size':16,'font-weight':800,style:'fill:#8e44ad',text:i===12?'00':i+12},ring);}
+  const hh=s('line',{x1:150,y1:150,class:'hand',stroke:'#e85d75','stroke-width':10},sv);const mh=s('line',{x1:150,y1:150,class:'hand',stroke:'#3a7bd5','stroke-width':6},sv);s('circle',{cx:150,cy:150,r:9,fill:'#2b2b2b'},sv);
+  const conv=h('div',{class:'conv'},R);
+  const day=h('div',{class:'daybar',title:'రోజు – 24 గంటలు'},R);const mark=h('div',{class:'dmark'},day);
+  [0,6,12,18,24].forEach(v=>h('span',{class:'dl',style:'left:'+(v/24*100)+'%',text:pad(v%25)},day));
+  day.addEventListener('click',e=>{const b=day.getBoundingClientRect();const mins=Math.round(((e.clientX-b.left)/b.width*1440)/15)*15%1440;H=Math.floor(mins/60);M=mins%60;prevM=M;upd();});
+  const row=h('div',{class:'row'},R);btn(row,'గంట −',()=>{H=(H+23)%24;upd();},'ghost');btn(row,'గంట +',()=>{H=(H+1)%24;upd();},'ghost');btn(row,'నిమిషం −5',()=>setM(M-5),'ghost');btn(row,'నిమిషం +5',()=>setM(M+5),'ghost');btn(row,'🌗 ఉదయం ↔ సాయంత్రం',()=>{H=(H+12)%24;upd();},'ghost');
+  function setM(m){if(m>=60){m-=60;H=(H+1)%24;}else if(m<0){m+=60;H=(H+23)%24;}M=m;prevM=m;upd();}
+  /* where is 24-hour time used */
+  const us=h('div',{class:'uses'},R);h('h4',{html:'🕓 24 గంటల సమయం ఎక్కడ వాడతారు?'},us);
+  h('p',{class:'muted',html:'ఉదయమా? సాయంత్రమా? అనే సందేహం రాకుండా – ప్రయాణాలు, ఆసుపత్రులు, బ్యాంకుల్లో 24 గంటల సమయం వాడతారు.'},us);
+  const grid=h('div',{class:'ugrid'},us);
+  [['🚆','రైల్వే','రైలు టికెట్, టైమ్ టేబుల్',18,45,'రైలు'],['🚌','బస్సు (APSRTC)','బస్ టికెట్, బస్టాండ్ బోర్డు',6,30,'బస్సు'],['✈️','విమానాశ్రయం','విమానం బయలుదేరే సమయం',22,10,'విమానం'],['🏥','ఆసుపత్రి','మందులు ఇచ్చే సమయం, రిపోర్టులు',14,0,'మందు'],
+   ['📱','మొబైల్ / కంప్యూటర్','ఫోన్ గడియారం, మెసేజ్ సమయం',20,15,'ఫోన్'],['🪖','సైన్యం, పోలీస్','డ్యూటీ మారే సమయం',0,0,'డ్యూటీ'],['🏧','బ్యాంక్ / ATM రసీదు','డబ్బు తీసిన సమయం',13,25,'రసీదు'],['📺','TV, రేడియో','కార్యక్రమాల జాబితా',19,0,'వార్తలు']]
+  .forEach(([ic,t,d,uh,um,w])=>{const cd=h('button',{class:'ucard',onclick:()=>{if(!is24)setMode(true);H=uh;M=um;prevM=um;upd(true);speak(t+'. '+w+' '+uh+' గంటల '+(um?um+' నిమిషాలు':'')+'. అంటే '+read(uh,um));}},grid);
+   h('span',{class:'uic',text:ic},cd);h('b',{text:t},cd);h('span',{class:'ud',text:d},cd);h('span',{class:'ut',html:t24(uh,um)+' <small>= '+(uh===0&&um===0?'అర్ధరాత్రి 12:00':part(uh)[0]+' '+h12(uh)+':'+pad(um))+'</small>'},cd);});
+  function upd(q){const ma=M*6*Math.PI/180,ha=((H%12)+M/60)*30*Math.PI/180;mh.setAttribute('x2',150+108*Math.sin(ma));mh.setAttribute('y2',150-108*Math.cos(ma));hh.setAttribute('x2',150+60*Math.sin(ha));hh.setAttribute('y2',150-60*Math.cos(ha));
+   const p=part(H);outer.forEach((t,k)=>t.classList.toggle('hnow',!is24||H<12?k===H%12:false));inner.forEach((t,k)=>t.classList.toggle('hnow',is24&&H>=12&&k===H%12));
+   if(is24){big.innerHTML='<span class=num>'+t24(H,M)+'</span><span class=word>'+p[1]+' '+read(H,M)+'</span>';
+    conv.innerHTML=H===0?'00 గంటలు = <b>అర్ధరాత్రి 12</b>':H===12?'12 గంటలు = <b>మధ్యాహ్నం 12</b>':H>12?'<b>'+H+'</b> − 12 = <b>'+(H-12)+'</b> → '+p[0]+' '+(H-12)+':'+pad(M)+'<br><small>(12 గంటల నుండి 24 కి: '+(H-12)+' + 12 = '+H+')</small>':pad(H)+' గంటలు = '+p[0]+' '+H+':'+pad(M)+' <small>(12 కంటే తక్కువ – అలాగే ఉంటుంది)</small>';}
+   else{big.innerHTML='<span class=num>'+h12(H)+':'+pad(M)+'</span><span class=word>'+p[1]+' '+read(H,M)+'</span><span class=sub>పెద్ద ముల్లు '+(M%5===0?(M/5||12)+' దగ్గర':'')+' · చిన్న ముల్లు '+h12(H)+(M?' – '+h12(H+1)+' మధ్య':' దగ్గర')+'</span>';conv.innerHTML='24 గంటల పద్ధతిలో: <b>'+t24(H,M)+'</b>';}
+   mark.style.left=((H*60+M)/1440*100)+'%';mark.textContent=p[1];
+   if(!q&&!drag)say(is24?H+' గంటల '+(M?M+' నిమిషాలు':'')+'. '+read(H,M):read(H,M));if(!drag)g.check({h:H,m:M});}
+  function mv(e){const b=sv.getBoundingClientRect();const x=(e.clientX-b.left)/b.width*300-150,y=(e.clientY-b.top)/b.height*300-150;let deg=Math.atan2(x,-y)*180/Math.PI;if(deg<0)deg+=360;const m=Math.round(deg/6)%60;
+   if(prevM>=45&&m<15)H=(H+1)%24;else if(prevM<15&&m>=45)H=(H+23)%24;prevM=m;M=m;upd(true);}
+  sv.addEventListener('pointerdown',e=>{drag=true;try{sv.setPointerCapture(e.pointerId);}catch(_){}mv(e);});
+  sv.addEventListener('pointermove',e=>{if(drag)mv(e);});
+  const end=()=>{if(drag){drag=false;upd();}};sv.addEventListener('pointerup',end);sv.addEventListener('pointercancel',end);
+  setMode(is24);
+  quiz(C,()=>{if(Math.random()<.5){const x=rnd(13,23),m=pick([0,15,30,45,10,20]);return{q:'రైలు <b>'+t24(x,m)+'</b> కు బయలుదేరుతుంది. 12 గంటల పద్ధతిలో '+part(x)[0]+' <b>ఎన్ని గంటలు</b>?',a:x-12};}
+   const x=rnd(1,11);return{q:part(x+12)[0]+' <b>'+x+'</b> గంటలను 24 గంటల పద్ధతిలో రాస్తే గంటలు ఎంత?',a:x+12};});
+ }},
+/* 13 Perimeter & area */
+{t:'చుట్టుకొలత, వైశాల్యం',c:'4–5 తరగతి',col:'#27ae60',key:'చు = 2 × (పొ + వె) · వై = పొ × వె',
+ body:['<b>చుట్టుకొలత</b> = ఆకారం చుట్టూ ఉన్న అంచుల మొత్తం పొడవు.','<b>వైశాల్యం</b> = ఆకారం లోపల ఉన్న చదరపు గడుల సంఖ్య.','దీర్ఘచతురస్రం: చుట్టుకొలత = 2 × (పొడవు + వెడల్పు), వైశాల్యం = పొడవు × వెడల్పు. (ఒక్కో గడి = 1 సెం.మీ)'],
+ tip:'గడిని తాకితే అక్కడి వరకు దీర్ఘచతురస్రం వస్తుంది. 🐜 చీమ నడక నొక్కి చుట్టుకొలత లెక్కించండి.',
+ build(R,C){
+  const CO=12,RO=8,UN=36,ox=18,oy=18;let L=5,W=3,nums=false,token=0;onClean(()=>token++);
+  const ctl=h('div',{class:'ctl'},R);const lS=stepper(ctl,'పొడవు',1,CO,L,v=>{L=v;draw();}),wS=stepper(ctl,'వెడల్పు',1,RO,W,v=>{W=v;draw();});
+  const sv=svgBox(R,'0 0 '+(CO*UN+36)+' '+(RO*UN+36));const gG=s('g',{},sv),aG=s('g',{},sv),pG=s('g',{},sv),antG=s('g',{},sv);
+  for(let r=0;r<RO;r++)for(let c=0;c<CO;c++)s('rect',{x:ox+c*UN,y:oy+r*UN,width:UN,height:UN,class:'gcell',onclick:()=>{L=c+1;W=r+1;lS.set(L,true);wS.set(W,true);draw();}},gG);
+  const eq=h('div',{class:'eq'},R);const row=h('div',{class:'row'},R);btn(row,'🔢 గడులు లెక్కించు',()=>{nums=!nums;draw();},'ghost');btn(row,'🐜 చీమ నడక',ant);
+  function draw(q){token++;aG.innerHTML=pG.innerHTML=antG.innerHTML='';let k=0;
+   for(let r=0;r<W;r++)for(let c=0;c<L;c++){k++;s('rect',{x:ox+c*UN,y:oy+r*UN,width:UN,height:UN,class:'acell'},aG);if(nums)s('text',{x:ox+c*UN+UN/2,y:oy+r*UN+UN/2+5,class:'anum',text:k},aG);}
+   s('rect',{x:ox,y:oy,width:L*UN,height:W*UN,class:'per'},pG);
+   s('text',{x:ox+L*UN/2,y:oy-4,'text-anchor':'middle','font-size':13,'font-weight':800,text:'పొడవు '+L},pG);s('text',{x:ox+L*UN+6,y:oy+W*UN/2,'font-size':13,'font-weight':800,text:W},pG);
+   eq.innerHTML='చుట్టుకొలత = 2 × ('+L+' + '+W+') = <b>'+(2*(L+W))+'</b> సెం.మీ<br>వైశాల్యం = '+L+' × '+W+' = <b>'+(L*W)+'</b> చ.సెం.మీ';
+   if(!q)say('పొడవు '+L+', వెడల్పు '+W);}
+  async function ant(){draw(true);const my=token;const pts=[];for(let i=0;i<=L;i++)pts.push([i,0]);for(let i=1;i<=W;i++)pts.push([L,i]);for(let i=L-1;i>=0;i--)pts.push([i,W]);for(let i=W-1;i>=0;i--)pts.push([0,i]);
+   const a=s('g',{},antG);s('ellipse',{cx:0,cy:0,rx:7,ry:5,fill:'#222'},a);s('circle',{cx:7,cy:0,r:4,fill:'#222'},a);
+   for(let i=1;i<pts.length;i++){const[x0,y0]=pts[i-1],[x1,y1]=pts[i];const X0=ox+x0*UN,Y0=oy+y0*UN,X1=ox+x1*UN,Y1=oy+y1*UN;
+    await anim(170,t=>a.setAttribute('transform','translate('+(X0+(X1-X0)*t)+','+(Y0+(Y1-Y0)*t)+')'));if(my!==token)return;
+    const mx=(X0+X1)/2+(y0===y1?0:(x0===0?-10:10)),my2=(Y0+Y1)/2+(x0===x1?4:(y0===0?-6:16));s('text',{x:mx,y:my2,class:'pnum',text:i},antG);}
+   say('చుట్టుకొలత '+(2*(L+W)));}
+  draw(true);
+  quiz(C,()=>{const l=rnd(3,12),w=rnd(2,8),ar=Math.random()<.5;return{q:'పొడవు '+l+' సెం.మీ, వెడల్పు '+w+' సెం.మీ ఉన్న దీర్ఘచతురస్రం <b>'+(ar?'వైశాల్యం':'చుట్టుకొలత')+'</b> ఎంత?',a:ar?l*w:2*(l+w)};});
+ }},
+/* 13b Measurements & conversion */
+{t:'కొలతలు – మార్పిడి',c:'3–5 తరగతి',col:'#16a085',key:'పెద్ద → చిన్న: × గుణించు · చిన్న → పెద్ద: ÷ భాగించు',
+ body:['<b>పొడవు:</b> 1 కి.మీ = 1000 మీ · 1 మీ = 100 సెం.మీ · 1 సెం.మీ = 10 మి.మీ.','<b>బరువు:</b> 1 కి.గ్రా = 1000 గ్రా · 1 క్వింటాల్ = 100 కి.గ్రా · 1 టన్ను = 10 క్వింటాళ్లు. <b>ద్రవం:</b> 1 లీ = 1000 మి.లీ. <b>కాలం:</b> 1 రోజు = 24 గం · 1 గం = 60 నిమి · 1 నిమి = 60 సెక.','పెద్ద యూనిట్ నుండి చిన్న యూనిట్‌కు మార్చాలంటే <b>గుణించాలి (×)</b>. చిన్న నుండి పెద్దకు <b>భాగించాలి (÷)</b>. మెట్లు <b>దిగితే ×</b>, <b>ఎక్కితే ÷</b>.'],
+ tip:'పైన కొలత రకం ఎంచుకోండి. స్కేలు, తక్కెడ, జగ్గుతో ఆడండి. కింది “🪜 మార్పిడి మెట్లు”లో మీ సంఖ్య ఇచ్చి మార్చండి.',
+ build(R,C){
+  const Q={
+   len:{n:'📏 పొడవు',u:['కి.మీ','మీ','సెం.మీ','మి.మీ'],w:['కిలోమీటరు','మీటరు','సెంటీమీటరు','మిల్లీమీటరు'],f:[1000,100,10],ex:[3,0,0,1,0],
+    uses:[['🛣️','రోడ్డు మీద మైలు రాళ్లు – ఊళ్ల మధ్య దూరం','కి.మీ'],['🏃','పరుగు పందెం, ఆట స్థలం','మీ'],['🧵','దర్జీ కొలత టేపు, బట్ట','సెం.మీ / మీ'],['📐','స్కేలు, పెన్సిల్, పుస్తకం','సెం.మీ / మి.మీ']]},
+   wt:{n:'⚖️ బరువు',u:['టన్ను','క్వింటాల్','కి.గ్రా','గ్రా','మి.గ్రా'],w:['టన్ను','క్వింటాల్','కిలోగ్రాము','గ్రాము','మిల్లీగ్రాము'],f:[10,100,1000,1000],ex:[2,250,2,3,0],
+    uses:[['🛒','కిరాణా కొట్టు – బియ్యం, పప్పు','కి.గ్రా / గ్రా'],['🌾','మార్కెట్ యార్డు – పంట అమ్మకం','క్వింటాల్'],['🚛','లారీ సరుకు, చెరకు','టన్ను'],['💊','మందు బిళ్ళ','మి.గ్రా']]},
+   cap:{n:'🥛 ద్రవం',u:['కి.లీ','లీ','మి.లీ'],w:['కిలోలీటరు','లీటరు','మిల్లీలీటరు'],f:[1000,1000],ex:[2750,0,2,1,0],
+    uses:[['🥛','పాల ప్యాకెట్','మి.లీ / లీ'],['⛽','పెట్రోల్ బంక్','లీ'],['🚰','నీళ్ల ట్యాంకర్, ట్యాంకు','కి.లీ / లీ'],['🧴','దగ్గు మందు సిరప్','మి.లీ']]},
+   time:{n:'⏱ కాలం',u:['రోజు','గంట','నిమిషం','సెకను'],w:['రోజులు','గంటలు','నిమిషాలు','సెకన్లు'],f:[24,60,60],ex:[2,30,1,2,0],
+    uses:[['🏫','బడి సమయం – గంటలు','గంట'],['🍚','వంట – అన్నం ఉడకడం','నిమిషం'],['🏃','పరుగు పందెం','సెకను'],['📅','క్యాలెండర్ – సెలవులు','రోజు']]},
+   money:{n:'💰 డబ్బు',u:['రూపాయి','పైసలు'],w:['రూపాయలు','పైసలు'],f:[100],ex:[12,50,0,1,0],
+    uses:[['🛒','అంగడి బిల్లు ₹ 45.50','రూ / పై'],['🏦','బ్యాంకు పాస్‌బుక్','రూ / పై'],['⛽','పెట్రోల్ ధర ₹ 102.75','రూ / పై'],['🧾','కరెంటు బిల్లు','రూ / పై']]}};
+  let tab=store.get('ms_tab','len');if(!Q[tab])tab='len';
+  const tr=h('div',{class:'row'},R);const tb={};Object.keys(Q).forEach(k=>{tb[k]=btn(tr,Q[k].n,()=>{tab=k;store.set('ms_tab',k);Object.keys(tb).forEach(x=>tb[x].classList.toggle('on',x===k));render();},'chip'+(k===tab?' on':''));});
+  const play=h('div',{class:'mplay'},R);const conv=h('div',{class:'mconv'},R);const uses=h('div',{class:'uses'},R);
+  const fmt=n=>{const r=Math.round(n*1000)/1000;return String(r);};
+  const P=(q,i)=>{let p=1;for(let k=i;k<q.f.length;k++)p*=q.f[k];return p;};
+  function render(){play.innerHTML='';conv.innerHTML='';uses.innerHTML='';({len:ruler,wt:balance,cap:jug,time:facts,money:facts})[tab]();converter();useCards();}
+  function useCards(){const q=Q[tab];h('h4',{html:'📍 '+q.n.split(' ')[1]+' కొలతలు ఎక్కడ వాడతారు?'},uses);const g=h('div',{class:'ugrid'},uses);
+   q.uses.forEach(([ic,t,u])=>{const c=h('button',{class:'ucard',onclick:()=>speak(t+'. '+u)},g);h('span',{class:'uic',text:ic},c);h('b',{text:t},c);h('span',{class:'ut',html:'<small>'+u+'</small>'},c);});}
+  /* --- ruler --- */
+  function ruler(){let L=74;const g=goal(play,()=>{const t=rnd(20,149);return{text:'పెన్సిల్ పొడవు <b>'+Math.floor(t/10)+' సెం.మీ '+(t%10)+' మి.మీ</b> చేయండి',test:v=>v===t};});
+   const big=h('div',{class:'bigline'},play);const sv=svgBox(play,'0 0 640 150');sv.style.touchAction='none';
+   s('rect',{x:10,y:70,width:620,height:62,rx:6,fill:'#ffe9a8',stroke:'#2b2b2b','stroke-width':2},sv);
+   for(let m=0;m<=150;m++){const x=20+m*4,len=m%10===0?24:m%5===0?16:9;s('line',{x1:x,y1:70,x2:x,y2:70+len,stroke:'#2b2b2b','stroke-width':m%10===0?2:1},sv);if(m%10===0)s('text',{x,y:116,'text-anchor':'middle','font-size':15,'font-weight':800,text:m/10},sv);}
+   s('text',{x:610,y:128,'text-anchor':'end','font-size':11,text:'సెం.మీ'},sv);
+   const pen=s('g',{},sv);const body=s('rect',{x:20,y:28,height:22,fill:'#f6c453',stroke:'#2b2b2b','stroke-width':2},pen);const tip=s('path',{fill:'#f3d6a4',stroke:'#2b2b2b','stroke-width':2},pen);const lead=s('path',{fill:'#2b2b2b'},pen);
+   s('rect',{x:20,y:28,width:14,height:22,fill:'#e85d75',stroke:'#2b2b2b','stroke-width':2},pen);
+   const guide=s('line',{y1:50,y2:70,stroke:'#e85d75','stroke-width':2,'stroke-dasharray':'3 3'},sv);
+   function upd(q){const x=20+L*4,tl=Math.min(18,L*4-14);body.setAttribute('width',Math.max(0,x-20-tl));tip.setAttribute('d','M'+(x-tl)+' 28 L'+x+' 39 L'+(x-tl)+' 50 Z');lead.setAttribute('d','M'+(x-5)+' 36.5 L'+x+' 39 L'+(x-5)+' 41.5 Z');guide.setAttribute('x1',x);guide.setAttribute('x2',x);
+    big.innerHTML='<span class=num>'+Math.floor(L/10)+'<small> సెం.మీ </small>'+(L%10)+'<small> మి.మీ</small></span><span class=sub>= '+Math.floor(L/10)+' × 10 + '+(L%10)+' = <b>'+L+' మి.మీ</b> = '+fmt(L/10)+' సెం.మీ</span>';if(!q)say(Math.floor(L/10)+' సెంటీమీటర్లు '+(L%10)+' మిల్లీమీటర్లు');g.check(L);}
+   let drag=false;const mv=e=>{const b=sv.getBoundingClientRect();const x=(e.clientX-b.left)/b.width*640;L=Math.max(15,Math.min(150,Math.round((x-20)/4)));upd(true);};
+   sv.addEventListener('pointerdown',e=>{drag=true;try{sv.setPointerCapture(e.pointerId);}catch(_){}mv(e);});sv.addEventListener('pointermove',e=>{if(drag)mv(e);});
+   const end=()=>{if(drag){drag=false;upd();}};sv.addEventListener('pointerup',end);sv.addEventListener('pointercancel',end);
+   const r=h('div',{class:'row'},play);btn(r,'− 1 మి.మీ',()=>{L=Math.max(15,L-1);upd();},'ghost');btn(r,'+ 1 మి.మీ',()=>{L=Math.min(150,L+1);upd();},'ghost');btn(r,'− 1 సెం.మీ',()=>{L=Math.max(15,L-10);upd();},'ghost');btn(r,'+ 1 సెం.మీ',()=>{L=Math.min(150,L+10);upd();},'ghost');
+   h('div',{class:'muted',style:'text-align:center;font-size:.9rem',html:'పెన్సిల్ కొనను వేలితో లాగండి. 1 సెం.మీ లో <b>10</b> చిన్న గీతలు = 10 మి.మీ.'},play);upd(true);}
+  /* --- balance --- */
+  function balance(){const ITEMS=[['🍅','టమాటాలు'],['🍋','నిమ్మకాయలు'],['🥔','బంగాళదుంపలు'],['🍚','బియ్యం'],['🧅','ఉల్లిపాయలు'],['🍌','అరటిపండ్లు']];const WS=[1000,500,200,100,50];
+   let item,target,pan=[],solved=false;const wl=g=>g>=1000?(g/1000)+' కి.గ్రా':g+' గ్రా';const mix=g=>(g>=1000?Math.floor(g/1000)+' కి.గ్రా '+(g%1000?g%1000+' గ్రా':''):g+' గ్రా').trim();
+   const sv=svgBox(play,'0 0 400 240');const beam=s('g',{},sv);
+   s('path',{d:'M150 228 L250 228 L230 212 L170 212 Z',fill:'#a8682c',stroke:'#2b2b2b','stroke-width':2},sv);s('rect',{x:195,y:62,width:10,height:150,fill:'#a8682c',stroke:'#2b2b2b','stroke-width':2},sv);
+   const bl=s('line',{stroke:'#2b2b2b','stroke-width':6,'stroke-linecap':'round'},sv);s('circle',{cx:200,cy:62,r:7,fill:'#f6c453',stroke:'#2b2b2b','stroke-width':2},sv);
+   const needle=s('line',{x1:200,y1:62,stroke:'#e85d75','stroke-width':3},sv);
+   const LP=s('g',{},sv),RP=s('g',{},sv);
+   const info=h('div',{class:'eq'},play);const chips=h('div',{class:'tray'},play);const wr=h('div',{class:'row'},play);
+   WS.forEach(w=>btn(wr,'⚖ '+wl(w),()=>{if(pan.length<14){pan.push(w);pan.sort((a,b)=>b-a);upd();}},'ghost'));
+   btn(h('div',{class:'row'},play),'🛒 కొత్త వస్తువు',fresh,'ghost');
+   function hang(g,x,y,lab,isItem){g.innerHTML='';s('line',{x1:x-40,y1:y+40,x2:x,y2:y,stroke:'#555'},g);s('line',{x1:x+40,y1:y+40,x2:x,y2:y,stroke:'#555'},g);s('path',{d:'M'+(x-50)+' '+(y+40)+' Q'+x+' '+(y+62)+' '+(x+50)+' '+(y+40)+' Z',fill:'#dfe6ea',stroke:'#2b2b2b','stroke-width':2},g);
+    if(isItem){s('text',{x,y:y+34,'text-anchor':'middle','font-size':30,text:item[0]},g);s('text',{x,y:y+8,'text-anchor':'middle','font-size':14,'font-weight':800,text:solved?mix(target):'?'},g);}
+    else pan.forEach((w,k)=>{const ww=w>=1000?30:w>=500?24:w>=200?20:w>=100?16:13,xx=x-44+(k%5)*20,yy=y+38-ww-Math.floor(k/5)*16;s('rect',{x:xx,y:yy,width:18,height:ww,rx:3,fill:'#8e9aa6',stroke:'#2b2b2b','stroke-width':1.2},g);});}
+   function upd(){const tot=pan.reduce((a,b)=>a+b,0),d=target-tot,ang=Math.max(-14,Math.min(14,d/Math.max(400,target)*30))*Math.PI/180;
+    const lx=200-130*Math.cos(ang),ly=62+130*Math.sin(ang),rx=200+130*Math.cos(ang),ry=62-130*Math.sin(ang);
+    bl.setAttribute('x1',lx);bl.setAttribute('y1',ly);bl.setAttribute('x2',rx);bl.setAttribute('y2',ry);needle.setAttribute('x2',200+40*Math.sin(-ang));needle.setAttribute('y2',62-40*Math.cos(ang));
+    if(tot===target&&!solved){solved=true;addStar();say('సమానం! '+item[1]+' బరువు '+mix(target));}
+    hang(LP,lx,ly,'',true);hang(RP,rx,ry,'',false);
+    chips.innerHTML='';if(!pan.length)h('span',{class:'hint',text:'కింది తూకం రాళ్లు తాకి కుడి పళ్లెంలో వేయండి 👇'},chips);
+    pan.forEach((w,k)=>{h('button',{class:'coin wt',text:wl(w),onclick:()=>{pan.splice(k,1);solved=false;upd();}},chips);});
+    info.innerHTML='<b style="font-size:1em;color:inherit">'+item[0]+' '+item[1]+'</b> ను తూచండి<br>తూకం రాళ్లు: '+(pan.length?pan.map(wl).join(' + ')+' = <b>'+tot+' గ్రా</b>':'0')+'<br>'+(tot===target?'<span class=ok>✓ సమానం! బరువు = '+mix(target)+' = '+target+' గ్రా ⭐</span>':tot<target?'<span class=muted>ఎడమ వైపు బరువు ఎక్కువ – ఇంకా రాళ్లు వేయండి</span>':'<span class=warn>కుడి వైపు బరువు ఎక్కువ – రాయి తీసేయండి</span>');}
+   function fresh(){item=pick(ITEMS);target=rnd(5,60)*50;pan=[];solved=false;upd();}fresh();}
+  /* --- jug --- */
+  function jug(){let ml=0,target,solved=false;const mix=v=>(v>=1000?Math.floor(v/1000)+' లీ '+(v%1000?v%1000+' మి.లీ':''):v+' మి.లీ').trim();
+   const info=h('div',{class:'eq'},play);const sv=svgBox(play,'0 0 300 260');sv.style.maxWidth='300px';
+   const top=22,bot=232,Hh=bot-top;
+   s('path',{d:'M90 '+top+' L90 '+bot+' Q90 '+(bot+8)+' 100 '+(bot+8)+' L200 '+(bot+8)+' Q210 '+(bot+8)+' 210 '+bot+' L210 '+top},sv).setAttribute('style','fill:#f4fbff;stroke:#2b2b2b;stroke-width:3');
+   const water=s('rect',{x:92,y:top,width:116,height:Hh,class:'water'},sv);
+   s('path',{d:'M210 60 Q250 70 248 120 Q246 170 210 180',fill:'none',stroke:'#2b2b2b','stroke-width':6},sv);
+   for(let v=250;v<5000;v+=250){const y=bot-v/5000*Hh;s('line',{x1:90,y1:y,x2:v%1000===0?126:v%500===0?114:102,y2:y,stroke:'#2b2b2b','stroke-width':v%1000===0?2.4:1.2},sv);if(v%1000===0)s('text',{x:132,y:y+5,'font-size':14,'font-weight':800,text:(v/1000)+' లీ'},sv);else if(v%500===0)s('text',{x:118,y:y+4,'font-size':9,text:'500'},sv);}
+   s('text',{x:150,y:top-6,'text-anchor':'middle','font-size':12,text:'5 లీటర్ల జగ్గు'},sv);
+   const r=h('div',{class:'row'},play);[[1000,'+ 1 లీ'],[500,'+ 500 మి.లీ'],[200,'+ 200 మి.లీ'],[100,'+ 100 మి.లీ'],[50,'+ 50 మి.లీ']].forEach(([v,l])=>btn(r,'🥛 '+l,()=>add(v),'ghost'));
+   const r2=h('div',{class:'row'},play);btn(r2,'− 100 మి.లీ',()=>add(-100),'ghost');btn(r2,'🫗 ఖాళీ',()=>{ml=0;solved=false;upd();},'ghost');btn(r2,'🎯 కొత్త సవాలు',fresh,'ghost');
+   function add(v){const n=ml+v;if(n>5000){info.innerHTML+='<br><span class=warn>జగ్గు నిండిపోతుంది! 5 లీ కంటే ఎక్కువ పట్టదు.</span>';return;}ml=Math.max(0,n);upd();say(mix(ml));}
+   function upd(){water.style.transform='scaleY('+(ml/5000)+')';
+    if(ml===target&&!solved){solved=true;addStar();say('శభాష్! '+mix(target));}
+    info.innerHTML='🎯 జగ్గులో <b>'+mix(target)+'</b> నీళ్లు నింపండి<br>ఇప్పుడు: <b>'+mix(ml)+'</b> = '+ml+' మి.లీ'+(ml>=1000?' = '+fmt(ml/1000)+' లీ':'')+'<br>'+(ml===target?'<span class=ok>✓ సరిగ్గా నింపారు! ⭐</span>':ml<target?'<span class=muted>ఇంకా '+(target-ml)+' మి.లీ కావాలి</span>':'<span class=warn>'+(ml-target)+' మి.లీ ఎక్కువ</span>');}
+   function fresh(){target=rnd(6,99)*50;ml=0;solved=false;upd();}fresh();}
+  /* --- facts (time / money) --- */
+  function facts(){const F=tab==='time'?[['⏱','1 నిమిషం','60 సెకన్లు'],['🕐','1 గంట','60 నిమిషాలు'],['☀️','1 రోజు','24 గంటలు'],['🗓️','1 వారం','7 రోజులు'],['📅','1 నెల','30 లేదా 31 రోజులు (ఫిబ్రవరి 28/29)'],['🎉','1 సంవత్సరం','12 నెలలు = 365 రోజులు'],['🌟','లీపు సంవత్సరం','366 రోజులు (4 ఏళ్లకు ఒకసారి)'],['⏳','అర గంట / పావు గంట','30 నిమి / 15 నిమి']]
+    :[['🪙','1 రూపాయి','100 పైసలు'],['💵','₹ 12.50','12 రూ 50 పై = 1250 పై'],['🔢','50 పైసలు','అర్ధ రూపాయి'],['🧾','₹ 7.05','7 రూ 5 పై = 705 పై']];
+   h('h4',{class:'mh',html:tab==='time'?'⏱ కాలం కొలతలు – గుర్తుంచుకోండి':'💰 రూపాయలు – పైసలు'},play);const g=h('div',{class:'ugrid'},play);
+   F.forEach(([ic,a,b])=>{const c=h('button',{class:'ucard',onclick:()=>speak(a+' సమానం '+b)},g);h('span',{class:'uic',text:ic},c);h('b',{text:a},c);h('span',{class:'ut',html:'<small>= '+b+'</small>'},c);});
+   if(tab==='time'){h('div',{class:'eq',html:'ఉదా: <b>2 గంటల 30 నిమిషాలు</b> = 2 × 60 + 30 = <b>150 నిమిషాలు</b>'},play);}}
+  /* --- converter staircase --- */
+  function converter(){const q=Q[tab],n=q.u.length;h('h4',{class:'mh',html:'🪜 మార్పిడి మెట్లు <small class=muted>(దిగితే × · ఎక్కితే ÷)</small>'},conv);
+   const sv=svgBox(conv,'0 0 420 '+(n*58),'stair');const row=h('div',{class:'own mrow'},conv);
+   const v1=h('input',{type:'number',inputmode:'decimal',step:'any','aria-label':'విలువ'},row);const fS=h('select',{class:'sel'},row);q.u.forEach((u,k)=>h('option',{value:k,text:u},fS));
+   const plus=h('span',{class:'own'},row);h('b',{text:'+'},plus);const v2=h('input',{type:'number',inputmode:'numeric','aria-label':'చిన్న యూనిట్ విలువ'},plus);const v2l=h('span',{class:'u2'},plus);
+   h('b',{text:'→'},row);const tS=h('select',{class:'sel'},row);q.u.forEach((u,k)=>h('option',{value:k,text:u},tS));btn(row,'మార్చు ✓',go);
+   const steps=h('div',{class:'stepmsg msteps'},conv);
+   const ex=q.ex;v1.value=ex[0];v2.value=ex[1]||'';fS.value=ex[2];tS.value=ex[3];
+   const syncPlus=()=>{const i=+fS.value;plus.style.display=i<n-1?'':'none';v2l.textContent=i<n-1?q.u[i+1]:'';};fS.onchange=syncPlus;syncPlus();
+   [v1,v2].forEach(x=>x.addEventListener('keydown',e=>{if(e.key==='Enter'){e.stopPropagation();go();}}));
+   function stair(a,b){sv.innerHTML='';const bw=150,ind=n>1?Math.min(70,(420-bw-150)/(n-1)):0,X=k=>8+k*ind,Y=k=>6+k*58;
+    for(let k=0;k<n;k++){const x=X(k),y=Y(k),on=k>=Math.min(a,b)&&k<=Math.max(a,b);
+     s('rect',{x,y,width:bw,height:38,rx:9,style:'fill:'+(k===a?'#ffe08a':k===b?'#bdebcf':on?'#fff3d6':'#fff')+';stroke:#2b2b2b;stroke-width:2'},sv);
+     s('text',{x:x+bw/2,y:y+26,'text-anchor':'middle','font-size':20,'font-weight':800,text:q.u[k]},sv);
+     if(k===a)s('text',{x:x+bw+8,y:y+26,'font-size':15,'font-weight':700,style:'fill:#b8860b',text:'← నుండి'},sv);
+     if(k===b&&b!==a)s('text',{x:x+bw+8,y:y+26,'font-size':15,'font-weight':700,style:'fill:#2e9e5b',text:'← కి'},sv);
+     if(k<n-1){const used=on&&k+1<=Math.max(a,b),down=b>a;
+      s('text',{x:x+bw*.3,y:y+53,'font-size':17,'font-weight':800,style:'fill:'+(used&&down?'#2e9e5b':'#aab5ae'),text:'↓ × '+q.f[k]},sv);
+      s('text',{x:x+bw*.3+110,y:y+53,'font-size':17,'font-weight':800,style:'fill:'+(used&&!down?'#f08a24':'#c9c0b0'),text:'↑ ÷ '+q.f[k]},sv);}}}
+   function go(){const a=+fS.value,b=+tS.value,x1=parseFloat(v1.value),x2=a<n-1&&v2.value!==''?parseFloat(v2.value):0;
+    if(isNaN(x1)){steps.innerHTML='<span class=warn>సంఖ్య ఇవ్వండి.</span>';return;}
+    const L=[];let cur=a,val=x1;
+    if(x2){const nv=x1*q.f[a]+x2;L.push(x1+' '+q.u[a]+' '+x2+' '+q.u[a+1]+' = '+x1+' × '+q.f[a]+' + '+x2+' = <b>'+fmt(nv)+' '+q.u[a+1]+'</b>');val=nv;cur=a+1;}
+    const start=cur,startVal=val;
+    if(b===cur&&!x2)L.push('ఒకే యూనిట్ – మార్పు లేదు.');
+    while(cur<b){const nv=val*q.f[cur];L.push('⬇ '+fmt(val)+' '+q.u[cur]+' × '+q.f[cur]+' = <b>'+fmt(nv)+' '+q.u[cur+1]+'</b>');val=nv;cur++;}
+    while(cur>b){const nv=val/q.f[cur-1];L.push('⬆ '+fmt(val)+' '+q.u[cur]+' ÷ '+q.f[cur-1]+' = <b>'+fmt(nv)+' '+q.u[cur-1]+'</b>');val=nv;cur--;}
+    let res='<div class=mres>= '+fmt(val)+' '+q.u[b]+'</div>';
+    if(b<start&&Math.round(val*1000)%1000!==0){const F=startVal/val,qn=Math.floor(val),rm=Math.round((startVal-qn*F)*1000)/1000;res+='<div class=muted>మిశ్రమ రూపంలో: <b>'+qn+' '+q.u[b]+' '+rm+' '+q.u[start]+'</b></div>';}
+    steps.innerHTML=(b>start||(b===start&&x2)?'<b>పెద్ద నుండి చిన్న యూనిట్ → గుణించాలి (×)</b>':b<start?'<b>చిన్న నుండి పెద్ద యూనిట్ → భాగించాలి (÷)</b>':'')+'<br>'+L.join('<br>')+res;
+    stair(a,b);say(steps.innerText);}
+   stair(+fS.value,+tS.value);go();}
+  render();
+  quiz(C,()=>{const q=Q[tab],n=q.u.length,k=rnd(0,n-2),f=q.f[k],t=rnd(0,2);
+   if(t===0){const v=rnd(2,9);return{q:'<b>'+v+' '+q.u[k]+'</b> = ఎన్ని '+q.u[k+1]+'?',a:v*f};}
+   if(t===1){const v=rnd(2,9);return{q:'<b>'+(v*f)+' '+q.u[k+1]+'</b> = ఎన్ని '+q.u[k]+'?',a:v};}
+   const v=rnd(1,5),w=rnd(1,f-1);return{q:'<b>'+v+' '+q.u[k]+' '+w+' '+q.u[k+1]+'</b> = ఎన్ని '+q.u[k+1]+'?',a:v*f+w};});
+ }},
+/* 13c Geometry */
+{t:'జ్యామితి – కోణాలు, ఆకారాలు',c:'2–5 తరగతి',col:'#1abc9c',key:'లంబకోణం = 90° · త్రిభుజం కోణాల మొత్తం = 180° · వ్యాసం = 2 × వ్యాసార్థం',
+ body:['<b>కోణం:</b> రెండు భుజాలు ఒక బిందువు (శీర్షం) దగ్గర కలిస్తే కోణం. 90° కంటే తక్కువ – అల్పకోణం, 90° – లంబకోణం, 90°–180° – అధికకోణం, 180° – సరళకోణం.','<b>త్రిభుజాలు:</b> భుజాల ప్రకారం – సమబాహు, సమద్విబాహు, విషమబాహు. కోణాల ప్రకారం – అల్పకోణ, లంబకోణ, అధికకోణ త్రిభుజం. మూడు కోణాల మొత్తం ఎప్పుడూ 180°.','<b>వృత్తం:</b> కేంద్రం నుండి అంచుకు దూరం – వ్యాసార్థం. కేంద్రం గుండా వెళ్లే అంచు నుండి అంచుకు గీత – వ్యాసం. <b>సౌష్ఠవం:</b> మడిస్తే రెండు భాగాలు సరిగ్గా సరిపోతే ఆ గీత సౌష్ఠవ రేఖ.'],
+ tip:'పైన విభాగం ఎంచుకోండి. ఎరుపు చుక్కలను వేలితో లాగండి – కోణాలు, భుజాలు తనంతట కొలుస్తుంది.',
+ build(R,C){
+  const TB=[['ang','📐 కోణాలు'],['tri','🔺 త్రిభుజాలు'],['shp','🟦 ఆకారాలు, రేఖలు'],['cir','⭕ వృత్తం'],['sym','🦋 సౌష్ఠవం']];
+  let tab=store.get('geo_tab','ang');if(!TB.some(t=>t[0]===tab))tab='ang';
+  const tr=h('div',{class:'row'},R);const tb={};TB.forEach(([k,l])=>{tb[k]=btn(tr,l,()=>{tab=k;store.set('geo_tab',k);TB.forEach(([x])=>tb[x].classList.toggle('on',x===k));render();},'chip'+(k===tab?' on':''));});
+  const pane=h('div',{class:'gpane'},R);
+  const svgPt=(sv,e,W,H)=>{const b=sv.getBoundingClientRect();return[(e.clientX-b.left)/b.width*W,(e.clientY-b.top)/b.height*H];};
+  function dragOn(sv,down,move,up){let d=false;sv.style.touchAction='none';sv.addEventListener('pointerdown',e=>{d=down(e)!==false;if(d)try{sv.setPointerCapture(e.pointerId);}catch(_){}});sv.addEventListener('pointermove',e=>{if(d)move(e);});const end=e=>{if(d){d=false;up&&up(e);}};sv.addEventListener('pointerup',end);sv.addEventListener('pointercancel',end);}
+  function cards(list,on){const g=h('div',{class:'ugrid'},pane);list.forEach(it=>{const c=h('button',{class:'ucard',onclick:()=>on(it)},g);h('span',{class:'uic',text:it[0]},c);h('b',{text:it[1]},c);if(it[2]!=null)h('span',{class:'ut',html:'<small>'+it[2]+'</small>'},c);});}
+  function render(){pane.innerHTML='';({ang,tri,shp,cir,sym})[tab]();}
+  /* ---- angles ---- */
+  function ang(){let th=60,snap=5;const O=[180,170];
+   const g=goal(pane,()=>{const t=pick([30,45,60,90,120,135,150,180,210,270]);return{text:'ఎరుపు భుజాన్ని తిప్పి <b>'+t+'°</b> కోణం చేయండి',test:v=>v===t};});
+   const big=h('div',{class:'bigline'},pane);const sv=svgBox(pane,'0 0 360 330');sv.style.maxWidth='420px';
+   s('circle',{cx:O[0],cy:O[1],r:150,fill:'none',stroke:'#d6e4f3','stroke-width':1.5,'stroke-dasharray':'4 5'},sv);
+   s('path',{d:'M'+(O[0]-150)+' '+O[1]+' A150 150 0 0 1 '+(O[0]+150)+' '+O[1]+' Z',fill:'#eef6ff',stroke:'#7aa7d9','stroke-width':1.5},sv);
+   for(let d=0;d<=180;d+=5){const a=d*Math.PI/180,r1=d%30===0?126:d%10===0?136:142;s('line',{x1:O[0]+r1*Math.cos(a),y1:O[1]-r1*Math.sin(a),x2:O[0]+150*Math.cos(a),y2:O[1]-150*Math.sin(a),stroke:'#7aa7d9','stroke-width':d%30===0?2:1},sv);if(d%30===0)s('text',{x:O[0]+112*Math.cos(a),y:O[1]-112*Math.sin(a)+5,'text-anchor':'middle','font-size':12,style:'fill:#4a78ad',text:d},sv);}
+   const arc=s('path',{opacity:.35},sv);const sq=s('path',{fill:'none',stroke:'#3a7bd5','stroke-width':2.5},sv);
+   s('line',{x1:O[0],y1:O[1],x2:O[0]+160,y2:O[1],stroke:'#2b2b2b','stroke-width':5,'stroke-linecap':'round'},sv);
+   const arm=s('line',{x1:O[0],y1:O[1],stroke:'#e85d75','stroke-width':5,'stroke-linecap':'round'},sv);
+   const knob=s('circle',{r:12,fill:'#e85d75',stroke:'#fff','stroke-width':3},sv);s('circle',{cx:O[0],cy:O[1],r:6,fill:'#2b2b2b'},sv);
+   const lab=s('text',{'text-anchor':'middle','font-size':17,'font-weight':800},sv);s('text',{x:O[0]-10,y:O[1]+22,'font-size':13,text:'శీర్షం'},sv);
+   const kind=d=>d===0?['సున్నా కోణం','#999']:d<90?['అల్పకోణం (90° కంటే తక్కువ)','#2e9e5b']:d===90?['లంబకోణం (సరిగ్గా 90°)','#3a7bd5']:d<180?['అధికకోణం (90° – 180° మధ్య)','#f08a24']:d===180?['సరళకోణం (180° – సరళ రేఖ)','#8e44ad']:['పరావర్తన కోణం (180° కంటే ఎక్కువ)','#e85d75'];
+   function upd(q){const a=th*Math.PI/180,k=kind(th),r=44,x=O[0]+155*Math.cos(a),y=O[1]-155*Math.sin(a);arm.setAttribute('x2',x);arm.setAttribute('y2',y);knob.setAttribute('cx',x);knob.setAttribute('cy',y);
+    arc.setAttribute('d',th?'M'+O[0]+' '+O[1]+' L'+(O[0]+r)+' '+O[1]+' A'+r+' '+r+' 0 '+(th>180?1:0)+' 0 '+(O[0]+r*Math.cos(a))+' '+(O[1]-r*Math.sin(a))+' Z':'');arc.setAttribute('fill',k[1]);
+    sq.setAttribute('d',th===90?'M'+(O[0]+22)+' '+O[1]+' L'+(O[0]+22)+' '+(O[1]-22)+' L'+O[0]+' '+(O[1]-22):'');
+    const b=a/2;lab.setAttribute('x',O[0]+70*Math.cos(b));lab.setAttribute('y',O[1]-70*Math.sin(b)+6);lab.textContent=th+'°';lab.setAttribute('style','fill:'+k[1]);
+    big.innerHTML='<span class=num style="color:'+k[1]+'">'+th+'°</span><span class=word>'+k[0]+'</span>';if(!q){say(th+' డిగ్రీలు. '+k[0]);g.check(th);}}
+   const mv=e=>{const[x,y]=svgPt(sv,e,360,330);let d=Math.atan2(-(y-O[1]),x-O[0])*180/Math.PI;if(d<0)d+=360;th=Math.round(d/snap)*snap%360;upd(true);};
+   dragOn(sv,mv,mv,()=>upd());
+   const r1=h('div',{class:'row'},pane);btn(r1,'− 1°',()=>{th=(th+359)%360;upd();},'ghost');btn(r1,'+ 1°',()=>{th=(th+1)%360;upd();},'ghost');btn(r1,'− 5°',()=>{th=(th+355)%360;upd();},'ghost');btn(r1,'+ 5°',()=>{th=(th+5)%360;upd();},'ghost');
+   const sb=btn(r1,'లాగితే 5° చొప్పున',()=>{snap=snap===5?1:5;sb.innerHTML='లాగితే '+snap+'° చొప్పున';},'chip on');
+   h('h4',{class:'mh',html:'🕒 గడియారం ముళ్ల మధ్య కోణం (1 గంట = 30°) – మన చుట్టూ కోణాలు'},pane);
+   cards([['🕐','1 గంట','30° · అల్పకోణం',30],['🕑','2 గంటలు','60°',60],['🕒','3 గంటలు','90° · లంబకోణం',90],['🕓','4 గంటలు','120° · అధికకోణం',120],['🕕','6 గంటలు','180° · సరళకోణం',180],['📕','పుస్తకం మూల','90°',90],['✂️','తెరిచిన కత్తెర','అల్పకోణం',35],['🪑','కుర్చీ వీపు','అధికకోణం',105]],it=>{th=it[3];upd();});
+   upd(true);}
+  /* ---- triangles ---- */
+  function tri(){const U=30,CO=12,RO=9,W=CO*U+40,H=RO*U+40;let P=[[2,7],[9,7],[2,2]];
+   const g=goal(pane,()=>{const t=pick([['r','లంబకోణ త్రిభుజం'],['o','అధికకోణ త్రిభుజం'],['a','అల్పకోణ త్రిభుజం'],['i','సమద్విబాహు త్రిభుజం'],['s','విషమబాహు త్రిభుజం']]);return{text:'చుక్కలను లాగి <b>'+t[1]+'</b> చేయండి',test:c=>c&&c[t[0]]};});
+   const info=h('div',{class:'eq tinfo'},pane);const sv=svgBox(pane,'0 0 '+W+' '+H);sv.style.maxWidth='520px';
+   for(let x=0;x<=CO;x++)for(let y=0;y<=RO;y++)s('circle',{cx:20+x*U,cy:20+y*U,r:1.8,fill:'#c9bfa8'},sv);
+   const tg=s('g',{},sv);const X=p=>20+p[0]*U,Y=p=>20+p[1]*U;const NM=['A','B','C'];
+   const sq=(p,q)=>(p[0]-q[0])**2+(p[1]-q[1])**2;
+   function calc(){const a2=Math.abs((P[1][0]-P[0][0])*(P[2][1]-P[0][1])-(P[2][0]-P[0][0])*(P[1][1]-P[0][1]));if(!a2)return null;
+    const dot=i=>{const p=P[i],q=P[(i+1)%3],r=P[(i+2)%3];return(q[0]-p[0])*(r[0]-p[0])+(q[1]-p[1])*(r[1]-p[1]);};
+    const raw=[0,1,2].map(i=>{const p=P[i],q=P[(i+1)%3],r=P[(i+2)%3];return Math.acos(Math.max(-1,Math.min(1,dot(i)/Math.sqrt(sq(p,q)*sq(p,r)))))*180/Math.PI;});
+    const A=raw.map(Math.round);let df=180-A[0]-A[1]-A[2];if(df){let bi=-1,be=-1;raw.forEach((v,i)=>{if(dot(i)===0)return;const e=Math.abs(v-A[i]);if(e>be){be=e;bi=i;}});if(bi<0)bi=0;A[bi]+=df;}
+    const S=[sq(P[1],P[2]),sq(P[0],P[2]),sq(P[0],P[1])];const r=[0,1,2].some(i=>dot(i)===0),o=[0,1,2].some(i=>dot(i)<0);const iso=S[0]===S[1]||S[1]===S[2]||S[0]===S[2],eq=S[0]===S[1]&&S[1]===S[2];
+    return{A,S,r,o,a:!r&&!o,i:iso&&!eq,e:eq,s:!iso,dot};}
+   const L=v=>{const x=Math.sqrt(v);return Number.isInteger(x)?String(x):x.toFixed(1);};
+   function draw(q){tg.innerHTML='';const c=calc();const pts=P.map(p=>X(p)+','+Y(p)).join(' ');
+    s('polygon',{points:pts,fill:c?(c.r?'#dbe9ff':c.o?'#ffe6cc':'#dff5e8'):'#f3d6d6',stroke:'#2b2b2b','stroke-width':3,'stroke-linejoin':'round'},tg);
+    const cx=(X(P[0])+X(P[1])+X(P[2]))/3,cy=(Y(P[0])+Y(P[1])+Y(P[2]))/3;
+    if(c){[[0,1,2],[1,2,0],[2,0,1]].forEach(([i,j,k])=>{const mx=(X(P[i])+X(P[j]))/2,my=(Y(P[i])+Y(P[j]))/2,dx=mx-cx,dy=my-cy,dl=Math.hypot(dx,dy)||1;s('text',{x:mx+dx/dl*16,y:my+dy/dl*16+5,'text-anchor':'middle','font-size':14,'font-weight':800,style:'fill:#8a5a00',text:L(c.S[k])},tg);});
+     P.forEach((p,i)=>{const vx=cx-X(p),vy=cy-Y(p),vl=Math.hypot(vx,vy)||1;
+      if(c.dot(i)===0){const q=P[(i+1)%3],r=P[(i+2)%3];const u1=[(q[0]-p[0]),(q[1]-p[1])],u2=[(r[0]-p[0]),(r[1]-p[1])];const n1=Math.hypot(...u1),n2=Math.hypot(...u2),d=12;const a1=[X(p)+u1[0]/n1*d,Y(p)+u1[1]/n1*d],a2=[X(p)+u2[0]/n2*d,Y(p)+u2[1]/n2*d];s('path',{d:'M'+a1[0]+' '+a1[1]+' L'+(a1[0]+u2[0]/n2*d)+' '+(a1[1]+u2[1]/n2*d)+' L'+a2[0]+' '+a2[1],fill:'none',stroke:'#3a7bd5','stroke-width':2},tg);}
+      s('text',{x:X(p)+vx/vl*34,y:Y(p)+vy/vl*34+5,'text-anchor':'middle','font-size':14,'font-weight':800,style:'fill:#e85d75',text:c.A[i]+'°'},tg);});}
+    P.forEach((p,i)=>{s('circle',{cx:X(p),cy:Y(p),r:11,fill:'#e85d75',stroke:'#fff','stroke-width':3},tg);const vx=X(p)-cx,vy=Y(p)-cy,vl=Math.hypot(vx,vy)||1;s('text',{x:X(p)+vx/vl*22,y:Y(p)+vy/vl*22+5,'text-anchor':'middle','font-size':15,'font-weight':800,text:NM[i]},tg);});
+    if(!c){info.innerHTML='<span class=warn>మూడు చుక్కలు ఒకే రేఖ మీద ఉన్నాయి – ఇది త్రిభుజం కాదు!</span>';return;}
+    const bs=c.e?'సమబాహు':c.i?'సమద్విబాహు (2 భుజాలు సమానం)':'విషమబాహు (3 భుజాలు వేర్వేరు)',ba=c.r?'లంబకోణ త్రిభుజం (ఒక కోణం 90°)':c.o?'అధికకోణ త్రిభుజం (ఒక కోణం 90° కంటే ఎక్కువ)':'అల్పకోణ త్రిభుజం (అన్నీ 90° కంటే తక్కువ)';
+    info.innerHTML='∠A + ∠B + ∠C = '+c.A[0]+'° + '+c.A[1]+'° + '+c.A[2]+'° = <b>180°</b><br>భుజాల ప్రకారం: <b style="font-size:1em">'+bs+'</b><br>కోణాల ప్రకారం: <b style="font-size:1em">'+ba+'</b>';
+    if(!q){say(bs+'. '+ba);g.check(c);}}
+   let sel=-1;dragOn(sv,e=>{const[x,y]=svgPt(sv,e,W,H);let bd=1e9;P.forEach((p,i)=>{const d=Math.hypot(X(p)-x,Y(p)-y);if(d<bd){bd=d;sel=i;}});if(bd>45){sel=-1;return false;}},e=>{if(sel<0)return;const[x,y]=svgPt(sv,e,W,H);const nx=Math.max(0,Math.min(CO,Math.round((x-20)/U))),ny=Math.max(0,Math.min(RO,Math.round((y-20)/U)));if(P.some((p,i)=>i!==sel&&p[0]===nx&&p[1]===ny))return;if(P[sel][0]!==nx||P[sel][1]!==ny){P[sel]=[nx,ny];draw(true);}},()=>{sel=-1;draw();});
+   const r1=h('div',{class:'row'},pane);[['లంబకోణ',[[2,7],[9,7],[2,2]]],['సమద్విబాహు',[[2,8],[10,8],[6,2]]],['అధికకోణ',[[1,7],[11,7],[4,4]]],['అల్పకోణ',[[2,8],[10,7],[5,1]]]].forEach(([l,pp])=>btn(r1,l,()=>{P=pp.map(p=>p.slice());draw();},'ghost'));
+   draw(true);}
+  /* ---- shapes & lines ---- */
+  function shp(){const poly=n=>Array.from({length:n},(_,i)=>{const a=-Math.PI/2+i*2*Math.PI/n;return[130+100*Math.cos(a),135+100*Math.sin(a)];});
+   const SH=[{n:'త్రిభుజం',p:poly(3),pr:['3 భుజాలు, 3 శీర్షాలు, 3 కోణాలు','కోణాల మొత్తం 180°'],ex:'సమోసా, ట్రాఫిక్ హెచ్చరిక బోర్డు'},
+    {n:'చతురస్రం',p:[[60,65],[200,65],[200,205],[60,205]],pr:['4 భుజాలు అన్నీ సమానం','4 కోణాలూ లంబకోణాలు (90°)','కర్ణాలు సమానం'],ex:'క్యారమ్ బోర్డు, చెస్ బోర్డు గడి'},
+    {n:'దీర్ఘచతురస్రం',p:[[25,85],[235,85],[235,185],[25,185]],pr:['ఎదురెదురు భుజాలు సమానం, సమాంతరం','4 కోణాలూ లంబకోణాలు','కర్ణాలు సమానం'],ex:'తలుపు, పుస్తకం, నల్లబల్ల'},
+    {n:'సమచతుర్భుజం',p:[[130,30],[215,135],[130,240],[45,135]],pr:['4 భుజాలు సమానం','ఎదురెదురు కోణాలు సమానం','కర్ణాలు లంబంగా ఖండించుకుంటాయి'],ex:'గాలిపటం ఆకారం 🪁'},
+    {n:'సమాంతర చతుర్భుజం',p:[[75,75],[245,75],[185,195],[15,195]],pr:['ఎదురెదురు భుజాలు సమానం, సమాంతరం','ఎదురెదురు కోణాలు సమానం'],ex:'ఒరిగిన పెట్టె వైపు'},
+    {n:'సమలంబ చతుర్భుజం',p:[[85,75],[175,75],[245,195],[15,195]],pr:['ఒక జత ఎదురెదురు భుజాలు సమాంతరం'],ex:'బకెట్ పక్క ఆకారం'},
+    {n:'పంచభుజి',p:poly(5),pr:['5 భుజాలు, 5 శీర్షాలు','కోణాల మొత్తం 540°'],ex:'ఇంటి ముందు భాగం (పైకప్పుతో)'},
+    {n:'షడ్భుజి',p:poly(6),pr:['6 భుజాలు, 6 శీర్షాలు','కోణాల మొత్తం 720°'],ex:'తేనెపట్టు గదులు 🐝'},
+    {n:'అష్టభుజి',p:poly(8),pr:['8 భుజాలు, 8 శీర్షాలు'],ex:'“ఆగు” ట్రాఫిక్ బోర్డు 🛑'},
+    {n:'వృత్తం',circle:1,pr:['భుజాలు, శీర్షాలు లేవు','అంచు మీది ప్రతి బిందువు కేంద్రం నుండి సమాన దూరంలో'],ex:'నాణెం, చక్రం, గాజు'}];
+   let cur=0,mode='';const COLS=['#ef7d8f','#6fb6f2','#f6c453','#7fd18b','#c39bd3','#f7a072','#6fd6c5','#f39ac0','#9fb7ff','#ffd27a'];
+   const cr=h('div',{class:'row'},pane);const cb=SH.map((o,i)=>btn(cr,o.n,()=>{cur=i;cb.forEach((b,j)=>b.classList.toggle('on',j===i));draw();say(o.n);},'chip'+(i?'':' on')));
+   const sv=svgBox(pane,'0 0 260 270');sv.style.maxWidth='300px';const cnt=h('div',{class:'counts'},pane);const pr=h('div',{class:'stepmsg'},pane);
+   function draw(){const o=SH[cur];sv.innerHTML='';
+    if(o.circle){s('circle',{cx:130,cy:135,r:105,fill:COLS[cur]+'88',stroke:'#2b2b2b','stroke-width':3},sv);s('circle',{cx:130,cy:135,r:4,fill:'#2b2b2b'},sv);s('text',{x:138,y:130,'font-size':14,text:'కేంద్రం'},sv);}
+    else{s('polygon',{points:o.p.map(p=>p.join(',')).join(' '),fill:COLS[cur]+'88',stroke:'#2b2b2b','stroke-width':3,'stroke-linejoin':'round'},sv);
+     if(mode==='s')o.p.forEach((p,i)=>{const q=o.p[(i+1)%o.p.length];s('line',{x1:p[0],y1:p[1],x2:q[0],y2:q[1],stroke:'#e85d75','stroke-width':6,'stroke-linecap':'round'},sv);const mx=(p[0]+q[0])/2,my=(p[1]+q[1])/2;s('circle',{cx:mx,cy:my,r:11,fill:'#fff',stroke:'#e85d75','stroke-width':2},sv);s('text',{x:mx,y:my+5,'text-anchor':'middle','font-size':13,'font-weight':800,style:'fill:#e85d75',text:i+1},sv);});
+     if(mode==='v')o.p.forEach((p,i)=>{s('circle',{cx:p[0],cy:p[1],r:12,fill:'#3a7bd5'},sv);s('text',{x:p[0],y:p[1]+5,'text-anchor':'middle','font-size':13,'font-weight':800,style:'fill:#fff',text:i+1},sv);});}
+    cnt.innerHTML='';if(!o.circle)[['s','భుజాలు'],['v','శీర్షాలు']].forEach(([k,t])=>{const d=h('div',{class:'cnt'+(mode===k?' on':''),html:'<b>'+o.p.length+'</b>'+t,onclick:()=>{mode=mode===k?'':k;draw();if(mode)say(o.n+'కు '+o.p.length+' '+t);}},cnt);});
+    pr.innerHTML='<b>'+o.n+'</b><br>• '+o.pr.join('<br>• ')+'<br><span class=muted>ఉదా: '+o.ex+'</span>';}
+   draw();
+   h('h4',{class:'mh',html:'➖ రేఖలు – రకాలు'},pane);const lg=h('div',{class:'ugrid lgrid'},pane);
+   const LN=[['రేఖాఖండం','రెండు చివరలు ఉంటాయి','M15 35 L105 35',1,'పెన్సిల్ అంచు'],['రేఖ','రెండు వైపులా అనంతం','M5 35 L115 35',2,'↔'],['కిరణం','ఒక చివర, ఒక వైపు అనంతం','M15 35 L115 35',3,'టార్చ్ వెలుగు 🔦'],['సమాంతర రేఖలు','ఎప్పుడూ కలవవు','M10 22 L110 22 M10 48 L110 48',0,'రైలు పట్టాలు 🛤️'],['లంబ రేఖలు','90° వద్ద ఖండించుకుంటాయి','M60 8 L60 62 M15 35 L105 35',4,'“+” గుర్తు'],['ఖండన రేఖలు','ఒక బిందువు దగ్గర కలుస్తాయి','M15 60 L105 10 M15 10 L105 60',0,'కత్తెర ✂️']];
+   LN.forEach(([n,d,p,k,ex])=>{const c=h('div',{class:'ucard'},lg);const sv2=svgBox(c,'0 0 120 70');s('path',{d:p,stroke:'#2b2b2b','stroke-width':3,fill:'none','stroke-linecap':'round'},sv2);
+    if(k===1)[[15,35],[105,35]].forEach(([x,y])=>s('circle',{cx:x,cy:y,r:4.5,fill:'#e85d75'},sv2));
+    if(k===2){s('path',{d:'M14 28 L4 35 L14 42',fill:'none',stroke:'#2b2b2b','stroke-width':3},sv2);s('path',{d:'M106 28 L116 35 L106 42',fill:'none',stroke:'#2b2b2b','stroke-width':3},sv2);}
+    if(k===3){s('circle',{cx:15,cy:35,r:4.5,fill:'#e85d75'},sv2);s('path',{d:'M106 28 L116 35 L106 42',fill:'none',stroke:'#2b2b2b','stroke-width':3},sv2);}
+    if(k===4)s('path',{d:'M60 23 L72 23 L72 35',fill:'none',stroke:'#3a7bd5','stroke-width':2},sv2);
+    h('b',{text:n},c);h('span',{class:'ud',text:d},c);h('span',{class:'ut',html:'<small>'+ex+'</small>'},c);c.onclick=()=>speak(n+'. '+d);});}
+  /* ---- circle ---- */
+  function cir(){let r=5,ang=35,showD=true;const O=[160,150],K=12;
+   const info=h('div',{class:'eq'},pane);const sv=svgBox(pane,'0 0 320 300');sv.style.maxWidth='360px';
+   const ctl=h('div',{class:'ctl'},pane);stepper(ctl,'వ్యాసార్థం (సెం.మీ)',2,11,r,v=>{r=v;draw();});const dB=btn(ctl,'వ్యాసం చూపు',()=>{showD=!showD;dB.classList.toggle('on',showD);draw();},'chip on');
+   function draw(q){sv.innerHTML='';const R0=r*K,a=ang*Math.PI/180,A=[O[0]+R0*Math.cos(a),O[1]-R0*Math.sin(a)],B=[O[0]-R0*Math.cos(a),O[1]+R0*Math.sin(a)];
+    s('circle',{cx:O[0],cy:O[1],r:R0,fill:'#fff3dc',stroke:'#2b2b2b','stroke-width':3},sv);
+    if(showD){s('line',{x1:B[0],y1:B[1],x2:O[0],y2:O[1],stroke:'#8e44ad','stroke-width':4,'stroke-dasharray':'7 5'},sv);s('circle',{cx:B[0],cy:B[1],r:6,fill:'#8e44ad'},sv);s('text',{x:B[0]+(B[0]<O[0]?-16:10),y:B[1]+(B[1]>O[1]?18:-8),'font-size':16,'font-weight':800,text:'B'},sv);}
+    s('line',{x1:O[0],y1:O[1],x2:A[0],y2:A[1],stroke:'#e85d75','stroke-width':5,'stroke-linecap':'round'},sv);
+    s('text',{x:(O[0]+A[0])/2-12*Math.sin(a),y:(O[1]+A[1])/2-12*Math.cos(a),'text-anchor':'middle','font-size':14,'font-weight':800,style:'fill:#e85d75',text:r+' సెం.మీ'},sv);
+    s('circle',{cx:O[0],cy:O[1],r:6,fill:'#2b2b2b'},sv);s('text',{x:O[0]-18,y:O[1]+20,'font-size':16,'font-weight':800,text:'O'},sv);
+    s('circle',{cx:A[0],cy:A[1],r:11,fill:'#e85d75',stroke:'#fff','stroke-width':3},sv);s('text',{x:A[0]+(A[0]>O[0]?14:-24),y:A[1]+(A[1]<O[1]?-8:20),'font-size':16,'font-weight':800,text:'A'},sv);
+    info.innerHTML='వ్యాసార్థం OA = <b>'+r+' సెం.మీ</b>'+(showD?'<br>వ్యాసం AB = 2 × '+r+' = <b>'+(2*r)+' సెం.మీ</b>':'');if(!q)say('వ్యాసార్థం '+r+' సెంటీమీటర్లు. వ్యాసం '+(2*r)+' సెంటీమీటర్లు');}
+   const mv=e=>{const[x,y]=svgPt(sv,e,320,300);ang=Math.round(Math.atan2(-(y-O[1]),x-O[0])*180/Math.PI);draw(true);};dragOn(sv,mv,mv);
+   h('h4',{class:'mh',html:'⭕ వృత్తం భాగాలు'},pane);
+   cards([['⚫','కేంద్రం (O)','వృత్తం మధ్య బిందువు'],['📏','వ్యాసార్థం (OA)','కేంద్రం నుండి అంచుకు'],['↔️','వ్యాసం (AB)','కేంద్రం గుండా అంచు నుండి అంచుకు = 2 × వ్యాసార్థం'],['🔄','పరిధి','వృత్తం చుట్టూ అంచు పొడవు'],['🚲','సైకిల్ చక్రం','ఊచలు = వ్యాసార్థాలు'],['🪙','నాణెం, గాజు','వృత్తాకారం']],it=>speak(it[1]+'. '+it[2]));
+   draw(true);}
+  /* ---- symmetry ---- */
+  function sym(){const CO=12,RO=10,U=26,PAL={r:'#e85d75',y:'#f6c453',b:'#3a7bd5',g:'#2e9e5b',k:'#2b2b2b'};let cells={},mode='m',col='r',fixed=null,solved=false;
+   const PRE={'🦋 సీతాకోకచిలుక':['...k..','rr..k.','ryrr.k','rrrrrk','.rrrrk','..bbbk','.byb.k','.bb..k','......','......'],'🏠 ఇల్లు':['.....r','....rr','...rrr','..rrrr','.rrrrr','.yyyyy','.ybyyy','.yyyyk','.yyyyk','gggggg'],'❤️ గుండె':['......','.rr...','rrrr.r','rrrrrr','rrrrrr','.rrrrr','..rrrr','...rrr','....rr','.....r'],'🌳 చెట్టు':['.....g','....gg','...ggg','..gggg','...ggg','..gggg','.ggggg','.....k','.....k','yyyyyy']};
+   const mr=h('div',{class:'row'},pane);const mb=btn(mr,'🪞 అద్దం బొమ్మ',()=>setMode('m'),'chip on'),cbn=btn(mr,'✍ సగం పూర్తి చేయండి',()=>setMode('c'),'chip');
+   const info=h('div',{class:'eq'},pane);const pal=h('div',{class:'row'},pane);
+   const pb={};Object.keys(PAL).forEach(k=>{pb[k]=h('button',{class:'swatch'+(k===col?' on':''),style:'background:'+PAL[k],'aria-label':'రంగు',onclick:()=>{col=k;Object.keys(pb).forEach(x=>pb[x].classList.toggle('on',x===k));}},pal);});
+   const sv=svgBox(pane,'0 0 '+(CO*U+20)+' '+(RO*U+20));sv.style.maxWidth='420px';const gg=s('g',{},sv);
+   const ar=h('div',{class:'row'},pane);
+   function setMode(m){mode=m;mb.classList.toggle('on',m==='m');cbn.classList.toggle('on',m==='c');ar.innerHTML='';cells={};fixed=null;solved=false;
+    if(m==='m'){Object.keys(PRE).forEach(n=>btn(ar,n,()=>{cells={};PRE[n].forEach((row,r)=>row.split('').forEach((ch,c)=>{if(ch!=='.'){cells[r+','+c]=ch;cells[r+','+(CO-1-c)]=ch;}}));draw();say(n.slice(2));},'ghost'));btn(ar,'🧹 ఖాళీ',()=>{cells={};draw();},'ghost');}
+    else{btn(ar,'🎯 కొత్త సవాలు',()=>setMode('c'),'ghost');btn(ar,'🧹 కుడి వైపు ఖాళీ',()=>{Object.keys(cells).forEach(k=>{if(+k.split(',')[1]>=CO/2)delete cells[k];});solved=false;draw();},'ghost');
+     fixed={};const n=rnd(9,15),ks=Object.keys(PAL);for(let i=0;i<n;i++){const r=rnd(0,RO-1),c=rnd(1,CO/2-1);fixed[r+','+c]=pick(ks);}Object.assign(cells,fixed);}
+    draw();}
+   function check(){if(mode!=='c'||solved)return;for(let r=0;r<RO;r++)for(let c=0;c<CO/2;c++){if((cells[r+','+c]||'')!==(cells[r+','+(CO-1-c)]||''))return;}solved=true;addStar();say('శభాష్! సౌష్ఠవ బొమ్మ పూర్తయింది');}
+   function draw(){gg.innerHTML='';for(let r=0;r<RO;r++)for(let c=0;c<CO;c++){const k=r+','+c,v=cells[k];s('rect',{x:10+c*U,y:10+r*U,width:U,height:U,style:'fill:'+(v?PAL[v]:(mode==='c'&&c<CO/2?'#f3efe6':'#fff'))+';stroke:#d6cdb9;stroke-width:1;cursor:pointer',onclick:()=>tap(r,c)},gg);}
+    s('line',{x1:10+CO/2*U,y1:2,x2:10+CO/2*U,y2:RO*U+18,stroke:'#e85d75','stroke-width':3,'stroke-dasharray':'8 5','pointer-events':'none'},gg);
+    check();info.innerHTML=mode==='m'?'ఒక వైపు గడిని తాకితే <b>అద్దంలా</b> రెండో వైపు కూడా రంగు పడుతుంది. ఎరుపు చుక్కల గీత = <b>సౌష్ఠవ రేఖ</b>.':solved?'<span class=ok>✓ రెండు వైపులా సరిగ్గా సరిపోయాయి! ⭐</span>':'ఎడమ వైపు బొమ్మకు సరిపోయేలా <b>కుడి వైపు</b> అవే రంగులు వేయండి.';}
+   function tap(r,c){if(mode==='m'){const k1=r+','+c,k2=r+','+(CO-1-c);if(cells[k1]===col){delete cells[k1];delete cells[k2];}else{cells[k1]=col;cells[k2]=col;}}
+    else{if(c<CO/2)return;const k=r+','+c;if(cells[k]===col)delete cells[k];else cells[k]=col;}draw();}
+   h('h4',{class:'mh',html:'🔤 సౌష్ఠవ రేఖలు ఉన్న అక్షరాలు'},pane);const lv=svgBox(pane,'0 0 470 84');lv.style.maxWidth='500px';
+   [['A','v'],['B','h'],['C','h'],['E','h'],['H','vh'],['M','v'],['O','vh'],['T','v'],['F','']].forEach(([l,t],i)=>{const x=28+i*52;s('text',{x,y:58,'text-anchor':'middle','font-size':40,'font-weight':800,style:'font-family:Arial,sans-serif;fill:#2b2b2b',text:l},lv);
+    if(t.includes('v'))s('line',{x1:x,y1:6,x2:x,y2:72,stroke:'#e85d75','stroke-width':2,'stroke-dasharray':'4 3'},lv);if(t.includes('h'))s('line',{x1:x-22,y1:42,x2:x+22,y2:42,stroke:'#3a7bd5','stroke-width':2,'stroke-dasharray':'4 3'},lv);if(!t)s('text',{x,y:78,'text-anchor':'middle','font-size':10,text:'లేదు'},lv);});
+   setMode('m');}
+  render();
+  quiz(C,()=>{const t=rnd(0,5);
+   if(t===0){const a=rnd(30,80),b=rnd(30,80);return{q:'త్రిభుజంలో రెండు కోణాలు <b>'+a+'°</b>, <b>'+b+'°</b>. మూడో కోణం ఎంత?',a:180-a-b};}
+   if(t===1){const r=rnd(3,15);return{q:'వ్యాసార్థం <b>'+r+' సెం.మీ</b> అయితే వ్యాసం ఎంత?',a:2*r};}
+   if(t===2){const d=rnd(2,12)*2;return{q:'వ్యాసం <b>'+d+' సెం.మీ</b> అయితే వ్యాసార్థం ఎంత?',a:d/2};}
+   if(t===3){const o=pick([['త్రిభుజానికి',3],['చతురస్రానికి',4],['పంచభుజికి',5],['షడ్భుజికి',6],['అష్టభుజికి',8]]);return{q:o[0]+' ఎన్ని <b>భుజాలు</b>?',a:o[1]};}
+   if(t===4){const hh=rnd(1,6);return{q:'గడియారంలో <b>'+hh+' గంటలకు</b> ముళ్ల మధ్య కోణం ఎన్ని డిగ్రీలు?',a:hh*30};}
+   const o=pick([['లంబకోణం',90],['సరళకోణం',180],['పూర్ణకోణం',360]]);return{q:'<b>'+o[0]+'</b> ఎన్ని డిగ్రీలు?',a:o[1]};});
+ }},
+/* 14 3D shapes */
+{t:'3D ఆకారాలు – తిప్పి చూద్దాం',c:'1–5 తరగతి',col:'#c0392b',key:'ముఖాలు + శీర్షాలు − అంచులు = 2',
+ body:['ఘన ఆకారాలకు <b>ముఖాలు</b> (చదునైన తలాలు), <b>అంచులు</b> (రెండు ముఖాలు కలిసే గీతలు), <b>శీర్షాలు</b> (మూలలు) ఉంటాయి.','పాచిక = ఘనం, అగ్గిపెట్టె = దీర్ఘఘనం, గుడారం = త్రిభుజ పట్టకం.','ఏ ఆకారానికైనా: ముఖాలు + శీర్షాలు − అంచులు = 2.'],
+ tip:'ఆకారాన్ని వేలితో లాగి తిప్పండి. కింద ముఖాలు / అంచులు / శీర్షాలు నొక్కితే అవి వెలుగుతాయి.',
+ build(R,C){
+  const SH=[
+   {n:'ఘనం',ex:'పాచిక 🎲',v:[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]],f:[[0,1,2,3],[4,5,6,7],[0,1,5,4],[2,3,7,6],[1,2,6,5],[0,3,7,4]]},
+   {n:'దీర్ఘఘనం',ex:'అగ్గిపెట్టె, ఇటుక 🧱',v:[[-1.6,-.8,-1],[1.6,-.8,-1],[1.6,.8,-1],[-1.6,.8,-1],[-1.6,-.8,1],[1.6,-.8,1],[1.6,.8,1],[-1.6,.8,1]],f:[[0,1,2,3],[4,5,6,7],[0,1,5,4],[2,3,7,6],[1,2,6,5],[0,3,7,4]]},
+   {n:'చతురస్ర పిరమిడ్',ex:'ఈజిప్ట్ పిరమిడ్ 🔺',v:[[-1.2,-1,-1.2],[1.2,-1,-1.2],[1.2,-1,1.2],[-1.2,-1,1.2],[0,1.4,0]],f:[[0,1,2,3],[0,1,4],[1,2,4],[2,3,4],[3,0,4]]},
+   {n:'త్రిభుజ పట్టకం',ex:'గుడారం ⛺',v:[[-1.3,-1,-1.4],[1.3,-1,-1.4],[0,1.1,-1.4],[-1.3,-1,1.4],[1.3,-1,1.4],[0,1.1,1.4]],f:[[0,1,2],[3,4,5],[0,1,4,3],[1,2,5,4],[2,0,3,5]]},
+   {n:'చతుర్ముఖి',ex:'త్రిభుజ పిరమిడ్',v:[[0,1.4,0],[-1.3,-.8,-.75],[1.3,-.8,-.75],[0,-.8,1.5]],f:[[1,2,3],[0,1,2],[0,2,3],[0,3,1]]}];
+  SH.forEach(o=>{const es=new Set(),E=[];o.f.forEach(fc=>fc.forEach((a,i)=>{const b=fc[(i+1)%fc.length];const k=Math.min(a,b)+'-'+Math.max(a,b);if(!es.has(k)){es.add(k);E.push([a,b]);}}));o.e=E;});
+  const FC=['#ef7d8f','#6fb6f2','#f6c453','#7fd18b','#c39bd3','#f7a072'];
+  let cur=0,mode='',yaw=.6,pitch=.45,drag=null,auto=true,alive=true;onClean(()=>alive=false);
+  const chips=h('div',{class:'row'},R);const cb=SH.map((o,i)=>btn(chips,o.n,()=>{cur=i;cb.forEach((c,j)=>c.classList.toggle('on',j===i));cnt();say(o.n);},'chip'+(i?'':' on')));
+  const cv=h('canvas',{class:'c3d','aria-label':'3D ఆకారం'},R);const ctx=cv.getContext('2d');
+  const counts=h('div',{class:'counts'},R);const exl=h('div',{class:'eq'},R);
+  const items=[['f','ముఖాలు'],['e','అంచులు'],['v','శీర్షాలు']].map(([k,t])=>{const d=h('div',{class:'cnt',onclick:()=>{mode=mode===k?'':k;items.forEach(x=>x.d.classList.toggle('on',x.k===mode));if(mode)say(SH[cur].n+' '+(k==='f'?SH[cur].f.length:k==='e'?SH[cur].e.length:SH[cur].v.length)+' '+t);}},counts);return{k,t,d};});
+  function cnt(){const o=SH[cur];items.forEach(x=>x.d.innerHTML='<b>'+(x.k==='f'?o.f.length:x.k==='e'?o.e.length:o.v.length)+'</b>'+x.t);exl.innerHTML=o.f.length+' + '+o.v.length+' − '+o.e.length+' = <b>2</b><br><small>ఉదాహరణ: '+o.ex+'</small>';}
+  function size(){const w=cv.clientWidth||300,hh=cv.clientHeight||300,dpr=window.devicePixelRatio||1;cv.width=w*dpr;cv.height=hh*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
+  function proj(p,w,hh){const[x,y,z]=p;const x1=x*Math.cos(yaw)+z*Math.sin(yaw),z1=-x*Math.sin(yaw)+z*Math.cos(yaw);const y2=y*Math.cos(pitch)-z1*Math.sin(pitch),z2=y*Math.sin(pitch)+z1*Math.cos(pitch);const D=6,sc=Math.min(w,hh)*.27*D/(D+z2);return[w/2+x1*sc,hh/2-y2*sc,z2];}
+  function render(){if(!alive)return;const w=cv.clientWidth,hh=cv.clientHeight;if(cv.width!==Math.round(w*(window.devicePixelRatio||1)))size();ctx.clearRect(0,0,w,hh);const o=SH[cur];const P=o.v.map(p=>proj(p,w,hh));
+   const fs=o.f.map((fc,i)=>({fc,i,z:fc.reduce((a,k)=>a+P[k][2],0)/fc.length})).sort((a,b)=>b.z-a.z);
+   fs.forEach(({fc,i})=>{ctx.beginPath();fc.forEach((k,j)=>j?ctx.lineTo(P[k][0],P[k][1]):ctx.moveTo(P[k][0],P[k][1]));ctx.closePath();ctx.fillStyle=mode==='f'?FC[i%FC.length]+'cc':'#fff8e855';ctx.fill();});
+   ctx.lineJoin='round';o.e.forEach(([a,b])=>{ctx.beginPath();ctx.moveTo(P[a][0],P[a][1]);ctx.lineTo(P[b][0],P[b][1]);ctx.strokeStyle=mode==='e'?'#e85d75':'#2b2b2b';ctx.lineWidth=mode==='e'?4.5:2.2;ctx.stroke();});
+   if(mode==='v')P.forEach((p,i)=>{ctx.beginPath();ctx.arc(p[0],p[1],10,0,7);ctx.fillStyle='#3a7bd5';ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 11px "Baloo Tamma 2",sans-serif';ctx.textAlign='center';ctx.fillText(i+1,p[0],p[1]+4);});
+   if(mode==='e')o.e.forEach(([a,b],i)=>{const x=(P[a][0]+P[b][0])/2,y=(P[a][1]+P[b][1])/2;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(x,y,9,0,7);ctx.fill();ctx.fillStyle='#e85d75';ctx.font='bold 11px "Baloo Tamma 2",sans-serif';ctx.textAlign='center';ctx.fillText(i+1,x,y+4);});
+   if(auto&&!drag)yaw+=.006;requestAnimationFrame(render);}
+  cv.addEventListener('pointerdown',e=>{drag=[e.clientX,e.clientY];auto=false;try{cv.setPointerCapture(e.pointerId);}catch(_){}});
+  cv.addEventListener('pointermove',e=>{if(!drag)return;yaw+=(e.clientX-drag[0])*.01;pitch=Math.max(-1.4,Math.min(1.4,pitch+(e.clientY-drag[1])*.01));drag=[e.clientX,e.clientY];});
+  const up=()=>{drag=null;};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+  btn(h('div',{class:'row'},R),'⟳ తనంతట తిరుగు',()=>{auto=!auto;},'ghost');
+  cnt();requestAnimationFrame(()=>{size();render();});
+  quiz(C,()=>{const o=pick(SH),k=pick(['f','e','v']);return{q:'<b>'+o.n+'</b> ('+o.ex+') కు ఎన్ని <b>'+(k==='f'?'ముఖాలు':k==='e'?'అంచులు':'శీర్షాలు')+'</b>?',a:k==='f'?o.f.length:k==='e'?o.e.length:o.v.length};});
+ }},
+/* 15 Data handling */
+{t:'దత్తాంశ నిర్వహణ – గణన గుర్తులు, రేఖాచిత్రాలు',c:'2–5 తరగతి',col:'#9b59b6',key:'గణన గుర్తులు → పట్టిక → చిత్ర రేఖాచిత్రం → కమ్మీ రేఖాచిత్రం',
+ body:['<b>దత్తాంశం</b> = సేకరించిన సమాచారం. ఉదా: తరగతిలో ఎవరికి ఏ పండు ఇష్టం?','<b>గణన గుర్తులు:</b> ఒక్కొక్కరికి ఒక నిలువు గీత |. ఐదో గీతను అడ్డంగా గీసి 5 గా కట్టాలి – లెక్కించడం సులభం.','<b>చిత్ర రేఖాచిత్రం:</b> ఒక బొమ్మ కొంత మందిని సూచిస్తుంది (కీ చూడాలి). <b>కమ్మీ రేఖాచిత్రం:</b> కమ్మీ ఎత్తు = సంఖ్య. ఎత్తైన కమ్మీ = ఎక్కువ.'],
+ tip:'సర్వే ఎంచుకుని + / − తో ఓట్లు వేయండి. గణన గుర్తులు, చిత్ర, కమ్మీ రేఖాచిత్రాలు తనంతట మారతాయి. “✏️ మీ సర్వే”లో మీ తరగతి ప్రశ్న రాయవచ్చు.',
+ build(R,C){
+  const DS={fruit:{n:'🍎 ఇష్టమైన పండ్లు',q:'మీకు ఇష్టమైన పండు ఏది?',c:[['🥭','మామిడి'],['🍌','అరటి'],['🍎','ఆపిల్'],['🍇','ద్రాక్ష'],['🍊','నారింజ']]},
+   travel:{n:'🚌 బడికి ఎలా?',q:'మీరు బడికి ఎలా వస్తారు?',c:[['🚶','నడక'],['🚲','సైకిల్'],['🚌','బస్సు'],['🛺','ఆటో'],['🏍️','బైక్']]},
+   game:{n:'🏏 ఇష్టమైన ఆట',q:'మీకు ఇష్టమైన ఆట ఏది?',c:[['🏏','క్రికెట్'],['🤼','కబడ్డీ'],['⚽','ఫుట్‌బాల్'],['🏃','ఖో-ఖో'],['♟️','చదరంగం']]},
+   own:{n:'✏️ మీ సర్వే',q:'మా తరగతి సర్వే',c:[['🔴','ఎంపిక 1'],['🔵','ఎంపిక 2'],['🟢','ఎంపిక 3'],['🟡','ఎంపిక 4'],['🟣','ఎంపిక 5']]}};
+  const BC=['#f6a623','#f6c453','#e85d75','#8e44ad','#f08a24'];
+  let st=store.get('dh_state',null);if(!st||!st.counts)st={ds:'fruit',view:'tally',key:2,counts:{},own:null};
+  Object.keys(DS).forEach(k=>{if(!st.counts[k]||st.counts[k].length!==5)st.counts[k]=k==='own'?[0,0,0,0,0]:DS[k].c.map(()=>rnd(2,12));});
+  if(st.own){DS.own.q=st.own.q||DS.own.q;(st.own.n||[]).forEach((n,i)=>{if(n)DS.own.c[i][1]=n;});}
+  const save=()=>store.set('dh_state',{...st,own:{q:DS.own.q,n:DS.own.c.map(c=>c[1])}});
+  const dr=h('div',{class:'row'},R);const db={};Object.keys(DS).forEach(k=>{db[k]=btn(dr,DS[k].n,()=>{st.ds=k;save();Object.keys(db).forEach(x=>db[x].classList.toggle('on',x===k));renderAll();},'chip'+(k===st.ds?' on':''));});
+  const qh=h('div',{class:'dq'},R);const vote=h('div',{class:'vgrid'},R);
+  const tools=h('div',{class:'row'},R);btn(tools,'🎲 కొత్త దత్తాంశం',()=>{st.counts[st.ds]=st.counts[st.ds].map(()=>rnd(1,14));save();renderAll();},'ghost');btn(tools,'0 అన్నీ సున్నా',()=>{st.counts[st.ds]=[0,0,0,0,0];save();renderAll();},'ghost');
+  const vr=h('div',{class:'row'},R);const vb={};[['tally','✋ గణన గుర్తులు'],['pic','🖼️ చిత్ర రేఖాచిత్రం'],['bar','📊 కమ్మీ రేఖాచిత్రం']].forEach(([k,l])=>{vb[k]=btn(vr,l,()=>{st.view=k;save();Object.keys(vb).forEach(x=>vb[x].classList.toggle('on',x===k));renderView();},'chip'+(k===st.view?' on':''));});
+  const view=h('div',{class:'dview'},R);const find=h('div',{class:'stepmsg dfind'},R);
+  const D=()=>DS[st.ds],N=()=>st.counts[st.ds];
+  function renderAll(){const d=D();qh.innerHTML='';
+   if(st.ds==='own'){const qi=h('input',{class:'dqi',value:d.q,'aria-label':'సర్వే ప్రశ్న'},qh);qi.oninput=()=>{d.q=qi.value;save();};}else qh.innerHTML='❓ '+d.q;
+   vote.innerHTML='';d.c.forEach(([e,n],i)=>{const c=h('div',{class:'vcard'},vote);h('span',{class:'ve',text:e},c);
+    if(st.ds==='own'){const ni=h('input',{class:'vni',value:n,'aria-label':'ఎంపిక పేరు'},c);ni.oninput=()=>{d.c[i][1]=ni.value||('ఎంపిక '+(i+1));save();renderView();};}else h('b',{class:'vn',text:n},c);
+    const rw=h('div',{class:'vrow'},c);btn(rw,'−',()=>{if(N()[i]>0){N()[i]--;save();upd(i);}},'ghost sm');const out=h('b',{class:'vc',text:N()[i]},rw);btn(rw,'+',()=>{if(N()[i]<40){N()[i]++;save();upd(i);say(d.c[i][1]+' '+N()[i]);}},'sm');c._out=out;});
+   renderView();}
+  function upd(i){vote.children[i]._out.textContent=N()[i];renderView();}
+  function tallySvg(p,n){const g=Math.floor(n/5),r=n%5,w=g*46+r*9+6;const sv=svgBox(p,'0 0 '+Math.max(20,w)+' 34','tally');sv.style.width=Math.max(20,w)*0.9+'px';
+   for(let k=0;k<g;k++){const x0=4+k*46;for(let j=0;j<4;j++)s('line',{x1:x0+j*9,y1:4,x2:x0+j*9,y2:30,stroke:'#2b2b2b','stroke-width':2.6,'stroke-linecap':'round'},sv);s('line',{x1:x0-4,y1:26,x2:x0+31,y2:8,stroke:'#e85d75','stroke-width':2.6,'stroke-linecap':'round'},sv);}
+   for(let j=0;j<r;j++){const x=4+g*46+j*9;s('line',{x1:x,y1:4,x2:x,y2:30,stroke:'#2b2b2b','stroke-width':2.6,'stroke-linecap':'round'},sv);}}
+  function renderView(){const d=D(),n=N();view.innerHTML='';
+   if(st.view==='tally'){const t=h('table',{class:'dtab'},view);t.innerHTML='<tr><th>'+(st.ds==='own'?'ఎంపిక':'అంశం')+'</th><th>గణన గుర్తులు</th><th>సంఖ్య</th></tr>';
+    d.c.forEach(([e,nm],i)=>{const tr=h('tr',{},t);h('td',{html:e+' '+nm},tr);const td=h('td',{},tr);tallySvg(td,n[i]);h('td',{class:'num',text:n[i]},tr);});
+    const tr=h('tr',{class:'tot'},t);h('td',{text:'మొత్తం'},tr);h('td',{},tr);h('td',{class:'num',text:n.reduce((a,b)=>a+b,0)},tr);}
+   else if(st.view==='pic'){const kr=h('div',{class:'row'},view);h('span',{text:'కీ: ఒక బొమ్మ = '},kr);[1,2,5].forEach(k=>btn(kr,k+(k===1?' పిల్లవాడు':' మంది'),()=>{st.key=k;save();renderView();},'chip'+(st.key===k?' on':'')));
+    const t=h('table',{class:'dtab pic'},view);d.c.forEach(([e,nm],i)=>{const tr=h('tr',{},t);h('td',{text:nm},tr);const td=h('td',{class:'pics'},tr);const full=Math.floor(n[i]/st.key),part=n[i]%st.key;
+     for(let k=0;k<full;k++)h('span',{class:'pc',text:e},td);if(part)h('span',{class:'pc part',style:'--f:'+(part/st.key),text:e},td);h('td',{class:'num',text:n[i]},tr);});
+    h('div',{class:'muted',style:'text-align:center',html:'కీ: '+d.c[0][0]+' = <b>'+st.key+'</b> '+(st.key===1?'పిల్లవాడు':'మంది పిల్లలు')+(st.key>1?' · సగం బొమ్మ / ముక్క = '+st.key+' కంటే తక్కువ':'')},view);}
+   else{const mx=Math.max(1,...n),step=mx<=10?1:mx<=20?2:5,top=Math.ceil(mx/step)*step||step,W=440,H=300,x0=48,y0=250,ph=210,bw=(W-x0-10)/d.c.length;
+    const sv=svgBox(view,'0 0 '+W+' '+H,'barsvg');
+    for(let v=0;v<=top;v+=step){const y=y0-v/top*ph;s('line',{x1:x0,y1:y,x2:W-6,y2:y,stroke:v?'#e8e1d1':'#2b2b2b','stroke-width':v?1:2.5},sv);s('text',{x:x0-8,y:y+5,'text-anchor':'end','font-size':13,'font-weight':700,text:v},sv);}
+    s('line',{x1:x0,y1:y0,x2:x0,y2:y0-ph-8,stroke:'#2b2b2b','stroke-width':2.5},sv);
+    s('text',{x:14,y:y0-ph/2,'text-anchor':'middle','font-size':12,'font-weight':700,transform:'rotate(-90 14 '+(y0-ph/2)+')',text:'పిల్లల సంఖ్య'},sv);
+    d.c.forEach(([e,nm],i)=>{const x=x0+i*bw+bw*.18,w=bw*.64,hgt=n[i]/top*ph;const g=s('g',{style:'cursor:pointer',onclick:()=>speak(nm+' – '+n[i]+' మంది')},sv);
+     s('rect',{x,y:y0-hgt,width:w,height:hgt,rx:4,fill:BC[i],stroke:'#2b2b2b','stroke-width':1.5,class:'barr'},g);s('text',{x:x+w/2,y:y0-hgt-6,'text-anchor':'middle','font-size':15,'font-weight':800,text:n[i]},g);
+     s('text',{x:x+w/2,y:y0+22,'text-anchor':'middle','font-size':18,text:e},g);s('text',{x:x+w/2,y:y0+40,'text-anchor':'middle','font-size':11,'font-weight':700,text:nm.length>9?nm.slice(0,8)+'…':nm},g);});
+    h('div',{class:'muted',style:'text-align:center',text:'స్కేలు: ఒక గడి = '+step+(step===1?' పిల్లవాడు':' మంది')},view);}
+   const tot=n.reduce((a,b)=>a+b,0),mx=Math.max(...n),mn=Math.min(...n),nm=i=>d.c[i][1];
+   const most=d.c.map((c,i)=>i).filter(i=>n[i]===mx).map(nm).join(', '),least=d.c.map((c,i)=>i).filter(i=>n[i]===mn).map(nm).join(', ');
+   find.innerHTML=tot?'📌 <b>ఏం తెలుసుకున్నాం?</b><br>• మొత్తం పిల్లలు: <b>'+tot+'</b><br>• ఎక్కువ మంది: <b>'+most+'</b> ('+mx+')<br>• తక్కువ మంది: <b>'+least+'</b> ('+mn+')<br>• తేడా: '+mx+' − '+mn+' = <b>'+(mx-mn)+'</b>':'<span class=muted>+ నొక్కి ఓట్లు వేయండి.</span>';}
+  renderAll();
+  quiz(C,()=>{const d=D(),n=N(),t=rnd(0,3),i=rnd(0,4);let j=rnd(0,4);if(j===i)j=(i+1)%5;
+   if(n.reduce((a,b)=>a+b,0)===0)return{q:'ముందు కొన్ని ఓట్లు వేయండి. ఇప్పుడు మొత్తం ఎంత?',a:0};
+   if(t===0)return{q:'దత్తాంశం ప్రకారం <b>'+d.c[i][1]+'</b> ఎంచుకున్నవారు ఎంత మంది?',a:n[i]};
+   if(t===1)return{q:'సర్వేలో <b>మొత్తం</b> ఎంత మంది పాల్గొన్నారు?',a:n.reduce((a,b)=>a+b,0)};
+   if(t===2)return{q:'<b>'+d.c[i][1]+'</b>, <b>'+d.c[j][1]+'</b> మధ్య తేడా ఎంత?',a:Math.abs(n[i]-n[j])};
+   return{q:'<b>అత్యధికంగా</b> ఎంచుకున్న అంశానికి ఎన్ని ఓట్లు వచ్చాయి?',a:Math.max(...n)};});
+ }}
+];
+const N=CH.length;
+
+/* ---------- pages ---------- */
+const L=$('L'),Rp=$('R'),book=$('book');
+let page=Math.max(0,Math.min(N,store.get('page',0)));
+function tocList(ul,onPick){ul.innerHTML='';const li0=h('li',{onclick:()=>onPick(0)},ul);h('span',{class:'dot',style:'background:#fff'},li0);h('span',{class:'n',text:'0'},li0);h('span',{class:'tt',text:'ముఖపత్రం / విషయ సూచిక'},li0);
+ CH.forEach((c,i)=>{const li=h('li',{onclick:()=>onPick(i+1)},ul);h('span',{class:'dot',style:'background:'+c.col},li);h('span',{class:'n',text:i+1},li);h('span',{class:'tt',text:c.t},li);h('span',{class:'cl',text:c.c},li);});}
+function coverArt(p){const sv=svgBox(p,'0 0 360 200');
+ [[30,120,'#f6c453',48],[86,120,'#f6c453',48]].forEach(([x,y,f,w])=>{s('path',{d:'M'+x+' '+y+' l8 -8 h'+w+' v'+w+' l-8 8z',fill:'#0002'},sv);s('rect',{x,y,width:w,height:w,fill:f,class:'ink'},sv);for(let i=1;i<10;i++){s('line',{x1:x,y1:y+w*i/10,x2:x+w,y2:y+w*i/10,stroke:'#0003'},sv);s('line',{x1:x+w*i/10,y1:y,x2:x+w*i/10,y2:y+w,stroke:'#0003'},sv);}});
+ for(let i=0;i<4;i++){s('rect',{x:150+i*14,y:48,width:11,height:120,fill:'#6fb6f2',class:'ink'},sv);}
+ for(let i=0;i<5;i++)s('rect',{x:216+(i%3)*20,y:132+Math.floor(i/3)*20,width:15,height:15,fill:'#ef7d8f',class:'ink'},sv);
+ s('circle',{cx:310,cy:70,r:36,fill:'#fff3dc',class:'ink'},sv);s('path',{d:'M310 70 L310 34 A36 36 0 0 1 346 70 Z',fill:'#f08a24',class:'ink'},sv);
+ s('text',{x:180,y:28,'text-anchor':'middle','font-size':22,'font-weight':800,text:'1 + 2 × 3 ÷ ½'},sv);}
+function renderPages(){
+ CL.forEach(f=>{try{f();}catch(e){}});CL=[];try{speechSynthesis.cancel();}catch(e){}
+ L.innerHTML='';Rp.innerHTML='';
+ const sp=btn(L,'🔊',()=>speak(pageText()),'ghost spk');sp.title='ఈ పేజీ వినండి';
+ if(page===0){
+  h('div',{class:'chno',text:'రాయ్ ఎడ్యుకేషన్ · Raay Education'},L);h('div',{class:'cover-t',text:'గణిత పుస్తకం'},L);h('div',{class:'cover-s',text:'ఆడుతూ, తాకుతూ, తిప్పుతూ నేర్చుకునే గణితం – 1 నుండి 5 తరగతులు'},L);
+  coverArt(L);
+  h('ul',{class:'howto',html:'<li>◀ ▶ బటన్లతో లేదా ← → కీలతో పేజీలు తిప్పండి.</li><li>కుడి పేజీలోని బొమ్మలను <b>తాకండి, లాగండి</b> – అవి కదులుతాయి.</li><li>🎯 సవాళ్లు గెలిస్తే ⭐ నక్షత్రాలు వస్తాయి.</li><li>🔊 పేజీ వినండి · 🔈 ఆటో వాయిస్ ఆన్ చేస్తే ప్రతి అడుగు చదువుతుంది.</li><li>TV రిమోట్: ← → పేజీలు, OK = వినండి, Back = విషయ సూచిక, 1–9 = అధ్యాయం.</li>'},L);
+  h('div',{class:'mt',text:'విషయ సూచిక'},Rp);const t=h('div',{class:'ctitle',text:'విషయ సూచిక'},Rp);t.classList.add('toc-h');
+  tocList(h('ul',{class:'toc'},Rp),go);
+ }else{
+  const c=CH[page-1];
+  h('div',{class:'chno',text:'అధ్యాయం '+page},L);const tt=h('div',{class:'ctitle',text:c.t},L);h('span',{class:'cls',text:c.c},tt);
+  h('div',{class:'key',html:c.key},L);const b=h('div',{class:'body'},L);c.body.forEach(p=>h('p',{html:p},b));
+  h('div',{class:'tip',html:'<span>👆</span><span>'+c.tip+'</span>'},L);
+  const C=h('div',{class:'chal'},L);
+  h('div',{class:'mt',text:page+'. '+c.t},Rp);
+  try{c.build(Rp,C);}catch(e){console.error(e);h('div',{class:'warn',text:'ఈ పేజీ లోడ్ కాలేదు: '+e.message},Rp);}
+ }
+ $('ttl').textContent=page?page+'. '+CH[page-1].t:'విషయ సూచిక';$('prog').style.width=(page/N*100)+'%';
+ $('pBtn').disabled=page===0;$('nBtn').disabled=page===N;
+ document.querySelectorAll('#mList li').forEach((li,i)=>li.classList.toggle('sel',i===page));
+}
+function pageText(){if(!page)return 'గణిత పుస్తకం. ఆడుతూ నేర్చుకునే గణితం. విషయ సూచిక: '+CH.map((c,i)=>(i+1)+'. '+c.t).join('. ');const c=CH[page-1];return c.t+'. '+c.body.join(' ')+' '+c.tip;}
+function go(n){if(n<0||n>N||n===page)return;closeMenu();const dir=n>page?1:-1;const wide=matchMedia('(min-width:900px)').matches;
+ if(wide){const src=dir>0?Rp:L;const leaf=src.cloneNode(true);leaf.removeAttribute('id');leaf.classList.add('leaf',dir>0?'leaf-next':'leaf-prev');book.appendChild(leaf);leaf.addEventListener('animationend',()=>leaf.remove());setTimeout(()=>leaf.remove(),1200);}
+ else{book.classList.remove('slide-l','slide-r');void book.offsetWidth;book.classList.add(dir>0?'slide-l':'slide-r');window.scrollTo({top:0,behavior:'smooth'});}
+ page=n;store.set('page',page);renderPages();if(voiceOn)setTimeout(()=>speak(pageText()),400);}
+
+/* ---------- menu ---------- */
+const menu=$('menu'),scrim=$('scrim');let mSel=0;
+function openMenu(){tocList($('mList'),go);mSel=page;hl();menu.classList.add('open');scrim.classList.add('open');}
+function closeMenu(){menu.classList.remove('open');scrim.classList.remove('open');}
+function hl(){document.querySelectorAll('#mList li').forEach((li,i)=>{li.classList.toggle('sel',i===mSel);if(i===mSel)li.scrollIntoView({block:'nearest'});});}
+$('mBtn').onclick=()=>menu.classList.contains('open')?closeMenu():openMenu();$('mClose').onclick=closeMenu;scrim.onclick=closeMenu;
+$('pBtn').onclick=()=>go(page-1);$('nBtn').onclick=()=>go(page+1);
+$('sBtn').onclick=()=>speak(pageText());
+$('fBtn').onclick=()=>{try{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen();}catch(e){}};
+function vUpd(){$('vBtn').textContent=voiceOn?'🔊 ఆటో':'🔈';$('vBtn').classList.toggle('on',voiceOn);}
+$('vBtn').onclick=()=>{voiceOn=!voiceOn;store.set('voice',voiceOn);vUpd();if(voiceOn)speak('ఆటో వాయిస్ ఆన్');else try{speechSynthesis.cancel();}catch(e){}};
+document.addEventListener('keydown',e=>{
+ const tg=e.target,typing=tg&&(tg.tagName==='INPUT'||tg.tagName==='TEXTAREA');const open=menu.classList.contains('open');
+ if(e.key==='Escape'||(e.key==='Backspace'&&!typing)||e.key==='BrowserBack'||e.key==='GoBack'){e.preventDefault();open?closeMenu():openMenu();return;}
+ if(typing)return;
+ if(open){if(e.key==='ArrowDown'){e.preventDefault();mSel=Math.min(N,mSel+1);hl();}else if(e.key==='ArrowUp'){e.preventDefault();mSel=Math.max(0,mSel-1);hl();}else if(e.key==='Enter'){e.preventDefault();go(mSel);closeMenu();}return;}
+ if(e.key==='ArrowRight'||e.key==='PageDown'||e.key==='MediaTrackNext'){e.preventDefault();go(page+1);}
+ else if(e.key==='ArrowLeft'||e.key==='PageUp'||e.key==='MediaTrackPrevious'){e.preventDefault();go(page-1);}
+ else if(e.key==='Enter'&&!(tg&&tg.tagName==='BUTTON')){e.preventDefault();speak(pageText());}
+ else if(/^[0-9]$/.test(e.key)){go(+e.key);}
+});
+showStars();vUpd();tocList($('mList'),go);renderPages();
+})();
+</script>
+</body>
+</html>

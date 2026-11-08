@@ -715,6 +715,19 @@ details.lsub[open]>summary{border-radius:22px 22px 0 0;margin:0}details.lsub[ope
 .evb .tag{font-size:13px}.evb h3{font-size:20px;line-height:1.35;margin:8px 0 6px}.evb p{font-size:15px;line-height:1.55;margin:4px 0}
 .evb .evgal{margin-top:8px}.evb .lk2{margin-top:10px}
 .dly .card,.dly>div{margin-bottom:12px}
+
+/* ===== 2026.11.09: లెక్కల బడి (బేసిక్స్ టూల్స్), పేరు కింద సూక్తి, మొబైల్ బ్యాక్ బటన్ ===== */
+.hsm .motto{font-size:13px;opacity:.95;margin-top:2px;font-weight:600;letter-spacing:.2px}
+.lbadi{margin-top:12px;background:linear-gradient(135deg,#eef2ff,#ecfeff);border:1.5px solid #c7d2fe;border-radius:18px;padding:12px}
+.lbadi h4{margin:0 0 2px;font-size:16px;color:#3730a3}.lbadi p{margin:0 0 10px;font-size:12.5px;color:var(--mut)}
+.lbadi .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lbadi button{border:0;border-radius:16px;padding:12px 8px;color:#fff;font:inherit;text-align:center;cursor:pointer;box-shadow:0 6px 14px rgba(0,0,0,.15);position:relative;overflow:hidden}
+.lbadi button::before{content:'';position:absolute;inset:0;background:var(--shine);pointer-events:none}
+.lbadi button span{display:block;font-size:30px;line-height:1.2}.lbadi button b{display:block;font-size:15px}.lbadi button small{display:block;font-size:11.5px;opacity:.92}
+.lbadi button:active{transform:scale(.97)}
+.exov{position:fixed;inset:0;z-index:100000;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;padding:20px;animation:pop .2s both}
+.exbox{background:#fff;border-radius:24px;padding:22px 18px 16px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.exbox h3{margin:6px 0 4px;font-size:20px}.exbox p{margin:0 0 14px;color:var(--mut);font-size:13.5px}.exbox .row2 .btn{margin:0}
 </style>
 </head>
 <body>
@@ -2433,7 +2446,41 @@ function dueText(h){const sd=subOf(h);const d=diffDays(h.due,todayS());
  return `<span class="st due">ఇంకా ${d} రోజుల గడువు</span>`;}
 
 /* ---------- నావిగేషన్ ---------- */
-function go(v,p){if(typeof PGDIRTY!=='undefined')PGDIRTY=false;clearInterval(tick);tick=null;try{speechSynthesis.cancel();}catch(e){}view=v;param=p||{};render();window.scrollTo(0,0);}
+
+/* ===== 📱 మొబైల్ బ్యాక్ బటన్: యాప్ లోపలే వెనక్కి (మూసుకోదు); హోమ్‌లో “మూసేయాలా?” అని అడుగుతుంది =====
+   Chrome 120+ (Android/TWA): CloseWatcher; లేకపోతే history guard (మొదటి టచ్ తర్వాత). */
+const NAVH={st:[],pop:0,exit:0,cw:null,armed:0,noAsk:0};
+const NAV_ROOT=['home','learn','test','games','homework','welcome','login'],NAV_SKIP=['testrun','wsrun','gamerun','book'];
+function navKey(v,p){p=p||{};return v+'|'+(p.t||p.tab||p.s||'')+'|'+(p.id||'');}
+function navRec(v,p){if(NAVH.pop){NAVH.pop=0;return;}NAVH.exit=0;if(!NAVH.cw&&!NAVH.armed&&!NAVH.exit)setTimeout(navWatch,0);
+ if(NAV_ROOT.includes(v)){NAVH.st=(v==='home'||v==='welcome'||v==='login'||!S.cur)?[]:[{v:'home',p:{}}];return;}
+ const k=navKey(v,p),i=NAVH.st.map(e=>navKey(e.v,e.p)).lastIndexOf(k);if(i>=0){NAVH.st=NAVH.st.slice(0,i);return;}
+ if(view&&!NAV_SKIP.includes(view)&&navKey(view,param)!==k)NAVH.st.push({v:view,p:Object.assign({},param)});if(NAVH.st.length>40)NAVH.st.shift();}
+function navWatch(){if(NAVH.exit||document.getElementById('exitOv'))return;
+ if(window.CloseWatcher){if(NAVH.cw)return;try{const w=new CloseWatcher();w.onclose=()=>{NAVH.cw=null;navBack();setTimeout(navWatch,0);};NAVH.cw=w;return;}catch(e){}}
+ if(!NAVH.armed){try{history.pushState({raay:1},'');NAVH.armed=1;}catch(e){}}}
+window.addEventListener('popstate',()=>{NAVH.armed=0;if(NAVH.exit)return;navBack();navWatch();});
+['pointerdown','keydown'].forEach(t=>document.addEventListener(t,()=>{if(!NAVH.cw&&!NAVH.armed)navWatch();},{capture:true,passive:true}));
+function navBack(){
+ if(document.getElementById('exitOv')){exitDo();return;}
+ for(const id of ['zoom','ansSheet','budHelp']){const e=document.getElementById(id);if(e){e.remove();return;}}
+ if(document.getElementById('budOv')){budClose();return;}
+ if(typeof SL!=='undefined'&&SL.open){slClose();return;}
+ if(view==='testrun'){quitTest();return;}if(view==='wsrun'){wsQuit();return;}if(view==='gamerun'){quitGame();return;}if(view==='book'){closeBook();return;}
+ const ck=navKey(view,param);let pr;while((pr=NAVH.st.pop())&&navKey(pr.v,pr.p)===ck){}
+ if(pr){NAVH.pop=1;go(pr.v,pr.p);return;}
+ if(!NAV_ROOT.includes(view)&&S.cur){go('home');return;}
+ if(view!=='home'&&view!=='welcome'&&view!=='login'&&S.cur){go('home');return;}
+ exitAsk();}
+function exitAsk(){if(document.getElementById('exitOv'))return;const o=document.createElement('div');o.id='exitOv';o.className='exov';o.onclick=e=>{if(e.target===o)exitStay();};
+ o.innerHTML=`<div class="exbox"><div style="font-size:46px">👋</div><h3>యాప్ మూసేయాలా?</h3><p>మళ్ళీ ← బ్యాక్ నొక్కినా యాప్ మూసుకుంటుంది.</p><div class="row2"><button class="btn ghost" onclick="exitStay()">✅ ఉండు</button><button class="btn" style="background:#dc2626" onclick="exitDo()">🚪 మూసేయి</button></div></div>`;document.body.appendChild(o);}
+function exitStay(){const o=document.getElementById('exitOv');if(o)o.remove();NAVH.exit=0;navWatch();}
+function exitDo(){const o=document.getElementById('exitOv');if(o)o.remove();NAVH.exit=1;try{NAVH.cw&&NAVH.cw.destroy();}catch(e){}NAVH.cw=null;try{window.close();}catch(e){}
+ setTimeout(()=>{if(document.visibilityState!=='visible')return;if(NAVH.armed){NAVH.armed=0;try{history.go(-2);}catch(e){}}else{try{history.back();}catch(e){}}
+  setTimeout(()=>{if(document.visibilityState==='visible'){toast('మూసేయడానికి ఫోన్ ← బ్యాక్ మళ్ళీ నొక్కండి');}},700);},150);}
+/* బ్రౌజర్ ట్యాబ్ ✕ మూసినా అడుగుతుంది (యాప్‌గా ఇన్‌స్టాల్ చేస్తే బ్యాక్ బటన్ పై డైలాగ్ చాలు) */
+window.addEventListener('beforeunload',e=>{if(NAVH.exit||NAVH.noAsk||isStandalone())return;e.preventDefault();e.returnValue='';});
+function go(v,p){navRec(v,p||{});if(typeof PGDIRTY!=='undefined')PGDIRTY=false;clearInterval(tick);tick=null;try{speechSynthesis.cancel();}catch(e){}view=v;param=p||{};render();window.scrollTo(0,0);}
 /* ---------- ✏️ పలక & 📝 నోట్ – ప్రతి విభాగానికి వేరుగా, అవసరమైనప్పుడే తెరుచుకుంటుంది ---------- */
 const SL={open:false,full:false,tab:'d',bg:'slate',col:'#ffffff',w:4,er:false,strokes:[],base:null,bw:0,sec:'',key:'',cur:null,pid:null,dpr:1,W:0,H:0,th:null,sv:null};
 const SLBG={slate:{n:'⬛ నల్ల పలక',c:'#22312b'},white:{n:'⬜ తెల్ల పేజీ',c:'#ffffff'},lines:{n:'📄 గీతల పేజీ',c:'#ffffff'},grid:{n:'🔲 గడుల పేజీ',c:'#ffffff'}};
@@ -2572,7 +2619,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.08-3';
+const APPV='2026.11.09-1';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3356,7 +3403,7 @@ function schip(c,s){const p=subjProg(c,s);if(!p.n)return '';return `<button clas
    కింది నావ్‌లో ఉన్నవి (నేర్చుకో/టెస్ట్/ఆటలు/హోంవర్క్) ఇక్కడ మళ్ళీ పెట్టం – ఒకే చోటుకి రెండు బటన్లు ఉండకూడదు */
 V.home=()=>{setTimeout(checkBadges,50);const g=greet(),stc=stars(),c=S.cur.c,sl=learnSubs(c).map(s=>schip(c,s)).join(''),t=todayS(),evT=live('events').filter(e=>e.d===t&&(e.c===0||e.c===S.cur.c)).length;
  const hi=(v,ic,tx,p,b)=>`<button onclick="go('${v}'${p?','+p:''})"><span>${ic}</span>${tx}${b?`<i>${b}</i>`:''}</button>`;
- return `<section class="hero hsm"><div class="htop"><div><small>${g[0]} ${g[1]}</small><h2>${esc(S.cur.n)}</h2><p>${S.cfg.sname?'🏫 '+esc(S.cfg.sname):c+'వ తరగతి'}</p></div><span class="starb" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐ ${stc}</span><div class="mascot bob" onclick="go('avatar')" title="బొమ్మ మార్చు">${avOf(S.cur.n)}<i class="edit">✏️</i></div></div>
+ return `<section class="hero hsm"><div class="htop"><div><small>${g[0]} ${g[1]}${S.cfg.sname?' • 🏫 '+esc(S.cfg.sname):''}</small><h2>${esc(S.cur.n)}</h2><p class="motto">నేర్చుకో • సాధన చేయి • ఎదుగు</p></div><span class="starb" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐ ${stc}</span><div class="mascot bob" onclick="go('avatar')" title="బొమ్మ మార్చు">${avOf(S.cur.n)}<i class="edit">✏️</i></div></div>
 <div class="hico">${hi('events','📅','ఈవెంట్లు','',evT?'ఈరోజు':'')}${hi('daily','💡','సూక్తి')}${hi('library','🧰','టూల్స్',"{tab:'tools'}")}${hi('idmk','🪪','ID కార్డు')}${hi('card','🎓','ప్రగతి కార్డు')}${hi('badges','🏅','బ్యాడ్జీలు','',badgeCount()||'')}${+c===10?hi('ssc','📝','SSC'):''}</div></section>
 ${tickerHtml()}${slidesHtml()}${reconnectCard()}${installBanner()}${nextLes()}
 ${sl?`<h4 class="sec">📖 నా సబ్జెక్టులు <small>${c}వ తరగతి</small></h4><div class="sline">${sl}</div>`:''}
@@ -3653,10 +3700,13 @@ V.wsboard=()=>{const k=param.k||'d';return `<div class="bar"><button class="ib" 
 ${wsBoardHtml(S.cur.c,k,me())}${S.cfg.type?'':'<p class="mut" style="text-align:center;margin-top:10px">📴 ఆఫ్లైన్ – ఈ ఫోన్‌లో రాసిన వారి మార్కులు మాత్రమే కనిపిస్తాయి</p>'}`;};
 function wsMine(){return live('results').filter(r=>r.kind==='ws'&&r.n===me()&&r.c===S.cur.c).sort((a,b)=>a.d<b.d?1:-1);}
 function wsRankToday(){const b=wsBoard(S.cur.c,todayS(),todayS());const i=b.findIndex(p=>p.n===me());return i<0?0:i+1;}
+/* 🧮 లెక్కల బడి – యూజర్ ఇచ్చిన బేసిక్స్ టూల్స్ (basics/*.html – ఆ ఫైళ్ల కోడ్ మార్చకూడదు), యాప్ లోపలే తెరుచుకుంటాయి */
+const BASICS=[['basics/Ganitha_Pustakam.html','📗','గణిత పుస్తకం','ఆడుతూ నేర్చుకో','linear-gradient(135deg,#34d399,#0f766e)'],['basics/Ganitha_Sadhana.html','✏️','గణిత సాధన','దశలవారీగా చేయి','linear-gradient(135deg,#818cf8,#4338ca)']];
+function lbadi(){return `<div class="lbadi"><h4>🧮 లెక్కల బడి – బేసిక్స్</h4><p>అంకెలు, కూడిక, తీసివేత, గుణకారం, భాగహారం – అందరికీ పునాది</p><div class="g2">${BASICS.map(([u,i,t,d,bg])=>`<button style="background:${bg}" onclick="go('book',{u:'${u}',t:'${i} ${t}',k:'tool',back:{test:1}})"><span>${i}</span><b>${t}</b><small>${d}</small></button>`).join('')}</div></div>`;}
 function wsCard(){const d=wsDraft(),tr=wsTodayRec(),lv=wsLvFor(S.cur.c),rk=tr?wsRankToday():0;
  return `<div class="tcard wscard"><div class="th" style="background:#d3f9f2"><span class="si" style="width:34px;height:34px;font-size:18px;color:#0c8599">📅</span>నేటి లెక్కలు (+ − × ÷)</div><div class="tb">రోజూ కొత్త 16 లెక్కలు – ఒక్కో ప్రక్రియకు 4. ప్రతి లెక్క చేసిన వెంటనే జవాబు, మార్కు. మార్కులు సార్‌కి చేరతాయి.<br><small class="mut">${fmtD(todayS())} • ${WSLV[lv-1].t} (${WSLV[lv-1].d})</small>
 ${tr?`<div class="wsdone">✅ ఈరోజు పూర్తి: <b>${tr.s}/${tr.t}</b> • ⏱ ${mmss(tr.sec)}${rk?` • ర్యాంక్ <b>${rk}</b>`:''}</div>`:d&&d.m==='day'?`<button class="btn" style="margin-top:10px" onclick="wsStart('day',0,true)">▶ నేటి లెక్కలు కొనసాగించు (${Object.values(d.y).filter(x=>x.k).length}/16)</button>`:`<button class="btn" style="margin-top:10px" onclick="wsStart('day')">▶ నేటి లెక్కలు ప్రారంభించు</button>`}
-<div class="row2" style="margin-top:8px"><button class="btn ghost" style="margin:0" onclick="go('wsboard')">🏆 ర్యాంక్ బోర్డు</button>${wsMine().length?`<button class="btn ghost" style="margin:0" onclick="go('test',{tab:'done'})">📋 నా మార్కులు</button>`:''}</div>
+${lbadi()}<div class="row2" style="margin-top:8px"><button class="btn ghost" style="margin:0" onclick="go('wsboard')">🏆 ర్యాంక్ బోర్డు</button>${wsMine().length?`<button class="btn ghost" style="margin:0" onclick="go('test',{tab:'done'})">📋 నా మార్కులు</button>`:''}</div>
 <details class="wspr"${d&&d.m==='pr'?' open':''}><summary>✎ అదనపు అభ్యాసం (ర్యాంక్‌కి లెక్కించదు)</summary>${d&&d.m==='pr'?`<div class="warn" style="margin-top:8px">📝 మధ్యలో ఆపిన అభ్యాసం ఉంది <button class="lk b" onclick="wsStart('pr',${d.lv},true)">కొనసాగించు ▶</button></div>`:''}
 <div class="wslv">${WSLV.map((l,i)=>`<button onclick="wsStart('pr',${i+1})"><b>${l.t}</b><small>${l.d}</small></button>`).join('')}</div></details></div></div>`;}
 function wsShare(id){const r=live('results').find(x=>x.id===id);if(!r)return;
@@ -4706,7 +4756,7 @@ function joinLink(){const b=appBase();return b?b+'#join='+joinCode():'';}
 function shareWA(){const l=joinLink();if(!l)return toast('ముందు యాప్ వెబ్ లింక్ ఇవ్వండి');window.open('https://wa.me/?text='+encodeURIComponent('📚 రాయ్ విద్యార్థి లెర్నింగ్ యాప్ – '+(S.cfg.sname?S.cfg.sname+' ':'మన పాఠశాల ')+'కోసం. ఈ లింక్ ఓపెన్ చేసి నీ పేరు, తరగతి ఇవ్వు:\n'+l),'_blank');}
 function setAppUrl(){const v=$('#appu').value.trim();if(!/^https:\/\//.test(v))return toast('https:// తో మొదలయ్యే లింక్ ఇవ్వండి');S.cfg.appUrl=v;save();toast('సేవ్ అయింది ✓');go('teacher',{t:'sy'});}
 function connectFresh(cfg){const keepApp=S.cfg.appUrl;S.cfg=Object.assign(cfg,{appUrl:cfg.appUrl||keepApp});S.q={};S.last={};S.lastSync=0;Sync.primed=false;queueAll();save();
- if(FBK.ready){location.reload();return;}Sync.start();}
+ if(FBK.ready){NAVH.noAsk=1;location.reload();return;}Sync.start();}
 /* ---------- పబ్లిక్ సర్వర్: ఏ పాఠశాల అయినా నమోదు ---------- */
 const PUB={server:'',tpl:'',full:false,n:0,max:0,capAt:0};
 function pubServer(){return PUB.server||S.pub||'';}
@@ -4760,7 +4810,7 @@ async function fbLogin(){const e=$('#fle').value.trim(),p=$('#flp').value;if(!e|
 async function fbLogout(){await FBK.logout();S.cfg.isT=false;save();go('teacher',{t:'sy',m:'fb'});}
 async function disconnect(){if(!confirm('⚠️ ఆన్‌లైన్ సింక్ ఆపేయాలా?\n\nపాఠశాల నుండి ఈ ఫోన్ వేరవుతుంది. (తర్వాత “🔁 మళ్ళీ కనెక్ట్” తో ఒక్క నొక్కుతో తిరిగి కలపవచ్చు)'))return;
  if(Object.keys(S.q).length){toast('పంపాల్సినవి ముందు పంపుతోంది...');try{Sync.running=false;await Sync.run();}catch(e){}}
- clearInterval(Sync.poll);const a=S.cfg.appUrl;const old=Object.assign({},S.cfg);S.lastCfg=old.type?old:S.lastCfg;S.cfg={type:'',appUrl:a};draft=null;S.q={};S.last={};save();location.reload();}
+ clearInterval(Sync.poll);const a=S.cfg.appUrl;const old=Object.assign({},S.cfg);S.lastCfg=old.type?old:S.lastCfg;S.cfg={type:'',appUrl:a};draft=null;S.q={};S.last={};save();NAVH.noAsk=1;location.reload();}
 function reconnect(){const c=S.lastCfg;if(!c||!c.type)return;delete S.lastCfg;connectFresh(c);S.offline=false;save();toast('✅ మళ్ళీ కనెక్ట్ అయింది: '+(c.sname||'పాఠశాల'));render();}
 function reconnectCard(){const c=S.lastCfg;if(S.cfg.type||!c||!c.type)return '';
  return `<div class="card" style="border:2px solid #f59e0b"><h3>🔁 మళ్ళీ కనెక్ట్ అవ్వాలా?</h3><p class="mut">ఈ ఫోన్ ఇంతకు ముందు <b>${esc(c.sname||(c.type==='gs'?'Google Sheets':'Firebase'))}</b> కు కనెక్ట్ అయి ఉంది. పొరపాటున ఆపితే ఒక్క నొక్కుతో తిరిగి కలపండి.</p><button class="btn" onclick="reconnect()">🔁 మళ్ళీ కనెక్ట్ చేయి</button></div>`;}
@@ -5009,7 +5059,7 @@ async function pdfDraw(){if(!BV.doc)return;const tok=++BV.tok,n=BV.page;const pg
 function pdfGo(d){if(!BV.doc)return;const n=Math.min(BV.n,Math.max(1,BV.page+d));if(n!==BV.page){BV.page=n;pdfDraw();}}
 function pdfTo(v){if(!BV.doc)return;const n=parseInt(v,10);if(n>=1&&n<=BV.n){BV.page=n;pdfDraw();}else{const pg=document.getElementById('bpg');if(pg)pg.value=BV.page;}}
 function pdfZoom(f){if(!BV.doc)return;BV.zoom=Math.min(4,Math.max(0.6,BV.zoom*f));pdfDraw();}
-function closeBook(){try{inkFlush();}catch(e){}INK.on=false;INK.key='';INK.d=null;inkTxNo();try{BV.rt&&BV.rt.cancel();}catch(e){}try{BV.doc&&BV.doc.destroy();}catch(e){}try{BV.task0&&BV.task0.destroy();}catch(e){}const b=param.back||{};BV={};if(b.tch)go('teacher',{t:'tb'});else if(b.tbl)go('tbl',{s:b.s,id:b.id,wb:1});else go('library',b);}
+function closeBook(){try{inkFlush();}catch(e){}INK.on=false;INK.key='';INK.d=null;inkTxNo();try{BV.rt&&BV.rt.cancel();}catch(e){}try{BV.doc&&BV.doc.destroy();}catch(e){}try{BV.task0&&BV.task0.destroy();}catch(e){}const b=param.back||{};BV={};if(b.test)go('test');else if(b.tch)go('teacher',{t:'tb'});else if(b.tbl)go('tbl',{s:b.s,id:b.id,wb:1});else go('library',b);}
 document.addEventListener('keydown',e=>{if(view!=='book'||param.k!=='pdf'||(e.target&&e.target.tagName==='INPUT'))return;
  if(e.key==='ArrowRight'||e.key==='PageDown'){pdfGo(1);e.preventDefault();}else if(e.key==='ArrowLeft'||e.key==='PageUp'){pdfGo(-1);e.preventDefault();}
  else if(e.key==='+'||e.key==='='){pdfZoom(1.25);}else if(e.key==='-'){pdfZoom(0.8);}else if(e.key==='Escape'||e.key==='Backspace'){closeBook();}});
