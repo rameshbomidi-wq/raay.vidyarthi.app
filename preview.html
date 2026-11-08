@@ -3358,11 +3358,11 @@ V.home=()=>{setTimeout(checkBadges,50);const g=greet(),stc=stars(),c=S.cur.c,sl=
  const hi=(v,ic,tx,p,b)=>`<button onclick="go('${v}'${p?','+p:''})"><span>${ic}</span>${tx}${b?`<i>${b}</i>`:''}</button>`;
  return `<section class="hero hsm"><div class="htop"><div><small>${g[0]} ${g[1]}</small><h2>${esc(S.cur.n)}</h2><p>${S.cfg.sname?'🏫 '+esc(S.cfg.sname):c+'వ తరగతి'}</p></div><span class="starb" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐ ${stc}</span><div class="mascot bob" onclick="go('avatar')" title="బొమ్మ మార్చు">${avOf(S.cur.n)}<i class="edit">✏️</i></div></div>
 <div class="hico">${hi('events','📅','ఈవెంట్లు','',evT?'ఈరోజు':'')}${hi('daily','💡','సూక్తి')}${hi('library','🧰','టూల్స్',"{tab:'tools'}")}${hi('idmk','🪪','ID కార్డు')}${hi('card','🎓','ప్రగతి కార్డు')}${hi('badges','🏅','బ్యాడ్జీలు','',badgeCount()||'')}${+c===10?hi('ssc','📝','SSC'):''}</div></section>
-${tickerHtml()}${reconnectCard()}${installBanner()}${nextLes()}
+${tickerHtml()}${slidesHtml()}${reconnectCard()}${installBanner()}${nextLes()}
 ${sl?`<h4 class="sec">📖 నా సబ్జెక్టులు <small>${c}వ తరగతి</small></h4><div class="sline">${sl}</div>`:''}
 ${hStats()}
 <h4 class="sec">⚡ త్వరిత యాక్సెస్</h4><div class="qgrid">${qb('doubts','💬','సందేహం','p')}${qb('schedule','📅','షెడ్యూల్','t')}${qb('library','📚','పుస్తకాలు','b',"{tab:'books'}")}${qb('dict','🔤','డిక్షనరీ','o')}</div>
-<div style="margin-top:14px">${slidesHtml()}</div>`;};
+`;};
 /* 📅 ఈవెంట్లు – పెద్ద కార్డులు */
 V.events=()=>{const t=todayS(),es=live('events').filter(e=>e.d>=t&&(e.c===0||e.c===S.cur.c)).sort((a,b)=>(a.d+(a.tm||''))<(b.d+(b.tm||''))?-1:1);
  const col={test:'#dc2626',hol:'#16a34a',live:'#7c3aed'};
