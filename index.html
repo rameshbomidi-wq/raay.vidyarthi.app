@@ -2449,7 +2449,7 @@ function dueText(h){const sd=subOf(h);const d=diffDays(h.due,todayS());
 
 /* ===== 📱 మొబైల్ బ్యాక్ బటన్: యాప్ లోపలే వెనక్కి (మూసుకోదు); హోమ్‌లో “మూసేయాలా?” అని అడుగుతుంది =====
    Chrome 120+ (Android/TWA): CloseWatcher; లేకపోతే history guard (మొదటి టచ్ తర్వాత). */
-const NAVH={st:[],pop:0,exit:0,cw:null,armed:0,noAsk:0};
+const NAVH={st:[],pop:0,exit:0,cw:null,armed:0,noAsk:0,skip:0};
 const NAV_ROOT=['home','learn','test','games','homework','welcome','login'],NAV_SKIP=['testrun','wsrun','gamerun','book'];
 function navKey(v,p){p=p||{};return v+'|'+(p.t||p.tab||p.s||'')+'|'+(p.id||'');}
 function navRec(v,p){if(NAVH.pop){NAVH.pop=0;return;}NAVH.exit=0;if(!NAVH.cw&&!NAVH.armed&&!NAVH.exit)setTimeout(navWatch,0);
@@ -2457,9 +2457,10 @@ function navRec(v,p){if(NAVH.pop){NAVH.pop=0;return;}NAVH.exit=0;if(!NAVH.cw&&!N
  const k=navKey(v,p),i=NAVH.st.map(e=>navKey(e.v,e.p)).lastIndexOf(k);if(i>=0){NAVH.st=NAVH.st.slice(0,i);return;}
  if(view&&!NAV_SKIP.includes(view)&&navKey(view,param)!==k)NAVH.st.push({v:view,p:Object.assign({},param)});if(NAVH.st.length>40)NAVH.st.shift();}
 function navWatch(){if(NAVH.exit||document.getElementById('exitOv'))return;
- if(window.CloseWatcher){if(NAVH.cw)return;try{const w=new CloseWatcher();w.onclose=()=>{NAVH.cw=null;navBack();setTimeout(navWatch,0);};NAVH.cw=w;return;}catch(e){}}
+ /* రెండూ: CloseWatcher (Android back) + history guard (iframe లోపల టచ్ చేసినప్పుడు back history ద్వారా వస్తుంది) */
+ if(window.CloseWatcher&&!NAVH.cw){try{const w=new CloseWatcher();w.onclose=()=>{NAVH.cw=null;navBack();setTimeout(navWatch,0);};NAVH.cw=w;}catch(e){}}
  if(!NAVH.armed){try{history.pushState({raay:1},'');NAVH.armed=1;}catch(e){}}}
-window.addEventListener('popstate',()=>{NAVH.armed=0;if(NAVH.exit)return;navBack();navWatch();});
+window.addEventListener('popstate',()=>{NAVH.armed=0;if(NAVH.skip){NAVH.skip=0;return;}if(NAVH.exit)return;navBack();navWatch();});
 ['pointerdown','keydown'].forEach(t=>document.addEventListener(t,()=>{if(!NAVH.cw&&!NAVH.armed)navWatch();},{capture:true,passive:true}));
 function navBack(){
  if(document.getElementById('exitOv')){exitDo();return;}
@@ -2472,7 +2473,7 @@ function navBack(){
  if(!NAV_ROOT.includes(view)&&S.cur){go('home');return;}
  if(view!=='home'&&view!=='welcome'&&view!=='login'&&S.cur){go('home');return;}
  exitAsk();}
-function exitAsk(){if(document.getElementById('exitOv'))return;const o=document.createElement('div');o.id='exitOv';o.className='exov';o.onclick=e=>{if(e.target===o)exitStay();};
+function exitAsk(){if(document.getElementById('exitOv'))return;if(NAVH.armed){NAVH.armed=0;NAVH.skip=1;try{history.back();}catch(e){NAVH.skip=0;}}const o=document.createElement('div');o.id='exitOv';o.className='exov';o.onclick=e=>{if(e.target===o)exitStay();};
  o.innerHTML=`<div class="exbox"><div style="font-size:46px">👋</div><h3>యాప్ మూసేయాలా?</h3><p>మళ్ళీ ← బ్యాక్ నొక్కినా యాప్ మూసుకుంటుంది.</p><div class="row2"><button class="btn ghost" onclick="exitStay()">✅ ఉండు</button><button class="btn" style="background:#dc2626" onclick="exitDo()">🚪 మూసేయి</button></div></div>`;document.body.appendChild(o);}
 function exitStay(){const o=document.getElementById('exitOv');if(o)o.remove();NAVH.exit=0;navWatch();}
 function exitDo(){const o=document.getElementById('exitOv');if(o)o.remove();NAVH.exit=1;try{NAVH.cw&&NAVH.cw.destroy();}catch(e){}NAVH.cw=null;try{window.close();}catch(e){}
@@ -2619,7 +2620,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.09-1';
+const APPV='2026.11.09-2';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
