@@ -38,7 +38,7 @@ qz=[['The narrator was a…', 'homoeopath', 'surgeon', 'teacher', 'lawyer'],
     ['The old lady was turned into a…', 'woodpecker', 'crow', 'sparrow', 'parrot'],
     ['“I was turned to stone” shows that the author was…', 'afraid', 'proud', 'humorous', 'no longer afraid'],
     ['“I looked into the mirror and smiled” shows he was…', 'proud of his appearance', 'afraid', 'angry', 'sad'],
-    ['“jumped out of his skin” means…', 'was frightened by something sudden', 'was happy', 'was angry', 'was ill']]))
+    ['“jumped out of his skin” means…', 'was frightened by something sudden', 'was happy', 'was angry', 'was ill']])
 SEC = [
  (62, 'Thinking about the Text – I, II', [
   'I. 1. He wanted a fat woman so that if he made some silly mistake and needed to run away, she should not be able to run after him and catch him (a humorous reason). She should also be a doctor with plenty of money.',
