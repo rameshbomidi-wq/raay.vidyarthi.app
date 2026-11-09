@@ -3,8 +3,8 @@
 # ఉన్న notes-6.js / answers-6.js లోని ఇతర పాఠాలు (ఇక్కడ ch/ లో లేనివి) అలాగే ఉంటాయి.
 import json, glob, importlib.util, os
 H = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.abspath(f'{H}/../..')
-BOOK = {'mat': ('Class6_Maths_Textbook_Sem1.pdf', 8), 'sci': ('Class6_Science_Textbook_Sem1.pdf', 8)}
-BIL = {'mat', 'sci'}  # సరి పేజీ English, తర్వాతి (బేసి) పేజీ తెలుగు → జవాబులు రెండింటికీ
+BOOK = {'mat': ('Class6_Maths_Textbook_Sem1.pdf', 8), 'sci': ('Class6_Science_Textbook_Sem1.pdf', 8), 'soc': ('Class6_Social_Textbook_Sem1.pdf', 8)}
+BIL = {'mat', 'sci', 'soc'}  # సరి పేజీ English, తర్వాతి (బేసి) పేజీ తెలుగు → జవాబులు రెండింటికీ
 def load(f):
     sp = importlib.util.spec_from_file_location('c6_' + os.path.basename(f)[:-3], f); m = importlib.util.module_from_spec(sp); sp.loader.exec_module(m); return m
 def rd(fn, key):
