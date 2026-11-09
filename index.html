@@ -2239,8 +2239,8 @@ const SUBJ={
 const CLASSES=[1,2,3,4,5,6,7,8,9,10];
 const ALLSUBJ=['tel','hin','eng','mat','evs','sci','phy','bio','soc'];
 function subjectsFor(c){c=+c;return c<=2?['tel','eng','mat']:c<=5?['tel','eng','mat','evs']:c<=7?['tel','hin','eng','mat','sci','soc']:['tel','hin','eng','mat','phy','bio','soc'];}
-/* నేర్చుకో/పాఠ్యపుస్తకం కోసం: 10వ తరగతికి తెలుగు ద్వితీయ భాష (te2) అదనం – మార్కులు/ప్రగతి కార్డులో కాదు */
-function learnSubs(c){c=+c;const a=subjectsFor(c);return c>=9?a.concat(['te2']):a;}
+/* నేర్చుకో/పాఠ్యపుస్తకం కోసం: 6, 9, 10 తరగతులకు తెలుగు ద్వితీయ భాష (te2) అదనం – మార్కులు/ప్రగతి కార్డులో కాదు */
+function learnSubs(c){c=+c;const a=subjectsFor(c);return (c>=9||c===6)?a.concat(['te2']):a;}
 
 /* ---------- పాఠాలు (Self Learn) ---------- */
 const L={
@@ -2711,7 +2711,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.09-27';
+const APPV='2026.11.09-28';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
