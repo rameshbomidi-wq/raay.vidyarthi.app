@@ -428,7 +428,9 @@ label.idck{display:flex;align-items:center;gap:8px}label.idck input{width:20px;h
 .sqo{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13.5px;margin:0 0 6px}.sqmy{width:100%;box-sizing:border-box;border:1.5px dashed var(--line);border-radius:10px;padding:8px;font:inherit;font-size:14px;resize:vertical}
 .sqb{display:flex;gap:8px;margin-top:6px}.sqa{margin-top:8px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:9px 10px;line-height:1.6;font-size:14px}.sqa .sqe{margin-top:6px;border-top:1px dashed #bbf7d0;padding-top:6px}
 .sscbn{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:16px;padding:12px 14px;margin:12px 0;cursor:pointer}.sscbn b{display:block;font-size:15px}.sscbn span{font-size:30px}.sscbn small{color:#78350f}
-.exbox{margin:12px 0}.exbox h4{margin:0 0 6px;font-size:15px}.exbn{background:linear-gradient(135deg,#f3e8ff,#fbcfe8);margin:8px 0}.exbn small{color:#6b21a8}.exbn i{margin-left:auto;font-style:normal;font-size:18px;color:#86198f}
+.exbox{margin:12px 0;background:linear-gradient(135deg,#faf5ff,#fdf2f8);border:1.5px solid #e9d5ff;border-radius:16px;padding:10px 12px}.exbox summary{font-weight:700;font-size:15px;cursor:pointer;list-style-position:inside}.exbox summary small{font-weight:400;color:#7e22ce;margin-left:4px}
+.exwrap{overflow-x:auto;margin-top:8px}.extab{border-collapse:separate;border-spacing:3px;width:100%;font-size:13px}.extab th{font-weight:600;color:#6b21a8;white-space:nowrap;text-align:center}.extab tr th:first-child{text-align:left}.extab td{text-align:center;padding:0}
+.exok{border:0;color:#fff;border-radius:9px;min-width:40px;min-height:34px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;box-shadow:0 2px 5px #0002;margin:1px;position:relative}.exok i{font-style:normal;font-size:10px;position:absolute;top:-4px;right:-3px;background:#fff;color:#333;border-radius:8px;padding:0 3px}.exno{color:#c4b5fd}.exft{display:flex;justify-content:space-between;align-items:center;margin-top:6px;color:#6b7280}
 #qpPrint{display:none}
 @media print{body.qpprint>*:not(#qpPrint){display:none!important}body.qpprint #qpPrint{display:block!important}body.qpprint,html:has(body.qpprint){background:#fff!important}}
 .qpsheet{font-family:'Noto Sans Telugu',sans-serif;color:#000;padding:8px 14px;font-size:14px}.qpsheet .qph{text-align:center;border-bottom:2px solid #000;padding-bottom:6px;margin-bottom:8px}
@@ -2709,7 +2711,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.09-14';
+const APPV='2026.11.09-15';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3848,12 +3850,36 @@ function wsMine(){return live('results').filter(r=>r.kind==='ws'&&r.n===me()&&r.
 function wsRankToday(){const b=wsBoard(S.cur.c,todayS(),todayS());const i=b.findIndex(p=>p.n===me());return i<0?0:i+1;}
 /* 🧮 లెక్కల బడి – యూజర్ ఇచ్చిన బేసిక్స్ టూల్స్ (basics/*.html – ఆ ఫైళ్ల కోడ్ మార్చకూడదు), యాప్ లోపలే తెరుచుకుంటాయి */
 const BASICS=[['basics/Ganitha_Pustakam.html','📗','గణిత పుస్తకం','ఆడుతూ నేర్చుకో','linear-gradient(135deg,#34d399,#0f766e)'],['basics/Ganitha_Sadhana.html','✏️','గణిత సాధన','దశలవారీగా చేయి','linear-gradient(135deg,#818cf8,#4338ca)']];
-/* 📝 పరీక్ష జవాబులు – యూజర్ ఇచ్చిన SA/FA జవాబుల టూల్స్ (exams/*.html – కోడ్ మార్చకూడదు, byte-for-byte). కొత్త పరీక్షకు ఇక్కడ ఒక వరుస చేర్చాలి */
-const EXAMS=[{c:3,t:'SA1 తెలుగు – జవాబులు',d:'2026-11-09',n:'33 ప్రశ్నలు జవాబులతో • క్విజ్ • అదనపు ఉదాహరణలు',u:'exams/Class3_Telugu_SA1_Model_Paper_2026-27_Answers.html'},
- {c:4,t:'SA1 తెలుగు – జవాబులు',d:'2026-11-09',n:'33 ప్రశ్నలు జవాబులతో • క్విజ్ • అదనపు ఉదాహరణలు',u:'exams/Class4_Telugu_SA1_Model_Paper_2026-27_Answers.html'}];
-function examsOf(c){return EXAMS.filter(e=>e.c===+c).sort((a,b)=>a.d<b.d?1:-1);}
-function examCards(c){const L=examsOf(c);if(!L.length)return '';
- return `<div class="exbox"><h4>📝 పరీక్ష జవాబులు</h4>${L.map(e=>`<div class="sscbn exbn" onclick="go('book',{u:'${e.u}',t:'📝 ${e.t}',k:'tool',back:{test:1}})"><span>📝</span><div><b>${e.t}</b><small>${fmtD(e.d)} పరీక్ష • ${e.n}</small></div><i>▶</i></div>`).join('')}</div>`;}
+/* 📝 పరీక్ష జవాబులు – తరగతి → సబ్జెక్టు → FA1–FA4, SA1, SA2.
+   GitHub repo లో exams/ ఫోల్డర్‌లో HTML ఫైల్ పెడితే చాలు – ఆటోగా కనిపిస్తుంది (లైబ్రరీ లాగే listDir; కోడ్ మార్చనవసరం లేదు).
+   ఫైల్ పేరు: Class3_Telugu_SA1_<ఏదైనా>.html  (సబ్జెక్టు: Telugu English Maths EVS Hindi Science Physics Biology Social; పరీక్ష: FA1–FA4, SA1, SA2).
+   github.io కాని చోట (లేదా GitHub API పరిమితి దాటితే) exams/index.json చూస్తుంది. ఫైళ్ల కోడ్ మార్చకూడదు. */
+const EXK=['FA1','FA2','FA3','FA4','SA1','SA2'];
+const EXSUB={telugu:'tel',tel:'tel',english:'eng',eng:'eng',maths:'mat',math:'mat',mathematics:'mat',mat:'mat',evs:'evs',hindi:'hin',hin:'hin',science:'sci',sci:'sci',
+ physics:'phy',physical:'phy',ps:'phy',phy:'phy',biology:'bio',biological:'bio',bio:'bio',ns:'bio',social:'soc',soc:'soc',ss:'soc'};
+function exParse(n){const b=String(n).replace(/\.html?$/i,''),t=b.split(/[\s_\-.]+/).filter(Boolean);let c=0,s='',x='',rest=[];
+ for(let i=0;i<t.length;i++){const l=t[i].toLowerCase();let m;
+  if(!c&&(m=l.match(/^(?:class|cls|c)(\d{1,2})$/))){c=+m[1];continue;}
+  if(!c&&/^(class|cls)$/.test(l)&&/^\d{1,2}$/.test(t[i+1]||'')){c=+t[++i];continue;}
+  if(!s&&EXSUB[l]){s=EXSUB[l];continue;}
+  if(!x&&(m=l.match(/^(fa|sa)([1-4])$/))&&(m[1]==='fa'||+m[2]<=2)){x=m[1].toUpperCase()+m[2];continue;}
+  if(!x&&/^(fa|sa)$/.test(l)&&/^[1-4]$/.test(t[i+1]||'')){x=l.toUpperCase()+t[++i];continue;}
+  rest.push(t[i]);}
+ return c>=1&&c<=10&&s&&x?{c,s,x,u:'exams/'+encodeURIComponent(n),t:rest.join(' ').replace(/\banswers?\b|\btool\b/ig,'').replace(/\s+/g,' ').replace(/(\d{4}) (\d{2})\b/,'$1-$2').trim(),n}:null;}
+let EXF=0;
+function exFiles(){const v=(S.lib||{})['dir:exams'];return v&&v.v?v.v:[];}
+async function exRefresh(force){EXF=1;const old=JSON.stringify(exFiles());let v=await listDir('exams',force);
+ if(!v||(!v.length&&ghRepo())){try{const r=await fetch('exams/index.json?_='+Date.now());if(r.ok){const j=await r.json();const w=j.map(x=>typeof x==='string'?{name:x,size:0}:x);if(!v||w.length){v=w;S.lib=S.lib||{};S.lib['dir:exams']={t:Date.now(),v};save();}}}catch(e){}}
+ if(JSON.stringify(exFiles())!==old&&view==='test'&&(param.tab||'new')==='new')render();else if(force)toast(v?'✅ తాజా జాబితా':'📴 నెట్ లేదు – పాత జాబితా');}
+function examsOf(c){return exFiles().map(f=>exParse(f.name)).filter(e=>e&&e.c===+c);}
+function exOpen(u,t){go('book',{u,t:'📝 '+t,k:'tool',back:{test:1}});}
+function examCards(c){const st=(S.lib||{})['dir:exams'];if(!EXF&&(!st||Date.now()-st.t>30*60e3))setTimeout(()=>exRefresh(true),50);
+ const L=examsOf(c),subs=learnSubs(c).filter(s=>s!=='te2'||L.some(e=>e.s==='te2'));
+ const cell=(s,x)=>{const f=L.filter(e=>e.s===s&&e.x===x);if(!f.length)return `<td><span class="exno">–</span></td>`;
+  return `<td>${f.map((e,i)=>`<button class="exok" style="background:${SUBJ[s].col}" title="${esc(e.t||x)}" onclick="exOpen('${e.u}','${c}వ తరగతి ${SUBJ[s].n} ${x}${e.t?' – '+esc(e.t).replace(/'/g,'')+'':''}')">${x}${f.length>1?'<i>'+(i+1)+'</i>':''}</button>`).join('')}</td>`;};
+ return `<details class="exbox"${L.length?' open':''}><summary>📝 పరీక్ష జవాబులు <small>FA 1–4 • SA 1–2${L.length?' • '+L.length+' అందుబాటులో':''}</small></summary>
+<div class="exwrap"><table class="extab"><tr><th></th>${EXK.map(x=>`<th>${x}</th>`).join('')}</tr>${subs.map(s=>`<tr><th><span style="color:${SUBJ[s].col}">${SUBJ[s].ic}</span> ${SUBJ[s].sh}</th>${EXK.map(x=>cell(s,x)).join('')}</tr>`).join('')}</table></div>
+<div class="exft"><small>రంగు బటన్ నొక్కితే జవాబులు • “–” = ఇంకా రాలేదు</small><button class="lk b" onclick="exRefresh(true)">🔄</button></div></details>`;}
 function lbadi(){return `<div class="lbadi"><h4>🧮 లెక్కల బడి – బేసిక్స్</h4><p>అంకెలు, కూడిక, తీసివేత, గుణకారం, భాగహారం – అందరికీ పునాది</p><div class="g2">${BASICS.map(([u,i,t,d,bg])=>`<button style="background:${bg}" onclick="go('book',{u:'${u}',t:'${i} ${t}',k:'tool',back:{test:1}})"><span>${i}</span><b>${t}</b><small>${d}</small></button>`).join('')}</div></div>`;}
 function wsCard(){const d=wsDraft(),tr=wsTodayRec(),lv=wsLvFor(S.cur.c),rk=tr?wsRankToday():0;
  return `<div class="tcard wscard"><div class="th" style="background:#d3f9f2"><span class="si" style="width:34px;height:34px;font-size:18px;color:#0c8599">📅</span>నేటి లెక్కలు (+ − × ÷)</div><div class="tb">రోజూ కొత్త 16 లెక్కలు – ఒక్కో ప్రక్రియకు 4. ప్రతి లెక్క చేసిన వెంటనే జవాబు, మార్కు. మార్కులు సార్‌కి చేరతాయి.<br><small class="mut">${fmtD(todayS())} • ${WSLV[lv-1].t} (${WSLV[lv-1].d})</small>
