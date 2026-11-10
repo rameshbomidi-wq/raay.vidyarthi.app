@@ -1,10 +1,10 @@
 # పని స్థితి (Claude కోసం – ప్రతి commit తో అప్‌డేట్ చేయాలి)
 
-చివరి అప్‌డేట్: 2026-11-10 • APPV 2026.11.10-6 • 7వ తరగతి సాంఘికం అధ్యాయాలు 1–4
+చివరి అప్‌డేట్: 2026-11-10 • APPV 2026.11.10-6 • 7వ తరగతి సాంఘికం అధ్యాయాలు 1–5
 
 ## ఇప్పుడు నడుస్తున్న పని
 - 7వ తరగతి సాంఘికం (`tools/class7/ch/cNN.py`, BK 'soc', `books/7/Class7_Social_Textbook_Sem1.pdf` – 100dpi JPEG కుదింపు, PDF = ముద్రిత + 8, సరి English/బేసి తెలుగు, BIL).
-  పూర్తి: c01–c04. తర్వాత: c05 Rise of Empires (170–225), c06 Age of Reorganisation (226–269), c07 How the Land Becomes Sacred? (270–303), c08 From the Rulers to the Ruled (304–345), c09 From Barter to Money (346–375), c10 Understanding Markets (376–415). (Readiness 10–35, AI 416–435 – చేయవద్దు.)
+  పూర్తి: c01–c05. తర్వాత: c06 Age of Reorganisation (226–269), c07 How the Land Becomes Sacred? (270–303), c08 From the Rulers to the Ruled (304–345), c09 From Barter to Money (346–375), c10 Understanding Markets (376–415). (Readiness 10–35, AI 416–435 – చేయవద్దు.)
   PDFలో text layer లేదు → English సరి పేజీలు `tesseract -l eng --psm 4` 170dpi OCR (scratchpad పద్ధతి: `/home/claude/w7/so/ocr/<p>.txt`).
 - తర్వాత: తెలుగు ద్వితీయ భాష “తేనె చినుకులు-2” పాఠాలు 1–8 (ch/l01–l08.py, S/BK 'te2', `books/7/Class7_Telugu_SecondLanguage_Textbook.pdf`, PDF = ముద్రిత + 7 – సరిచూడాలి; పాఠం 1 ముద్రిత 29) + `learnSubs` లో c===7.
 
