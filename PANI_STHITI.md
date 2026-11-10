@@ -1,10 +1,10 @@
 # పని స్థితి (Claude కోసం – ప్రతి commit తో అప్‌డేట్ చేయాలి)
 
-చివరి అప్‌డేట్: 2026-11-10 • APPV 2026.11.10-4 • commit “7వ తరగతి English: A Funny Man (e7u2b)”
+చివరి అప్‌డేట్: 2026-11-10 • APPV 2026.11.10-4 • commit “7వ తరగతి English: Say the Right Thing (e7u2c)”
 
 ## ఇప్పుడు నడుస్తున్న పని
-- 7వ తరగతి English (Honey Bloom సెమ్-1) – పూర్తి: e01–e05
-- తర్వాత: e06 Say the Right Thing (Languages PDF 310–328), e07–e09 (పరిధులు books/7/README.md)
+- 7వ తరగతి English (Honey Bloom సెమ్-1) – పూర్తి: e01–e06 (Units 1, 2)
+- తర్వాత: e07 My Brother’s Great Invention (Languages PDF 332–351), e08 Paper Boats (352–361), e09 North South East West (362–380)
 
 ## తర్వాత చేయవలసినవి (క్రమంలో)
 1. 7వ తరగతి Languages (పుస్తకం `books/7/Class7_Languages_Textbook_Sem1.pdf`, PDF = ముద్రిత + 8: తెలుగు PDF 9–110, హిందీ 111–220, English 221–386 = Honey Bloom పుట + 220). క్రమం: English 9 పాఠాలు (ch/e01–e09) → తెలుగు (ch/t0N) → హిందీ (ch/h0N). యూజర్ విడి English TB కూడా పంపారు (text చదవగలం; విడి TB PDF + 214 = Languages PDF) – repo లో పెట్టలేదు, కొత్త chat లో మళ్ళీ అడగాలి లేదా Languages PDF పేజీలు 221–386 నుండి `pdftotext` + shift decode (books/7/README.md).
