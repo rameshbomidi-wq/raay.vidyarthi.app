@@ -1,0 +1,101 @@
+# 8వ తరగతి English – Blooming Minds Unit 1 (Wit and Wisdom): Wisdom Paves the Way (play)
+# Languages పుస్తకం PDF = ముద్రిత + 8
+S = 'eng'
+PAGES = (279, 297)
+L = dict(id='e8u1c', no=3, t='Wisdom Paves the Way', m=[7], ty='Unit 1 – Wit and Wisdom (Play)', by='One-act play – Blooming Minds (pp. 271–289)',
+th='Knowledge is facts; wisdom is using it with good judgement. Careful observation and reasoning reveal the truth and earn honour.',
+sum='Scene I: Four young men – Ram Datt, Shiv Datt, Har Datt and Dev Datt – have been walking for ten days towards Ujjain to find work, hoping to meet the King. On the dusty road they notice fresh camel tracks and study them carefully; each discovers something special. A distressed merchant runs up and asks whether they have seen his lost camel. They ask: Is it lame in one leg? Blind in the right eye? Does it have a short tail? Is it suffering from stomach pain? He says yes to all, but they say they have never seen it. The angry merchant calls them thieves and takes them to the King. Scene II: In the court the King asks each to explain. Ram Datt – only three feet left clear prints, the fourth was faint, so it is lame. Shiv Datt – it ate leaves only on the left side of the road, so it is blind in the right eye. Har Datt – drops of blood from mosquito bites along the track; a long tail would have driven the pests away, so the tail is short. Dev Datt – the forefeet prints were deep and the hind feet faint; it was drawing up its hind legs because of pain in its belly. The King praises their reasoning, calls the accusation baseless, and the ashamed merchant leaves. The King makes the four men his advisers. They accept with gratitude.',
+te='నలుగురు యువకులు – రామ్ దత్, శివ్ దత్, హర్ దత్, దేవ్ దత్ – ఉద్యోగం కోసం ఉజ్జయిని వెళ్తూ దారిలో ఒంటె అడుగుజాడలు జాగ్రత్తగా పరిశీలించారు. ఒంటె పోగొట్టుకున్న వ్యాపారికి – అది కుంటిది, కుడి కన్ను గుడ్డిది, తోక పొట్టిది, కడుపు నొప్పితో ఉంది – అని చెప్పి, “మేము చూడలేదు” అనగా వ్యాపారి దొంగలని రాజు దగ్గరకు తీసుకెళ్లాడు. ప్రతి ఒక్కరూ తమ పరిశీలనను వివరించారు (మూడు కాళ్ల ముద్రలే స్పష్టం, ఎడమ వైపు ఆకులే తిన్నది, దోమ కాటు రక్తపు చుక్కలు, వెనుక కాళ్ల ముద్రలు పలుచన). రాజు మెచ్చి వారిని సలహాదారులుగా నియమించాడు; వ్యాపారి సిగ్గుపడ్డాడు.',
+pts=['Knowledge = facts and information; wisdom = using knowledge with good judgement.',
+ 'Characters: the young King of Ujjain, four young men (Ram, Shiv, Har, Dev Datt), the Merchant, two sentries.',
+ 'Scene I – road to Ujjain; the men have travelled ten days looking for employment.',
+ 'They scrutinise fresh camel tracks; each notices something unique.',
+ 'The distressed merchant’s camel has gone astray; they describe it exactly but have not seen it.',
+ 'The indignant merchant accuses them of theft and takes them to the King.',
+ 'Ram Datt: three clear prints, one faint → lame in one leg.',
+ 'Shiv Datt: leaves eaten only on the left side → blind in the right eye.',
+ 'Har Datt: blood drops from mosquito bites → short tail (a long tail would have fended off the pests).',
+ 'Dev Datt: forefeet deep, hind feet faint → pain in the belly.',
+ 'The King calls the accusation baseless; the chastened merchant leaves; the four become royal advisers.',
+ 'Grammar: modal verbs (can, could, may, might, must, shall, should, will, would, need to, ought to, dare) and their functions.',
+ 'Speaking: word stress changes meaning; statements and exclamations end with a falling tone.'],
+w=[['adorned', 'beautified'], ['tapestries', 'decorative fabrics with pictures'], ['resolute', 'determined'], ['bustling', 'busy'], ['eludes', '(here) is difficult to obtain'], ['devise', 'to think of (a plan)'],
+   ['deliberate', 'to think carefully'], ['scrutinise', 'to look at carefully'], ['in haste', 'in a hurry'], ['pursued', '(here) chased'], ['countenance', 'facial expression'], ['distressed', 'worried'],
+   ['astray', 'away from the correct path'], ['indignant', 'angry (at unfairness)'], ['yonder', 'over there'], ['grievance', 'complaint'], ['accusation', 'claim that someone did wrong'], ['deduce', 'to decide by reasoning'],
+   ['discern', 'to see or notice'], ['foliage', 'green leaves and plants'], ['fended off', 'guarded against'], ['insight', 'deep understanding'], ['sound', '(here) healthy'], ['intimately', 'in a detailed way'],
+   ['flawless', 'perfect'], ['chastened', 'felt sorry'], ['counsel', 'advice'], ['beacon', 'guiding light']],
+gr=dict(t='Modal verbs and their functions', p=['can – ability; could – past ability/disbelief (How could you know?)', 'may – possibility/permission; May … – wish (May your wisdom shine)', 'might – weak possibility; must – necessity/logical conclusion (You must have stolen it)', 'shall – command (You shall come with me); should – advice; ought to – moral obligation', 'will – willingness; would – prediction; would have – imagined past possibility; need to – necessity; dare – challenge']),
+qa=[['Why were the four young men going to Ujjain?', 'They had left their village to find employment and hoped to meet the King of Ujjain, who might recognise their talents.'],
+ ['Why did the merchant think the four men were thieves?', 'Because they described his camel exactly – lame, blind in the right eye, short-tailed and with stomach pain – yet said they had never seen it.'],
+ ['How did Shiv Datt know that the camel was blind in its right eye?', 'The camel had eaten leaves only on the left side of the road; the leaves on the right side were untouched, so it could not see with its right eye.'],
+ ['How did Har Datt know the camel had a short tail?', 'He saw small drops of blood from mosquito bites along the track. A camel with a long tail would have driven away the mosquitoes, so its tail must be short.'],
+ ['Why did the King make the four men his advisers?', '1) They showed remarkable observation and reasoning.\n2) They could see beyond the obvious.\n3) Such minds are rare and valuable for good decisions.\n4) The King values wisdom and justice.']],
+act='Classify situations as knowledge or wisdom. Stage the play “Wisdom Paves the Way” (choose director, actors, props, rehearse). Write a complaint letter about a damaged road. Read stories of Vikramaditya–Betal, Gopal the Jester, Panchatantra and Tenali Rama.',
+kn='This kind of reasoning from small clues is called deduction – the method used by detectives like Sherlock Holmes. Savitribai Phule: “Let knowledge be the beacon that dispels the darkness of ignorance.”',
+qz=[['How many days had the four men been travelling?', 'Ten', 'Seven', 'Fifteen', 'Three'],
+    ['Where were the four young men going?', 'Ujjain', 'Vijayanagara', 'Pataliputra', 'Delhi'],
+    ['Who noticed that the camel was lame?', 'Ram Datt', 'Shiv Datt', 'Har Datt', 'Dev Datt'],
+    ['How did Shiv Datt know the camel was blind in the right eye?', 'It ate leaves only on the left side', 'It walked in circles', 'It had a scar', 'The merchant told him'],
+    ['Har Datt guessed the short tail from …', 'drops of blood from mosquito bites', 'hair on the road', 'footprints', 'dung'],
+    ['Dev Datt said the camel had …', 'pain in its belly', 'a broken leg', 'a long tail', 'two humps'],
+    ['The merchant called the four men …', 'thieves / deceivers', 'healers', 'kings', 'friends'],
+    ['At the end, the King made the four men his …', 'advisers', 'soldiers', 'merchants', 'servants'],
+    ['“astray” means …', 'away from the correct path', 'tied', 'sold', 'sleeping'],
+    ['“countenance” means …', 'facial expression', 'counting', 'courage', 'country'],
+    ['“indignant” means …', 'angry', 'happy', 'tired', 'calm'],
+    ['“You must have stolen it” – “must have” expresses …', 'logical conclusion', 'wish', 'willingness', 'permission'],
+    ['“May your wisdom shine upon Ujjain” – “may” expresses …', 'wish', 'possibility', 'command', 'ability'],
+    ['“We ought to be united” expresses …', 'moral obligation', 'disbelief', 'prediction', 'challenge'],
+    ['Using knowledge with good judgement is …', 'wisdom', 'knowledge', 'luck', 'memory']],
+wb=dict(mis='The men never saw the camel – they deduced everything from clues. “must have + past participle” shows a guess about the past (logical conclusion), not compulsion. Statements and exclamations end with a falling tone.',
+        qz=[['Noun form of “deduce”:', 'deduction', 'deduceness', 'deducing', 'deducement'], ['Noun form of “scrutinise”:', 'scrutiny', 'scrutinisation', 'scrutinous', 'scruting'], ['“bear” meaning “tolerate”:', 'I can’t bear the sound of honking.', 'I spotted a bear.', 'Trees bear fruit.', 'She agreed to bear the responsibility.']]))
+SEC = [
+ (279, 'Before we read – I & II', [
+  'I. Elders have long experience of life; they have faced many problems and can guide us wisely, warn us of mistakes and help us take good decisions.',
+  'II. 1. Knowledge 2. Wisdom 3. Knowledge 4. Wisdom 5. Wisdom 6. Knowledge']),
+ (280, 'Before we read – Observe the picture', [
+  '(Sample) Four young men are examining footprints of a camel on a road and a worried merchant is running towards them – perhaps the merchant has lost his camel and the young men are trying to find clues about it.']),
+ (284, 'Let us discuss – I (Scene I)', [
+  '2. … he wanted all four of them to stay hopeful and united, as that hope was the reason they kept walking towards Ujjain.',
+  '3. … he (Shiv Datt in the text) saw fresh camel tracks on the road.',
+  '4. … he saw a man running towards them in a great hurry, looking worried.',
+  '5. … Dev Datt had correctly said the camel was suffering from stomach pain, which only someone who knew the camel could know.',
+  '6. … they were innocent and confident; they had nothing to hide and were ready to face the King.']),
+ (289, 'Let us discuss – Scene II (order of events)', [
+  'Order: 3 (King asks the merchant to state his accusation) → 8 (merchant accuses the men) → 2 (Ram Datt – lame) → 5 (Shiv Datt – blind in right eye) → 7 (Har Datt – short tail) → 6 (Dev Datt – pain) → 4 (King praises them, dismisses accusation) → 1 (King makes them advisers).',
+  'So the numbers are: event 1 – 8, event 2 – 3, event 3 – 1, event 4 – 7, event 5 – 4, event 6 – 6, event 7 – 5, event 8 – 2.']),
+ (290, 'Let us think and reflect – I (Extracts)', [
+  'Extract 1: i. A is false. Correct: Dev Datt believes they may have to wander many more roads before finding suitable employment – it is not an easy task. ii. He is confident about his talents, hopeful and optimistic. iii. B. moving forward with determination. iv. C. He is cautious and thoughtful, preferring to plan ahead.',
+  'Extract 2: i. B. Both A and R are true, but R is not the correct explanation of A (the merchant left ashamed because the King called his accusation baseless). ii. C. notice details that others might overlook. iii. … they were only poor travellers looking for any job, and becoming the King’s advisers was far beyond their expectations. iv. The King values wisdom, intelligence and justice; he rewards merit and is fair – he does not punish people without proof.']),
+ (291, 'Let us think and reflect – II (Answer the questions)', [
+  '1. The journey was long, tiring and uncomfortable – they had walked for ten days in the hot sun on dusty roads without finding work.',
+  '2. Because the men described his camel perfectly but said they had not seen it. It shows that he was hasty, suspicious and quick to judge without thinking.',
+  '3. Their observations first make them look guilty, but when they explain them in court they prove their wisdom – this turns the accusation into an honour (they become advisers).',
+  '4. Because each man gave a logical explanation based on clear evidence from the tracks, while the merchant had no proof except his suspicion.',
+  '5. They observe carefully, notice small details, think logically, stay calm under pressure, are honest and work together – qualities needed to give good advice.',
+  '6. He realised that he had wrongly called wise and honest men thieves; the King rebuked him publicly, so he felt embarrassed.',
+  '7. They kept walking for ten days, encouraged one another (“we ought to be united in this hope”) and planned calmly. It shows they were patient, optimistic, determined and united.',
+  '8. He listened to both sides, asked each man to explain, judged by evidence and reasoning, dismissed the false charge, warned the merchant and rewarded merit – qualities of a just and wise ruler.']),
+ (291, 'Let us learn – I & II', [
+  'I. 1. deduction 2. observation(s) 3. scrutiny 4. accusations 5. recognition',
+  'II. 1 – vi, 2 – iv, 3 – v, 4 – vii, 5 – ii, 6 – viii, 7 – i, 8 – iii',
+  'Sentences (samples): We accepted the job with all our hearts. To be precise, the bus left at 8.15. He wanted to gain an audience with the Collector. The runner stopped to catch his breath. The hall erupted in applause. This failure is small in the grand scheme of things. I was taken aback by the news. There is more to this story than meets the eye.']),
+ (292, 'Let us learn – III (face / bear)', [
+  'Face: 1 (n. front of the head) – iii; 2 (v. positioned towards) – i; 3 (v. deal with) – iv; 4 (n. front surface of a thing) – ii.',
+  'Bear: 1 (v. tolerate) – iv; 2 (v. accept) – iii; 3 (n. large mammal) – ii; 4 (v. produce) – i.']),
+ (293, 'Let us learn – IV & V (Modals)', [
+  'IV. 1 will – ix willingness; 2 must have – v logical conclusion; 3 shall – x command; 4 could – i disbelief; 5 would – viii prediction; 6 would have – ii imagined possibility; 7 may – xi possibility; 8 May – vi wish; 9 ought to – iii moral obligation; 10 need to – vii necessity; 11 dare – iv challenge.',
+  'V. 1. can 2. must 3. should 4. might 5. need to 6. may 7. could']),
+ (294, 'Let us learn – VI & Let us listen (transcript p. 292)', [
+  'VI. 2. You need not worry about things beyond your control. 3. A person cannot gain experience without taking risks. 4. You must treat others with kindness, even when they disagree with you. 5. You must not interrupt when someone else is speaking.',
+  'Listen: Speaker i – 6 (deactivate tense situations with cleverness); Speaker ii – 1 (cleverness as powerful as strength); Speaker iii – 4 (tricky situations managed calmly); Speaker iv – 3 (keep the reader involved). Not needed: 2 and 5. (Speaker iv also mentions learning being fun – check with the book key.)']),
+ (295, 'Let us speak – Word stress & intonation', [
+  'I take my dog…: stress on I – I (not someone else) take him; take – I take him (not send him); my dog – my own dog, not someone else’s; walk – for a walk (not to the vet/bath); evening – in the evening (not morning).',
+  'All the given sentences are statements or exclamations – say them with a falling tone (↘).']),
+ (296, 'Let us write – Complaint letter', [
+  'From: K. Suresh, 8th Class, ZPHS TV Palli, Gudur Mandal, SPSR Nellore Dt. | Date: 12 July 2026 | To: The Sarpanch, Gram Panchayat, TV Palli. | Respected Sir, | Sub: Bad condition of the kutcha road to our colony – reg.',
+  'I would like to bring to your attention the very bad condition of the kutcha road leading to our colony after the heavy rains.',
+  'The road is full of potholes filled with water. Children and elders slip and fall; two-wheelers have met with accidents. As a result, stagnant water has become a breeding ground for mosquitoes and many people are suffering from fever.',
+  'Firstly, I would like to suggest that the potholes be filled with gravel immediately. Secondly, drains may be dug on both sides and a cement road laid. I request you to look into this matter and take swift action. I look forward to your prompt response.',
+  'Thanking you, | Yours faithfully, | (Signature) K. Suresh']),
+]
