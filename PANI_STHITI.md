@@ -1,15 +1,15 @@
 # పని స్థితి (Claude కోసం – ప్రతి commit తో అప్‌డేట్ చేయాలి)
 
-చివరి అప్‌డేట్: 2026-11-10 • APPV 2026.11.10-4 • commit “7వ తరగతి English: Paper Boats (e7u3b)”
+చివరి అప్‌డేట్: 2026-11-10 • APPV 2026.11.10-4 • commit “7వ తరగతి English: North, South, East, West (e7u3c) – English 9 పాఠాలు పూర్తి”
 
 ## ఇప్పుడు నడుస్తున్న పని
-- 7వ తరగతి English (Honey Bloom సెమ్-1) – పూర్తి: e01–e08
-- తర్వాత: e09 North South East West (Languages PDF 362–380)
+- 7వ తరగతి English (Honey Bloom సెమ్-1) 9 పాఠాలు పూర్తి (e01–e09)
+- తర్వాత: తెలుగు పాఠం 1 (Languages PDF 9 నుండి – విషయసూచిక చూసి పరిధులు README లో రాయాలి)
 
 ## తర్వాత చేయవలసినవి (క్రమంలో)
-1. 7వ తరగతి Languages (పుస్తకం `books/7/Class7_Languages_Textbook_Sem1.pdf`, PDF = ముద్రిత + 8: తెలుగు PDF 9–110, హిందీ 111–220, English 221–386 = Honey Bloom పుట + 220). క్రమం: English 9 పాఠాలు (ch/e01–e09) → తెలుగు (ch/t0N) → హిందీ (ch/h0N). యూజర్ విడి English TB కూడా పంపారు (text చదవగలం; విడి TB PDF + 214 = Languages PDF) – repo లో పెట్టలేదు, కొత్త chat లో మళ్ళీ అడగాలి లేదా Languages PDF పేజీలు 221–386 నుండి `pdftotext` + shift decode (books/7/README.md).
+1. 7వ తరగతి Languages (పుస్తకం `books/7/Class7_Languages_Textbook_Sem1.pdf`, PDF = ముద్రిత + 8): ✅ English 9 పాఠాలు (ch/e01–e09) పూర్తి. మిగిలినవి: తెలుగు (PDF 9–110; ch/t0N.py) → హిందీ (PDF 111–220; ch/h0N.py) – legacy font, పేజీ బొమ్మలు + tesseract OCR (పద్ధతి books/7/README.md). English Readiness (PDF 223–237) చేయలేదు.
 2. 7వ తరగతి: సాంఘికం, తెలుగు ద్వితీయ భాష – యూజర్ PDFలు పంపాలి.
-3. 7వ తరగతి పుస్తకంతో సరిచూడవలసినవి: గణితం పుట 184 (A–D), పుట 310 (ఎత్తుల బొమ్మ), Fig 5.5/5.6, 3.2 ప్ర.1, 6.5 ప్ర.3.
+3. 7వ తరగతి పుస్తకంతో సరిచూడవలసినవి: గణితం పుట 184 (A–D), పుట 310 (ఎత్తుల బొమ్మ), Fig 5.5/5.6, 3.2 ప్ర.1, 6.5 ప్ర.3. English: e05 currant bun బొమ్మ ఎంపిక (PDF 302), e07 poster (PDF 347–348), e09 crossword 12 Across పెట్టెల సంఖ్య.
 4. 8వ తరగతి మిగిలినవి: సైన్స్, సాంఘికం, Languages (యూజర్ 2026-11-10 న Languages SEM1 PDF పంపారు – `books/8/Class8_Languages_Textbook_Sem1.pdf` గా repo లో పెట్టాలి), English, తెలుగు ద్వితీయ భాష.
 5. 6వ తరగతి సెమ్-2, 1–5 తరగతుల సెమ్-2 – PDFలు వచ్చినప్పుడు.
 
