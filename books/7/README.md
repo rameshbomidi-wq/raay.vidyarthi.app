@@ -5,3 +5,6 @@
 - Class7_Science_Textbook_Sem1.pdf – సామాన్య శాస్త్రం (Readiness PDF 10–37; అధ్యాయాలు 1–6: PDF 38–229; AI PDF 230–241; PDF = ముద్రిత + 8; సరి English, బేసి తెలుగు). English text pdftotext తో చదవవచ్చు.
   అధ్యాయాల PDF పరిధులు: 1) 38–49  2) 50–83  3) 84–127  4) 128–161  5) 162–195  6) 196–229.
 - Class7_Maths_SA1_Set1_Solutions_2026-27.pdf – SA1 మోడల్ పేపర్ సాధనలు.
+- Class7_Languages_Textbook_Sem1.pdf – తెలుగు + హిందీ + English ఒకే ఫైల్ (386 పుటలు; PDF = ముద్రిత + 8). తెలుగు PDF 9–110 (ముద్రిత 1–102), హిందీ PDF 111–220 (103–212), English “Honey Bloom” PDF 221–386 (213–378; Honey Bloom పుట + 220 = PDF).
+  English text: `pdftotext -layout` → shift cipher (ఎక్కువ వరుసలు chr+29; కొన్ని వరుసల్లో ‘a’ వరకు ఉన్న అక్షరాలు మాత్రమే +29 → −29 చేయాలి) – చదవగలం. తెలుగు/హిందీ legacy font → పేజీ బొమ్మలు + tesseract (tel: tessdata_best GitHub నుండి; hin ఇక్కడ ఉంది).
+  English పాఠాల PDF పరిధులు: Readiness 223–237; U1: River Spoke 238–253, Try Again 254–266, Three Days to See 267–277 (Transcripts 278–281); U2: Dr Dolittle 282–297, A Funny Man 298–309, Say the Right Thing 310–328 (Transcripts 329–331); U3: My Brother’s Great Invention 332–351, Paper Boats 352–361, North South East West 362–380 (Transcripts 381–383); Mind maps 384–386.
