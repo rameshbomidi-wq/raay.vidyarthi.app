@@ -1,0 +1,102 @@
+# 8వ తరగతి English – Blooming Minds Unit 3 (Mystery and Magic): The Case of the Fifth Word – Donald J. Sobol
+# Languages పుస్తకం PDF = ముద్రిత + 8
+S = 'eng'
+PAGES = (357, 378)
+L = dict(id='e8u3a', no=7, t='The Case of the Fifth Word', m=[9], ty='Unit 3 – Mystery and Magic (Detective story)', by='Donald J. Sobol (1924–2012) – Blooming Minds (pp. 349–370)',
+th='Observation, knowledge and logical thinking solve mysteries; modesty in success.',
+sum='Leroy Brown, called “Encyclopedia” because his head is full of facts, is an eighth grader in Idaville. His father, the Chief of Police, comes home to dinner whenever he cannot solve a case, and Encyclopedia solves it before dinner is over. Neither of them tells anyone. One Tuesday Chief Brown says Tim Nolan died yesterday. Five years earlier two masked men robbed the Diamond Mart of a million dollars’ worth of jewellery; the Chief believed Nolan and his prison friend Daniel Davenport did it, but there was no proof – a clerk thought she recognised Nolan but would not testify, and the jewellery was never found. Davenport disappeared after the hold-up. Nolan ran a small palm-tree nursery. Police searched his house but found nothing. Dying of a stroke, Nolan left a will giving everything, including the nursery, to Davenport; clipped to it was a desk-calendar sheet with Davenport’s address and four words: “Nom Utes Sweden Hurts”. Mrs. Brown explains their dictionary meanings but cannot decode them. Encyclopedia asks one question – “Is there a young fir tree in Mr. Nolan’s nursery?” – and says the jewellery is under the fifth word. Explanation: the words are days of the week without “day”: Mon(day) → Nom, Tues(day) → Utes, Wednes(day) → Sweden, Thurs(day) → Hurts; the fifth is Fri(day) → Fir. The jewellery was found in a jug of earth in which the young fir tree grew.',
+te='లీరాయ్ బ్రౌన్ (“ఎన్‌సైక్లోపీడియా”) పోలీస్ చీఫ్ కొడుకు; అన్ని విషయాలూ గుర్తుంచుకునే 8వ తరగతి అబ్బాయి. ఐదేళ్ల క్రితం నగల దొంగతనంలో నోలన్, డావెన్‌పోర్ట్‌లపై అనుమానం ఉన్నా రుజువు లేదు. నోలన్ చనిపోతూ తన తాటిచెట్ల నర్సరీని డావెన్‌పోర్ట్‌కు రాసి, క్యాలెండర్ కాగితంపై “Nom Utes Sweden Hurts” అనే నాలుగు పదాలు రాశాడు. ఇవి వారాల పేర్ల నుండి “day” తీసి అక్షరాలు మార్చిన పదాలు (Monday, Tuesday, Wednesday, Thursday). ఐదో పదం Friday → “Fir” (ఫర్ చెట్టు). నర్సరీలో ఫర్ చెట్టు కుండలోని మట్టిలో నగలు దొరికాయి.',
+pts=['Author: Donald J. Sobol (1924–2012), Encyclopedia Brown mystery series.',
+ 'Leroy “Encyclopedia” Brown – eighth grader, reads more than anyone in Idaville, never forgets a fact.',
+ 'His father, Chief of Police, goes home to dinner when stuck; Leroy solves the case before dinner ends.',
+ 'Five years ago two masked men robbed the Diamond Mart on Sixth Avenue of a million dollars’ jewellery.',
+ 'Suspects: Tim Nolan and Daniel Davenport (met in prison in South Carolina); no proof; jewellery never found.',
+ 'Nolan ran a palm-tree nursery; Davenport disappeared after the hold-up.',
+ 'Dying of a stroke, Nolan left a will giving everything to Davenport, with a calendar sheet: “Nom Utes Sweden Hurts”.',
+ 'Encyclopedia asked one question: Is there a young fir tree in the nursery?',
+ 'Code: days of the week minus “day”, letters rearranged – Mon→Nom, Tues→Utes, Wednes→Sweden, Thurs→Hurts.',
+ 'Fifth word = Fri → FIR; the jewellery was hidden in the jug of earth of the young fir tree.',
+ 'Grammar: phrasal verbs, homophones, relative/conjunction words (who, where, which, when, though, because, if, why), reported questions (asked if/whether, Wh-word).'],
+w=[['nickname', 'pet name'], ['in a matter-of-fact manner', 'without showing much emotion'], ['hold-ups', 'robberies using threat or violence'], ['nursery', 'place where young plants are grown for sale'], ['testify', 'make a statement in court'],
+   ['hunch', 'a strong feeling about something'], ['loot', 'stolen goods'], ['stroke', 'sudden serious illness causing inability to move'], ['will', 'legal document saying who gets one’s property after death'], ['leafed through', 'quickly turned the pages'],
+   ['confessed', 'admitted'], ['code', 'hidden message'], ['foreseen', 'predicted'], ['anagram', 'word made by rearranging letters'], ['spoonerism', 'swapping first sounds of words (funny mistake)'], ['homophones', 'words that sound alike but differ in meaning']],
+gr=dict(t='Reported questions', p=['Wh-question: “What do you make of the words?” → She asked what he made of the words.', 'Yes/No question: “Is there a fir tree?” → He asked if/whether there was a fir tree.', 'Tense back-shift: present → past; past → past perfect; will → would; shall → should.', 'Time/place: yesterday → the day before; tomorrow → the following day; this → that; these → those; here → there.', 'Remove question mark; question becomes a statement (subject before verb).']),
+qa=[['Why was Leroy called Encyclopedia?', 'Because like an encyclopedia, his head was full of facts – he read more books than anyone in Idaville and never forgot a fact.'],
+ ['Why did Chief Brown suspect Nolan and Davenport?', 'They became friends in prison; Davenport came to live with Nolan a week before the hold-up; a clerk thought she recognised Nolan when a gunman’s mask slipped; Davenport disappeared right after the robbery.'],
+ ['What were the four words and what did they mean?', '“Nom Utes Sweden Hurts” – Monday, Tuesday, Wednesday, Thursday without “day”, with letters rearranged.'],
+ ['What was the fifth word? Where was the jewellery?', 'Fir (Friday without “day”). The jewellery was inside the twenty-gallon jug of earth in which the young fir tree grew in Nolan’s nursery.'],
+ ['What qualities does Encyclopedia show?', '1) Knowledgeable 2) Clever, logical thinker 3) Keen listener 4) Humble – he never boasts about helping his father.']],
+act='Solve the anagram crossword. Play “Name the Mystery Object” with three hints. Find the difference between an encyclopedia, a dictionary and a thesaurus. Hold a group discussion on “The interesting aspects of a mystery story”. Write a report on an Inter-school Art Exhibition.',
+kn='Encyclopedia Brown stories (from 1963) end with a question so that readers can solve the case themselves; the answer is at the end. The first famous fictional detective was Edgar Allan Poe’s Auguste Dupin; the most famous is Sherlock Holmes.',
+qz=[['What was Leroy Brown’s nickname?', 'Encyclopedia', 'Detective', 'Chief', 'Professor'],
+    ['Leroy’s father was the …', 'Chief of Police', 'school teacher', 'jeweller', 'nursery owner'],
+    ['Where did Leroy solve his father’s cases?', 'At the dinner table', 'At the police station', 'In school', 'In the library'],
+    ['The robbery took place at the …', 'Diamond Mart', 'bank', 'palm-tree nursery', 'post office'],
+    ['Nolan and Davenport met …', 'in prison in South Carolina', 'at school', 'at the nursery', 'in the army'],
+    ['What business did Nolan run?', 'A palm-tree nursery', 'A jewellery shop', 'A restaurant', 'A bookshop'],
+    ['Nolan left everything to …', 'Davenport', 'Chief Brown', 'the clerk', 'Leroy'],
+    ['The four words were written on …', 'a sheet from a desk calendar', 'the will', 'a wall', 'a newspaper'],
+    ['“Utes” stands for …', 'Tuesday', 'Thursday', 'Monday', 'Wednesday'],
+    ['The fifth word was …', 'Fir', 'Sat', 'Sun', 'Fri'],
+    ['The jewellery was hidden in …', 'a jug of earth with a fir tree', 'Nolan’s kitchen', 'a bank locker', 'the calendar'],
+    ['“hunch” means …', 'a strong feeling', 'a lunch', 'a prize', 'a robbery'],
+    ['“loot” means …', 'stolen goods', 'a tool', 'a code', 'a will'],
+    ['“We can’t figure out the answer” – “figure out” means …', 'solve', 'draw', 'count', 'hide'],
+    ['“Is there a fir tree?” asked Leroy. → Leroy asked …', 'if there was a fir tree', 'is there was a fir tree', 'that is there a fir tree', 'there is a fir tree?']],
+wb=dict(mis='The four words are not real meanings (tribe, country) – they are days of the week minus “day”. In reported Yes/No questions use “if/whether” and do not use a question mark.',
+        qz=[['Homophone pair:', 'peace/piece', 'peace/peach', 'break/brick', 'week/walk'], ['Spoonerism “bead a rook” means …', 'read a book', 'bad rock', 'bed a rack', 'rob a bead'], ['“got away with” means …', 'escaped without punishment', 'ran away', 'took away', 'got angry']]))
+SEC = [
+ (358, 'Before we read – I (Anagram crossword) & II', [
+  'Across: 3. Declare – CLEARED 6. Tucks – STUCK 7. Heart – EARTH 9. Felt – LEFT 10. Sown – OWNS (or SNOW) 12. Sword – WORDS 13. Evil – LIVE (or VILE). Down: 1. Aces – CASE 2. Read – DEAR (or DARE) 4. Tool – LOOT 5. Alps – PALS 6. Hooks – SHOOK 8. Mane – NAME 11. Loves – SOLVE. (Most answers are words from the story – check that the letters fit the grid.)',
+  'II. 1 – iii situation 2 – iv matter 3 – ii container 4 – i writing format. The title “Case” means a matter (a police case/mystery).']),
+ (361, 'Let us discuss – I & II (Part I)', [
+  '1. … his head was filled with facts from A to Z, like an encyclopedia; he read more books than anyone in Idaville and never forgot a fact.',
+  '2. … he had a mystery that he could not solve.',
+  '3. … he knew his parents were discussing the case for his benefit, so he was listening carefully.',
+  '4. … he realised he was dying and wanted Davenport to get everything he owned, including the nursery (and the clue to the hidden jewellery).',
+  'II. Yes – the police had searched Nolan’s house and found nothing, and the only new clue was a strange set of words; Chief Brown could not understand it, so he would need Leroy’s sharp thinking.']),
+ (364, 'Let us discuss – I (Fact/Opinion) & II (Traits)', [
+  'I. 2. Opinion 3. Fact 4. Opinion 5. Fact 6. Fact 7. Opinion 8. Fact',
+  'II. 2. humble 3. keen listener 4. cleverness (extra word: gentle)']),
+ (365, 'Let us think and reflect – I (Extracts)', [
+  'Extract 1: i. … the best detective alive was his own son, an eighth grader, but no one would believe it, so he could not tell anyone. ii. C. He desires to blend with the other boys to prevent seeming different. iii. C (They want him to be remembered as different) – this reason is false. iv. He could not get rid of the name; everyone except his parents and teachers kept calling him Encyclopedia.',
+  'Extract 2: i. B. He is confused, unable to make sense of the words. ii. True. iii. The message had a hidden meaning (a code); its literal meanings made no sense. iv. refocus the discussion on the context of the crime (it also hints the message was meant for Davenport).']),
+ (367, 'Let us think and reflect – II (Answer the questions)', [
+  '1. They met in prison and became friends because of shared interests; Davenport came to live with Nolan a week before the hold-up; Nolan left everything he owned to Davenport and wrote him a secret message.',
+  '2. To avoid being caught and to wait until things cooled down; he probably planned to return later, collect the hidden jewellery with Nolan and share it.',
+  '3. She is intelligent, curious, observant and supportive – she remembers details of old cases, asks questions and tries to decode the words (she was a teacher).',
+  '4. His son was the best detective alive – he solved even difficult police cases before dinner was over, though only an eighth grader.',
+  '5. The two were prison friends; Davenport arrived just before the robbery and vanished right after; a clerk thought she recognised Nolan; the jewellery was never found – the circumstances strongly pointed to them.',
+  '6. It is the key to the mystery: it secretly tells Davenport where the jewellery is hidden; decoding it shows Encyclopedia’s cleverness and solves the case.',
+  '7. Encyclopedia was a knowledgeable eighth grader who never forgot a fact that he read. He was clever and could solve a case by asking just one question. He was a keen listener who sat quietly while his parents discussed cases. He was humble and never boasted about helping his father, as he did not want to seem different from other boys.',
+  '8. Because he knows his son will solve it at the dinner table. It shows deep trust, love and a close, cooperative relationship between them.',
+  '9. He did not want to seem different from other boys. It shows that he is modest, humble and values friendship more than fame.',
+  '10. The case is discussed casually over soup; Encyclopedia solves it “before dessert” with one question – the ordinary family setting makes his quick intelligence look remarkable.',
+  '11. With his last strength he put his will on the kitchen table, left everything to Davenport and clipped a calendar sheet with Davenport’s address and four strange words to it.',
+  '12. He thought of the context (a calendar sheet, Davenport’s disappearance), noticed the words were days without “day”, guessed the unwritten fifth word Fir (Friday), and linked it to a fir tree in a palm-tree nursery.']),
+ (368, 'Let us learn – I (Phrasal verbs) & II (Homophones)', [
+  'I. 1 – iv, 2 – iii, 3 – i, 4 – vi, 5 – ii, 6 – v. A. turned up B. cooled down C. figure out D. put on E. got away with F. make of',
+  'II. 1. week, weak 2. four, fore 3. brake, break 4. piece, peace 5. dyeing, dying']),
+ (370, 'Let us learn – III (Spoonerisms) & IV', [
+  'Picture puzzles: solve in pairs (see the illustrations in the book).',
+  'Spoonerisms: 1. sowing nits (swap the first sounds n ↔ s) 2. It’s pouring with rain. 3. master plan 4. warm blanket 5. cars and trucks 6. take a shower 7. read a book 8. Pardon me, madam.',
+  'IV. i who ii where iii Though iv why v which vi When vii if viii because (extra: whose, how)']),
+ (371, 'Let us learn – VI & VII (Reported questions)', [
+  'VI. 2. We went to the place where the incident occurred. 3. The teacher, who is now nearly sixty, said she would retire soon. 4. It was the day when half the class was absent.',
+  'VII. i … what was suspicious about that. ii … what he made of the four words. iii … whether he had not been mixed up in a jewellery robbery a few years before. iv … if he had not searched Nolan’s house. v (Leroy asked) … whether there was a young fir tree in Mr. Nolan’s palm-tree nursery.']),
+ (373, 'Let us learn – VIII & Aditi–Rahul', [
+  '1. Rohan questioned why I had stopped talking to him. 2. My aunt asked if I had enjoyed the family gathering the day before. 3. My grandmother inquired when we would visit them again. 4. Madavi asked Ravi if he would come with her to meet their old teacher the following day. 5. My friend inquired what gift I was planning to give my brother. 6. Veenu asked her teacher if she should carry those notebooks to the staffroom.',
+  'Aditi: 1. … if he had seen anyone leave a package near the lift. 2. … what time he had seen that happen. 3. … whether he had been able to see his face.']),
+ (374, 'Let us listen', [
+  'I. 1. False (it helps awareness, better decisions and memory – not common sense) 2. False 3. True 4. False (you will soon observe things you never noticed – success is not mentioned)',
+  'II. 1. take your time 2. information 3. curious 4. details 5. present']),
+ (376, 'Let us speak & Let us write – Report', [
+  'Group discussion phrases: If I may say something… I fully agree… I’m afraid I don’t agree… Interesting aspects: suspense, clues, clever detective, surprise ending, it makes us think.',
+  'INTER-SCHOOL ART EXHIBITION | By K. Divya, Class VIII | An Inter-school Art Exhibition was organised by the Art and Craft Club of ZPHS TV Palli on 18 and 19 September 2026 in the school hall. Students from eight schools of Gudur mandal participated.',
+  'The exhibition was inaugurated by the Mandal Educational Officer at 10 a.m. on 18 September. Over 200 paintings, clay models, kalamkari works and recycled-material crafts were displayed. Following the inauguration, students explained their works to visitors. Subsequently, a live painting competition on “Clean and Green India” was held.',
+  'Prizes and certificates were given to the best entries by the chief guest, who said, “Art helps children express their dreams.” The exhibition was a great success and showcased creativity and teamwork.']),
+ (378, 'Let us explore', [
+  'II. Mystery object (example hints): the blackboard / board.',
+  'III. An encyclopedia gives detailed information on many topics arranged A–Z; a dictionary gives meanings, pronunciation and usage of words.',
+  'IV. Thesaurus (sample): happy – joyful, glad; big – large, huge; smart – clever, intelligent; fast – quick, swift; begin – start, commence.']),
+]
