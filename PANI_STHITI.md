@@ -1,12 +1,13 @@
 # పని స్థితి (Claude కోసం – ప్రతి commit తో అప్‌డేట్ చేయాలి)
 
-చివరి అప్‌డేట్: 2026-11-10 • APPV 2026.11.10-7 • 8వ తరగతి సైన్స్ భౌతిక అధ్యా. 1–3
+చివరి అప్‌డేట్: 2026-11-10 • 8వ తరగతి English e01; హిందీ ఏదీ లేదు
 
 ## ఇప్పుడు నడుస్తున్న పని
-- 8వ తరగతి మిగిలినవి (PDFలు `books/8/` లో పెట్టాను; build `tools/class8/build8.py`, BOOK లో phy/bio/tel/hin/eng/te2 కీలు; `learnSubs` c>=6 కి te2):
-  - సైన్స్ `Class8_Science_Textbook_Sem1.pdf` (PDF = ముద్రిత + 8, సరి English (pdftotext చదవగలం), బేసి తెలుగు; BIL). భౌతిక S='phy' (ch/pNN.py, ids p8nN): 1) 36–47 ✅ 2) 48–85 ✅ 3) 86–121 ✅ 4) Pressure and its Effects 122–161 ✅ 5) Solutions 162–199 ✅. జీవ S='bio' (ch/bNN.py, ids b8nN): 1) Invisible Living World 220–261 ✅ 2) Health 262–295 ✅ 3) Nature’s Harmony 296–339 ✅. (Readiness, AI చేయవద్దు.)
-  - తెలుగు ద్వితీయ భాష `Class8_Telugu_SecondLanguage_Textbook.pdf` (legacy font → tesseract tel OCR `/home/claude/w8/ocr_sl/<p>.txt`; PDF = ముద్రిత + 8 ✔ (పుట 26 = PDF 34)). సెమ్-1 = పాఠాలు 1–6: సమైక్యభారతి 28 ✅ (l01, PDF 36–43), కొయ్యగుర్రం 36 ✅ (l02, PDF 44–51), పిల్లలం 44 ✅ (l03, PDF 52–61), సమయస్ఫూర్తి 54 ✅ (l04, PDF 62–70), నీవేమైనా చేయగలవు 64 ✅ (l05, PDF 72–79), విద్యార్థిగా నేను 72 ✅ (l06, PDF 80–87) – ద్వితీయ తెలుగు సెమ్-1 పూర్తి; విషయసూచిక: పాఠం 7 సూక్తిసుధ (నవంబర్, PDF 88–) నుండి సెమ్-2; చదువు–ఆనందించు (మేకపోతు గాంభీర్యం, మదర్ థెరీసా) చేయలేదు (ముద్రిత పుటలు). ch/lNN.py, ids sl8lN.
-  - Languages `Class8_Languages_Textbook_Sem1.pdf` (text layer లేదు → OCR `/home/claude/w8/ocr/<p>.txt`; PDF = ముద్రిత + 8). తెలుగు సౌరభం-8: 1) ఆంధ్రవైభవం 38–49 ✅ 2) మాతృభూమి 50–61 ✅ 3) శతకసౌరభం 62–76 ✅ 4) నా యాత్ర 77–91 ✅ 5) సందేశం 92–105 ✅ 6) పయనం 106–120 ✅ 7) చైతన్యమూర్తులు (ఉపవాచకం) 121–130 ✅ (ch/tNN, t8lN). హిందీ मकरंद: 1) सुबह 154–163 2) तेनालीराम की चतुराई 164–173 3) श्रीहरिकोटा 174–186 4) किसान 187–197 5) कूड़ेदान 198–210 6) मित्र को पत्र 211–219 7) गोल 220–231 (ch/hNN, h8lN). English Blooming Minds: U1 The Wit that Won Hearts / A Concrete Example / Wisdom Paves the Way 252–300; U2 Major Somanath Sharma / Somebody’s Mother 301–337, Verghese Kurien 338–356; U3 The Case of the Fifth Word / The Magic Brush of Dreams 357–393, Spectacular Wonders 394–415 (ch/eNN, e8uNx). పాఠాల ఖచ్చిత సరిహద్దులు పేజీ చూసి సరిచూడాలి.
+- 8వ తరగతి (build `tools/class8/build8.py`). ✅ గణితం 7, సైన్స్ (phy 5 + bio 3), తెలుగు 7, తెలుగు ద్వితీయ భాష 6 – పూర్తి.
+- ⏳ Languages `books/8/Class8_Languages_Textbook_Sem1.pdf` (PDF = ముద్రిత + 8):
+  - English Blooming Minds (ch/eNN.py, ids e8u1a…): text = `pdftotext -layout` + decode (encoded tokens chr+29; సాదా పదాలున్న tokens అలాగే) – scratchpad `/home/claude/w8/scripts/en_dec.py`. పరిధులు: U1 (జూలై) a The Wit that Won Hearts 252–268, b A Concrete Example 269–278, c Wisdom Paves the Way 279–297 (Transcripts 298–300); U2 a A Tale of Valour (Major Somnath Sharma) 301–323, b Somebody’s Mother 324–337 (ఆగస్టు), c Verghese Kurien – I Too Had a Dream 338–353 (సెప్టెంబర్) (Transcripts 354–356); U3 a The Case of the Fifth Word 357–378, b The Magic Brush of Dreams 379–393 (సెప్టెంబర్), c Spectacular Wonders 394–409 (అక్టోబర్) (Transcripts 410–412). పూర్తి: e01.
+  - హిందీ मकरंद (ch/hNN.py, h8lN): OCR `tesseract -l hin+eng --psm 4` 200dpi → `/home/claude/w8/hi/<p>.txt`. 1) सुबह 154–163 2) तेनालीराम की चतुराई 164–173 3) श्रीहरिकोटा 174–186 4) किसान 187–197 5) कूड़ेदान 198–210 6) मित्र को पत्र 211–219 7) गोल 220–231. పూర్తి: ఏదీ లేదు.
+- ⏳ సాంఘికం – PDF ఇంకా రాలేదు (యూజర్ పంపాలి). 
 
 ## తర్వాత చేయవలసినవి (క్రమంలో)
 1. 7వ తరగతి Languages ✅ పూర్తి (English 9, తెలుగు 6, హిందీ 7 – ch/e01–e09, t01–t06, h01–h07). పుస్తకంతో సరిచూడవలసినవి: హిందీలో “पुस्तक से मिलाइए” గమనిక ఉన్న అంశాలు (బొమ్మల ఆధారిత రిక్త స్థానాలు/पर्याय/बेमेल), తెలుగులో “పుస్తకంతో సరిచూడండి” అంశాలు. చేయనివి: మూడు భాషల సంసిద్ధత (Readiness) భాగాలు.
