@@ -5,8 +5,8 @@ import json, glob, importlib.util, os
 H = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.abspath(f'{H}/../..')
 BOOK = {'mat': ('Class8_Maths_Textbook_Sem1.pdf', 8), 'phy': ('Class8_Science_Textbook_Sem1.pdf', 8), 'bio': ('Class8_Science_Textbook_Sem1.pdf', 8),
         'tel': ('Class8_Languages_Textbook_Sem1.pdf', 8), 'hin': ('Class8_Languages_Textbook_Sem1.pdf', 8), 'eng': ('Class8_Languages_Textbook_Sem1.pdf', 8),
-        'te2': ('Class8_Telugu_SecondLanguage_Textbook.pdf', 7)}
-BIL = {'mat', 'phy', 'bio'}  # సరి పేజీ English, తర్వాతి (బేసి) పేజీ తెలుగు → జవాబులు రెండింటికీ
+        'te2': ('Class8_Telugu_SecondLanguage_Textbook.pdf', 7), 'soc': ('Class8_Social_Textbook_Sem1.pdf', 8)}
+BIL = {'mat', 'phy', 'bio', 'soc'}  # సరి పేజీ English, తర్వాతి (బేసి) పేజీ తెలుగు → జవాబులు రెండింటికీ
 def load(f):
     sp = importlib.util.spec_from_file_location('c8_' + os.path.basename(f)[:-3], f); m = importlib.util.module_from_spec(sp); sp.loader.exec_module(m); return m
 def rd(fn, key):

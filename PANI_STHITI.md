@@ -1,11 +1,12 @@
 # పని స్థితి (Claude కోసం – ప్రతి commit తో అప్‌డేట్ చేయాలి)
 
-చివరి అప్‌డేట్: 2026-11-10 • 8వ తరగతి English 9 + హిందీ 7 పూర్తి (APPV 2026.11.10-9); సాంఘికం PDF కోసం వేచి ఉంది
+చివరి అప్‌డేట్: 2026-11-10 • 8వ తరగతి సాంఘికం c01
 
 ## ఇప్పుడు నడుస్తున్న పని
-- 8వ తరగతి సెమ్-1 (build `tools/class8/build8.py`): ✅ గణితం 7, సైన్స్ (phy 5 + bio 3), తెలుగు 7, తెలుగు ద్వితీయ భాష 6, English Blooming Minds 9 (e01–e09), హిందీ मकरंद 7 (h01–h07) – పూర్తి (2026.11.10-9).
-- ⏳ 8వ తరగతి సాంఘికం – PDF ఇంకా రాలేదు (యూజర్ పంపాలి; 8 అధ్యాయాలు, ids so8n1.., ch/cNN.py, BK 'soc', BIL – class 7 పద్ధతి).
-- పుస్తకంతో సరిచూడవలసినవి (8వ): English e07 anagram crossword గళ్ళు, e07 spoonerism 1 (knowing sits), e08 crossword గళ్ళు, e09 Before we read బొమ్మలు; హిందీ h05 పత్తాల విలోమ పదాలు, h03/h06 గద్యాంశ ప్రశ్నలు (పుస్తకంలో ప్ర.1 మాత్రమే కనిపించింది).
+- 8వ తరగతి సెమ్-1 (build `tools/class8/build8.py`): ✅ గణితం 7, సైన్స్ 8, తెలుగు 7, ద్వితీయ తెలుగు 6, English 9, హిందీ 7 – పూర్తి.
+- ⏳ సాంఘికం `books/8/Class8_Social_Textbook_Sem1.pdf` (PDF = ముద్రిత + 8; సరి English, బేసి తెలుగు; BK 'soc' BIL; English text pdftotext తో చదవగలం). ch/cNN.py, ids so8nN (class 7 c01 పద్ధతి – తెలుగులో జవాబులు).
+  అధ్యాయాల PDF పరిధులు: 1 Natural Resources 40–73 (జూలై), 2 Reshaping India’s Political Map 74–131 (జూలై), 3 Rise of the Marathas 132–171 (జూలై), 4 Colonial Era 172–227 (ఆగస్టు), 5 Kakatiya kingdom 228–247 (ఆగస్టు), 6 Universal Franchise & Electoral System 248–285 (సెప్టెంబర్), 7 Parliamentary System 286–327 (సెప్టెంబర్), 8 Factors of Production 328–365 (అక్టోబర్). Readiness 10–39, AI 366–385 చేయవద్దు.
+  పూర్తి: c01. తర్వాతి: c02 (PDF 74–131).
 
 ## తర్వాత చేయవలసినవి (క్రమంలో)
 1. 7వ తరగతి Languages ✅ పూర్తి (English 9, తెలుగు 6, హిందీ 7 – ch/e01–e09, t01–t06, h01–h07). పుస్తకంతో సరిచూడవలసినవి: హిందీలో “पुस्तक से मिलाइए” గమనిక ఉన్న అంశాలు (బొమ్మల ఆధారిత రిక్త స్థానాలు/पर्याय/बेमेल), తెలుగులో “పుస్తకంతో సరిచూడండి” అంశాలు. చేయనివి: మూడు భాషల సంసిద్ధత (Readiness) భాగాలు.
