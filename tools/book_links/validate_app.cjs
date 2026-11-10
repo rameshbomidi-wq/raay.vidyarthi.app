@@ -16,7 +16,8 @@ function setup(){
   vm.createContext(c);vm.runInContext(code,c,{timeout:3000});
   return {c,box,calls,opened,state,get:expr=>JSON.parse(JSON.stringify(vm.runInContext(expr,c)))};
 }
-function hrefs(markup){return [...markup.matchAll(/href="([^"]*req_doc_id=[^"]*)"/g)].map(m=>m[1]);}
+function hrefs(markup){return [...markup.matchAll(/href="([^"]*req_doc_id=2026-2027[^"]*)"/g)].map(m=>m[1]);}
+function hrefs25(markup){return [...markup.matchAll(/href="([^"]*req_doc_id=2025-2026[^"]*)"/g)].map(m=>m[1]);}
 async function run(){
   const f=setup(),all=[];
   for(const [grade,count] of Object.entries(counts)){
@@ -29,6 +30,10 @@ async function run(){
     for(const r of refs){assert.ok(r.u.includes(`2026-2027${/2026-2027([WT])/.exec(r.u)[1]}${grade.padStart(2,'0')}`));all.push(r.u);}
     assert.ok(!f.box.innerHTML.includes('undefined'));
   }
+  // 2025–26 గత సంవత్సరం లింకులు: అన్నీ view లో details లో; SEM2 view లో 2026–27 SEM2 లేనప్పుడు మాత్రమే.
+  f.c.param={tab:'books',c:3};f.c.S.cur.c=3;await f.c.libLoad();assert.equal(hrefs25(f.box.innerHTML).length,13);
+  f.c.param={tab:'books',c:3,sem:'2'};await f.c.libLoad();assert.equal(hrefs25(f.box.innerHTML).length,4);assert.ok(!f.box.innerHTML.includes('ఇంకా అధికారిక CSE పోర్టల్‌లో రాలేదు'));
+  f.c.param={tab:'books',c:10,sem:'2'};f.c.S.cur.c=10;await f.c.libLoad();assert.equal(hrefs25(f.box.innerHTML).length,0);
   assert.deepEqual(all,sourceUrls);assert.equal(new Set(all).size,66);
   // Local PDFs, resume positions, and teacher-added books retain their old routes.
   f.c.param={tab:'books',c:7};f.c.S.cur.c=7;
