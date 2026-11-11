@@ -341,6 +341,11 @@
   .imp textarea{width:100%;font-family:inherit;font-size:.85rem;border:1px solid #bbb;border-radius:8px;padding:6px;margin-top:4px}
   .imp .impv{border:2px solid #f59e0b;background:#fffdf5;border-radius:12px;padding:10px;margin:6px 0 12px}.imp .impv select{font-size:.72rem;padding:3px;max-width:130px}
   .imp .pv td.on{background:#ecfdf5}.imp .pv td.off{color:#9ca3af}.imp .pv th{vertical-align:top;font-weight:400}
+  .menu .mg.m3{grid-template-columns:repeat(3,1fr)}.menu .mg button.e{background:linear-gradient(135deg,#166534,#15803d);color:#fff;border:0;font-weight:700}.menu .mg button.e small{color:#d1fae5}
+  details.msgd{margin:8px 0}details.msgd>summary{cursor:pointer;font-weight:700;padding:8px 10px;background:#fff;border-radius:10px;color:var(--green-dark)}
+  .imp .chips2{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.imp .chips2 button.on{background:var(--green);color:#fff;border-color:var(--green)}
+  .imp table.et{border-collapse:collapse;width:100%;font-size:.85rem}.imp table.et th,.imp table.et td{border:1px solid #e5e7eb;padding:3px 4px;text-align:center}.imp table.et td.nm{text-align:left;font-weight:600;min-width:120px}
+  .imp table.et input{width:52px;padding:5px 3px;border:1px solid #bbb;border-radius:6px;text-align:center;font-size:.9rem}.imp table.et tr:nth-child(even){background:#f9fafb}.imp table.et .lo{color:#c0392b;font-weight:700}
   .imp-open{background:#fde68a!important;color:#5b3c00!important;}
   .imp{max-width:980px;margin:14px auto;background:#fff;border-radius:12px;padding:14px;box-shadow:0 4px 18px rgba(0,0,0,.15);font-family:'Noto Sans Telugu',sans-serif;}
   .imp h4{margin:12px 0 6px;color:var(--green-dark);font-size:1rem;border-left:4px solid var(--green);padding-left:8px;}
@@ -450,11 +455,10 @@
 <body>
 
 <header>
-  <h1>📱 విద్యార్థుల ఫోన్ నంబర్ల డైరెక్టరీ</h1>
+  <h1>🏫 School ప్రగతి</h1>
   <p>క్లాస్ వారీగా పేర్లు &amp; మొబైల్ నంబర్లు — SMS / WhatsApp పంపండి</p>
   <div class="hdr-btns">
-    <button class="att-open imp-open" onclick="openSch()">⚙️ స్కూల్</button>
-    <button class="att-open imp-open" onclick="openStu()">👥 విద్యార్థులు</button>
+    <button class="att-open imp-open" onclick="openSch()">⚙️ స్కూల్ / బ్యాకప్</button>
   </div>
 </header>
 
@@ -466,9 +470,8 @@
     <input type="text" id="searchBox" placeholder="పేరు / ID / PEN / తండ్రి పేరు వెతకండి...">
   </div>
   <div class="stats" id="statsBar"></div>
-  <div class="bk-row"><button onclick="exportBk()">⬇️ పూర్తి బ్యాకప్ (విద్యార్థులు + మార్కులు + హాజరు)</button><button onclick="document.getElementById('bkFile').click()">⬆️ బ్యాకప్ ఎక్కించు</button></div>
 
-  <div class="bulk-bar">
+  <details class="msgd"><summary>📢 తల్లిదండ్రులకు మెసేజ్ (WhatsApp / SMS)</summary><div class="bulk-bar">
     <textarea id="bulkMsg" placeholder="బల్క్ మెసేజ్ ఇక్కడ టైప్ చేయండి... (ఉదా: రేపు స్కూల్ కి సెలవు)"></textarea>
     <div class="bulk-actions">
       <label><input type="checkbox" id="selectAll"> అందరినీ ఎంచుకోండి (ఈ క్లాస్)</label>
@@ -478,7 +481,7 @@
       <button class="bulk-btn wa" onclick="bulkSend('wa')">✅ WhatsApp పంపండి</button>
       <button class="bulk-btn sms" onclick="bulkSend('sms')">✉️ SMS పంపండి</button>
     </div>
-  </div>
+  </div></details>
 </div>
 
 <div class="list" id="studentList"></div>
@@ -545,6 +548,10 @@
   <div class="imp" id="stuBox"></div>
   <input type="file" id="stuFile" accept=".xlsx,.xls,.xlsm,.ods,.csv,.txt,.tsv" style="display:none" onchange="stuFilePick(this)">
 </div>
+<div id="entView" class="ovl">
+  <div class="att-bar"><span id="entTitle">✏️ నమోదు</span><select id="entCls" onchange="currentClass=this.value;drawEnt()"></select><button class="close" onclick="closeOvl('entView')">✖ మూసివేయి</button></div>
+  <div class="imp" id="entBox"></div>
+</div>
 <div id="plView" class="ovl">
   <div class="att-bar">
     <span>🎓 ప్రమోషన్ చార్ట్</span>
@@ -559,10 +566,6 @@
 <div id="bookView" class="ovl">
   <div class="att-bar"><span id="bookTitle">📁 ఫైల్</span><button onclick="window.print()">🖨️ ప్రింట్ / PDF</button><button class="close" onclick="closeOvl('bookView')">✖ మూసివేయి</button></div>
   <div class="sheet-wrap book" id="bookWrap"></div>
-</div>
-<div id="admView" class="ovl">
-  <div class="att-bar"><span>📋 ప్రమోషన్ చార్ట్ (I–V)</span><button onclick="if(confirm('ప్రగతిలోని తాజా పేర్లు, మార్కులు, హాజరు చార్ట్‌లోకి నింపాలా? (చార్ట్‌లో మీరు టైప్ చేసినవి — ప్రగతిలో ఖాళీ ఉన్నవి — అలాగే ఉంటాయి)'))admGo(true)">🔄 ప్రగతి నుండి తాజాగా నింపు</button><button class="close" onclick="closeOvl('admView')">✖ మూసివేయి</button></div>
-  <iframe id="admFrame" title="Promotion Chart"></iframe>
 </div>
 <div id="hpcView" class="ovl">
   <div class="att-bar"><span id="hpcTitle">🏅 HPC</span><button class="close" onclick="closeOvl('hpcView')">✖ మూసివేయి</button></div>
@@ -1316,1138 +1319,6 @@ ld(); drawTop(); render();
 </body>
 </html>
 </script>
-<script type="text/plain" id="admSrc"><!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Primary Classes Promotion Chart 2025-26</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Tiro+Telugu&display=swap');
-
-  :root {
-    --navy: #1a2e5a;
-    --blue: #2457a4;
-    --light-blue: #dbe8f8;
-    --accent: #e8a020;
-    --green: #1a6e3c;
-    --red: #b91c1c;
-    --bg: #f0f4fa;
-    --border: #aac0e0;
-    --cell-h: 26px;
-    --header-bg: #2457a4;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Noto Sans', sans-serif;
-    background: var(--bg);
-    font-size: 11px;
-    color: #111;
-  }
-
-  /* ===== TOP CONTROLS ===== */
-  #app-header {
-    background: var(--navy);
-    color: #fff;
-    padding: 10px 18px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  }
-  #app-header h1 {
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: .5px;
-    color: var(--accent);
-    white-space: nowrap;
-  }
-  #app-header .dev {
-    font-size: 9px;
-    color: #b0c4e8;
-    margin-left: auto;
-  }
-
-  .tab-bar {
-    display: flex;
-    gap: 4px;
-    background: #223;
-    padding: 6px 12px 0;
-    flex-wrap: wrap;
-  }
-  .tab {
-    padding: 6px 16px;
-    border-radius: 6px 6px 0 0;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 600;
-    background: #3a4a6a;
-    color: #b0c4e8;
-    border: 1px solid #445;
-    border-bottom: none;
-    transition: all .15s;
-    user-select: none;
-  }
-  .tab:hover { background: #4a5a8a; color: #fff; }
-  .tab.active { background: #fff; color: var(--navy); border-color: var(--border); }
-
-  .btn-row {
-    display: flex;
-    gap: 8px;
-    padding: 6px 12px;
-    background: #eef2fa;
-    border-bottom: 1px solid var(--border);
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .btn {
-    padding: 5px 14px;
-    border-radius: 5px;
-    border: 1px solid var(--blue);
-    background: var(--blue);
-    color: #fff;
-    cursor: pointer;
-    font-size: 11px;
-    font-weight: 600;
-    transition: .15s;
-  }
-  .btn:hover { background: var(--navy); }
-  .btn.secondary { background: #fff; color: var(--navy); }
-  .btn.secondary:hover { background: var(--light-blue); }
-  .btn.danger { background: #b91c1c; border-color: #b91c1c; }
-  .btn.danger:hover { background: #7f1d1d; }
-  .btn.green { background: var(--green); border-color: var(--green); }
-
-  /* ===== SCHOOL INFO PANEL ===== */
-  .school-info-panel {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    margin: 10px 12px 4px;
-    padding: 10px 14px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 8px;
-  }
-  .school-info-panel label { font-size: 10px; color: #555; display: block; margin-bottom: 2px; font-weight: 600; }
-  .school-info-panel input {
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 3px 6px;
-    font-size: 11px;
-    font-family: inherit;
-  }
-  .school-info-panel input:focus { outline: 2px solid var(--blue); border-color: transparent; }
-
-  /* ===== SHEET CONTENT ===== */
-  .sheet { display: none; padding: 10px 12px; }
-  .sheet.active { display: block; }
-
-  /* ===== A4 PRINT WRAPPER ===== */
-  .a4-page {
-    background: #fff;
-    width: 100%;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow-x: auto;
-    box-shadow: 0 1px 4px rgba(0,0,0,.1);
-  }
-
-  /* ===== SHEET HEADER ===== */
-  .sheet-title-bar {
-    background: var(--navy);
-    color: #fff;
-    text-align: center;
-    padding: 7px 10px;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: .5px;
-  }
-  .sheet-subtitle {
-    background: var(--blue);
-    color: #fff;
-    text-align: center;
-    padding: 4px 8px;
-    font-size: 11px;
-  }
-  .sheet-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 4px 8px;
-    background: var(--light-blue);
-    border-bottom: 1px solid var(--border);
-    font-size: 10px;
-    flex-wrap: wrap;
-    gap: 4px;
-  }
-  .sheet-meta span { color: #333; }
-  .sheet-meta strong { color: var(--navy); }
-
-  /* ===== MAIN TABLE ===== */
-  .promo-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 1050px;
-  }
-  .promo-table th, .promo-table td {
-    border: 1px solid #aac0e0;
-    text-align: center;
-    padding: 0;
-    height: var(--cell-h);
-    vertical-align: middle;
-    font-size: 10px;
-  }
-  .promo-table th {
-    background: var(--header-bg);
-    color: #fff;
-    font-weight: 700;
-    padding: 2px 3px;
-    font-size: 9.5px;
-    line-height: 1.2;
-  }
-  .promo-table th.sub-hdr { background: #3a6bbf; }
-  .promo-table th.co-hdr { background: #1a6e3c; }
-  .promo-table th.att-hdr { background: #5a3080; }
-  .promo-table th.res-hdr { background: #b44020; }
-  .promo-table td input {
-    width: 100%;
-    height: 100%;
-    border: none;
-    text-align: center;
-    font-size: 10px;
-    font-family: inherit;
-    background: transparent;
-    padding: 0 2px;
-    outline: none;
-  }
-  .promo-table td input:focus { background: #fffde7; outline: 1px solid var(--accent); }
-  .promo-table td.calc { background: #e8f4e8; font-weight: 700; color: var(--green); }
-  .promo-table td.grade-cell { font-weight: 700; font-size: 11px; }
-  .promo-table td.grade-A\+ { color: #1a6e3c; }
-  .promo-table td.grade-A { color: #2457a4; }
-  .promo-table td.grade-B\+ { color: #7a5500; }
-  .promo-table td.grade-B { color: #b47000; }
-  .promo-table td.grade-C { color: #b91c1c; }
-  .promo-table tr:nth-child(even) td:not(.calc) { background: #f5f9ff; }
-  .promo-table tr:nth-child(even) td input { background: transparent; }
-
-  /* SL No & Name */
-  .promo-table td.sl { width: 28px; font-weight: 600; color: #555; }
-  .promo-table td.name-cell { text-align: left; min-width: 130px; }
-  .promo-table td.name-cell input { text-align: left; padding-left: 4px; }
-
-  /* ===== RESULT select ===== */
-  .promo-table td select {
-    width: 100%;
-    height: 100%;
-    border: none;
-    font-size: 10px;
-    font-family: inherit;
-    background: transparent;
-    text-align: center;
-    cursor: pointer;
-    outline: none;
-  }
-  .promo-table td select:focus { background: #fffde7; outline: 1px solid var(--accent); }
-
-  /* ===== ABSTRACT TABLE ===== */
-  .abs-section { padding: 16px 10px 10px; }
-  .abs-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 8px; border-bottom: 2px solid var(--blue); padding-bottom: 4px; }
-  .abs-table { width: 100%; border-collapse: collapse; font-size: 10px; min-width: 600px; }
-  .abs-table th, .abs-table td { border: 1px solid #aac0e0; text-align: center; padding: 4px 5px; height: 24px; }
-  .abs-table th { background: var(--header-bg); color: #fff; font-size: 10px; }
-  .abs-table th.grade-hdr { background: #1a6e3c; }
-  .abs-table th.caste-hdr { background: #5a3080; }
-  .abs-table td { font-weight: 600; }
-  .abs-table td.cls-label { background: #e8f0fc; font-weight: 700; color: var(--navy); text-align: left; padding-left: 8px; }
-  .abs-table td.total-row { background: var(--light-blue); font-weight: 700; }
-
-  /* ===== FOOTER SIG ===== */
-  .sig-row { display: flex; justify-content: space-around; padding: 12px 20px 10px; border-top: 1px solid var(--border); margin-top: 6px; font-size: 10px; font-weight: 600; color: #333; }
-  .sig-box { text-align: center; }
-  .sig-line { width: 140px; border-bottom: 1px solid #555; margin: 20px auto 4px; }
-  .dev-footer { text-align: center; font-size: 9px; color: #888; padding: 6px; border-top: 1px solid #e0e0e0; }
-
-  /* ===== PRINT MODAL ===== */
-  #print-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 500; align-items: center; justify-content: center; }
-  #print-overlay.open { display: flex; }
-  #print-modal { background: #fff; border-radius: 10px; padding: 24px 28px; width: 420px; max-width: 95vw; box-shadow: 0 8px 32px rgba(0,0,0,.35); font-size: 13px; }
-  #print-modal h2 { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 16px; border-bottom: 2px solid var(--blue); padding-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-  .pm-section { margin-bottom: 14px; }
-  .pm-section label.pm-title { display: block; font-weight: 700; color: #333; margin-bottom: 6px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; }
-  .pm-options { display: flex; flex-wrap: wrap; gap: 8px; }
-  .pm-opt { display: flex; align-items: center; gap: 5px; background: #f0f4fa; border: 1px solid #ccd; border-radius: 5px; padding: 5px 10px; cursor: pointer; font-size: 12px; transition: .12s; user-select: none; }
-  .pm-opt:hover { background: var(--light-blue); border-color: var(--blue); }
-  .pm-opt input[type=checkbox], .pm-opt input[type=radio] { accent-color: var(--blue); cursor: pointer; }
-  .pm-sep { border: none; border-top: 1px solid #e0e8f4; margin: 10px 0; }
-  .pm-slider-row { display: flex; align-items: center; gap: 10px; }
-  .pm-slider-row input[type=range] { flex: 1; accent-color: var(--blue); }
-  .pm-slider-row span { font-weight: 700; color: var(--navy); min-width: 36px; text-align: right; }
-  .pm-actions { display: flex; gap: 10px; margin-top: 18px; justify-content: flex-end; }
-  .pm-actions .btn { padding: 7px 20px; font-size: 12px; }
-
-  /* ===== PRINT ENGINE ===== */
-  @media print {
-    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-    body { background: #fff !important; }
-    #app-header, .tab-bar, .btn-row, .school-info-panel,
-    #print-overlay, #status-bar, .no-print { display: none !important; }
-
-    .sheet { display: none !important; padding: 0 !important; }
-    .sheet.print-me { display: block !important; }
-
-    .a4-page { border: none !important; box-shadow: none !important; width: 100% !important; overflow: visible !important; page-break-after: always; break-after: page; }
-    .a4-page div[style*="overflow"] { overflow: visible !important; }
-    .a4-page:last-of-type { page-break-after: avoid; break-after: avoid; }
-
-    body.pf-7  { font-size: 7px !important; }
-    body.pf-8  { font-size: 8px !important; }
-    body.pf-9  { font-size: 9px !important; }
-    body.pf-10 { font-size: 10px !important; }
-    body.pf-11 { font-size: 11px !important; }
-
-    .promo-table th, .promo-table td { font-size: inherit !important; }
-    .promo-table { min-width: 0 !important; width: 100% !important; table-layout: auto !important; }
-    .promo-table td { height: 18px !important; }
-    .promo-table td input, .promo-table td select { font-size: inherit !important; }
-
-    /* === PRINT VALUE FIX: inputs hide, td shows text via ::after === */
-    .promo-table td input,
-    .promo-table td select { display: none !important; }
-    .promo-table td[data-pv]::after {
-      content: attr(data-pv);
-      display: block;
-      text-align: center;
-      font-size: inherit;
-      white-space: nowrap;
-      overflow: visible;
-      line-height: 18px;
-    }
-    .promo-table td.name-cell[data-pv]::after { text-align: left; padding-left: 4px; }
-    .sheet-title-bar { font-size: 11px !important; padding: 4px !important; }
-    .sheet-subtitle { font-size: 9px !important; padding: 3px !important; }
-    .sheet-meta { font-size: 8px !important; padding: 3px 6px !important; }
-    .sig-line { margin: 14px auto 3px !important; }
-    .sig-row { padding: 6px 16px 6px !important; font-size: 9px !important; }
-  }
-
-  @media print { @page { size: A4 landscape; margin: 8mm; } }
-
-  /* ===== STATUS BAR ===== */
-  #status-bar { position: fixed; bottom: 10px; right: 16px; background: var(--navy); color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 10px; opacity: 0; transition: opacity .3s; z-index: 200; }
-  #status-bar.show { opacity: 1; }
-</style>
-</head>
-<body>
-
-<div id="app-header">
-  <h1>📋 PRIMARY CLASSES PROMOTION CHART — 2025-26</h1>
-  <div class="dev">Prog. By: బోమిడి రమేష్| S.G.Teacher, ZPHS T.V పల్లి, గూడూరు | 9440 955214</div>
-</div>
-
-<div class="tab-bar">
-  <div class="tab active" onclick="switchTab('class1')">Class 1</div>
-  <div class="tab" onclick="switchTab('class2')">Class 2</div>
-  <div class="tab" onclick="switchTab('class3')">Class 3</div>
-  <div class="tab" onclick="switchTab('class4')">Class 4</div>
-  <div class="tab" onclick="switchTab('class5')">Class 5</div>
-  <div class="tab" onclick="switchTab('summary')">Summary / Abstract</div>
-</div>
-
-<div class="btn-row">
-  <button class="btn" onclick="addRow()">+ Add Student</button>
-  <button class="btn secondary" onclick="removeLastRow()">&#8722; Remove Last</button>
-  <button class="btn green" onclick="recalcAll()">&#8635; Recalculate All</button>
-  <button class="btn secondary" onclick="clearSheet()">&#128465; Clear Sheet</button>
-  <button class="btn" style="background:#c05000;border-color:#c05000" onclick="openPrintModal()">&#128424; Print / PDF Settings</button>
-  <button class="btn secondary" onclick="saveData()">&#128190; Save</button>
-  <button class="btn secondary" onclick="loadData()">&#128194; Load</button>
-  <span style="color:#555;font-size:10px;margin-left:10px;">Tab నొక్కి cells మధ్య move చేయండి. <b style="color:#b91c1c;">కొత్త ఫీచర్: FA+SA1 (20%) మరియు Attend. Days బాక్స్‌లపై క్లిక్ చేసి లెక్కించండి.</b></span>
-</div>
-
-<div id="print-overlay">
-  <div id="print-modal">
-    <h2>&#128424; Print / PDF Settings</h2>
-    <div class="pm-section">
-      <label class="pm-title">&#128194; ఏ Sheets Print చేయాలి?</label>
-      <div class="pm-options">
-        <label class="pm-opt"><input type="radio" name="print-scope" value="current" checked> Current Sheet మాత్రమే</label>
-        <label class="pm-opt"><input type="radio" name="print-scope" value="all"> అన్ని Sheets (1&#8211;5 + Summary)</label>
-        <label class="pm-opt"><input type="radio" name="print-scope" value="custom"> Custom Select</label>
-      </div>
-    </div>
-    <div class="pm-section" id="pm-custom-sheets" style="display:none">
-      <label class="pm-title">&#128203; Sheets Select చేయండి</label>
-      <div class="pm-options">
-        <label class="pm-opt"><input type="checkbox" class="sheet-chk" value="class1" checked> Class 1</label>
-        <label class="pm-opt"><input type="checkbox" class="sheet-chk" value="class2" checked> Class 2</label>
-        <label class="pm-opt"><input type="checkbox" class="sheet-chk" value="class3" checked> Class 3</label>
-        <label class="pm-opt"><input type="checkbox" class="sheet-chk" value="class4" checked> Class 4</label>
-        <label class="pm-opt"><input type="checkbox" class="sheet-chk" value="class5" checked> Class 5</label>
-        <label class="pm-opt"><input type="checkbox" class="sheet-chk" value="summary" checked> Summary</label>
-      </div>
-    </div>
-    <hr class="pm-sep">
-    <div class="pm-section">
-      <label class="pm-title">&#128196; Page Orientation</label>
-      <div class="pm-options">
-        <label class="pm-opt"><input type="radio" name="print-orient" value="landscape" checked> Landscape</label>
-        <label class="pm-opt"><input type="radio" name="print-orient" value="portrait"> Portrait</label>
-      </div>
-    </div>
-    <div class="pm-section">
-      <label class="pm-title">&#128208; Page Margin</label>
-      <div class="pm-options">
-        <label class="pm-opt"><input type="radio" name="print-margin" value="5mm"> Narrow</label>
-        <label class="pm-opt"><input type="radio" name="print-margin" value="8mm" checked> Normal</label>
-        <label class="pm-opt"><input type="radio" name="print-margin" value="12mm"> Wide</label>
-      </div>
-    </div>
-    <div class="pm-section">
-      <label class="pm-title">&#128290; Font Size &#8212; <span id="pm-fs-label">8px</span></label>
-      <div class="pm-slider-row">
-        <span style="font-size:10px">చిన్న</span>
-        <input type="range" id="pm-fontsize" min="7" max="11" value="8" step="1" oninput="document.getElementById('pm-fs-label').textContent=this.value+'px'">
-        <span style="font-size:10px">పెద్ద</span>
-      </div>
-    </div>
-    <div class="pm-section">
-      <label class="pm-title">&#127912; Print Style</label>
-      <div class="pm-options">
-        <label class="pm-opt"><input type="radio" name="print-color" value="color" checked> Color</label>
-        <label class="pm-opt"><input type="radio" name="print-color" value="bw"> Black &amp; White</label>
-      </div>
-    </div>
-    <div class="pm-actions">
-      <button class="btn secondary" onclick="closePrintModal()">&#10006; Cancel</button>
-      <button class="btn" style="background:#c05000;border-color:#c05000" onclick="doPrint()">&#128424; Print / Save PDF</button>
-    </div>
-  </div>
-</div>
-
-<div class="school-info-panel">
-  <div><label>School Name</label><input id="inf-school" type="text" placeholder="School Name"></div>
-  <div><label>Village</label><input id="inf-vill" type="text" placeholder="Village"></div>
-  <div><label>DISE Code</label><input id="inf-dise" type="text" placeholder="DISE No."></div>
-  <div><label>Cluster</label><input id="inf-cluster" type="text" placeholder="Cluster"></div>
-  <div><label>Mandal</label><input id="inf-mandal" type="text" placeholder="Mandal"></div>
-  <div><label>District</label><input id="inf-dist" type="text" placeholder="District"></div>
-  <div><label>Medium</label><input id="inf-medium" type="text" placeholder="Medium"></div>
-  <div><label>Section</label><input id="inf-section" type="text" placeholder="Section"></div>
-</div>
-
-<div id="sheet-class1" class="sheet active"><div class="a4-page"><div class="sheet-title-bar">SCHOOL LEVEL PRIMARY CLASSES PROMOTION CHART : 2025-26</div><div class="sheet-subtitle">CLASS : 1 &nbsp;|&nbsp; SUBJECTS: Telugu, English, Maths &nbsp;|&nbsp; Total Marks: 300</div><div class="sheet-meta"><span><strong>School:</strong> <span class="meta-school"></span></span><span><strong>Village:</strong> <span class="meta-vill"></span></span><span><strong>DISE:</strong> <span class="meta-dise"></span></span><span><strong>Cluster:</strong> <span class="meta-cluster"></span></span><span><strong>Mandal:</strong> <span class="meta-mandal"></span></span><span><strong>Dist.:</strong> <span class="meta-dist"></span></span><span><strong>Medium:</strong> <span class="meta-medium"></span></span><span><strong>Section:</strong> <span class="meta-section"></span></span></div><div style="overflow-x:auto;"><table class="promo-table" id="tbl-class1"><thead><tr><th rowspan="2" style="width:28px">Sl.</th><th rowspan="2" style="width:28px">Gen</th><th rowspan="2" style="min-width:130px">Child Name</th><th rowspan="2" style="width:70px">Admn No.</th><th rowspan="2" style="width:120px">Student PEN</th><th rowspan="2" style="width:135px">DOB</th><th rowspan="2" style="width:135px">DOA</th><th colspan="4" class="sub-hdr">TELUGU</th><th colspan="4" class="sub-hdr">ENGLISH</th><th colspan="4" class="sub-hdr">MATHS</th><th rowspan="2" class="sub-hdr" style="width:45px">Total<br>Marks<br>300</th><th rowspan="2" class="sub-hdr" style="width:35px">Total<br>Grade</th><th colspan="4" class="co-hdr">Co-Curricular (Each 100M)</th><th rowspan="2" class="co-hdr" style="width:40px">TOTAL<br>400</th><th rowspan="2" class="co-hdr" style="width:40px">TOTAL<br>GRADE</th><th rowspan="2" class="att-hdr" style="width:45px">Caste</th><th rowspan="2" class="att-hdr" style="width:45px">Working<br>Days</th><th rowspan="2" class="att-hdr" style="width:45px">Attend.<br>Days</th><th rowspan="2" class="att-hdr" style="width:35px">%</th><th rowspan="2" class="res-hdr" style="width:60px">Result</th><th rowspan="2" class="res-hdr" style="min-width:80px">Remarks</th></tr><tr><th class="sub-hdr" style="width:35px">FA+SA1<br>20%</th><th class="sub-hdr" style="width:34px">SA-2<br>80%</th><th class="sub-hdr" style="width:34px">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="sub-hdr" style="width:35px">FA+SA1<br>20%</th><th class="sub-hdr" style="width:34px">SA-2<br>80%</th><th class="sub-hdr" style="width:34px">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="sub-hdr" style="width:35px">FA+SA1<br>20%</th><th class="sub-hdr" style="width:34px">SA-2<br>80%</th><th class="sub-hdr" style="width:34px">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="co-hdr" style="width:40px">Values &<br>Life Skills</th><th class="co-hdr" style="width:40px">Art &<br>Culture</th><th class="co-hdr" style="width:40px">Comp &<br>Work Edu</th><th class="co-hdr" style="width:40px">Health &<br>Phy Edu</th></tr></thead><tbody id="body-class1"></tbody></table></div><div class="sig-row"><div class="sig-box"><div class="sig-line"></div>Class Teacher</div><div class="sig-box"><div class="sig-line"></div>Subject Teacher</div><div class="sig-box"><div class="sig-line"></div>Headmaster / Principal</div><div class="sig-box"><div class="sig-line"></div>M.E.O. / Dy.E.O.</div></div><div class="dev-footer">Programme Developed by : బోమిడి రమేష్ &nbsp; 9440955214</div></div></div>
-<div id="sheet-class2" class="sheet"><div class="a4-page"><div class="sheet-title-bar">SCHOOL LEVEL PRIMARY CLASSES PROMOTION CHART : 2025-26</div><div class="sheet-subtitle">CLASS : 2 &nbsp;|&nbsp; SUBJECTS: Telugu, English, Maths &nbsp;|&nbsp; Total Marks: 300</div><div class="sheet-meta"><span><strong>School:</strong> <span class="meta-school"></span></span><span><strong>Village:</strong> <span class="meta-vill"></span></span><span><strong>DISE:</strong> <span class="meta-dise"></span></span><span><strong>Cluster:</strong> <span class="meta-cluster"></span></span><span><strong>Mandal:</strong> <span class="meta-mandal"></span></span><span><strong>Dist.:</strong> <span class="meta-dist"></span></span><span><strong>Medium:</strong> <span class="meta-medium"></span></span><span><strong>Section:</strong> <span class="meta-section"></span></span></div><div style="overflow-x:auto;"><table class="promo-table" id="tbl-class2"><thead><tr><th rowspan="2" style="width:28px">Sl.</th><th rowspan="2" style="width:28px">Gen</th><th rowspan="2" style="min-width:130px">Child Name</th><th rowspan="2" style="width:70px">Admn No.</th><th rowspan="2" style="width:120px">Student PEN</th><th rowspan="2" style="width:135px">DOB</th><th rowspan="2" style="width:135px">DOA</th><th colspan="4" class="sub-hdr">TELUGU</th><th colspan="4" class="sub-hdr">ENGLISH</th><th colspan="4" class="sub-hdr">MATHS</th><th rowspan="2" class="sub-hdr" style="width:45px">Total<br>Marks<br>300</th><th rowspan="2" class="sub-hdr" style="width:35px">Total<br>Grade</th><th colspan="4" class="co-hdr">Co-Curricular (Each 100M)</th><th rowspan="2" class="co-hdr" style="width:40px">TOTAL<br>400</th><th rowspan="2" class="co-hdr" style="width:40px">TOTAL<br>GRADE</th><th rowspan="2" class="att-hdr" style="width:45px">Caste</th><th rowspan="2" class="att-hdr" style="width:45px">Working<br>Days</th><th rowspan="2" class="att-hdr" style="width:45px">Attend.<br>Days</th><th rowspan="2" class="att-hdr" style="width:35px">%</th><th rowspan="2" class="res-hdr" style="width:60px">Result</th><th rowspan="2" class="res-hdr" style="min-width:80px">Remarks</th></tr><tr><th class="sub-hdr" style="width:35px">FA+SA1<br>20%</th><th class="sub-hdr" style="width:34px">SA-2<br>80%</th><th class="sub-hdr" style="width:34px">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="sub-hdr" style="width:35px">FA+SA1<br>20%</th><th class="sub-hdr" style="width:34px">SA-2<br>80%</th><th class="sub-hdr" style="width:34px">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="sub-hdr" style="width:35px">FA+SA1<br>20%</th><th class="sub-hdr" style="width:34px">SA-2<br>80%</th><th class="sub-hdr" style="width:34px">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="co-hdr" style="width:40px">Values &<br>Life Skills</th><th class="co-hdr" style="width:40px">Art &<br>Culture</th><th class="co-hdr" style="width:40px">Comp &<br>Work Edu</th><th class="co-hdr" style="width:40px">Health &<br>Phy Edu</th></tr></thead><tbody id="body-class2"></tbody></table></div><div class="sig-row"><div class="sig-box"><div class="sig-line"></div>Class Teacher</div><div class="sig-box"><div class="sig-line"></div>Subject Teacher</div><div class="sig-box"><div class="sig-line"></div>Headmaster / Principal</div><div class="sig-box"><div class="sig-line"></div>M.E.O. / Dy.E.O.</div></div><div class="dev-footer">Programme Developed by : బోమిడి రమేష్ &nbsp; 9440955214</div></div></div>
-<div id="sheet-class3" class="sheet"><div class="a4-page"><div class="sheet-title-bar">SCHOOL LEVEL PRIMARY CLASSES PROMOTION CHART : 2025-26</div><div class="sheet-subtitle">CLASS : 3 &nbsp;|&nbsp; SUBJECTS: Telugu, English, Maths, E.V.S. &nbsp;|&nbsp; Total Marks: 400</div><div class="sheet-meta"><span><strong>School:</strong> <span class="meta-school"></span></span><span><strong>Village:</strong> <span class="meta-vill"></span></span><span><strong>DISE:</strong> <span class="meta-dise"></span></span><span><strong>Cluster:</strong> <span class="meta-cluster"></span></span><span><strong>Mandal:</strong> <span class="meta-mandal"></span></span><span><strong>Dist.:</strong> <span class="meta-dist"></span></span><span><strong>Medium:</strong> <span class="meta-medium"></span></span><span><strong>Section:</strong> <span class="meta-section"></span></span></div><div style="overflow-x:auto;"><table class="promo-table" id="tbl-class3"><thead><tr><th rowspan="2" style="width:28px">Sl.</th><th rowspan="2" style="width:28px">Gen</th><th rowspan="2" style="min-width:130px">Child Name</th><th rowspan="2" style="width:70px">Admn No.</th><th rowspan="2" style="width:120px">Student PEN</th><th rowspan="2" style="width:135px">DOB</th><th rowspan="2" style="width:135px">DOA</th><th colspan="4" class="sub-hdr">TELUGU</th><th colspan="4" class="sub-hdr">ENGLISH</th><th colspan="4" class="sub-hdr">MATHS</th><th colspan="4" class="sub-hdr">E.V.S.</th><th rowspan="2" class="sub-hdr" style="width:45px">Total<br>Marks<br>400</th><th rowspan="2" class="sub-hdr" style="width:35px">Total<br>Grade</th><th colspan="4" class="co-hdr">Co-Curricular (Each 100M)</th><th rowspan="2" class="co-hdr" style="width:40px">TOTAL<br>800</th><th rowspan="2" class="co-hdr" style="width:40px">TOTAL<br>GRADE</th><th rowspan="2" class="att-hdr" style="width:45px">Caste</th><th rowspan="2" class="att-hdr" style="width:45px">Working<br>Days</th><th rowspan="2" class="att-hdr" style="width:45px">Attend.<br>Days</th><th rowspan="2" class="att-hdr" style="width:35px">%</th><th rowspan="2" class="res-hdr" style="width:60px">Result</th><th rowspan="2" class="res-hdr" style="min-width:80px">Remarks</th></tr><tr><th class="sub-hdr">FA+SA1<br>20%</th><th class="sub-hdr">SA-2<br>80%</th><th class="sub-hdr">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="sub-hdr">FA+SA1<br>20%</th><th class="sub-hdr">SA-2<br>80%</th><th class="sub-hdr">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="sub-hdr">FA+SA1<br>20%</th><th class="sub-hdr">SA-2<br>80%</th><th class="sub-hdr">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="sub-hdr">FA+SA1<br>20%</th><th class="sub-hdr">SA-2<br>80%</th><th class="sub-hdr">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="co-hdr">Values &<br>Life Skills</th><th class="co-hdr">Art &<br>Culture</th><th class="co-hdr">Comp &<br>Work Edu</th><th class="co-hdr">Health &<br>Phy Edu</th></tr></thead><tbody id="body-class3"></tbody></table></div><div class="sig-row"><div class="sig-box"><div class="sig-line"></div>Class Teacher</div><div class="sig-box"><div class="sig-line"></div>Subject Teacher</div><div class="sig-box"><div class="sig-line"></div>Headmaster / Principal</div><div class="sig-box"><div class="sig-line"></div>M.E.O. / Dy.E.O.</div></div><div class="dev-footer">Programme Developed by : బోమిడి రమేష్ &nbsp; 9440955214</div></div></div>
-<div id="sheet-class4" class="sheet"><div class="a4-page"><div class="sheet-title-bar">SCHOOL LEVEL PRIMARY CLASSES PROMOTION CHART : 2025-26</div><div class="sheet-subtitle">CLASS : 4 &nbsp;|&nbsp; SUBJECTS: Telugu, English, Maths, E.V.S. &nbsp;|&nbsp; Total Marks: 400</div><div class="sheet-meta"><span><strong>School:</strong> <span class="meta-school"></span></span><span><strong>Village:</strong> <span class="meta-vill"></span></span><span><strong>DISE:</strong> <span class="meta-dise"></span></span><span><strong>Cluster:</strong> <span class="meta-cluster"></span></span><span><strong>Mandal:</strong> <span class="meta-mandal"></span></span><span><strong>Dist.:</strong> <span class="meta-dist"></span></span><span><strong>Medium:</strong> <span class="meta-medium"></span></span><span><strong>Section:</strong> <span class="meta-section"></span></span></div><div style="overflow-x:auto;"><table class="promo-table" id="tbl-class4"><thead><tr><th rowspan="2" style="width:28px">Sl.</th><th rowspan="2" style="width:28px">Gen</th><th rowspan="2" style="min-width:130px">Child Name</th><th rowspan="2" style="width:70px">Admn No.</th><th rowspan="2" style="width:120px">Student PEN</th><th rowspan="2" style="width:135px">DOB</th><th rowspan="2" style="width:135px">DOA</th><th colspan="4" class="sub-hdr">TELUGU</th><th colspan="4" class="sub-hdr">ENGLISH</th><th colspan="4" class="sub-hdr">MATHS</th><th colspan="4" class="sub-hdr">E.V.S.</th><th rowspan="2" class="sub-hdr" style="width:45px">Total<br>Marks<br>400</th><th rowspan="2" class="sub-hdr" style="width:35px">Total<br>Grade</th><th colspan="4" class="co-hdr">Co-Curricular (Each 100M)</th><th rowspan="2" class="co-hdr" style="width:40px">TOTAL<br>800</th><th rowspan="2" class="co-hdr" style="width:40px">TOTAL<br>GRADE</th><th rowspan="2" class="att-hdr" style="width:45px">Caste</th><th rowspan="2" class="att-hdr" style="width:45px">Working<br>Days</th><th rowspan="2" class="att-hdr" style="width:45px">Attend.<br>Days</th><th rowspan="2" class="att-hdr" style="width:35px">%</th><th rowspan="2" class="res-hdr" style="width:60px">Result</th><th rowspan="2" class="res-hdr" style="min-width:80px">Remarks</th></tr><tr><th class="sub-hdr">FA+SA1<br>20%</th><th class="sub-hdr">SA-2<br>80%</th><th class="sub-hdr">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="sub-hdr">FA+SA1<br>20%</th><th class="sub-hdr">SA-2<br>80%</th><th class="sub-hdr">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="sub-hdr">FA+SA1<br>20%</th><th class="sub-hdr">SA-2<br>80%</th><th class="sub-hdr">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="sub-hdr">FA+SA1<br>20%</th><th class="sub-hdr">SA-2<br>80%</th><th class="sub-hdr">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="co-hdr">Values &<br>Life Skills</th><th class="co-hdr">Art &<br>Culture</th><th class="co-hdr">Comp &<br>Work Edu</th><th class="co-hdr">Health &<br>Phy Edu</th></tr></thead><tbody id="body-class4"></tbody></table></div><div class="sig-row"><div class="sig-box"><div class="sig-line"></div>Class Teacher</div><div class="sig-box"><div class="sig-line"></div>Subject Teacher</div><div class="sig-box"><div class="sig-line"></div>Headmaster / Principal</div><div class="sig-box"><div class="sig-line"></div>M.E.O. / Dy.E.O.</div></div><div class="dev-footer">Programme Developed by : బోమిడి రమేష్ &nbsp; 9440955214</div></div></div>
-<div id="sheet-class5" class="sheet"><div class="a4-page"><div class="sheet-title-bar">SCHOOL LEVEL PRIMARY CLASSES PROMOTION CHART : 2025-26</div><div class="sheet-subtitle">CLASS : 5 &nbsp;|&nbsp; SUBJECTS: Telugu, English, Maths, E.V.S. &nbsp;|&nbsp; Total Marks: 400</div><div class="sheet-meta"><span><strong>School:</strong> <span class="meta-school"></span></span><span><strong>Village:</strong> <span class="meta-vill"></span></span><span><strong>DISE:</strong> <span class="meta-dise"></span></span><span><strong>Cluster:</strong> <span class="meta-cluster"></span></span><span><strong>Mandal:</strong> <span class="meta-mandal"></span></span><span><strong>Dist.:</strong> <span class="meta-dist"></span></span><span><strong>Medium:</strong> <span class="meta-medium"></span></span><span><strong>Section:</strong> <span class="meta-section"></span></span></div><div style="overflow-x:auto;"><table class="promo-table" id="tbl-class5"><thead><tr><th rowspan="2" style="width:28px">Sl.</th><th rowspan="2" style="width:28px">Gen</th><th rowspan="2" style="min-width:130px">Child Name</th><th rowspan="2" style="width:70px">Admn No.</th><th rowspan="2" style="width:120px">Student PEN</th><th rowspan="2" style="width:135px">DOB</th><th rowspan="2" style="width:135px">DOA</th><th colspan="4" class="sub-hdr">TELUGU</th><th colspan="4" class="sub-hdr">ENGLISH</th><th colspan="4" class="sub-hdr">MATHS</th><th colspan="4" class="sub-hdr">E.V.S.</th><th rowspan="2" class="sub-hdr" style="width:45px">Total<br>Marks<br>400</th><th rowspan="2" class="sub-hdr" style="width:35px">Total<br>Grade</th><th colspan="4" class="co-hdr">Co-Curricular (Each 100M)</th><th rowspan="2" class="co-hdr" style="width:40px">TOTAL<br>800</th><th rowspan="2" class="co-hdr" style="width:40px">TOTAL<br>GRADE</th><th rowspan="2" class="att-hdr" style="width:45px">Caste</th><th rowspan="2" class="att-hdr" style="width:45px">Working<br>Days</th><th rowspan="2" class="att-hdr" style="width:45px">Attend.<br>Days</th><th rowspan="2" class="att-hdr" style="width:35px">%</th><th rowspan="2" class="res-hdr" style="width:60px">Result</th><th rowspan="2" class="res-hdr" style="min-width:80px">Remarks</th></tr><tr><th class="sub-hdr">FA+SA1<br>20%</th><th class="sub-hdr">SA-2<br>80%</th><th class="sub-hdr">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="sub-hdr">FA+SA1<br>20%</th><th class="sub-hdr">SA-2<br>80%</th><th class="sub-hdr">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="sub-hdr">FA+SA1<br>20%</th><th class="sub-hdr">SA-2<br>80%</th><th class="sub-hdr">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="sub-hdr">FA+SA1<br>20%</th><th class="sub-hdr">SA-2<br>80%</th><th class="sub-hdr">TOT<br>100</th><th class="sub-hdr" style="width:30px">Grade</th><th class="co-hdr">Values &<br>Life Skills</th><th class="co-hdr">Art &<br>Culture</th><th class="co-hdr">Comp &<br>Work Edu</th><th class="co-hdr">Health &<br>Phy Edu</th></tr></thead><tbody id="body-class5"></tbody></table></div><div class="sig-row"><div class="sig-box"><div class="sig-line"></div>Class Teacher</div><div class="sig-box"><div class="sig-line"></div>Subject Teacher</div><div class="sig-box"><div class="sig-line"></div>Headmaster / Principal</div><div class="sig-box"><div class="sig-line"></div>M.E.O. / Dy.E.O.</div></div><div class="dev-footer">Programme Developed by : బోమిడి రమేష్ &nbsp; 9440955214</div></div></div>
-
-<div id="sheet-summary" class="sheet">
-  <div class="a4-page">
-    <div class="sheet-title-bar">SCHOOL LEVEL PRIMARY CLASSES — ANNUAL PROGRESS CONSOLIDATION TABLE</div>
-    <div class="sheet-subtitle">2025-26 &nbsp;|&nbsp; <span class="meta-school-sum"></span> &nbsp; — &nbsp; <span class="meta-vill-sum"></span></div>
-    <div class="abs-section">
-      <div class="abs-title">GRADE WISE ABSTRACT &nbsp;<small style="font-weight:400;font-size:10px;">(TOT = ABSENT + T.C. ISSUED + PROMOTED)</small></div>
-      <div style="overflow-x:auto;">
-      <table class="abs-table" id="tbl-grade-abs">
-        <thead>
-          <tr><th rowspan="2" style="width:70px">Class</th><th colspan="3">ROLL</th><th colspan="3" class="grade-hdr">A+ (91–100)</th><th colspan="3" class="grade-hdr">A (71–90)</th><th colspan="3" class="grade-hdr">B+ (51–70)</th><th colspan="3" class="grade-hdr">B (41–50)</th><th colspan="3" class="grade-hdr">C (00–40)</th><th rowspan="2" class="grade-hdr" style="width:55px">School<br>Grade</th></tr>
-          <tr><th>Boys</th><th>Girls</th><th>Total</th><th class="grade-hdr">Boys</th><th class="grade-hdr">Girls</th><th class="grade-hdr">Total</th><th class="grade-hdr">Boys</th><th class="grade-hdr">Girls</th><th class="grade-hdr">Total</th><th class="grade-hdr">Boys</th><th class="grade-hdr">Girls</th><th class="grade-hdr">Total</th><th class="grade-hdr">Boys</th><th class="grade-hdr">Girls</th><th class="grade-hdr">Total</th></tr>
-        </thead>
-        <tbody id="body-grade-abs"></tbody>
-      </table>
-      </div>
-    </div>
-    <div class="abs-section">
-      <div class="abs-title">CASTE WISE ABSTRACT &nbsp;<small style="font-weight:400;font-size:10px;">(TOT = ABSENT + T.C. ISSUED + PROMOTED)</small></div>
-      <div style="overflow-x:auto;">
-      <table class="abs-table" id="tbl-caste-abs">
-        <thead>
-          <tr><th rowspan="2" style="width:70px">Class</th><th colspan="3">ROLL</th><th colspan="3" class="caste-hdr">S.C.</th><th colspan="3" class="caste-hdr">S.T.</th><th colspan="3" class="caste-hdr">B.C.</th><th colspan="3" class="caste-hdr">O.C.</th><th colspan="3" class="caste-hdr">M.M.</th></tr>
-          <tr><th>Boys</th><th>Girls</th><th>Total</th><th class="caste-hdr">Boys</th><th class="caste-hdr">Girls</th><th class="caste-hdr">Total</th><th class="caste-hdr">Boys</th><th class="caste-hdr">Girls</th><th class="caste-hdr">Total</th><th class="caste-hdr">Boys</th><th class="caste-hdr">Girls</th><th class="caste-hdr">Total</th><th class="caste-hdr">Boys</th><th class="caste-hdr">Girls</th><th class="caste-hdr">Total</th><th class="caste-hdr">Boys</th><th class="caste-hdr">Girls</th><th class="caste-hdr">Total</th></tr>
-        </thead>
-        <tbody id="body-caste-abs"></tbody>
-      </table>
-      </div>
-    </div>
-    <div class="sig-row"><div class="sig-box"><div class="sig-line"></div>Class / Subject Teachers</div><div class="sig-box"><div class="sig-line"></div>Headmaster / Principal</div><div class="sig-box"><div class="sig-line"></div>M.E.O. / Dy.E.O.</div></div>
-    <div class="dev-footer">Programme Developed by : Ramanjaneyulu PERUMAL ; S.G.Teacher ; Rahimanpuram ; Bethamcherla &nbsp; 99 63 53 53 04</div>
-  </div>
-</div>
-
-<div id="wtg-modal" class="no-print" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center;">
-  <div style="background:#fff; padding:20px; border-radius:8px; width:320px; box-shadow:0 4px 20px rgba(0,0,0,0.3); font-family:sans-serif;">
-    <h3 style="margin-bottom:15px; font-size:15px; border-bottom:2px solid #2457a4; padding-bottom:5px; color:#1a2e5a; text-align:center;">Enter Marks (280 Max)</h3>
-    <div style="display:flex; justify-content:space-between; margin-bottom:10px; align-items:center;"><label style="font-weight:bold;">FA 1 (50M):</label> <input type="number" id="wtg-f1" max="50" style="width:80px; padding:6px; border:1px solid #ccc; text-align:center; border-radius:4px;"></div>
-    <div style="display:flex; justify-content:space-between; margin-bottom:10px; align-items:center;"><label style="font-weight:bold;">FA 2 (50M):</label> <input type="number" id="wtg-f2" max="50" style="width:80px; padding:6px; border:1px solid #ccc; text-align:center; border-radius:4px;"></div>
-    <div style="display:flex; justify-content:space-between; margin-bottom:10px; align-items:center;"><label style="font-weight:bold;">FA 3 (50M):</label> <input type="number" id="wtg-f3" max="50" style="width:80px; padding:6px; border:1px solid #ccc; text-align:center; border-radius:4px;"></div>
-    <div style="display:flex; justify-content:space-between; margin-bottom:10px; align-items:center;"><label style="font-weight:bold;">FA 4 (50M):</label> <input type="number" id="wtg-f4" max="50" style="width:80px; padding:6px; border:1px solid #ccc; text-align:center; border-radius:4px;"></div>
-    <div style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;"><label style="font-weight:bold;">SA 1 (80M):</label> <input type="number" id="wtg-s1" max="80" style="width:80px; padding:6px; border:1px solid #ccc; text-align:center; border-radius:4px;"></div>
-    <button onclick="applyWeightage()" style="background:#2457a4; color:white; border:none; padding:10px 15px; border-radius:4px; cursor:pointer; font-weight:bold; width:100%; margin-top:5px; font-size:12px;">Apply (Convert to 20M)</button>
-    <button onclick="closeWeightageModal()" style="background:#888; color:white; border:none; padding:10px 15px; border-radius:4px; cursor:pointer; font-weight:bold; width:100%; margin-top:8px; font-size:12px;">Cancel</button>
-  </div>
-</div>
-
-<div id="att-modal" class="no-print" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center;">
-  <div style="background:#fff; padding:20px; border-radius:8px; width:340px; box-shadow:0 4px 20px rgba(0,0,0,0.3); font-family:sans-serif;">
-    <h3 style="margin-bottom:15px; font-size:15px; border-bottom:2px solid #2457a4; padding-bottom:5px; color:#1a2e5a; text-align:center;">Monthly Attendance</h3>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:15px;">
-      <div><label style="font-size:11px; font-weight:bold;">Jun:</label> <input type="number" id="att-1" style="width:100%; padding:4px; border:1px solid #ccc;"></div>
-      <div><label style="font-size:11px; font-weight:bold;">Jul:</label> <input type="number" id="att-2" style="width:100%; padding:4px; border:1px solid #ccc;"></div>
-      <div><label style="font-size:11px; font-weight:bold;">Aug:</label> <input type="number" id="att-3" style="width:100%; padding:4px; border:1px solid #ccc;"></div>
-      <div><label style="font-size:11px; font-weight:bold;">Sep:</label> <input type="number" id="att-4" style="width:100%; padding:4px; border:1px solid #ccc;"></div>
-      <div><label style="font-size:11px; font-weight:bold;">Oct:</label> <input type="number" id="att-5" style="width:100%; padding:4px; border:1px solid #ccc;"></div>
-      <div><label style="font-size:11px; font-weight:bold;">Nov:</label> <input type="number" id="att-6" style="width:100%; padding:4px; border:1px solid #ccc;"></div>
-      <div><label style="font-size:11px; font-weight:bold;">Dec:</label> <input type="number" id="att-7" style="width:100%; padding:4px; border:1px solid #ccc;"></div>
-      <div><label style="font-size:11px; font-weight:bold;">Jan:</label> <input type="number" id="att-8" style="width:100%; padding:4px; border:1px solid #ccc;"></div>
-      <div><label style="font-size:11px; font-weight:bold;">Feb:</label> <input type="number" id="att-9" style="width:100%; padding:4px; border:1px solid #ccc;"></div>
-      <div><label style="font-size:11px; font-weight:bold;">Mar:</label> <input type="number" id="att-10" style="width:100%; padding:4px; border:1px solid #ccc;"></div>
-      <div><label style="font-size:11px; font-weight:bold;">Apr:</label> <input type="number" id="att-11" style="width:100%; padding:4px; border:1px solid #ccc;"></div>
-    </div>
-    <button onclick="applyAttendance()" style="background:#2457a4; color:white; border:none; padding:10px 15px; border-radius:4px; cursor:pointer; font-weight:bold; width:100%; font-size:12px;">Apply Total</button>
-    <button onclick="closeAttModal()" style="background:#888; color:white; border:none; padding:10px 15px; border-radius:4px; cursor:pointer; font-weight:bold; width:100%; margin-top:8px; font-size:12px;">Cancel</button>
-  </div>
-</div>
-
-<div id="status-bar">✓ Saved</div>
-
-<script>
-// ============================================================
-// CONFIG & MODAL LOGIC (NEW)
-// ============================================================
-const CLASSES = {
-  class1: { label:'Class 1', subjects:['Telugu','English','Maths'], maxMarks:300 },
-  class2: { label:'Class 2', subjects:['Telugu','English','Maths'], maxMarks:300 },
-  class3: { label:'Class 3', subjects:['Telugu','English','Maths','EVS'], maxMarks:400 },
-  class4: { label:'Class 4', subjects:['Telugu','English','Maths','EVS'], maxMarks:400 },
-  class5: { label:'Class 5', subjects:['Telugu','English','Maths','EVS'], maxMarks:400 },
-};
-
-let currentTab = 'class1';
-
-// --- Weightage Modal JS ---
-let activeWtgInput = null;
-function openWeightageModal(inputEl) {
-  activeWtgInput = inputEl;
-  document.getElementById('wtg-modal').style.display = 'flex';
-  document.getElementById('wtg-f1').value = inputEl.dataset.f1 || '';
-  document.getElementById('wtg-f2').value = inputEl.dataset.f2 || '';
-  document.getElementById('wtg-f3').value = inputEl.dataset.f3 || '';
-  document.getElementById('wtg-f4').value = inputEl.dataset.f4 || '';
-  document.getElementById('wtg-s1').value = inputEl.dataset.s1 || '';
-}
-function closeWeightageModal() { document.getElementById('wtg-modal').style.display = 'none'; }
-function applyWeightage() {
-  if(!activeWtgInput) return;
-  let f1 = parseFloat(document.getElementById('wtg-f1').value) || 0;
-  let f2 = parseFloat(document.getElementById('wtg-f2').value) || 0;
-  let f3 = parseFloat(document.getElementById('wtg-f3').value) || 0;
-  let f4 = parseFloat(document.getElementById('wtg-f4').value) || 0;
-  let s1 = parseFloat(document.getElementById('wtg-s1').value) || 0;
-  activeWtgInput.dataset.f1 = f1; activeWtgInput.dataset.f2 = f2;
-  activeWtgInput.dataset.f3 = f3; activeWtgInput.dataset.f4 = f4; activeWtgInput.dataset.s1 = s1;
-  let total = f1 + f2 + f3 + f4 + s1;
-  activeWtgInput.value = ((total / 280) * 20).toFixed(1);
-  calcRow(activeWtgInput);
-  closeWeightageModal();
-}
-
-// --- Attendance Modal JS ---
-let activeAttInput = null;
-function openAttModal(inputEl) {
-  activeAttInput = inputEl;
-  document.getElementById('att-modal').style.display = 'flex';
-  for(let i=1; i<=11; i++) { document.getElementById('att-'+i).value = inputEl.dataset['m'+i] || ''; }
-}
-function closeAttModal() { document.getElementById('att-modal').style.display = 'none'; }
-function applyAttendance() {
-  if(!activeAttInput) return;
-  let total = 0;
-  for(let i=1; i<=11; i++) {
-    let val = parseFloat(document.getElementById('att-'+i).value) || 0;
-    activeAttInput.dataset['m'+i] = val;
-    total += val;
-  }
-  activeAttInput.value = total;
-  calcRow(activeAttInput);
-  closeAttModal();
-}
-
-// ============================================================
-// GRADE LOGIC
-// ============================================================
-function getGrade(score, max) {
-  const pct = (score / max) * 100;
-  if (pct >= 91) return 'A+';
-  if (pct >= 71) return 'A';
-  if (pct >= 51) return 'B+';
-  if (pct >= 41) return 'B';
-  return 'C';
-}
-
-// ============================================================
-// ROW BUILDER (UPDATED WITH CLICK TRIGGERS)
-// ============================================================
-function buildRow(cls, rowIdx) {
-  const cfg = CLASSES[cls];
-  const nSubj = cfg.subjects.length;
-  const tr = document.createElement('tr');
-  tr.dataset.row = rowIdx;
-
-  const tdSl = document.createElement('td');
-  tdSl.className = 'sl'; tdSl.textContent = rowIdx;
-  tr.appendChild(tdSl);
-
-  tr.appendChild(makeSelectTd(['','M','F'], 'gen'));
-
-  const tdName = document.createElement('td');
-  tdName.className = 'name-cell';
-  tdName.innerHTML = `<input type="text" placeholder="Student Name" class="f-name">`;
-  tr.appendChild(tdName);
-
-  ['f-admn','f-pen','f-dob','f-doa'].forEach(c => {
-    const td = document.createElement('td');
-    if (c === 'f-dob' || c === 'f-doa') {
-    td.innerHTML = `<input type="text" class="${c}" placeholder="DD/MM/YYYY" maxlength="10">`;
-} else {
-    td.innerHTML = `<input type="text" class="${c}">`;
-}
-    tr.appendChild(td);
-  });
-
-  // Subjects (With new onClick Weightage Calculator)
-  cfg.subjects.forEach((subj, si) => {
-    const td1 = document.createElement('td');
-    td1.innerHTML = `<input type="number" step="0.1" class="f-fa${si}" placeholder="Click" readonly style="cursor:pointer; background:#fff9c4; color:#b91c1c; font-weight:bold;" onclick="openWeightageModal(this)" title="Click to enter 280 marks">`;
-    tr.appendChild(td1);
-
-    const td2 = document.createElement('td');
-    td2.innerHTML = `<input type="number" min="0" max="80" class="f-sa${si}" placeholder="" oninput="calcRow(this)">`;
-    tr.appendChild(td2);
-
-    const tdTot = document.createElement('td');
-    tdTot.className = 'calc';
-    tdTot.innerHTML = `<span class="f-tot${si}">—</span>`;
-    tr.appendChild(tdTot);
-
-    const tdSubGrade = document.createElement('td');
-    tdSubGrade.className = 'calc grade-cell';
-    tdSubGrade.innerHTML = `<span class="f-subgrade${si}">—</span>`;
-    tr.appendChild(tdSubGrade);
-  });
-
-  const tdTotalM = document.createElement('td');
-  tdTotalM.className = 'calc';
-  tdTotalM.innerHTML = `<span class="f-totalmarks">—</span>`;
-  tr.appendChild(tdTotalM);
-
-  const tdTotalG = document.createElement('td');
-  tdTotalG.className = 'calc grade-cell';
-  tdTotalG.innerHTML = `<span class="f-totalgrade">—</span>`;
-  tr.appendChild(tdTotalG);
-
-  ['f-vls','f-art','f-cwe','f-hpe'].forEach(c => {
-    const td = document.createElement('td');
-    td.innerHTML = `<input type="number" min="0" max="100" class="${c}" oninput="calcRow(this)">`;
-    tr.appendChild(td);
-  });
-
-  const tdGrandT = document.createElement('td');
-  tdGrandT.className = 'calc';
-  tdGrandT.innerHTML = `<span class="f-grandtotal">—</span>`;
-  tr.appendChild(tdGrandT);
-
-  const tdGrandG = document.createElement('td');
-  tdGrandG.className = 'calc grade-cell';
-  tdGrandG.innerHTML = `<span class="f-grandgrade">—</span>`;
-  tr.appendChild(tdGrandG);
-
-  tr.appendChild(makeSelectTd(['','SC','ST','BC','OC','MM'], 'f-caste'));
-
-  const tdWd = document.createElement('td');
-  tdWd.innerHTML = `<input type="number" min="0" max="365" class="f-wd" oninput="calcRow(this)">`;
-  tr.appendChild(tdWd);
-
-  // Attendance Days (With new onClick Monthly Calculator)
-  const tdAd = document.createElement('td');
-  tdAd.innerHTML = `<input type="number" min="0" max="365" class="f-ad" placeholder="Click" readonly style="cursor:pointer; background:#e8f4f8; color:#1a2e5a; font-weight:bold;" onclick="openAttModal(this)" title="Click to enter monthly attendance">`;
-  tr.appendChild(tdAd);
-
-  const tdPct = document.createElement('td');
-  tdPct.className = 'calc';
-  tdPct.innerHTML = `<span class="f-attpc">—</span>`;
-  tr.appendChild(tdPct);
-
-  tr.appendChild(makeSelectTd(['','Promoted','Absent','TC Issued','Detained'], 'f-result'));
-
-  const tdRem = document.createElement('td');
-  tdRem.innerHTML = `<input type="text" class="f-remarks">`;
-  tr.appendChild(tdRem);
-
-  return tr;
-}
-
-function makeSelectTd(options, cls) {
-  const td = document.createElement('td');
-  const sel = document.createElement('select');
-  sel.className = cls;
-  options.forEach(o => {
-    const opt = document.createElement('option');
-    opt.value = o; opt.textContent = o;
-    sel.appendChild(opt);
-  });
-  td.appendChild(sel);
-  return td;
-}
-
-// ============================================================
-// CALC ROW
-// ============================================================
-function calcRow(el) {
-  const tr = el.closest('tr');
-  const cls = currentTab;
-  const cfg = CLASSES[cls];
-  const nSubj = cfg.subjects.length;
-
-  let totalMarks = 0;
-
-  for (let si = 0; si < nSubj; si++) {
-    const fa = parseFloat(tr.querySelector(`.f-fa${si}`)?.value) || 0;
-    const sa = parseFloat(tr.querySelector(`.f-sa${si}`)?.value) || 0;
-    const tot = fa + sa;
-    const totSpan = tr.querySelector(`.f-tot${si}`);
-    if (totSpan) totSpan.textContent = (fa || sa) ? tot.toFixed(1) : '—';
-    const subGradeSpan = tr.querySelector(`.f-subgrade${si}`);
-    if (subGradeSpan) {
-      if (fa || sa) {
-        const sg = getGrade(tot, 100);
-        subGradeSpan.textContent = sg;
-        subGradeSpan.parentElement.className = `calc grade-cell grade-${sg.replace('+','\\+')}`;
-      } else {
-        subGradeSpan.textContent = '—';
-        subGradeSpan.parentElement.className = 'calc grade-cell';
-      }
-    }
-    if (fa || sa) totalMarks += tot;
-  }
-
-  const totalMarkSpan = tr.querySelector('.f-totalmarks');
-  const totalGradeSpan = tr.querySelector('.f-totalgrade');
-  if (totalMarkSpan) totalMarkSpan.textContent = totalMarks > 0 ? totalMarks.toFixed(1) : '—';
-  if (totalGradeSpan) {
-    if (totalMarks > 0) {
-      const g = getGrade(totalMarks, cfg.maxMarks);
-      totalGradeSpan.textContent = g;
-      totalGradeSpan.parentElement.className = `calc grade-cell grade-${g.replace('+','\\+')}`;
-    } else totalGradeSpan.textContent = '—';
-  }
-
-  const vls = parseFloat(tr.querySelector('.f-vls')?.value) || 0;
-  const art = parseFloat(tr.querySelector('.f-art')?.value) || 0;
-  const cwe = parseFloat(tr.querySelector('.f-cwe')?.value) || 0;
-  const hpe = parseFloat(tr.querySelector('.f-hpe')?.value) || 0;
-  const grandTotal = totalMarks + vls + art + cwe + hpe;
-  const grandMax = cfg.maxMarks + 400;
-
-  const gtSpan = tr.querySelector('.f-grandtotal');
-  const ggSpan = tr.querySelector('.f-grandgrade');
-  if (gtSpan) gtSpan.textContent = grandTotal > 0 ? grandTotal.toFixed(1) : '—';
-  if (ggSpan) {
-    if (grandTotal > 0) {
-      const g = getGrade(grandTotal, grandMax);
-      ggSpan.textContent = g;
-      ggSpan.parentElement.className = `calc grade-cell grade-${g.replace('+','\\+')}`;
-    } else ggSpan.textContent = '—';
-  }
-
-  const wd = parseFloat(tr.querySelector('.f-wd')?.value) || 0;
-  const ad = parseFloat(tr.querySelector('.f-ad')?.value) || 0;
-  const attPc = tr.querySelector('.f-attpc');
-  if (attPc) attPc.textContent = wd > 0 ? Math.round((ad/wd)*100)+'%' : '—';
-}
-
-// ============================================================
-// ADD / REMOVE ROWS
-// ============================================================
-function addRow() {
-  const tbody = document.getElementById(`body-${currentTab}`);
-  const rowIdx = tbody.rows.length + 1;
-  const tr = buildRow(currentTab, rowIdx);
-  tbody.appendChild(tr);
-}
-
-function removeLastRow() {
-  const tbody = document.getElementById(`body-${currentTab}`);
-  if (tbody.rows.length > 0) tbody.deleteRow(-1);
-}
-
-function clearSheet() {
-  if (!confirm('Clear all rows in this sheet?')) return;
-  const tbody = document.getElementById(`body-${currentTab}`);
-  tbody.innerHTML = '';
-  for (let i = 1; i <= 5; i++) tbody.appendChild(buildRow(currentTab, i));
-}
-
-function recalcAll() {
-  Object.keys(CLASSES).forEach(cls => {
-    const tbody = document.getElementById(`body-${cls}`);
-    if (!tbody) return;
-    const prevTab = currentTab;
-    currentTab = cls;
-    Array.from(tbody.rows).forEach(tr => {
-      const anyInput = tr.querySelector('input[type="number"]');
-      if (anyInput) calcRow(anyInput);
-    });
-    currentTab = prevTab;
-  });
-  buildSummary();
-  showStatus('Recalculated ✓');
-}
-
-// ============================================================
-// TAB SWITCHING
-// ============================================================
-function switchTab(tab) {
-  currentTab = tab;
-  document.querySelectorAll('.sheet').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById(`sheet-${tab}`)?.classList.add('active');
-  const tabs = document.querySelectorAll('.tab');
-  const tabOrder = ['class1','class2','class3','class4','class5','summary'];
-  tabs[tabOrder.indexOf(tab)]?.classList.add('active');
-  if (tab === 'summary') buildSummary();
-}
-
-// ============================================================
-// SCHOOL INFO → SYNC TO META SPANS
-// ============================================================
-function syncMeta() {
-  const fields = {
-    school: document.getElementById('inf-school').value,
-    vill:   document.getElementById('inf-vill').value,
-    dise:   document.getElementById('inf-dise').value,
-    cluster:document.getElementById('inf-cluster').value,
-    mandal: document.getElementById('inf-mandal').value,
-    dist:   document.getElementById('inf-dist').value,
-    medium: document.getElementById('inf-medium').value,
-    section:document.getElementById('inf-section').value,
-  };
-  document.querySelectorAll('.meta-school').forEach(el => el.textContent = fields.school);
-  document.querySelectorAll('.meta-vill').forEach(el => el.textContent = fields.vill);
-  document.querySelectorAll('.meta-dise').forEach(el => el.textContent = fields.dise);
-  document.querySelectorAll('.meta-cluster').forEach(el => el.textContent = fields.cluster);
-  document.querySelectorAll('.meta-mandal').forEach(el => el.textContent = fields.mandal);
-  document.querySelectorAll('.meta-dist').forEach(el => el.textContent = fields.dist);
-  document.querySelectorAll('.meta-medium').forEach(el => el.textContent = fields.medium);
-  document.querySelectorAll('.meta-section').forEach(el => el.textContent = fields.section);
-  document.querySelectorAll('.meta-school-sum').forEach(el => el.textContent = fields.school);
-  document.querySelectorAll('.meta-vill-sum').forEach(el => el.textContent = fields.vill);
-}
-
-['inf-school','inf-vill','inf-dise','inf-cluster','inf-mandal','inf-dist','inf-medium','inf-section']
-  .forEach(id => document.getElementById(id)?.addEventListener('input', syncMeta));
-
-// ============================================================
-// BUILD SUMMARY
-// ============================================================
-function buildSummary() {
-  buildGradeAbstract();
-  buildCasteAbstract();
-}
-
-function buildGradeAbstract() {
-  const tbody = document.getElementById('body-grade-abs');
-  tbody.innerHTML = '';
-  const gradeKeys = ['A+','A','B+','B','C'];
-  let totals = { roll:{b:0,g:0}, grade:{} };
-  gradeKeys.forEach(g => totals.grade[g] = {b:0,g:0});
-
-  Object.keys(CLASSES).forEach(cls => {
-    const dataBody = document.getElementById(`body-${cls}`);
-    if (!dataBody) return;
-    let boys=0, girls=0;
-    const gradeCounts = {};
-    gradeKeys.forEach(g => gradeCounts[g] = {b:0,g:0});
-
-    Array.from(dataBody.rows).forEach(tr => {
-      const name = tr.querySelector('.f-name')?.value;
-      if (!name) return;
-      const gender = tr.querySelector('.gen')?.value;
-      const isB = gender === 'M';
-      const isG = gender === 'F';
-      if (isB) boys++;
-      if (isG) girls++;
-
-      const ggSpan = tr.querySelector('.f-grandgrade');
-      const grade = ggSpan?.textContent;
-      if (grade && grade !== '—' && gradeCounts[grade]) {
-        if (isB) gradeCounts[grade].b++;
-        if (isG) gradeCounts[grade].g++;
-      }
-    });
-
-    totals.roll.b += boys; totals.roll.g += girls;
-    gradeKeys.forEach(g => { totals.grade[g].b += gradeCounts[g].b; totals.grade[g].g += gradeCounts[g].g; });
-
-    const tr = document.createElement('tr');
-    let html = `<td class="cls-label">${CLASSES[cls].label}</td>`;
-    html += `<td>${boys}</td><td>${girls}</td><td>${boys+girls}</td>`;
-    gradeKeys.forEach(g => {
-      html += `<td>${gradeCounts[g].b}</td><td>${gradeCounts[g].g}</td><td>${gradeCounts[g].b+gradeCounts[g].g}</td>`;
-    });
-    let schoolGrade = 'C';
-    for (const g of gradeKeys) {
-      if (gradeCounts[g].b + gradeCounts[g].g > 0) { schoolGrade = g; break; }
-    }
-    html += `<td style="font-weight:700;color:#1a6e3c">${boys+girls>0?schoolGrade:''}</td>`;
-    tr.innerHTML = html;
-    tbody.appendChild(tr);
-  });
-
-  const tr = document.createElement('tr');
-  let html = `<td class="cls-label total-row" style="background:#dbe8f8">TOTAL</td>`;
-  html += `<td class="total-row">${totals.roll.b}</td><td class="total-row">${totals.roll.g}</td><td class="total-row">${totals.roll.b+totals.roll.g}</td>`;
-  gradeKeys.forEach(g => {
-    html += `<td class="total-row">${totals.grade[g].b}</td><td class="total-row">${totals.grade[g].g}</td><td class="total-row">${totals.grade[g].b+totals.grade[g].g}</td>`;
-  });
-  html += `<td class="total-row"></td>`;
-  tr.innerHTML = html;
-  tbody.appendChild(tr);
-}
-
-function buildCasteAbstract() {
-  const tbody = document.getElementById('body-caste-abs');
-  tbody.innerHTML = '';
-  const castes = ['SC','ST','BC','OC','MM'];
-  let totals = { roll:{b:0,g:0}, caste:{} };
-  castes.forEach(c => totals.caste[c] = {b:0,g:0});
-
-  Object.keys(CLASSES).forEach(cls => {
-    const dataBody = document.getElementById(`body-${cls}`);
-    if (!dataBody) return;
-    let boys=0, girls=0;
-    const casteCounts = {};
-    castes.forEach(c => casteCounts[c] = {b:0,g:0});
-
-    Array.from(dataBody.rows).forEach(tr => {
-      const name = tr.querySelector('.f-name')?.value;
-      if (!name) return;
-      const gender = tr.querySelector('.gen')?.value;
-      const isB = gender === 'M';
-      const isG = gender === 'F';
-      if (isB) boys++;
-      if (isG) girls++;
-      const caste = tr.querySelector('.f-caste')?.value;
-      if (caste && casteCounts[caste]) {
-        if (isB) casteCounts[caste].b++;
-        if (isG) casteCounts[caste].g++;
-      }
-    });
-
-    totals.roll.b += boys; totals.roll.g += girls;
-    castes.forEach(c => { totals.caste[c].b += casteCounts[c].b; totals.caste[c].g += casteCounts[c].g; });
-
-    const tr = document.createElement('tr');
-    let html = `<td class="cls-label">${CLASSES[cls].label}</td>`;
-    html += `<td>${boys}</td><td>${girls}</td><td>${boys+girls}</td>`;
-    castes.forEach(c => {
-      html += `<td>${casteCounts[c].b}</td><td>${casteCounts[c].g}</td><td>${casteCounts[c].b+casteCounts[c].g}</td>`;
-    });
-    tr.innerHTML = html;
-    tbody.appendChild(tr);
-  });
-
-  const tr = document.createElement('tr');
-  let html = `<td class="cls-label total-row" style="background:#dbe8f8">TOTAL</td>`;
-  html += `<td class="total-row">${totals.roll.b}</td><td class="total-row">${totals.roll.g}</td><td class="total-row">${totals.roll.b+totals.roll.g}</td>`;
-  castes.forEach(c => {
-    html += `<td class="total-row">${totals.caste[c].b}</td><td class="total-row">${totals.caste[c].g}</td><td class="total-row">${totals.caste[c].b+totals.caste[c].g}</td>`;
-  });
-  tr.innerHTML = html;
-  tbody.appendChild(tr);
-}
-
-// ============================================================
-// PRINT ENGINE
-// ============================================================
-let _printStyleEl = null;
-
-function openPrintModal() {
-  document.getElementById('print-overlay').classList.add('open');
-  document.querySelectorAll('input[name="print-scope"]').forEach(r => {
-    r.onchange = () => {
-      document.getElementById('pm-custom-sheets').style.display =
-        (document.querySelector('input[name="print-scope"]:checked').value === 'custom') ? 'block' : 'none';
-    };
-  });
-}
-
-function closePrintModal() {
-  document.getElementById('print-overlay').classList.remove('open');
-  document.querySelectorAll('.sheet').forEach(s => s.classList.remove('print-me'));
-  document.body.className = document.body.className.replace(/\bpf-\d+\b/g,'').replace(/\bpo-\w+\b/g,'').replace(/\bbw-print\b/g,'').trim();
-  if (_printStyleEl) { _printStyleEl.remove(); _printStyleEl = null; }
-}
-
-function doPrint() {
-  recalcAll();
-  const scope = document.querySelector('input[name="print-scope"]:checked').value;
-  let targetSheets = [];
-  if (scope === 'current') targetSheets = [currentTab];
-  else if (scope === 'all') targetSheets = ['class1','class2','class3','class4','class5','summary'];
-  else document.querySelectorAll('.sheet-chk:checked').forEach(chk => targetSheets.push(chk.value));
-  
-  if (targetSheets.length === 0) { alert('కనీసం ఒక Sheet select చేయండి.'); return; }
-  if (targetSheets.includes('summary')) buildSummary();
-
-  document.querySelectorAll('.sheet').forEach(s => s.classList.remove('print-me'));
-  targetSheets.forEach(id => document.getElementById('sheet-'+id)?.classList.add('print-me'));
-
-  const orient = document.querySelector('input[name="print-orient"]:checked').value;
-  const margin = document.querySelector('input[name="print-margin"]:checked').value;
-  const fs = document.getElementById('pm-fontsize').value;
-  
-  document.body.classList.remove(...['7','8','9','10','11'].map(v=>'pf-'+v));
-  document.body.classList.add('pf-'+fs);
-
-  const colorMode = document.querySelector('input[name="print-color"]:checked').value;
-  if (colorMode === 'bw') document.body.classList.add('bw-print');
-  else document.body.classList.remove('bw-print');
-
-  if (_printStyleEl) _printStyleEl.remove();
-  _printStyleEl = document.createElement('style');
-  _printStyleEl.textContent = [
-    '@media print {',
-    '  @page { size: A4 '+orient+'; margin: '+margin+'; }',
-    colorMode==='bw' ? '  body * { color: #000 !important; background: #fff !important; }\n  .promo-table th, .abs-table th { background: #ccc !important; color: #000 !important; border: 1px solid #000 !important; }\n  .sheet-title-bar, .sheet-subtitle { background: #333 !important; color: #fff !important; }' : '',
-    '}'
-  ].join('\n');
-  document.head.appendChild(_printStyleEl);
-
-  document.getElementById('print-overlay').classList.remove('open');
-
-  // ===== Sync all input/select values to parent td data-pv attribute =====
-  syncPrintValues();
-  
-  setTimeout(() => {
-    window.print();
-  }, 500); 
-}
-
-// Sync every input/select value to its parent td's data-pv attribute for CSS print rendering
-function syncPrintValues() {
-  document.querySelectorAll('.promo-table tbody td').forEach(td => {
-    const inp = td.querySelector('input');
-    const sel = td.querySelector('select');
-    const el = inp || sel;
-    if (el && el.value) {
-      td.setAttribute('data-pv', el.value);
-    } else if (el) {
-      td.setAttribute('data-pv', '');
-    }
-  });
-}
-
-// ============================================================
-// SAVE / LOAD
-// ============================================================
-function collectSheetData(cls) {
-  const tbody = document.getElementById(`body-${cls}`);
-  if (!tbody) return [];
-  return Array.from(tbody.rows).map(tr => {
-    const data = {};
-    tr.querySelectorAll('input').forEach(inp => data[inp.className] = inp.value);
-    tr.querySelectorAll('select').forEach(sel => data[sel.className] = sel.value);
-    return data;
-  });
-}
-
-function saveData() {
-  const payload = {
-    school: {
-      school: document.getElementById('inf-school').value, vill: document.getElementById('inf-vill').value,
-      dise: document.getElementById('inf-dise').value, cluster: document.getElementById('inf-cluster').value,
-      mandal: document.getElementById('inf-mandal').value, dist: document.getElementById('inf-dist').value,
-      medium: document.getElementById('inf-medium').value, section: document.getElementById('inf-section').value,
-    },
-    sheets: {}
-  };
-  Object.keys(CLASSES).forEach(cls => payload.sheets[cls] = collectSheetData(cls));
-  try {
-    localStorage.setItem('rv_sp_adm_v1', JSON.stringify(payload));
-    showStatus('Data saved locally ✓');
-  } catch(e) {
-    const blob = new Blob([JSON.stringify(payload)], {type:'application/json'});
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = 'PromotionChart2026.json'; a.click();
-    showStatus('Downloaded as JSON ✓');
-  }
-}
-
-function loadData() {
-  const raw = localStorage.getItem('rv_sp_adm_v1');
-  if (!raw) { alert('No saved data found.'); return; }
-  const payload = JSON.parse(raw);
-  const si = payload.school;
-  if (si) {
-    Object.keys(si).forEach(k => { const el = document.getElementById('inf-'+k); if (el) el.value = si[k]; });
-    syncMeta();
-  }
-  Object.keys(CLASSES).forEach(cls => {
-    const rows = payload.sheets?.[cls];
-    if (!rows) return;
-    const tbody = document.getElementById(`body-${cls}`);
-    tbody.innerHTML = '';
-    rows.forEach((rowData, idx) => {
-      const tr = buildRow(cls, idx+1);
-      tbody.appendChild(tr);
-      Object.keys(rowData).forEach(cls2 => {
-        const el = tr.querySelector(`.${cls2.replace(/\+/g,'\\+')}`);
-        if (el) el.value = rowData[cls2];
-      });
-      const prevTab = currentTab;
-      currentTab = cls;
-      const anyInput = tr.querySelector('input[type="number"]');
-      if (anyInput) calcRow(anyInput);
-      currentTab = prevTab;
-    });
-  });
-  showStatus('Data loaded ✓');
-}
-
-function showStatus(msg) {
-  const sb = document.getElementById('status-bar');
-  sb.textContent = msg; sb.classList.add('show');
-  setTimeout(() => sb.classList.remove('show'), 2500);
-}
-
-// INIT
-window.addEventListener('DOMContentLoaded', () => {
-  Object.keys(CLASSES).forEach(cls => {
-    const tbody = document.getElementById(`body-${cls}`);
-    for (let i = 1; i <= 5; i++) tbody.appendChild(buildRow(cls, i));
-  });
-  const raw = localStorage.getItem('rv_sp_adm_v1');
-  if (raw) loadData();
-});
-
-// Auto-sync print values when browser triggers print (Ctrl+P or system print)
-window.addEventListener('beforeprint', () => {
-  recalcAll();
-  syncPrintValues();
-});
-</scr_RAI_ipt>
-</body>
-</html>
-</script>
 <script>
 const SRC='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
 const PKK='rv_sp_pack_v1';
@@ -2529,7 +1400,6 @@ function render(){
         <a class="icon-btn wa" href="https://wa.me/91${s.mobile}" target="_blank" title="WhatsApp">🟢</a>
         <a class="icon-btn sms" href="sms:+91${s.mobile}" title="SMS">✉️</a>
         <button class="icon-btn prog" onclick="openProg('${s.id}')" title="ప్రగతి: FA-1→SA-2 + హాజరు">📘</button>
-        <button class="icon-btn prf" onclick="openProfile('${s.id}')" title="వివరాల పత్రం (ఒక పేజీ)">🪪</button>
       </div>
     `;
     listEl.appendChild(card);
@@ -2926,38 +1796,21 @@ function hpcGo(md,title,o){o=o||{};const el=document.getElementById('hpcSrc'),fr
     fr.srcdoc=el.textContent.split('</scr_RAI_ipt').join('</'+'script');}
   else run();}
 function openHPC(){hpcGo('SCH','🏫 పాఠశాల ఫైనల్');}
-function drawMenu(){const box=document.getElementById('menuBox');if(!box)return;const c=cnum(currentClass),R=CLS_NAME[currentClass]||currentClass,hasH=!!(document.getElementById('hpcSrc')||{}).textContent;
+function drawMenu(){const box=document.getElementById('menuBox');if(!box)return;const c=cnum(currentClass),R=CLS_NAME[currentClass]||currentClass,n=(DATA[currentClass]||[]).length,hasH=!!(document.getElementById('hpcSrc')||{}).textContent;
   const B=(cl,fn,t)=>'<button class="'+cl+'" onclick="'+fn+'">'+t+'</button>';
-  const N=(n,fn,t)=>B('n',fn,'<span class="no">'+n+'</span>'+t);
-  const G=plGrp(c)[2].replace(/ - /g,'–'),has=(a,b)=>Object.keys(DATA).some(x=>cnum(x)>=a&&cnum(x)<=b);
-  let h='<div class="mt">🏫 School ప్రగతి — '+R+' తరగతి</div><div class="mg">'
-   +N(1,"openTbl('det')",'విద్యార్థుల పూర్తి వివరాలు<br><small>I నుండి X వరకు — తరగతి వారీ</small>')
-   +N(2,"openTbl('asm')",'FA-1, FA-2, FA-3, FA-4, SA-1, SA-2<br><small>FA = 50 మార్కులు · SA = 80 మార్కులు</small>')
-   +N(3,"openTbl('att')",'నెలవారీ హాజరు')
-   +(hasH?N(4,"hpcGo('HPC','📘 "+R+" HPC కార్డులు')",'విద్యార్థి మొత్తం HPC కార్డు'):'')
-   +N(5,"openPL(false)",'ప్రమోషన్ చార్ట్ — '+G+'<br><small>తరగతి మొత్తం (సబ్జెక్టు మార్కులు మాత్రమే)</small>')
-   +N(6,"openPL(true)",'ప్రమోషన్ చార్ట్ + Co-curricular<br><small>మార్కులు వేస్తే గ్రేడ్‌లో కలుస్తాయి</small>');
-  if(hasH)h+=(has(1,5)?N(7,"hpcGo('P','I – V తరగతులు — Subject గ్రేడులు')",'Subject గ్రేడులు: I – V<br><small>పాఠశాల మొత్తం నివేదిక</small>'):'')
-   +(has(6,8)?N(7,"hpcGo('M','VI – VIII తరగతులు — Subject గ్రేడులు')",'Subject గ్రేడులు: VI – VIII<br><small>పాఠశాల మొత్తం నివేదిక</small>'):'')
-   +(has(9,10)?N(7,"hpcGo('S','IX – X తరగతులు — Subject గ్రేడులు')",'Subject గ్రేడులు: IX – X<br><small>పాఠశాల మొత్తం నివేదిక</small>'):'');
-  h+=N(8,"openTbl('sub')",'సబ్జెక్టు వారీ మార్కులు<br><small>ప్రతి సబ్జెక్టుకు వేరుగా</small>')+'</div>';
-  h+='<details><summary>📂 మరిన్ని నివేదికలు — '+R+' తరగతి</summary><div class="mg" style="margin-top:6px">'
-   +B('','openAtt()','📊 హాజరు రిపోర్ట్')+B('','openCls()','📋 తరగతి ప్రగతి<br><small>FA-1→SA-2 + హాజరు</small>');
-  if(c<=5)h+=B('','openCCE()','📒 CCE రిజిస్టర్')+B('','admGo()','📋 ప్రమోషన్ చార్ట్ (Admission)<br><small>పేర్లు ఆటోగా నిండినవి</small>');
-  if(hasH){h+=B('h',"hpcGo('CLS','🏅 "+R+" తరగతి గ్రేడ్')",'🏅 తరగతి గ్రేడ్ (HPC)')
-     +B('h',"hpcGo('STU','👤 "+R+" విద్యార్థి వారీ')",'👤 విద్యార్థి వారీ గ్రేడ్')+B('h',"hpcGo('CMR','📄 "+R+" CMR ప్రొఫార్మా')",'📄 CMR ప్రొఫార్మా')
-     +B('h',"hpcGo('F50','🔢 "+R+" FA-1 (50)')",'🔢 FA-1 (50 మార్కులు)');
-    if(c===10)h+=B('h',"hpcGo('E10','✍️ X తరగతి ఎంట్రీ')",'✍️ 10వ తరగతి ఎంట్రీ');}
-  h+='</div><div class="mt" style="margin-top:10px">🖨️ హార్డ్ కాపీ (PDF) — ఫైల్ చేయడానికి</div><div class="mg">'
-   +B('p',"openBook('all')",'📦 పూర్తి తరగతి ఫైల్<br><small>అన్ని నివేదికలు + ప్రతి విద్యార్థి కార్డ్</small>')
-   +B('p',"openBook('cls')",'📁 తరగతి నివేదికలు మాత్రమే')+B('p',"openBook('stu')",'👥 ప్రతి విద్యార్థి ప్రగతి కార్డ్<br><small>ఒక్కొక్కరికి ఒక పేజీ</small>')
-   +(hasH?B('p',"hpcGo('HPC','📘 "+R+" HPC కార్డులు — అందరూ',{print:1})",'📘 HPC కార్డులు — అందరికీ'):'')+'</div>'
-   +'<div class="mt" style="margin-top:10px">📑 ప్రత్యేక పట్టికలు (PDF)</div><div class="mg">'
-   +B('p',"openTbl('all')",'📦 అన్ని పట్టికలు ఒకేసారి')+B('p',"openProfiles()",'🪪 వివరాల పత్రం — ఒక్కొక్కరికి ఒక పేజీ')
-   +B('p',"openTbl('tot')",'🏆 విద్యార్థి మొత్తం గ్రేడ్ & స్థానం')+'</div>';
-  if(hasH)h+='<div class="mt" style="margin-top:10px">🏫 పాఠశాల మొత్తం నివేదికలు</div><div class="mg">'
-   +[['SCH','🏫 పాఠశాల ఫైనల్'],['H','VI – X'],['A','I – X'],['X','X తరగతి'],['SUB','సబ్జెక్టు వారీగా'],['ALLR','అన్నీ కలిపి']].map(([m,t])=>B('s',"hpcGo('"+m+"','"+t+"')",t)).join('')+'</div>';
-  h+='</details>';
+  let h='<div class="mt">✏️ '+R+' తరగతి — నమోదు</div><div class="mg m3">'
+   +B('e','openStu()','👥 విద్యార్థులు<br><small>'+n+' మంది • చేర్చు / సరిచేయి</small>')
+   +B('e',"openEnt('mk')",'✏️ మార్కులు<br><small>FA-1 … SA-2 • తరగతి మొత్తం</small>')
+   +B('e',"openEnt('at')",'📅 హాజరు<br><small>నెల వారీ • తరగతి మొత్తం</small>')+'</div>';
+  h+='<div class="mt" style="margin-top:10px">🖨️ '+R+' తరగతి — ప్రింట్ / PDF</div><div class="mg">'
+   +B('p',"openBook('stu')",'📘 ప్రగతి కార్డులు<br><small>ఒక్కొక్కరికి ఒక పేజీ</small>')
+   +(hasH?B('p',"hpcGo('HPC','🏅 "+R+" HPC కార్డులు')",'🏅 HPC కార్డులు<br><small>ప్రభుత్వ నమూనా</small>'):'')
+   +B('p','openCls()','📊 తరగతి ఫలితాలు<br><small>మార్కులు • గ్రేడ్ • ర్యాంక్</small>')
+   +B('p',c<=5?'openCCE()':"openTbl('sub')",(c<=5?'📒 CCE రిజిస్టర్':'📒 సబ్జెక్టు రిజిస్టర్')+'<br><small>సబ్జెక్టు వారీ</small>')
+   +B('p','openAtt()','📅 హాజరు రిజిస్టర్<br><small>నెల వారీ %</small>')
+   +B('p','openPL(true)','🎓 ప్రమోషన్ లిస్ట్<br><small>సంవత్సరాంతం</small>')
+   +B('p',"openTbl('det')",'🪪 విద్యార్థుల వివరాలు<br><small>అడ్మిషన్ రిజిస్టర్ లాగా</small>')
+   +B('p',"openBook('all')",'📦 తరగతి మొత్తం ఫైల్<br><small>పైవన్నీ ఒకేసారి</small>')+'</div>';
   box.innerHTML=h;}
 
 /* ---------- హార్డ్ కాపీ ఫైల్స్ (తరగతి / విద్యార్థి) ---------- */
@@ -2979,7 +1832,7 @@ function bookStu(cls,only){const out=[],kc=progCls,ki=progIdx;progCls=cls;DATA[c
 function openBook(kind){const cls=currentClass,c=cnum(cls);let pages=[],it=[],t='';
   showToast('⏳ ఫైల్ తయారవుతోంది...');
   if(kind==='cls'||kind==='all'){const b=bookClass(cls);pages=pages.concat(b.out);it=it.concat(b.it);}
-  if(kind==='all'){pages=pages.concat(DATA[cls].map((st,k)=>tProfile(cls,st,k)));it.push('విద్యార్థి వివరాల పత్రాలు ('+DATA[cls].length+' మంది)');}
+  if(kind==='all'){pages.push(tDetails(cls));it.push('విద్యార్థుల వివరాల రిజిస్టర్');}
   if(kind==='stu'||kind==='all'){pages=pages.concat(bookStu(cls));it.push('ప్రతి విద్యార్థి ప్రగతి కార్డ్ ('+DATA[cls].length+' మంది)');}
   t=kind==='cls'?'తరగతి నివేదికలు':kind==='stu'?'విద్యార్థుల ప్రగతి కార్డులు':'పూర్తి తరగతి ఫైల్';
   document.getElementById('bookWrap').innerHTML=coverPg(cls,t,it)+pages.join('');
@@ -3137,7 +1990,7 @@ applyStu();
 
 /* ---------- స్కూల్ సెట్టింగ్స్ / కొత్త స్కూల్ ---------- */
 const SF=['name','short','place','udise','year'];
-function applySchUI(){document.title=SCH.short+' — School ప్రగతి - రాయ్ ఎడ్యుకేషన్';const p=document.querySelector('header p');if(p)p.innerHTML=(SCH.short||SCH.name)+' | క్లాస్ వారీగా పేర్లు &amp; మొబైల్ నంబర్లు — SMS / WhatsApp పంపండి';}
+function applySchUI(){document.title=SCH.short+' — School ప్రగతి - రాయ్ ఎడ్యుకేషన్';const p=document.querySelector('header p');if(p)p.innerHTML=(SCH.name||SCH.short)+(SCH.year?' • '+SCH.year:'');}
 function openSch(){SF.forEach(k=>document.getElementById('sc_'+k).value=SCH[k]||'');{const r=Array.isArray(PACK.rng)?PACK.rng:[1,10],e=document.getElementById('sc_rng');e.value=r[0]+'-'+r[1];if(!e.value)e.value='1-10';}document.getElementById('schView').classList.add('show');}
 function saveSch(){PS.sch={};SF.forEach(k=>{SCH[k]=cleanTxt(document.getElementById('sc_'+k).value,120);PS.sch[k]=SCH[k];});if(!SCH.short)SCH.short=PS.sch.short=SCH.name;savePS();applySchUI();showToast('స్కూల్ వివరాలు సేవ్ అయ్యాయి ✅');}
 
@@ -3368,11 +2221,52 @@ window.RVSP={
     P[s.id]=o;}));return P;}
 };
 
+/* ================= ✏️ తరగతి మొత్తం నమోదు: మార్కులు / హాజరు ================= */
+const ENT={m:'mk',A:'FA1',i:0,mi:Math.min(10,Math.max(0,(new Date().getMonth()+7)%12))};
+function openEnt(m){ENT.m=m;const s=document.getElementById('entCls');s.innerHTML=Object.keys(DATA).map(c=>'<option value="'+c+'">'+CLS_NAME[c]+' తరగతి ('+DATA[c].length+')</option>').join('');s.value=currentClass;
+  document.getElementById('entView').classList.add('show');drawEnt();document.getElementById('entView').scrollTop=0;}
+function drawEnt(){const cls=currentClass,c=cnum(cls),C=clsDef(c),L=DATA[cls]||[],R=CLS_NAME[cls];let h='';
+  document.getElementById('entTitle').textContent=ENT.m==='mk'?'✏️ మార్కుల నమోదు':'📅 హాజరు నమోదు';
+  if(!L.length){document.getElementById('entBox').innerHTML='<div class="warn">'+R+' తరగతిలో విద్యార్థులు లేరు. ముందు 👥 విద్యార్థులను చేర్చండి.</div><div class="row"><button class="go" onclick="closeOvl(\'entView\');openStu()">👥 విద్యార్థులను చేర్చు</button></div>';return;}
+  if(ENT.m==='mk'){if(ENT.i>=C.subs.length)ENT.i=0;const A=ENT.A,i=ENT.i,isFA=A[0]==='F',sc=scOf(c,(C.subs[i]||{}).n),n=c<=5?6:1,tm=faMaxOf(c,i);
+    h+='<div class="chips2">'+ASMT.map(x=>'<button class="'+(x===A?'on':'')+'" onclick="ENT.A=\''+x+'\';drawEnt()">'+ASL[x]+'</button>').join('')+'</div>'
+      +'<div class="chips2">'+C.subs.map((sb,k)=>'<button class="'+(k===i?'on':'')+'" onclick="ENT.i='+k+';drawEnt()">'+tn(sb.n)+'</button>').join('')+'</div>'
+      +'<div class="st">'+(isFA?'FA = ప్రతిస్పందనలు 5 + రాత అంశాలు 5 + ప్రాజెక్ట్ 5 + రాత పరీక్ష 35 = 50':'SA గరిష్ఠం 80'+(n===6?' (AS-1 … AS-6 విభాగాలు)':''))+' • గైర్హాజరు అయితే <b>AB</b> • టైప్ చేయగానే సేవ్ అవుతుంది • Enter = కింది విద్యార్థి</div>';
+    h+='<div style="overflow-x:auto"><table class="et"><tr><th>#</th><th>పేరు</th>'+(isFA?TOOLS.map((t,q)=>'<th>'+t+'<br><small>/'+tm[q]+'</small></th>').join(''):Array.from({length:n},(_,q)=>'<th>'+(n===6?'AS-'+(q+1):'మార్కులు<br><small>/80</small>')+'</th>').join(''))+'<th>మొత్తం</th><th>గ్రేడ్</th></tr>';
+    L.forEach((s,k)=>{const r=aRes(s,c,A,i),v=((PS.mk[s.id]||{})[A]||{})[i];let vv=v||(r&&r.t)||[];if(!isFA&&v&&v.length!==n)vv=n===6?[]:[v.reduce((a,x)=>a+(+x||0),0)];
+      h+='<tr><td>'+(k+1)+'</td><td class="nm">'+s.name+'</td>'+Array.from({length:isFA?4:n},(_,q)=>'<td><input class="em" inputmode="decimal" data-sid="'+s.id+'" data-q="'+q+'" data-max="'+(isFA?tm[q]:(n===6?80:80))+'" value="'+(vv[q]===null||vv[q]===undefined?'':vv[q])+'"></td>').join('')
+        +'<td id="emt_'+s.id+'">'+(r?(r.ab?'AB':nf(r.tot)):'')+'</td><td id="emg_'+s.id+'" class="gd '+(r&&!r.ab?gcl(r.g,sc):'')+'">'+(r&&!r.ab?r.g:'')+'</td></tr>';});
+    h+='</table></div>';}
+  else{const mi=ENT.mi,wd=Math.max(0,...L.map(s=>attM(s,mi)[0]));
+    h+='<div class="row"><span>నెల</span><select onchange="ENT.mi=+this.value;drawEnt()">'+MONTHS.map((m,k)=>'<option value="'+k+'"'+(k===mi?' selected':'')+'>'+m+'</option>').join('')+'</select>'
+      +'<span>పని దినాలు</span><input id="eaW" type="number" inputmode="numeric" min="0" max="31" style="width:70px" value="'+(wd||'')+'"><button class="go" onclick="eaAll()">✅ అందరూ పూర్తి హాజరు</button></div>'
+      +'<div class="st">ముందు ఆ నెల పని దినాలు ఇవ్వండి → ప్రతి విద్యార్థి హాజరైన రోజులు రాయండి (లేదా “అందరూ పూర్తి హాజరు” నొక్కి గైర్హాజరైనవారివి మార్చండి). టైప్ చేయగానే సేవ్.</div>'
+      +'<div style="overflow-x:auto"><table class="et"><tr><th>#</th><th>పేరు</th><th>హాజరైన రోజులు</th><th>%</th></tr>'
+      +L.map((s,k)=>{const [w,p]=attM(s,mi),has=w>0;return '<tr><td>'+(k+1)+'</td><td class="nm">'+s.name+'</td><td><input class="ea" type="number" inputmode="numeric" min="0" data-sid="'+s.id+'" value="'+(has?p:'')+'"></td><td id="eap_'+s.id+'" class="'+(has&&p*100/w<75?'lo':'')+'">'+(has?r1(Math.min(p,w)*100/w)+'%':'')+'</td></tr>';}).join('')+'</table></div>';}
+  h+='<div class="row"><button class="go" onclick="closeOvl(\'entView\')">✅ పూర్తయింది</button></div>';
+  document.getElementById('entBox').innerHTML=h;}
+function eaW(){const v=+document.getElementById('eaW').value||0;if(!(v>0)){showToast('ముందు ఆ నెల పని దినాలు ఇవ్వండి');return 0;}return Math.min(31,v);}
+function eaSet(sid,p){const w=eaW();if(!w)return;const mi=ENT.mi;PS.att[sid]=PS.att[sid]||{};
+  if(p===''||p===null){delete PS.att[sid][mi];}else{p=Math.max(0,Math.min(w,+p||0));PS.att[sid][mi]=[w,p];}
+  const e=document.getElementById('eap_'+sid);if(e){const s=findStu(sid).s,[ww,pp]=attM(s,mi);e.textContent=ww?r1(Math.min(pp,ww)*100/ww)+'%':'';e.className=ww&&pp*100/ww<75?'lo':'';}}
+function eaAll(){const w=eaW();if(!w)return;let n=0;document.querySelectorAll('#entBox input.ea').forEach(x=>{if(x.value===''){x.value=w;n++;}eaSet(x.dataset.sid,x.value);});savePS();showToast('✅ '+w+' రోజులు — మిగిలినవారికి పూర్తి హాజరు ('+n+')');}
+document.addEventListener('input',e=>{const el=e.target;if(!el.closest||!el.closest('#entBox'))return;
+  if(el.id==='eaW'){if(+el.value>0){document.querySelectorAll('#entBox input.ea').forEach(x=>{if(x.value!=='')eaSet(x.dataset.sid,x.value);});savePS();}return;}
+  if(el.classList.contains('ea')){eaSet(el.dataset.sid,el.value.trim());savePS();return;}
+  if(el.classList.contains('em')){const sid=el.dataset.sid,A=ENT.A,i=ENT.i,c=cnum(currentClass),row=[...document.querySelectorAll('#entBox input.em[data-sid="'+sid+'"]')];
+    const vals=row.map(x=>{let v=x.value.trim();if(v==='')return null;if(v.toUpperCase()==='AB')return 'AB';let n=+v;if(isNaN(n))return null;const mx=+x.dataset.max||1e9;if(n<0)n=0;if(n>mx){n=mx;x.value=n;}return n;});
+    PS.mk[sid]=PS.mk[sid]||{};PS.mk[sid][A]=PS.mk[sid][A]||{};if(vals.every(v=>v===null))delete PS.mk[sid][A][i];else PS.mk[sid][A][i]=vals;savePS();
+    const s=findStu(sid).s,r=aRes(s,c,A,i),sc=scOf(c,clsDef(c).subs[i].n);document.getElementById('emt_'+sid).textContent=r?(r.ab?'AB':nf(r.tot)):'';
+    const g=document.getElementById('emg_'+sid);g.textContent=r&&!r.ab?r.g:'';g.className='gd '+(r&&!r.ab?gcl(r.g,sc):'');}});
+document.addEventListener('keydown',e=>{const el=e.target;if(e.key!=='Enter'||!el.closest||!el.closest('#entBox')||el.tagName!=='INPUT')return;e.preventDefault();
+  const cl=el.classList.contains('em')?'em':el.classList.contains('ea')?'ea':'';if(!cl)return;const all=[...document.querySelectorAll('#entBox input.'+cl)],q=el.dataset.q;
+  const col=all.filter(x=>x.dataset.q===q),k=col.indexOf(el);if(col[k+1])col[k+1].focus();});
+
 function setupHint(){const n=totalStu(),R=CLS_NAME[currentClass]||currentClass;
   if(n)return '<div class="setup"><b class="t">'+R+' తరగతిలో ఇంకా విద్యార్థులు లేరు</b><button onclick="openStu()">📂 విద్యార్థులను చేర్చు</button></div>';
   return '<div class="setup"><b class="t">🏫 మీ పాఠశాల కోసం సిద్ధం చేసుకోండి — 3 అడుగులు</b><ol><li><b>⚙️ స్కూల్</b> — పాఠశాల పేరు, మండలం/జిల్లా, UDISE, విద్యా సంవత్సరం, తరగతులు (I–V / VI–X / I–X).</li>'
    +'<li><b>👥 విద్యార్థులు</b> — మీ Excel / CSV జాబితా ఎక్కించండి (కాలమ్‌లు ఏ క్రమంలో ఉన్నా సరే)'+(APP?', లేదా యాప్‌లోని జాబితా తెచ్చుకోండి':'')+'.</li>'
-   +'<li>ప్రతి విద్యార్థి 📘 లో <b>మార్కులు (FA-1…SA-2), హాజరు</b> నమోదు చేయండి → ప్రగతి కార్డులు, CCE రిజిస్టర్, ప్రమోషన్ చార్ట్, HPC కార్డులు, తరగతి ఫైళ్లు ప్రింట్ / PDF.</li></ol>'
+   +'<li><b>✏️ మార్కులు, 📅 హాజరు</b> తరగతి మొత్తం ఒకే పట్టికలో నమోదు చేయండి → ప్రగతి కార్డులు, HPC, రిజిస్టర్లు, ప్రమోషన్ లిస్ట్ ప్రింట్ / PDF.</li></ol>'
    +'<button onclick="openSch()">⚙️ స్కూల్ వివరాలు</button><button onclick="openStu()">📂 విద్యార్థుల జాబితా ఎక్కించు (Excel / CSV)</button>'+'<button style="background:#b8860b" onclick="document.getElementById(\'bkFile\').click()">⬆️ బ్యాకప్ ఫైల్ ఉంటే ఎక్కించు</button>'
    +'<div style="font-size:.8rem;color:#555;margin-top:8px">🔒 డేటా ఈ ఫోన్ / కంప్యూటర్‌లోనే ఉంటుంది — తరచూ ⬇️ బ్యాకప్ తీసుకోండి.</div></div>';}
 applySchUI();
