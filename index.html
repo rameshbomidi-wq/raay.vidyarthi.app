@@ -2724,7 +2724,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.11-12';
+const APPV='2026.11.11-11';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3585,22 +3585,10 @@ ${vlBanner(c)}${+c===10?SSCBN:''}<h4 class="sec">📚 నోట్స్ ఉన�
 ${learnSubs(c).map(s=>lsubCard(c,s,s===op)).join('')}${ms?'':`<h4 class="sec">నీ కోసం సూచన</h4>${recommend()}`}${offCard(+c)}`;};
 /* ⭐ రాయ్ స్పెషల్ SSC 2027 (10వ తరగతి – నేర్చుకో లో వీడియో పాఠాల కింద). కొత్త ప్రత్యేక టూల్ వస్తే RSP లో ఒక వరుస చేర్చాలి (+ offFiles ఆటో) */
 const RSP=[['ssc/Mission-March-SSC-2027-Action-Plan-Tool.html','🚀','SSC FULL Mission March 2027','రోజువారీ యాక్షన్ ప్లాన్ • అన్ని సబ్జెక్టుల Q-Bank • స్లిప్ టెస్టులు • దశలవారీ జవాబులు','linear-gradient(135deg,#ef4444,#1d4ed8)']];
-/* 📚 రాయ్ స్పెషల్ SSC పుస్తకాలు: ssc/books/ లో PDF/HTML పెడితే ఆటోగా (GitHub API + index.json) */
-let RBF=0;
-function rbList(){const st=(S.lib||{})['dir:ssc/books'];return ((st&&st.v)||[]).filter(f=>/\.(pdf|html?)$/i.test(f.name)).sort((a,b)=>a.name.localeCompare(b.name));}
-async function rbRefresh(force){RBF=1;const old=JSON.stringify(rbList());let v=await listDir('ssc/books',force);
- if(!v||(!v.length&&ghRepo())){try{const r=await fetch('ssc/books/index.json?_='+Date.now());if(r.ok){const j=await r.json();const w=j.map(x=>typeof x==='string'?{name:x,size:0}:x);if(!v||w.length){v=w;S.lib=S.lib||{};S.lib['dir:ssc/books']={t:Date.now(),v};save();}}}catch(e){}}
- if(view==='rsp'&&(force||JSON.stringify(rbList())!==old))render();if(force)toast(v===null?'📴 ఇంటర్నెట్ లేదు':'🔄 పుస్తకాల జాబితా తాజా అయింది');}
-const RBS=[[/math|గణిత/i,'🔢','గణితం'],[/phy|భౌతిక/i,'⚗️','భౌతిక శాస్త్రం'],[/bio|జీవ/i,'🌿','జీవ శాస్త్రం'],[/soc|sst|సాంఘిక/i,'🌏','సాంఘిక శాస్త్రం'],[/eng/i,'🔤','English'],[/hin|हिं|హిందీ/i,'🅷','హిందీ'],[/tel|తెలుగు/i,'📜','తెలుగు']];
-function rbSub(n){return RBS.find(x=>x[0].test(n))||['','📚',''];}
-function rbOpen(n){const pdf=/\.pdf$/i.test(n);go('book',{u:'ssc/books/'+encodeURIComponent(n),t:'📚 '+prettyName(n),k:pdf?'pdf':'tool',back:{v:'rsp'}});}
-function rbCard(){const st=(S.lib||{})['dir:ssc/books'];if(!RBF&&(!st||Date.now()-st.t>30*60e3))setTimeout(()=>rbRefresh(false),50);const l=rbList();
- return `<div class="card"><h3>📚 Mission March పుస్తకాలు <button class="ib" style="float:right" onclick="rbRefresh(true)" aria-label="తాజా చేయి">🔄</button></h3>
-${l.length?`<div class="list">${l.map((f,i)=>{const s=rbSub(f.name);return `<button class="tcard" style="display:flex;gap:12px;align-items:center;width:100%;text-align:left" onclick="rbOpen(rbList()[${i}].name)"><span style="font-size:28px">${s[1]}</span><span style="flex:1"><b>${esc(prettyName(f.name))}</b><br><small class="mut">${s[2]?s[2]+' • ':''}${/\.pdf$/i.test(f.name)?'PDF':'టూల్'}${f.size?' • '+(f.size/1048576).toFixed(1)+' MB':''}</small></span><span>▶</span></button>`;}).join('')}</div>`:`<p class="mut">ఇంకా పుస్తకాలు చేర్చలేదు – ఉపాధ్యాయులు చేర్చగానే ఇక్కడ కనిపిస్తాయి.</p>`}</div>`;}
 const RSPBN=`<div class="sscbn rspbn" onclick="go('rsp')"><span class="rspic">🚀</span><div><b>రాయ్ స్పెషల్ SSC 2027 <i class="rspnew">NEW</i></b><small>SSC FULL Mission March 2027 • పూర్తి ప్రణాళిక + జవాబులు</small></div><em class="rspgo">▶</em><u class="rspst s1">✦</u><u class="rspst s2">✦</u><u class="rspst s3">✦</u></div>`;
 V.rsp=()=>`<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>⭐ రాయ్ స్పెషల్ SSC 2027</h2></div>
 <p class="mut" style="margin:-4px 2px 10px">10వ తరగతి పబ్లిక్ పరీక్షల కోసం రాయ్ ఎడ్యుకేషన్ ప్రత్యేక సాధనాలు. నొక్కితే app లోనే తెరుచుకుంటుంది.</p>
-<div class="lbadi rspl"><div class="g2">${RSP.map(([u,i,t,d,bg])=>`<button style="background:${bg}" onclick="go('book',{u:'${u}',t:'${i} ${t}',k:'tool',back:{v:'rsp'}})"><span>${i}</span><b>${t}</b><small>${d}</small></button>`).join('')}</div></div>${rbCard()}${bkb('learn','','నేర్చుకో కి వెనక్కి')}`;
+<div class="lbadi rspl"><div class="g2">${RSP.map(([u,i,t,d,bg])=>`<button style="background:${bg}" onclick="go('book',{u:'${u}',t:'${i} ${t}',k:'tool',back:{v:'rsp'}})"><span>${i}</span><b>${t}</b><small>${d}</small></button>`).join('')}</div></div>${bkb('learn','','నేర్చుకో కి వెనక్కి')}`;
 V.vids=()=>{const c=S.cur.c,subs=learnSubs(c),all=vlAll(c);const s=subs.includes(param.s)?param.s:(subs.find(x=>all.some(n=>n.s===x))||subs[0]);
  return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>🎬 వీడియో పాఠాలు</h2></div>
 <p class="mut" style="margin:-4px 2px 10px">${c}వ తరగతి • ఉపాధ్యాయులు ఎంచుకున్న వీడియోలు మాత్రమే. ▶ నొక్కితే ఇక్కడే ప్లే అవుతుంది.</p>
