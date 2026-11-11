@@ -2297,6 +2297,10 @@ function openSchGrade(A){SGA=A||SGA;const AL=Object.assign({ANN:'వార్ష
    +'<div class="sign"><span>తేదీ</span><span>ప్రధానోపాధ్యాయుల సంతకం</span></div><div class="brand">రాయ్ ఎడ్యుకేషన్ | Raay Education</div></div>';
   showBook('పాఠశాల గ్రేడ్ నివేదిక',[h]);}
 
+/* 📱 యాప్ బ్యాక్ బటన్: ముందు టూల్ లోపల తెరిచిన పేజీ మూసుకుంటుంది (true = మేమే మూసాం) */
+window.rvBack=function(){const L=[...document.querySelectorAll('.ovl.show')];if(!L.length)return false;const o=L[L.length-1];
+  if(o.id==='stuView'){if(stuEditId){stuEditId=null;stuDraw();return true;}if(IMP){IMP=null;stuDraw();return true;}stuClose();return true;}
+  closeOvl(o.id);return true;};
 function setupHint(){const n=totalStu(),R=CLS_NAME[currentClass]||currentClass;
   if(n)return '<div class="setup"><b class="t">'+R+' తరగతిలో ఇంకా విద్యార్థులు లేరు</b><button onclick="openStu()">📂 విద్యార్థులను చేర్చు</button></div>';
   return '<div class="setup"><b class="t">🏫 మీ పాఠశాల కోసం సిద్ధం చేసుకోండి — 3 అడుగులు</b><ol><li><b>⚙️ స్కూల్</b> — పాఠశాల పేరు, మండలం/జిల్లా, UDISE, విద్యా సంవత్సరం, తరగతులు (I–V / VI–X / I–X).</li>'
