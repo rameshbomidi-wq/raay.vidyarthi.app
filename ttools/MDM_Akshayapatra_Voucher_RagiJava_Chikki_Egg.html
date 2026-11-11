@@ -90,13 +90,13 @@ footer a{color:var(--leaf);font-weight:700;text-decoration:none;border-bottom:2p
 .vf.sv{font-size:7.5pt;table-layout:fixed}.vf.sv td,.vf.sv th{height:5.2mm}.vf.sv .hd td{height:5mm}.vf.sv th{font-size:6.8pt}.vf.sv th.sr,.vf.sv th.sc,.vf.sv th.se{background:#fff;color:#000;font-weight:bold}
 .vf td.na{background:#e4e4e4}
 .vf .nt td{font-weight:normal;font-size:7.5pt;text-align:left;height:5mm}
-.stk{margin-top:12px;border:1px solid var(--line);border-radius:8px;padding:10px;background:#fbfaf3}
+.stk{margin:4px 0 12px;border:1px solid var(--line);border-radius:8px;padding:10px;background:#fbfaf3}
 .stk h3{margin:0 0 8px;font-size:1rem;color:#8a4b12}
 .stk .gm{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-bottom:10px}
 .stk table{width:100%;border-collapse:collapse;font-size:.88rem}.stk th,.stk td{border:1px solid var(--line);padding:4px;text-align:center}
 .stk th{background:#8a4b12;color:#fff;font-size:.75rem}.stk td:first-child{text-align:left;font-weight:600}
-.stk td input{max-width:90px;padding:5px 2px;text-align:center}.stk .cv{font-weight:700}.stk .neg{color:var(--warn)}
-.vf.st{margin-top:2.5mm;font-size:8pt}.vf.st td,.vf.st th{height:4.8mm}.vf.st th{font-weight:bold;font-size:7.5pt}.vf.st td:first-child{text-align:left;font-weight:bold}
+.stk td input{max-width:90px;padding:5px 2px;text-align:center}.stk td input[type=date]{max-width:150px;font-size:.85rem}.stk .tw{overflow-x:auto}.stk .cv{font-weight:700}.stk .neg{color:var(--warn)}
+.vf.st{margin:2mm 0;font-size:8pt}.vf.st td,.vf.st th{height:4.6mm}.vf.st th{line-height:1.05}.vf.st th{font-weight:bold;font-size:7.5pt}.vf.st td:first-child{text-align:left;font-weight:bold}
 .sig.s2{margin-top:10mm}
 .legend{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}.legend span{font-size:.8rem;border-radius:14px;padding:3px 10px;color:#fff;font-weight:600}
 #printArea{display:none}
@@ -145,8 +145,9 @@ footer a{color:var(--leaf);font-weight:700;text-decoration:none;border-bottom:2p
     </div>
     <h2 id="gTitle">నెలవారీ నమోదు</h2>
     <p class="note" id="gNote" style="margin:0 0 8px">బాక్సుల్లో నేరుగా హాజరు టైప్ చేయండి. Enter = పక్క బాక్స్, ↑↓ = పై/కింది రోజు. సెలవు కోసం రోజు నంబర్ నొక్కండి (ఆదివారాలు ఆటోగా సెలవు).</p>
-    <div class="gwrap"><table class="g" id="grid"></table></div>
     <div class="stk" id="stock" hidden></div>
+    <h2 id="dTitle" hidden style="margin-top:14px">📅 రోజువారీ నమోదు</h2>
+    <div class="gwrap"><table class="g" id="grid"></table></div>
     <div class="row">
       <button class="pri" id="printCur">ఈ ఫార్మాట్ ప్రింట్</button>
       <button class="acc" id="printAll">3 ఫార్మాట్లు ప్రింట్</button>
@@ -207,7 +208,7 @@ function renderGrid(){
   const sup=S.view==='s';
   $('vtabs').innerHTML=[['m','🍛 భోజనం వోచర్'],['s','🥚 రాగి జావ • చిక్కీ • గుడ్డు']].map(([k,t])=>`<button class="${S.view===k?'on':''}" data-v="${k}">${t}</button>`).join('');
   $('vtabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{S.view=b.dataset.v;save();renderAll()});
-  $('legend').hidden=!sup;$('stock').hidden=!sup;$('mToggle').closest('.mswitch').style.display=sup?'none':'';$('grid').classList.toggle('sup',sup);
+  $('legend').hidden=!sup;$('stock').hidden=!sup;$('dTitle').hidden=!sup;$('mToggle').closest('.mswitch').style.display=sup?'none':'';$('grid').classList.toggle('sup',sup);
   $('gNote').textContent=sup?'భోజనం వోచర్‌లో వేసిన సంఖ్యలే ఇక్కడ ఆటోగా వస్తాయి (ఆ వస్తువు ఇచ్చే రోజుల్లో మాత్రమే). తేడా ఉంటే బాక్స్‌లో సంఖ్య మార్చండి; ఖాళీ చేస్తే మళ్ళీ ఆటో సంఖ్య వస్తుంది. బూడిద రంగు గడి = ఆ రోజు ఇవ్వరు.':'బాక్సుల్లో నేరుగా హాజరు టైప్ చేయండి. Enter = పక్క బాక్స్, ↑↓ = పై/కింది రోజు. సెలవు కోసం రోజు నంబర్ నొక్కండి (ఆదివారాలు ఆటోగా సెలవు).';
   if(sup){renderSup();return}
   const cls=FMT[S.fmt].c,n=cls.length,D=dim(),M=S.meals;
@@ -256,9 +257,9 @@ function renderStock(){
   $('stock').innerHTML=`<h3>📦 స్టాక్ – ${MON_TE[S.month]} ${S.year} (${FMT[fk].t})</h3>
   <div class="gm"><div><label>రాగి జావ – రాగి పిండి: ఒక్కొక్కరికి గ్రాములు</label><input type="number" min="0" step="any" inputmode="decimal" data-gm="r" value="${g.r??''}"></div>
   <div><label>బెల్లం: ఒక్కొక్కరికి గ్రాములు</label><input type="number" min="0" step="any" inputmode="decimal" data-gm="j" value="${g.j??''}"></div></div>
-  <table><tr><th>వస్తువు</th><th>Opening Balance</th><th>Received</th><th>Total</th><th>Used</th><th>Balance</th></tr>
-  ${ITEMS.map(x=>{const s=stk(fk,x[0]);return `<tr><td>${x[2]} <small>(${x[3]})</small></td><td><input type="number" step="any" inputmode="decimal" data-st="${x[0]}" data-f="ob" value="${s.ob??''}"></td><td><input type="number" min="0" step="any" inputmode="decimal" data-st="${x[0]}" data-f="rc" value="${s.rc??''}"></td><td class="cv" id="kt${x[0]}"></td><td class="cv" id="ku${x[0]}"></td><td class="cv" id="kb${x[0]}"></td></tr>`}).join('')}</table>
-  <p class="note" style="margin:8px 0 0">Opening Balance ఖాళీగా వదిలితే గత నెల Balance ఆటోగా వస్తుంది (బూడిద రంగులో కనిపిస్తుంది). మొదటి నెలకు మీరే వేయండి. రాగి పిండి, బెల్లం kg లో; చిక్కీ, గుడ్లు సంఖ్యలో. Used = రాగి జావ తీసుకున్న మొత్తం విద్యార్థులు × గ్రాములు.</p>`;
+  <div class="tw"><table><tr><th>వస్తువు</th><th>Opening Balance</th><th>Received Date<br>(వచ్చిన తేదీ)</th><th>Received</th><th>Total</th><th>Used</th><th>Balance</th></tr>
+  ${ITEMS.map(x=>{const s=stk(fk,x[0]);return `<tr><td>${x[2]} <small>(${x[3]})</small></td><td><input type="number" step="any" inputmode="decimal" data-st="${x[0]}" data-f="ob" value="${s.ob??''}"></td><td><input type="date" data-st="${x[0]}" data-f="rd" value="${s.rd??''}"></td><td><input type="number" min="0" step="any" inputmode="decimal" data-st="${x[0]}" data-f="rc" value="${s.rc??''}"></td><td class="cv" id="kt${x[0]}"></td><td class="cv" id="ku${x[0]}"></td><td class="cv" id="kb${x[0]}"></td></tr>`}).join('')}</table></div>
+  <p class="note" style="margin:8px 0 0">Received తో పాటు వచ్చిన తేదీ వేయండి. Opening Balance ఖాళీగా వదిలితే గత నెల Balance ఆటోగా వస్తుంది (బూడిద రంగులో కనిపిస్తుంది). మొదటి నెలకు మీరే వేయండి. రాగి పిండి, బెల్లం kg లో; చిక్కీ, గుడ్లు సంఖ్యలో. Used = రాగి జావ తీసుకున్న మొత్తం విద్యార్థులు × గ్రాములు.</p>`;
   $('stock').querySelectorAll('[data-gm]').forEach(i=>i.oninput=()=>{S.gm[fk]=S.gm[fk]||{};S.gm[fk][i.dataset.gm]=i.value;save();stockCalc()});
   $('stock').querySelectorAll('[data-st]').forEach(i=>i.oninput=()=>{stk(fk,i.dataset.st,true)[i.dataset.f]=i.value;save();stockCalc()});
   stockCalc();
@@ -267,9 +268,11 @@ function stockCalc(){const fk=S.fmt;ITEMS.forEach(x=>{const r=stockRow(fk,x[0]),
   const oi=$('stock').querySelector(`[data-st="${k}"][data-f="ob"]`);if(oi)oi.placeholder=r.man?'':r.ob;
   $('kt'+k).textContent=r.tot;$('ku'+k).textContent=r.used;const b=$('kb'+k);b.textContent=r.bal;b.classList.toggle('neg',r.bal<0)})}
 function stockPrint(fk,blank){const g=(S.gm||{})[fk]||{};
-  return `<table class="vf st"><tr><th style="width:22%">STOCK</th><th>Opening Balance</th><th>Received</th><th>Total</th><th>Used</th><th>Balance</th></tr>
-  ${ITEMS.map(x=>{const r=blank?{ob:'',rc:'',tot:'',used:'',bal:''}:stockRow(fk,x[0]);return `<tr><td>${x[1]} (${x[3]})</td><td>${r.ob}</td><td>${r.rc}</td><td>${r.tot}</td><td>${r.used}</td><td>${r.bal}</td></tr>`}).join('')}
-  <tr class="nt"><td colspan="6" style="font-weight:normal">Ragi flour per student : ${blank?'______':(g.r||'______')} g &nbsp;|&nbsp; Jaggery per student : ${blank?'______':(g.j||'______')} g &nbsp;|&nbsp; This month's Balance = next month's Opening Balance</td></tr></table>`}
+  const dt=v=>v?v.split('-').reverse().join('-'):'';
+  return `<table class="vf st"><tr><th colspan="7" style="font-size:9pt;text-align:left">STOCK POSITION</th></tr>
+  <tr><th style="width:20%">Item</th><th>Opening Balance</th><th>Received Date</th><th>Received</th><th>Total<br>(Opening + Received)</th><th>Used</th><th>Balance<br>(Total − Used)</th></tr>
+  ${ITEMS.map(x=>{const r=blank?{ob:'',rc:'',tot:'',used:'',bal:''}:stockRow(fk,x[0]);return `<tr><td>${x[1]} (${x[3]})</td><td>${r.ob}</td><td>${blank?'':dt(stk(fk,x[0]).rd)}</td><td>${blank?'':(r.rc||'')}</td><td>${r.tot}</td><td>${r.used}</td><td>${r.bal}</td></tr>`}).join('')}
+  <tr class="nt"><td colspan="7" style="font-weight:normal">Ragi flour per student : ${blank?'______':(g.r||'______')} g &nbsp;|&nbsp; Jaggery per student : ${blank?'______':(g.j||'______')} g &nbsp;|&nbsp; This month's Balance = next month's Opening Balance</td></tr></table>`}
 function renderSup(){
   const cls=FMT[S.fmt].c,n=cls.length,D=dim();
   const wd=['ఆ','సో','మం','బు','గు','శు','శ'];
@@ -317,13 +320,15 @@ function formSup(fk,blank){
   const esc=s=>String(s||'').replace(/[&<>]/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[x]));
   const half=Math.ceil(cols/2);
   const sh=SUP.map(x=>`<th class="${x[4]}">${x[1].replace(' Java','')}</th>`).join('');
-  let h=`<div class="page"><table class="vf sv"><colgroup><col style="width:${n>3?5:7}%">${'<col>'.repeat(n*3+3)}</colgroup>
-  <tr class="hd"><td colspan="${cols}" class="ttl">DAY - WISE REGISTER OF RAGI JAVA, CHIKKI &amp; EGG FOR THE YEAR - ${S.year}</td></tr>
-  <tr class="hd"><td colspan="${cols}" class="ttl" style="font-size:9.5pt">MID - DAY MEALS PROGRAMME · THE AKSHAYAPATRA FOUNDATION - NELLORE</td></tr>
-  <tr class="hd"><td colspan="${half}">NAME OF THE MANDAL : ${blank?'':esc(S.mandal)}</td><td colspan="${cols-half}">MONTH: ${MON[S.month]}</td></tr>
-  <tr class="hd"><td colspan="${half}">NAME OF THE SCHOOL : ${blank?'':esc(S.school)}</td><td colspan="${cols-half}">TOTAL ROLL : ${blank||!roll?'':roll}</td></tr>
-  <tr class="hd"><td colspan="${half}">SCHOOL CODE : ${blank?'':esc(S.code)}</td><td colspan="${cols-half}">CLASSES : ${cls[0]} - ${cls[n-1]}</td></tr>
-  <tr class="hd nt"><td colspan="${cols}">Chikki : Mon, Wed, Fri &nbsp;|&nbsp; Ragi Java : Tue, Thu, Sat &nbsp;|&nbsp; Egg : Mon to Fri (no egg on Saturday)</td></tr>
+  let h=`<div class="page"><table class="vf sv">
+  <tr class="hd"><td colspan="2" class="ttl">DAY - WISE REGISTER OF RAGI JAVA, CHIKKI &amp; EGG FOR THE YEAR - ${S.year}</td></tr>
+  <tr class="hd"><td colspan="2" class="ttl" style="font-size:9.5pt">MID - DAY MEALS PROGRAMME · THE AKSHAYAPATRA FOUNDATION - NELLORE</td></tr>
+  <tr class="hd"><td>NAME OF THE MANDAL : ${blank?'':esc(S.mandal)}</td><td>MONTH : ${MON[S.month]} ${S.year}</td></tr>
+  <tr class="hd"><td>NAME OF THE SCHOOL : ${blank?'':esc(S.school)}</td><td>CLASSES : ${cls[0]} - ${cls[n-1]} &nbsp;&nbsp; TOTAL ROLL : ${blank||!roll?'':roll}</td></tr>
+  <tr class="hd"><td colspan="2">SCHOOL CODE : ${blank?'':esc(S.code)}</td></tr></table>
+  ${stockPrint(fk,blank)}
+  <table class="vf sv"><colgroup><col style="width:${n>3?5:7}%">${'<col>'.repeat(n*3+3)}</colgroup>
+  <tr class="hd"><th colspan="${cols}" style="font-size:9pt;text-align:left;font-weight:bold">DAILY REGISTER &nbsp;–&nbsp; Chikki : Mon, Wed, Fri &nbsp;|&nbsp; Ragi Java : Tue, Thu, Sat &nbsp;|&nbsp; Egg : Mon to Fri &nbsp;(grey box = not given that day)</th></tr>
   <tr><th rowspan="2" class="cl" style="font-size:8pt">DAY</th>${cls.map(c=>`<th colspan="3" class="cl">${ORD(c)} Class</th>`).join('')}<th colspan="3" class="cl">Total</th></tr>
   <tr>${cls.map(()=>sh).join('')}${sh}</tr>`;
   const T={},G={};SUP.forEach(x=>{G[x[0]]=0;cls.forEach(c=>T[x[0]+c]=0)});
@@ -338,7 +343,6 @@ function formSup(fk,blank){
     h+='</tr>';
   }
   h+=`<tr class="tr"><td style="text-align:left">Total</td>${cls.map(c=>SUP.map(x=>`<td>${blank?'':T[x[0]+c]||''}</td>`).join('')).join('')}${SUP.map(x=>`<td>${blank?'':G[x[0]]||''}</td>`).join('')}</tr></table>
-  ${stockPrint(fk,blank)}
   <div class="sig s2"><span>Signature of the implementing authority</span><span>Signature of the Head Master</span></div></div>`;
   return h;
 }
