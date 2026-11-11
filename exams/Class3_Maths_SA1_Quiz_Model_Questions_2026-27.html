@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3వ తరగతి గణితం – క్విజ్ & మోడల్ ప్రశ్నలు</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Noto+Sans+Telugu:wght@400;600;800&family=Mallanna&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fffdf6; --ink:#1f2a44; --muted:#6b7280; --line:#dbe7f5; --margin:#f2a7a7;
+  --brand:#2f6fdb; --brand2:#ff8a3d; --ok:#16a34a; --okbg:#e8f8ee; --bad:#dc2626; --badbg:#fdecec;
+  --card:#ffffff; --chip:#eef4ff; --shadow:0 6px 20px rgba(31,42,68,.10);
+}
+@media (prefers-color-scheme: dark){
+  :root{--paper:#16191f; --ink:#e8ecf4; --muted:#9aa3b2; --line:#232a36; --margin:#5a2a2a;
+  --card:#1e232c; --chip:#243049; --okbg:#12301f; --badbg:#3a1717; --shadow:0 6px 20px rgba(0,0,0,.4)}
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:"Noto Sans Telugu","Mallanna",system-ui,sans-serif; color:var(--ink);
+  background:var(--paper);
+  background-image:linear-gradient(90deg,transparent 34px,var(--margin) 34px,var(--margin) 36px,transparent 36px),
+                   repeating-linear-gradient(var(--paper) 0 31px,var(--line) 31px 32px);
+  min-height:100vh; line-height:1.55;
+}
+.wrap{max-width:760px;margin:0 auto;padding:14px 14px 90px 46px}
+h1{font-size:1.35rem;margin:6px 0 2px}
+.sub{color:var(--muted);font-size:.9rem;margin:0 0 14px}
+.num,.kalam{font-family:"Kalam","Noto Sans Telugu",cursive}
+.cards{display:grid;gap:12px}
+.mode{background:var(--card);border-radius:16px;padding:16px;box-shadow:var(--shadow);cursor:pointer;border:2px solid transparent;display:flex;gap:14px;align-items:center;text-align:left;width:100%;color:inherit;font:inherit}
+.mode:hover{border-color:var(--brand)}
+.mode .ic{font-size:2rem;width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:var(--chip);flex:none}
+.mode b{display:block;font-size:1.05rem}
+.mode span{color:var(--muted);font-size:.88rem}
+.best{margin-left:auto;font-family:Kalam;color:var(--brand2);font-weight:700;white-space:nowrap}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0 12px}
+.seg{display:inline-flex;background:var(--card);border-radius:999px;box-shadow:var(--shadow);overflow:hidden}
+.seg button{border:0;background:none;padding:6px 12px;font:inherit;font-size:.85rem;color:var(--ink);cursor:pointer}
+.seg button.on{background:var(--brand);color:#fff}
+.btn{border:0;border-radius:12px;padding:11px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--brand);color:#fff;box-shadow:var(--shadow)}
+.btn.alt{background:var(--card);color:var(--ink)}
+.btn.orange{background:var(--brand2)}
+.btn:disabled{opacity:.45;cursor:default}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.prog{flex:1;height:10px;background:var(--line);border-radius:99px;overflow:hidden}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2));width:0;transition:width .3s}
+.count{font-family:Kalam;font-weight:700;white-space:nowrap}
+.qcard{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:16px 16px 18px}
+.chip{display:inline-block;background:var(--chip);color:var(--brand);border-radius:999px;padding:2px 10px;font-size:.78rem;font-weight:600;margin-bottom:8px}
+.qno{font-family:Kalam;font-weight:700;color:var(--brand2);margin-right:4px}
+.en{font-size:1.05rem;font-weight:600}
+.te{font-size:1rem;color:var(--ink);opacity:.85;margin-top:2px}
+body.only-te .en{display:none} body.only-te .te{opacity:1;font-weight:600;font-size:1.05rem}
+body.only-en .te{display:none}
+.fig{margin:12px 0;display:flex;justify-content:center;overflow-x:auto}
+.opts{display:grid;gap:9px;margin-top:14px}
+@media(min-width:560px){.opts.two{grid-template-columns:1fr 1fr}}
+.opt{display:flex;gap:10px;align-items:center;text-align:left;border:2px solid var(--line);background:var(--paper);border-radius:12px;padding:10px 12px;font:inherit;color:inherit;cursor:pointer;font-size:1.02rem}
+.opt .l{font-family:Kalam;font-weight:700;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--chip);color:var(--brand);flex:none}
+.opt.sel{border-color:var(--brand);background:var(--chip)}
+.opt.ok{border-color:var(--ok);background:var(--okbg)} .opt.ok .l{background:var(--ok);color:#fff}
+.opt.bad{border-color:var(--bad);background:var(--badbg)} .opt.bad .l{background:var(--bad);color:#fff}
+.opt:disabled{cursor:default}
+input.blank,select.blank{font-family:Kalam,"Noto Sans Telugu";font-size:1.15rem;font-weight:700;width:5.2em;text-align:center;border:2px dashed var(--brand);border-radius:8px;padding:3px 4px;background:var(--paper);color:var(--ink)}
+input.blank.d1{width:2.1em}
+select.blank{width:auto;max-width:100%;font-size:.95rem;font-family:"Noto Sans Telugu";text-align:left}
+.blank.ok{border:2px solid var(--ok);background:var(--okbg)} .blank.bad{border:2px solid var(--bad);background:var(--badbg)}
+.fill{margin-top:14px;font-size:1.1rem}
+.fill .row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:8px 0}
+.mrow{display:flex;align-items:center;gap:10px;margin:9px 0;flex-wrap:wrap}
+.mrow .left{font-family:Kalam;font-weight:700;font-size:1.1rem;min-width:90px}
+.vert{font-family:Kalam;font-size:1.5rem;font-weight:700;display:inline-grid;text-align:right;line-height:1.5;margin:0 18px}
+.vert .ln{border-top:2px solid var(--ink);margin-top:2px;padding-top:4px}
+.fb{margin-top:14px;border-radius:12px;padding:10px 12px;display:none}
+.fb.ok{display:block;background:var(--okbg);border-left:5px solid var(--ok)}
+.fb.bad{display:block;background:var(--badbg);border-left:5px solid var(--bad)}
+.fb b{display:block;margin-bottom:2px}
+.actions{display:flex;gap:10px;justify-content:space-between;margin-top:14px}
+.hidden{display:none!important}
+.result{text-align:center;background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:22px 16px}
+.big{font-family:Kalam;font-size:3rem;font-weight:700;color:var(--brand)}
+.stars{font-size:2rem;letter-spacing:4px}
+.review{text-align:left;margin-top:16px}
+.ritem{border-top:1px dashed var(--line);padding:8px 2px;font-size:.92rem}
+.ritem .a{color:var(--ok);font-weight:600}
+.nl-wrap{overflow-x:auto;width:100%;padding-bottom:6px}
+.nl-tick{cursor:pointer}
+.perm{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.perm input{width:100%}
+.shake{animation:sh .35s}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pop{animation:pp .35s}
+@keyframes pp{50%{transform:scale(1.06)}}
+.foot{color:var(--muted);font-size:.8rem;text-align:center;margin-top:20px}
+.secHead{font-weight:800;margin:18px 0 6px;font-size:.95rem;color:var(--brand)}
+.jump{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.jump button{width:34px;height:34px;border-radius:9px;border:2px solid var(--line);background:var(--card);font-family:Kalam;font-weight:700;color:var(--ink);cursor:pointer}
+.jump button.cur{border-color:var(--brand)}
+.jump button.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.jump button.bad{background:var(--bad);border-color:var(--bad);color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HOME -->
+<section id="home">
+  <h1>📘 3వ తరగతి గణితం – క్విజ్</h1>
+  <p class="sub">SA-1 మోడల్ పేపర్ 2026-27 · Class 3 Maths · ప్రతి ప్రశ్నకు జవాబు వెంటనే సరిచూడవచ్చు</p>
+  <div class="bar">
+    <span style="font-size:.85rem">భాష:</span>
+    <div class="seg" id="langSeg">
+      <button data-l="both" class="on">రెండూ</button>
+      <button data-l="te">తెలుగు</button>
+      <button data-l="en">English</button>
+    </div>
+  </div>
+  <div class="cards">
+    <button class="mode" data-mode="paper"><div class="ic">📝</div><div><b>మోడల్ పేపర్ (అసలు ప్రశ్నలు)</b><span>సెక్షన్ A, B, C, D – మొత్తం 33 ప్రశ్నలు (ఎంపిక ప్రశ్నలు రెండూ)</span></div><div class="best" id="best-paper"></div></button>
+    <button class="mode" data-mode="extra"><div class="ic">⭐</div><div><b>అదనపు మోడల్ ప్రశ్నలు</b><span>అదే పాఠాల నుండి 47 కొత్త ప్రశ్నలు</span></div><div class="best" id="best-extra"></div></button>
+    <button class="mode" data-mode="practice"><div class="ic">♾️</div><div><b>అపరిమిత అభ్యాసం</b><span>ప్రతిసారి 10 కొత్త లెక్కలు – కూడిక, తీసివేత, గుణకారం, స్థాన విలువ</span></div><div class="best" id="best-practice"></div></button>
+  </div>
+  <div class="bar" style="margin-top:16px">
+    <label style="font-size:.9rem"><input type="checkbox" id="shuffle"> ప్రశ్నలను కలగలపు (shuffle)</label>
+  </div>
+  <p class="foot">సూచన: జవాబు ఎంచుకుని <b>సరిచూడు</b> నొక్కండి. తప్పయితే సరైన జవాబు, వివరణ కనిపిస్తాయి.</p>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="hidden">
+  <div class="top">
+    <button class="btn alt" id="homeBtn" style="padding:7px 11px">🏠</button>
+    <div class="prog"><i id="progI"></i></div>
+    <div class="count" id="count"></div>
+  </div>
+  <div class="qcard" id="qcard">
+    <div class="chip" id="qsec"></div>
+    <div id="qtext"></div>
+    <div id="qbody"></div>
+    <div class="fb" id="fb"></div>
+    <div class="actions">
+      <button class="btn alt" id="prevBtn">◀ వెనక్కి</button>
+      <button class="btn" id="checkBtn">సరిచూడు ✓</button>
+      <button class="btn orange hidden" id="nextBtn">తర్వాత ▶</button>
+    </div>
+  </div>
+  <div class="jump" id="jump"></div>
+</section>
+
+<!-- RESULT -->
+<section id="result" class="hidden">
+  <div class="result">
+    <div class="stars" id="stars"></div>
+    <div class="big" id="score"></div>
+    <div id="msg" style="font-weight:600"></div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap">
+      <button class="btn" id="againBtn">⟲ మళ్ళీ చేయి</button>
+      <button class="btn alt" id="home2Btn">🏠 మొదటి పేజీ</button>
+    </div>
+    <div class="review" id="review"></div>
+  </div>
+</section>
+
+</div>
+<script>
+/* ---------------- helpers ---------------- */
+const $=s=>document.querySelector(s);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+/* ---------- figures ---------- */
+const abacusSVG=`<svg viewBox="0 0 230 150" width="230" height="150">
+ <g stroke="currentColor" stroke-width="3">${[40,90,140,190].map(x=>`<line x1="${x}" y1="10" x2="${x}" y2="112"/>`).join('')}</g>
+ <g fill="#ff8a3d">${[40,140,190].map(x=>`<circle cx="${x}" cy="104" r="9"/>`).join('')}</g>
+ <rect x="15" y="112" width="200" height="34" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+ <g font-family="Kalam" font-size="15" text-anchor="middle" fill="currentColor"><text x="40" y="128">Th</text><text x="90" y="128">H</text><text x="140" y="128">T</text><text x="190" y="128">O</text></g>
+ <g font-size="11" text-anchor="middle" fill="currentColor"><text x="40" y="142">వే</text><text x="90" y="142">వం</text><text x="140" y="142">ప</text><text x="190" y="142">ఒ</text></g></svg>`;
+const oilSVG=`<svg viewBox="0 0 140 170" width="120" height="146"><rect x="45" y="4" width="26" height="18" rx="3" fill="#333"/>
+ <path d="M20 30h80q12 0 12 12v115q0 9-9 9H17q-9 0-9-9V42q0-12 12-12z" fill="#2b2b2b"/>
+ <path d="M86 40h16v60H86z" fill="none" stroke="#666" stroke-width="6" rx="6"/>
+ <rect x="18" y="62" width="62" height="64" rx="12" fill="#fff"/>
+ <text x="49" y="86" font-family="Kalam" font-size="16" text-anchor="middle" fill="#111">Oil</text>
+ <text x="49" y="110" font-family="Kalam" font-size="17" font-weight="700" text-anchor="middle" fill="#111">Rs.537</text></svg>`;
+const bakery=`<div style="display:flex;gap:14px;border:2px solid currentColor;border-radius:14px;padding:10px 16px;font-family:Kalam;font-size:1.2rem;font-weight:700;text-align:center">
+ <div><div style="font-size:2.4rem">🍫</div>₹25</div><div><div style="font-size:2.4rem">🧁</div>₹10</div><div><div style="font-size:2.4rem">🍪</div>₹15</div></div>`;
+const caps=`<div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:360px">${'<span style="border:2px solid currentColor;border-radius:6px;padding:2px 6px;font-size:1.4rem">🧢🧢</span>'.repeat(7)}</div>`;
+const vert=(a,b,sign,ans)=>`<div class="vert"><span>${a}</span><span>${sign} ${b}</span><span class="ln">${ans}</span></div>`;
+
+/* ---------- ORIGINAL MODEL PAPER ---------- */
+const SA='సెక్షన్ A · బహుళైచ్ఛిక', SB='సెక్షన్ B · 2 మార్కులు', SC='సెక్షన్ C · 4 మార్కులు', SD='సెక్షన్ D · 8 మార్కులు';
+const PAPER=[
+{no:'1',sec:SA,en:'The place value of the digit 3 in 307',te:'307 లో 3 అంకె యొక్క స్థాన విలువ.',opts:['3','30','300','307'],ans:2,exp:'307 లో 3 వందల స్థానంలో ఉంది → 3 × 100 = 300.'},
+{no:'2',sec:SA,en:'What is the missing number in the pattern? 890, 892, 894, ___, 898',te:'అమరికలో లోపించిన సంఖ్య: 890, 892, 894, ___, 898',opts:['896','895','893','891'],ans:0,exp:'ప్రతిసారి 2 పెరుగుతోంది: 894 + 2 = 896.'},
+{no:'3',sec:SA,en:'What is the value of Fifty six + Three = ?',te:'యాభై ఆరు + మూడు = విలువ ఎంత?',opts:['863','563','69','59'],ans:3,exp:'56 + 3 = 59.'},
+{no:'4',sec:SA,en:'Which of the following has a value smaller than 5?',te:'కింది వానిలో దేని విలువ 5 కన్నా తక్కువ?',opts:['14 − 2','19 − 15','9 − 2','21 − 10'],ans:1,exp:'14−2=12, 19−15=4, 9−2=7, 21−10=11. 4 మాత్రమే 5 కన్నా తక్కువ.'},
+{no:'5',sec:SA,en:'Which number comes immediately after 999?',te:'999 తరువాత వెంటనే వచ్చే సంఖ్య ఏది?',opts:['998','1000','1001','1100'],ans:1,exp:'999 + 1 = 1000.'},
+{no:'6',sec:SA,en:'5 more than 365 is',te:'365 కన్నా 5 ఎక్కువైన సంఖ్య',opts:['355','360','370','3655'],ans:2,exp:'365 + 5 = 370.'},
+{no:'7',sec:SA,en:'300 + 2 = ___',te:'300 + 2 = ___',opts:['3002','3020','302','32'],ans:2,exp:'3 వందలు + 2 ఒకట్లు = 302.'},
+{no:'8',sec:SA,en:'By how much 315 is greater than 238?',te:'238 కన్నా 315 ఎంత ఎక్కువ?',opts:['77','123','177','5413'],ans:0,exp:'315 − 238 = 77.'},
+{no:'9',sec:SA,en:'584 − 5 = ?',te:'584 − 5 = ?',opts:['574','579','581','589'],ans:1,exp:'584 − 5 = 579.'},
+{no:'10',sec:SA,en:'In the multiplication 15 × 5 = 75, identify the multiplicand.',te:'15 × 5 = 75 గుణకారంలో గుణ్యాన్ని గుర్తించండి.',opts:['5','15','20','45'],ans:1,exp:'గుణ్యం (multiplicand) = 15, గుణకం (multiplier) = 5, లబ్ధం (product) = 75.'},
+{no:'11',sec:SA,en:'Look at the Abacus and identify the number represented on it.',te:'అబాకస్‌ను చూసి దానిపై సూచించిన సంఖ్యను గుర్తించండి.',fig:abacusSVG,opts:['1101','1011','201','111'],ans:1,exp:'వేలు 1, వందలు 0, పదులు 1, ఒకట్లు 1 → 1011.'},
+{no:'12',sec:SA,en:'9 fives is the same as',te:'9 ఐదులు అనగా',opts:['9 + 5','9 ÷ 5','9 − 5','9 × 5'],ans:3,exp:'9 సార్లు 5 = 9 × 5 = 45.'},
+{no:'13',sec:SA,en:'Which two numbers have a sum equal to 500?',te:'ఏ రెండు సంఖ్యల మొత్తం 500 అవుతుంది?',opts:['240 మరియు 270','325 మరియు 175','215 మరియు 275','340 మరియు 165'],ans:1,exp:'325 + 175 = 500. (510, 490, 505 మిగతావి)'},
+{no:'14',sec:SA,en:'Estimate the sum of 276 and 489 by rounding each number to the nearest hundred.',te:'276 మరియు 489 లను దగ్గరి వందలకు సవరించి మొత్తాన్ని అంచనా వేయండి.',opts:['700','750','800','900'],ans:2,exp:'276 → 300, 489 → 500. 300 + 500 = 800.'},
+{no:'15',sec:SA,en:'Which number should be subtracted from 347 to get 291?',te:'సమాధానం 291 అవటానికి 347 నుండి ఏ సంఖ్యను తీసివేయవలెను?',opts:['46','56','66','76'],ans:1,exp:'347 − 291 = 56.'},
+{no:'16',sec:SA,en:'☐ − 100 = 350 + 20. What is the missing number?',te:'☐ − 100 = 350 + 20. లోపించిన సంఖ్య ఏది?',opts:['270','330','370','470'],ans:3,exp:'350 + 20 = 370. ☐ = 370 + 100 = 470.'},
+{no:'17',sec:SA,en:'In a toy shop, there are 609 toy cars. 19 are sold. How many are left?',te:'బొమ్మల దుకాణంలో 609 బొమ్మ కార్లు ఉన్నాయి. 19 అమ్మిన, ఇంకా ఎన్ని మిగిలి ఉన్నాయి?',opts:['580','590','628','600'],ans:1,exp:'609 − 19 = 590.'},
+{no:'18',sec:SA,en:'4 friends each bought 12 notebooks. How many notebooks in total?',te:'4 గురు స్నేహితులు ఒక్కొక్కరు 12 నోట్‌బుక్స్ కొన్నారు. మొత్తం ఎన్ని?',opts:['8','16','48','124'],ans:2,exp:'12 × 4 = 48.'},
+{no:'19',sec:SA,en:'Raju has Rs.450. How much more money does he need to buy this oil can?',te:'రాజు వద్ద రూ.450 ఉన్నాయి. నూనె డబ్బా కొనుటకు ఇంకా ఎంత సొమ్ము కావాలి?',fig:oilSVG,opts:['Rs.87','Rs.107','Rs.127','Rs.987'],ans:0,exp:'537 − 450 = 87.'},
+{no:'20',sec:SA,en:'Which of the numbers given below is between 1550 and 2520?',te:'కింది సంఖ్యలలో ఏది 1550 మరియు 2520 ల మధ్య ఉంటుంది?',opts:['2521','2620','1539','1626'],ans:3,exp:'1550 < 1626 < 2520.'},
+
+{no:'21',sec:SB,type:'numberline',en:'Mark the numbers 5610 and 5790 on the number line (tap the marks).',te:'5610, 5790 లను సంఖ్యారేఖపై గుర్తించండి (గీతపై నొక్కండి).',from:5550,to:5850,step:10,label:50,targets:[5610,5790],exp:'ప్రతి చిన్న గీత = 10. 5610 అంటే 5600 తర్వాత 1 గీత; 5790 అంటే 5800 కి 1 గీత ముందు.'},
+{no:'22',sec:SB,type:'fill',en:'What is the total cost of a chocolate and a biscuit packet?',te:'ఒక చాక్లెట్ మరియు ఒక బిస్కెట్ ప్యాకెట్ మొత్తం ఖరీదు ఎంత?',fig:bakery,html:'₹25 + ₹15 = ₹ {0}',ans:[40],exp:'25 + 15 = 40 రూపాయలు.'},
+{no:'23',sec:SB,type:'fill',en:'Fill the boxes with suitable numbers.',te:'డబ్బాలను సరైన సంఖ్యలతో నింపండి.',html:`<div class="vert"><span>2 {0} 0</span><span>× 4</span><span class="ln">{1} 8 0</span></div>`,small:true,ans:[2,8],exp:'4 × ☐ చివర 8 రావాలి → 4 × 2 = 8. కాబట్టి 220 × 4 = 880.'},
+{no:'24',sec:SB,type:'fill',en:'Chappals cost Rs.250. Raju has Rs.190. How much more money does he need?',te:'ఒక జత చెప్పుల ఖరీదు రూ.250. రాజు వద్ద రూ.190 ఉన్నాయి. ఇంకా ఎంత కావాలి?',html:'250 − 190 = Rs. {0}',ans:[60],exp:'250 − 190 = 60.'},
+
+{no:'25',sec:SC,type:'fill',en:'Do the subtractions. c) Which answer is larger?',te:'తీసివేతలు చేయండి. c) రెండు సమాధానాలలో పెద్దది ఏది?',html:'<div class="row">a) 402 − 7 = {0}</div><div class="row">b) 401 − 5 = {1}</div><div class="row">c) పెద్దది: {2}</div>',ans:[395,396,396],exp:'402 − 7 = 395, 401 − 5 = 396. 396 పెద్దది.'},
+{no:'26',sec:SC,type:'fill',en:'a) 7 boxes with 2 caps each: 7 ☐ 2 = 14 (fill the sign). b) In 21 × 2 = 42 write multiplicand, multiplier, product.',te:'a) సరైన గుర్తు నింపండి. b) 21 × 2 = 42 లో గుణ్యము, గుణకము, లబ్ధము రాయండి.',fig:caps,html:'<div class="row">a) 7 {0} 2 = 14</div><div class="row">b) i) గుణ్యము {1} &nbsp; ii) గుణకము {2} &nbsp; iii) లబ్ధము {3}</div>',sel:{0:['+','−','×','÷']},ans:['×',21,2,42],exp:'7 డబ్బాలు × 2 టోపీలు = 14 → గుర్తు ×. గుణ్యం 21, గుణకం 2, లబ్ధం 42.'},
+{no:'27',sec:SC,type:'fill',en:'Solve the problems.',te:'సమస్యలను సాధించండి.',html:`<div class="row">${vert('605','296','+','{0}')}${vert('845','365','+','{1}')}</div>`,ans:[901,1210],exp:'605 + 296 = 901, 845 + 365 = 1210.'},
+{no:'28',sec:SC,type:'match',en:'Choose the pair of numbers between which the given number lies.',te:'ఇచ్చిన సంఖ్య ఏ సంఖ్యా జతల మధ్య ఉందో ఎంచుకోండి.',rows:[{left:'a) 233',opts:['230 – 240','240 – 250'],ans:0},{left:'b) 549',opts:['550 – 560','530 – 550'],ans:1}],exp:'233 అనేది 230, 240 మధ్య. 549 అనేది 530, 550 మధ్య (550 కన్నా చిన్నది).'},
+{no:'29',sec:SC,type:'fill',en:'Fill the boxes by doing subtractions.',te:'తీసివేతలు చేసి డబ్బాలను పూరించండి.',html:'<div class="row"><b class="kalam">98</b> −12 → {0}</div><div class="row">↓ −39 → {1}</div><div class="row">−27 → {2}</div>',ans:[86,47,20],exp:'98 − 12 = 86, 86 − 39 = 47, 47 − 27 = 20.'},
+
+{no:'30 (a)',sec:SD,type:'perm',en:'Write any eight 4-digit numbers using 1, 3, 9 and 8 only once.',te:'1, 3, 9, 8 లను ఒకసారి మాత్రమే ఉపయోగించి ఏవైనా ఎనిమిది 4-అంకెల సంఖ్యలు రాయండి.',digits:'1398',exp:'ఉదాహరణ: 1389, 1398, 1839, 1893, 1938, 1983, 3189, 3198 … ప్రతి సంఖ్యలో 1, 3, 9, 8 ఒక్కొక్కసారి ఉండాలి, సంఖ్యలు వేర్వేరుగా ఉండాలి.'},
+{no:'30 (b)',sec:SD,type:'match',en:'Choose the number names (in words) for the numbers.',te:'సంఖ్యలకు సంఖ్యా నామాలు (అక్షరాలలో) ఎంచుకోండి.',rows:[
+ {left:'a) 3805',opts:['Three thousand eighty five','Three thousand eight hundred five – మూడు వేల ఎనిమిది వందల ఐదు','Three hundred eighty five'],ans:1},
+ {left:'b) 2002',opts:['Two thousand two – రెండు వేల రెండు','Two thousand twenty','Two hundred two'],ans:0},
+ {left:'c) 4400',opts:['Four thousand forty','Four hundred forty','Four thousand four hundred – నాలుగు వేల నాలుగు వందలు'],ans:2},
+ {left:'d) 9090',opts:['Nine thousand nine hundred','Nine thousand ninety – తొమ్మిది వేల తొంభై','Nine hundred ninety'],ans:1}],exp:'3805 = మూడు వేల ఎనిమిది వందల ఐదు; 2002 = రెండు వేల రెండు; 4400 = నాలుగు వేల నాలుగు వందలు; 9090 = తొమ్మిది వేల తొంభై.'},
+{no:'31 (a)',sec:SD,type:'fill',en:'Do the multiplication given below.',te:'కింది గుణకారాలను చేయండి.',html:'<div class="row">a) 24 × 14 = {0}</div><div class="row">b) 45 × 12 = {1}</div><div class="row">c) 100 × 0 = {2}</div><div class="row">d) 101 × 8 = {3}</div>',ans:[336,540,0,808],exp:'24×14 = 96 + 240 = 336; 45×12 = 90 + 450 = 540; ఏ సంఖ్యను 0 తో గుణించినా 0; 101×8 = 808.'},
+{no:'31 (b)',sec:SD,type:'match',en:'Match the following.',te:'కింది వానిని జతపరచండి.',rows:[
+ {left:'a) 234 × 2',opts:['i) 56','ii) 99','iii) (200+30+4) × 2','iv) 9 × 5'],ans:2},
+ {left:'b) 8 × 7',opts:['i) 56','ii) 99','iii) (200+30+4) × 2','iv) 9 × 5'],ans:0},
+ {left:'c) 5 × 9',opts:['i) 56','ii) 99','iii) (200+30+4) × 2','iv) 9 × 5'],ans:3},
+ {left:'d) 99 × 1',opts:['i) 56','ii) 99','iii) (200+30+4) × 2','iv) 9 × 5'],ans:1}],exp:'a → iii (234 = 200+30+4), b → i (56), c → iv (5×9 = 9×5), d → ii (99).'},
+{no:'32 (a)',sec:SD,type:'fill',en:'A fruit shop has 385 guavas, 195 oranges and 402 mangoes. How many fruits in total?',te:'పండ్ల దుకాణంలో 385 జామకాయలు, 195 ఆరెంజ్‌లు, 402 మామిడికాయలు ఉన్నాయి. మొత్తం ఎన్ని పండ్లు?',html:'385 + 195 + 402 = {0}',ans:[982],exp:'385 + 195 = 580; 580 + 402 = 982.'},
+{no:'32 (b)',sec:SD,type:'fill',en:'After selling 365 rice bags, 506 bags remained. How many were there at first?',te:'365 బియ్యం బస్తాలు అమ్మిన తరువాత 506 మిగిలాయి. మొదట ఎన్ని బస్తాలు ఉన్నాయి?',html:'506 + 365 = {0}',ans:[871],exp:'మిగిలినవి + అమ్మినవి = మొదట ఉన్నవి: 506 + 365 = 871.'},
+{no:'33 (a)',sec:SD,type:'fill',en:'A school got Rs.6,990. It spent Rs.2,300 on cool drinks and Rs.1,500 on biscuits. How much is left?',te:'పాఠశాలకు రూ.6,990 గ్రాంట్ వచ్చింది. రూ.2,300 శీతల పానీయాలకు, రూ.1,500 బిస్కెట్లకు ఖర్చు చేశారు. ఎంత మిగిలింది?',html:'<div class="row">ఖర్చు: 2300 + 1500 = {0}</div><div class="row">మిగిలింది: 6990 − ఖర్చు = {1}</div>',ans:[3800,3190],exp:'2300 + 1500 = 3800; 6990 − 3800 = 3190 రూపాయలు.'},
+{no:'33 (b)',sec:SD,type:'match',en:'Match the following.',te:'కింది వానిని జతపరచండి.',rows:[
+ {left:'a) 300 − 180',opts:['i) 540','ii) 120','iii) 90','iv) 1'],ans:1},
+ {left:'b) 150 − 149',opts:['i) 540','ii) 120','iii) 90','iv) 1'],ans:3},
+ {left:'c) 601 − 61',opts:['i) 540','ii) 120','iii) 90','iv) 1'],ans:0},
+ {left:'d) 199 − 109',opts:['i) 540','ii) 120','iii) 90','iv) 1'],ans:2}],exp:'300−180 = 120, 150−149 = 1, 601−61 = 540, 199−109 = 90.'},
+];
+
+/* ---------- EXTRA MODEL QUESTIONS ---------- */
+const E1='సంఖ్యలు & స్థాన విలువ', E2='కూడిక & తీసివేత', E3='గుణకారం', E4='సమస్యలు (Word problems)';
+const EXTRA=[
+{sec:E1,en:'The place value of 7 in 4725 is',te:'4725 లో 7 యొక్క స్థాన విలువ',opts:['7','70','700','7000'],ans:2,exp:'7 వందల స్థానంలో ఉంది → 700.'},
+{sec:E1,en:'Face value of 6 in 6281 is',te:'6281 లో 6 యొక్క ముఖ విలువ',opts:['6','60','600','6000'],ans:0,exp:'ముఖ విలువ అంటే అంకె విలువే → 6. (స్థాన విలువ 6000)'},
+{sec:E1,en:'Expanded form of 5306 is',te:'5306 యొక్క విస్తరణ రూపం',opts:['5000 + 300 + 60','5000 + 300 + 6','500 + 30 + 6','5000 + 30 + 6'],ans:1,exp:'5 వేలు, 3 వందలు, 0 పదులు, 6 ఒకట్లు → 5000 + 300 + 6.'},
+{sec:E1,en:'6 thousands + 4 hundreds + 2 ones =',te:'6 వేలు + 4 వందలు + 2 ఒకట్లు =',opts:['642','6042','6402','6420'],ans:2,exp:'పదుల స్థానంలో 0 → 6402.'},
+{sec:E1,en:'"Two thousand fifty" in numbers is',te:'"రెండు వేల యాభై" సంఖ్యలో',opts:['2500','2050','2005','250'],ans:1,exp:'2000 + 50 = 2050.'},
+{sec:E1,en:'Which is the greatest number?',te:'కింది వాటిలో పెద్ద సంఖ్య ఏది?',opts:['4089','4980','4908','4890'],ans:1,exp:'వేల స్థానం అన్నిటికీ 4. వందల స్థానంలో 9 ఉన్నవి 4980, 4908; పదుల స్థానంలో 8 > 0 → 4980.'},
+{sec:E1,en:'The smallest 4-digit number is',te:'అతి చిన్న 4-అంకెల సంఖ్య',opts:['1111','1000','9999','999'],ans:1,exp:'అతి చిన్న 4-అంకెల సంఖ్య 1000.'},
+{sec:E1,en:'The greatest 3-digit number is',te:'అతి పెద్ద 3-అంకెల సంఖ్య',opts:['100','900','999','1000'],ans:2,exp:'999. దానికి 1 కలిపితే 1000 (4 అంకెలు).'},
+{sec:E1,en:'The number just before 5000 is',te:'5000 కు ముందు వచ్చే సంఖ్య',opts:['4999','5001','4900','4000'],ans:0,exp:'5000 − 1 = 4999.'},
+{sec:E1,en:'Fill the sign: 3045 ☐ 3054',te:'సరైన గుర్తు: 3045 ☐ 3054',opts:['>','<','='],ans:1,exp:'పదుల స్థానంలో 4 < 5, కాబట్టి 3045 < 3054.'},
+{sec:E1,en:'Next in the pattern: 1200, 1300, 1400, ___',te:'అమరికలో తర్వాతి సంఖ్య: 1200, 1300, 1400, ___',opts:['1401','1410','1500','2400'],ans:2,exp:'ప్రతిసారి 100 పెరుగుతోంది → 1500.'},
+{sec:E1,en:'Next in the pattern: 45, 40, 35, ___',te:'అమరికలో తర్వాతి సంఖ్య: 45, 40, 35, ___',opts:['25','30','34','40'],ans:1,exp:'ప్రతిసారి 5 తగ్గుతోంది → 30.'},
+{sec:E1,en:'Round 468 to the nearest hundred.',te:'468 ని దగ్గరి వందకు సవరించండి.',opts:['400','460','470','500'],ans:3,exp:'పదుల అంకె 6 (5 లేదా ఎక్కువ) → పై వందకు: 500.'},
+{sec:E1,en:'Round 73 to the nearest ten.',te:'73 ని దగ్గరి పదికి సవరించండి.',opts:['70','75','80','100'],ans:0,exp:'ఒకట్ల అంకె 3 (5 కన్నా తక్కువ) → 70.'},
+{sec:E1,en:'4 tens = ___ ones',te:'4 పదులు = ___ ఒకట్లు',opts:['4','14','40','400'],ans:2,exp:'1 పది = 10 ఒకట్లు, 4 పదులు = 40.'},
+{sec:E1,en:'1 thousand = ___ hundreds',te:'1 వెయ్యి = ___ వందలు',opts:['10','100','1000','1'],ans:0,exp:'10 వందలు = 1000.'},
+{sec:E1,en:'Greatest 3-digit number using 2, 5, 7 once each',te:'2, 5, 7 లను ఒకసారి వాడి పెద్ద 3-అంకెల సంఖ్య',opts:['257','572','725','752'],ans:3,exp:'పెద్ద అంకెను ముందు: 7, 5, 2 → 752.'},
+{sec:E1,en:'Smallest 3-digit number using 0, 4, 6 once each',te:'0, 4, 6 లను ఒకసారి వాడి చిన్న 3-అంకెల సంఖ్య',opts:['046','406','460','604'],ans:1,exp:'0 ముందు రాకూడదు. 4 ముందు, తర్వాత 0, 6 → 406.'},
+{sec:E1,en:'Which number is between 2340 and 2360?',te:'2340 మరియు 2360 ల మధ్య ఉన్న సంఖ్య ఏది?',opts:['2330','2351','2365','2400'],ans:1,exp:'2340 < 2351 < 2360.'},
+{sec:E1,type:'fill',en:'Write the number shown: 3 thousands, 0 hundreds, 7 tens, 9 ones',te:'3 వేలు, 0 వందలు, 7 పదులు, 9 ఒకట్లు = ?',html:'సంఖ్య: {0}',ans:[3079],exp:'3079.'},
+
+{sec:E2,en:'345 + 232 = ?',te:'345 + 232 = ?',opts:['567','577','587','113'],ans:1,exp:'5+2=7, 4+3=7, 3+2=5 → 577.'},
+{sec:E2,en:'478 + 156 = ?',te:'478 + 156 = ?',opts:['524','624','634','534'],ans:2,exp:'8+6=14 (బదిలీ 1), 7+5+1=13 (బదిలీ 1), 4+1+1=6 → 634.'},
+{sec:E2,en:'700 − 245 = ?',te:'700 − 245 = ?',opts:['455','545','465','555'],ans:0,exp:'700 − 245 = 455. సరిచూడు: 455 + 245 = 700.'},
+{sec:E2,en:'10 more than 995 is',te:'995 కన్నా 10 ఎక్కువ',opts:['985','1005','1095','905'],ans:1,exp:'995 + 10 = 1005.'},
+{sec:E2,en:'100 less than 1050 is',te:'1050 కన్నా 100 తక్కువ',opts:['950','1040','1000','1150'],ans:0,exp:'1050 − 100 = 950.'},
+{sec:E2,en:'456 + ☐ = 600',te:'456 + ☐ = 600',opts:['144','154','244','156'],ans:0,exp:'600 − 456 = 144.'},
+{sec:E2,en:'☐ − 125 = 375',te:'☐ − 125 = 375',opts:['250','400','500','600'],ans:2,exp:'375 + 125 = 500.'},
+{sec:E2,en:'Which pair adds up to 1000?',te:'ఏ జత మొత్తం 1000?',opts:['650 + 450','650 + 350','550 + 550','750 + 350'],ans:1,exp:'650 + 350 = 1000.'},
+{sec:E2,en:'Estimate 312 + 589 by rounding to the nearest hundred.',te:'312 + 589 ను దగ్గరి వందలకు సవరించి అంచనా వేయండి.',opts:['800','850','900','1000'],ans:2,exp:'312 → 300, 589 → 600. 300 + 600 = 900.'},
+{sec:E2,type:'fill',en:'Add.',te:'కూడండి.',html:`<div class="row">${vert('568','276','+','{0}')}${vert('1407','2395','+','{1}')}</div>`,ans:[844,3802],exp:'568 + 276 = 844; 1407 + 2395 = 3802.'},
+{sec:E2,type:'fill',en:'Subtract.',te:'తీసివేయండి.',html:`<div class="row">${vert('503','278','−','{0}')}${vert('900','456','−','{1}')}</div>`,ans:[225,444],exp:'503 − 278 = 225; 900 − 456 = 444.'},
+
+{sec:E3,en:'8 × 6 = ?',te:'8 × 6 = ?',opts:['42','48','54','46'],ans:1,exp:'8 ఎక్కం: 8 × 6 = 48.'},
+{sec:E3,en:'In 12 × 4 = 48, the multiplier is',te:'12 × 4 = 48 లో గుణకము',opts:['12','4','48','16'],ans:1,exp:'గుణ్యం 12, గుణకం 4, లబ్ధం 48.'},
+{sec:E3,en:'In 7 × 9 = 63, the product is',te:'7 × 9 = 63 లో లబ్ధము',opts:['7','9','63','16'],ans:2,exp:'జవాబే లబ్ధం → 63.'},
+{sec:E3,en:'0 × 25 = ?',te:'0 × 25 = ?',opts:['25','0','1','250'],ans:1,exp:'ఏ సంఖ్యను 0 తో గుణించినా 0.'},
+{sec:E3,en:'25 × 4 = ?',te:'25 × 4 = ?',opts:['90','100','104','29'],ans:1,exp:'25 + 25 + 25 + 25 = 100.'},
+{sec:E3,en:'6 + 6 + 6 + 6 + 6 is the same as',te:'6 + 6 + 6 + 6 + 6 అనగా',opts:['6 × 6','5 × 6','6 + 5','11'],ans:1,exp:'5 సార్లు 6 → 5 × 6 = 30.'},
+{sec:E3,en:'9 × 100 = ?',te:'9 × 100 = ?',opts:['90','900','9000','109'],ans:1,exp:'9 వందలు = 900.'},
+{sec:E3,type:'fill',en:'Multiply.',te:'గుణించండి.',html:'<div class="row">a) 32 × 3 = {0}</div><div class="row">b) 120 × 5 = {1}</div><div class="row">c) 23 × 12 = {2}</div>',ans:[96,600,276],exp:'32×3 = 96; 120×5 = 600; 23×12 = 46 + 230 = 276.'},
+
+{sec:E4,en:'6 rows of chairs, 4 chairs in each row. How many chairs?',te:'6 వరుసలు, ఒక్కో వరుసలో 4 కుర్చీలు. మొత్తం ఎన్ని కుర్చీలు?',opts:['10','20','24','64'],ans:2,exp:'6 × 4 = 24.'},
+{sec:E4,en:'3 packets with 15 pens each. Total pens?',te:'ఒక్కో ప్యాకెట్‌లో 15 పెన్నులు, 3 ప్యాకెట్లు. మొత్తం?',opts:['18','35','45','153'],ans:2,exp:'15 × 3 = 45.'},
+{sec:E4,en:'Ravi had 250 marbles. He gave 75 to his friend. How many are left?',te:'రవి వద్ద 250 గోళీలు ఉన్నాయి. స్నేహితుడికి 75 ఇచ్చాడు. ఇంకా ఎన్ని ఉన్నాయి?',opts:['175','185','225','325'],ans:0,exp:'250 − 75 = 175.'},
+{sec:E4,en:'A bus had 48 people. 17 got off and 12 got on. How many now?',te:'బస్సులో 48 మంది ఉన్నారు. 17 మంది దిగారు, 12 మంది ఎక్కారు. ఇప్పుడు ఎంతమంది?',opts:['31','43','53','77'],ans:1,exp:'48 − 17 = 31; 31 + 12 = 43.'},
+{sec:E4,en:'Sita paid with a Rs.500 note for a bag of Rs.365. How much change?',te:'సీత రూ.365 బ్యాగ్ కొని రూ.500 నోటు ఇచ్చింది. ఎంత చిల్లర వస్తుంది?',opts:['Rs.135','Rs.145','Rs.235','Rs.865'],ans:0,exp:'500 − 365 = 135.'},
+{sec:E4,en:'Anu saved Rs.125 in June and Rs.230 in July. Total savings?',te:'అను జూన్‌లో రూ.125, జూలైలో రూ.230 దాచింది. మొత్తం ఎంత?',opts:['Rs.255','Rs.345','Rs.355','Rs.105'],ans:2,exp:'125 + 230 = 355.'},
+{sec:E4,type:'fill',en:'A box has 9 rows with 9 mangoes in each row. How many mangoes?',te:'ఒక పెట్టెలో 9 వరుసలు, ఒక్కో వరుసలో 9 మామిడిపండ్లు. మొత్తం ఎన్ని?',html:'9 × 9 = {0}',ans:[81],exp:'9 × 9 = 81.'},
+{sec:E4,type:'fill',en:'A library has 1245 Telugu and 860 English books. How many books in all?',te:'గ్రంథాలయంలో 1245 తెలుగు, 860 ఇంగ్లీష్ పుస్తకాలు ఉన్నాయి. మొత్తం ఎన్ని?',html:'1245 + 860 = {0}',ans:[2105],exp:'1245 + 860 = 2105.'},
+];
+
+/* ---------- RANDOM PRACTICE ---------- */
+function mcqFrom(correct, wrongs){
+  const set=[...new Set([correct,...wrongs.filter(w=>w!==correct&&w>=0)])].slice(0,4);
+  while(set.length<4){const w=correct+rnd(-20,20);if(w>=0&&!set.includes(w))set.push(w)}
+  const opts=shuffle(set);return{opts:opts.map(String),ans:opts.indexOf(correct)};
+}
+const GEN=[
+ ()=>{const a=rnd(100,699),b=rnd(100,299),c=a+b;return{sec:'కూడిక',en:`${a} + ${b} = ?`,te:`${a} + ${b} = ?`,...mcqFrom(c,[c+10,c-10,c+100,c-1]),exp:`${a} + ${b} = ${c}.`}},
+ ()=>{const a=rnd(300,999),b=rnd(100,a-50),c=a-b;return{sec:'తీసివేత',en:`${a} − ${b} = ?`,te:`${a} − ${b} = ?`,...mcqFrom(c,[c+10,c-10,c+100,a+b>999?c+1:a+b]),exp:`${a} − ${b} = ${c}. సరిచూడు: ${c} + ${b} = ${a}.`}},
+ ()=>{const a=rnd(11,49),b=rnd(2,9),c=a*b;return{sec:'గుణకారం',en:`${a} × ${b} = ?`,te:`${a} × ${b} = ?`,...mcqFrom(c,[c+b,c-b,c+10,a+b]),exp:`${a} × ${b} = ${c}.`}},
+ ()=>{const a=rnd(2,10),b=rnd(2,10),c=a*b;return{sec:'ఎక్కాలు',en:`${a} × ${b} = ?`,te:`${a} × ${b} = ?`,...mcqFrom(c,[c+a,c-a,c+b,c+1]),exp:`${a} ఎక్కంలో ${a} × ${b} = ${c}.`}},
+ ()=>{const n=rnd(1000,9999),s=String(n),p=rnd(0,3),d=+s[p],pv=d*10**(3-p);const names=['వేల','వందల','పదుల','ఒకట్ల'];
+   if(d===0)return GEN[0]();return{sec:'స్థాన విలువ',en:`Place value of ${d} in ${n}`,te:`${n} లో ${s[p]} (${names[p]} స్థానం) యొక్క స్థాన విలువ`,...mcqFrom(pv,[d,d*10,d*100,d*1000]),exp:`${d} ${names[p]} స్థానంలో ఉంది → ${pv}.`}},
+ ()=>{const n=rnd(1000,9998),after=rnd(0,1);const c=after?n+1:n-1;return{sec:'ముందు / తర్వాత',en:`The number just ${after?'after':'before'} ${n}`,te:`${n} కు ${after?'తర్వాత':'ముందు'} వచ్చే సంఖ్య`,...mcqFrom(c,[after?n-1:n+1,c+10,c-10]),exp:`${n} ${after?'+':'−'} 1 = ${c}.`}},
+ ()=>{const n=rnd(110,989),c=Math.round(n/100)*100;if(n%100===50)return GEN[6]();return{sec:'సవరించడం',en:`Round ${n} to the nearest hundred`,te:`${n} ని దగ్గరి వందకు సవరించండి`,...mcqFrom(c,[c+100,c-100,Math.round(n/10)*10]),exp:`పదుల అంకె ${Math.floor(n/10)%10} → ${c}.`}},
+ ()=>{const st=rnd(1,9)*100+rnd(0,9)*10,step=[2,5,10,50,100][rnd(0,4)],up=rnd(0,1)||st<500;const seq=[0,1,2,3].map(i=>up?st+i*step:st-i*step);const c=up?st+4*step:st-4*step;
+   return{sec:'అమరికలు',en:`Next in the pattern: ${seq.join(', ')}, ___`,te:`అమరికలో తర్వాతి సంఖ్య: ${seq.join(', ')}, ___`,...mcqFrom(c,[c+step,c-step,c+1]),exp:`ప్రతిసారి ${step} ${up?'పెరుగుతోంది':'తగ్గుతోంది'} → ${c}.`}},
+ ()=>{const items=[['పెన్సిళ్లు','pencils'],['పుస్తకాలు','books'],['గోళీలు','marbles'],['మామిడిపండ్లు','mangoes']];const [t,e]=items[rnd(0,3)];const a=rnd(200,800),b=rnd(50,a-20),c=a-b;
+   return{sec:'సమస్యలు',en:`A shop had ${a} ${e}. ${b} were sold. How many are left?`,te:`దుకాణంలో ${a} ${t} ఉన్నాయి. ${b} అమ్మారు. ఇంకా ఎన్ని మిగిలాయి?`,...mcqFrom(c,[a+b>2000?c+1:a+b,c+10,c-10]),exp:`${a} − ${b} = ${c}.`}},
+ ()=>{const a=rnd(3,9),b=rnd(11,25),c=a*b;return{sec:'సమస్యలు',en:`${a} boxes with ${b} chocolates each. How many chocolates?`,te:`ఒక్కో పెట్టెలో ${b} చాక్లెట్లు, ${a} పెట్టెలు. మొత్తం ఎన్ని?`,...mcqFrom(c,[a+b,c+b,c-a]),exp:`${b} × ${a} = ${c}.`}},
+];
+function genPractice(){return Array.from({length:10},()=>GEN[rnd(0,GEN.length-1)]())}
+
+/* ---------------- state ---------------- */
+let mode='paper', Q=[], idx=0, st=[];
+const langSeg=$('#langSeg');
+function setLang(l){document.body.classList.toggle('only-te',l==='te');document.body.classList.toggle('only-en',l==='en');
+  langSeg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));store.set('g3lang',l)}
+langSeg.onclick=e=>{if(e.target.dataset.l)setLang(e.target.dataset.l)};
+setLang(store.get('g3lang')||'both');
+
+function showBest(){['paper','extra','practice'].forEach(m=>{const v=store.get('g3best-'+m);$('#best-'+m).textContent=v?('🏆 '+v+'%'):''})}
+showBest();
+document.querySelectorAll('.mode').forEach(b=>b.onclick=()=>start(b.dataset.mode));
+
+function start(m){
+  mode=m;
+  let list = m==='paper'?PAPER : m==='extra'?EXTRA : genPractice();
+  if($('#shuffle').checked && m!=='practice') list=shuffle(list);
+  Q=list.map((q,i)=>({...q,type:q.type||'mcq',_n:q.no||String(i+1)}));
+  st=Q.map(()=>({done:false,ok:false,resp:null}));
+  idx=0; show("quiz"); buildJump(); render();
+}
+function show(id){['home','quiz','result'].forEach(s=>$('#'+s).classList.toggle('hidden',s!==id));window.scrollTo(0,0)}
+$('#homeBtn').onclick=()=>{show('home');showBest()};
+$('#home2Btn').onclick=()=>{show('home');showBest()};
+$('#againBtn').onclick=()=>start(mode);
+
+function buildJump(){
+  $('#jump').innerHTML=Q.map((q,i)=>`<button data-i="${i}">${q._n.replace(/ \((.)\)/,'$1')}</button>`).join('');
+  $('#jump').onclick=e=>{const i=e.target.dataset.i;if(i!==undefined){idx=+i;render()}};
+  paintJump();
+}
+function paintJump(){[...$('#jump').children].forEach((b,i)=>{b.className=(i===idx?'cur ':'')+(st[i].done?(st[i].ok?'ok':'bad'):'')})}
+
+/* ---------------- render ---------------- */
+function render(){
+  const q=Q[idx], s=st[idx];
+  $('#count').textContent=`${idx+1} / ${Q.length}`;
+  $('#progI').style.width=(st.filter(x=>x.done).length/Q.length*100)+'%';
+  $('#qsec').textContent=q.sec;
+  $('#qtext').innerHTML=`<div class="en"><span class="qno">${q._n}.</span>${q.en}</div><div class="te">${mode==='paper'||true?'':''}${q.te}</div>`+(q.fig?`<div class="fig">${q.fig}</div>`:'');
+  const body=$('#qbody'); body.innerHTML='';
+  if(q.type==='mcq'){
+    const long=q.opts.some(o=>o.length>14);
+    body.innerHTML=`<div class="opts ${long?'':'two'}">${q.opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="l">${'ABCD'[i]}</span><span class="kalam" style="font-size:1.1rem">${o}</span></button>`).join('')}</div>`;
+    body.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(st[idx].done)return;s.resp=+b.dataset.i;body.querySelectorAll('.opt').forEach(x=>x.classList.toggle('sel',x===b))});
+  }
+  else if(q.type==='fill'){
+    let h=q.html.replace(/\{(\d)\}/g,(m,k)=>{
+      if(q.sel&&q.sel[k])return `<select class="blank" data-k="${k}"><option value="">?</option>${q.sel[k].map(o=>`<option>${o}</option>`).join('')}</select>`;
+      return `<input class="blank ${q.small?'d1':''}" data-k="${k}" inputmode="numeric" autocomplete="off">`});
+    body.innerHTML=`<div class="fill">${h}</div>`;
+    const ins=[...body.querySelectorAll('input.blank')];
+    ins.forEach((inp,i)=>inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();if(ins[i+1])ins[i+1].focus();else check()}}));
+  }
+  else if(q.type==='match'){
+    body.innerHTML=`<div style="margin-top:12px">${q.rows.map((r,i)=>`<div class="mrow"><span class="left">${r.left}</span><select class="blank" data-k="${i}"><option value="">— ఎంచుకోండి —</option>${r.opts.map((o,j)=>`<option value="${j}">${o}</option>`).join('')}</select></div>`).join('')}</div>`;
+  }
+  else if(q.type==='numberline'){ body.innerHTML=numberLine(q); }
+  else if(q.type==='perm'){
+    body.innerHTML=`<div class="perm">${Array.from({length:8},(_,i)=>`<input class="blank" data-k="${i}" inputmode="numeric" maxlength="4" autocomplete="off">`).join('')}</div>`;
+  }
+  // restore state
+  const fb=$('#fb'); fb.className='fb'; fb.innerHTML='';
+  if(s.done){ restore(q,s); feedback(q,s.ok,s.detail); }
+  $('#checkBtn').classList.toggle('hidden',s.done);
+  $('#nextBtn').classList.toggle('hidden',!s.done);
+  $('#nextBtn').textContent= idx===Q.length-1?'ఫలితం చూడు 🏁':'తర్వాత ▶';
+  $('#prevBtn').disabled= idx===0;
+  paintJump();
+}
+
+function numberLine(q){
+  const n=(q.to-q.from)/q.step, gap=26, W=n*gap+60;
+  let t='';
+  for(let i=0;i<=n;i++){const v=q.from+i*q.step,x=30+i*gap,major=v%q.label===0;
+    t+=`<g class="nl-tick" data-v="${v}"><rect x="${x-12}" y="8" width="24" height="70" fill="transparent"/>
+    <line x1="${x}" y1="${major?30:36}" x2="${x}" y2="${major?62:56}" stroke="currentColor" stroke-width="${major?2.5:1.5}"/>
+    ${major?`<text x="${x}" y="80" font-family="Kalam" font-size="14" text-anchor="middle" fill="currentColor">${v}</text>`:''}
+    <g class="mk" style="display:none"><circle cx="${x}" cy="46" r="7" fill="#ff8a3d"/><text x="${x}" y="22" font-family="Kalam" font-weight="700" font-size="13" text-anchor="middle" fill="#ff8a3d">${v}</text></g></g>`}
+  return `<div class="nl-wrap"><svg viewBox="0 0 ${W} 90" width="${W}" height="90" style="color:var(--ink)" id="nl">
+   <line x1="10" y1="46" x2="${W-10}" y2="46" stroke="currentColor" stroke-width="2"/>
+   <path d="M10 46l8-5v10z M${W-10} 46l-8-5v10z" fill="currentColor"/>${t}</svg></div>
+   <p class="te" style="font-size:.85rem">👉 సంఖ్యారేఖను పక్కకు జరపవచ్చు. తప్పుగా నొక్కితే మళ్ళీ నొక్కి తీసేయండి.</p>`;
+}
+document.addEventListener('click',e=>{
+  const g=e.target.closest('.nl-tick'); if(!g||st[idx].done)return;
+  const mk=g.querySelector('.mk'); mk.style.display=mk.style.display==='none'?'':'none';
+});
+
+/* ---------------- check ---------------- */
+const norm=v=>String(v).replace(/[\s,]/g,'').replace('x','×').replace('*','×').replace('-','−');
+function collect(q){
+  const b=$('#qbody');
+  if(q.type==='mcq')return st[idx].resp;
+  if(q.type==='numberline')return [...b.querySelectorAll('.nl-tick')].filter(g=>g.querySelector('.mk').style.display!=='none').map(g=>+g.dataset.v);
+  return [...b.querySelectorAll('.blank')].map(x=>x.value);
+}
+function check(){
+  const q=Q[idx], s=st[idx]; const r=collect(q);
+  let ok=false, detail='';
+  if(q.type==='mcq'){ if(r==null){nudge('ఒక జవాబు ఎంచుకోండి');return} ok=r===q.ans; }
+  else if(q.type==='fill'){ if(r.every(v=>v.trim()==='')){nudge('డబ్బాలలో జవాబు రాయండి');return} s.marks=r.map((v,i)=>norm(v)===norm(q.ans[i])); ok=s.marks.every(Boolean); }
+  else if(q.type==='match'){ if(r.every(v=>v==='')){nudge('జతలను ఎంచుకోండి');return} s.marks=r.map((v,i)=>v!==''&&+v===q.rows[i].ans); ok=s.marks.every(Boolean); }
+  else if(q.type==='numberline'){ if(!r.length){nudge('సంఖ్యారేఖపై గీతలను నొక్కండి');return} ok=r.length===q.targets.length&&q.targets.every(t=>r.includes(t)); }
+  else if(q.type==='perm'){
+    const want=q.digits.split('').sort().join(''); const seen=new Set();
+    s.marks=r.map(v=>{v=v.trim();const good=/^\d{4}$/.test(v)&&v.split('').sort().join('')===want&&!seen.has(v);if(good)seen.add(v);return good});
+    ok=s.marks.every(Boolean); if(!ok)detail='ఎరుపు డబ్బాలలోని సంఖ్యలు సరికావు: ప్రతి సంఖ్యలో 1, 3, 9, 8 ఒక్కొక్కసారే ఉండాలి, ఒకే సంఖ్య రెండుసార్లు రాకూడదు.';
+  }
+  s.done=true; s.ok=ok; s.resp=r; s.detail=detail;
+  restore(q,s); feedback(q,ok,detail);
+  $('#checkBtn').classList.add('hidden'); $('#nextBtn').classList.remove('hidden');
+  $('#progI').style.width=(st.filter(x=>x.done).length/Q.length*100)+'%';
+  $('#qcard').classList.remove('pop'); void $('#qcard').offsetWidth; if(ok)$('#qcard').classList.add('pop');
+  paintJump();
+}
+function restore(q,s){
+  const b=$('#qbody');
+  if(q.type==='mcq'){ b.querySelectorAll('.opt').forEach((o,i)=>{o.disabled=true;if(i===q.ans)o.classList.add('ok');else if(i===s.resp)o.classList.add('bad')}); }
+  else if(q.type==='numberline'){
+    b.querySelectorAll('.nl-tick').forEach(g=>{const v=+g.dataset.v,mk=g.querySelector('.mk');const picked=s.resp.includes(v),tgt=q.targets.includes(v);
+      if(picked||tgt){mk.style.display='';const col=tgt?'#16a34a':'#dc2626';mk.querySelector('circle').setAttribute('fill',col);mk.querySelector('text').setAttribute('fill',col)}});
+  } else {
+    b.querySelectorAll('.blank').forEach((x,i)=>{x.value=s.resp[i]??'';x.disabled=true;x.classList.add(s.marks[i]?'ok':'bad')});
+  }
+}
+function answerText(q){
+  if(q.type==='mcq')return q.opts[q.ans];
+  if(q.type==='fill')return q.ans.join(', ');
+  if(q.type==='match')return q.rows.map(r=>`${r.left} → ${r.opts[r.ans]}`).join(' ; ');
+  if(q.type==='numberline')return q.targets.join(', ');
+  if(q.type==='perm')return '1389, 1398, 1839, 1893 …';
+}
+function feedback(q,ok,detail){
+  const fb=$('#fb');
+  fb.className='fb '+(ok?'ok':'bad');
+  fb.innerHTML= ok?`<b>✅ సరైనది! శభాష్!</b>${q.exp}`:`<b>❌ తప్పు. సరైన జవాబు: <span class="kalam">${answerText(q)}</span></b>${detail?detail+'<br>':''}${q.exp}`;
+}
+function nudge(msg){const fb=$('#fb');fb.className='fb bad';fb.innerHTML='<b>⚠️ '+msg+'</b>';$('#qcard').classList.remove('shake');void $('#qcard').offsetWidth;$('#qcard').classList.add('shake')}
+
+$('#checkBtn').onclick=check;
+$('#prevBtn').onclick=()=>{if(idx>0){idx--;render()}};
+$('#nextBtn').onclick=()=>{
+  if(idx<Q.length-1){idx++;render();return}
+  const nxt=st.findIndex(x=>!x.done); if(nxt>=0){idx=nxt;render();return}
+  finish();
+};
+
+function finish(){
+  const n=st.filter(x=>x.ok).length, pct=Math.round(n/Q.length*100);
+  $('#score').textContent=`${n} / ${Q.length}`;
+  $('#stars').textContent= pct>=90?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=35?'⭐':'💪';
+  $('#msg').textContent= pct>=90?`అద్భుతం! ${pct}% – చాలా బాగా చేశావు!`:pct>=60?`బాగుంది! ${pct}% – ఇంకొంచెం సాధన చేయి.`:`${pct}% – తప్పులను చూసి మళ్ళీ ప్రయత్నించు.`;
+  const prev=+(store.get('g3best-'+mode)||0); if(pct>prev)store.set('g3best-'+mode,pct);
+  const wrong=Q.map((q,i)=>({q,i})).filter(o=>!st[o.i].ok);
+  $('#review').innerHTML= wrong.length?`<div class="secHead">❌ సరిచేసుకోవలసినవి (${wrong.length})</div>`+wrong.map(({q})=>`<div class="ritem"><b class="kalam">${q._n}.</b> ${q.te}<br><span class="a">✓ ${answerText(q)}</span></div>`).join(''):'<div class="secHead" style="text-align:center">🎉 అన్నీ సరైనవి!</div>';
+  show('result');
+}
+</script>
+</body>
+</html>

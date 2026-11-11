@@ -750,7 +750,7 @@ details.lsub[open]>summary{border-radius:22px 22px 0 0;margin:0}details.lsub[ope
 .offc h4{margin:0 0 4px;font-size:16px}.offc p{margin:0 0 10px;font-size:12.5px;color:var(--mut)}.offc .row2 .btn{margin:0}
 .offc .st{font-size:12.5px;font-weight:700;color:#15803d;margin-top:8px}
 
-.dq.dqs{display:block}.vlbn{background:linear-gradient(135deg,#fee2e2,#fecaca)}.vlbn small{color:#7f1d1d}
+.dq.dqs{display:block}.vlbn{background:linear-gradient(135deg,#fee2e2,#fecaca)}.vlbn small{color:#7f1d1d}.rspbn{background:linear-gradient(135deg,#dbeafe,#fbcfe8)}.rspbn small{color:#1e3a8a}.rspl .g2{grid-template-columns:1fr}.hico button.w2{flex:1 0 104px}
 .vlg{background:#fff;border-radius:16px;padding:4px 12px 8px;margin:0 0 12px;box-shadow:0 2px 10px rgba(15,23,42,.06)}.vlg>summary{cursor:pointer;font-weight:800;font-size:15px;padding:10px 0;color:#0f172a}.vlg>summary small{color:var(--mut);font-weight:600}
 .vlc{display:flex;gap:10px;align-items:center;padding:8px 0;border-top:1px solid #f1f5f9}.vlc.on{display:block}.vlth{position:relative;flex:none;width:128px;height:72px;border:0;padding:0;border-radius:10px;overflow:hidden;background:linear-gradient(135deg,#ef4444,#7f1d1d);cursor:pointer}
 .vlth img{width:100%;height:100%;object-fit:cover;display:block}.vlth i{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;background:rgba(220,38,38,.92);color:#fff;font-style:normal;font-size:15px;line-height:34px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.35)}
@@ -2711,7 +2711,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.10-10';
+const APPV='2026.11.11-1';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3514,7 +3514,7 @@ function schip(c,s){const p=subjProg(c,s);if(!p.n)return '';return `<button clas
 V.home=()=>{setTimeout(checkBadges,50);launchHello();const g=greet(),stc=stars(),c=S.cur.c,sl=learnSubs(c).map(s=>schip(c,s)).join(''),t=todayS(),evT=evAll().filter(e=>e.d===t&&(e.c===0||e.c===S.cur.c)).length;
  const hi=(v,ic,tx,p,b)=>`<button onclick="go('${v}'${p?','+p:''})"><span>${ic}</span>${tx}${b?`<i>${b}</i>`:''}</button>`;
  return `<section class="hero hsm"><div class="htop"><div><small>${g[0]} ${g[1]}${S.cfg.sname?' • 🏫 '+esc(S.cfg.sname):''}</small><h2>${esc(S.cur.n)}</h2><p class="motto">నేర్చుకో • సాధన చేయి • ఎదుగు</p></div><span class="starb" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐ ${stc}</span><div class="mascot bob" onclick="go('avatar')" title="బొమ్మ మార్చు">${avOf(S.cur.n)}<i class="edit">✏️</i></div></div>
-<div class="hico">${hi('events','📅','ఈవెంట్లు','',evT?'ఈరోజు':'')}${hi('daily','💡','సూక్తి')}${hi('library','🧰','టూల్స్',"{tab:'tools'}")}${hi('idmk','🪪','ID కార్డు')}${hi('card','🎓','ప్రగతి కార్డు')}${hi('badges','🏅','బ్యాడ్జీలు','',badgeCount()||'')}${+c===10?hi('ssc','📝','SSC'):''}</div></section>
+<div class="hico">${hi('events','📅','ఈవెంట్లు','',evT?'ఈరోజు':'')}${hi('daily','💡','సూక్తి')}${hi('library','🧰','టూల్స్',"{tab:'tools'}")}${hi('idmk','🪪','ID కార్డు')}${hi('card','🎓','ప్రగతి కార్డు')}${hi('badges','🏅','బ్యాడ్జీలు','',badgeCount()||'')}${+c===10?hi('ssc','📝','SSC')+hi('book','🚀','SSC FULL Mission March 2027',"{u:RSP[0][0],t:'🚀 SSC FULL Mission March 2027',k:'tool',back:{v:'home'}}").replace('<button','<button class="w2"'):''}</div></section>
 ${tickerHtml()}${slidesHtml()}${reconnectCard()}${installBanner()}${nextLes()}
 ${sl?`<h4 class="sec">📖 నా సబ్జెక్టులు <small>${c}వ తరగతి</small></h4><div class="sline">${sl}</div>`:''}
 ${hStats()}
@@ -3545,7 +3545,7 @@ function offInfo(c){try{return JSON.parse(localStorage.getItem('raiOff')||'{}')[
 function offMark(c,o){try{const a=JSON.parse(localStorage.getItem('raiOff')||'{}');a[c]=o;localStorage.setItem('raiOff',JSON.stringify(a));}catch(e){}}
 function offFiles(c){c=+c;const f=['./','index.html','help.js','basics/Ganitha_Pustakam.html','basics/Ganitha_Sadhana.html'];
  if(TB_SPLIT[c]){f.push('notes-'+c+'-idx.js');learnSubs(c).forEach(s=>f.push('notes-'+c+'-'+s+'.js'));}else f.push('notes-'+c+'.js');
- f.push('answers-'+c+'.js');examsOf(c).forEach(e=>f.push(e.u));if(c===10){f.push('ssc-10-idx.js');learnSubs(10).forEach(s=>f.push('ssc-10-'+s+'.js'));}return f;}
+ f.push('answers-'+c+'.js');examsOf(c).forEach(e=>f.push(e.u));if(c===10){RSP.forEach(r=>f.push(r[0]));f.push('ssc-10-idx.js');learnSubs(10).forEach(s=>f.push('ssc-10-'+s+'.js'));}return f;}
 let OFFBUSY=0;
 async function offSave(c,pdf){if(OFFBUSY)return;if(!('caches' in window))return toast('ఈ ఫోన్ బ్రౌజర్ ఆఫ్‌లైన్ సేవ్ సపోర్ట్ చేయదు');if(!navigator.onLine)return toast('📴 ముందు నెట్ ఆన్ చేయండి');
  OFFBUSY=1;const st=document.getElementById('offSt');const say=t=>{const e=document.getElementById('offSt');if(e)e.textContent=t;};
@@ -3567,9 +3567,15 @@ function lsubCard(c,s,open){const tl=tbLes(c,s),p=subjProg(c,s);if(!p.n)return '
 <button class="lmore" onclick="go('subject',{s:'${s}'})">${tl.some(L=>L.wb)?'📒 '+esc(tl.find(L=>L.wb).wb.lb||'వర్క్‌బుక్')+' & ':''}✏️ అదనపు అభ్యాసం ▸</button></div></details>`;}
 V.learn=()=>{const c=S.cur.c,ms=tbMonthSec(),op=param.open||'';if(op)setTimeout(()=>{const e=document.getElementById('ls-'+op);if(e)window.scrollTo({top:e.getBoundingClientRect().top+window.scrollY-70,behavior:'smooth'});},120);
  return `${+c===10?SSCBN:''}${ms}
-${vlBanner(c)}<h4 class="sec">📚 నోట్స్ ఉన్న అన్ని పాఠాలు <small>${c}వ తరగతి • <a onclick="go('cls')">మార్చు</a></small></h4>
+${vlBanner(c)}${+c===10?RSPBN:''}<h4 class="sec">📚 నోట్స్ ఉన్న అన్ని పాఠాలు <small>${c}వ తరగతి • <a onclick="go('cls')">మార్చు</a></small></h4>
 <p class="mut" style="margin:-4px 2px 12px;font-size:13.5px">సబ్జెక్టు నొక్కు → పాఠాలు తెరుచుకుంటాయి. పాఠం నొక్కితే నోట్స్, 📝 నొక్కితే టెస్ట్.</p>
 ${learnSubs(c).map(s=>lsubCard(c,s,s===op)).join('')}${ms?'':`<h4 class="sec">నీ కోసం సూచన</h4>${recommend()}`}${offCard(+c)}`;};
+/* ⭐ రాయ్ స్పెషల్ SSC 2027 (10వ తరగతి – నేర్చుకో లో వీడియో పాఠాల కింద). కొత్త ప్రత్యేక టూల్ వస్తే RSP లో ఒక వరుస చేర్చాలి (+ offFiles ఆటో) */
+const RSP=[['ssc/Mission-March-SSC-2027-Action-Plan-Tool.html','🚀','SSC FULL Mission March 2027','రోజువారీ యాక్షన్ ప్లాన్ • అన్ని సబ్జెక్టుల Q-Bank • స్లిప్ టెస్టులు • దశలవారీ జవాబులు','linear-gradient(135deg,#ef4444,#1d4ed8)']];
+const RSPBN=`<div class="sscbn rspbn" onclick="go('rsp')"><span>⭐</span><div><b>రాయ్ స్పెషల్ SSC 2027</b><small>SSC FULL Mission March 2027 • పూర్తి ప్రణాళిక + జవాబులు</small></div></div>`;
+V.rsp=()=>`<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>⭐ రాయ్ స్పెషల్ SSC 2027</h2></div>
+<p class="mut" style="margin:-4px 2px 10px">10వ తరగతి పబ్లిక్ పరీక్షల కోసం రాయ్ ఎడ్యుకేషన్ ప్రత్యేక సాధనాలు. నొక్కితే app లోనే తెరుచుకుంటుంది.</p>
+<div class="lbadi rspl"><div class="g2">${RSP.map(([u,i,t,d,bg])=>`<button style="background:${bg}" onclick="go('book',{u:'${u}',t:'${i} ${t}',k:'tool',back:{v:'rsp'}})"><span>${i}</span><b>${t}</b><small>${d}</small></button>`).join('')}</div></div>${bkb('learn','','నేర్చుకో కి వెనక్కి')}`;
 V.vids=()=>{const c=S.cur.c,subs=learnSubs(c),all=vlAll(c);const s=subs.includes(param.s)?param.s:(subs.find(x=>all.some(n=>n.s===x))||subs[0]);
  return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>🎬 వీడియో పాఠాలు</h2></div>
 <p class="mut" style="margin:-4px 2px 10px">${c}వ తరగతి • ఉపాధ్యాయులు ఎంచుకున్న వీడియోలు మాత్రమే. ▶ నొక్కితే ఇక్కడే ప్లే అవుతుంది.</p>
@@ -5329,7 +5335,7 @@ async function pdfDraw(){if(!BV.doc)return;const tok=++BV.tok,n=BV.page;const pg
 function pdfGo(d){if(!BV.doc)return;const n=Math.min(BV.n,Math.max(1,BV.page+d));if(n!==BV.page){BV.page=n;pdfDraw();}}
 function pdfTo(v){if(!BV.doc)return;const n=parseInt(v,10);if(n>=1&&n<=BV.n){BV.page=n;pdfDraw();}else{const pg=document.getElementById('bpg');if(pg)pg.value=BV.page;}}
 function pdfZoom(f){if(!BV.doc)return;BV.zoom=Math.min(4,Math.max(0.6,BV.zoom*f));pdfDraw();}
-function closeBook(){try{inkFlush();}catch(e){}INK.on=false;INK.key='';INK.d=null;inkTxNo();try{BV.rt&&BV.rt.cancel();}catch(e){}try{BV.doc&&BV.doc.destroy();}catch(e){}try{BV.task0&&BV.task0.destroy();}catch(e){}const b=param.back||{};BV={};if(b.test)go('test');else if(b.tch)go('teacher',{t:'tb'});else if(b.tbl)go('tbl',{s:b.s,id:b.id,wb:1});else go('library',b);}
+function closeBook(){try{inkFlush();}catch(e){}INK.on=false;INK.key='';INK.d=null;inkTxNo();try{BV.rt&&BV.rt.cancel();}catch(e){}try{BV.doc&&BV.doc.destroy();}catch(e){}try{BV.task0&&BV.task0.destroy();}catch(e){}const b=param.back||{};BV={};if(b.test)go('test');else if(b.tch)go('teacher',{t:'tb'});else if(b.tbl)go('tbl',{s:b.s,id:b.id,wb:1});else if(b.v)go(b.v);else go('library',b);}
 document.addEventListener('keydown',e=>{if(view!=='book'||param.k!=='pdf'||(e.target&&e.target.tagName==='INPUT'))return;
  if(e.key==='ArrowRight'||e.key==='PageDown'){pdfGo(1);e.preventDefault();}else if(e.key==='ArrowLeft'||e.key==='PageUp'){pdfGo(-1);e.preventDefault();}
  else if(e.key==='+'||e.key==='='){pdfZoom(1.25);}else if(e.key==='-'){pdfZoom(0.8);}else if(e.key==='Escape'||e.key==='Backspace'){closeBook();}});
