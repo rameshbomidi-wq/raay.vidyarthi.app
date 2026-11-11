@@ -2723,7 +2723,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.11-4';
+const APPV='2026.11.11-5';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -5356,7 +5356,7 @@ document.addEventListener('touchstart',e=>{if(view==='book'&&param.k==='pdf'&&e.
 document.addEventListener('touchend',e=>{if(tsx==null)return;const t=e.changedTouches[0],dx=t.clientX-tsx,dy=t.clientY-tsy;tsx=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)pdfGo(dx<0?1:-1);},{passive:true});
 /* టీచర్: పుస్తకం / టూల్ లింక్ జోడించడం */
 /* 🧑‍🏫 టీచర్ టూల్స్ – repo లో ttools/ ఫోల్డర్‌లోని HTML ఫైళ్లు ఆటోగా (టీచర్ ప్యానెల్‌లో మాత్రమే; విద్యార్థులకు కాదు). TTN = తెలుగు పేర్లు (లేకపోతే ఫైల్ పేరు) */
-const TTN={'MDM_Akshayapatra_Voucher_RagiJava_Chikki_Egg.html':['🍛','MDM వోచర్ – అక్షయపాత్ర','డే-వైజ్ వోచర్ + రాగి జావ • చిక్కీ • గుడ్డు నెలవారీ రిజిస్టర్ (A4 ప్రింట్)']};
+const TTN={'School_Pragathi_All_Reports.html':['🏫','School ప్రగతి – అన్ని నివేదికలు','విద్యార్థుల వివరాలు • FA/SA మార్కులు • హాజరు • HPC కార్డు • ప్రమోషన్ చార్ట్ (I–X)'],'MDM_Akshayapatra_Voucher_RagiJava_Chikki_Egg.html':['🍛','MDM వోచర్ – అక్షయపాత్ర','డే-వైజ్ వోచర్ + రాగి జావ • చిక్కీ • గుడ్డు నెలవారీ రిజిస్టర్ (A4 ప్రింట్)']};
 let TTF=0;
 function ttList(){const st=(S.lib||{})['dir:ttools'];return ((st&&st.v)||[]).filter(f=>/\.html?$/i.test(f.name)).sort((a,b)=>a.name.localeCompare(b.name));}
 async function ttRefresh(force){TTF=1;const old=JSON.stringify(ttList());const v=await listDir('ttools',force);if(view==='teacher'&&param.t==='lb'&&(force||JSON.stringify(ttList())!==old))render();if(force)toast(v===null?'📴 ఇంటర్నెట్ లేదు':'🔄 టీచర్ టూల్స్ జాబితా తాజా అయింది');}
