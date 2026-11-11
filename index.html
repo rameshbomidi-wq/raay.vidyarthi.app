@@ -750,7 +750,16 @@ details.lsub[open]>summary{border-radius:22px 22px 0 0;margin:0}details.lsub[ope
 .offc h4{margin:0 0 4px;font-size:16px}.offc p{margin:0 0 10px;font-size:12.5px;color:var(--mut)}.offc .row2 .btn{margin:0}
 .offc .st{font-size:12.5px;font-weight:700;color:#15803d;margin-top:8px}
 
-.dq.dqs{display:block}.vlbn{background:linear-gradient(135deg,#fee2e2,#fecaca)}.vlbn small{color:#7f1d1d}.rspbn{background:linear-gradient(135deg,#dbeafe,#fbcfe8)}.rspbn small{color:#1e3a8a}.rspl .g2{grid-template-columns:1fr}.hico button.w2{flex:1 0 104px}
+.dq.dqs{display:block}.vlbn{background:linear-gradient(135deg,#fee2e2,#fecaca)}.vlbn small{color:#7f1d1d}.rspbn{position:relative;overflow:hidden;color:#fff;padding:14px;background:linear-gradient(120deg,#7c3aed,#db2777,#f59e0b,#db2777,#7c3aed);background-size:300% 100%;animation:rspbg 6s linear infinite,rspglow 2.2s ease-in-out infinite;box-shadow:0 6px 18px rgba(219,39,119,.35)}
+.rspbn b{font-size:16.5px;color:#fff}.rspbn small{color:#fff;opacity:.95}.rspbn>div{position:relative;z-index:1;flex:1}
+.rspbn::after{content:'';position:absolute;top:0;bottom:0;left:-40%;width:30%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:rspsh 3s ease-in-out infinite}
+.rspbn .rspic{position:relative;z-index:1;width:52px;height:52px;flex:none;display:grid;place-items:center;font-size:30px;background:rgba(255,255,255,.22);border-radius:50%;box-shadow:inset 0 0 0 2px rgba(255,255,255,.5);animation:rspfly 1.6s ease-in-out infinite}
+.rspnew{font-style:normal;font-size:10px;background:#fde047;color:#7c2d12;border-radius:8px;padding:1px 6px;margin-left:4px;vertical-align:middle;display:inline-block;animation:rsppop 1.2s ease-in-out infinite}
+.rspgo{position:relative;z-index:1;font-style:normal;width:30px;height:30px;flex:none;display:grid;place-items:center;border-radius:50%;background:#fff;color:#db2777;font-size:13px;animation:rspnx 1.2s ease-in-out infinite}
+.rspst{position:absolute;text-decoration:none;color:#fef08a;font-size:12px;animation:rsptw 1.8s ease-in-out infinite}.rspst.s1{top:6px;left:58px}.rspst.s2{bottom:6px;right:52px;animation-delay:.6s;font-size:15px}.rspst.s3{top:8px;right:16px;animation-delay:1.1s}
+@keyframes rspbg{to{background-position:300% 0}}@keyframes rspglow{50%{box-shadow:0 6px 26px rgba(245,158,11,.65)}}@keyframes rspsh{0%,55%{left:-40%}100%{left:130%}}
+@keyframes rspfly{0%,100%{transform:translateY(2px) rotate(-6deg)}50%{transform:translateY(-5px) rotate(8deg)}}@keyframes rsppop{50%{transform:scale(1.18)}}@keyframes rspnx{50%{transform:translateX(4px)}}@keyframes rsptw{0%,100%{opacity:.15;transform:scale(.6)}50%{opacity:1;transform:scale(1.2)}}
+@media(prefers-reduced-motion:reduce){.rspbn,.rspbn *,.rspbn::after{animation:none!important}}.rspl .g2{grid-template-columns:1fr}.hico button.w2{flex:1 0 104px}
 .vlg{background:#fff;border-radius:16px;padding:4px 12px 8px;margin:0 0 12px;box-shadow:0 2px 10px rgba(15,23,42,.06)}.vlg>summary{cursor:pointer;font-weight:800;font-size:15px;padding:10px 0;color:#0f172a}.vlg>summary small{color:var(--mut);font-weight:600}
 .vlc{display:flex;gap:10px;align-items:center;padding:8px 0;border-top:1px solid #f1f5f9}.vlc.on{display:block}.vlth{position:relative;flex:none;width:128px;height:72px;border:0;padding:0;border-radius:10px;overflow:hidden;background:linear-gradient(135deg,#ef4444,#7f1d1d);cursor:pointer}
 .vlth img{width:100%;height:100%;object-fit:cover;display:block}.vlth i{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;background:rgba(220,38,38,.92);color:#fff;font-style:normal;font-size:15px;line-height:34px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.35)}
@@ -2714,7 +2723,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.11-2';
+const APPV='2026.11.11-3';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3569,13 +3578,13 @@ function lsubCard(c,s,open){const tl=tbLes(c,s),p=subjProg(c,s);if(!p.n)return '
   return `<div class="lrow ${d?'ok':''} ${now?'now':''}"><button class="lrm" onclick="go('tbl',{s:'${s}',id:'${L.id}'})"><span class="lno">${d?'✓':L.no}</span><span><b>${esc(L.t)}</b><small>📖 నోట్స్ చదువు • 📅 ${tbMonths(L)}${now?' • <b style="display:inline;font-size:13px;color:var(--sc)">ఈ నెల</b>':''}</small></span></button><button class="lrt ${b!=null?pctCls(b):''}" onclick="startLesTest('${s}','${L.id}')">📝<br>${b!=null?b+'%':'టెస్ట్'}</button></div>`;}).join('')}
 <button class="lmore" onclick="go('subject',{s:'${s}'})">${tl.some(L=>L.wb)?'📒 '+esc(tl.find(L=>L.wb).wb.lb||'వర్క్‌బుక్')+' & ':''}✏️ అదనపు అభ్యాసం ▸</button></div></details>`;}
 V.learn=()=>{const c=S.cur.c,ms=tbMonthSec(),op=param.open||'';if(op)setTimeout(()=>{const e=document.getElementById('ls-'+op);if(e)window.scrollTo({top:e.getBoundingClientRect().top+window.scrollY-70,behavior:'smooth'});},120);
- return `${+c===10?SSCBN:''}${ms}
-${vlBanner(c)}${+c===10?RSPBN:''}<h4 class="sec">📚 నోట్స్ ఉన్న అన్ని పాఠాలు <small>${c}వ తరగతి • <a onclick="go('cls')">మార్చు</a></small></h4>
+ return `${+c===10?RSPBN:''}${ms}
+${vlBanner(c)}${+c===10?SSCBN:''}<h4 class="sec">📚 నోట్స్ ఉన్న అన్ని పాఠాలు <small>${c}వ తరగతి • <a onclick="go('cls')">మార్చు</a></small></h4>
 <p class="mut" style="margin:-4px 2px 12px;font-size:13.5px">సబ్జెక్టు నొక్కు → పాఠాలు తెరుచుకుంటాయి. పాఠం నొక్కితే నోట్స్, 📝 నొక్కితే టెస్ట్.</p>
 ${learnSubs(c).map(s=>lsubCard(c,s,s===op)).join('')}${ms?'':`<h4 class="sec">నీ కోసం సూచన</h4>${recommend()}`}${offCard(+c)}`;};
 /* ⭐ రాయ్ స్పెషల్ SSC 2027 (10వ తరగతి – నేర్చుకో లో వీడియో పాఠాల కింద). కొత్త ప్రత్యేక టూల్ వస్తే RSP లో ఒక వరుస చేర్చాలి (+ offFiles ఆటో) */
 const RSP=[['ssc/Mission-March-SSC-2027-Action-Plan-Tool.html','🚀','SSC FULL Mission March 2027','రోజువారీ యాక్షన్ ప్లాన్ • అన్ని సబ్జెక్టుల Q-Bank • స్లిప్ టెస్టులు • దశలవారీ జవాబులు','linear-gradient(135deg,#ef4444,#1d4ed8)']];
-const RSPBN=`<div class="sscbn rspbn" onclick="go('rsp')"><span>⭐</span><div><b>రాయ్ స్పెషల్ SSC 2027</b><small>SSC FULL Mission March 2027 • పూర్తి ప్రణాళిక + జవాబులు</small></div></div>`;
+const RSPBN=`<div class="sscbn rspbn" onclick="go('rsp')"><span class="rspic">🚀</span><div><b>రాయ్ స్పెషల్ SSC 2027 <i class="rspnew">NEW</i></b><small>SSC FULL Mission March 2027 • పూర్తి ప్రణాళిక + జవాబులు</small></div><em class="rspgo">▶</em><u class="rspst s1">✦</u><u class="rspst s2">✦</u><u class="rspst s3">✦</u></div>`;
 V.rsp=()=>`<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>⭐ రాయ్ స్పెషల్ SSC 2027</h2></div>
 <p class="mut" style="margin:-4px 2px 10px">10వ తరగతి పబ్లిక్ పరీక్షల కోసం రాయ్ ఎడ్యుకేషన్ ప్రత్యేక సాధనాలు. నొక్కితే app లోనే తెరుచుకుంటుంది.</p>
 <div class="lbadi rspl"><div class="g2">${RSP.map(([u,i,t,d,bg])=>`<button style="background:${bg}" onclick="go('book',{u:'${u}',t:'${i} ${t}',k:'tool',back:{v:'rsp'}})"><span>${i}</span><b>${t}</b><small>${d}</small></button>`).join('')}</div></div>${bkb('learn','','నేర్చుకో కి వెనక్కి')}`;
