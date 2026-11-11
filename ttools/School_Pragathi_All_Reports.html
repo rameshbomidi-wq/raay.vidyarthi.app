@@ -509,7 +509,7 @@
   <div class="class-tabs" id="classTabs"></div>
   <div class="ent-row">
     <button onclick="openStu()">➕ విద్యార్థిని చేర్చు</button>
-    <button onclick="openPaste()">📋 జాబితా పేస్ట్<small>Excel నుండి ఒకేసారి</small></button>
+    <button onclick="openPaste()">📋 జాబితా పేస్ట్<small>Excel నుండి – అన్ని తరగతులు ఒకేసారి</small></button>
     <button onclick="openMk()">✏️ మార్కుల నమోదు<small>తరగతి మొత్తం ఒకేసారి</small></button>
     <button onclick="openAtE()">📅 హాజరు నమోదు<small>నెల వారీ – తరగతి మొత్తం</small></button>
   </div>
@@ -3225,17 +3225,40 @@ function delStu(id){const cls=currentClass,s=DATA[cls].find(x=>x.id===id);if(!s|
   DATA[cls]=DATA[cls].filter(x=>x.id!==id);savePS();closeOvl('entView');refreshAll();showToast('తొలగించబడింది');}
 /* Excel నుండి జాబితా పేస్ట్ */
 const PCOL=['name','mobile','father','mother','dob','g','caste','pen','id','adm'];
-function openPaste(){entOpen('📋 జాబితా పేస్ట్ — '+(CLS_NAME[currentClass]||currentClass)+' తరగతి','<h4>Excel / Google Sheets నుండి విద్యార్థుల జాబితా</h4>'
-  +'<div class="warn">Excel లో వరుసలను కాపీ చేసి కింద పేస్ట్ చేయండి. కాలమ్‌ల క్రమం:<br><b>పేరు | మొబైల్ | తండ్రి | తల్లి | పుట్టిన తేదీ | లింగం (B/G) | కులం | PEN | చైల్డ్ ID | అడ్మిషన్ నం.</b><br>పేరు ఒక్కటే ఉన్నా సరిపోతుంది (ఒక్కో లైన్‌లో ఒక పేరు). మిగతావి తర్వాత ✏️ తో నింపవచ్చు.</div>'
-  +'<textarea id="pasteBox" placeholder="RAMU K&#9;9876543210&#9;KRISHNA&#9;LAKSHMI&#9;12/05/2015&#9;B&#9;BC"></textarea>'
-  +'<div class="row"><button class="go" onclick="pasteGo()">➕ ఈ తరగతిలో చేర్చు</button></div>');}
-function pasteGo(){const cls=currentClass,lines=gid('pasteBox').value.split(/\r?\n/).map(x=>x.replace(/\s+$/,'')).filter(x=>x.trim());let n=0,dup=0;
-  PS.add=PS.add||{};PS.add[cls]=PS.add[cls]||[];const ids=new Set(allStu().map(x=>x.id)),nms=new Set(DATA[cls].map(x=>x.name.toLowerCase().trim()));
-  lines.forEach((ln,k)=>{const p=(ln.indexOf('\t')>=0?ln.split('\t'):ln.split(',')).map(x=>x.trim());if(!p[0]||/^(name|student|పేరు|s\.?\s*no)/i.test(p[0]))return;
+let pasteAll=true;
+function openPaste(){const R=CLS_NAME[currentClass]||currentClass,tot=allStu().length;
+  entOpen('📋 జాబితా పేస్ట్ (Excel నుండి)','<h4>Excel / Google Sheets నుండి విద్యార్థుల జాబితా</h4>'
+  +'<div class="chips"><button class="'+(pasteAll?'active':'')+'" onclick="pasteAll=true;openPaste()">🏫 అన్ని తరగతులు ఒకేసారి</button><button class="'+(pasteAll?'':'active')+'" onclick="pasteAll=false;openPaste()">'+R+' తరగతి మాత్రమే</button></div>'
+  +'<div class="warn">Excel లో వరుసలను కాపీ చేసి కింద పేస్ట్ చేయండి. కాలమ్‌ల క్రమం:<br><b>'+(pasteAll?'తరగతి | ':'')+'పేరు | మొబైల్ | తండ్రి | తల్లి | పుట్టిన తేదీ | లింగం (B/G) | కులం | PEN | చైల్డ్ ID | అడ్మిషన్ నం.</b><br>'
+   +(pasteAll?'<b>తరగతి</b> కాలమ్‌లో 1 నుండి 10 (లేదా I–X, 6A, Class 6) ఉండాలి — ప్రతి విద్యార్థి ఆ తరగతిలోకి వెళ్తాడు. ':'')+'పేరు ఒక్కటే ఉన్నా సరిపోతుంది; మిగతావి తర్వాత ✏️ తో నింపవచ్చు. ఇప్పటికే ఉన్న పేరు / ID మళ్ళీ చేరదు.</div>'
+  +'<textarea id="pasteBox" placeholder="'+(pasteAll?'6&#9;':'')+'RAMU K&#9;9876543210&#9;KRISHNA&#9;LAKSHMI&#9;12/05/2015&#9;B&#9;BC'+(pasteAll?'&#10;7&#9;SITA P&#9;9876543211':'')+'"></textarea>'
+  +'<div class="row"><button class="go" onclick="pasteGo()">➕ '+(pasteAll?'అన్ని తరగతుల్లో చేర్చు':'ఈ తరగతిలో చేర్చు')+'</button></div>'
+  +'<h4 style="border-color:#c62828;color:#b91c1c">🗑 ఉన్న జాబితా తొలగించు</h4>'
+  +'<div class="warn">కొత్త జాబితా పేస్ట్ చేసే ముందు పాతది తీసేయాలంటే మాత్రమే. విద్యార్థులతో పాటు వారి మార్కులు, హాజరు కూడా పోతాయి — ముందు <b>⬇️ పూర్తి బ్యాకప్</b> తీసుకోండి. రెండుసార్లు అడుగుతుంది.</div>'
+  +'<div class="row"><button class="del" onclick="delAll(false)">🗑 '+R+' తరగతి మొత్తం ('+DATA[currentClass].length+')</button><button class="del" onclick="delAll(true)">🗑 పాఠశాల మొత్తం — అన్ని తరగతులు ('+tot+')</button></div>');}
+const ROMN={i:1,ii:2,iii:3,iv:4,v:5,vi:6,vii:7,viii:8,ix:9,x:10};
+function clsKey(v){v=String(v||'').toLowerCase().replace(/class|తరగతి|std|th|st|nd|rd|వ/g,'').replace(/[^a-z0-9]/g,'');if(!v)return null;
+  let m=v.match(/^(\d{1,2})[a-z]?$/),c=m?+m[1]:(ROMN[v]||ROMN[v.replace(/[a-z]$/,'')]||0);if(!c||c>10)return null;return DATA[c+'A']?c+'A':Object.keys(DATA).find(k=>cnum(k)===c)||null;}
+function pasteGo(){const lines=gid('pasteBox').value.split(/\r?\n/).map(x=>x.replace(/\s+$/,'')).filter(x=>x.trim());let n=0,dup=0,bad=0;const per={};
+  PS.add=PS.add||{};const ids=new Set(allStu().map(x=>x.id)),nms={};Object.keys(DATA).forEach(c=>nms[c]=new Set(DATA[c].map(x=>x.name.toLowerCase().trim())));
+  lines.forEach((ln,k)=>{let p=(ln.indexOf('\t')>=0?ln.split('\t'):ln.split(',')).map(x=>x.trim()),cls=currentClass;
+    if(pasteAll){if(/^(class|తరగతి|s\.?\s*no)/i.test(p[0])&&!clsKey(p[0]))return;cls=clsKey(p[0]);p=p.slice(1);if(!cls){bad++;return;}}
+    if(!p[0]||/^(name|student|పేరు|s\.?\s*no)/i.test(p[0]))return;
     const o={};STF.forEach(([f])=>o[f]='');PCOL.forEach((f,i)=>{if(p[i])o[f]=p[i];});o.medium='';o.bmi='';o.mobile=o.mobile.replace(/\D/g,'').slice(-10);
     o.g=/^(b|m)/i.test(o.g)?'B':/^(g|f)/i.test(o.g)?'G':'';if(!o.id)o.id='N'+Date.now().toString(36).toUpperCase()+k;
-    if(ids.has(o.id)||nms.has(o.name.toLowerCase())){dup++;return;}ids.add(o.id);nms.add(o.name.toLowerCase());PS.add[cls].push(o);DATA[cls].push(o);n++;});
-  savePS();refreshAll();showToast(n+' మంది చేర్చబడ్డారు ✅'+(dup?' ('+dup+' ఇప్పటికే ఉన్నవారు వదిలేశాం)':''));if(n)closeOvl('entView');}
+    if(ids.has(o.id)||nms[cls].has(o.name.toLowerCase())){dup++;return;}ids.add(o.id);nms[cls].add(o.name.toLowerCase());
+    if((PS.del||{})[o.id])delete PS.del[o.id];(PS.add[cls]=PS.add[cls]||[]).push(o);DATA[cls].push(o);n++;per[cls]=(per[cls]||0)+1;});
+  savePS();refreshAll();
+  showToast(n+' మంది చేర్చబడ్డారు ✅'+(pasteAll&&n?' ('+Object.keys(per).map(c=>(CLS_NAME[c]||c)+': '+per[c]).join(', ')+')':'')+(dup?' · '+dup+' ఇప్పటికే ఉన్నవారు':'')+(bad?' · '+bad+' వరుసల్లో తరగతి లేదు':''));
+  if(n)closeOvl('entView');else if(bad)alert(bad+' వరుసల్లో తరగతి గుర్తించలేకపోయాను. మొదటి కాలమ్‌లో తరగతి (1–10) ఉందో చూడండి, లేదా “ఈ తరగతి మాత్రమే” ఎంచుకోండి.');}
+/* ఉన్న విద్యార్థులను మొత్తం తొలగించు — రెండుసార్లు అడుగుతుంది */
+function delAll(school){const L=school?Object.keys(DATA):[currentClass],n=L.reduce((a,c)=>a+DATA[c].length,0),what=school?'పాఠశాల మొత్తం (అన్ని తరగతులు)':(CLS_NAME[currentClass]||currentClass)+' తరగతి';
+  if(!n){showToast('తొలగించడానికి విద్యార్థులు లేరు');return;}
+  if(!confirm('⚠️ మొదటిసారి అడుగుతున్నాను:\n\n'+what+' — '+n+' మంది విద్యార్థులను తొలగించాలా?\nవారి మార్కులు, హాజరు నమోదులు కూడా పోతాయి.'))return;
+  if(!confirm('⚠️ రెండోసారి — చివరిసారి అడుగుతున్నాను:\n\n'+n+' మంది విద్యార్థుల డేటా శాశ్వతంగా పోతుంది. బ్యాకప్ తీసుకున్నారా?\n\nనిజంగా తొలగించాలా? (OK = తొలగించు, Cancel = వద్దు)'))return;
+  PS.del=PS.del||{};PS.add=PS.add||{};
+  L.forEach(c=>{DATA[c].forEach(s=>{if(!(PS.add[c]||[]).some(x=>x.id===s.id))PS.del[s.id]=1;delete PS.mk[s.id];delete PS.att[s.id];if(PS.pl)delete PS.pl[s.id];if(PS.stu)delete PS.stu[s.id];});PS.add[c]=[];DATA[c]=[];});
+  savePS();closeOvl('entView');refreshAll();showToast(n+' మంది తొలగించబడ్డారు');}
 
 /* తరగతి మొత్తం మార్కుల నమోదు: మదింపు × సబ్జెక్టు */
 let mkA='FA1',mkI=0;
