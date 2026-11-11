@@ -2724,7 +2724,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.11-11';
+const APPV='2026.11.11-13';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -5239,10 +5239,14 @@ function ap25(c){return (typeof APBOOKS25!=='undefined'&&APBOOKS25[c]||[]).map((
 /* పుస్తకం పేరు/ఫైల్ పేరులో SEM1/SEM2 గుర్తు → 1/2; లేకపోతే 0 (సంవత్సరం మొత్తం) */
 function semOf(x){x=String(x||'');if(/SEM[\s_-]*2(?!\d)/i.test(x))return 2;if(/SEM[\s_-]*1(?!\d)/i.test(x))return 1;return 0;}
 function openItem(i){const it=LIB[i];if(!it)return;if(it.k==='aplink'){window.open(it.u,'_blank','noopener,noreferrer');return;}go('book',{u:it.u,t:it.t,k:it.k,back:{tab:param.tab||'books',c:param.c||S.cur.c}});if(it.k==='pdf')pdfInit();}
+/* iframe టూల్ లోపల జత చేసిన PDF (Mission March 📎) – window.open(blob) యాప్‌లో తెరుచుకోదు → యాప్ PDF viewer లో, ✕ = టూల్‌కు తిరిగి. టూల్ ఫైల్ మార్చకుండా. */
+function toolHook(f){try{const w=f.contentWindow,tp=Object.assign({},param);if(!w||typeof w.openPdf!=='function'||typeof w.pdfs!=='function')return;
+ w.openPdf=async function(id){try{const all=await w.pdfs(),x=all.find(y=>y.id===id);if(!x||!x.blob)return;const u=URL.createObjectURL(x.blob);
+  go('book',{u,t:'📄 '+String(x.name||'PDF').replace(/\.pdf$/i,''),k:'pdf',back:{v:'book',p:tp}});pdfInit();}catch(e){toast('PDF తెరవలేకపోయాను');}};}catch(e){}}
 V.book=()=>{const p=param,k=p.k;const ext=/^https?:/i.test(p.u);
  const top=`<div class="bvtop"><button class="ib" onclick="closeBook()" aria-label="మూసివేయి">✕</button><b>${esc(p.t||'')}</b>${k!=='pdf'?`<a class="ib" href="${esc(k==='drive'?'https://drive.google.com/file/d/'+driveId(p.u)+'/view':p.u)}" target="_blank" rel="noopener" aria-label="కొత్త ట్యాబ్">↗</a>`:`<button class="ib" id="akbtn" hidden onclick="akToggle()">🔑</button><button class="ib" id="inkbtn" onclick="inkToggle()">${p.ak?'✏️ జవాబు రాయి':'✏️ రాయి'}</button><a class="ib" href="${esc(p.u)}" target="_blank" rel="noopener" download aria-label="డౌన్‌లోడ్">⬇</a>`}</div>`;
  if(k==='drive')return `<div class="bview">${top}<iframe class="bframe" src="https://drive.google.com/file/d/${esc(driveId(p.u))}/preview" allow="autoplay; fullscreen" referrerpolicy="no-referrer"></iframe></div>`;
- if(k==='tool')return `<div class="bview">${top}<iframe class="bframe" src="${esc(p.u)}" allow="autoplay; fullscreen; clipboard-write; microphone; camera" ${ext?'referrerpolicy="no-referrer"':''}></iframe></div>`;
+ if(k==='tool')return `<div class="bview">${top}<iframe class="bframe" onload="toolHook(this)" src="${esc(p.u)}" allow="autoplay; fullscreen; clipboard-write; microphone; camera" ${ext?'referrerpolicy="no-referrer"':''}></iframe></div>`;
  return `<div class="bview">${top}<div id="bbox" class="bbox"><div id="bmsg" class="bmsg">⏳ పుస్తకం తెరుస్తోంది...</div><div class="bwrap"><canvas id="bcv"></canvas><canvas id="bink"></canvas><div id="btxl"></div></div></div><div id="ansp" class="ansp" hidden></div><div id="inkbar"></div><div id="btxin" hidden><textarea placeholder="✍️ జవాబు ఇక్కడ టైప్ చేయి" maxlength="300"></textarea><button class="x" onclick="inkTxNo()">✕</button><button onclick="inkTxOk()">✓</button></div>
 <div class="bvbot"><button onclick="pdfGo(-1)" aria-label="వెనుక పేజీ">◀</button><span><input id="bpg" inputmode="numeric" value="" onchange="pdfTo(this.value)"> <span id="bpn"></span></span><button onclick="pdfGo(1)" aria-label="తర్వాతి పేజీ">▶</button><button onclick="pdfZoom(0.8)">−</button><button onclick="pdfZoom(1.25)">+</button></div></div>`;};
 function bmsg(h){const m=document.getElementById('bmsg');if(m){m.innerHTML=h;m.style.display=h?'block':'none';}}
