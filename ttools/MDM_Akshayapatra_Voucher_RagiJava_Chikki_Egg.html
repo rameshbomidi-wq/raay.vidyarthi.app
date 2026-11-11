@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MDM డే-వైజ్ వోచర్ + రాగి జావ • చిక్కీ • గుడ్డు – అక్షయపాత్ర నెల్లూరు</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700&family=Baloo+Tamma+2:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--leaf:#2E5E3A;--leaf2:#3F7A4E;--turm:#E0A526;--ink:#1d2a22;--line:#cfd8d1;--bg:#f3f6f3;--warn:#c0392b;--sun:#fdecc8}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Noto Sans Telugu',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:15px}
+header{background:var(--leaf);color:#fff;padding:14px 16px;border-bottom:5px solid var(--turm)}
+header h1{margin:0;font-family:'Baloo Tamma 2','Noto Sans Telugu',sans-serif;font-size:1.35rem;line-height:1.3}
+header p{margin:2px 0 0;opacity:.85;font-size:.85rem}
+main{max-width:1100px;margin:auto;padding:12px}
+.box{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px}
+.box h2{margin:0 0 10px;font-size:1.02rem;color:var(--leaf)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+label{font-size:.8rem;font-weight:600;display:block;margin-bottom:2px}
+input,select{width:100%;padding:8px;border:1px solid var(--line);border-radius:6px;font:inherit;font-size:.95rem;background:#fff}
+input:focus,select:focus{outline:2px solid var(--turm);border-color:var(--turm)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tabs button{flex:1;min-width:95px}
+button{font:inherit;font-weight:600;border:1px solid var(--leaf);background:#fff;color:var(--leaf);border-radius:7px;padding:8px 10px;cursor:pointer}
+button.on,button.pri{background:var(--leaf);color:#fff}
+button.acc{background:var(--turm);border-color:var(--turm);color:#2a1d00}
+button.del{border-color:var(--warn);color:var(--warn)}
+button:focus-visible{outline:3px solid var(--turm)}
+.rolls{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:6px}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.chip{width:40px;height:40px;padding:0;border-radius:50%;border:1px solid var(--line);color:var(--ink);background:#fff;position:relative}
+.chip.done{background:#dcefe0;border-color:var(--leaf2)}
+.chip.hol{background:var(--sun);border-color:var(--turm);color:#7a5200}
+.chip.cur{outline:3px solid var(--leaf);outline-offset:1px}
+.entry table{width:100%;border-collapse:collapse}
+.entry th,.entry td{padding:5px;border-bottom:1px solid var(--line);text-align:center}
+.entry th{font-size:.8rem;color:#4b5b50}
+.entry input{text-align:center;max-width:110px}
+.entry input.bad{border-color:var(--warn);background:#fdecea}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.row .sp{flex:1}
+.note{font-size:.8rem;color:#5a6a5f}
+.tot{font-weight:700;color:var(--leaf)}
+.prevwrap{overflow-x:auto;background:#e9ece9;padding:10px;border-radius:8px}
+.page{background:#fff;width:200mm;margin:auto;padding:6mm;color:#000;font-family:Arial,Helvetica,sans-serif}
+.vf{width:100%;border-collapse:collapse;font-size:8.5pt}
+.vf td,.vf th{border:1px solid #000;padding:0 2px;text-align:center;height:6.1mm}
+.vf .hd td{font-weight:bold;text-align:left;height:5.5mm}
+.vf .ttl{font-size:10.5pt;font-weight:bold;text-align:center!important}
+.vf th{font-weight:normal;font-size:7.5pt}
+.vf th.cl{font-weight:bold;font-size:9pt}
+.vf td.hl{font-style:italic;color:#444;letter-spacing:.5px}
+.vf tr.tr td{font-weight:bold}
+.sig{display:flex;justify-content:space-between;margin-top:14mm;font-size:9pt;font-weight:bold;padding:0 10mm}
+footer{text-align:center;padding:16px;font-size:.9rem}
+footer a{color:var(--leaf);font-weight:700;text-decoration:none;border-bottom:2px solid var(--turm)}
+.mswitch{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;margin-bottom:12px;border-radius:8px;background:#eef5ef;border:1px solid var(--line)}
+.mswitch.off{background:#f6f1e4}
+.sw{width:64px;height:34px;border-radius:20px;padding:0;position:relative;background:#b9c2bb;border:none;flex:none}
+.sw span{position:absolute;top:3px;left:3px;width:28px;height:28px;border-radius:50%;background:#fff;transition:left .2s}
+.sw.on{background:var(--leaf)}
+.sw.on span{left:33px}
+.sw::after{content:'OFF';position:absolute;right:8px;top:8px;font-size:.7rem;color:#fff}
+.sw.on::after{content:'ON';left:9px;right:auto}
+@media (prefers-reduced-motion:reduce){.sw span{transition:none}}
+.gwrap{overflow:auto;max-height:75vh;border:1px solid var(--line);border-radius:8px}
+.g{border-collapse:collapse;font-size:.85rem;min-width:100%}
+.g th,.g td{border:1px solid var(--line);padding:2px;text-align:center}
+.g thead th{position:sticky;top:0;background:var(--leaf);color:#fff;font-weight:600;font-size:.75rem;padding:4px;z-index:2}
+.g thead tr:nth-child(2) th{top:26px}
+.g .dc{position:sticky;left:0;background:#fff;z-index:1}
+.g thead .dc{z-index:3;background:var(--leaf)}
+.g input{width:52px;padding:5px 2px;text-align:center;border-radius:4px}
+.g input.bad{border-color:var(--warn);background:#fdecea}
+.g td.off{background:#eee}
+.g .rt{font-weight:700;color:#d10000;min-width:44px}
+.g tfoot td{position:sticky;bottom:0;background:#fdeeee;font-weight:700;color:#d10000;padding:6px 2px}
+.vf .rd,.vf tr.tr td{color:#d10000}
+*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.db{width:42px;padding:2px;border-color:var(--line);color:var(--ink);line-height:1.1}
+.db small{display:block;font-size:.65rem;color:#6b7b70}
+.db.h{background:var(--sun);border-color:var(--turm)}
+.g td.hr{background:var(--sun)}
+.g td.hr input{width:100%;max-width:260px;background:transparent;border:1px dashed var(--turm);font-style:italic}
+.vtabs{display:flex;gap:6px;margin-bottom:12px}.vtabs button{flex:1;padding:10px 6px}
+.g th.sr,.vf th.sr{background:#8a4b12;color:#fff}.g th.sc,.vf th.sc{background:#a8751a;color:#fff}.g th.se,.vf th.se{background:#b23a2a;color:#fff}
+.g thead tr:nth-child(2) th.sr{background:#8a4b12}.g thead tr:nth-child(2) th.sc{background:#a8751a}.g thead tr:nth-child(2) th.se{background:#b23a2a}
+.g td.na{background:#eceeec;color:#9aa39c}
+.g.sup input{width:46px}
+.vf.sv{font-size:7.5pt;table-layout:fixed}.vf.sv th{font-size:6.8pt}.vf.sv th.sr,.vf.sv th.sc,.vf.sv th.se{background:#fff;color:#000;font-weight:bold}
+.vf td.na{background:#e4e4e4}
+.vf .nt td{font-weight:normal;font-size:7.5pt;text-align:left;height:5mm}
+.legend{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}.legend span{font-size:.8rem;border-radius:14px;padding:3px 10px;color:#fff;font-weight:600}
+#printArea{display:none}
+@media print{
+  @page{size:A4 portrait;margin:6mm}
+  body{background:#fff}
+  header,main,footer{display:none!important}
+  #printArea{display:block}
+  .page{width:auto;padding:0;page-break-after:always;break-after:page}
+  .page:last-child{page-break-after:auto;break-after:auto}
+}
+@media (max-width:560px){.entry input{max-width:80px;padding:6px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>మధ్యాహ్న భోజనం – డే-వైజ్ వోచర్</h1>
+  <p>ది అక్షయపాత్ర ఫౌండేషన్ – నెల్లూరు · 1–5 / 6–8 / 9–10 తరగతుల ఫార్మాట్లు · రాగి జావ, చిక్కీ, గుడ్డు నెలవారీ రిజిస్టర్</p>
+</header>
+
+<main>
+  <section class="box">
+    <h2>పాఠశాల వివరాలు</h2>
+    <div class="grid">
+      <div><label>మండలం</label><input id="mandal"></div>
+      <div><label>పాఠశాల పేరు</label><input id="school"></div>
+      <div><label>స్కూల్ కోడ్</label><input id="code" inputmode="numeric"></div>
+      <div><label>నెల</label><select id="month"></select></div>
+      <div><label>సంవత్సరం</label><input id="year" type="number" min="2020" max="2100"></div>
+    </div>
+  </section>
+
+  <section class="box">
+    <h2>ఫార్మాట్ ఎంచుకోండి</h2>
+    <div class="tabs" id="tabs"></div>
+    <label>తరగతి వారీ రోల్ (Total Roll కోసం)</label>
+    <div class="rolls" id="rolls"></div>
+  </section>
+
+  <section class="box">
+    <div class="vtabs" id="vtabs"></div>
+    <div class="legend" id="legend" hidden><span style="background:#a8751a">చిక్కీ – సోమ, బుధ, శుక్ర</span><span style="background:#8a4b12">రాగి జావ – మంగళ, గురు, శని</span><span style="background:#b23a2a">గుడ్డు – సోమ నుండి శుక్ర (శనివారం లేదు)</span></div>
+    <div class="mswitch">
+      <div><b>Meals Taken</b><br><span class="note" id="mNote"></span></div>
+      <button id="mToggle" class="sw" role="switch"><span></span></button>
+    </div>
+    <h2 id="gTitle">నెలవారీ నమోదు</h2>
+    <p class="note" id="gNote" style="margin:0 0 8px">బాక్సుల్లో నేరుగా హాజరు టైప్ చేయండి. Enter = పక్క బాక్స్, ↑↓ = పై/కింది రోజు. సెలవు కోసం రోజు నంబర్ నొక్కండి (ఆదివారాలు ఆటోగా సెలవు).</p>
+    <div class="gwrap"><table class="g" id="grid"></table></div>
+    <div class="row">
+      <button class="pri" id="printCur">ఈ ఫార్మాట్ ప్రింట్</button>
+      <button class="acc" id="printAll">3 ఫార్మాట్లు ప్రింట్</button>
+      <button id="printBlank">ఖాళీ ఫారం ప్రింట్</button>
+      <span class="sp"></span>
+      <button id="csv">Excel (CSV)</button>
+      <button id="backup">బ్యాకప్</button>
+      <button id="restoreBtn">రీస్టోర్</button>
+      <input type="file" id="restore" accept=".json" hidden>
+      <button id="clearMonth" class="del">నెల డేటా క్లియర్</button>
+    </div>
+  </section>
+</main>
+
+<footer>తయారీ: <a href="https://raayeducation.in" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a></footer>
+<div id="printArea"></div>
+
+<script>
+const FMT={p:{t:'1–5 తరగతులు',c:[1,2,3,4,5]},u:{t:'6–8 తరగతులు',c:[6,7,8]},h:{t:'9–10 తరగతులు',c:[9,10]}};
+const MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MON_TE=['జనవరి','ఫిబ్రవరి','మార్చి','ఏప్రిల్','మే','జూన్','జూలై','ఆగస్టు','సెప్టెంబర్','అక్టోబర్','నవంబర్','డిసెంబర్'];
+const ORD=n=>n+(n==1?'st':n==2?'nd':n==3?'rd':'th');
+const KEY='mdm_akshaya_v1';
+const $=id=>document.getElementById(id);
+let S;
+try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+const now=new Date();
+S=Object.assign({mandal:'Gudur',school:'ZPHS TV Palli',code:'',year:now.getFullYear(),month:now.getMonth(),fmt:'p',rolls:{},data:{},meals:true,day:1,view:'m'},S||{});
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const mk=()=>S.year+'-'+String(+S.month+1).padStart(2,'0');
+const dim=()=>new Date(S.year,+S.month+1,0).getDate();
+const isSun=d=>new Date(S.year,S.month,d).getDay()===0;
+const getD=(d,c)=>{const m=S.data[mk()]||(c?(S.data[mk()]={}):null);if(!m)return null;return m[d]||(c?(m[d]={v:{}}):null)};
+const isHol=d=>{const o=getD(d);return o&&o.hol!==undefined?o.hol:isSun(d)};
+const reason=d=>{const o=getD(d);return (o&&o.r)||(isSun(d)?'Sunday':'Holiday')};
+const val=(d,c,k)=>{const o=getD(d);const v=o&&o.v[c]&&o.v[c][k];return v===''||v==null?'':+v};
+const mv=(d,c)=>{if(!S.meals)return '';const m=val(d,c,'m');return m!==''?m:val(d,c,'a')};
+/* రాగి జావ / చిక్కీ / గుడ్డు – వారపు రోజులు (0=ఆది … 6=శని) */
+const SUP=[['r','Ragi Java','రాగి జావ',[2,4,6],'sr'],['c','Chikki','చిక్కీ',[1,3,5],'sc'],['e','Egg','గుడ్డు',[1,2,3,4,5],'se']];
+const supOn=(d,k)=>SUP.find(x=>x[0]===k)[3].includes(new Date(S.year,S.month,d).getDay());
+const base=(d,c)=>{const m=val(d,c,'m');return m!==''?m:val(d,c,'a')};
+/* ఆ రోజు వర్తించకపోతే null; టీచర్ మార్చిన సంఖ్య ఉంటే అది, లేకపోతే భోజనం (లేదా హాజరు) సంఖ్యే */
+const sv=(d,c,k)=>{if(!supOn(d,k))return null;const o=val(d,c,k);return o!==''?o:base(d,c)};
+const hasData=d=>{const o=getD(d);return o&&Object.values(o.v).some(x=>x.a!==''&&x.a!=null||x.m!==''&&x.m!=null)};
+
+function initForm(){
+  $('month').innerHTML=MON_TE.map((m,i)=>`<option value="${i}">${m}</option>`).join('');
+  ['mandal','school','code','year','month'].forEach(k=>{$(k).value=S[k];$(k).oninput=()=>{S[k]=k==='year'||k==='month'?+$(k).value:$(k).value;save();renderAll()}});
+  $('mToggle').onclick=()=>{S.meals=!S.meals;save();renderAll()};
+}
+function renderTabs(){
+  $('tabs').innerHTML=Object.entries(FMT).map(([k,f])=>`<button class="${S.fmt===k?'on':''}" data-f="${k}">${f.t}</button>`).join('');
+  $('tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{S.fmt=b.dataset.f;save();renderAll()});
+  $('rolls').innerHTML=FMT[S.fmt].c.map(c=>`<div><label>${c} వ తరగతి</label><input type="number" min="0" inputmode="numeric" data-r="${c}" value="${S.rolls[c]??''}"></div>`).join('');
+  $('rolls').querySelectorAll('input').forEach(i=>i.oninput=()=>{S.rolls[i.dataset.r]=i.value;save();totals()});
+}
+function renderGrid(){
+  const sup=S.view==='s';
+  $('vtabs').innerHTML=[['m','🍛 భోజనం వోచర్'],['s','🥚 రాగి జావ • చిక్కీ • గుడ్డు']].map(([k,t])=>`<button class="${S.view===k?'on':''}" data-v="${k}">${t}</button>`).join('');
+  $('vtabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{S.view=b.dataset.v;save();renderAll()});
+  $('legend').hidden=!sup;$('mToggle').closest('.mswitch').style.display=sup?'none':'';$('grid').classList.toggle('sup',sup);
+  $('gNote').textContent=sup?'భోజనం వోచర్‌లో వేసిన సంఖ్యలే ఇక్కడ ఆటోగా వస్తాయి (ఆ వస్తువు ఇచ్చే రోజుల్లో మాత్రమే). తేడా ఉంటే బాక్స్‌లో సంఖ్య మార్చండి; ఖాళీ చేస్తే మళ్ళీ ఆటో సంఖ్య వస్తుంది. బూడిద రంగు గడి = ఆ రోజు ఇవ్వరు.':'బాక్సుల్లో నేరుగా హాజరు టైప్ చేయండి. Enter = పక్క బాక్స్, ↑↓ = పై/కింది రోజు. సెలవు కోసం రోజు నంబర్ నొక్కండి (ఆదివారాలు ఆటోగా సెలవు).';
+  if(sup){renderSup();return}
+  const cls=FMT[S.fmt].c,n=cls.length,D=dim(),M=S.meals;
+  const wd=['ఆ','సో','మం','బు','గు','శు','శ'];
+  $('gTitle').textContent=`నెలవారీ నమోదు – ${MON_TE[S.month]} ${S.year} (${FMT[S.fmt].t})`;
+  let h=`<thead><tr><th rowspan="2" class="dc">రోజు</th>${cls.map(c=>`<th colspan="2">${c} వ తరగతి</th>`).join('')}<th rowspan="2">Total<br>Attend</th><th rowspan="2">Total<br>Meals</th></tr>
+  <tr>${cls.map(()=>`<th>హాజరు</th><th>భోజనం</th>`).join('')}</tr></thead><tbody>`;
+  for(let d=1;d<=D;d++){
+    const dw=wd[new Date(S.year,S.month,d).getDay()];
+    h+=`<tr data-d="${d}"><td class="dc"><button class="db ${isHol(d)?'h':''}" data-hd="${d}" title="సెలవు ఆన్/ఆఫ్">${d}<small>${dw}</small></button></td>`;
+    if(isHol(d)){h+=`<td colspan="${n*2+2}" class="hr"><input data-rs="${d}" value="${reason(d).replace(/"/g,'&quot;')}"></td>`}
+    else{cls.forEach(c=>{h+=`<td><input type="number" min="0" inputmode="numeric" data-d="${d}" data-c="${c}" data-k="a" value="${val(d,c,'a')}"></td><td class="${M?'':'off'}">${M?`<input type="number" min="0" inputmode="numeric" data-d="${d}" data-c="${c}" data-k="m" value="${mv(d,c)}">`:''}</td>`});
+      h+=`<td class="rt" id="ra${d}"></td><td class="rt" id="rm${d}"></td>`}
+    h+='</tr>';
+  }
+  h+=`</tbody><tfoot><tr><td class="dc">Total</td>${cls.map(c=>`<td id="ca${c}"></td><td id="cm${c}"></td>`).join('')}<td id="ga"></td><td id="gm"></td></tr></tfoot>`;
+  $('grid').innerHTML=h;
+  $('grid').querySelectorAll('[data-hd]').forEach(b=>b.onclick=()=>{const d=+b.dataset.hd,o=getD(d,true);o.hol=!isHol(d);if(o.hol&&!o.r)o.r=isSun(d)?'Sunday':'Holiday';save();renderGrid()});
+  $('grid').querySelectorAll('[data-rs]').forEach(i=>i.oninput=()=>{getD(+i.dataset.rs,true).r=i.value;save()});
+  const ins=[...$('grid').querySelectorAll('input[data-k]')];
+  ins.forEach((i,ix)=>{
+    i.oninput=()=>{const d=+i.dataset.d,c=i.dataset.c,o=getD(d,true);o.v[c]=o.v[c]||{};o.v[c][i.dataset.k]=i.value;
+      if(i.dataset.k==='a'){o.v[c].m=i.value;const mi=$('grid').querySelector(`[data-d="${d}"][data-c="${c}"][data-k=m]`);if(mi)mi.value=i.value}
+      save();totals()};
+    i.onkeydown=e=>{
+      const same=(dir)=>{let d=+i.dataset.d+dir;while(d>=1&&d<=D){const t=$('grid').querySelector(`input[data-d="${d}"][data-c="${i.dataset.c}"][data-k="${i.dataset.k}"]`);if(t)return t;d+=dir}};
+      if(e.key==='Enter'){e.preventDefault();let n=ins[ix+1];if(M&&i.dataset.k==='a'&&n&&n.dataset.k==='m')n=ins[ix+2];if(n){n.focus();n.select()}}
+      else if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();const t=same(e.key==='ArrowDown'?1:-1);if(t){t.focus();t.select()}}
+    };
+  });
+  totals();
+}
+function renderSup(){
+  const cls=FMT[S.fmt].c,n=cls.length,D=dim();
+  const wd=['ఆ','సో','మం','బు','గు','శు','శ'];
+  $('gTitle').textContent=`రాగి జావ • చిక్కీ • గుడ్డు – ${MON_TE[S.month]} ${S.year} (${FMT[S.fmt].t})`;
+  let h=`<thead><tr><th rowspan="2" class="dc">రోజు</th>${cls.map(c=>`<th colspan="3">${c} వ తరగతి</th>`).join('')}<th colspan="3">మొత్తం</th></tr>
+  <tr>${(cls.map(()=>SUP.map(x=>`<th class="${x[4]}">${x[2]}</th>`).join('')).join(''))}${SUP.map(x=>`<th class="${x[4]}">${x[2]}</th>`).join('')}</tr></thead><tbody>`;
+  for(let d=1;d<=D;d++){
+    const dw=wd[new Date(S.year,S.month,d).getDay()];
+    h+=`<tr data-d="${d}"><td class="dc"><button class="db ${isHol(d)?'h':''}" data-hd="${d}" title="సెలవు ఆన్/ఆఫ్">${d}<small>${dw}</small></button></td>`;
+    if(isHol(d)){h+=`<td colspan="${n*3+3}" class="hr"><input data-rs="${d}" value="${reason(d).replace(/"/g,'&quot;')}"></td>`}
+    else{cls.forEach(c=>SUP.forEach(x=>{const v=sv(d,c,x[0]);h+=v===null?'<td class="na">–</td>':`<td><input type="number" min="0" inputmode="numeric" data-d="${d}" data-c="${c}" data-k="${x[0]}" value="${v}"></td>`}));
+      h+=SUP.map(x=>supOn(d,x[0])?`<td class="rt" id="s${x[0]}${d}"></td>`:'<td class="na">–</td>').join('')}
+    h+='</tr>';
+  }
+  h+=`</tbody><tfoot><tr><td class="dc">Total</td>${cls.map(c=>SUP.map(x=>`<td id="t${x[0]}${c}"></td>`).join('')).join('')}${SUP.map(x=>`<td id="g${x[0]}"></td>`).join('')}</tr></tfoot>`;
+  $('grid').innerHTML=h;
+  $('grid').querySelectorAll('[data-hd]').forEach(b=>b.onclick=()=>{const d=+b.dataset.hd,o=getD(d,true);o.hol=!isHol(d);if(o.hol&&!o.r)o.r=isSun(d)?'Sunday':'Holiday';save();renderGrid()});
+  $('grid').querySelectorAll('[data-rs]').forEach(i=>i.oninput=()=>{getD(+i.dataset.rs,true).r=i.value;save()});
+  const ins=[...$('grid').querySelectorAll('input[data-k]')];
+  ins.forEach((i,ix)=>{
+    i.oninput=()=>{const d=+i.dataset.d,c=i.dataset.c,o=getD(d,true);o.v[c]=o.v[c]||{};o.v[c][i.dataset.k]=i.value;save();supTotals()};
+    i.onblur=()=>{if(i.value===''){const v=sv(+i.dataset.d,i.dataset.c,i.dataset.k);i.value=v===null?'':v;supTotals()}};
+    i.onkeydown=e=>{
+      const same=(dir)=>{let d=+i.dataset.d+dir;while(d>=1&&d<=D){const t=$('grid').querySelector(`input[data-d="${d}"][data-c="${i.dataset.c}"][data-k="${i.dataset.k}"]`);if(t)return t;d+=dir}};
+      if(e.key==='Enter'){e.preventDefault();const n=ins[ix+1];if(n){n.focus();n.select()}}
+      else if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();const t=same(e.key==='ArrowDown'?1:-1);if(t){t.focus();t.select()}}
+    };
+  });
+  supTotals();
+}
+function supTotals(){
+  const cls=FMT[S.fmt].c,D=dim();const T={},G={};SUP.forEach(x=>{G[x[0]]=0;cls.forEach(c=>T[x[0]+c]=0)});
+  for(let d=1;d<=D;d++){if(isHol(d))continue;
+    SUP.forEach(x=>{const k=x[0];if(!supOn(d,k))return;let r=0,any=false;
+      cls.forEach(c=>{const v=sv(d,c,k);if(v!==''&&v!==null)any=true;r+=+v||0;T[k+c]+=+v||0;
+        const i=$('grid').querySelector(`[data-d="${d}"][data-c="${c}"][data-k="${k}"]`),a=val(d,c,'a');if(i)i.classList.toggle('bad',a!==''&&v!==''&&v>a)});
+      G[k]+=r;const e=$('s'+k+d);if(e)e.textContent=any?r:''})}
+  SUP.forEach(x=>{cls.forEach(c=>{$('t'+x[0]+c).textContent=T[x[0]+c]||''});$('g'+x[0]).textContent=G[x[0]]||''});
+}
+/* A4 ప్రింట్ – రాగి జావ + చిక్కీ + గుడ్డు నెలవారీ రిజిస్టర్ */
+function formSup(fk,blank){
+  const cls=FMT[fk].c,n=cls.length,D=dim(),cols=1+n*3+3;
+  const roll=cls.reduce((s,c)=>s+(+S.rolls[c]||0),0);
+  const esc=s=>String(s||'').replace(/[&<>]/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[x]));
+  const half=Math.ceil(cols/2);
+  const sh=SUP.map(x=>`<th class="${x[4]}">${x[1].replace(' Java','')}</th>`).join('');
+  let h=`<div class="page"><table class="vf sv"><colgroup><col style="width:${n>3?5:7}%">${'<col>'.repeat(n*3+3)}</colgroup>
+  <tr class="hd"><td colspan="${cols}" class="ttl">DAY - WISE REGISTER OF RAGI JAVA, CHIKKI &amp; EGG FOR THE YEAR - ${S.year}</td></tr>
+  <tr class="hd"><td colspan="${cols}" class="ttl" style="font-size:9.5pt">MID - DAY MEALS PROGRAMME · THE AKSHAYAPATRA FOUNDATION - NELLORE</td></tr>
+  <tr class="hd"><td colspan="${half}">NAME OF THE MANDAL : ${blank?'':esc(S.mandal)}</td><td colspan="${cols-half}">MONTH: ${MON[S.month]}</td></tr>
+  <tr class="hd"><td colspan="${half}">NAME OF THE SCHOOL : ${blank?'':esc(S.school)}</td><td colspan="${cols-half}">TOTAL ROLL : ${blank||!roll?'':roll}</td></tr>
+  <tr class="hd"><td colspan="${half}">SCHOOL CODE : ${blank?'':esc(S.code)}</td><td colspan="${cols-half}">CLASSES : ${cls[0]} - ${cls[n-1]}</td></tr>
+  <tr class="hd nt"><td colspan="${cols}">Chikki : Mon, Wed, Fri &nbsp;|&nbsp; Ragi Java : Tue, Thu, Sat &nbsp;|&nbsp; Egg : Mon to Fri (no egg on Saturday)</td></tr>
+  <tr><th rowspan="2" class="cl" style="font-size:8pt">DAY</th>${cls.map(c=>`<th colspan="3" class="cl">${ORD(c)} Class</th>`).join('')}<th colspan="3" class="cl">Total</th></tr>
+  <tr>${cls.map(()=>sh).join('')}${sh}</tr>`;
+  const T={},G={};SUP.forEach(x=>{G[x[0]]=0;cls.forEach(c=>T[x[0]+c]=0)});
+  for(let d=1;d<=31;d++){
+    h+=`<tr><td>${d}</td>`;
+    if(d>D){h+='<td></td>'.repeat(n*3+3)}
+    else if(isHol(d)){h+=`<td colspan="${n*3+3}" class="hl">${esc(reason(d))}</td>`}
+    else{const R={};SUP.forEach(x=>R[x[0]]={s:0,any:false});
+      cls.forEach(c=>SUP.forEach(x=>{const k=x[0];if(!supOn(d,k)){h+='<td class="na"></td>';return}
+        const v=blank?'':sv(d,c,k);if(v!=='')R[k].any=true;R[k].s+=+v||0;T[k+c]+=+v||0;h+=`<td>${v}</td>`}));
+      SUP.forEach(x=>{const k=x[0];if(!supOn(d,k)){h+='<td class="na"></td>';return}G[k]+=R[k].s;h+=`<td class="rd">${R[k].any?R[k].s:''}</td>`})}
+    h+='</tr>';
+  }
+  h+=`<tr class="tr"><td style="text-align:left">Total</td>${cls.map(c=>SUP.map(x=>`<td>${blank?'':T[x[0]+c]||''}</td>`).join('')).join('')}${SUP.map(x=>`<td>${blank?'':G[x[0]]||''}</td>`).join('')}</tr></table>
+  <div class="sig"><span>Signature of the implementing authority</span><span>Signature of the Head Master</span></div></div>`;
+  return h;
+}
+function totals(){
+  const cls=FMT[S.fmt].c,D=dim(),M=S.meals;let GA=0,GM=0;const T={};cls.forEach(c=>T[c]={a:0,m:0});
+  for(let d=1;d<=D;d++){if(isHol(d))continue;let a=0,m=0,any=false;
+    cls.forEach(c=>{const x=val(d,c,'a'),y=mv(d,c);if(x!=='')any=true;a+=+x||0;m+=+y||0;T[c].a+=+x||0;T[c].m+=+y||0;
+      const r=+S.rolls[c]||0,ai=$('grid').querySelector(`[data-d="${d}"][data-c="${c}"][data-k=a]`),mi=$('grid').querySelector(`[data-d="${d}"][data-c="${c}"][data-k=m]`);
+      if(ai)ai.classList.toggle('bad',!!(r&&x!==''&&x>r));if(mi)mi.classList.toggle('bad',y!==''&&x!==''&&y>x)});
+    GA+=a;GM+=m;$('ra'+d).textContent=any?a:'';$('rm'+d).textContent=any&&M?m:''}
+  cls.forEach(c=>{$('ca'+c).textContent=T[c].a||'';$('cm'+c).textContent=M&&T[c].m||''});
+  $('ga').textContent=GA||'';$('gm').textContent=M&&GM||'';
+}
+function form(fk,blank){
+  const cls=FMT[fk].c,n=cls.length,D=dim(),cols=1+n*2+2;
+  const roll=cls.reduce((s,c)=>s+(+S.rolls[c]||0),0);
+  const esc=s=>String(s||'').replace(/[&<>]/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[x]));
+  const half=Math.ceil(cols/2);
+  let h=`<div class="page"><table class="vf"><colgroup><col style="width:${n>3?7:9}%">${'<col>'.repeat(n*2)}<col style="width:${n>3?9:13}%"><col style="width:${n>3?9:13}%"></colgroup>
+  <tr class="hd"><td colspan="${cols}" class="ttl">DAY - WISE VOUCHER FOR SERVING MID - DAY MEALS PROGRAMME FOR THE YEAR - ${S.year}</td></tr>
+  <tr class="hd"><td colspan="${cols}" class="ttl" style="font-size:9.5pt">THE AKSHAYAPATRA FOUNDATION - NELLORE</td></tr>
+  <tr class="hd"><td colspan="${half}">NAME OF THE MANDAL : ${blank?'':esc(S.mandal)}</td><td colspan="${cols-half}">MONTH: ${MON[S.month]}</td></tr>
+  <tr class="hd"><td colspan="${half}">NAME OF THE SCHOOL : ${blank?'':esc(S.school)}</td><td colspan="${cols-half}">TOTAL ROLL : ${blank||!roll?'':roll}</td></tr>
+  <tr class="hd"><td colspan="${cols}">SCHOOL CODE : ${blank?'':esc(S.code)}</td></tr>
+  <tr><th rowspan="2" class="cl" style="font-size:8pt">DAY</th>${cls.map(c=>`<th colspan="2" class="cl">${ORD(c)} Class</th>`).join('')}<th rowspan="2" class="cl" style="font-size:7.5pt">Total Attend</th><th rowspan="2" class="cl" style="font-size:7.5pt">Total Meals Taken</th></tr>
+  <tr>${cls.map(()=>'<th>Attend</th><th>Meals Taken</th>').join('')}</tr>`;
+  const T={};cls.forEach(c=>T[c]={a:0,m:0});let GA=0,GM=0;
+  for(let d=1;d<=31;d++){
+    h+=`<tr><td>${d}</td>`;
+    if(blank||d>D){h+='<td></td>'.repeat(n*2+2)}
+    else if(isHol(d)){h+=`<td colspan="${n*2+2}" class="hl">${esc(reason(d))}</td>`}
+    else{let ra=0,rm=0,any=false;
+      cls.forEach(c=>{const a=val(d,c,'a'),m=mv(d,c);if(a!=='')any=true;ra+=+a||0;rm+=+m||0;T[c].a+=+a||0;T[c].m+=+m||0;h+=`<td>${a}</td><td>${m}</td>`});
+      GA+=ra;GM+=rm;h+=`<td class="rd">${any?ra:''}</td><td class="rd">${any&&S.meals?rm:''}</td>`}
+    h+='</tr>';
+  }
+  h+=`<tr class="tr"><td style="text-align:left">Total:</td>${cls.map(c=>blank?'<td></td><td></td>':`<td>${T[c].a||''}</td><td>${S.meals&&T[c].m||''}</td>`).join('')}<td>${blank?'':GA||''}</td><td>${blank||!S.meals?'':GM||''}</td></tr></table>
+  <div class="sig"><span>Signature of the implementing authority</span><span>Signature of the Head Master</span></div></div>`;
+  return h;
+}
+function doPrint(list,blank){$('printArea').innerHTML=list.map(f=>(S.view==='s'?formSup:form)(f,blank)).join('');setTimeout(()=>window.print(),150)}
+$('printCur').onclick=()=>doPrint([S.fmt]);
+$('printAll').onclick=()=>doPrint(['p','u','h']);
+$('printBlank').onclick=()=>doPrint([S.fmt],true);
+
+$('csv').onclick=()=>{
+  const cls=FMT[S.fmt].c;
+  if(S.view==='s'){let r=[['Day',...cls.flatMap(c=>SUP.map(x=>ORD(c)+' '+x[1])),...SUP.map(x=>'Total '+x[1])]];
+    for(let d=1;d<=dim();d++){if(isHol(d)){r.push([d,reason(d)]);continue}const row=[d],t={};SUP.forEach(x=>t[x[0]]=0);
+      cls.forEach(c=>SUP.forEach(x=>{const v=sv(d,c,x[0]);row.push(v===null?'-':v);t[x[0]]+=+v||0}));r.push([...row,...SUP.map(x=>supOn(d,x[0])?t[x[0]]:'-')])}
+    dl('\ufeff'+r.map(x=>x.join(',')).join('\n'),`MDM_RagiJava_Chikki_Egg_${FMT[S.fmt].t}_${mk()}.csv`,'text/csv');return}let r=[['Day',...cls.flatMap(c=>[ORD(c)+' Attend',ORD(c)+' Meals']),'Total Attend','Total Meals']];
+  for(let d=1;d<=dim();d++){if(isHol(d)){r.push([d,reason(d)]);continue}let a=0,m=0;const row=[d];cls.forEach(c=>{const x=val(d,c,'a'),y=mv(d,c);a+=+x||0;m+=+y||0;row.push(x,y)});r.push([...row,a,S.meals?m:''])}
+  dl('\ufeff'+r.map(x=>x.join(',')).join('\n'),`MDM_${FMT[S.fmt].t}_${mk()}.csv`,'text/csv');
+};
+$('backup').onclick=()=>dl(JSON.stringify(S),`MDM_backup_${mk()}.json`,'application/json');
+$('restoreBtn').onclick=()=>$('restore').click();
+$('restore').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{S=Object.assign(S,JSON.parse(rd.result));save();initForm();renderAll();alert('రీస్టోర్ అయింది')}catch(x){alert('ఫైల్ సరైనది కాదు – MDM బ్యాకప్ .json ఫైల్ ఎంచుకోండి')}};rd.readAsText(f)};
+$('clearMonth').onclick=()=>{if(confirm(`${MON_TE[S.month]} ${S.year} నెల మొత్తం డేటా తొలగించాలా?`)){delete S.data[mk()];save();renderAll()}};
+function dl(txt,name,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type}));a.download=name;document.body.appendChild(a);a.click();a.remove()}
+
+function renderSwitch(){const t=$('mToggle');t.classList.toggle('on',S.meals);t.setAttribute('aria-checked',S.meals);t.closest('.mswitch').classList.toggle('off',!S.meals);$('mNote').textContent=S.meals?'ON – హాజరు సంఖ్యే భోజనంగా వచ్చి, మొత్తం లెక్కిస్తుంది':'OFF – Meals Taken కాలమ్, మొత్తం ఖాళీగా ఉంటాయి'}
+function renderAll(){renderSwitch();renderTabs();renderGrid()}
+initForm();renderAll();
+</script>
+</body>
+</html>

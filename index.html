@@ -2723,7 +2723,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.11-3';
+const APPV='2026.11.11-4';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -5347,7 +5347,7 @@ async function pdfDraw(){if(!BV.doc)return;const tok=++BV.tok,n=BV.page;const pg
 function pdfGo(d){if(!BV.doc)return;const n=Math.min(BV.n,Math.max(1,BV.page+d));if(n!==BV.page){BV.page=n;pdfDraw();}}
 function pdfTo(v){if(!BV.doc)return;const n=parseInt(v,10);if(n>=1&&n<=BV.n){BV.page=n;pdfDraw();}else{const pg=document.getElementById('bpg');if(pg)pg.value=BV.page;}}
 function pdfZoom(f){if(!BV.doc)return;BV.zoom=Math.min(4,Math.max(0.6,BV.zoom*f));pdfDraw();}
-function closeBook(){try{inkFlush();}catch(e){}INK.on=false;INK.key='';INK.d=null;inkTxNo();try{BV.rt&&BV.rt.cancel();}catch(e){}try{BV.doc&&BV.doc.destroy();}catch(e){}try{BV.task0&&BV.task0.destroy();}catch(e){}const b=param.back||{};BV={};if(b.test)go('test');else if(b.tch)go('teacher',{t:'tb'});else if(b.tbl)go('tbl',{s:b.s,id:b.id,wb:1});else if(b.v)go(b.v);else go('library',b);}
+function closeBook(){try{inkFlush();}catch(e){}INK.on=false;INK.key='';INK.d=null;inkTxNo();try{BV.rt&&BV.rt.cancel();}catch(e){}try{BV.doc&&BV.doc.destroy();}catch(e){}try{BV.task0&&BV.task0.destroy();}catch(e){}const b=param.back||{};BV={};if(b.test)go('test');else if(b.tch)go('teacher',{t:'tb'});else if(b.tbl)go('tbl',{s:b.s,id:b.id,wb:1});else if(b.v)go(b.v,b.p);else go('library',b);}
 document.addEventListener('keydown',e=>{if(view!=='book'||param.k!=='pdf'||(e.target&&e.target.tagName==='INPUT'))return;
  if(e.key==='ArrowRight'||e.key==='PageDown'){pdfGo(1);e.preventDefault();}else if(e.key==='ArrowLeft'||e.key==='PageUp'){pdfGo(-1);e.preventDefault();}
  else if(e.key==='+'||e.key==='='){pdfZoom(1.25);}else if(e.key==='-'){pdfZoom(0.8);}else if(e.key==='Escape'||e.key==='Backspace'){closeBook();}});
@@ -5355,8 +5355,17 @@ let tsx=null,tsy=null;
 document.addEventListener('touchstart',e=>{if(view==='book'&&param.k==='pdf'&&e.touches.length===1&&BV.zoom<=1){tsx=e.touches[0].clientX;tsy=e.touches[0].clientY;}else tsx=null;},{passive:true});
 document.addEventListener('touchend',e=>{if(tsx==null)return;const t=e.changedTouches[0],dx=t.clientX-tsx,dy=t.clientY-tsy;tsx=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)pdfGo(dx<0?1:-1);},{passive:true});
 /* టీచర్: పుస్తకం / టూల్ లింక్ జోడించడం */
+/* 🧑‍🏫 టీచర్ టూల్స్ – repo లో ttools/ ఫోల్డర్‌లోని HTML ఫైళ్లు ఆటోగా (టీచర్ ప్యానెల్‌లో మాత్రమే; విద్యార్థులకు కాదు). TTN = తెలుగు పేర్లు (లేకపోతే ఫైల్ పేరు) */
+const TTN={'MDM_Akshayapatra_Voucher_RagiJava_Chikki_Egg.html':['🍛','MDM వోచర్ – అక్షయపాత్ర','డే-వైజ్ వోచర్ + రాగి జావ • చిక్కీ • గుడ్డు నెలవారీ రిజిస్టర్ (A4 ప్రింట్)']};
+let TTF=0;
+function ttList(){const st=(S.lib||{})['dir:ttools'];return ((st&&st.v)||[]).filter(f=>/\.html?$/i.test(f.name)).sort((a,b)=>a.name.localeCompare(b.name));}
+async function ttRefresh(force){TTF=1;const old=JSON.stringify(ttList());const v=await listDir('ttools',force);if(view==='teacher'&&param.t==='lb'&&(force||JSON.stringify(ttList())!==old))render();if(force)toast(v===null?'📴 ఇంటర్నెట్ లేదు':'🔄 టీచర్ టూల్స్ జాబితా తాజా అయింది');}
+function ttOpen(n){const m=TTN[n];go('book',{u:'ttools/'+encodeURIComponent(n),t:m?m[0]+' '+m[1]:'🧰 '+prettyName(n),k:'tool',back:{v:'teacher',p:{t:'lb'}}});}
+function ttCard(){const st=(S.lib||{})['dir:ttools'];if(!TTF&&(!st||Date.now()-st.t>30*60e3))setTimeout(()=>ttRefresh(false),50);const l=ttList();
+ return `<div class="card"><h3>🧑‍🏫 టీచర్ టూల్స్ – పాఠశాల పనులు <button class="ib" style="float:right" onclick="ttRefresh(true)" aria-label="తాజా చేయి">🔄</button></h3><p class="mut">ఉపాధ్యాయులకు మాత్రమే కనిపిస్తాయి. నొక్కితే app లోనే తెరుచుకుంటుంది; డేటా మీ ఫోన్‌లోనే సేవ్ అవుతుంది.</p>
+${l.length?`<div class="list">${l.map(f=>{const m=TTN[f.name];return `<button class="lrm" style="--sc:#2E5E3A;width:100%;text-align:left;margin-bottom:6px" onclick="ttOpen('${f.name.replace(/'/g,'')}')"><span class="lno">${m?m[0]:'🧰'}</span><span><b>${esc(m?m[1]:prettyName(f.name))}</b><small>${esc(m?m[2]:'టీచర్ టూల్')}</small></span></button>`;}).join('')}</div>`:'<div class="empty">⏳ టూల్స్ లోడ్ అవుతున్నాయి… (నెట్ ఉండాలి) – 🔄 నొక్కండి</div>'}</div>`;}
 TP.lb=()=>{const bk=live('notes').filter(n=>n.kind==='book'&&canSee(n.c,n.s)),tl=live('notes').filter(n=>n.kind==='tool'&&canSee(n.c));
- return `<div class="card"><h3>📘 పుస్తకం జోడించు – PDF అప్‌లోడ్ / Drive లింక్</h3><p class="mut">PDF ఫైల్ నేరుగా అప్‌లోడ్ చేయండి (20 MB లోపు) లేదా Google Drive లింక్ పేస్ట్ చేయండి. మీ పాఠశాల పిల్లలకు మాత్రమే కనిపిస్తుంది.</p>
+ return `${ttCard()}<div class="card"><h3>📘 పుస్తకం జోడించు – PDF అప్‌లోడ్ / Drive లింక్</h3><p class="mut">PDF ఫైల్ నేరుగా అప్‌లోడ్ చేయండి (20 MB లోపు) లేదా Google Drive లింక్ పేస్ట్ చేయండి. మీ పాఠశాల పిల్లలకు మాత్రమే కనిపిస్తుంది.</p>
 <div class="g2"><div><label>తరగతి</label>${clsSel('bkc')}</div><div><label>సబ్జెక్ట్</label><select id="bkcs">${subjOpts(myCls()[0])}</select></div></div>
 <label>పుస్తకం పేరు</label><input id="bkt" placeholder="ఉదా: తెలుగు వర్క్‌బుక్ – సెమిస్టర్ 1">
 <div class="upbox"><label class="upbtn">📤 PDF ఫైల్ ఎంచుకో<input type="file" id="bkf" accept="application/pdf,.pdf" hidden onchange="bkFile(this)"></label><small id="bkfn" class="mut">ఫైల్ ఎంచుకోలేదు</small></div>
