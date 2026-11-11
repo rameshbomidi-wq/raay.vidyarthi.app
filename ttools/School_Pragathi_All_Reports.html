@@ -1726,6 +1726,7 @@ function openPL(co){const sel=document.getElementById('plCls'),L=Object.keys(DAT
   if(!sel.options.length)sel.innerHTML=L.map(c=>'<option value="'+c+'">'+CLS_NAME[c]+' తరగతి ('+DATA[c].length+')</option>').join('');
   plCoOn=co!==false;const cs=document.getElementById('plCo');if(cs)cs.value=plCoOn?'1':'0';
   sel.value=L.includes(currentClass)?currentClass:L[0];document.getElementById('plView').classList.add('show');document.body.classList.add('land');renderPL();}
+function openPLGroupAll(){openPL(true);openPLGroup();}
 function openPLGroup(){const sel=document.getElementById('plCls'),cur=sel.value||currentClass,c=cnum(cur),g=plGrp(c),L=plGrpCls(c),pages=[];
   ensureOpts('plCls',Object.keys(DATA));
   L.forEach(x=>{sel.value=x;renderPL();pages.push(grab(document.getElementById('plSheet')));});
@@ -1810,7 +1811,8 @@ function drawMenu(){const box=document.getElementById('menuBox');if(!box)return;
    +B('p','openAtt()','📅 హాజరు రిజిస్టర్<br><small>నెల వారీ %</small>')
    +B('p','openPL(true)','🎓 ప్రమోషన్ లిస్ట్<br><small>సంవత్సరాంతం</small>')
    +B('p',"openTbl('det')",'🪪 విద్యార్థుల వివరాలు<br><small>అడ్మిషన్ రిజిస్టర్ లాగా</small>')
-   +B('p',"openBook('all')",'📦 తరగతి మొత్తం ఫైల్<br><small>పైవన్నీ ఒకేసారి</small>')+'</div>';
+   +B('p',"openBook('all')",'📦 తరగతి మొత్తం ఫైల్<br><small>పైవన్నీ ఒకేసారి</small>')+'</div>'
+   +'<div class="mt" style="margin-top:10px">🏫 పాఠశాల మొత్తం</div><div class="mg">'+B('s',"openSchGrade('ANN')",'🏫 పాఠశాల గ్రేడ్ నివేదిక<br><small>అన్ని తరగతులు • గ్రేడ్ వారీ సంఖ్య • సబ్జెక్టు సగటు</small>')+B('s','openPLGroupAll()','🎓 ప్రమోషన్ లిస్ట్ — విభాగం మొత్తం<br><small>I–V / VI–VIII / IX–X</small>')+'</div>';
   box.innerHTML=h;}
 
 /* ---------- హార్డ్ కాపీ ఫైల్స్ (తరగతి / విద్యార్థి) ---------- */
@@ -2261,6 +2263,37 @@ document.addEventListener('input',e=>{const el=e.target;if(!el.closest||!el.clos
 document.addEventListener('keydown',e=>{const el=e.target;if(e.key!=='Enter'||!el.closest||!el.closest('#entBox')||el.tagName!=='INPUT')return;e.preventDefault();
   const cl=el.classList.contains('em')?'em':el.classList.contains('ea')?'ea':'';if(!cl)return;const all=[...document.querySelectorAll('#entBox input.'+cl)],q=el.dataset.q;
   const col=all.filter(x=>x.dataset.q===q),k=col.indexOf(el);if(col[k+1])col[k+1].focus();});
+
+/* ================= 🏫 పాఠశాల గ్రేడ్ నివేదిక (అన్ని తరగతులు) ================= */
+let SGA='ANN';
+function sgP(s,c,A){if(A==='ANN'){const a=annAll(s,c);return a?a.p:null;}return aAll(s,c,A).p;}
+function sgSubP(s,c,A,i){if(A==='ANN'){const a=annSub(s,c,i);return a?a.p:null;}const r=aRes(s,c,A,i);return r&&!r.ab?r.p:null;}
+function sgGroup(lo,hi,A){const cls=Object.keys(DATA).filter(k=>cnum(k)>=lo&&cnum(k)<=hi&&DATA[k].length);if(!cls.length)return '';
+  const sc=lo<=5?'P':'H',G=SCALES[sc].g.map(x=>x[0]),tot={n:0,d:0,g:{},ps:[],w:0,p:0};
+  let rows='';cls.forEach(k=>{const c=cnum(k),L=DATA[k],ps=L.map(s=>sgP(s,c,A)).filter(p=>p!==null&&p!==undefined),g={};
+    ps.forEach(p=>{const x=grade(p,sc);g[x]=(g[x]||0)+1;tot.g[x]=(tot.g[x]||0)+1;});tot.n+=L.length;tot.d+=ps.length;tot.ps=tot.ps.concat(ps);
+    let w=0,pp=0;L.forEach(s=>{const t=termAtt(s,T1.concat(T2));w+=t.w;pp+=t.p;});tot.w+=w;tot.p+=pp;
+    const av=ps.length?ps.reduce((a,b)=>a+b,0)/ps.length:null,pass=ps.filter(p=>p>=35).length;
+    rows+='<tr><td><b>'+CLS_NAME[k]+'</b></td><td>'+L.length+'</td><td>'+ps.length+'</td>'+G.map(x=>'<td>'+(g[x]||'')+'</td>').join('')
+      +'<td>'+(ps.length?r1(pass*100/ps.length)+'%':'')+'</td><td><b>'+(av===null?'':r1(av)+'%')+'</b></td><td class="gd '+(av===null?'':gcl(grade(av,sc),sc))+'">'+(av===null?'':grade(av,sc))+'</td><td>'+(w?r1(pp*100/w)+'%':'')+'</td></tr>';});
+  const av=tot.ps.length?tot.ps.reduce((a,b)=>a+b,0)/tot.ps.length:null,pass=tot.ps.filter(p=>p>=35).length;
+  rows+='<tr class="sum"><td><b>మొత్తం</b></td><td>'+tot.n+'</td><td>'+tot.d+'</td>'+G.map(x=>'<td><b>'+(tot.g[x]||'')+'</b></td>').join('')+'<td>'+(tot.d?r1(pass*100/tot.d)+'%':'')+'</td><td><b>'+(av===null?'':r1(av)+'%')+'</b></td><td class="gd '+(av===null?'':gcl(grade(av,sc),sc))+'"><b>'+(av===null?'':grade(av,sc))+'</b></td><td>'+(tot.w?r1(tot.p*100/tot.w)+'%':'')+'</td></tr>';
+  let h='<div class="sec">'+(lo<=5?'ప్రాథమిక తరగతులు (I – V)':'ఉన్నత తరగతులు (VI – X)')+' — గ్రేడ్ వారీ విద్యార్థుల సంఖ్య</div><table><tr><th>తరగతి</th><th>మొత్తం</th><th>మార్కులు ఉన్నవారు</th>'+G.map(x=>'<th>'+x+'</th>').join('')+'<th>35% పైన</th><th>సగటు %</th><th>గ్రేడ్</th><th>హాజరు %</th></tr>'+rows+'</table>';
+  /* సబ్జెక్టు వారీ సగటు */
+  const subs=[];cls.forEach(k=>clsDef(cnum(k)).subs.forEach(sb=>{if(!subs.includes(sb.n))subs.push(sb.n);}));
+  h+='<div class="sec">సబ్జెక్టు వారీ సగటు % (గ్రేడ్)</div><table><tr><th>తరగతి</th>'+subs.map(n=>'<th>'+tn(n)+'</th>').join('')+'</tr>'
+    +cls.map(k=>{const c=cnum(k),C=clsDef(c);return '<tr><td><b>'+CLS_NAME[k]+'</b></td>'+subs.map(n=>{const i=C.subs.findIndex(sb=>sb.n===n);if(i<0)return '<td>—</td>';
+      const v=DATA[k].map(s=>sgSubP(s,c,A,i)).filter(p=>p!==null&&p!==undefined);if(!v.length)return '<td></td>';const a=v.reduce((x,y)=>x+y,0)/v.length,s2=scOf(c,n);
+      return '<td><span class="mk">'+r1(a)+'%</span><span class="gd '+gcl(grade(a,s2),s2)+'">'+grade(a,s2)+'</span></td>';}).join('')+'</tr>';}).join('')+'</table>';
+  return h;}
+function openSchGrade(A){SGA=A||SGA;const AL=Object.assign({ANN:'వార్షిక ఫలితం (అన్ని మదింపుల సగటు)'},ASL),n=totalStu();
+  let h='<div class="sheet land tb"><h2>'+SCH.name+'</h2><div style="text-align:center;font-size:9pt">'+(SCH.place?SCH.place+' | ':'')+(SCH.udise?'UDISE: '+SCH.udise+' | ':'')+'విద్యా సంవత్సరం '+SCH.year+'</div>'
+   +'<h3>🏫 పాఠశాల గ్రేడ్ నివేదిక — '+AL[SGA]+'</h3>'
+   +'<div class="noprint entry"><div class="chips">'+['ANN'].concat(ASMT).map(x=>'<button class="'+(x===SGA?'active':'')+'" onclick="openSchGrade(\''+x+'\')">'+(x==='ANN'?'వార్షికం':ASL[x])+'</button>').join('')+'</div></div>'
+   +(n?sgGroup(1,5,SGA)+sgGroup(6,10,SGA):'<div class="note">ఇంకా విద్యార్థులు లేరు.</div>')
+   +'<div class="note">గ్రేడ్ = ప్రతి విద్యార్థి '+(SGA==='ANN'?'నమోదైన అన్ని మదింపుల సగటు %':ASL[SGA]+' %')+' (అన్ని సబ్జెక్టులు కలిపి) • I–V: A+ 91–100, A 71–90, B+ 51–70, B 41–50, C 0–40 • VI–X: A1 91–100 … D2 0–34 • హాజరు = సంవత్సరం మొత్తం</div>'
+   +'<div class="sign"><span>తేదీ</span><span>ప్రధానోపాధ్యాయుల సంతకం</span></div><div class="brand">రాయ్ ఎడ్యుకేషన్ | Raay Education</div></div>';
+  showBook('పాఠశాల గ్రేడ్ నివేదిక',[h]);}
 
 function setupHint(){const n=totalStu(),R=CLS_NAME[currentClass]||currentClass;
   if(n)return '<div class="setup"><b class="t">'+R+' తరగతిలో ఇంకా విద్యార్థులు లేరు</b><button onclick="openStu()">📂 విద్యార్థులను చేర్చు</button></div>';
