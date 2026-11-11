@@ -770,6 +770,7 @@ let DATA, E={}, mode="SCH", curC=null, curSt="ALL", curSub="Mathematics", curP="
 function tn(s){ return TE[s]||s; }
 function r1(x){ return Math.round(x*10)/10; }
 function nf(v){ return (v===null||v===undefined)?'':(Math.round(v*100)/100); }
+function delOK(m){return confirm(m)&&confirm('⚠️ మళ్ళీ అడుగుతున్నాం: నిజంగా తొలగించాలా? ఇది తిరిగి రాదు.');}
 function ld(){
   try{ const r=localStorage.getItem(KEY); DATA = r? JSON.parse(r) : JSON.parse(JSON.stringify(BASE)); }catch(e){ DATA=JSON.parse(JSON.stringify(BASE)); }
   try{ E=JSON.parse(localStorage.getItem(EKEY)||'{}')||{}; }catch(e){ E={}; }
@@ -1128,7 +1129,7 @@ function addNames(){
   lines.forEach((l,k)=>{ const mm=l.match(/^(\d{6,})\s*[-–]\s*(.+)$/); C.st.push({id:mm?mm[1]:'X10-'+Date.now()+'-'+k, nm:(mm?mm[2]:l).toUpperCase(), m:C.subs.map(()=>[null,null,null,null,null,''])}); });
   sv(); render();
 }
-function delSt(i){ const C=get10(); if(!confirm(C.st[i].nm+' ను తొలగించాలా?')) return; C.st.splice(i,1); sv(); render(); }
+function delSt(i){ const C=get10(); if(!delOK(C.st[i].nm+' ను తొలగించాలా?')) return; C.st.splice(i,1); sv(); render(); }
 document.getElementById('out').addEventListener('input',e=>{
   const el=e.target;
   if(el.classList && el.classList.contains('mk') && mode==="E10"){
@@ -1997,6 +1998,7 @@ function openSch(){SF.forEach(k=>document.getElementById('sc_'+k).value=SCH[k]||
 function saveSch(){PS.sch={};SF.forEach(k=>{SCH[k]=cleanTxt(document.getElementById('sc_'+k).value,120);PS.sch[k]=SCH[k];});if(!SCH.short)SCH.short=PS.sch.short=SCH.name;savePS();applySchUI();showToast('స్కూల్ వివరాలు సేవ్ అయ్యాయి ✅');}
 
 /* ================= 👥 విద్యార్థుల నిర్వహణ + పూర్తి బ్యాకప్ (ఏ పాఠశాలకైనా) ================= */
+function delOK(m){return confirm(m)&&confirm('⚠️ మళ్ళీ అడుగుతున్నాం: నిజంగా తొలగించాలా? ఇది తిరిగి రాదు.');}
 const HKEY='rv_sp_hpc_v1',HEKEY='rv_sp_hpce_v1';
 const APP=(function(){try{return (window.parent&&window.parent!==window&&typeof window.parent.live==='function')?window.parent:null;}catch(e){return null;}})();
 function appEval(x){try{return APP?APP.eval(x):null;}catch(e){return null;}}
@@ -2158,7 +2160,7 @@ function stuSave(){const v={};SFLD.forEach(f=>v[f[0]]=document.getElementById('s
   else{let id=String(v.id||'').replace(/[^\w-]/g,'');if(id&&findStu(id)){showToast('ఈ ID ఇప్పటికే ఉంది — '+findStu(id).s.name);return;}if(!id)id=newStuId();
     DATA[cls].push(fixStu(Object.assign(v,{id:id})));if(stuSaved())showToast(cleanTxt(v.name)+' చేర్చబడింది ✅');}
   stuDraw();}
-function stuDel(id){const e=findStu(id);if(!e)return;if(!confirm(e.s.name+' ను జాబితా నుండి తొలగించాలా?\n(ఈ విద్యార్థి మార్కులు, హాజరు కూడా తొలగిపోతాయి)'))return;
+function stuDel(id){const e=findStu(id);if(!e)return;if(!delOK(e.s.name+' ను జాబితా నుండి తొలగించాలా?\n(ఈ విద్యార్థి మార్కులు, హాజరు కూడా తొలగిపోతాయి)'))return;
   DATA[e.cls].splice(e.k,1);delete PS.mk[id];delete PS.att[id];if(PS.pl)delete PS.pl[id];if(PS.stu)delete PS.stu[id];
   if(PS.add)for(const c in PS.add)PS.add[c]=(PS.add[c]||[]).filter(s=>s.id!==id);savePS();stuSaved();stuDraw();showToast('తొలగించబడింది');}
 function stuSort(){const cls=document.getElementById('stuCls').value;DATA[cls].sort((a,b)=>a.name.localeCompare(b.name));stuSaved();stuDraw();}
