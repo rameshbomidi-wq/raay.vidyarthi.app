@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="te"><head>
+<html lang="te">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>School విద్యార్థులు + ప్రగతి - రాయ్ ఎడ్యుకేషన్</title>
+<title>School ప్రగతి – రిజిస్టర్లు (FA-1→SA-2, హాజరు, HPC) - రాయ్ ఎడ్యుకేషన్</title>
 <meta name="theme-color" content="#14532d">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700;800&amp;family=Baloo+Tamma+2:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700;800&family=Baloo+Tamma+2:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --green-dark:#14532d;
@@ -330,6 +331,11 @@
   .cce-bar input{border:none;border-radius:8px;padding:7px 10px;font-weight:700;font-size:.85rem;width:150px;}
   @media print{.sheet.cce{page-break-after:always;break-after:page;margin:0!important;}.sheet.cce:last-child{page-break-after:auto;break-after:auto;}}
   /* ===== డేటా ఇంపోర్ట్ (Excel / PDF) ===== */
+  .imp .fg{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:center;font-size:.85rem}.imp .fg input,.imp .fg select{width:100%}
+  .imp button{padding:7px 12px;border:1px solid #bbb;border-radius:8px;background:#fff;font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer}.imp button.go{background:var(--green);color:#fff;border-color:var(--green)}.imp button:disabled{opacity:.5}
+  .imp .warn{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 10px;font-size:.82rem;margin:6px 0}
+  .imp .pv td button{padding:2px 7px}
+  .setup{background:#fff;border-radius:12px;padding:14px;margin:10px;box-shadow:0 2px 10px rgba(0,0,0,.12);text-align:left;font-size:.9rem;color:#1f2937}.setup b.t{display:block;font-size:1.05rem;color:var(--green-dark);margin-bottom:6px}.setup ol{margin:6px 0 10px 20px;padding:0}.setup li{margin:4px 0}.setup button{padding:9px 14px;border:0;border-radius:10px;background:var(--green);color:#fff;font-family:inherit;font-weight:700;font-size:.9rem;margin:3px 4px 3px 0;cursor:pointer}
   .imp-open{background:#fde68a!important;color:#5b3c00!important;}
   .imp{max-width:980px;margin:14px auto;background:#fff;border-radius:12px;padding:14px;box-shadow:0 4px 18px rgba(0,0,0,.15);font-family:'Noto Sans Telugu',sans-serif;}
   .imp h4{margin:12px 0 6px;color:var(--green-dark);font-size:1rem;border-left:4px solid var(--green);padding-left:8px;}
@@ -367,72 +373,13 @@
   .pl td.idc{font-size:6.3pt;letter-spacing:-.2px;}
   .pl td.idc input.pi{font-size:5.9pt;letter-spacing:-.35px;}
   .pl td.nm{text-align:left;padding-left:2px;font-size:6.6pt;line-height:1.05;word-break:break-word;}
-  .pl tr.r td{height:var(--rh4,5.6mm);}
-  @media print{body{padding-bottom:0!important;} .pl tr.r td{padding-top:0;padding-bottom:0;line-height:1;} .pl input.pi{height:auto;line-height:1;}}
+  .pl tr.r td{height:5.6mm;}
   .pl td.b{font-weight:700;}
   .pl td.fin small{font-weight:400;font-size:5.4pt;}
-  .pl col{width:var(--p);}
-  /* ---- స్క్రీన్‌పై విశాలంగా (ప్రింట్ మారదు) ---- */
-  @media screen{
-    #plView .sheet-wrap{padding:8px;}
-    .sheet.pl{width:max-content;min-width:100%;padding:14px 12px;}
-    .sheet.pl h2{font-size:17px;text-align:left;}
-    .pl .hd{font-size:13px;gap:4px 18px;max-width:1100px;}
-    .pl table{width:var(--tw);font-size:13px!important;}
-    .pl col{width:var(--x);}
-    .pl th{font-size:12px!important;}
-    .pl th.v{height:150px;} .pl th.v span{max-height:146px;line-height:1.15;} .pl th.v small{font-size:10px;}
-    .pl th,.pl td{padding:3px 4px;}
-    .pl tr.r td{height:38px;}
-    .pl td.nm,.pl.many td.nm{font-size:13px!important;line-height:1.2;}
-    .pl td.idc,.pl.many td.idc{font-size:12px!important;letter-spacing:0;}
-    .pl td.idc input.pi,.pl.many td.idc input.pi{font-size:12px!important;letter-spacing:0;}
-    .pl input.pi{height:30px;font-size:14px;border:1px solid #e5d9a6;border-radius:4px;}
-    .pl input.pi:focus{outline:2px solid #16a34a;background:#fff;}
-    .pl td.fin small{font-size:10px;}
-    .pl td.nm.sk{overflow:hidden;white-space:normal;word-break:break-word;}
-    .pl .sk{position:sticky;left:var(--l);z-index:1;background:#fff!important;box-shadow:inset -1px 0 0 #000;}
-    .pl tr:nth-child(even) td.sk{background:#fafafa!important;}
-    .pl tr.r:nth-child(even) td{background:#fafafa;}
-    .pl .nt{font-size:12px;} .pl .sg{font-size:13px;}
-  }
-  /* ---- A3 ప్రింట్ ---- */
-  @page a3{size:A3 landscape;margin:0;}
-  @media print{
-    .sheet.pl.a3{page:a3;width:420mm;padding:9mm 8mm;}
-    .pl.a3 h2{font-size:17pt;} .pl.a3 .hd{font-size:11pt;}
-    .pl.a3 table,.pl.a3.many table{font-size:9.5pt;} .pl.a3 th,.pl.a3.many th{font-size:9pt;}
-    .pl.a3 th.v{height:40mm;} .pl.a3 th.v span{max-height:44mm;} .pl.a3 th.v small{font-size:7.5pt;}
-    .pl.a3 td.nm,.pl.a3.many td.nm{font-size:9pt;} .pl.a3 td.idc,.pl.a3.many td.idc,.pl.a3 td.idc input.pi,.pl.a3.many td.idc input.pi{font-size:8pt;letter-spacing:0;}
-    .pl.a3 tr.r td{height:var(--rh3,8mm);} .pl.a3 .nt{font-size:10pt;} .pl.a3 .sg{font-size:12pt;}
-  }
   .pl.many table{font-size:6.4pt;} .pl.many th{font-size:6.2pt;}
   .pl.many td.idc{font-size:5.4pt;letter-spacing:-.35px;} .pl.many td.idc input.pi{font-size:5.1pt;letter-spacing:-.45px;}
   .pl.many td.nm{font-size:6pt;}
-  .ent-row{display:grid;gap:6px;margin-top:4px;}
-  .ent-row button{border:none;border-radius:10px;padding:10px 8px;font-family:inherit;font-weight:800;font-size:.84rem;cursor:pointer;background:#5b21b6;color:#fff;text-align:left;line-height:1.3;}
-  .ent-row button small{display:block;font-weight:500;opacity:.9;font-size:.72rem;}
-  .ent-row button:nth-child(1),.ent-row button:nth-child(2){background:#1f6b3f;}
-  .icon-btn.edt{background:#fef3c7;}
-  .imp table.eg{border-collapse:collapse;width:100%;font-size:.86rem;}
-  .imp table.eg th,.imp table.eg td{border:1px solid #d6d6d6;padding:3px 4px;text-align:center;}
-  .imp table.eg th{background:#14532d;color:#fff;font-size:.76rem;}
-  .imp table.eg td.l{text-align:left;font-weight:600;min-width:104px;font-size:.8rem;}
-  .ent-row{grid-template-columns:1fr 1fr;}
-  .imp table.eg input{width:46px;padding:7px 1px;text-align:center;border:1px solid #bbb;border-radius:6px;font-size:.92rem;font-family:inherit;}
-  .imp table.eg input:focus{outline:2px solid #16a34a;}
-  .imp table.eg td.g{font-weight:800;color:#14532d;}
-  .imp table.eg td.lo{color:#b91c1c;font-weight:700;}
-  .imp .egw{overflow-x:auto;margin-top:8px;}
-  .imp .chips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0;}
-  .imp .chips button{border:2px solid var(--purple);background:#fff;color:var(--purple);border-radius:16px;padding:6px 14px;font-weight:700;cursor:pointer;font-family:inherit;}
-  .imp .chips button.active{background:var(--purple);color:#fff;}
-  .imp textarea{width:100%;min-height:170px;border:1px solid #bbb;border-radius:8px;padding:8px;font-family:inherit;font-size:.85rem;}
-  .imp .del{background:#c62828;color:#fff;border:none;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer;font-family:inherit;}
   .menu button.n{background:#fefce8;color:#713f12;border-color:#fde68a;}
-  .menu button.w{grid-column:span 2;}
-  .menu button.n small{display:block;margin-top:3px;font-weight:500;opacity:.85;}
-  .menu button.n{line-height:1.35;padding:10px 8px;}
   .menu button .no{display:inline-block;min-width:1.5em;height:1.5em;line-height:1.5em;text-align:center;border-radius:50%;background:#14532d;color:#fff;font-size:.72rem;margin-right:5px;}
   .pl input.pi{width:100%;border:none;background:#fffbe6;text-align:center;font:inherit;padding:0;}
   .pl .sg{display:flex;justify-content:space-between;margin-top:18px;font-size:9pt;}
@@ -498,28 +445,23 @@
 <body>
 
 <header>
-  <h1>🏫 School ప్రగతి</h1>
-  <p>విద్యార్థుల వివరాలు · FA/SA మార్కులు · హాజరు · HPC · ప్రమోషన్ చార్ట్ · అన్ని నివేదికలు</p>
+  <h1>📱 విద్యార్థుల ఫోన్ నంబర్ల డైరెక్టరీ</h1>
+  <p>క్లాస్ వారీగా పేర్లు &amp; మొబైల్ నంబర్లు — SMS / WhatsApp పంపండి</p>
   <div class="hdr-btns">
     <button class="att-open imp-open" onclick="openSch()">⚙️ స్కూల్</button>
+    <button class="att-open imp-open" onclick="openStu()">👥 విద్యార్థులు</button>
   </div>
 </header>
 
 <div class="controls">
   <div class="class-tabs" id="classTabs"></div>
-  <div class="ent-row">
-    <button onclick="openStu()">➕ విద్యార్థిని చేర్చు</button>
-    <button onclick="openPaste()">📋 జాబితా పేస్ట్<small>Excel నుండి – అన్ని తరగతులు ఒకేసారి</small></button>
-    <button onclick="openMk()">✏️ మార్కుల నమోదు<small>తరగతి మొత్తం ఒకేసారి</small></button>
-    <button onclick="openAtE()">📅 హాజరు నమోదు<small>నెల వారీ – తరగతి మొత్తం</small></button>
-  </div>
   <div class="menu" id="menuBox"></div>
   <div class="search-box">
     <span>🔍</span>
     <input type="text" id="searchBox" placeholder="పేరు / ID / PEN / తండ్రి పేరు వెతకండి...">
   </div>
   <div class="stats" id="statsBar"></div>
-  <div class="bk-row"><button onclick="exportBk(true)">⬇️ పూర్తి బ్యాకప్ (విద్యార్థులతో)</button><button onclick="exportBk()">⬇️ మార్కులు/హాజరు బ్యాకప్</button><button onclick="document.getElementById('bkFile').click()">⬆️ బ్యాకప్ ఎక్కించు (HPC బ్యాకప్ కూడా)</button></div>
+  <div class="bk-row"><button onclick="exportBk()">⬇️ పూర్తి బ్యాకప్ (విద్యార్థులు + మార్కులు + హాజరు)</button><button onclick="document.getElementById('bkFile').click()">⬆️ బ్యాకప్ ఎక్కించు</button></div>
 
   <div class="bulk-bar">
     <textarea id="bulkMsg" placeholder="బల్క్ మెసేజ్ ఇక్కడ టైప్ చేయండి... (ఉదా: రేపు స్కూల్ కి సెలవు)"></textarea>
@@ -584,26 +526,26 @@
       <span>విద్యా సంవత్సరం</span><input type="text" id="sc_year">
     </div>
     <div class="row"><button class="go" onclick="saveSch()">💾 సేవ్ చేయి</button></div>
-    <h4>2. వేరే స్కూల్ కోసం కొత్త ఫైల్</h4>
-    <div class="warn">కొత్త స్కూల్ వివరాలు ఇచ్చి నొక్కితే, <b>విద్యార్థులు లేని ఖాళీ కొత్త .html ఫైల్</b> (అన్ని నివేదికలు, HPC, ప్రమోషన్ చార్ట్‌తో) డౌన్‌లోడ్ అవుతుంది. ఆ ఫైల్‌లో ➕ / 📋 తో విద్యార్థులను చేర్చుకోవచ్చు. దాని డేటా వేరుగా సేవ్ అవుతుంది — ఈ స్కూల్ డేటాతో కలవదు.</div>
-    <div class="fg">
-      <span>స్కూల్ పేరు</span><input type="text" id="ns_name" placeholder="ఉదా: MPPS KOMMANETURU">
-      <span>చిన్న పేరు</span><input type="text" id="ns_short" placeholder="ఉదా: MPPS Kommaneturu">
-      <span>మండలం, జిల్లా</span><input type="text" id="ns_place" placeholder="ఉదా: Gudur Mandal, Tirupati Dist.">
-      <span>UDISE కోడ్</span><input type="text" id="ns_udise" inputmode="numeric">
-      <span>విద్యా సంవత్సరం</span><input type="text" id="ns_year">
-      <span>తరగతులు</span><select id="ns_cls"><option value="1-10">I – X</option><option value="1-5">I – V (ప్రాథమిక)</option><option value="1-8">I – VIII (UP)</option><option value="6-10">VI – X (హైస్కూల్)</option></select>
-    </div>
-    <div class="row"><button class="go" onclick="makeSchool()">🏫 కొత్త స్కూల్ ఫైల్ డౌన్‌లోడ్</button></div>
+    <h4>2. ఈ పాఠశాలలో ఉన్న తరగతులు</h4>
+    <div class="row"><select id="sc_rng"><option value="1-5">I – V (ప్రాథమిక)</option><option value="1-7">I – VII</option><option value="1-8">I – VIII (UP)</option><option value="6-10">VI – X (హైస్కూల్)</option><option value="1-10">I – X</option></select><button class="go" onclick="saveRng()">💾 తరగతులు సేవ్</button></div>
+    <h4>3. విద్యార్థులు</h4>
+    <div class="row"><button class="go" onclick="closeOvl('schView');openStu('one')">👥 విద్యార్థులను చేర్చు / సరిచేయి</button><button onclick="closeOvl('schView');openStu('bulk')">📋 జాబితా పేస్ట్ / CSV</button></div>
+    <h4>4. డేటా భద్రత</h4>
+    <div class="warn">🔒 ఈ టూల్‌లోని డేటా అంతా <b>ఈ ఫోన్ / కంప్యూటర్‌లోనే</b> ఉంటుంది (ఇంటర్నెట్‌కు వెళ్ళదు). వేరే ఫోన్‌లో వాడాలంటే: ఇక్కడ ⬇️ బ్యాకప్ → ఆ ఫోన్‌లో ⬆️ ఎక్కించు.</div>
+    <div class="row"><button class="go" onclick="exportBk()">⬇️ పూర్తి బ్యాకప్</button><button onclick="document.getElementById('bkFile').click()">⬆️ బ్యాకప్ ఎక్కించు</button><button style="color:#c0392b" onclick="wipeAll()">🗑 మొత్తం డేటా తొలగించు</button></div>
   </div>
+</div>
+<div id="stuView" class="ovl">
+  <div class="att-bar"><span>👥 విద్యార్థులు</span><select id="stuCls" onchange="stuEditId=null;stuDraw()"></select><button class="close" onclick="stuClose()">✖ మూసివేయి</button></div>
+  <div class="imp" id="stuBox"></div>
+  <input type="file" id="stuCsv" accept=".csv,.txt,.tsv" style="display:none" onchange="stuCsvPick(this)">
 </div>
 <div id="plView" class="ovl">
   <div class="att-bar">
     <span>🎓 ప్రమోషన్ చార్ట్</span>
     <select id="plCls" onchange="renderPL()"></select>
     <select id="plCo" onchange="plCoOn=this.value==='1';renderPL()"><option value="1">Co-curricular తో</option><option value="0">Co-curricular లేకుండా</option></select>
-    <select id="plPg" onchange="PS.plpg=this.value;savePS();renderPL()"><option value="A4">ప్రింట్: A4</option><option value="A3">ప్రింట్: A3 (పెద్దది)</option></select>
-    <button onclick="openPLGroup()">📦 విభాగం మొత్తం</button>
+    <button onclick="openPLGroup()">📦 విభాగం మొత్తం (I–V / VI–VIII / IX–X)</button>
     <button onclick="window.print()">🖨️ ప్రింట్ / PDF</button>
     <button class="close" onclick="closeOvl('plView')">✖ మూసివేయి</button>
   </div>
@@ -629,10 +571,6 @@
     <button class="close" onclick="closeOvl('clsView')">✖ మూసివేయి</button>
   </div>
   <div class="sheet-wrap"><div class="sheet land clsr" id="clsSheet"></div></div>
-</div>
-<div id="entView" class="ovl">
-  <div class="att-bar"><span id="entTitle">✏️ నమోదు</span><button class="close" onclick="closeOvl('entView')">✖ మూసివేయి</button></div>
-  <div class="imp" id="entBody"></div>
 </div>
 <input type="file" id="bkFile" accept=".json" style="display:none" onchange="importBk(this)">
 
@@ -801,12 +739,13 @@ textarea.names{width:100%;min-height:90px;font-family:inherit;font-size:.8rem;bo
 <div id="out"></div>
 
 <script>
-const BASE = [{"c":1,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":2,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":3,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]},{"n":"EVS","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":4,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]},{"n":"EVS","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":5,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]},{"n":"EVS","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":6,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"Second Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]},{"n":"General Science","max":50,"tm":[5,5,5,35]},{"n":"Social Studies","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":7,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"Second Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]},{"n":"General Science","max":50,"tm":[5,5,5,35]},{"n":"Social Studies","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":8,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"Second Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]},{"n":"Physical Science","max":50,"tm":[5,5,5,35]},{"n":"Biological Science","max":50,"tm":[5,5,5,35]},{"n":"Social Studies","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":9,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"Second Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]},{"n":"Physical Science","max":50,"tm":[5,5,5,35]},{"n":"Biological Science","max":50,"tm":[5,5,5,35]},{"n":"Social Studies","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":10,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"Second Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]},{"n":"Physical Science","max":50,"tm":[5,5,5,35]},{"n":"Biological Science","max":50,"tm":[5,5,5,35]},{"n":"Social Studies","max":50,"tm":[5,5,5,35]}],"st":[]}];
+const _RV=(function(){try{return parent.RVSP||null;}catch(e){return null;}})();
+const BASE = _RV?_RV.base():[];
 /* విద్యార్థుల జాబితా + SMC జాబితా నుండి HPC ప్రొఫైల్ & హాజరు */
-const PROF = {};
-const _PS=(function(){try{const p=window.parent.SCH;return p&&p.key!=="zphs_progress_v1"?p:null;}catch(e){return null;}})();
-const SCHOOL=_PS?(_PS.name||""):"", SCH_HPC=_PS?(_PS.name||""):"", UDISE=_PS?(_PS.udise||""):"", AY=_PS?(_PS.year||""):"2026-27", SEC="A", RDATE=_PS?"":"24-09-2026";
-const SUBLINE=(_PS?(_PS.place||""):"")+" &nbsp;|&nbsp; UDISE: "+UDISE+" &nbsp;|&nbsp; విద్యా సంవత్సరం "+AY;
+const PROF = _RV?_RV.prof():{};
+const _S=_RV?_RV.sch():{};
+const SCHOOL=_S.name||"", SCH_HPC=_S.name||"", UDISE=_S.udise||"", AY=_S.year||"", SEC="A", RDATE=_S.rdate||"";
+const SUBLINE=(_S.place?_S.place+" &nbsp;|&nbsp; ":"")+"UDISE: "+UDISE+" &nbsp;|&nbsp; విద్యా సంవత్సరం "+AY;
 const ROM=["","I","II","III","IV","V","VI","VII","VIII","IX","X"];
 const TE={"First Language":"ప్రథమ భాష (తెలుగు)","Second Language":"ద్వితీయ భాష (హిందీ)","English":"ఇంగ్లీష్","Mathematics":"గణితం",
   "EVS":"పరిసరాల విజ్ఞానం","General Science":"సామాన్య శాస్త్రం","Physical Science":"భౌతిక శాస్త్రం","Biological Science":"జీవ శాస్త్రం","Social Studies":"సాంఘిక శాస్త్రం"};
@@ -817,7 +756,7 @@ const SCALES={
  P :{nm:"I – V తరగతులు",g:[["A+",91],["A",71],["B+",51],["B",41],["C",0]],b:["91–100","71–90","51–70","41–50","0–40"]},
  H :{nm:"VI – X తరగతులు",g:[["A1",91],["A2",81],["B1",71],["B2",61],["C1",51],["C2",41],["D1",35],["D2",0]],b:["91–100","81–90","71–80","61–70","51–60","41–50","35–40","0–34"]},
  L2:{nm:"VI – X ద్వితీయ భాష",g:[["A1",90],["A2",79],["B1",68],["B2",57],["C1",46],["C2",35],["D1",20],["D2",0]],b:["90–100","79–89","68–78","57–67","46–56","35–45","20–34","0–19"]}};
-const KEY="raay_school_pragathi_v1_hpc", EKEY="raay_school_pragathi_v1_hpce";
+const KEY="rv_sp_hpc_v1", EKEY="rv_sp_hpce_v1";
 let DATA, E={}, mode="SCH", curC=null, curSt="ALL", curSub="Mathematics", curP="ALL", curES="First Language";
 
 function tn(s){ return TE[s]||s; }
@@ -825,7 +764,13 @@ function r1(x){ return Math.round(x*10)/10; }
 function nf(v){ return (v===null||v===undefined)?'':(Math.round(v*100)/100); }
 function ld(){
   try{ const r=localStorage.getItem(KEY); DATA = r? JSON.parse(r) : JSON.parse(JSON.stringify(BASE)); }catch(e){ DATA=JSON.parse(JSON.stringify(BASE)); }
-  try{ E=JSON.parse(localStorage.getItem(EKEY)||'{}'); }catch(e){ E={}; }
+  try{ E=JSON.parse(localStorage.getItem(EKEY)||'{}')||{}; }catch(e){ E={}; }
+  if(!Array.isArray(DATA)) DATA=[];
+  /* ప్రధాన జాబితాలో కొత్తగా చేరిన తరగతులు / విద్యార్థులు / మార్కులు కలుపు */
+  BASE.forEach(B=>{ const C=DATA.find(x=>x.c===B.c); if(!C){ DATA.push(JSON.parse(JSON.stringify(B))); return; }
+    B.st.forEach(b=>{ const s=C.st.find(x=>x.id===b.id); if(!s){ C.st.push(JSON.parse(JSON.stringify(b))); return; } s.nm=b.nm;
+      b.m.forEach((m,i)=>{ const o=s.m[i]; if(m&&m[4]!==null&&m[4]!==undefined&&(!o||o[4]===null||o[4]===undefined)) s.m[i]=m.slice(); }); }); });
+  DATA.sort((a,b)=>a.c-b.c);
 }
 function sv(){ try{ localStorage.setItem(KEY,JSON.stringify(DATA)); }catch(e){} }
 function svE(){ try{ localStorage.setItem(EKEY,JSON.stringify(E)); }catch(e){} }
@@ -1194,7 +1139,7 @@ document.getElementById('out').addEventListener('input',e=>{
 /* ---------- 8. CMR ప్రొఫార్మా (పోర్టల్ వ్యక్తిగత నివేదిక నమూనా) ---------- */
 const CMRNAME={"First Language":"Telugu","Second Language":"Hindi","English":"English","Mathematics":"Mathematics","EVS":"EVS",
   "General Science":"General Science","Physical Science":"Physical Science","Biological Science":"Biological Science","Social Studies":"Social Studies"};
-const CMR_OVR={};
+const CMR_OVR=_RV?_RV.cmr():{};
 const CMRMON=["June","July","August","September","October","November","December","January","February","March","April"];
 function cmrSheet(C,s){
   const ov=CMR_OVR[s.id]; let rows, dbl=false;
@@ -1350,8 +1295,8 @@ function loadXLS(el){
           L.forEach(C=>{ DATA=DATA.filter(x=>x.c!==C.c); DATA.push(C); }); sv(); render(); alert('డేటా ఎక్కించబడింది.'); } };
       fr.readAsArrayBuffer(f); }); el.value=''; });
 }
-function resetData(){ if(!confirm('మార్కుల డేటాను అసలు (24-09-2026) స్థితికి మార్చాలా?\n(10వ తరగతి నమోదులు కూడా పోతాయి. HPC లో టైప్ చేసినవి ఉంటాయి.)')) return; DATA=JSON.parse(JSON.stringify(BASE)); sv(); render(); }
-function expAll(){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([JSON.stringify({d:DATA,e:E})],{type:'application/json'})); a.download='School_HPC_backup_'+new Date().toISOString().slice(0,10)+'.json'; a.click(); }
+function resetData(){ if(!confirm('మార్కుల డేటాను అసలు స్థితికి మార్చాలా?\n(10వ తరగతి నమోదులు కూడా పోతాయి. HPC లో టైప్ చేసినవి ఉంటాయి.)')) return; DATA=JSON.parse(JSON.stringify(BASE)); sv(); render(); }
+function expAll(){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([JSON.stringify({d:DATA,e:E})],{type:'application/json'})); a.download='School_grades_HPC_backup_'+new Date().toISOString().slice(0,10)+'.json'; a.click(); }
 function impAll(el){ const f=el.files[0]; if(!f) return; const r=new FileReader();
   r.onload=()=>{ try{ const o=JSON.parse(r.result); if(o.d) DATA=o.d; if(o.e) E=o.e; sv(); svE(); render(); alert('బ్యాకప్ ఎక్కించబడింది.'); }catch(x){ alert('ఫైల్ చదవలేకపోయాను.'); } }; r.readAsText(f); el.value=''; }
 function exportCSV(){
@@ -2432,7 +2377,7 @@ function saveData() {
   };
   Object.keys(CLASSES).forEach(cls => payload.sheets[cls] = collectSheetData(cls));
   try {
-    localStorage.setItem('raay_school_pragathi_v1_adm', JSON.stringify(payload));
+    localStorage.setItem('rv_sp_adm_v1', JSON.stringify(payload));
     showStatus('Data saved locally ✓');
   } catch(e) {
     const blob = new Blob([JSON.stringify(payload)], {type:'application/json'});
@@ -2443,7 +2388,7 @@ function saveData() {
 }
 
 function loadData() {
-  const raw = localStorage.getItem('raay_school_pragathi_v1_adm');
+  const raw = localStorage.getItem('rv_sp_adm_v1');
   if (!raw) { alert('No saved data found.'); return; }
   const payload = JSON.parse(raw);
   const si = payload.school;
@@ -2485,7 +2430,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const tbody = document.getElementById(`body-${cls}`);
     for (let i = 1; i <= 5; i++) tbody.appendChild(buildRow(cls, i));
   });
-  const raw = localStorage.getItem('raay_school_pragathi_v1_adm');
+  const raw = localStorage.getItem('rv_sp_adm_v1');
   if (raw) loadData();
 });
 
@@ -2500,12 +2445,19 @@ window.addEventListener('beforeprint', () => {
 </script>
 <script>
 const SRC='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
-const SCH={"name":"","short":"","place":"","udise":"","year":"2026-27","key":"raay_school_pragathi_v1"};
+const PKK='rv_sp_pack_v1';
+/* పాత 'School ప్రగతి – అన్ని నివేదికలు' (2026.11.11-5) డేటా ఉంటే ఒక్కసారి ఆటోగా తెచ్చుకో */
+try{if(!localStorage.getItem('rv_sp_pack_v1')&&!localStorage.getItem('rv_sp_ps_v1')){const old=localStorage.getItem('raay_school_pragathi_v1');if(old)localStorage.setItem('rv_sp_ps_v1',old);}}catch(e){}let PACK={};try{PACK=JSON.parse(localStorage.getItem(PKK)||'{}')||{};}catch(e){PACK={};}
+function savePack(){try{localStorage.setItem(PKK,JSON.stringify(PACK));return true;}catch(e){showToast('సేవ్ కాలేదు — స్థలం నిండింది. బ్యాకప్ తీసుకోండి');return false;}}
+const SUBDEF=[{"c":1,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":2,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":3,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]},{"n":"EVS","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":4,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]},{"n":"EVS","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":5,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]},{"n":"EVS","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":6,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"Second Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]},{"n":"General Science","max":50,"tm":[10,10,10,20]},{"n":"Social Studies","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":7,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"Second Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]},{"n":"General Science","max":50,"tm":[10,10,10,20]},{"n":"Social Studies","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":8,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"Second Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]},{"n":"Physical Science","max":25,"tm":[5,5,5,10]},{"n":"Biological Science","max":25,"tm":[5,5,5,10]},{"n":"Social Studies","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":9,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"Second Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]},{"n":"Physical Science","max":25,"tm":[5,5,5,10]},{"n":"Biological Science","max":25,"tm":[5,5,5,10]},{"n":"Social Studies","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":10,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"Second Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]},{"n":"Physical Science","max":25,"tm":[5,5,5,10]},{"n":"Biological Science","max":25,"tm":[5,5,5,10]},{"n":"Social Studies","max":50,"tm":[10,10,10,20]}],"st":[]}];
+const SCH=Object.assign({name:"మా పాఠశాల",short:"మా పాఠశాల",place:"",udise:"",year:"2026-27"},PACK.SCH||{},{key:"rv_sp_ps_v1"});
 try{const o=JSON.parse(localStorage.getItem(SCH.key)||'{}').sch;if(o)Object.assign(SCH,o,{key:SCH.key});}catch(e){}
-window.SCH=SCH;
-const DATA = {"1A":[],"2A":[],"3A":[],"4A":[],"5A":[],"6A":[],"7A":[],"8A":[],"9A":[],"10A":[]};
+const DATA=(function(){const D={},src=PACK.DATA||{},rng=Array.isArray(PACK.rng)?PACK.rng:[1,10];
+  for(let c=1;c<=10;c++){const k=c+'A';if((c>=rng[0]&&c<=rng[1])||(src[k]&&src[k].length))D[k]=(src[k]||[]).map(fixStu).filter(s=>s.id&&s.name);}
+  if(!Object.keys(D).length)D['1A']=[];return D;})();
+PACK.DATA=DATA;
 
-let currentClass = "1A";
+let currentClass = "1A";try{currentClass=sessionStorage.getItem('rv_sp_cls')||"1A";}catch(e){}
 if(!DATA[currentClass])currentClass=Object.keys(DATA)[0];
 const classTabsEl = document.getElementById('classTabs');
 const listEl = document.getElementById('studentList');
@@ -2538,6 +2490,7 @@ function render(){
   });
   listEl.innerHTML = '';
   emptyEl.style.display = students.length ? 'none' : 'block';
+  if(!students.length) emptyEl.innerHTML = DATA[currentClass].length ? 'విద్యార్థులు కనిపించలేదు' : setupHint();
   statsBar.textContent = "మొత్తం: " + DATA[currentClass].length + " | కనిపిస్తున్నవి: " + students.length;
 
   students.forEach(s=>{
@@ -2571,7 +2524,6 @@ function render(){
         <a class="icon-btn wa" href="https://wa.me/91${s.mobile}" target="_blank" title="WhatsApp">🟢</a>
         <a class="icon-btn sms" href="sms:+91${s.mobile}" title="SMS">✉️</a>
         <button class="icon-btn prog" onclick="openProg('${s.id}')" title="ప్రగతి: FA-1→SA-2 + హాజరు">📘</button>
-        <button class="icon-btn edt" onclick="openStu('${s.id}')" title="వివరాలు సరిచేయి">✏️</button>
         <button class="icon-btn prf" onclick="openProfile('${s.id}')" title="వివరాల పత్రం (ఒక పేజీ)">🪪</button>
       </div>
     `;
@@ -2671,7 +2623,7 @@ function renderAtt(){
     <div class="brand"><a href="https://raayeducation.in" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">రాయ్ ఎడ్యుకేషన్ | Raay Education</a></div>`;
 }
 
-const HPC_BASE=[{"c":1,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":2,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":3,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]},{"n":"EVS","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":4,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]},{"n":"EVS","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":5,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]},{"n":"EVS","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":6,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"Second Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]},{"n":"General Science","max":50,"tm":[5,5,5,35]},{"n":"Social Studies","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":7,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"Second Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]},{"n":"General Science","max":50,"tm":[5,5,5,35]},{"n":"Social Studies","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":8,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"Second Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]},{"n":"Physical Science","max":50,"tm":[5,5,5,35]},{"n":"Biological Science","max":50,"tm":[5,5,5,35]},{"n":"Social Studies","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":9,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"Second Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]},{"n":"Physical Science","max":50,"tm":[5,5,5,35]},{"n":"Biological Science","max":50,"tm":[5,5,5,35]},{"n":"Social Studies","max":50,"tm":[5,5,5,35]}],"st":[]},{"c":10,"subs":[{"n":"First Language","max":50,"tm":[5,5,5,35]},{"n":"Second Language","max":50,"tm":[5,5,5,35]},{"n":"English","max":50,"tm":[5,5,5,35]},{"n":"Mathematics","max":50,"tm":[5,5,5,35]},{"n":"Physical Science","max":50,"tm":[5,5,5,35]},{"n":"Biological Science","max":50,"tm":[5,5,5,35]},{"n":"Social Studies","max":50,"tm":[5,5,5,35]}],"st":[]}];
+const HPC_BASE=SUBDEF.map(D=>(Array.isArray(PACK.HPC_BASE)&&PACK.HPC_BASE.find(x=>x.c===D.c))||D);
 /* ================= ప్రగతి: FA-1 → SA-2 + హాజరు (TERM 1 / TERM 2) ================= */
 const TE={"First Language":"ప్రథమ భాష (తెలుగు)","Second Language":"ద్వితీయ భాష (హిందీ)","English":"ఇంగ్లీష్","Mathematics":"గణితం",
   "EVS":"పరిసరాల విజ్ఞానం","General Science":"సామాన్య శాస్త్రం","Physical Science":"భౌతిక శాస్త్రం","Biological Science":"జీవ శాస్త్రం","Social Studies":"సాంఘిక శాస్త్రం"};
@@ -2848,19 +2800,6 @@ function renderCls(){
 }
 
 /* ---------- బ్యాకప్ ---------- */
-function exportBk(full){const o={app:"zphs_progress",v:2,ps:PS};if(full){o.data=DATA;o.hpc=(PS.hpc||HPC_BASE);o.sch={name:SCH.name,short:SCH.short,place:SCH.place,udise:SCH.udise,year:SCH.year};}
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(o)],{type:'application/json'}));
-  a.download=SCH.short.replace(/\W+/g,'_')+'_pragathi_backup_'+new Date().toISOString().slice(0,10)+'.json';a.click();}
-function importBk(el){const f=el.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);
-  if(o.ps){if((Object.keys(PS.mk).length||Object.keys(PS.att).length)&&!confirm('బ్యాకప్ ఎక్కిస్తే ఇప్పుడు ఈ ఫోన్‌లో ఉన్న మార్కులు / హాజరు స్థానంలో బ్యాకప్‌లోనివి వస్తాయి. (ఇక్కడ చేర్చిన విద్యార్థులు అలాగే ఉంటారు.) కొనసాగాలా?')){el.value='';return;}
-    const oldAdd=PS.add||{},oldSch=PS.sch;PS=Object.assign({mk:{},att:{},hpc:null},o.ps);let n=0;PS.add=PS.add||{};if(oldSch)PS.sch=oldSch;
-    Object.keys(oldAdd).forEach(c=>(oldAdd[c]||[]).forEach(st=>{if(!(PS.add[c]||[]).some(x=>x.id===st.id)&&!(PS.del||{})[st.id])(PS.add[c]=PS.add[c]||[]).push(st);}));
-    if(o.data){PS.add=PS.add||{};Object.keys(o.data).forEach(c=>{if(!DATA[c])return;(o.data[c]||[]).forEach(st=>{if(!st||!st.id||DATA[c].some(x=>x.id===st.id)||(PS.add[c]||[]).some(x=>x.id===st.id))return;(PS.add[c]=PS.add[c]||[]).push(st);n++;});});
-      if(o.hpc&&!HPC_BASE.some(C=>C.st.length))PS.hpc=o.hpc;
-      if(o.sch&&!SCH.name){PS.sch=o.sch;Object.assign(SCH,o.sch);applySchUI();}applyStu();classTabsEl.innerHTML='';buildTabs();}
-    showToast('బ్యాకప్ ఎక్కించబడింది ✅'+(n?' — '+n+' మంది విద్యార్థులు చేరారు':''));}
-  else if(Array.isArray(o.d)){PS.hpc=o.d.map(C=>({c:C.c,subs:C.subs,st:C.st.map(s=>({id:s.id,nm:s.nm,m:s.m}))}));showToast('HPC బ్యాకప్ నుండి FA-1 మార్కులు అప్డేట్ ✅');}
-  else throw 0;savePS();indexHPC();render();}catch(e){showToast('ఈ ఫైల్ సరైన బ్యాకప్ కాదు');}el.value='';};r.readAsText(f);}
 
 /* ---------- Subject wise CCE Register (1 to 5 Classes) ---------- */
 const PCLS=["1A","2A","3A","4A","5A"].filter(c=>DATA[c]);
@@ -2947,17 +2886,15 @@ function renderPL(){const cls=document.getElementById('plCls').value,c=cnum(cls)
   const W=(many?[1.9,2.6,11,4.9,4.2,4.6,3.9,1.7,2.3]:[2,3,nS>3?11:12.5,5.4,5.2,5.6,4.6,2.2,2.8])
     .concat([].concat.apply([],C.subs.map(()=>many?[2.1,1.9,2.1,2.1]:[3.6,2.4,2.6,2.3])))
     .concat(CO.length?[many?2.6:3]:[]).concat(CO.map(()=>many?2.1:2.4)).concat(many?[3.4,2.2,2.3,2.5,5.4]:[3.4,2.4,2.6,2.8,4.4]),WS=W.reduce((a,b)=>a+b,0);
-  const X=[34,60,165,118,104,110,92,40,52].concat([].concat.apply([],C.subs.map(()=>[46,44,52,44]))).concat(CO.length?[66]:[]).concat(CO.map(()=>62)).concat([86,50,62,58,104]),XS=X.reduce((a,b)=>a+b,0);
-  h+='<table style="--tw:'+XS+'px"><colgroup>'+W.map((w,i)=>'<col style="--p:'+(w*100/WS).toFixed(2)+'%;--x:'+X[i]+'px">').join('')+'</colgroup>';
-  const SK=['0px','34px','94px'];
-  h+='<tr>'+V('S.No','',1).replace('class="v"','class="v sk" style="--l:0px"')+V('Adm. No.','',1)+'<th rowspan="2" class="sk" style="--l:34px">Student Name</th><th rowspan="2">APAAR ID</th><th rowspan="2">Child ID</th><th rowspan="2">PEN Number</th>'+V('Date of Birth','',1)+V('Boy / Girl','',1)+V('Caste','',1)
+  h+='<table><colgroup>'+W.map(w=>'<col style="width:'+(w*100/WS).toFixed(2)+'%">').join('')+'</colgroup>';
+  h+='<tr>'+V('S.No','',1)+V('Adm. No.','',1)+'<th rowspan="2">Student Name</th><th rowspan="2">APAAR ID</th><th rowspan="2">Child ID</th><th rowspan="2">PEN Number</th>'+V('Date of Birth','',1)+V('Boy / Girl','',1)+V('Caste','',1)
    +C.subs.map(sb=>'<th colspan="4">'+(PL_SUB[sb.n]||sb.n.toUpperCase())+'</th>').join('')
    +(CO.length?V('Subjects Total '+GT+' M','',1)+CO.map(x=>V(x[1],'',1)).join('')+V('Grand Total','(with Co-curricular)',1):V('Grand Total '+GT+' M','',1))
    +V('Grade','',1)+'<th colspan="2">ATTENDANCE</th>'+V('Result','',1)+'</tr>';
   h+='<tr>'+C.subs.map(()=>V('20 M',many?'(FA1-4 &amp; SA1)':'(FA1,2,3,4 &amp; SA1 total Reduced to 20)')+V('SA-2 (80 M)')+V('TOTAL (100 M)')+V('Grade')).join('')+V('No.of Days Present')+V('Attendance %')+'</tr>';
   list.forEach((st,k)=>{const R=C.subs.map((_,i)=>plSub(st,c,i)),ok=R.length>0&&R.every(r=>r.tot!==null),gt=ok?R.reduce((a,r)=>a+r.tot,0):null,y=termAtt(st,T1.concat(T2)),ov=(pl[st.id]||{}).res,f=plFinal(gt,GT,st.id,sc);
     const fin='<td class="b fin" data-id="'+st.id+'" data-gt="'+(gt===null?'':gt)+'" data-mx="'+GT+'" data-sc="'+sc+'">'+f.txt+'</td>';
-    h+='<tr class="r"><td class="sk" style="--l:0px">'+(k+1)+'</td><td>'+inp(st.id,'adm')+'</td><td class="nm sk" style="--l:34px">'+st.name.toUpperCase()+'</td><td class="idc">'+inpV(st.id,'apaar',st.apaar)+'</td><td class="idc">'+st.id+'</td><td class="idc">'+(st.pen||'')+'</td><td class="idc">'+(st.dob||'')+'</td><td>'+inpV(st.id,'g',st.g||'')+'</td><td>'+inpV(st.id,'cas',st.caste||'')+'</td>'
+    h+='<tr class="r"><td>'+(k+1)+'</td><td>'+inp(st.id,'adm')+'</td><td class="nm">'+st.name.toUpperCase()+'</td><td class="idc">'+inpV(st.id,'apaar',st.apaar)+'</td><td class="idc">'+st.id+'</td><td class="idc">'+(st.pen||'')+'</td><td class="idc">'+(st.dob||'')+'</td><td>'+inpV(st.id,'g',st.g||'')+'</td><td>'+inpV(st.id,'cas',st.caste||'')+'</td>'
      +R.map(r=>'<td>'+(r.inn===null?'':r.inn)+'</td><td>'+(r.sa===null?'':r.sa)+'</td><td class="b">'+(r.tot===null?'':r.tot)+'</td><td class="b">'+r.g+'</td>').join('')
      +(CO.length?'<td class="b">'+(gt===null?'':gt)+'</td>'+CO.map(x=>'<td>'+inp(st.id,x[0],1)+'</td>').join(''):'')+fin
      +'<td class="b fgr" data-id="'+st.id+'">'+f.g+'</td>'
@@ -2967,9 +2904,7 @@ function renderPL(){const cls=document.getElementById('plCls').value,c=cnum(cls)
    +'<div class="nt">Note: Internal Marks 20M = (FA1+FA2+FA3+FA4 [50M each] + SA1 [80M]) reduced to 20 &nbsp;|&nbsp; SA-2 = 80M &nbsp;|&nbsp; Grades: '+G.g.map((x,i)=>x[0]+' '+G.b[i]).join(', ')
    +(CO.length?'<br>Co-curricular (100 M each): marks, if entered, are added to the Grand Total and the Grade is on the combined total; if not entered, the Grade is on subject marks only.':'')+'</div>'
    +'<div class="brand"><a href="https://raayeducation.in" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">రాయ్ ఎడ్యుకేషన్ | Raay Education</a></div>';
-  const sh=document.getElementById('plSheet');sh.classList.toggle('many',many);sh.classList.toggle('a3',(PS.plpg||'A4')==='A3');const n=Math.max(1,list.length);
-  sh.style.setProperty('--rh4',Math.min(5.6,110/n).toFixed(2)+'mm');sh.style.setProperty('--rh3',Math.min(8,(many?165:190)/n).toFixed(2)+'mm');sh.innerHTML=h;
-  const ps=document.getElementById('plPg');if(ps)ps.value=PS.plpg||'A4';}
+  const sh=document.getElementById('plSheet');sh.classList.toggle('many',many);sh.innerHTML=h;}
 document.addEventListener('input',e=>{const el=e.target;if(!el.classList||!el.classList.contains('pi'))return;
   if(el.id==='plWD'){PS.plwd=PS.plwd||{};const c=document.getElementById('plCls').value;if(el.value.trim()==='')delete PS.plwd[c];else PS.plwd[c]=el.value.trim();savePS();plUpd();return;}
   PS.pl=PS.pl||{};const o=PS.pl[el.dataset.id]=PS.pl[el.dataset.id]||{};
@@ -2981,22 +2916,22 @@ const HIDE_HPC_MENU='header,#mtabs,#clsRow,.controls>.lbl:first-child{display:no
 function hpcGo(md,title,o){o=o||{};const el=document.getElementById('hpcSrc'),fr=document.getElementById('hpcFrame'),c=o.c||cnum(currentClass);
   if(!el||!el.textContent.trim()){showToast('ఈ ఫైల్‌లో HPC కార్డులు లేవు');return;}
   document.getElementById('hpcTitle').textContent=title;document.getElementById('hpcView').classList.add('show');
-  const run=()=>{const w=fr.contentWindow;hpcSync(w);try{w.eval("mode="+JSON.stringify(md)+";"+(md==='F50'?"curF="+c+";":"")+(['CLS','STU','HPC','CMR','F50'].includes(md)?"curC="+c+";curSt="+JSON.stringify(o.st===undefined?'ALL':String(o.st))+";":"")+"drawTop();render();window.scrollTo(0,0);");if(o.print)setTimeout(()=>w.print(),600);}catch(e){showToast('HPC తెరవలేకపోయాను');}};
+  const run=()=>{const w=fr.contentWindow;try{w.eval("mode="+JSON.stringify(md)+";"+(md==='F50'?"curF="+c+";":"")+(['CLS','STU','HPC','CMR','F50'].includes(md)?"curC="+c+";curSt="+JSON.stringify(o.st===undefined?'ALL':String(o.st))+";":"")+"drawTop();render();window.scrollTo(0,0);");if(o.print)setTimeout(()=>w.print(),600);}catch(e){showToast('HPC తెరవలేకపోయాను');}};
   if(!fr.dataset.ok){fr.dataset.ok=1;fr.onload=()=>{try{const st=fr.contentDocument.createElement('style');st.textContent=HIDE_HPC_MENU;fr.contentDocument.head.appendChild(st);}catch(e){}run();};
     fr.srcdoc=el.textContent.split('</scr_RAI_ipt').join('</'+'script');}
   else run();}
 function openHPC(){hpcGo('SCH','🏫 పాఠశాల ఫైనల్');}
 function drawMenu(){const box=document.getElementById('menuBox');if(!box)return;const c=cnum(currentClass),R=CLS_NAME[currentClass]||currentClass,hasH=!!(document.getElementById('hpcSrc')||{}).textContent;
   const B=(cl,fn,t)=>'<button class="'+cl+'" onclick="'+fn+'">'+t+'</button>';
-  const N=(n,fn,t,w)=>B('n'+(w?' w':''),fn,'<span class="no">'+n+'</span>'+t);
+  const N=(n,fn,t)=>B('n',fn,'<span class="no">'+n+'</span>'+t);
   const G=plGrp(c)[2].replace(/ - /g,'–'),has=(a,b)=>Object.keys(DATA).some(x=>cnum(x)>=a&&cnum(x)<=b);
   let h='<div class="mt">🏫 School ప్రగతి — '+R+' తరగతి</div><div class="mg">'
    +N(1,"openTbl('det')",'విద్యార్థుల పూర్తి వివరాలు<br><small>I నుండి X వరకు — తరగతి వారీ</small>')
    +N(2,"openTbl('asm')",'FA-1, FA-2, FA-3, FA-4, SA-1, SA-2<br><small>FA = 50 మార్కులు · SA = 80 మార్కులు</small>')
    +N(3,"openTbl('att')",'నెలవారీ హాజరు')
    +(hasH?N(4,"hpcGo('HPC','📘 "+R+" HPC కార్డులు')",'విద్యార్థి మొత్తం HPC కార్డు'):'')
-   +N(5,"openPL(false)",'ప్రమోషన్ చార్ట్ ('+G+')<small>సబ్జెక్టు మార్కులతో</small>',1)
-   +N(6,"openPL(true)",'ప్రమోషన్ చార్ట్ + Co-curricular<small>వేస్తే గ్రేడ్‌లో కలుస్తాయి</small>',1);
+   +N(5,"openPL(false)",'ప్రమోషన్ చార్ట్ — '+G+'<br><small>తరగతి మొత్తం (సబ్జెక్టు మార్కులు మాత్రమే)</small>')
+   +N(6,"openPL(true)",'ప్రమోషన్ చార్ట్ + Co-curricular<br><small>మార్కులు వేస్తే గ్రేడ్‌లో కలుస్తాయి</small>');
   if(hasH)h+=(has(1,5)?N(7,"hpcGo('P','I – V తరగతులు — Subject గ్రేడులు')",'Subject గ్రేడులు: I – V<br><small>పాఠశాల మొత్తం నివేదిక</small>'):'')
    +(has(6,8)?N(7,"hpcGo('M','VI – VIII తరగతులు — Subject గ్రేడులు')",'Subject గ్రేడులు: VI – VIII<br><small>పాఠశాల మొత్తం నివేదిక</small>'):'')
    +(has(9,10)?N(7,"hpcGo('S','IX – X తరగతులు — Subject గ్రేడులు')",'Subject గ్రేడులు: IX – X<br><small>పాఠశాల మొత్తం నివేదిక</small>'):'');
@@ -3139,7 +3074,7 @@ function stuInfoRows(id){let st=null,cls=null;for(const c in DATA){const x=DATA[
    +R('హాజరు TERM-1',at(a),'హాజరు TERM-2',at(b))+'<tr><td class="k">మొత్తం హాజరు</td><td colspan="3"><b>'+(at(y)||'—')+'</b></td></tr>';}
 
 /* ---------- ప్రమోషన్ చార్ట్ (Admission ఫైల్) — I–V పేర్లు ఆటోగా ---------- */
-const ADM_KEY='raay_school_pragathi_v1_adm',ADM_SUB={"First Language":0,"English":1,"Mathematics":2,"EVS":3};
+const ADM_KEY='rv_sp_adm_v1',ADM_SUB={"First Language":0,"English":1,"Mathematics":2,"EVS":3};
 function admNk(n){return String(n||'').toLowerCase().replace(/[^a-z]/g,' ').split(/\s+/).filter(Boolean).sort().join('');}
 function admRow(cls,st){const c=cnum(cls),C=clsDef(c),o=(PS.pl||{})[st.id]||{},r={},f1=x=>x===null||x===undefined?'':String(Math.round(x*10)/10);
   const g=String(o.g||st.g||'').toUpperCase();r['gen']=/^(B|M|BOY)/.test(g)?'M':/^(G|F|GIRL)/.test(g)?'F':'';
@@ -3192,157 +3127,168 @@ Object.values(DATA).forEach(L=>L.forEach(s=>{const x=SMC[s.id];if(!x)return;if(!
 loadPS();indexHPC();
 
 function applyStu(){for(const c in (PS.add||{}))(PS.add[c]||[]).forEach(ns=>{if(DATA[c]&&!DATA[c].some(s=>s.id===ns.id))DATA[c].push(ns);});
-  const st=PS.stu||{},dl=PS.del||{};Object.keys(DATA).forEach(c=>{DATA[c]=DATA[c].filter(s=>!dl[s.id]);DATA[c].forEach(s=>{if(st[s.id])Object.assign(s,st[s.id]);});});}
+  const st=PS.stu||{};Object.values(DATA).forEach(L=>L.forEach(s=>{if(st[s.id])Object.assign(s,st[s.id]);}));}
 applyStu();
-
-/* ================= నమోదు: విద్యార్థులు / మార్కులు / హాజరు (తరగతి మొత్తం ఒకేసారి) ================= */
-const hx=v=>String(v==null?'':v).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const gid=id=>document.getElementById(id);
-const STF=[['name','విద్యార్థి పేరు *'],['id','చైల్డ్ ID'],['mobile','మొబైల్ నంబర్'],['father','తండ్రి పేరు'],['mother','తల్లి పేరు'],['dob','పుట్టిన తేదీ (DD/MM/YYYY)'],['g','లింగం'],['caste','కులం (OC / BC / SC / ST)'],
-  ['pen','PEN'],['apaar','APAAR ID'],['adm','అడ్మిషన్ నం.'],['medium','మీడియం'],['addr','చిరునామా'],['ht','ఎత్తు (cm)'],['wt','బరువు (kg)']];
-function entOpen(title,html){gid('entTitle').textContent=title;gid('entBody').innerHTML=html;gid('entView').classList.add('show');gid('entView').scrollTop=0;}
-function refreshAll(){classTabsEl.innerHTML='';buildTabs();render();}
-function allStu(){return [].concat.apply([],Object.values(DATA));}
-function openStu(id){const cls=currentClass,s=id?DATA[cls].find(x=>x.id===id):null;if(id&&!s)return;
-  let h='<h4>'+(s?'✏️ వివరాలు సరిచేయి':'➕ కొత్త విద్యార్థి')+' — '+(CLS_NAME[cls]||cls)+' తరగతి</h4><div class="fg">';
-  STF.forEach(([k,l])=>{const v=s?(s[k]||''):(k==='medium'?'Telugu':'');
-    h+='<span>'+l+'</span>'+(k==='g'?'<select id="sf_g"><option value=""></option><option value="B"'+(v==='B'?' selected':'')+'>బాలుడు</option><option value="G"'+(v==='G'?' selected':'')+'>బాలిక</option></select>'
-      :'<input type="text" id="sf_'+k+'" value="'+hx(v)+'"'+(k==='id'&&s?' disabled':'')+(k==='mobile'||k==='pen'||k==='apaar'||k==='ht'||k==='wt'?' inputmode="numeric"':'')+(k==='id'&&!s?' placeholder="ఖాళీగా వదిలితే ఆటో నంబర్"':'')+'>');});
-  h+='</div><div class="row"><button class="go" onclick="saveStu('+(s?"'"+s.id+"'":'')+')">💾 సేవ్ చేయి</button>'+(s?'<button class="del" onclick="delStu(\''+s.id+'\')">🗑 తొలగించు</button>':'')+'</div>'
-   +'<div class="warn">ఇక్కడ చేర్చిన వివరాలు అన్ని నివేదికల్లో (వివరాల పట్టిక, హాజరు, మార్కులు, HPC కార్డు, ప్రమోషన్ చార్ట్) ఆటోగా వస్తాయి. ఈ ఫోన్/బ్రౌజర్‌లోనే సేవ్ అవుతాయి — తరచూ “పూర్తి బ్యాకప్” తీసుకోండి.</div>';
-  entOpen(s?'✏️ '+s.name:'➕ కొత్త విద్యార్థి',h);}
-function stuFields(){const o={};STF.forEach(([k])=>{const e=gid('sf_'+k);o[k]=e?e.value.trim():'';});o.mobile=o.mobile.replace(/\D/g,'').slice(-10);
-  const h=parseFloat(o.ht),w=parseFloat(o.wt);o.bmi=h>0&&w>0?String(Math.round(w/Math.pow(h/100,2)*100)/100):'';return o;}
-function saveStu(id){const cls=currentClass,o=stuFields();if(!o.name){showToast('విద్యార్థి పేరు రాయండి');return;}
-  if(id){const s=DATA[cls].find(x=>x.id===id);if(!s)return;delete o.id;Object.assign(s,o);
-    if(!((PS.add||{})[cls]||[]).some(x=>x.id===id)){PS.stu=PS.stu||{};PS.stu[id]=Object.assign(PS.stu[id]||{},o);}
-    savePS();showToast('సేవ్ అయింది ✅');closeOvl('entView');return;}
-  if(!o.id)o.id='N'+Date.now().toString(36).toUpperCase();
-  if(allStu().some(x=>x.id===o.id)){showToast('ఈ చైల్డ్ ID ఇప్పటికే ఉంది');return;}
-  PS.add=PS.add||{};(PS.add[cls]=PS.add[cls]||[]).push(o);DATA[cls].push(o);savePS();refreshAll();showToast(o.name+' చేర్చబడ్డారు ✅');openStu();}
-function delStu(id){const cls=currentClass,s=DATA[cls].find(x=>x.id===id);if(!s||!confirm(s.name+' ను ఈ తరగతి జాబితా నుండి తొలగించాలా?\n(మార్కులు, హాజరు నమోదులు కూడా కనిపించవు)'))return;
-  const a=(PS.add||{})[cls]||[],i=a.findIndex(x=>x.id===id);if(i>=0)a.splice(i,1);else{PS.del=PS.del||{};PS.del[id]=1;}
-  DATA[cls]=DATA[cls].filter(x=>x.id!==id);savePS();closeOvl('entView');refreshAll();showToast('తొలగించబడింది');}
-/* Excel నుండి జాబితా పేస్ట్ */
-const PCOL=['name','mobile','father','mother','dob','g','caste','pen','id','adm'];
-let pasteAll=true;
-function openPaste(){const R=CLS_NAME[currentClass]||currentClass,tot=allStu().length;
-  entOpen('📋 జాబితా పేస్ట్ (Excel నుండి)','<h4>Excel / Google Sheets నుండి విద్యార్థుల జాబితా</h4>'
-  +'<div class="chips"><button class="'+(pasteAll?'active':'')+'" onclick="pasteAll=true;openPaste()">🏫 అన్ని తరగతులు ఒకేసారి</button><button class="'+(pasteAll?'':'active')+'" onclick="pasteAll=false;openPaste()">'+R+' తరగతి మాత్రమే</button></div>'
-  +'<div class="warn">Excel లో వరుసలను కాపీ చేసి కింద పేస్ట్ చేయండి. కాలమ్‌ల క్రమం:<br><b>'+(pasteAll?'తరగతి | ':'')+'పేరు | మొబైల్ | తండ్రి | తల్లి | పుట్టిన తేదీ | లింగం (B/G) | కులం | PEN | చైల్డ్ ID | అడ్మిషన్ నం.</b><br>'
-   +(pasteAll?'<b>తరగతి</b> కాలమ్‌లో 1 నుండి 10 (లేదా I–X, 6A, Class 6) ఉండాలి — ప్రతి విద్యార్థి ఆ తరగతిలోకి వెళ్తాడు. ':'')+'పేరు ఒక్కటే ఉన్నా సరిపోతుంది; మిగతావి తర్వాత ✏️ తో నింపవచ్చు. ఇప్పటికే ఉన్న పేరు / ID మళ్ళీ చేరదు.</div>'
-  +'<textarea id="pasteBox" placeholder="'+(pasteAll?'6&#9;':'')+'RAMU K&#9;9876543210&#9;KRISHNA&#9;LAKSHMI&#9;12/05/2015&#9;B&#9;BC'+(pasteAll?'&#10;7&#9;SITA P&#9;9876543211':'')+'"></textarea>'
-  +'<div class="row"><button class="go" onclick="pasteGo()">➕ '+(pasteAll?'అన్ని తరగతుల్లో చేర్చు':'ఈ తరగతిలో చేర్చు')+'</button></div>'
-  +'<h4 style="border-color:#c62828;color:#b91c1c">🗑 ఉన్న జాబితా తొలగించు</h4>'
-  +'<div class="warn">కొత్త జాబితా పేస్ట్ చేసే ముందు పాతది తీసేయాలంటే మాత్రమే. విద్యార్థులతో పాటు వారి మార్కులు, హాజరు కూడా పోతాయి — ముందు <b>⬇️ పూర్తి బ్యాకప్</b> తీసుకోండి. రెండుసార్లు అడుగుతుంది.</div>'
-  +'<div class="row"><button class="del" onclick="delAll(false)">🗑 '+R+' తరగతి మొత్తం ('+DATA[currentClass].length+')</button><button class="del" onclick="delAll(true)">🗑 పాఠశాల మొత్తం — అన్ని తరగతులు ('+tot+')</button></div>');}
-const ROMN={i:1,ii:2,iii:3,iv:4,v:5,vi:6,vii:7,viii:8,ix:9,x:10};
-function clsKey(v){v=String(v||'').toLowerCase().replace(/class|తరగతి|std|th|st|nd|rd|వ/g,'').replace(/[^a-z0-9]/g,'');if(!v)return null;
-  let m=v.match(/^(\d{1,2})[a-z]?$/),c=m?+m[1]:(ROMN[v]||ROMN[v.replace(/[a-z]$/,'')]||0);if(!c||c>10)return null;return DATA[c+'A']?c+'A':Object.keys(DATA).find(k=>cnum(k)===c)||null;}
-function pasteGo(){const lines=gid('pasteBox').value.split(/\r?\n/).map(x=>x.replace(/\s+$/,'')).filter(x=>x.trim());let n=0,dup=0,bad=0;const per={};
-  PS.add=PS.add||{};const ids=new Set(allStu().map(x=>x.id)),nms={};Object.keys(DATA).forEach(c=>nms[c]=new Set(DATA[c].map(x=>x.name.toLowerCase().trim())));
-  lines.forEach((ln,k)=>{let p=(ln.indexOf('\t')>=0?ln.split('\t'):ln.split(',')).map(x=>x.trim()),cls=currentClass;
-    if(pasteAll){if(/^(class|తరగతి|s\.?\s*no)/i.test(p[0])&&!clsKey(p[0]))return;cls=clsKey(p[0]);p=p.slice(1);if(!cls){bad++;return;}}
-    if(!p[0]||/^(name|student|పేరు|s\.?\s*no)/i.test(p[0]))return;
-    const o={};STF.forEach(([f])=>o[f]='');PCOL.forEach((f,i)=>{if(p[i])o[f]=p[i];});o.medium='';o.bmi='';o.mobile=o.mobile.replace(/\D/g,'').slice(-10);
-    o.g=/^(b|m)/i.test(o.g)?'B':/^(g|f)/i.test(o.g)?'G':'';if(!o.id)o.id='N'+Date.now().toString(36).toUpperCase()+k;
-    if(ids.has(o.id)||nms[cls].has(o.name.toLowerCase())){dup++;return;}ids.add(o.id);nms[cls].add(o.name.toLowerCase());
-    if((PS.del||{})[o.id])delete PS.del[o.id];(PS.add[cls]=PS.add[cls]||[]).push(o);DATA[cls].push(o);n++;per[cls]=(per[cls]||0)+1;});
-  savePS();refreshAll();
-  showToast(n+' మంది చేర్చబడ్డారు ✅'+(pasteAll&&n?' ('+Object.keys(per).map(c=>(CLS_NAME[c]||c)+': '+per[c]).join(', ')+')':'')+(dup?' · '+dup+' ఇప్పటికే ఉన్నవారు':'')+(bad?' · '+bad+' వరుసల్లో తరగతి లేదు':''));
-  if(n)closeOvl('entView');else if(bad)alert(bad+' వరుసల్లో తరగతి గుర్తించలేకపోయాను. మొదటి కాలమ్‌లో తరగతి (1–10) ఉందో చూడండి, లేదా “ఈ తరగతి మాత్రమే” ఎంచుకోండి.');}
-/* ఉన్న విద్యార్థులను మొత్తం తొలగించు — రెండుసార్లు అడుగుతుంది */
-function delAll(school){const L=school?Object.keys(DATA):[currentClass],n=L.reduce((a,c)=>a+DATA[c].length,0),what=school?'పాఠశాల మొత్తం (అన్ని తరగతులు)':(CLS_NAME[currentClass]||currentClass)+' తరగతి';
-  if(!n){showToast('తొలగించడానికి విద్యార్థులు లేరు');return;}
-  if(!confirm('⚠️ మొదటిసారి అడుగుతున్నాను:\n\n'+what+' — '+n+' మంది విద్యార్థులను తొలగించాలా?\nవారి మార్కులు, హాజరు నమోదులు కూడా పోతాయి.'))return;
-  if(!confirm('⚠️ రెండోసారి — చివరిసారి అడుగుతున్నాను:\n\n'+n+' మంది విద్యార్థుల డేటా శాశ్వతంగా పోతుంది. బ్యాకప్ తీసుకున్నారా?\n\nనిజంగా తొలగించాలా? (OK = తొలగించు, Cancel = వద్దు)'))return;
-  PS.del=PS.del||{};PS.add=PS.add||{};
-  L.forEach(c=>{DATA[c].forEach(s=>{if(!(PS.add[c]||[]).some(x=>x.id===s.id))PS.del[s.id]=1;delete PS.mk[s.id];delete PS.att[s.id];if(PS.pl)delete PS.pl[s.id];if(PS.stu)delete PS.stu[s.id];});PS.add[c]=[];DATA[c]=[];});
-  savePS();closeOvl('entView');refreshAll();showToast(n+' మంది తొలగించబడ్డారు');}
-
-/* తరగతి మొత్తం మార్కుల నమోదు: మదింపు × సబ్జెక్టు */
-let mkA='FA1',mkI=0;
-function openMk(){const c=cnum(currentClass),C=clsDef(c);if(!DATA[currentClass].length){showToast('ముందు విద్యార్థులను చేర్చండి');return;}
-  if(!C.subs.length){showToast('ఈ తరగతికి సబ్జెక్టులు లేవు');return;}if(mkI>=C.subs.length)mkI=0;
-  entOpen('✏️ మార్కుల నమోదు — '+(CLS_NAME[currentClass]||currentClass)+' తరగతి','<div id="mkTop"></div><div class="egw" id="mkGrid"></div>'
-   +'<div class="warn">టైప్ చేయగానే సేవ్ అవుతుంది. Enter = కింది విద్యార్థి. FA = 5 + 5 + 5 + 35 = 50 · SA = 80. గైర్హాజరైతే SA గడిలో <b>AB</b> అని రాయండి. ఇక్కడ వేసిన మార్కులే ప్రగతి కార్డు, HPC కార్డు, ప్రమోషన్ చార్ట్, సబ్జెక్టు వారీ నివేదికల్లోకి వెళ్తాయి.</div>');drawMkG();}
-function drawMkG(){const cls=currentClass,c=cnum(cls),C=clsDef(c),i=mkI,A=mkA,isFA=A[0]==='F',sb=C.subs[i],sc=scOf(c,sb.n),n=isFA?4:(c<=5?6:1);
-  gid('mkTop').innerHTML='<div class="chips">'+ASMT.map(x=>'<button class="'+(x===A?'active':'')+'" onclick="mkA=\''+x+'\';drawMkG()">'+ASL[x]+'</button>').join('')+'</div>'
-   +'<div class="row"><b>సబ్జెక్టు:</b><select onchange="mkI=+this.value;drawMkG()">'+C.subs.map((x,k)=>'<option value="'+k+'"'+(k===i?' selected':'')+'>'+tn(x.n)+'</option>').join('')+'</select><span>గరిష్ఠం: <b>'+(isFA?50:saMax(c,sb.n))+'</b></span></div>';
-  const tm=faMaxOf(c,i);
-  let h='<table class="eg"><tr><th>క్ర.సం</th><th>విద్యార్థి పేరు</th>'+(isFA?TOOLS.map((t,q)=>'<th>'+t+'<br>('+tm[q]+')</th>').join(''):(n===6?[1,2,3,4,5,6].map(k=>'<th>AS-'+k+'</th>').join(''):'<th>మార్కులు (80)</th>'))+'<th>మొత్తం</th><th>గ్రేడ్</th></tr>';
-  DATA[cls].forEach((s,k)=>{const r=aRes(s,c,A,i);let vv;
-    if(isFA)vv=r&&r.t?r.t:[];else{const v=((PS.mk[s.id]||{})[A]||{})[i];vv=v?(v.length===n?v:(n===6?[]:[v.some(x=>String(x).toUpperCase()==='AB')?'AB':v.reduce((a,x)=>a+(+x||0),0)])):[];}
-    h+='<tr><td>'+(k+1)+'</td><td class="l">'+hx(s.name.toUpperCase())+'</td>'+Array.from({length:n},(_,q)=>'<td><input class="gi" '+(isFA?'type="number" step="0.5" min="0" max="'+tm[q]+'" inputmode="decimal"':'inputmode="decimal"'+(n===1?' data-mx="80"':''))+' data-sid="'+s.id+'" data-r="'+k+'" data-q="'+q+'" value="'+(vv[q]===null||vv[q]===undefined?'':vv[q])+'"></td>').join('')
-      +'<td id="gt'+k+'">'+(r?(r.ab?'AB':nf(r.tot)+'/'+r.max):'')+'</td><td class="g" id="gg'+k+'">'+(r&&!r.ab?r.g:'')+'</td></tr>';});
-  gid('mkGrid').innerHTML=h+'</table>';}
-/* తరగతి మొత్తం నెలవారీ హాజరు నమోదు */
-let atM=Math.min(10,(new Date().getMonth()+7)%12);
-function openAtE(){if(!DATA[currentClass].length){showToast('ముందు విద్యార్థులను చేర్చండి');return;}
-  entOpen('📅 హాజరు నమోదు — '+(CLS_NAME[currentClass]||currentClass)+' తరగతి','<div id="atTop"></div><div class="egw" id="atGrid"></div>'
-   +'<div class="warn">ముందు ఆ నెల <b>పని దినాలు</b> వేయండి, తర్వాత ప్రతి విద్యార్థి <b>హాజరైన రోజులు</b>. టైప్ చేయగానే సేవ్ అవుతుంది. 75% కంటే తక్కువ ఎరుపులో కనిపిస్తుంది.</div>');drawAtG();}
-function atWD(){return Math.max(0,...DATA[currentClass].map(s=>attM(s,atM)[0]));}
-function drawAtG(){const cls=currentClass,wd=atWD();
-  gid('atTop').innerHTML='<div class="row"><b>నెల:</b><select onchange="atM=+this.value;drawAtG()">'+MONTHS.map((m,k)=>'<option value="'+k+'"'+(k===atM?' selected':'')+'>'+m+'</option>').join('')+'</select>'
-   +'<b>పని దినాలు:</b><input type="number" id="atWDi" min="0" max="31" inputmode="numeric" style="width:80px" value="'+(wd||'')+'"></div>';
-  let h='<table class="eg"><tr><th>క్ర.సం</th><th>విద్యార్థి పేరు</th><th>హాజరైన రోజులు</th><th>%</th></tr>';
-  DATA[cls].forEach((s,k)=>{const [w,p]=attM(s,atM),x=w?Math.min(p,w)*100/w:null;
-    h+='<tr><td>'+(k+1)+'</td><td class="l">'+hx(s.name.toUpperCase())+'</td><td><input class="pa" type="number" min="0" max="31" inputmode="numeric" data-sid="'+s.id+'" data-r="'+k+'" value="'+(w?p:'')+'"></td><td id="ap'+k+'" class="'+(x!==null&&x<75?'lo':'')+'">'+(x===null?'':r1(x)+'%')+'</td></tr>';});
-  gid('atGrid').innerHTML=h+'</table>';}
-function atSet(s,w,p){PS.att[s.id]=PS.att[s.id]||{};PS.att[s.id][atM]=[w,Math.max(0,Math.min(p,w||p))];}
-document.addEventListener('input',e=>{const el=e.target;if(!el.closest||!el.closest('#entBody'))return;const cls=currentClass,c=cnum(cls);
-  if(el.classList.contains('gi')){const s=DATA[cls].find(x=>x.id===el.dataset.sid);if(!s)return;const row=[...document.querySelectorAll('#mkGrid input.gi[data-sid="'+s.id+'"]')];
-    const vals=row.map(x=>{let v=x.value.trim();if(v==='')return null;if(v.toUpperCase()==='AB')return 'AB';let n=+v;if(isNaN(n))return null;const mx=+(x.max||x.dataset.mx)||1e9;if(n<0)n=0;if(n>mx){n=mx;x.value=n;}return n;});
-    PS.mk[s.id]=PS.mk[s.id]||{};PS.mk[s.id][mkA]=PS.mk[s.id][mkA]||{};if(vals.every(v=>v===null))delete PS.mk[s.id][mkA][mkI];else PS.mk[s.id][mkA][mkI]=vals;savePS();
-    const r=aRes(s,c,mkA,mkI),k=el.dataset.r;gid('gt'+k).textContent=r?(r.ab?'AB':nf(r.tot)+'/'+r.max):'';gid('gg'+k).textContent=r&&!r.ab?r.g:'';return;}
-  if(el.id==='atWDi'){const w=Math.max(0,+el.value||0);DATA[cls].forEach((s,k)=>{const p=attM(s,atM)[1];atSet(s,w,p);const x=w?Math.min(p,w)*100/w:null,t=gid('ap'+k);t.textContent=x===null?'':r1(x)+'%';t.className=x!==null&&x<75?'lo':'';});savePS();return;}
-  if(el.classList.contains('pa')){const s=DATA[cls].find(x=>x.id===el.dataset.sid);if(!s)return;const w=Math.max(0,+gid('atWDi').value||0);let p=Math.max(0,+el.value||0);if(w&&p>w){p=w;el.value=p;}
-    atSet(s,w,p);savePS();const x=w?p*100/w:null,t=gid('ap'+el.dataset.r);t.textContent=x===null?'':r1(x)+'%';t.className=x!==null&&x<75?'lo':'';}});
-document.addEventListener('keydown',e=>{const el=e.target;if(e.key!=='Enter'||!el.closest||!el.closest('#entBody')||!el.dataset||el.dataset.r===undefined)return;
-  const nx=document.querySelector('#entBody input[data-r="'+(+el.dataset.r+1)+'"]'+(el.dataset.q!==undefined?'[data-q="'+el.dataset.q+'"]':''));if(nx){e.preventDefault();nx.focus();nx.select();}});
-
-/* HPC కార్డులు / Subject గ్రేడ్ నివేదికలు: ప్రధాన భాగంలో నమోదు చేసిన విద్యార్థులు, FA-1 మార్కులు, వివరాలు, హాజరు ఆటోగా */
-function hpcSync(w){try{const D=w.eval('DATA'),P=w.eval('PROF'),dl=PS.del||{};
-  Object.keys(DATA).forEach(cls=>{const c=cnum(cls),def=clsDef(c);if(!def.subs.length)return;
-    let C=D.find(x=>x.c===c);if(!C){C={c:c,subs:def.subs.map(x=>({n:x.n,max:50,tm:[5,5,5,35]})),st:[]};D.push(C);}
-    C.st=C.st.filter(x=>!dl[x.id]);
-    DATA[cls].forEach(st=>{let hs=C.st.find(x=>x.id===st.id);if(!hs){hs={id:st.id,nm:st.name.toUpperCase(),m:C.subs.map(()=>[null,null,null,null,null,''])};C.st.push(hs);}
-      else if((PS.stu||{})[st.id])hs.nm=st.name.toUpperCase();
-      C.subs.forEach((sb,j)=>{const i=def.subs.findIndex(x=>x.n===sb.n);if(i<0)return;const v=((PS.mk[st.id]||{}).FA1||{})[i];
-        if(v&&v.some(x=>x!==null&&x!=='')){const t=[0,1,2,3].map(q=>v[q]===null||v[q]===undefined||v[q]===''?null:+v[q]||0);hs.m[j]=[t[0],t[1],t[2],t[3],t.reduce((a,x)=>a+(x||0),0),''];}});
-      const p=P[st.id]=P[st.id]||{},put=(k,v,f)=>{if(v!==undefined&&v!==null&&v!==''&&(f||p[k]===undefined||p[k]===''))p[k]=String(v);},ed=(PS.stu||{})[st.id];
-      put('dob',(st.dob||'').replace(/\//g,'-'),ed);put('wt',st.wt,ed);put('ht',st.ht,ed);put('bmi',st.bmi,ed);put('pen',st.pen,ed);put('apaar',((PS.pl||{})[st.id]||{}).apaar||st.apaar,ed);
-      put('adm',((PS.pl||{})[st.id]||{}).adm||st.adm,ed);put('fn',(st.father||'').toUpperCase(),ed);put('mn',(st.mother||'').toUpperCase(),ed);put('fm',st.mobile,ed);put('addr',st.addr,ed);
-      const own=!!PS.att[st.id],at=(pre,ix)=>{let W=0,Q=0;ix.forEach((mi,k)=>{const [a,b]=attM(st,mi);if(a>0){const q=Math.min(b,a);put(pre+'w'+k,a,own);put(pre+'p'+k,q,own);put(pre+'a'+k,Math.round(q*10000/a)/100,own);W+=a;Q+=q;}});
-        if(W){put(pre+'w'+ix.length,W,own);put(pre+'p'+ix.length,Q,own);put(pre+'a'+ix.length,Math.round(Q*10000/W)/100,own);}};
-      at('a1',T1);at('a2',T2);});});
-  }catch(e){}}
 
 /* ---------- స్కూల్ సెట్టింగ్స్ / కొత్త స్కూల్ ---------- */
 const SF=['name','short','place','udise','year'];
-function applySchUI(){const n=SCH.short||SCH.name||'మీ పాఠశాల';document.title=n+' School ప్రగతి - రాయ్ ఎడ్యుకేషన్';const p=document.querySelector('header p');if(p)p.innerHTML=hx(n)+' | విద్యార్థుల వివరాలు · FA/SA మార్కులు · హాజరు · HPC · ప్రమోషన్ చార్ట్ · అన్ని నివేదికలు';}
-function openSch(){SF.forEach(k=>document.getElementById('sc_'+k).value=SCH[k]||'');document.getElementById('ns_year').value=SCH.year;document.getElementById('schView').classList.add('show');}
-function saveSch(){PS.sch={};SF.forEach(k=>{SCH[k]=document.getElementById('sc_'+k).value.trim();PS.sch[k]=SCH[k];});savePS();applySchUI();showToast('స్కూల్ వివరాలు సేవ్ అయ్యాయి ✅');}
-/* విద్యార్థుల డేటా ఏదీ లేని ఖాళీ ఫైల్ (అన్ని నివేదికలు, HPC, ప్రమోషన్ చార్ట్ అలాగే ఉంటాయి) */
-function blankSrc(n,a,b){let h=SRC;const cut=(st,en,txt)=>{const i=h.indexOf(st);if(i<0)return;const j=h.indexOf(en,i);if(j<0)return;h=h.slice(0,i)+txt+h.slice(j+en.length);};
-  const cl={};for(let c=a;c<=b;c++)cl[c+'A']=[];
-  const subs=HPC_BASE.map(C=>({c:C.c,subs:C.subs.map(x=>({n:x.n,max:50,tm:[5,5,5,35]})),st:[]}));
-  cut('const SCH=','\n','const SCH='+JSON.stringify(n)+';\n');
-  cut('const DATA = {','\n};\n','const DATA = '+JSON.stringify(cl)+';\n');
-  cut('const HPC_BASE=',';\n','const HPC_BASE='+JSON.stringify(subs)+';\n');
-  cut('const MOTHER=',';\n','const MOTHER={};\n');cut('const SMC=',';\n','const SMC={};\n');
-  cut('const BASE = ',';\n','const BASE = '+JSON.stringify(subs)+';\n');cut('const CMR_OVR=','}};','const CMR_OVR={};');cut('const PROF = ',';\n','const PROF = {};\n');
-  h=h.split('raay_school_pragathi_v1_hpc').join(n.key+'_hpc').split('raay_school_pragathi_v1_hpce').join(n.key+'_hpce').split('raay_school_pragathi_v1_adm').join(n.key+'_adm');
-  h=h.replace(/<title>[^<]*<\/title>/,'<title>'+(n.short||'School').replace(/</g,'')+' విద్యార్థులు + ప్రగతి - రాయ్ ఎడ్యుకేషన్</title>');return h;}
-function makeSchool(){const n={};SF.forEach(k=>n[k]=document.getElementById('ns_'+k).value.trim());
-  if(!n.name){showToast('కొత్త స్కూల్ పేరు ఇవ్వండి');return;}if(!n.short)n.short=n.name;if(!n.year)n.year=SCH.year;
-  n.key='sch_'+(n.udise||n.short.replace(/\W+/g,'').toLowerCase())+'_'+Date.now().toString(36);
-  const [a,b]=document.getElementById('ns_cls').value.split('-').map(Number),h=blankSrc(n,a,b);
-  const bl=new Blob([h],{type:'text/html'}),l=document.createElement('a');l.href=URL.createObjectURL(bl);l.download=n.short.replace(/\W+/g,'_')+'_Pragathi.html';l.click();
-  showToast('కొత్త స్కూల్ ఫైల్ డౌన్‌లోడ్ అయింది ✅');}
+function applySchUI(){document.title=SCH.short+' — School ప్రగతి - రాయ్ ఎడ్యుకేషన్';const p=document.querySelector('header p');if(p)p.innerHTML=(SCH.short||SCH.name)+' | క్లాస్ వారీగా పేర్లు &amp; మొబైల్ నంబర్లు — SMS / WhatsApp పంపండి';}
+function openSch(){SF.forEach(k=>document.getElementById('sc_'+k).value=SCH[k]||'');{const r=Array.isArray(PACK.rng)?PACK.rng:[1,10],e=document.getElementById('sc_rng');e.value=r[0]+'-'+r[1];if(!e.value)e.value='1-10';}document.getElementById('schView').classList.add('show');}
+function saveSch(){PS.sch={};SF.forEach(k=>{SCH[k]=cleanTxt(document.getElementById('sc_'+k).value,120);PS.sch[k]=SCH[k];});if(!SCH.short)SCH.short=PS.sch.short=SCH.name;savePS();applySchUI();showToast('స్కూల్ వివరాలు సేవ్ అయ్యాయి ✅');}
+
+/* ================= 👥 విద్యార్థుల నిర్వహణ + పూర్తి బ్యాకప్ (ఏ పాఠశాలకైనా) ================= */
+const HKEY='rv_sp_hpc_v1',HEKEY='rv_sp_hpce_v1';
+const APP=(function(){try{return (window.parent&&window.parent!==window&&typeof window.parent.live==='function')?window.parent:null;}catch(e){return null;}})();
+function appEval(x){try{return APP?APP.eval(x):null;}catch(e){return null;}}
+const SFLD=[['name','పేరు *','t'],['id','చైల్డ్ ID (ఖాళీగా వదిలితే ఆటో)','n'],['father','తండ్రి పేరు','t'],['mother','తల్లి పేరు','t'],['mobile','మొబైల్','n'],['dob','పుట్టిన తేదీ (dd/mm/yyyy)','t'],
+  ['g','లింగం (B / G)','t'],['caste','కులం (SC/ST/BC/OC)','t'],['medium','మీడియం','t'],['pen','PEN','n'],['apaar','APAAR','n'],['adm','అడ్మిషన్ నం.','t'],['addr','చిరునామా','t'],['ht','ఎత్తు (cm)','n'],['wt','బరువు (kg)','n']];
+function cleanTxt(v,n){return String(v===null||v===undefined?'':v).replace(/[<>"`\\]/g,'').replace(/'/g,'’').replace(/\s+/g,' ').trim().slice(0,n||80);}
+function fixStu(s){s=s||{};const o=Object.assign({},s);
+  o.id=String(s.id===undefined||s.id===null?'':s.id).replace(/[^\w-]/g,'');o.name=cleanTxt(s.name);
+  ['medium','dob','apaar','pen','adm','father','mother','addr','ht','wt','bmi','g','caste'].forEach(k=>{o[k]=cleanTxt(s[k],k==='addr'?120:80);});
+  o.mobile=String(s.mobile||'').replace(/\D/g,'').slice(-10);if(!o.medium)o.medium='-';
+  o.m=Array.from({length:11},(_,i)=>{const p=Array.isArray(s.m)?s.m[i]:null;return Array.isArray(p)?[+p[0]||0,+p[1]||0]:[0,0];});
+  if(!o.bmi&&+o.ht>0&&+o.wt>0)o.bmi=(+o.wt/Math.pow(+o.ht/100,2)).toFixed(2);
+  return o;}
+function newStuId(){let id;do{id='9'+String(Date.now()).slice(-8)+String(Math.floor(Math.random()*90+10));}while(findStu(id));return id;}
+function findStu(id){for(const c in DATA){const k=DATA[c].findIndex(s=>s.id===id);if(k>=0)return {cls:c,k:k,s:DATA[c][k]};}return null;}
+function totalStu(){return Object.values(DATA).reduce((a,L)=>a+L.length,0);}
+function dobFix(v){v=cleanTxt(v);let m=v.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);if(m)return m[3].padStart(2,'0')+'/'+m[2].padStart(2,'0')+'/'+m[1];
+  m=v.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/);return m?m[1].padStart(2,'0')+'/'+m[2].padStart(2,'0')+'/'+m[3]:v;}
+function clsKeyOf(v){v=String(v||'').trim().toUpperCase().replace(/(వ|TH|ST|ND|RD|CLASS|తరగతి|\s)/g,'');const m=v.match(/^(\d{1,2})A?$/);if(m&&+m[1]>=1&&+m[1]<=10)return +m[1]+'A';
+  const R={I:1,II:2,III:3,IV:4,V:5,VI:6,VII:7,VIII:8,IX:9,X:10};return R[v]?R[v]+'A':'';}
+let stuDirty=false,stuTab='one',stuEditId=null;
+function stuSaved(){PACK.DATA=DATA;stuDirty=true;return savePack();}
+function openStu(tab){const sel=document.getElementById('stuCls');
+  sel.innerHTML=Object.keys(DATA).map(c=>'<option value="'+c+'">'+CLS_NAME[c]+' తరగతి ('+DATA[c].length+')</option>').join('');sel.value=DATA[currentClass]?currentClass:Object.keys(DATA)[0];
+  if(tab)stuTab=tab;stuEditId=null;document.getElementById('stuView').classList.add('show');stuDraw();}
+function stuClose(){document.getElementById('stuView').classList.remove('show');if(stuDirty){currentClass=document.getElementById('stuCls').value;try{sessionStorage.setItem('rv_sp_cls',currentClass);}catch(e){}location.reload();}}
+function stuOpts(){const sel=document.getElementById('stuCls'),v=sel.value;[...sel.options].forEach(o=>o.textContent=CLS_NAME[o.value]+' తరగతి ('+DATA[o.value].length+')');sel.value=v;}
+function stuDraw(){const cls=document.getElementById('stuCls').value,L=DATA[cls],R=CLS_NAME[cls];stuOpts();
+  const T=(k,t)=>'<button class="'+(stuTab===k?'go':'')+'" onclick="stuTab=\''+k+'\';stuEditId=null;stuDraw()">'+t+'</button>';
+  let h='<div class="warn">🔒 మీరు ఇక్కడ చేర్చే విద్యార్థుల వివరాలు <b>ఈ ఫోన్ / కంప్యూటర్‌లోనే</b> ఉంటాయి — ఇంటర్నెట్‌కు ఎక్కడికీ వెళ్ళవు. ఫోన్ మార్చినా, బ్రౌజర్ డేటా తుడిచినా పోతాయి కాబట్టి <b>⬇️ బ్యాకప్</b> తరచూ తీసుకోండి.</div>'
+   +'<div class="row stabs">'+T('one','➕ ఒక్కొక్కరిని')+T('bulk','📋 జాబితా పేస్ట్ / CSV')+(APP?T('app','📥 యాప్ జాబితా నుండి'):'')+'</div>';
+  if(stuTab==='one'){const e=stuEditId?findStu(stuEditId):null,s=e?e.s:{};
+    h+='<h4>'+(e?'✏️ సరిచేయి — '+s.name:'➕ '+R+' తరగతిలో కొత్త విద్యార్థి')+'</h4><div class="fg">'
+     +SFLD.map(f=>'<span>'+f[1]+'</span><input type="text" id="sf_'+f[0]+'"'+(f[2]==='n'?' inputmode="numeric"':'')+(e&&f[0]==='id'?' disabled':'')+' value="'+(s[f[0]]&&s[f[0]]!=='-'?s[f[0]]:'')+'">').join('')
+     +(e?'<span>తరగతి</span><select id="sf_cls">'+Object.keys(DATA).map(c=>'<option value="'+c+'"'+(c===e.cls?' selected':'')+'>'+CLS_NAME[c]+'</option>').join('')+'</select>':'')
+     +'</div><div class="row"><button class="go" onclick="stuSave()">💾 '+(e?'మార్పులు సేవ్':'చేర్చు')+'</button>'+(e?'<button onclick="stuEditId=null;stuDraw()">రద్దు</button>':'')+'</div>';}
+  else if(stuTab==='bulk'){
+    h+='<h4>📋 '+R+' తరగతికి జాబితా పేస్ట్</h4><div class="st">Excel / Sheets నుండి కాపీ చేసి పేస్ట్ చేయండి. ఒక వరుసకు ఒక విద్యార్థి — కాలమ్‌ల క్రమం:<br><b>పేరు, తండ్రి, మొబైల్, చైల్డ్ ID, పుట్టిన తేదీ, తల్లి</b> (పేరు తప్ప మిగతావి ఖాళీగా ఉండొచ్చు).<br>మొదటి కాలమ్ తరగతి (1–10) అయితే: <b>తరగతి, పేరు, ID, తండ్రి, మొబైల్, పుట్టిన తేదీ</b> — అన్ని తరగతులు ఒకేసారి (రాయ్ విద్యార్థి యాప్ CSV ఫార్మ్ ఇదే).</div>'
+     +'<textarea id="stuBulk" rows="7" style="width:100%;margin-top:6px;font-family:inherit;font-size:.85rem;border:1px solid #bbb;border-radius:8px;padding:6px" placeholder="పేరు, తండ్రి, మొబైల్, ID, పుట్టిన తేదీ, తల్లి" oninput="stuBulkPrev()"></textarea>'
+     +'<div class="row"><button onclick="document.getElementById(\'stuCsv\').click()">📂 CSV ఫైల్ ఎంచుకో</button><button class="go" onclick="stuBulkGo()">➕ జోడించు</button><span class="st" id="stuBulkMsg"></span></div>';}
+  else if(stuTab==='app'){const n=+appEval("live('roster').length")||0;
+    h+='<h4>📥 రాయ్ విద్యార్థి యాప్‌లోని విద్యార్థుల జాబితా నుండి</h4><div class="st">యాప్ → టీచర్ → “విద్యార్థులు & మార్కులు” లో ఉన్న జాబితా: <b>'+n+' మంది</b>. పేరు, ID, తండ్రి, మొబైల్, మీడియం, నెలవారీ హాజరు, FA టూల్స్ మార్కులు (5+5+5+35) ఇక్కడికి వస్తాయి. ఇక్కడ ముందే ఉన్నవారి వివరాలు అప్‌డేట్ అవుతాయి; ఇక్కడ రాసిన మార్కులు మారవు.</div>'
+     +'<div class="row"><button class="go" '+(n?'':'disabled')+' onclick="stuFromApp()">📥 '+n+' మందిని తెచ్చుకో</button></div>'+(n?'':'<div class="st">యాప్‌లో ఇంకా జాబితా లేదు — “➕ ఒక్కొక్కరిని” లేదా “📋 జాబితా పేస్ట్” వాడండి.</div>');}
+  h+='<h4>👥 '+R+' తరగతి — '+L.length+' మంది</h4>';
+  h+=L.length?'<div class="pv" style="max-height:340px"><table><tr><th>క్ర.సం</th><th>పేరు</th><th>ID</th><th>తండ్రి</th><th>మొబైల్</th><th>పు.తే.</th><th></th></tr>'
+    +L.map((s,k)=>'<tr><td>'+(k+1)+'</td><td><b>'+s.name+'</b></td><td>'+s.id+'</td><td>'+(s.father||'')+'</td><td>'+(s.mobile||'')+'</td><td>'+(s.dob||'')+'</td><td><button onclick="stuTab=\'one\';stuEditId=\''+s.id+'\';stuDraw();document.getElementById(\'stuView\').scrollTop=0">✏️</button> <button onclick="stuDel(\''+s.id+'\')">🗑</button></td></tr>').join('')+'</table></div>'
+    +'<div class="row"><button onclick="stuSort()">🔤 పేర్ల వరుసలో అమర్చు</button></div>'
+    :'<div class="st">ఈ తరగతిలో ఇంకా ఎవరూ లేరు.</div>';
+  document.getElementById('stuBox').innerHTML=h;}
+function stuSave(){const v={};SFLD.forEach(f=>v[f[0]]=document.getElementById('sf_'+f[0]).value);
+  if(!cleanTxt(v.name)){showToast('పేరు రాయండి');return;}v.dob=dobFix(v.dob);v.g=cleanTxt(v.g).toUpperCase().slice(0,1);v.g=v.g==='M'?'B':v.g==='F'?'G':v.g;
+  const cls=document.getElementById('stuCls').value;
+  if(stuEditId){const e=findStu(stuEditId);if(!e)return;const n=fixStu(Object.assign({},e.s,v,{id:e.s.id,bmi:''}));const to=document.getElementById('sf_cls').value;
+    if(to!==e.cls){DATA[e.cls].splice(e.k,1);DATA[to].push(n);}else DATA[e.cls][e.k]=n;
+    if(PS.stu&&PS.stu[n.id]){delete PS.stu[n.id];savePS();}
+    stuEditId=null;if(stuSaved())showToast('మార్పులు సేవ్ అయ్యాయి ✅');}
+  else{let id=String(v.id||'').replace(/[^\w-]/g,'');if(id&&findStu(id)){showToast('ఈ ID ఇప్పటికే ఉంది — '+findStu(id).s.name);return;}if(!id)id=newStuId();
+    DATA[cls].push(fixStu(Object.assign(v,{id:id})));if(stuSaved())showToast(cleanTxt(v.name)+' చేర్చబడింది ✅');}
+  stuDraw();}
+function stuDel(id){const e=findStu(id);if(!e)return;if(!confirm(e.s.name+' ను జాబితా నుండి తొలగించాలా?\n(ఈ విద్యార్థి మార్కులు, హాజరు కూడా తొలగిపోతాయి)'))return;
+  DATA[e.cls].splice(e.k,1);delete PS.mk[id];delete PS.att[id];if(PS.pl)delete PS.pl[id];if(PS.stu)delete PS.stu[id];
+  if(PS.add)for(const c in PS.add)PS.add[c]=(PS.add[c]||[]).filter(s=>s.id!==id);savePS();stuSaved();stuDraw();showToast('తొలగించబడింది');}
+function stuSort(){const cls=document.getElementById('stuCls').value;DATA[cls].sort((a,b)=>a.name.localeCompare(b.name));stuSaved();stuDraw();}
+function stuParse(txt){const cls=document.getElementById('stuCls').value,out=[];
+  String(txt||'').replace(/^﻿/,'').split(/\r?\n/).forEach(l=>{if(!l.trim())return;
+    const cs=(l.includes('\t')?l.split('\t'):(l.match(/("([^"]|"")*"|[^,]*)(,|$)/g)||[]).map(x=>x.replace(/,$/,''))).map(x=>x.replace(/^\s*"|"\s*$/g,'').replace(/""/g,'"').trim());
+    const ck=clsKeyOf(cs[0]);
+    if(ck&&cs[1]&&!/^\d+$/.test(cs[1])){if(DATA[ck])out.push({cls:ck,name:cs[1],id:cs[2],father:cs[3],mobile:cs[4],dob:cs[5],mother:cs[6]});else out.push({bad:1});}
+    else if(cs[0]&&!/^(పేరు|name|తరగతి|class)/i.test(cs[0])&&!/^\d+$/.test(cs[0]))out.push({cls:cls,name:cs[0],father:cs[1],mobile:cs[2],id:cs[3],dob:cs[4],mother:cs[5]});});
+  return out;}
+function stuBulkPrev(){const R=stuParse(document.getElementById('stuBulk').value),ok=R.filter(r=>!r.bad),by={};ok.forEach(r=>by[r.cls]=(by[r.cls]||0)+1);
+  document.getElementById('stuBulkMsg').textContent=ok.length?'✅ '+ok.length+' మంది — '+Object.keys(by).map(c=>CLS_NAME[c]+': '+by[c]).join(', ')+(R.length-ok.length?' | ⚠️ '+(R.length-ok.length)+' వరుసల తరగతి ఈ పాఠశాలలో లేదు':''):'సరైన వరుసలు లేవు';}
+function stuBulkGo(){const R=stuParse(document.getElementById('stuBulk').value).filter(r=>!r.bad);if(!R.length){showToast('సరైన వరుసలు లేవు');return;}let add=0,upd=0;
+  R.forEach(r=>{let id=String(r.id||'').replace(/[^\w-]/g,'');const e=id?findStu(id):null,v={name:r.name,father:r.father,mother:r.mother,mobile:r.mobile,dob:dobFix(r.dob)};
+    if(e){Object.keys(v).forEach(k=>{if(cleanTxt(v[k]))e.s[k]=v[k];});DATA[e.cls][e.k]=fixStu(e.s);upd++;}
+    else{DATA[r.cls].push(fixStu(Object.assign(v,{id:id||newStuId()})));add++;}});
+  if(stuSaved())showToast('✅ కొత్తగా '+add+' మంది'+(upd?' • అప్‌డేట్ '+upd:''));stuTab='one';stuDraw();}
+function stuCsvPick(el){const f=el.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{document.getElementById('stuBulk').value=String(r.result).replace(/^﻿/,'');stuBulkPrev();};r.readAsText(f);el.value='';}
+const APPSUB={tel:'First Language',hin:'Second Language',eng:'English',mat:'Mathematics',evs:'EVS',sci:'General Science',phy:'Physical Science',bio:'Biological Science',soc:'Social Studies'};
+function stuFromApp(){let o=null;try{o=JSON.parse(appEval("JSON.stringify({r:live('roster'),m:live('marks'),n:(S.cfg&&S.cfg.sname)||''})"));}catch(e){}
+  if(!o||!Array.isArray(o.r)||!o.r.length){showToast('యాప్ జాబితా దొరకలేదు');return;}
+  if(!confirm('యాప్‌లోని '+o.r.length+' మంది విద్యార్థులను ఇక్కడికి తెచ్చుకోవాలా?\n(ఇక్కడ ముందే ఉన్నవారి పేరు / తండ్రి / మొబైల్ / హాజరు అప్‌డేట్ అవుతాయి)'))return;let add=0,upd=0,mk=0;
+  o.r.slice().sort((a,b)=>(a.c-b.c)||((a.ord||0)-(b.ord||0))).forEach(r=>{const cls=(+r.c)+'A';if(!(+r.c>=1&&+r.c<=10)||!r.sid||!r.n)return;if(!DATA[cls])DATA[cls]=[];
+    const id=String(r.sid).replace(/[^\w-]/g,''),e=findStu(id),att=Array.from({length:11},(_,i)=>{const a=(r.att||[])[i];return Array.isArray(a)&&+a[0]>0?[+a[0],Math.max(+a[1]||0,0)]:null;});
+    if(e){const s=e.s;s.name=cleanTxt(r.n);if(r.f)s.father=cleanTxt(r.f);if(r.ph)s.mobile=String(r.ph).replace(/\D/g,'').slice(-10);if(r.med)s.medium=cleanTxt(r.med);att.forEach((a,i)=>{if(a)s.m[i]=a;});
+      if(e.cls!==cls){DATA[e.cls].splice(e.k,1);DATA[cls].push(s);}upd++;}
+    else{DATA[cls].push(fixStu({id:id,name:r.n,father:r.f,mobile:r.ph,medium:r.med,m:att.map(a=>a||[0,0])}));add++;}});
+  (o.m||[]).forEach(m=>{const e=findStu(String(m.sid||'')),sn=APPSUB[m.s];if(!e||!sn)return;const c=cnum(e.cls),i=clsDef(c).subs.findIndex(sb=>sb.n===sn);if(i<0)return;
+    ['FA1','FA2','FA3','FA4'].forEach(A=>{const v=(m.a||{})[A];if(!Array.isArray(v)||v.length!==4||(c>=8&&(m.s==='phy'||m.s==='bio')))return;
+      const P=PS.mk[e.s.id]=PS.mk[e.s.id]||{};P[A]=P[A]||{};if(P[A][i]&&P[A][i].some(x=>x!==null&&x!==''))return;P[A][i]=v.map(x=>x===''||x===undefined?null:x);mk++;});});
+  if(o.n&&(!PS.sch||!PS.sch.name)&&(!PACK.SCH||!PACK.SCH.name)){PS.sch=Object.assign({},PS.sch||{},{name:o.n,short:o.n});}
+  savePS();Object.keys(DATA).sort((a,b)=>cnum(a)-cnum(b));
+  if(stuSaved())showToast('✅ కొత్తగా '+add+' • అప్‌డేట్ '+upd+(mk?' • FA మార్కులు '+mk:''));stuTab='one';stuDraw();}
+
+/* ---------- తరగతుల పరిధి ---------- */
+function saveRng(){const [a,b]=document.getElementById('sc_rng').value.split('-').map(Number);PACK.rng=[a,b];PACK.DATA=DATA;if(savePack()){showToast('తరగతులు సేవ్ అయ్యాయి ✅');setTimeout(()=>location.reload(),500);}}
+
+/* ---------- పూర్తి బ్యాకప్ / పునరుద్ధరణ / మొత్తం తుడిచివేత ---------- */
+function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||'null');}catch(e){return null;}}
+function exportBk(){PACK.DATA=DATA;const o={app:'rv_school_pragathi',v:2,at:new Date().toISOString(),pack:Object.assign({},PACK,{SCH:{name:SCH.name,short:SCH.short,place:SCH.place,udise:SCH.udise,year:SCH.year}}),ps:PS,hpc:lsGet(HKEY),hpce:lsGet(HEKEY),adm:lsGet(ADM_KEY)};
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(o)],{type:'application/json'}));
+  a.download=(SCH.short||'School').replace(/[^\wఀ-౿]+/g,'_')+'_Pragathi_backup_'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();showToast('⬇️ బ్యాకప్ డౌన్‌లోడ్ — భద్రంగా ఉంచండి');}
+function importBk(el){const f=el.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);
+  if(o&&o.app==='rv_school_pragathi'&&o.pack){const n=Object.values(o.pack.DATA||{}).reduce((a,L)=>a+(L||[]).length,0),have=totalStu();
+    if(!confirm('ఈ బ్యాకప్: '+((o.pack.SCH||{}).name||'')+' — '+n+' మంది విద్యార్థులు.\n'+(have?'ఇప్పుడు ఇక్కడున్న '+have+' మంది డేటా స్థానంలో ఇది వస్తుంది. ':'')+'ఎక్కించాలా?')){el.value='';return;}
+    localStorage.setItem(PKK,JSON.stringify(o.pack));
+    if(o.ps)localStorage.setItem(PKEY,JSON.stringify(o.ps));else{const p=Object.assign({},PS);delete p.sch;delete p.add;delete p.stu;localStorage.setItem(PKEY,JSON.stringify(p));}
+    [[HKEY,o.hpc],[HEKEY,o.hpce],[ADM_KEY,o.adm]].forEach(x=>{if(x[1]!==null&&x[1]!==undefined)localStorage.setItem(x[0],JSON.stringify(x[1]));else if(o.ps)localStorage.removeItem(x[0]);});
+    showToast('బ్యాకప్ ఎక్కించబడింది ✅');setTimeout(()=>location.reload(),600);return;}
+  if(o&&o.app==='zphs_progress'&&o.data&&typeof o.data==='object'){const n=Object.values(o.data).reduce((a,L)=>a+(L||[]).length,0);
+    if(!confirm('ఈ బ్యాకప్: '+((o.sch||{}).name||'')+' — '+n+' మంది విద్యార్థులు.\n'+(totalStu()?'ఇప్పుడు ఇక్కడున్న '+totalStu()+' మంది డేటా స్థానంలో ఇది వస్తుంది. ':'')+'ఎక్కించాలా?')){el.value='';return;}
+    const ks=Object.keys(o.data).map(cnum).filter(c=>c>=1&&c<=10),pk={SCH:o.sch||{},rng:ks.length?[Math.min(...ks),Math.max(...ks)]:[1,10],DATA:o.data,HPC_BASE:Array.isArray(o.hpc)?o.hpc.map(C=>({c:C.c,subs:C.subs,st:(C.st||[]).map(s=>({id:s.id,m:s.m}))})):null};
+    const ps=Object.assign({mk:{},att:{}},o.ps||{});delete ps.add;delete ps.stu;delete ps.del;delete ps.sch;delete ps.hpc;
+    localStorage.setItem(PKK,JSON.stringify(pk));localStorage.setItem(PKEY,JSON.stringify(ps));[HKEY,HEKEY].forEach(k=>localStorage.removeItem(k));
+    showToast('బ్యాకప్ ఎక్కించబడింది ✅');setTimeout(()=>location.reload(),600);return;}
+  if(o.ps){if(!confirm('పాత రకం బ్యాకప్ (మార్కులు / హాజరు మాత్రమే). ఇప్పుడున్న మార్కులు, హాజరు స్థానంలో ఇది వస్తుంది. ఎక్కించాలా?')){el.value='';return;}
+    PS=Object.assign({mk:{},att:{},hpc:null},o.ps);showToast('ప్రగతి బ్యాకప్ ఎక్కించబడింది ✅');}
+  else if(Array.isArray(o.d)){PS.hpc=o.d.map(C=>({c:C.c,subs:C.subs,st:C.st.map(s=>({id:s.id,nm:s.nm,m:s.m}))}));showToast('HPC బ్యాకప్ నుండి FA-1 మార్కులు అప్డేట్ ✅');}
+  else throw 0;savePS();indexHPC();render();}catch(e){showToast('ఈ ఫైల్ సరైన బ్యాకప్ కాదు');}el.value='';};r.readAsText(f);}
+function wipeAll(){if(!confirm('ఈ పరికరంలోని School ప్రగతి డేటా మొత్తం (విద్యార్థులు, మార్కులు, హాజరు, HPC, ప్రమోషన్ చార్ట్) తొలగించాలా?\nముందు ⬇️ బ్యాకప్ తీసుకున్నారా?'))return;
+  if(!confirm('నిజంగా మొత్తం తొలగించాలా? ఇది తిరిగి రాదు.'))return;[PKK,PKEY,HKEY,HEKEY,ADM_KEY].forEach(k=>localStorage.removeItem(k));location.reload();}
+
+/* ---------- HPC / గ్రేడ్ల ఉప-యాప్‌కు డేటా వంతెన ---------- */
+window.RVSP={
+  sch:()=>({name:SCH.name,short:SCH.short,place:SCH.place,udise:SCH.udise,year:SCH.year,rdate:PACK.rdate||''}),
+  cmr:()=>PACK.CMR||{},
+  base:()=>Object.keys(DATA).filter(cls=>DATA[cls].length).map(cls=>{const c=cnum(cls),C=clsDef(c);
+    return {c:c,subs:C.subs.map(sb=>({n:sb.n,max:sb.max,tm:sb.tm})),st:DATA[cls].map(s=>{const h=HX[s.id],mk=(PS.mk[s.id]||{}).FA1||{};
+      return {id:s.id,nm:s.name.toUpperCase(),m:C.subs.map((_,i)=>{const v=mk[i];
+        if(v&&v.some(x=>x!==null&&x!==''&&x!==undefined)){const t=[0,1,2,3].map(q=>+v[q]||0);return t.concat([t.reduce((a,b)=>a+b,0),'']);}
+        const r=h&&h.C.c===c?h.s.m[i]:null;return r?r.slice():[null,null,null,null,null,''];})};})};}),
+  prof:()=>{const P={},X=PACK.PROF||{};Object.values(DATA).forEach(L=>L.forEach(s=>{
+    const o={dob:String(s.dob||'').replace(/\//g,'-'),wt:s.wt||'',ht:s.ht||'',bmi:s.bmi||'',pen:s.pen||'',fn:String(s.father||'').toUpperCase(),mn:String(s.mother||'').toUpperCase(),fm:s.mobile||'',addr:s.addr||''};
+    if(s.apaar)o.apaar=s.apaar;if(s.adm)o.adm=s.adm;Object.assign(o,X[s.id]||{});
+    [['a1',T1],['a2',T2]].forEach(([pre,ix])=>{let W=0,Pp=0;ix.forEach((mi,i)=>{const [w,p]=attM(s,mi);if(w>0){const q=Math.min(p,w);o[pre+'w'+i]=String(w);o[pre+'p'+i]=String(q);o[pre+'a'+i]=String(Math.round(q*10000/w)/100);W+=w;Pp+=q;}});
+      if(W){o[pre+'w'+ix.length]=String(W);o[pre+'p'+ix.length]=String(Pp);o[pre+'a'+ix.length]=String(Math.round(Pp*10000/W)/100);}});
+    P[s.id]=o;}));return P;}
+};
+
+function setupHint(){const n=totalStu(),R=CLS_NAME[currentClass]||currentClass;
+  if(n)return '<div class="setup"><b class="t">'+R+' తరగతిలో ఇంకా విద్యార్థులు లేరు</b><button onclick="openStu(\'one\')">➕ విద్యార్థిని చేర్చు</button><button onclick="openStu(\'bulk\')">📋 జాబితా పేస్ట్</button></div>';
+  return '<div class="setup"><b class="t">🏫 మీ పాఠశాల కోసం సిద్ధం చేసుకోండి — 3 అడుగులు</b><ol><li><b>⚙️ స్కూల్</b> — పాఠశాల పేరు, మండలం/జిల్లా, UDISE, విద్యా సంవత్సరం, తరగతులు (I–V / VI–X / I–X).</li>'
+   +'<li><b>👥 విద్యార్థులు</b> — ఒక్కొక్కరిని చేర్చండి, లేదా Excel జాబితా పేస్ట్ చేయండి'+(APP?', లేదా యాప్‌లోని జాబితా తెచ్చుకోండి':'')+'.</li>'
+   +'<li>ప్రతి విద్యార్థి 📘 లో <b>మార్కులు (FA-1…SA-2), హాజరు</b> నమోదు చేయండి → ప్రగతి కార్డులు, CCE రిజిస్టర్, ప్రమోషన్ చార్ట్, HPC కార్డులు, తరగతి ఫైళ్లు ప్రింట్ / PDF.</li></ol>'
+   +'<button onclick="openSch()">⚙️ స్కూల్ వివరాలు</button><button onclick="openStu(\'one\')">➕ విద్యార్థిని చేర్చు</button><button onclick="openStu(\'bulk\')">📋 జాబితా పేస్ట్ / CSV</button>'+(APP?'<button onclick="openStu(\'app\')">📥 యాప్ జాబితా నుండి</button>':'')
+   +'<button style="background:#b8860b" onclick="document.getElementById(\'bkFile\').click()">⬆️ బ్యాకప్ ఫైల్ ఉంటే ఎక్కించు</button>'
+   +'<div style="font-size:.8rem;color:#555;margin-top:8px">🔒 డేటా ఈ ఫోన్ / కంప్యూటర్‌లోనే ఉంటుంది — తరచూ ⬇️ బ్యాకప్ తీసుకోండి.</div></div>';}
 applySchUI();
 
 buildTabs();
 render();
-if(!SCH.name)setTimeout(()=>{openSch();showToast('ముందు మీ పాఠశాల వివరాలు నింపి సేవ్ చేయండి');},400);
-</script></body></html>
+</script>
+
+</body>
+</html>
