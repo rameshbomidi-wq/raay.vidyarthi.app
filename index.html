@@ -2415,7 +2415,8 @@ function save(){try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){toast('
 function sid(n){return String(n).trim().toLowerCase().replace(/[\/\s.#$\[\]|]+/g,'_');}
 function delOK(m){return confirm(m)&&confirm('⚠️ మళ్ళీ అడుగుతున్నాం: నిజంగా తొలగించాలా? ఇది తిరిగి రాదు.');}
 function live(col){const on=!!S.cfg.type;return S[col].filter(r=>!r.del&&!(on&&r.seed));}
-function put(col,rec){if(PRIV.includes(col)&&!rec.o)rec.o=S.dev;if(['hw','events','notes'].includes(col)&&!rec.byn&&S.cfg.isT&&typeof tName==='function'){const t=tScope();rec.by=t?t.id:'admin';rec.byn=tName();}rec.upd=Math.max(Date.now(),(rec.upd||0)+1);const a=S[col];const i=a.findIndex(x=>x.id===rec.id);if(i>=0)a[i]=rec;else a.push(rec);
+function recD(x){const v=x&&(x.d||x.upd);return v?fmtD(typeof v==='number'?new Date(v).toISOString():String(v)):'';}
+function put(col,rec){if(PRIV.includes(col)&&!rec.o)rec.o=S.dev;if(['hw','events','notes'].includes(col)&&!rec.byn&&S.cfg.isT&&typeof tName==='function'){const t=tScope();rec.by=t?t.id:'admin';rec.byn=tName();}if(['notes','qb'].includes(col)&&!rec.d&&!(S[col]||[]).some(x=>x.id===rec.id))rec.d=new Date().toISOString();rec.upd=Math.max(Date.now(),(rec.upd||0)+1);const a=S[col];const i=a.findIndex(x=>x.id===rec.id);if(i>=0)a[i]=rec;else a.push(rec);
  if(S.cfg.type&&!rec.seed){S.q[col+'|'+rec.id]=rec.upd;Sync.later();}save();return rec;}
 function remove(col,id){const r=S[col].find(x=>x.id===id);if(r)put(col,Object.assign({},r,{del:true}));}
 function dropLocal(k){const i=k.indexOf('|');const col=k.slice(0,i),id=k.slice(i+1);if(S[col])S[col]=S[col].filter(x=>x.id!==id);}
@@ -2724,7 +2725,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.12-9';
+const APPV='2026.11.12-10';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3273,7 +3274,7 @@ function tbFull(c,s){c=+c;if(!TB_SPLIT[c]||!s)return true;const k=c+'|'+s;if(TBF
  sc.onerror=()=>{TBF[k]='';sc.remove();delete TBW[k];toast('📴 పాఠం లోడ్ కాలేదు – నెట్ ఆన్ చేసి మళ్ళీ ప్రయత్నించండి');tbRefresh();};document.head.appendChild(sc);return false;}
 function tbWhenFull(c,s,f){if(tbFull(c,s))return f();const k=+c+'|'+s;(TBW[k]=TBW[k]||[]).push(f);toast('⏳ పాఠం లోడ్ అవుతోంది...');}
 const TBWAIT='<div class="empty">⏳ పాఠం లోడ్ అవుతోంది...</div>';
-function tbRefresh(){try{if(['learn','subject','tbl','home','ssc','vids'].includes(view)||(view==='teacher'&&(param.t==='tb'||param.t==='vl')))softRender();}catch(e){}}
+function tbRefresh(){try{if(['learn','subject','tbl','home','ssc','vids'].includes(view)||(view==='teacher'&&(param.t==='tb'||param.t==='vl'||param.t==='qp')))softRender();}catch(e){}}
 /* ఫైల్ పాఠాలు + టీచర్ మార్పులు (tbx) కలిపి */
 function tbLes(c,s){c=+c;tbLoad(c);const base=((window.RAAY_TB[c]||{})[s]||[]);const ov=live('tbx').filter(x=>+x.c===c&&x.s===s);if(!ov.length)return base;
  const m=new Map(base.map(L=>[L.id,L]));ov.forEach(x=>{if(x.hide)m.delete(x.lid);else if(x.L)m.set(x.lid,Object.assign({},x.L,{id:x.lid,tch:1}));});
@@ -3611,7 +3612,7 @@ V.doubts=()=>{const mine=live('doubts').filter(d=>d.n===me()).slice().reverse();
  return `<div class="bar"><button class="ib" onclick="go('learn')">←</button><h2>💬 సందేహం అడుగు</h2></div>
 <div class="card"><label>సబ్జెక్ట్</label><select id="dsub" onchange="const e=document.getElementById('dto');if(e)e.textContent='👩‍🏫 '+doubtTo(S.cur.c,this.value)+' గారికి వెళ్తుంది'">${learnSubs(S.cur.c).map(s=>`<option value="${s}" ${s===sel?'selected':''}>${SUBJ[s].n}</option>`).join('')}</select>${S.cfg.type?`<small class="mut" id="dto">👩‍🏫 ${esc(doubtTo(S.cur.c,sel))} గారికి వెళ్తుంది</small>`:''}
 <label>నీ సందేహం రాయి</label><textarea id="dtx" rows="3" placeholder="ఉదా: భిన్నాలు ఎలా కలపాలి?"></textarea><button class="btn" onclick="askDoubt()">పంపు ➤</button></div>
-<h4 class="sec">నా సందేహాలు (${mine.length})</h4>${mine.length?mine.map(d=>`<div class="dq dqs"><small>${SUBJ[d.s].n} • ${fmtD(d.d)}</small><p>❓ ${esc(d.q)}</p>${d.r?`<div class="ans">👩‍🏫 ${d.rb?'<b>'+esc(d.rb)+':</b> ':''}${esc(d.r)}${imgTag(d.ri,'ansimg',d.ris)}${d.ri?'<small style="display:block;margin-top:4px">👆 ఫోటో నొక్కితే పెద్దదిగా కనిపిస్తుంది</small>':''}${vidHtml(d.rv)}</div>`:'<div class="wait">⏳ ఉపాధ్యాయుల జవాబు కోసం వేచి ఉంది</div>'}</div>`).join(''):'<div class="empty">ఇంకా సందేహాలు అడగలేదు</div>'}`;};
+<h4 class="sec">నా సందేహాలు (${mine.length})</h4>${mine.length?mine.map(d=>`<div class="dq dqs"><small>${SUBJ[d.s].n} • ${fmtD(d.d)}</small><p>❓ ${esc(d.q)}</p>${d.r?`<div class="ans">👩‍🏫 ${d.rb?'<b>'+esc(d.rb)+':</b> ':''}${esc(d.r)}${d.ra?'<small style="display:block;color:#475569">📅 జవాబు తేదీ: '+fmtD(new Date(d.ra).toISOString())+'</small>':''}${imgTag(d.ri,'ansimg',d.ris)}${d.ri?'<small style="display:block;margin-top:4px">👆 ఫోటో నొక్కితే పెద్దదిగా కనిపిస్తుంది</small>':''}${vidHtml(d.rv)}</div>`:'<div class="wait">⏳ ఉపాధ్యాయుల జవాబు కోసం వేచి ఉంది</div>'}</div>`).join(''):'<div class="empty">ఇంకా సందేహాలు అడగలేదు</div>'}`;};
 function askDoubt(){const q=$('#dtx').value.trim();if(!q)return toast('సందేహం రాయి');put('doubts',{id:uid(),n:me(),c:S.cur.c,s:$('#dsub').value,q,d:new Date().toISOString(),r:''});toast('సందేహం ఉపాధ్యాయులకు పంపబడింది ✓');go('doubts');}
 
 /* ---------- ప్రశ్నల తయారీ ---------- */
@@ -4424,7 +4425,9 @@ let QP=null;
 function qpInit(){if(!QP){try{QP=JSON.parse(localStorage.getItem('raiQP')||'null');}catch(e){}if(!QP||!QP.f)QP={f:{}};}qpFix();}
 function qpSave(){try{localStorage.setItem('raiQP',JSON.stringify(QP));}catch(e){}}
 function qpLbl(x){return !x?'':x.te===x.en?x.te:x.te+' – '+x.en;}
+function qpTbLes(c,s){try{return tbLes(c,s).filter(L=>L._lite||(L.qz&&L.qz.length)||(L.qa&&L.qa.length)||(L.wb&&L.wb.qz&&L.wb.qz.length));}catch(e){return [];}}
 function qpTopics(c,s){c=+c;const T=QBK&&c<=5?QBK.topics(c,s).map(t=>({k:t.k,n:qpLbl(t),sub:t.sub.map(x=>({k:x.k,n:qpLbl(x)}))})):[];
+ const tl=qpTbLes(c,s);if(tl.length){T.push({k:'tball',n:'📘 పాఠ్యపుస్తకం – అన్ని పాఠాలు',sub:[]});tl.forEach(L=>T.push({k:'tb:'+L.id,n:'📘 '+(L.no!=null&&L.no!==''?L.no+'. ':'')+String(L.t||'').replace(/ – /g,' - '),sub:[]}));}
  if(c>5&&(((Q[c]||{})[s]||[]).length||s==='mat'))T.push({k:'gen',n:'సాధారణ ప్రశ్నలు (యాప్ బ్యాంకు)',sub:[]});
  const own=[...new Set(live('qb').filter(q=>+q.c===c&&q.s===s&&q.t==='own'&&q.tn).map(q=>q.tn))];
  if(own.length)T.push({k:'own',n:'✍️ ఉపాధ్యాయులు చేర్చిన టాపిక్‌లు',sub:own.map(x=>({k:'o:'+x,n:x}))});return T;}
@@ -4439,6 +4442,13 @@ function qpSrc(f){const c=+f.c,s=f.s,mi=f.med==='en'?1:0,lang=QP_LANG.includes(s
   P.gens.forEach(g=>out.push({k:'g'+QBK.gens.indexOf(g),auto:1,d:g.d,b:g.b,t:g.t,st:g.s,fr:g.fr,nw:g.nw,mk:()=>QBK.inst(g,c,mi)}));}
  if(c>5&&(!f.t||f.t==='gen')){((Q[c]||{})[s]||[]).forEach(([q,o],i)=>{const op=o.split('|');out.push({k:'q'+i,d:2,b:'R',t:'gen',st:'',fr:false,nw:op.length-1,mk:()=>({q,a:op[0],w:op.slice(1),fr:false})});});
   if(s==='mat')out.push({k:'gm',auto:1,d:2,b:'A',t:'gen',st:'',fr:true,nw:3,mk:()=>{const g=genMath(c);return {q:g.q,a:String(g.a),w:(g.o||[]).map(String).filter(x=>x!==String(g.a)),fr:true};}});}
+ if(!f.t||f.t==='tball'||String(f.t).startsWith('tb:')){tbFull(c,s);
+  qpTbLes(c,s).filter(L=>!f.t||f.t==='tball'||'tb:'+L.id===f.t).forEach(L=>{
+   const mc=(arr,tag,b)=>(arr||[]).forEach((x,i)=>{if(!Array.isArray(x)||!x[0]||x[1]==null||/⟦/.test(x.join(' ')))return;const w=x.slice(2).map(String).filter(v=>v.trim());
+    out.push({k:'x'+L.id+tag+i,d:2,b,t:f.t,st:'',fr:false,nw:w.length,mk:()=>({q:String(x[0]),a:String(x[1]),w,fr:false})});});
+   mc(L.qz,'z','R');mc(L.wb&&L.wb.qz,'w','U');
+   (L.qa||[]).forEach((x,i)=>{if(!Array.isArray(x)||!x[0]||!x[1])return;const q=String(x[0]),a=String(x[1]).trim();if(/⟦/.test(q+a)||a.length>40||/\n/.test(a))return;
+    out.push({k:'x'+L.id+'a'+i,d:2,b:'U',t:f.t,st:'',fr:true,nw:0,mk:()=>({q,a,w:[],fr:true})});});});}
  live('qb').forEach(x=>{if(+x.c!==c||x.s!==s)return;if(!lang&&x.med&&x.med!==f.med)return;const st=x.t==='own'?'o:'+x.tn:(x.st||'');
   if(f.t&&x.t!==f.t)return;if(f.st&&st!==f.st)return;const w=(x.w||[]).filter(v=>String(v).trim());
   out.push({k:'t'+x.id,own:1,d:+x.d||2,b:x.b||'R',t:x.t,st,fr:x.ty==='FR'||!!x.fr,nw:x.ty==='FR'?0:w.length,mk:()=>({q:x.q,a:x.a,w,fr:x.ty==='FR'||!!x.fr})});});
@@ -4463,7 +4473,7 @@ function qpBuild(){qpRead();qpFix();const f=QP.f,N=Math.min(60,Math.max(1,parseI
  slots.forEach(d=>{const q=qpDraw(src,d,bl,used,txt,bySt,f.ty);if(q)out.push(q);else short[d]=(short[d]||0)+1;});
  out.sort((a,b)=>a.d-b.d);f.n=N;QP.qs=out;QP.short=short;QP.bl=bl;QP.pid='';if(!f.ti)f.ti=qpDefTitle();qpSave();
  toast(out.length?`✅ ${out.length} ప్రశ్నలు సిద్ధం`:'ప్రశ్నలు దొరకలేదు');go('teacher',{t:'qp'});setTimeout(()=>{const e=document.getElementById('qpPrev');if(e)e.scrollIntoView({behavior:'smooth'});},120);}
-function qpDefTitle(){const f=QP.f,T=qpTopics(f.c,f.s).find(x=>x.k===f.t),st=T&&T.sub.find(x=>x.k===f.st);return SUBJ[f.s].n+(T?' – '+(st?st.n:T.n).split(' – ')[0]:'')+' పరీక్ష';}
+function qpDefTitle(){const f=QP.f,T=qpTopics(f.c,f.s).find(x=>x.k===f.t),st=T&&T.sub.find(x=>x.k===f.st);return SUBJ[f.s].n+(T?' – '+(st?st.n:T.n).split(' – ')[0].replace(/^📘 /,''):'')+' పరీక్ష';}
 function qpSwap(i){const cur=QP.qs[i];if(!cur)return;const src=qpSrc(QP.f),used=new Set(QP.qs.map(q=>q.k)),txt=new Set(QP.qs.map(q=>q.q));
  const q=qpDraw(src.filter(x=>x.auto||x.k!==cur.k),cur.d,{[cur.b]:1},used,txt,{},QP.f.ty);if(!q)return toast('ఇదే స్థాయిలో వేరే ప్రశ్న లేదు');QP.qs[i]=q;qpSave();go('teacher',{t:'qp'});}
 function qpDel(i){if(!delOK('ఈ ప్రశ్నను ప్రశ్నాపత్రం నుండి తీసేయాలా?'))return;QP.qs.splice(i,1);qpSave();go('teacher',{t:'qp'});}
@@ -4564,7 +4574,7 @@ ${f.t==='own'?`<label>టాపిక్ పేరు</label><input id="qbTN" ma
 <label>సరైన జవాబు</label><input id="qbA" maxlength="120" value="${esc(f.a||'')}">
 ${f.ty==='MCQ'?`<label>తప్పు ఆప్షన్లు (కనీసం 2)</label><div class="g3"><input id="qbW1" maxlength="120" value="${esc(f.w1||'')}" placeholder="తప్పు 1"><input id="qbW2" maxlength="120" value="${esc(f.w2||'')}" placeholder="తప్పు 2"><input id="qbW3" maxlength="120" value="${esc(f.w3||'')}" placeholder="తప్పు 3"></div>`:''}
 <button class="btn" onclick="qbAdd()">➕ ప్రశ్న చేర్చు</button></div>
-<h4 class="sec">చేర్చిన ప్రశ్నలు (${mine.length})</h4>${mine.length?mine.slice(0,150).map(q=>`<div class="titem"><div style="flex:1;min-width:0"><b>${esc(q.q)}</b><br><small class="mut">✓ ${esc(q.a)}${q.ty==='FR'?' • FR':' • ✗ '+esc((q.w||[]).filter(Boolean).join(', '))}</small><br><small class="mut">${q.c}వ తరగతి • ${SUBJ[q.s]?SUBJ[q.s].n:q.s} • ${esc(q.t==='own'?q.tn:QBK?QBK.label(q.s,q.t,q.st,0):q.t)} • ${(QP_D.find(x=>x[0]===+q.d)||[0,''])[1]} • ${(QP_B.find(x=>x[0]===q.b)||[0,0,''])[2]} • ${esc(q.byn||'')}</small></div>${isAdmin()||q.byn===tName()?`<button class="ib" onclick="qbDel('${q.id}')">🗑️</button>`:''}</div>`).join(''):'<div class="empty">ఇంకా ఏమీ లేవు</div>'}`;}
+<h4 class="sec">చేర్చిన ప్రశ్నలు (${mine.length})</h4>${mine.length?mine.slice(0,150).map(q=>`<div class="titem"><div style="flex:1;min-width:0"><b>${esc(q.q)}</b><br><small class="mut">✓ ${esc(q.a)}${q.ty==='FR'?' • FR':' • ✗ '+esc((q.w||[]).filter(Boolean).join(', '))}</small><br><small class="mut">${recD(q)?'📅 '+recD(q)+' • ':''}${q.c}వ తరగతి • ${SUBJ[q.s]?SUBJ[q.s].n:q.s} • ${esc(q.t==='own'?q.tn:QBK?QBK.label(q.s,q.t,q.st,0):q.t)} • ${(QP_D.find(x=>x[0]===+q.d)||[0,''])[1]} • ${(QP_B.find(x=>x[0]===q.b)||[0,0,''])[2]} • ${esc(q.byn||'')}</small></div>${isAdmin()||q.byn===tName()?`<button class="ib" onclick="qbDel('${q.id}')">🗑️</button>`:''}</div>`).join(''):'<div class="empty">ఇంకా ఏమీ లేవు</div>'}`;}
 function qbAdd(){qbRead();const f=QBF,q=String(f.q||'').trim(),a=String(f.a||'').trim(),w=[f.w1,f.w2,f.w3].map(x=>String(x||'').trim()).filter(Boolean);
  if(q.length<3)return toast('ప్రశ్న రాయండి');if(!a)return toast('సరైన జవాబు రాయండి');if(f.ty==='MCQ'&&w.length<2)return toast('కనీసం 2 తప్పు ఆప్షన్లు ఇవ్వండి');if(w.includes(a))return toast('తప్పు ఆప్షన్ సరైన జవాబులా ఉంది');if(f.t==='own'&&!String(f.tn||'').trim())return toast('టాపిక్ పేరు రాయండి');
  put('qb',{id:'qb'+uid(),c:+f.c,s:f.s,med:QP_LANG.includes(f.s)?'':f.med,t:f.t,st:f.t==='own'?'':f.st,tn:f.t==='own'?String(f.tn).trim().slice(0,50):'',ty:f.ty,d:+f.d,b:f.b,q:q.slice(0,400),a:a.slice(0,120),w:f.ty==='MCQ'?w.slice(0,3):[],fr:f.ty==='FR',byn:tName()});
@@ -4875,7 +4885,7 @@ TP.dq=()=>{const f=param.f||'open',fc=+param.fc||0;const all=live('doubts').filt
  const card=d=>{const sim=!d.r?open.filter(x=>x.id!==d.id&&dqSim(x,d)).length:0;const on=DQSEL.has(d.id);
   return `<div class="card dqc ${on?'sel':''}">${!d.r?`<label class="dqck"><input type="checkbox" ${on?'checked':''} onchange="dqPick('${d.id}',this.checked)"> ఎంచుకో</label>`:''}<small class="mut">👤 ${esc(d.n)} • ${d.c}వ • ${SUBJ[d.s]?SUBJ[d.s].n:''} • ${fmtD(d.d)}</small>
 <p style="margin:6px 0;font-weight:600">❓ ${esc(d.q)}</p>${sim?`<button class="simb" onclick="dqSimSel('${d.id}')">🔁 ఇలాంటి సందేహాలు ఇంకా ${sim} – అన్నీ ఎంచుకో</button>`:''}
-${d.r?`<div class="ans">👩‍🏫 ${d.rb?'<b>'+esc(d.rb)+':</b> ':''}${esc(d.r)}${imgTag(d.ri,'ansimg sm',d.ris)}${vidChip(d.rv)}</div>`:''}
+${d.r?`<div class="ans">👩‍🏫 ${d.rb?'<b>'+esc(d.rb)+':</b> ':''}${esc(d.r)}${d.ra?' <small class="mut">• 📅 '+fmtD(new Date(d.ra).toISOString())+'</small>':''}${imgTag(d.ri,'ansimg sm',d.ris)}${vidChip(d.rv)}</div>`:''}
 ${!d.r?`<div class="aib"><span>🤖 AI సూచన</span><button onclick="aiAsk('${d.id}','c')">ChatGPT</button><button onclick="aiAsk('${d.id}','g')">Gemini</button><button onclick="aiCopy('${d.id}')" aria-label="కాపీ">📋</button></div>`:''}<textarea id="r_${d.id}" rows="2" maxlength="1500" placeholder="జవాబు టైప్ చేయండి...">${d.r&&!d.ri&&!/^🎬 వీడియోలో/.test(d.r)?esc(d.r):''}</textarea>
 <div class="vrow"><input id="v_${d.id}" type="url" inputmode="url" placeholder="🎬 వీడియో లింక్ (YouTube / Drive) – ఐచ్ఛికం" value="${esc(d.rv||'')}"><button onclick="ytFind('${d.id}')">🔎 YouTube</button></div>
 <div class="dqbtns"><button class="btn sm" onclick="replyD('${d.id}')">➤ ${d.r?'మార్చు':'పంపు'}</button><button class="btn sm ghost" onclick="ansOpen(['${d.id}'])">📷 ✏️ ఫోటో / రాసి</button><button class="del" onclick="delItem('doubts','${d.id}')">🗑️</button></div></div>`;};
@@ -4968,7 +4978,7 @@ async function ansSend(){const txt=(document.getElementById('ansTx').value||'').
  ansClose();toast(bad?`${ds.length-bad} మందికి పంపాం, ${bad} పెద్దవి – చిన్న జవాబు ఇవ్వండి`:`✓ ${ds.length} ${ds.length>1?'మందికి':'విద్యార్థికి'} జవాబు పంపాం`);go('teacher',Object.assign({},param,{t:'dq'}));}
 TP.nt=()=>`<div class="card"><h3>పాఠం నోట్ జోడించండి</h3><p class="mut">విద్యార్థుల “సెల్ఫ్ లెర్న్” లో కొత్త పాఠంగా కనిపిస్తుంది.</p><div class="g2"><div><label>తరగతి</label>${clsSel('nc')}</div><div><label>సబ్జెక్ట్</label><select id="ncs">${subjOpts(myCls()[0])}</select></div></div>
 <label>పాఠం పేరు</label><input id="ntt" placeholder="ఉదా: మన గ్రామం"><label>ముఖ్యాంశాలు (ఒక్కో లైన్ = ఒక పాయింట్)</label><textarea id="ntx" rows="5"></textarea><button class="btn" onclick="addNote()">➕ జోడించు</button></div>
-<h4 class="sec">టీచర్ నోట్స్ (${live('notes').filter(n=>!n.kind&&canSee(n.c,n.s)).length})</h4>${live('notes').filter(n=>!n.kind&&canSee(n.c,n.s)).map(n=>`<div class="titem"><div><b>${esc(n.t)}</b><small>${n.c}వ తరగతి • ${SUBJ[n.s].n}</small></div><button class="del" onclick="delItem('notes','${n.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}`;
+<h4 class="sec">టీచర్ నోట్స్ (${live('notes').filter(n=>!n.kind&&canSee(n.c,n.s)).length})</h4>${live('notes').filter(n=>!n.kind&&canSee(n.c,n.s)).map(n=>`<div class="titem"><div><b>${esc(n.t)}</b><small>${n.c}వ తరగతి • ${SUBJ[n.s].n}${recD(n)?' • 📅 '+recD(n):''}</small></div><button class="del" onclick="delItem('notes','${n.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}`;
 function addNote(){const t=$('#ntt').value.trim(),x=$('#ntx').value.trim();if(!t||!x)return toast('పేరు, ముఖ్యాంశాలు రాయండి');put('notes',{id:uid(),c:+$('#nc').value,s:$('#ncs').value,t,x});toast('పాఠం జోడించబడింది ✓');go('teacher',{t:'nt'});}
 TP.vl=()=>{const cs=myCls(),c=cs.includes(+param.vc)?+param.vc:cs[0];const subs=learnSubs(c).filter(x=>canSee(c,x));const s=subs.includes(param.vs)?param.vs:subs[0];
  const ls=s?tbLes(c,s):[],mine=s?vlAll(c,s):[],sl=param.vl||(ls[0]?ls[0].id:'_');
@@ -5199,7 +5209,7 @@ function vlLT(s,L){return (L.no!=null&&L.no!==''?(s==='eng'?'Lesson ':'పాఠ
 function vlGroups(c,s,list){const ls=tbLes(c,s),g={};list.slice().sort((a,b)=>(a.upd||0)-(b.upd||0)).forEach(n=>{const L=n.l?ls.find(x=>x.id===n.l):null;const k=L?'a'+String(ls.indexOf(L)).padStart(3,'0'):'z'+(n.lt||'');
  (g[k]=g[k]||{t:L?vlLT(s,L):(n.lt||'ఇతర వీడియోలు'),n:[]}).n.push(n);});return Object.keys(g).sort().map(k=>g[k]);}
 function vlCard(n,tch){const v=vidEmbed(n.url);if(!v)return '';const th=v.k==='yt'?'https://i.ytimg.com/vi/'+v.id+'/mqdefault.jpg':'https://drive.google.com/thumbnail?id='+v.id+'&sz=w640';
- return `<div class="vlc" id="vl_${n.id}"><button class="vlth" onclick="vlPlay('${n.id}')" aria-label="ప్లే"><img src="${th}" alt="" loading="lazy" onerror="this.remove()"><i>▶</i></button><div class="vlm"><b>${esc(n.t||'వీడియో')}</b><small>${v.k==='yt'?'▶ YouTube':'📁 Google Drive'}${n.by?' • 👩‍🏫 '+esc(n.by):''}</small>${tch?`<button class="del" onclick="delItem('notes','${n.id}')">🗑️</button>`:''}</div></div>`;}
+ return `<div class="vlc" id="vl_${n.id}"><button class="vlth" onclick="vlPlay('${n.id}')" aria-label="ప్లే"><img src="${th}" alt="" loading="lazy" onerror="this.remove()"><i>▶</i></button><div class="vlm"><b>${esc(n.t||'వీడియో')}</b><small>${v.k==='yt'?'▶ YouTube':'📁 Google Drive'}${n.by?' • 👩‍🏫 '+esc(n.by):''}${recD(n)?' • 📅 '+recD(n):''}</small>${tch?`<button class="del" onclick="delItem('notes','${n.id}')">🗑️</button>`:''}</div></div>`;}
 function vlPlay(id){const n=live('notes').find(x=>x.id===id),e=document.getElementById('vl_'+id);if(!n||!e)return;const b=e.querySelector('.vlth');if(b)b.outerHTML=vidHtml(n.url,1);e.classList.add('on');}
 function vlFolders(c,s,list,tch){return vlGroups(c,s,list).map(g=>`<details class="vlg" open><summary>📁 ${esc(g.t)} <small>(${g.n.length})</small></summary>${g.n.map(n=>vlCard(n,tch)).join('')}</details>`).join('');}
 function vlBanner(c){const k=vlAll(c).length;return `<div class="sscbn vlbn" onclick="go('vids')"><span>🎬</span><div><b>వీడియో పాఠాలు${k?' ('+k+')':''}</b><small>${k?'సబ్జెక్టు → పాఠం వారీగా • app లోనే చూడు':'ఉపాధ్యాయులు పెట్టే వీడియోలు ఇక్కడ వస్తాయి'}</small></div></div>`;}
@@ -5463,13 +5473,13 @@ TP.fl=()=>{const fl=live('notes').filter(n=>n.kind==='flash'&&canSee(n.c)),ph=li
 <label>వార్త</label><input id="flt" maxlength="140" placeholder="ఉదా: రేపు సెలవు – దీపావళి శుభాకాంక్షలు 🪔">
 <div class="g2"><div><label>తరగతి</label>${clsSel('flc',true)}</div><div><label>ఎప్పటి వరకు (ఐచ్ఛికం)</label><input id="flu" type="date"></div></div>
 <button class="btn" onclick="addFlash()">➕ జోడించు</button></div>
-${fl.map(n=>`<div class="titem"><div><b>📢 ${esc(n.t)}</b><small>${n.c?n.c+'వ తరగతి':'అందరికీ'}${n.until?' • '+fmtD(n.until)+' వరకు':''}</small></div><button class="del" onclick="delItem('notes','${n.id}')">తొలగించు</button></div>`).join('')}
+${fl.map(n=>`<div class="titem"><div><b>📢 ${esc(n.t)}</b><small>${n.c?n.c+'వ తరగతి':'అందరికీ'}${recD(n)?' • 📅 '+recD(n):''}${n.until?' • '+fmtD(n.until)+' వరకు':''}</small></div><button class="del" onclick="delItem('notes','${n.id}')">తొలగించు</button></div>`).join('')}
 <div class="card"><h3>📷 ఫోటో జోడించు (స్లైడర్)</h3><p class="mut">ఫోన్ నుండి ఎంచుకోండి – యాప్ ఆటోగా చిన్నదిగా చేసి సేవ్ చేస్తుంది. లేదా Google Drive / వెబ్ ఫోటో లింక్ ఇవ్వండి. (గరిష్టం 12 ఫోటోలు)</p>
 <label>ఫోటో (ఫోన్ నుండి)</label><input id="php" type="file" accept="image/*">
 <label>లేదా ఫోటో లింక్</label><input id="phu" placeholder="https://drive.google.com/file/d/.../view">
 <div class="g2"><div><label>శీర్షిక (ఐచ్ఛికం)</label><input id="pht" maxlength="60" placeholder="ఉదా: స్వాతంత్ర్య దినోత్సవం"></div><div><label>తరగతి</label>${clsSel('phc',true)}</div></div>
 <button class="btn" id="phbtn" onclick="addPhoto()">➕ ఫోటో జోడించు</button></div>
-<div class="phgrid">${ph.map(n=>`<div class="phi"><img src="${esc(n.img||imgSrc(n.url))}" alt=""><small>${esc(n.t||'')}${n.c?' • '+n.c+'వ':''}</small><button class="del" onclick="delItem('notes','${n.id}')">🗑️</button></div>`).join('')}</div>`;};
+<div class="phgrid">${ph.map(n=>`<div class="phi"><img src="${esc(n.img||imgSrc(n.url))}" alt=""><small>${esc(n.t||'')}${n.c?' • '+n.c+'వ':''}${recD(n)?' • '+recD(n):''}</small><button class="del" onclick="delItem('notes','${n.id}')">🗑️</button></div>`).join('')}</div>`;};
 function addFlash(){const t=$('#flt').value.trim();if(!t)return toast('వార్త రాయండి');put('notes',{id:uid(),kind:'flash',c:+$('#flc').value,t,until:$('#flu').value||'',x:''});toast('జోడించబడింది ✓');go('teacher',{t:'fl'});}
 function shrinkImage(file){return new Promise((res,rej)=>{const fr=new FileReader();fr.onerror=rej;fr.onload=()=>{const im=new Image();im.onerror=rej;im.onload=()=>{
  let w=Math.min(720,im.width),q=0.72,out='';const cv=document.createElement('canvas'),cx=cv.getContext('2d');
