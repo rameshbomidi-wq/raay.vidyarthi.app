@@ -115,7 +115,7 @@ function render(){const c=U.c,L=list(c),R=recM(U.m,c),lim=LIM[c];
  else{
   h+=`<div class="card"><h3>📝 ${ROM[c]} తరగతి – ${monLbl(U.m)}</h3>
   <p class="mut">SOP పరిమితి: <b>${lim[0]} – ${lim[1]} కిలోలు</b> • బ్యాగ్ బరువు శరీర బరువులో <b>10%</b> మించరాదు. బరువులు కిలోల్లో (ఉదా: 24.5, 2.3). శరీర బరువు ఒకసారి రాస్తే తర్వాతి నెలలకు ఆటోగా వస్తుంది.</p>`;
-  if(!L.length)h+=`<div class="note">ఈ తరగతిలో విద్యార్థులు లేరు. “👥 విద్యార్థులు” ట్యాబ్‌లో పేర్లు చేర్చండి${APP?' లేదా యాప్ జాబితా తెచ్చుకోండి':''}.</div><div class="row" style="margin-top:8px">${APP?`<button onclick="fromApp()">📥 యాప్ జాబితా తెచ్చుకో</button>`:''}<button onclick="U.tab='stu';render()">👥 విద్యార్థులను చేర్చు</button><button class="sec" onclick="demo()">🧪 నమూనా డేటా</button></div>`;
+  if(!L.length)h+=`<div class="note">ఈ తరగతిలో విద్యార్థులు లేరు. “👥 విద్యార్థులు” ట్యాబ్‌లో పేర్లు చేర్చండి${SRC()?' లేదా యాప్ జాబితా తెచ్చుకోండి':''}.</div><div class="row" style="margin-top:8px">${SRC()?`<button onclick="fromApp()">📥 యాప్ జాబితా తెచ్చుకో</button>`:''}<button onclick="U.tab='stu';render()">👥 విద్యార్థులను చేర్చు</button><button class="sec" onclick="demo()">🧪 నమూనా డేటా</button></div>`;
   else{h+=`<div class="row" style="margin-bottom:8px"><label style="margin:0">తనిఖీ తేదీ</label><input type="date" id="cd" value="${(S.aud[U.m]||{})['d'+c]||todayS()}" onchange="setD(this.value)"></div>
   <div class="tw"><table><tr><th>క్ర.సం</th><th>పేరు</th><th>శరీర బరువు (kg)</th><th>బ్యాగ్ బరువు (kg)</th><th>%</th><th>స్థితి</th></tr>
   ${L.map((s,i)=>{const r=R[s.id]||{},bw=r.bw!=null?r.bw:lastBw(s.id),st=status(c,{bw,bg:r.bg});
@@ -143,7 +143,7 @@ function audCard(){const A=S.aud[U.m]||{};let rows='',T={tot:0,n:0,ok:0,ov:0,o10
  <div class="row" style="margin-top:8px"><button onclick="printReg('all')">🖨️ ఆడిట్ + అన్ని తరగతుల రిజిస్టర్ (A4)</button><button class="sec" onclick="csv()">⬇️ CSV (Excel)</button></div></div>`;}
 function fmt(d){const [y,m,dd]=d.split('-');return dd+'-'+m+'-'+y;}
 function stuCard(c,L){return `<div class="card"><h3>👥 ${ROM[c]} తరగతి విద్యార్థులు (${L.length})</h3>
- ${APP?`<div class="row" style="margin-bottom:8px"><button onclick="fromApp()">📥 రాయ్ విద్యార్థి యాప్ జాబితా తెచ్చుకో (అన్ని తరగతులు)</button></div>`:''}
+ ${APP?`<div class="row" style="margin-bottom:8px"><button onclick="fromApp()">📥 అన్ని తరగతుల జాబితా తెచ్చుకో (యాప్ + School ప్రగతి)</button></div>`:''}
  <label>పేర్లు పేస్ట్ చేయండి (ఒక వరుసకు ఒక పేరు; Excel నుండి కాపీ అయినా సరే)</label><textarea id="pn" placeholder="ఉదా:&#10;ఆర్. సాయి&#10;కె. లక్ష్మి"></textarea>
  <div class="row" style="margin-top:6px"><button onclick="addNames()">➕ ${ROM[c]} తరగతికి చేర్చు</button><button class="sec" onclick="demo()">🧪 నమూనా డేటా</button>${L.length?`<button class="red" onclick="clrCls()">🗑 ఈ తరగతి జాబితా తొలగించు</button>`:''}</div>
  ${L.length?`<div class="tw" style="margin-top:10px"><table><tr><th>క్ర.సం</th><th>పేరు</th><th></th></tr>${L.map((s,i)=>`<tr><td>${i+1}</td><td class="n">${esc(s.n)}</td><td><button class="mini red" onclick="delStu('${s.id}')">తొలగించు</button></td></tr>`).join('')}</table></div>`:''}
@@ -159,15 +159,20 @@ function sopCard(){return `<div class="card"><h3>📜 SOP ముఖ్యాం�
  <p class="mut" style="margin-top:8px">ఆధారం: పాఠశాల విద్యా డైరెక్టర్ Rc.No.ESE02/564/2022-SCERT, తేదీ 10-11-2026 (యూజర్ పంపిన సమాచారం ప్రకారం).</p></div>`;}
 function addNames(){const t=$('#pn').value.split(/\r?\n/).map(x=>x.split('\t').map(y=>y.trim()).filter(Boolean).find(y=>/[^\d.\s-]/.test(y))||'').map(x=>x.replace(/^\d+[.)]\s*/,'').trim()).filter(Boolean);
  if(!t.length){toast('పేర్లు పేస్ట్ చేయండి');return;}const L=list(U.c),have=new Set(L.map(s=>s.n));let a=0;t.forEach(n=>{if(!have.has(n)){L.push({id:uid(),n:n.slice(0,60)});have.add(n);a++;}});save();toast('✓ '+a+' మంది చేరారు');render();}
+/* 🏫 School ప్రగతి టూల్ జాబితా (అదే పరికరం/యాప్ – localStorage rv_sp_pack_v1, DATA {'1A':[{id,name}]}) */
+function spList(){const o=[];try{const P=JSON.parse(localStorage.getItem('rv_sp_pack_v1')||'{}')||{},D=P.DATA||{};
+ Object.keys(D).forEach(k=>{const c=parseInt(k,10);if(!(c>=1&&c<=10))return;(D[k]||[]).forEach(x=>{const n=x&&(x.name||x.nm);if(n)o.push({c,n:String(n).trim(),id:'p'+String(x.id||'').replace(/[^\w-]/g,'')});});});}catch(e){}return o;}
+const SRC=()=>APP||spList().length;
 /* యాప్ జాబితా: School ప్రగతి roster + యాప్‌లో నమోదైన విద్యార్థులు (students) – తరగతి+పేరు ఒకటైతే ఒక్కసారే */
-function appList(){let r=[],st=[];try{r=JSON.parse(APP.eval("JSON.stringify(live('roster').map(x=>({c:+x.c,n:x.n,sid:x.sid,ord:x.ord||0})))"))||[];}catch(e){}
+function appList(){let r=[],st=[];if(!APP)return spList();try{r=JSON.parse(APP.eval("JSON.stringify(live('roster').map(x=>({c:+x.c,n:x.n,sid:x.sid,ord:x.ord||0})))"))||[];}catch(e){}
  try{st=JSON.parse(APP.eval("JSON.stringify(live('students').map(x=>({c:+x.c,n:x.n})))"))||[];}catch(e){}
  const out=[],seen=new Set(),k=x=>x.c+'|'+String(x.n).trim().replace(/\s+/g,' ').toLowerCase();
  r.sort((x,y)=>(x.c-y.c)||(x.ord-y.ord)).forEach(x=>{if(!x.n||seen.has(k(x)))return;seen.add(k(x));out.push({c:x.c,n:String(x.n).trim(),id:'a'+String(x.sid).replace(/[^\w-]/g,'')});});
  st.sort((x,y)=>(x.c-y.c)||String(x.n).localeCompare(String(y.n))).forEach(x=>{if(!x.n||seen.has(k(x)))return;seen.add(k(x));out.push({c:x.c,n:String(x.n).trim(),id:'s'+k(x).replace(/[^\w\u0C00-\u0C7F|-]/g,'_').slice(0,50)});});
+ spList().forEach(x=>{if(!x.n||seen.has(k(x)))return;seen.add(k(x));out.push(x);});
  return out;}
-function fromApp(quiet){if(!APP){toast('యాప్ లోపల (టీచర్ ప్యానెల్ → టూల్స్) తెరిచినప్పుడే పనిచేస్తుంది');return 0;}
- const r=appList();if(!r.length){if(!quiet)toast('యాప్‌లో విద్యార్థులు లేరు – School ప్రగతిలో పేర్లు చేర్చండి లేదా ఇక్కడ పేస్ట్ చేయండి',5000);return 0;}
+function fromApp(quiet){if(!SRC()){toast('యాప్ లోపల (టీచర్ ప్యానెల్ → టూల్స్) తెరిచినప్పుడే పనిచేస్తుంది');return 0;}
+ const r=appList();if(!r.length){if(!quiet)toast('యాప్‌లో / School ప్రగతిలో విద్యార్థులు లేరు – అక్కడ పేర్లు చేర్చండి లేదా ఇక్కడ పేస్ట్ చేయండి',5000);return 0;}
  let a=0;const per={};r.forEach(x=>{const c=+x.c;if(!(c>=1&&c<=10))return;const L=list(c);
   const e=L.find(s=>s.id===x.id)||L.find(s=>s.n.trim().toLowerCase()===x.n.toLowerCase());if(e){e.n=x.n.slice(0,60);return;}L.push({id:x.id,n:x.n.slice(0,60)});a++;per[c]=(per[c]||0)+1;});
  save();const pc=Object.keys(per).map(c=>ROM[c]+': '+per[c]).join(', ');
@@ -197,7 +202,7 @@ function printReg(w){const P=$('#prt');let h='';
 window.rvBack=function(){if(U.tab!=='reg'){U.tab='reg';render();return true;}return false;};
 render();
 /* యాప్ లోపల తెరిచి, ఏ తరగతిలోనూ పేర్లు లేకపోతే – యాప్ జాబితా ఆటోగా */
-if(APP&&!Object.values(S.cls).some(L=>L&&L.length))setTimeout(()=>fromApp(true),300);
+if(SRC()&&!Object.values(S.cls).some(L=>L&&L.length))setTimeout(()=>fromApp(true),300);
 </script>
 </body>
 </html>
