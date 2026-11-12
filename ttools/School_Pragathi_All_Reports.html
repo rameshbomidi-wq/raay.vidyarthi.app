@@ -1536,7 +1536,14 @@ function indexHPC(){HPC=JSON.parse(JSON.stringify(PS.hpc||HPC_BASE));HX={};
   HPC.forEach(C=>{C.eff=C.subs.map((sb,i)=>effMax(C,i));C.st.forEach(s=>HX[s.id]={C:C,s:s});});}
 function cnum(cls){return parseInt(cls,10);}
 function clsDef(c){return HPC.find(x=>x.c===c)||{c:c,subs:[],eff:[]};}
-function saMax(c,sn){return 80;}
+/* SA మార్కుల విభజన (2026-27): I–II = MCQ 40 + FRS 40 = 80; III–IX = MCQ 20 + FRS 60 = 80;
+   VIII–IX భౌతిక/జీవ = MCQ 10 + FRS 30 = 40 చొప్పున; X = 100 (Awareness/Sensitivity/Creativity), X భౌతిక/జీవ = 50 చొప్పున */
+const SA10={'First Language':[60,20,20],'Second Language':[62,20,18],'English':[65,15,20],'Mathematics':[60,20,20],'Social Studies':[60,20,20],'Physical Science':[30,10,10],'Biological Science':[30,10,10]};
+function saParts(c,sn){if(c>=10){const m=SA10[sn]||[60,20,20];return [['Awareness',m[0]],['Sensitivity',m[1]],['Creativity',m[2]]];}
+  if(c<=2)return [['MCQ',40],['FRS',40]];if(sn==='Physical Science'||sn==='Biological Science')return [['MCQ',10],['FRS',30]];return [['MCQ',20],['FRS',60]];}
+function saN(c){return c>=10?3:2;}
+function saMax(c,sn){return saParts(c,sn).reduce((a,x)=>a+x[1],0);}
+function saInfo(c){return c>=10?'SA = 100 (Awareness + Sensitivity + Creativity; భౌతిక/జీవ 50 చొప్పున)':c<=2?'SA = MCQ 40 + FRS 40 = 80':'SA = MCQ 20 + FRS 60 = 80'+(c>=8?' (భౌతిక/జీవ: MCQ 10 + FRS 30 = 40 చొప్పున)':'');}
 function faMaxOf(c,i){return [5,5,5,35];}
 
 /* ఒక సబ్జెక్టు, ఒక మదింపు ఫలితం */
@@ -1626,15 +1633,15 @@ function drawEntry(s,c){
   const C=clsDef(c);if(!C.subs.length){document.getElementById('entryBox').innerHTML='';return;}
   let h='<b>✏️ మార్కుల నమోదు</b><div class="chips">'+ASMT.map(A=>'<button class="'+(A===curA?'active':'')+'" onclick="curA=\''+A+'\';drawEntry(DATA[progCls][progIdx],'+c+')">'+ASL[A]+'</button>').join('')+'</div>';
   const isFA=curA[0]==='F';
-  h+='<div style="overflow-x:auto"><table><tr><th>సబ్జెక్టు</th>'+(isFA?TOOLS.map(t=>'<th>'+t+'</th>').join(''):(c<=5?[1,2,3,4,5,6].map(k=>'<th>AS-'+k+'</th>').join(''):'<th>మార్కులు</th>')+'<th>గరిష్ఠం</th>')+'<th>మొత్తం</th><th>గ్రేడ్</th></tr>';
+  h+='<div style="overflow-x:auto"><table><tr><th>సబ్జెక్టు</th>'+(isFA?TOOLS.map(t=>'<th>'+t+'</th>').join(''):saParts(c,(C.subs[0]||{}).n).map(x=>'<th>'+x[0]+'</th>').join('')+'<th>గరిష్ఠం</th>')+'<th>మొత్తం</th><th>గ్రేడ్</th></tr>';
   C.subs.forEach((sb,i)=>{const r=aRes(s,c,curA,i),sc=scOf(c,sb.n);
     if(isFA){const tm=faMaxOf(c,i),t=r&&r.t?r.t:[];
       h+='<tr><td class="s">'+tn(sb.n)+'</td>'+tm.map((mx,q)=>'<td><input class="mi" type="number" inputmode="decimal" step="0.5" min="0" max="'+mx+'" placeholder="/'+mx+'" data-i="'+i+'" data-q="'+q+'" value="'+(t[q]===null||t[q]===undefined?'':t[q])+'"></td>').join('');}
     else{const v=((PS.mk[s.id]||{})[curA]||{})[i];
-      const n=c<=5?6:1,vv=v?(v.length===n?v:(n===6?[null,null,null,null,null,null]:[v.reduce((a,x)=>a+(+x||0),0)])):[];
-      h+='<tr><td class="s">'+tn(sb.n)+'</td>'+Array.from({length:n},(_,q)=>'<td><input class="mi" inputmode="decimal" placeholder="'+(n===6?'AS'+(q+1):'AB/మార్కు')+'" data-i="'+i+'" data-q="'+q+'" value="'+(vv[q]===null||vv[q]===undefined?'':vv[q])+'"></td>').join('')+'<td>'+saMax(c,sb.n)+'</td>';}
+      const P=saParts(c,sb.n),n=P.length,vv=v&&v.length===n?v:(v&&v.some(x=>String(x).toUpperCase()==='AB')?['AB']:[]);
+      h+='<tr><td class="s">'+tn(sb.n)+'</td>'+P.map((x,q)=>'<td><input class="mi" inputmode="decimal" max="'+x[1]+'" placeholder="/'+x[1]+'" data-i="'+i+'" data-q="'+q+'" value="'+(vv[q]===null||vv[q]===undefined?'':vv[q])+'"></td>').join('')+'<td>'+saMax(c,sb.n)+'</td>';}
     h+='<td id="et'+i+'">'+(r?(r.ab?'AB':nf(r.tot)+'/'+r.max):'')+'</td><td id="eg'+i+'" class="gd '+(r&&!r.ab?gcl(r.g,sc):'')+'">'+(r&&!r.ab?r.g:'')+'</td></tr>';});
-  h+='</table></div><div class="hint">టైప్ చేయగానే పైన టేబుల్ & క్లాస్ రిపోర్ట్ ఆటోమేటిక్‌గా అప్డేట్ అవుతాయి (ఈ ఫోన్/బ్రౌజర్‌లో సేవ్). '+(curA==='FA1'?'FA-1 మార్కులు HPC పోర్టల్ డేటా నుండి వచ్చాయి — మార్చవచ్చు.':(curA[0]==='S'&&c<=5?'SA: 6 విద్యా ప్రమాణాల (AS-1…AS-6) మార్కులు — మొత్తం ఆటోమేటిక్. గైర్హాజరైతే ఏదైనా గడిలో AB.':''))+'</div>';
+  h+='</table></div><div class="hint">టైప్ చేయగానే పైన టేబుల్ & క్లాస్ రిపోర్ట్ ఆటోమేటిక్‌గా అప్డేట్ అవుతాయి (ఈ ఫోన్/బ్రౌజర్‌లో సేవ్). '+(curA==='FA1'?'FA-1 మార్కులు HPC పోర్టల్ డేటా నుండి వచ్చాయి — మార్చవచ్చు.':(curA[0]==='S'?saInfo(c)+' — మొత్తం ఆటోమేటిక్. గైర్హాజరైతే మొదటి గడిలో AB.':''))+'</div>';
   document.getElementById('entryBox').innerHTML=h;
 }
 document.addEventListener('input',e=>{
@@ -1693,23 +1700,23 @@ function cceSheet(cls,i){
   const fa=r=>{if(!r)return '<td></td><td></td><td></td><td></td><td class="T"></td><td class="G"></td>';
     if(r.ab)return '<td colspan="4">AB</td><td class="T">AB</td><td class="G">—</td>';
     const t=r.t||[];return [0,1,2,3].map(q=>'<td>'+v(t[q])+'</td>').join('')+'<td class="T">'+v(r.tot)+(r.dbl?'*':'')+'</td><td class="G">'+r.g+'</td>';};
-  const sa=r=>{if(!r)return '<td></td>'.repeat(6)+'<td class="T"></td><td class="G"></td>';
-    if(r.ab)return '<td colspan="6">AB</td><td class="T">AB</td><td class="G">—</td>';
-    const t=r.t||[];return [0,1,2,3,4,5].map(q=>'<td>'+v(t[q])+'</td>').join('')+'<td class="T">'+v(r.tot)+'</td><td class="G">'+r.g+'</td>';};
+  const sa=r=>{if(!r)return '<td></td>'.repeat(2)+'<td class="T"></td><td class="G"></td>';
+    if(r.ab)return '<td colspan="2">AB</td><td class="T">AB</td><td class="G">—</td>';
+    const t=r.t&&r.t.length===2?r.t:[];return [0,1].map(q=>'<td>'+v(t[q])+'</td>').join('')+'<td class="T">'+v(r.tot)+'</td><td class="G">'+r.g+'</td>';};
   let body='';
   list.forEach((s,k)=>{const rs=ASMT.map(A=>aRes(s,c,A,i)),ok=rs.filter(r=>r&&!r.ab),tot=ok.reduce((a,r)=>a+r.tot,0),mx=ok.reduce((a,r)=>a+r.max,0),p=mx?tot*100/mx:null;
     body+='<tr class="r"><td>'+(k+1)+'</td><td class="nm">'+s.name.toUpperCase()+'</td>'+fa(rs[0])+fa(rs[1])+fa(rs[3])+fa(rs[4])+sa(rs[2])+sa(rs[5])
       +'<td class="T">'+(mx?nf(tot)+'/'+mx:'')+'</td><td>'+(p===null?'':r1(p)+'%')+'</td><td class="G">'+(p===null?'':grade(p,sc))+'</td></tr>';});
   const col=(n,w)=>Array.from({length:n},()=>'<col style="width:'+w+'">').join('');
-  const faH=['1','2','3','4','T','G'].map(x=>'<th>'+x+'</th>').join(''),saH=['1','2','3','4','5','6','T','G'].map(x=>'<th>'+x+'</th>').join('');
+  const faH=['1','2','3','4','T','G'].map(x=>'<th>'+x+'</th>').join(''),saH=['MCQ','FRS','T','G'].map(x=>'<th>'+x+'</th>').join('');
   return '<div class="sheet land cce"><div class="ttl"><h2>Subject wise CCE Register (1 to 5 Classes)</h2><div class="sc"><b>'+SCH.name+'</b>, '+SCH.place+'<br>UDISE: '+SCH.udise+' | Academic Year: '+SCH.year+'</div></div>'
    +'<div class="meta"><span>Class : <b>'+CLS_NAME[cls]+'</b></span><span>Section : <b>A</b></span><span>Subject : <b>'+(SUBEN[sb.n]||sb.n)+' / '+tn(sb.n)+'</b></span><span>Teacher Name : <b>'+(tch||'&nbsp;'.repeat(30))+'</b></span></div>'
-   +'<table><colgroup><col style="width:3.2%"><col style="width:14%">'+col(24,'1.62%')+col(16,'1.62%')+'<col style="width:5.4%"><col style="width:4.3%"><col style="width:3.6%"></colgroup>'
-   +'<tr><th rowspan="3">Sl.<br>No.</th><th rowspan="3">STUDENT NAME</th><th colspan="24" class="grp">FORMATIVE ASSESSMENT</th><th colspan="16" class="grp">SUMMATIVE ASSESSMENT</th><th colspan="3" rowspan="2" class="grp">FINAL RESULT</th></tr>'
-   +'<tr><th colspan="6">FA - 1</th><th colspan="6">FA - 2</th><th colspan="6">FA - 3</th><th colspan="6">FA - 4</th><th colspan="8">SA - 1</th><th colspan="8">SA - 2</th></tr>'
+   +'<table><colgroup><col style="width:3.2%"><col style="width:14%">'+col(24,'1.62%')+col(8,'3.24%')+'<col style="width:5.4%"><col style="width:4.3%"><col style="width:3.6%"></colgroup>'
+   +'<tr><th rowspan="3">Sl.<br>No.</th><th rowspan="3">STUDENT NAME</th><th colspan="24" class="grp">FORMATIVE ASSESSMENT</th><th colspan="8" class="grp">SUMMATIVE ASSESSMENT</th><th colspan="3" rowspan="2" class="grp">FINAL RESULT</th></tr>'
+   +'<tr><th colspan="6">FA - 1</th><th colspan="6">FA - 2</th><th colspan="6">FA - 3</th><th colspan="6">FA - 4</th><th colspan="4">SA - 1</th><th colspan="4">SA - 2</th></tr>'
    +'<tr>'+faH+faH+faH+faH+saH+saH+'<th>Total Marks<br>of 4FA+2SA</th><th>%</th><th>Final<br>Grade</th></tr>'+body+'</table>'
-   +'<div class="cnote"><b>Note:</b> This register is maintained by subject teacher. FA - Formative Assessment (5+5+5+35 = 50). SA - Summative Assessment ('+saMax(c,sb.n)+').<br>'
-   +'<b>Formative Assessment:</b> 1. Student Participation and Responses, 2. Written items of children, 3. Project Work, 4. Slip Test. &nbsp; <b>Summative Assessment:</b> 1 to 6 shows Academic Standards. G - Grade, T - Total Marks. &nbsp; '
+   +'<div class="cnote"><b>Note:</b> This register is maintained by subject teacher. FA - Formative Assessment (5+5+5+35 = 50). SA - Summative Assessment ('+saParts(c,sb.n).map(x=>x[0]+' '+x[1]).join(' + ')+' = '+saMax(c,sb.n)+').<br>'
+   +'<b>Formative Assessment:</b> 1. Student Participation and Responses, 2. Written items of children, 3. Project Work, 4. Slip Test. &nbsp; <b>Summative Assessment:</b> MCQ - Multiple Choice Questions, FRS - Free Response. G - Grade, T - Total Marks. &nbsp; '
    +'Grades: '+SCALES.P.g.map((x,k)=>x[0]+' '+SCALES.P.b[k]).join(', ')+'</div>'
    +'<div class="sign"><span>Class Teacher Signature</span><span>Head Master Signature</span></div><div class="brand"><a href="https://raayeducation.in" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">రాయ్ ఎడ్యుకేషన్ | Raay Education</a></div></div>';
 }
@@ -2166,15 +2173,15 @@ function stuDel(id){const e=findStu(id);if(!e)return;if(!delOK(e.s.name+' ను
 function stuSort(){const cls=document.getElementById('stuCls').value;DATA[cls].sort((a,b)=>a.name.localeCompare(b.name));stuSaved();stuDraw();}
 const APPSUB={tel:'First Language',hin:'Second Language',eng:'English',mat:'Mathematics',evs:'EVS',sci:'General Science',phy:'Physical Science',bio:'Biological Science',soc:'Social Studies'};
 /* యాప్ SA మార్కులు → ఇక్కడి /80 స్కేల్ (శాతం, గ్రేడ్ యాప్‌లో ఉన్నట్లే).
-   యాప్ గరిష్ఠం: I–V = 50 (AS-1…6), VI–X = 100, VIII–X భౌతిక/జీవ = 50; పోర్టల్ దిగుమతి {tot,max} / {ab} */
-function saFromApp(c,s,v){if(v==null)return null;const n=c<=5?6:1,to=saMax(c),ab=()=>{const a=Array(n).fill(null);a[0]='AB';return a;};
+   యాప్ గరిష్ఠం: I–V = 50 (AS-1…6), VI–X = 100, VIII–X భౌతిక/జీవ = 50; పోర్టల్ దిగుమతి {tot,max} / {ab}.
+   యాప్‌లో MCQ/FRS విభజన లేదు → మొత్తం మాత్రమే [tot] గా (విభజన గడులు ఖాళీ; టీచర్ రాస్తే అవి వాడతాం) */
+function saFromApp(c,s,v){if(v==null)return null;const n=saN(c),to=saMax(c,APPSUB[s]),ab=()=>{const a=Array(n).fill(null);a[0]='AB';return a;};
   let parts,max=c<=5?50:(s==='phy'||s==='bio')?50:100;
   if(Array.isArray(v)){if(!v.some(x=>x!==null&&x!==''&&x!==undefined))return null;if(v.some(x=>String(x).toUpperCase()==='AB'))return ab();parts=v.map(x=>x===null||x===''||x===undefined?null:+x||0);}
   else if(typeof v==='object'){if(v.ab)return ab();if(v.tot==null||!(+v.max>0))return null;parts=[+v.tot||0];max=+v.max;}
   else return null;
   const f=to/max,r=x=>x===null?null:Math.round(Math.min(x*f,to)*10)/10;
-  if(n===6&&parts.length===6)return parts.map(r);
-  const tot=parts.reduce((a,x)=>a+(+x||0),0),out=Array(n).fill(null);out[0]=r(tot);return out;}
+  const tot=parts.reduce((a,x)=>a+(+x||0),0);return [r(tot)];}
 /* యాప్ FA మార్కులు → ఇక్కడి [5,5,5,35]: VIII–X భౌతిక/జీవ (యాప్ [5,5,5,10] = 25) మొత్తం రెట్టింపు (శాతం అదే); పోర్టల్ {tot,max} → /50 */
 function faFromApp(c,s,v){if(v==null)return null;const pb=c>=8&&(s==='phy'||s==='bio'),r1=x=>Math.round(x*10)/10;
   if(Array.isArray(v)){if(v.length!==4||!v.some(x=>x!==null&&x!==''&&x!==undefined)||v.some(x=>String(x).toUpperCase()==='AB'))return null;
@@ -2261,13 +2268,13 @@ function openEnt(m){ENT.m=m;const s=document.getElementById('entCls');s.innerHTM
 function drawEnt(){const cls=currentClass,c=cnum(cls),C=clsDef(c),L=DATA[cls]||[],R=CLS_NAME[cls];let h='';
   document.getElementById('entTitle').textContent=ENT.m==='mk'?'✏️ మార్కుల నమోదు':'📅 హాజరు నమోదు';
   if(!L.length){document.getElementById('entBox').innerHTML='<div class="warn">'+R+' తరగతిలో విద్యార్థులు లేరు. ముందు 👥 విద్యార్థులను చేర్చండి.</div><div class="row"><button class="go" onclick="closeOvl(\'entView\');openStu()">👥 విద్యార్థులను చేర్చు</button></div>';return;}
-  if(ENT.m==='mk'){if(ENT.i>=C.subs.length)ENT.i=0;const A=ENT.A,i=ENT.i,isFA=A[0]==='F',sc=scOf(c,(C.subs[i]||{}).n),n=c<=5?6:1,tm=faMaxOf(c,i);
+  if(ENT.m==='mk'){if(ENT.i>=C.subs.length)ENT.i=0;const A=ENT.A,i=ENT.i,isFA=A[0]==='F',sc=scOf(c,(C.subs[i]||{}).n),SP=saParts(c,(C.subs[i]||{}).n),n=SP.length,tm=faMaxOf(c,i);
     h+='<div class="chips2">'+ASMT.map(x=>'<button class="'+(x===A?'on':'')+'" onclick="ENT.A=\''+x+'\';drawEnt()">'+ASL[x]+'</button>').join('')+'</div>'
       +'<div class="chips2">'+C.subs.map((sb,k)=>'<button class="'+(k===i?'on':'')+'" onclick="ENT.i='+k+';drawEnt()">'+tn(sb.n)+'</button>').join('')+'</div>'
-      +'<div class="st">'+(isFA?'FA = ప్రతిస్పందనలు 5 + రాత అంశాలు 5 + ప్రాజెక్ట్ 5 + రాత పరీక్ష 35 = 50':'SA గరిష్ఠం 80'+(n===6?' (AS-1 … AS-6 విభాగాలు)':''))+' • గైర్హాజరు అయితే <b>AB</b> • టైప్ చేయగానే సేవ్ అవుతుంది • Enter = కింది విద్యార్థి</div>';
-    h+='<div style="overflow-x:auto"><table class="et"><tr><th>#</th><th>పేరు</th>'+(isFA?TOOLS.map((t,q)=>'<th>'+t+'<br><small>/'+tm[q]+'</small></th>').join(''):Array.from({length:n},(_,q)=>'<th>'+(n===6?'AS-'+(q+1):'మార్కులు<br><small>/80</small>')+'</th>').join(''))+'<th>మొత్తం</th><th>గ్రేడ్</th></tr>';
-    L.forEach((s,k)=>{const r=aRes(s,c,A,i),v=((PS.mk[s.id]||{})[A]||{})[i];let vv=v||(r&&r.t)||[];if(!isFA&&v&&v.length!==n)vv=n===6?[]:[v.reduce((a,x)=>a+(+x||0),0)];
-      h+='<tr><td>'+(k+1)+'</td><td class="nm">'+s.name+'</td>'+Array.from({length:isFA?4:n},(_,q)=>'<td><input class="em" inputmode="decimal" data-sid="'+s.id+'" data-q="'+q+'" data-max="'+(isFA?tm[q]:(n===6?80:80))+'" value="'+(vv[q]===null||vv[q]===undefined?'':vv[q])+'"></td>').join('')
+      +'<div class="st">'+(isFA?'FA = ప్రతిస్పందనలు 5 + రాత అంశాలు 5 + ప్రాజెక్ట్ 5 + రాత పరీక్ష 35 = 50':'ఈ సబ్జెక్టు SA = '+SP.map(x=>x[0]+' '+x[1]).join(' + ')+' = '+saMax(c,(C.subs[i]||{}).n))+' • గైర్హాజరు అయితే <b>AB</b> • టైప్ చేయగానే సేవ్ అవుతుంది • Enter = కింది విద్యార్థి</div>';
+    h+='<div style="overflow-x:auto"><table class="et"><tr><th>#</th><th>పేరు</th>'+(isFA?TOOLS.map((t,q)=>'<th>'+t+'<br><small>/'+tm[q]+'</small></th>').join(''):SP.map(x=>'<th>'+x[0]+'<br><small>/'+x[1]+'</small></th>').join(''))+'<th>మొత్తం</th><th>గ్రేడ్</th></tr>';
+    L.forEach((s,k)=>{const r=aRes(s,c,A,i),v=((PS.mk[s.id]||{})[A]||{})[i];let vv=v||(r&&r.t)||[];if(!isFA&&v&&v.length!==n)vv=v.some(x=>String(x).toUpperCase()==='AB')?['AB']:[];
+      h+='<tr><td>'+(k+1)+'</td><td class="nm">'+s.name+'</td>'+Array.from({length:isFA?4:n},(_,q)=>'<td><input class="em" inputmode="decimal" data-sid="'+s.id+'" data-q="'+q+'" data-max="'+(isFA?tm[q]:SP[q][1])+'" value="'+(vv[q]===null||vv[q]===undefined?'':vv[q])+'"></td>').join('')
         +'<td id="emt_'+s.id+'">'+(r?(r.ab?'AB':nf(r.tot)):'')+'</td><td id="emg_'+s.id+'" class="gd '+(r&&!r.ab?gcl(r.g,sc):'')+'">'+(r&&!r.ab?r.g:'')+'</td></tr>';});
     h+='</table></div>';}
   else{const mi=ENT.mi,wd=Math.max(0,...L.map(s=>attM(s,mi)[0]));
