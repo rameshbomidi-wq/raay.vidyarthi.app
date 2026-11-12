@@ -35,7 +35,7 @@ var T={te:{hint:'👆 బొమ్మను తాకితే English',app:'�
 var q=new URLSearchParams(location.search),L=q.get('lang')==='en'?'en':'te';
 var pic=document.getElementById('pic'),wrap=document.getElementById('wrap');
 function kind(){return innerWidth>innerHeight*1.1?'wide':'phone';}
-function src(l){return 'help/banner/'+kind()+'_'+l+'.jpg';}
+function src(l){return 'help/banner/'+kind()+'_'+l+'.jpg?v=2';}
 ['te','en'].forEach(function(l){var i=new Image();i.src=src(l);});
 function show(anim){
   var t=T[L];document.documentElement.lang=L;
