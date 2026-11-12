@@ -2042,7 +2042,7 @@ function stuDraw(){stuOpts();const cls=document.getElementById('stuCls').value,L
      +SFLD.map(f=>'<span>'+f[1]+'</span><input type="text" id="sf_'+f[0]+'"'+(f[2]==='n'?' inputmode="numeric"':'')+(e&&f[0]==='id'?' disabled':'')+' value="'+(s[f[0]]&&s[f[0]]!=='-'?s[f[0]]:'')+'">').join('')
      +(e?'<span>తరగతి</span><select id="sf_cls">'+Object.keys(DATA).map(c=>'<option value="'+c+'"'+(c===e.cls?' selected':'')+'>'+CLS_NAME[c]+'</option>').join('')+'</select>':'')
      +'</div><div class="row"><button class="go" onclick="stuSave()">💾 '+(e?'మార్పులు సేవ్':'చేర్చు')+'</button>'+(e?'<button onclick="stuEditId=null;stuDraw()">రద్దు</button>':'')+'</div></details>';
-  if(APP&&!e){const n=+appEval("live('roster').length")||0;if(n)h+='<div class="row"><button onclick="stuFromApp()">📥 రాయ్ విద్యార్థి యాప్‌లోని జాబితా ('+n+' మంది) తెచ్చుకో</button></div>';}
+  if(APP&&!e){const n=+appEval("live('roster').length")||0;if(n)h+='<div class="row"><button onclick="stuFromApp()">📥 రాయ్ విద్యార్థి యాప్‌లోని జాబితా ('+n+' మంది) ఇప్పుడే సరిచూడు 🔄</button></div><div style="font-size:.82rem;color:#555;margin:4px 0 8px">ℹ️ యాప్‌లో ఎక్కించిన / పేస్ట్ చేసిన పేర్లు, హాజరు, FA / SA మార్కులు ఈ టూల్ తెరిచిన ప్రతిసారీ <b>ఆటోగా</b> ఇక్కడికి వస్తాయి. ఇక్కడ చేత్తో మార్చిన మార్కులు మారవు.</div>';}
   h+='<h4>👥 '+R+' తరగతి — '+L.length+' మంది</h4>';
   h+=L.length?'<div class="pv" style="max-height:360px"><table><tr><th>క్ర.సం</th><th>పేరు</th><th>తండ్రి</th><th>మొబైల్</th><th>ID</th><th>పు.తే.</th><th></th></tr>'
     +L.map((x,k)=>'<tr><td>'+(k+1)+'</td><td><b>'+x.name+'</b></td><td>'+(x.father||'')+'</td><td>'+(x.mobile||'')+'</td><td>'+x.id+'</td><td>'+(x.dob||'')+'</td><td><button onclick="stuEditId=\''+x.id+'\';stuDraw();document.getElementById(\'stuView\').scrollTop=0">✏️</button> <button onclick="stuDel(\''+x.id+'\')">🗑</button></td></tr>').join('')+'</table></div>'
@@ -2052,7 +2052,7 @@ function stuDraw(){stuOpts();const cls=document.getElementById('stuCls').value,L
   document.getElementById('stuBox').innerHTML=h;}
 function stuDelCls(){const cls=document.getElementById('stuCls').value,L=DATA[cls];if(!L.length)return;
   if(!confirm(CLS_NAME[cls]+' తరగతిలోని '+L.length+' మంది విద్యార్థులను (మార్కులు, హాజరుతో సహా) తొలగించాలా?'))return;if(!confirm('నిజంగా తొలగించాలా? ఇది తిరిగి రాదు.'))return;
-  L.forEach(s=>{delete PS.mk[s.id];delete PS.att[s.id];if(PS.pl)delete PS.pl[s.id];if(PS.stu)delete PS.stu[s.id];});if(PS.add)PS.add[cls]=[];DATA[cls]=[];savePS();stuSaved();stuDraw();showToast('తొలగించబడింది');}
+  L.forEach(s=>{delete PS.mk[s.id];delete PS.att[s.id];if(PS.ap)delete PS.ap[s.id];if(PS.pl)delete PS.pl[s.id];if(PS.stu)delete PS.stu[s.id];});if(PS.add)PS.add[cls]=[];DATA[cls]=[];savePS();stuSaved();stuDraw();showToast('తొలగించబడింది');}
 
 /* ---------- 📂 స్మార్ట్ దిగుమతి: కాలమ్‌లు ఏ క్రమంలో ఉన్నా ---------- */
 const IMPF=[['','— వదిలేయి —'],['name','విద్యార్థి పేరు'],['father','తండ్రి పేరు'],['mother','తల్లి పేరు'],['mobile','మొబైల్'],['id','చైల్డ్ / విద్యార్థి ID'],['dob','పుట్టిన తేదీ'],
@@ -2161,7 +2161,7 @@ function stuSave(){const v={};SFLD.forEach(f=>v[f[0]]=document.getElementById('s
     DATA[cls].push(fixStu(Object.assign(v,{id:id})));if(stuSaved())showToast(cleanTxt(v.name)+' చేర్చబడింది ✅');}
   stuDraw();}
 function stuDel(id){const e=findStu(id);if(!e)return;if(!delOK(e.s.name+' ను జాబితా నుండి తొలగించాలా?\n(ఈ విద్యార్థి మార్కులు, హాజరు కూడా తొలగిపోతాయి)'))return;
-  DATA[e.cls].splice(e.k,1);delete PS.mk[id];delete PS.att[id];if(PS.pl)delete PS.pl[id];if(PS.stu)delete PS.stu[id];
+  DATA[e.cls].splice(e.k,1);delete PS.mk[id];delete PS.att[id];if(PS.pl)delete PS.pl[id];if(PS.ap)delete PS.ap[id];if(PS.stu)delete PS.stu[id];
   if(PS.add)for(const c in PS.add)PS.add[c]=(PS.add[c]||[]).filter(s=>s.id!==id);savePS();stuSaved();stuDraw();showToast('తొలగించబడింది');}
 function stuSort(){const cls=document.getElementById('stuCls').value;DATA[cls].sort((a,b)=>a.name.localeCompare(b.name));stuSaved();stuDraw();}
 const APPSUB={tel:'First Language',hin:'Second Language',eng:'English',mat:'Mathematics',evs:'EVS',sci:'General Science',phy:'Physical Science',bio:'Biological Science',soc:'Social Studies'};
@@ -2175,22 +2175,39 @@ function saFromApp(c,s,v){if(v==null)return null;const n=c<=5?6:1,to=saMax(c),ab
   const f=to/max,r=x=>x===null?null:Math.round(Math.min(x*f,to)*10)/10;
   if(n===6&&parts.length===6)return parts.map(r);
   const tot=parts.reduce((a,x)=>a+(+x||0),0),out=Array(n).fill(null);out[0]=r(tot);return out;}
-function stuFromApp(){let o=null;try{o=JSON.parse(appEval("JSON.stringify({r:live('roster'),m:live('marks'),n:(S.cfg&&S.cfg.sname)||''})"));}catch(e){}
-  if(!o||!Array.isArray(o.r)||!o.r.length){showToast('యాప్ జాబితా దొరకలేదు');return;}
-  if(!confirm('యాప్‌లోని '+o.r.length+' మంది విద్యార్థులను ఇక్కడికి తెచ్చుకోవాలా?\n(ఇక్కడ ముందే ఉన్నవారి పేరు / తండ్రి / మొబైల్ / హాజరు అప్‌డేట్ అవుతాయి; FA, SA-1, SA-2 మార్కులు ఇక్కడ ఖాళీగా ఉన్న చోట్ల మాత్రమే చేరతాయి — SA యాప్ గరిష్ఠం నుండి /80 కి మారుతుంది)'))return;let add=0,upd=0,mk=0,sa=0;
-  o.r.slice().sort((a,b)=>(a.c-b.c)||((a.ord||0)-(b.ord||0))).forEach(r=>{const cls=(+r.c)+'A';if(!(+r.c>=1&&+r.c<=10)||!r.sid||!r.n)return;if(!DATA[cls])DATA[cls]=[];
+/* యాప్ FA మార్కులు → ఇక్కడి [5,5,5,35]: VIII–X భౌతిక/జీవ (యాప్ [5,5,5,10] = 25) మొత్తం రెట్టింపు (శాతం అదే); పోర్టల్ {tot,max} → /50 */
+function faFromApp(c,s,v){if(v==null)return null;const pb=c>=8&&(s==='phy'||s==='bio'),r1=x=>Math.round(x*10)/10;
+  if(Array.isArray(v)){if(v.length!==4||!v.some(x=>x!==null&&x!==''&&x!==undefined)||v.some(x=>String(x).toUpperCase()==='AB'))return null;
+    const p=v.map(x=>x===null||x===''||x===undefined?null:+x||0);if(!pb)return p;
+    const t=p.reduce((a,x)=>a+(+x||0),0);return [p[0],p[1],p[2],r1(2*t-(+p[0]||0)-(+p[1]||0)-(+p[2]||0))];}
+  if(typeof v==='object'){if(v.ab||v.tot==null||!(+v.max>0))return null;const t=Math.min(50,r1(v.tot*50/v.max)),o=[0,0,0,Math.min(35,t)];let r=r1(t-o[3]);
+    for(let k=0;k<3;k++){const x=Math.min(5,r);o[k]=x;r=r1(r-x);}return o;}
+  return null;}
+/* యాప్ నుండి వచ్చిన మార్కు ఒక గడిలో: ఖాళీ అయితే పెడుతుంది; యాప్‌లో మారితే ఇక్కడా మారుతుంది;
+   టీచర్ ఇక్కడ చేత్తో మార్చిన గడిని (PS.ap లో ఉన్న చివరి యాప్ విలువతో సరిపోనిది) ముట్టుకోదు */
+function apSet(id,A,i,v){const P=PS.mk[id]=PS.mk[id]||{};P[A]=P[A]||{};const cur=P[A][i],has=cur&&cur.some(x=>x!==null&&x!==''&&x!==undefined),nv=JSON.stringify(v),k=A+'|'+i;
+  PS.ap=PS.ap||{};const M=PS.ap[id]=PS.ap[id]||{};
+  if(has){const cs=JSON.stringify(cur);if(cs===nv){M[k]=nv;return 0;}if(M[k]!==cs)return 0;}
+  P[A][i]=v;M[k]=nv;return 1;}
+/* 📥 యాప్ (roster + marks) → ఇక్కడికి. టూల్ తెరిచిన ప్రతిసారీ ఆటోగా (appAuto) + బటన్ (stuFromApp) */
+function appPull(){let o=null;try{o=JSON.parse(appEval("JSON.stringify({r:live('roster'),m:live('marks'),n:(S.cfg&&S.cfg.sname)||''})"));}catch(e){}
+  if(!o||!Array.isArray(o.r)||!o.r.length)return null;const R={n:o.r.length,add:0,upd:0,mk:0,sa:0,ch:false},b0=JSON.stringify([DATA,PS.mk,PS.sch||0]);
+  o.r.slice().sort((a,b)=>(a.c-b.c)||((a.ord||0)-(b.ord||0))).forEach(r=>{const cls=(+r.c)+'A';if(!(+r.c>=1&&+r.c<=10)||!r.sid||!r.n)return;ensureCls(cls);
     const id=String(r.sid).replace(/[^\w-]/g,''),e=findStu(id),att=Array.from({length:11},(_,i)=>{const a=(r.att||[])[i];return Array.isArray(a)&&+a[0]>0?[+a[0],Math.max(+a[1]||0,0)]:null;});
-    if(e){const s=e.s;s.name=cleanTxt(r.n);if(r.f)s.father=cleanTxt(r.f);if(r.ph)s.mobile=String(r.ph).replace(/\D/g,'').slice(-10);if(r.med)s.medium=cleanTxt(r.med);att.forEach((a,i)=>{if(a)s.m[i]=a;});
-      if(e.cls!==cls){DATA[e.cls].splice(e.k,1);DATA[cls].push(s);}upd++;}
-    else{DATA[cls].push(fixStu({id:id,name:r.n,father:r.f,mobile:r.ph,medium:r.med,m:att.map(a=>a||[0,0])}));add++;}});
-  (o.m||[]).forEach(m=>{const e=findStu(String(m.sid||'')),sn=APPSUB[m.s];if(!e||!sn)return;const c=cnum(e.cls),i=clsDef(c).subs.findIndex(sb=>sb.n===sn);if(i<0)return;
-    ['FA1','FA2','FA3','FA4'].forEach(A=>{const v=(m.a||{})[A];if(!Array.isArray(v)||v.length!==4||(c>=8&&(m.s==='phy'||m.s==='bio')))return;
-      const P=PS.mk[e.s.id]=PS.mk[e.s.id]||{};P[A]=P[A]||{};if(P[A][i]&&P[A][i].some(x=>x!==null&&x!==''))return;P[A][i]=v.map(x=>x===''||x===undefined?null:x);mk++;});
-    ['SA1','SA2'].forEach(A=>{const v=saFromApp(c,m.s,(m.a||{})[A]);if(!v)return;
-      const P=PS.mk[e.s.id]=PS.mk[e.s.id]||{};P[A]=P[A]||{};if(P[A][i]&&P[A][i].some(x=>x!==null&&x!==''))return;P[A][i]=v;sa++;});});
+    if(e){const s=e.s,was=JSON.stringify(s)+e.cls;s.name=cleanTxt(r.n);if(r.f)s.father=cleanTxt(r.f);if(r.ph)s.mobile=String(r.ph).replace(/\D/g,'').slice(-10);if(r.med)s.medium=cleanTxt(r.med);att.forEach((a,i)=>{if(a)s.m[i]=a;});
+      if(e.cls!==cls){DATA[e.cls].splice(e.k,1);DATA[cls].push(s);}if(JSON.stringify(s)+cls!==was)R.upd++;}
+    else{DATA[cls].push(fixStu({id:id,name:r.n,father:r.f,mobile:r.ph,medium:r.med,m:att.map(a=>a||[0,0])}));R.add++;}});
+  (o.m||[]).forEach(m=>{const e=findStu(String(m.sid||'').replace(/[^\w-]/g,'')),sn=APPSUB[m.s];if(!e||!sn)return;const c=cnum(e.cls),i=clsDef(c).subs.findIndex(sb=>sb.n===sn);if(i<0)return;
+    ['FA1','FA2','FA3','FA4'].forEach(A=>{const v=faFromApp(c,m.s,(m.a||{})[A]);if(v)R.mk+=apSet(e.s.id,A,i,v);});
+    ['SA1','SA2'].forEach(A=>{const v=saFromApp(c,m.s,(m.a||{})[A]);if(v)R.sa+=apSet(e.s.id,A,i,v);});});
   if(o.n&&(!PS.sch||!PS.sch.name)&&(!PACK.SCH||!PACK.SCH.name)){PS.sch=Object.assign({},PS.sch||{},{name:o.n,short:o.n});}
-  savePS();Object.keys(DATA).sort((a,b)=>cnum(a)-cnum(b));
-  if(stuSaved())showToast('✅ కొత్తగా '+add+' • అప్‌డేట్ '+upd+(mk?' • FA మార్కులు '+mk:'')+(sa?' • SA మార్కులు '+sa:''));stuDraw();}
+  R.ch=JSON.stringify([DATA,PS.mk,PS.sch||0])!==b0;savePS();if(R.ch){PACK.DATA=DATA;savePack();}return R;}
+function appMsg(R){return (R.add?' • కొత్తగా '+R.add+' మంది':'')+(R.upd?' • వివరాలు/హాజరు '+R.upd:'')+(R.mk?' • FA మార్కులు '+R.mk:'')+(R.sa?' • SA మార్కులు '+R.sa:'');}
+function stuFromApp(){const R=appPull();if(!R){showToast('యాప్ జాబితా దొరకలేదు');return;}
+  if(R.ch)stuDirty=true;showToast(R.ch?'✅ యాప్ నుండి'+appMsg(R):'✅ యాప్‌తో సరిపోయింది — కొత్త మార్పులు లేవు');stuDraw();}
+/* టూల్ తెరిచిన ప్రతిసారీ: యాప్‌లో ఎక్కించిన/పేస్ట్ చేసిన పేర్లు, హాజరు, FA/SA మార్కులు ఆటోగా ఇక్కడికి */
+function appAuto(){if(!APP)return;let R=null;try{R=appPull();}catch(e){}if(R&&R.ch){try{if(!DATA[currentClass]||!DATA[currentClass].length){const k=Object.keys(DATA).find(x=>DATA[x].length);if(k)currentClass=k;}}catch(e){}
+  setTimeout(()=>showToast('🔄 యాప్ నుండి ఆటోగా'+appMsg(R)),600);}}
 
 /* ---------- తరగతుల పరిధి ---------- */
 function saveRng(){const [a,b]=document.getElementById('sc_rng').value.split('-').map(Number);PACK.rng=[a,b];PACK.DATA=DATA;if(savePack()){showToast('తరగతులు సేవ్ అయ్యాయి ✅');setTimeout(()=>location.reload(),500);}}
@@ -2320,6 +2337,7 @@ function setupHint(){const n=totalStu(),R=CLS_NAME[currentClass]||currentClass;
    +'<li><b>✏️ మార్కులు, 📅 హాజరు</b> తరగతి మొత్తం ఒకే పట్టికలో నమోదు చేయండి → ప్రగతి కార్డులు, HPC, రిజిస్టర్లు, ప్రమోషన్ లిస్ట్ ప్రింట్ / PDF.</li></ol>'
    +'<button onclick="openSch()">⚙️ స్కూల్ వివరాలు</button><button onclick="openStu()">📂 విద్యార్థుల జాబితా ఎక్కించు (Excel / CSV)</button>'+'<button style="background:#b8860b" onclick="document.getElementById(\'bkFile\').click()">⬆️ బ్యాకప్ ఫైల్ ఉంటే ఎక్కించు</button>'
    +'<div style="font-size:.8rem;color:#555;margin-top:8px">🔒 డేటా ఈ ఫోన్ / కంప్యూటర్‌లోనే ఉంటుంది — తరచూ ⬇️ బ్యాకప్ తీసుకోండి.</div></div>';}
+appAuto();
 applySchUI();
 
 buildTabs();
