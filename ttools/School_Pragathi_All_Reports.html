@@ -2165,9 +2165,19 @@ function stuDel(id){const e=findStu(id);if(!e)return;if(!delOK(e.s.name+' ను
   if(PS.add)for(const c in PS.add)PS.add[c]=(PS.add[c]||[]).filter(s=>s.id!==id);savePS();stuSaved();stuDraw();showToast('తొలగించబడింది');}
 function stuSort(){const cls=document.getElementById('stuCls').value;DATA[cls].sort((a,b)=>a.name.localeCompare(b.name));stuSaved();stuDraw();}
 const APPSUB={tel:'First Language',hin:'Second Language',eng:'English',mat:'Mathematics',evs:'EVS',sci:'General Science',phy:'Physical Science',bio:'Biological Science',soc:'Social Studies'};
+/* యాప్ SA మార్కులు → ఇక్కడి /80 స్కేల్ (శాతం, గ్రేడ్ యాప్‌లో ఉన్నట్లే).
+   యాప్ గరిష్ఠం: I–V = 50 (AS-1…6), VI–X = 100, VIII–X భౌతిక/జీవ = 50; పోర్టల్ దిగుమతి {tot,max} / {ab} */
+function saFromApp(c,s,v){if(v==null)return null;const n=c<=5?6:1,to=saMax(c),ab=()=>{const a=Array(n).fill(null);a[0]='AB';return a;};
+  let parts,max=c<=5?50:(s==='phy'||s==='bio')?50:100;
+  if(Array.isArray(v)){if(!v.some(x=>x!==null&&x!==''&&x!==undefined))return null;if(v.some(x=>String(x).toUpperCase()==='AB'))return ab();parts=v.map(x=>x===null||x===''||x===undefined?null:+x||0);}
+  else if(typeof v==='object'){if(v.ab)return ab();if(v.tot==null||!(+v.max>0))return null;parts=[+v.tot||0];max=+v.max;}
+  else return null;
+  const f=to/max,r=x=>x===null?null:Math.round(Math.min(x*f,to)*10)/10;
+  if(n===6&&parts.length===6)return parts.map(r);
+  const tot=parts.reduce((a,x)=>a+(+x||0),0),out=Array(n).fill(null);out[0]=r(tot);return out;}
 function stuFromApp(){let o=null;try{o=JSON.parse(appEval("JSON.stringify({r:live('roster'),m:live('marks'),n:(S.cfg&&S.cfg.sname)||''})"));}catch(e){}
   if(!o||!Array.isArray(o.r)||!o.r.length){showToast('యాప్ జాబితా దొరకలేదు');return;}
-  if(!confirm('యాప్‌లోని '+o.r.length+' మంది విద్యార్థులను ఇక్కడికి తెచ్చుకోవాలా?\n(ఇక్కడ ముందే ఉన్నవారి పేరు / తండ్రి / మొబైల్ / హాజరు అప్‌డేట్ అవుతాయి)'))return;let add=0,upd=0,mk=0;
+  if(!confirm('యాప్‌లోని '+o.r.length+' మంది విద్యార్థులను ఇక్కడికి తెచ్చుకోవాలా?\n(ఇక్కడ ముందే ఉన్నవారి పేరు / తండ్రి / మొబైల్ / హాజరు అప్‌డేట్ అవుతాయి; FA, SA-1, SA-2 మార్కులు ఇక్కడ ఖాళీగా ఉన్న చోట్ల మాత్రమే చేరతాయి — SA యాప్ గరిష్ఠం నుండి /80 కి మారుతుంది)'))return;let add=0,upd=0,mk=0,sa=0;
   o.r.slice().sort((a,b)=>(a.c-b.c)||((a.ord||0)-(b.ord||0))).forEach(r=>{const cls=(+r.c)+'A';if(!(+r.c>=1&&+r.c<=10)||!r.sid||!r.n)return;if(!DATA[cls])DATA[cls]=[];
     const id=String(r.sid).replace(/[^\w-]/g,''),e=findStu(id),att=Array.from({length:11},(_,i)=>{const a=(r.att||[])[i];return Array.isArray(a)&&+a[0]>0?[+a[0],Math.max(+a[1]||0,0)]:null;});
     if(e){const s=e.s;s.name=cleanTxt(r.n);if(r.f)s.father=cleanTxt(r.f);if(r.ph)s.mobile=String(r.ph).replace(/\D/g,'').slice(-10);if(r.med)s.medium=cleanTxt(r.med);att.forEach((a,i)=>{if(a)s.m[i]=a;});
@@ -2175,10 +2185,12 @@ function stuFromApp(){let o=null;try{o=JSON.parse(appEval("JSON.stringify({r:liv
     else{DATA[cls].push(fixStu({id:id,name:r.n,father:r.f,mobile:r.ph,medium:r.med,m:att.map(a=>a||[0,0])}));add++;}});
   (o.m||[]).forEach(m=>{const e=findStu(String(m.sid||'')),sn=APPSUB[m.s];if(!e||!sn)return;const c=cnum(e.cls),i=clsDef(c).subs.findIndex(sb=>sb.n===sn);if(i<0)return;
     ['FA1','FA2','FA3','FA4'].forEach(A=>{const v=(m.a||{})[A];if(!Array.isArray(v)||v.length!==4||(c>=8&&(m.s==='phy'||m.s==='bio')))return;
-      const P=PS.mk[e.s.id]=PS.mk[e.s.id]||{};P[A]=P[A]||{};if(P[A][i]&&P[A][i].some(x=>x!==null&&x!==''))return;P[A][i]=v.map(x=>x===''||x===undefined?null:x);mk++;});});
+      const P=PS.mk[e.s.id]=PS.mk[e.s.id]||{};P[A]=P[A]||{};if(P[A][i]&&P[A][i].some(x=>x!==null&&x!==''))return;P[A][i]=v.map(x=>x===''||x===undefined?null:x);mk++;});
+    ['SA1','SA2'].forEach(A=>{const v=saFromApp(c,m.s,(m.a||{})[A]);if(!v)return;
+      const P=PS.mk[e.s.id]=PS.mk[e.s.id]||{};P[A]=P[A]||{};if(P[A][i]&&P[A][i].some(x=>x!==null&&x!==''))return;P[A][i]=v;sa++;});});
   if(o.n&&(!PS.sch||!PS.sch.name)&&(!PACK.SCH||!PACK.SCH.name)){PS.sch=Object.assign({},PS.sch||{},{name:o.n,short:o.n});}
   savePS();Object.keys(DATA).sort((a,b)=>cnum(a)-cnum(b));
-  if(stuSaved())showToast('✅ కొత్తగా '+add+' • అప్‌డేట్ '+upd+(mk?' • FA మార్కులు '+mk:''));stuDraw();}
+  if(stuSaved())showToast('✅ కొత్తగా '+add+' • అప్‌డేట్ '+upd+(mk?' • FA మార్కులు '+mk:'')+(sa?' • SA మార్కులు '+sa:''));stuDraw();}
 
 /* ---------- తరగతుల పరిధి ---------- */
 function saveRng(){const [a,b]=document.getElementById('sc_rng').value.split('-').map(Number);PACK.rng=[a,b];PACK.DATA=DATA;if(savePack()){showToast('తరగతులు సేవ్ అయ్యాయి ✅');setTimeout(()=>location.reload(),500);}}
