@@ -898,7 +898,7 @@ body:has(#app.v4bg){background:#083a1b}
  ******************************************************************/
 var SCHOOL_KEY  = '__SCHOOL_KEY__';   // విద్యార్థుల కీ (జాయిన్ లింక్‌లో వెళ్తుంది) – ఖాళీగా ఉంటే యాప్ మొదటిసారి సెట్ చేస్తుంది
 var TEACHER_KEY = '__TEACHER_KEY__';  // ఉపాధ్యాయుల కీ – ఎవరికీ ఇవ్వకండి
-var SRV_V = 2;  // సర్వర్ కోడ్ వెర్షన్ (యాప్ “సర్వర్ పాతది” అని చూపడానికి)
+var SRV_V = 3;  // సర్వర్ కోడ్ వెర్షన్ (యాప్ “సర్వర్ పాతది” అని చూపడానికి)
 function keys_() {
   if (SCHOOL_KEY.indexOf('__') !== 0) return {s: SCHOOL_KEY, t: TEACHER_KEY};
   var pr = PropertiesService.getScriptProperties();
@@ -966,10 +966,33 @@ function cleanT_(col, js, admin) {
   try { var d = JSON.parse(js); delete d.key; return JSON.stringify(d); } catch (x) { return js; }
 }
 
+/* 🔐 జవాబుల తాళం చెవులు (2026.11.12-20): జవాబులు యాప్ ఫైళ్లలో AES-GCM గూఢలిపిలో; తాళం చెవి = HMAC-SHA256(AKS, label).
+   AKS = Script Properties లో రహస్యం (repo లో ఎప్పుడూ ఉండదు). label "c|sub|lessonId" → పిల్లలకు ఆ పాఠం (akl_) లేదా ఆ సబ్జెక్టు పుస్తకం (akb_) టీచర్ తెరిస్తేనే; "T|…" → టీచర్‌కు మాత్రమే. */
+function akSec_() { return PropertiesService.getScriptProperties().getProperty('AKS') || ''; }
+function akHint_() { var s = akSec_(); return s ? sha_(s).slice(0, 8) : ''; }
+function akey_(b, isT, sh) {
+  var sec = akSec_(); if (!sec) return json_({ok: false, err: 'nokey'});
+  var L = (b.l || []).slice(0, 300).map(String), want = {}, open = {}, keys = {};
+  if (!isT) {
+    L.forEach(function (l) { var p = l.split('|'); if (p[0] === 'T' || p.length < 3) return; want['ak|akl_' + p[0] + '_' + p[2]] = 1; want['ak|akb_' + p[0] + '_' + p[1]] = 1; });
+    var n = sh.getLastRow();
+    if (n > 1 && Object.keys(want).length) {
+      var A = sh.getRange(2, 1, n - 1, 1).getValues();
+      for (var i = 0; i < A.length; i++) if (want[A[i][0]]) { try { var d = JSON.parse(sh.getRange(i + 2, 6).getValue()); if (d.on && !d.del) open[A[i][0]] = 1; } catch (x) {} }
+    }
+  }
+  L.forEach(function (l) {
+    var p = l.split('|'), ok = isT;
+    if (!ok && p[0] !== 'T' && p.length >= 3) ok = !!(open['ak|akl_' + p[0] + '_' + p[2]] || open['ak|akb_' + p[0] + '_' + p[1]]);
+    if (ok) keys[l] = Utilities.base64Encode(Utilities.computeHmacSha256Signature(l, sec, Utilities.Charset.UTF_8));
+  });
+  return json_({ok: true, keys: keys});
+}
+
 /* డేటా చదవడం (pull) */
 function doGet(e) {
   var p = (e && e.parameter) || {};
-  if (p.a === 'ping') return json_({ok:true, up:true, roster:true, qp:true, pdfs:true, tbx:true, ak:true, own:true, v:SRV_V, init:!keys_().s});
+  if (p.a === 'ping') return json_({ok:true, up:true, roster:true, qp:true, pdfs:true, tbx:true, ak:true, akey:true, akh:akHint_(), own:true, v:SRV_V, init:!keys_().s});
   var w = who_(p.k);
   if (!w) return json_({ok:false, err:'key'});
   if (p.a === 'card') return card_(p, db_(), sname_(), 'cardf_one');
@@ -1005,6 +1028,7 @@ function doPost(e) {
   if (b.a === 'up') return up_(b, w, '');
   if (b.a === 'rm') return rm_(b, w, '');
   if (b.a === 'pdfs') return pdfs_(w, '', db_());
+  if (b.a === 'akey') return akey_(b, w.isT, db_());
   var isT = w.isT, tch = false;
   var lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
@@ -1300,10 +1324,33 @@ function auth_(p) {
   return {err: 'key'};
 }
 
+/* 🔐 జవాబుల తాళం చెవులు (2026.11.12-20): జవాబులు యాప్ ఫైళ్లలో AES-GCM గూఢలిపిలో; తాళం చెవి = HMAC-SHA256(AKS, label).
+   AKS = Script Properties లో రహస్యం (repo లో ఎప్పుడూ ఉండదు). label "c|sub|lessonId" → పిల్లలకు ఆ పాఠం (akl_) లేదా ఆ సబ్జెక్టు పుస్తకం (akb_) టీచర్ తెరిస్తేనే; "T|…" → టీచర్‌కు మాత్రమే. */
+function akSec_() { return PropertiesService.getScriptProperties().getProperty('AKS') || ''; }
+function akHint_() { var s = akSec_(); return s ? sha_(s).slice(0, 8) : ''; }
+function akey_(b, isT, sh) {
+  var sec = akSec_(); if (!sec) return json_({ok: false, err: 'nokey'});
+  var L = (b.l || []).slice(0, 300).map(String), want = {}, open = {}, keys = {};
+  if (!isT) {
+    L.forEach(function (l) { var p = l.split('|'); if (p[0] === 'T' || p.length < 3) return; want['ak|akl_' + p[0] + '_' + p[2]] = 1; want['ak|akb_' + p[0] + '_' + p[1]] = 1; });
+    var n = sh.getLastRow();
+    if (n > 1 && Object.keys(want).length) {
+      var A = sh.getRange(2, 1, n - 1, 1).getValues();
+      for (var i = 0; i < A.length; i++) if (want[A[i][0]]) { try { var d = JSON.parse(sh.getRange(i + 2, 6).getValue()); if (d.on && !d.del) open[A[i][0]] = 1; } catch (x) {} }
+    }
+  }
+  L.forEach(function (l) {
+    var p = l.split('|'), ok = isT;
+    if (!ok && p[0] !== 'T' && p.length >= 3) ok = !!(open['ak|akl_' + p[0] + '_' + p[2]] || open['ak|akb_' + p[0] + '_' + p[1]]);
+    if (ok) keys[l] = Utilities.base64Encode(Utilities.computeHmacSha256Signature(l, sec, Utilities.Charset.UTF_8));
+  });
+  return json_({ok: true, keys: keys});
+}
+
 /* డేటా చదవడం */
 function doGet(e) {
   var p = (e && e.parameter) || {};
-  if (p.a === 'ping') { var ns = nSchools_(); return json_({ok: true, multi: true, up: true, roster: true, qp: true, pdfs: true, tbx: true, ak: true, cap: true, full: ns >= MAX_SCHOOLS, n: ns, max: MAX_SCHOOLS}); }
+  if (p.a === 'ping') { var ns = nSchools_(); return json_({ok: true, multi: true, up: true, roster: true, qp: true, pdfs: true, tbx: true, ak: true, akey: true, akh: akHint_(), cap: true, full: ns >= MAX_SCHOOLS, n: ns, max: MAX_SCHOOLS}); }
   if (p.a === 'join') {
     var c = CacheService.getScriptCache(), bad = Number(c.get('badjoin') || 0);
     if (bad > 300) return json_({ok: false, err: 'busy'});
@@ -1343,6 +1390,7 @@ function doPost(e) {
   if (b.a === 'up') return up_(b, a, a.sc.id);
   if (b.a === 'rm') return rm_(b, a, a.sc.id);
   if (b.a === 'pdfs') return pdfs_(a, a.sc.id, db_(a.sc.id));
+  if (b.a === 'akey') return akey_(b, a.isT, db_(a.sc.id));
   // ఒక్కో పాఠశాలకు వేరు తాళం – ఒక పాఠశాల పంపుతుంటే మిగతావి వేచి ఉండవు
   var unlock = slock_(a.sc.id);
   if (!unlock) return json_({ok: false, err: 'busy'});
@@ -2816,7 +2864,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.12-19';
+const APPV='2026.11.12-20';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -2884,7 +2932,7 @@ V.welcome=()=>{const w=param.w||'';const ps=pubServer();const back=`<button clas
 <button class="role" style="background:#fdeaa8" onclick="go('welcome',{w:'s'})"><span>🧒</span><div><b>నేను విద్యార్థి</b><small>టీచర్ ఇచ్చిన పాఠశాల కోడ్‌తో చేరు</small></div></button>
 <button class="link" onclick="S.offline=true;save();go('home')">పాఠశాల లేకుండా సొంతంగా వాడుకో →</button><br><button class="link" onclick="go('help',{back:'welcome'})">❓ ఎలా వాడాలి (వీడియో)</button> • <button class="link" onclick="go('privacy')">🔒 గోప్యత & నిబంధనలు</button></div>`;};
 /* ================= 🖥️ సొంత సర్వర్ – 3 అడుగులు (పాఠశాల Google ఖాతాలో, ఉచితం, పరిమితి లేదు) ================= */
-const OWN_V=2,OWN={chk:0,v:0};
+const OWN_V=3,OWN={chk:0,v:0};
 async function pubCap(){if(!pubServer()||Date.now()-PUB.capAt<300000)return;PUB.capAt=Date.now();
  try{const j=await (await fetch(pubServer()+'?a=ping&_='+Date.now())).json();if(j&&j.cap){const was=PUB.full;PUB.full=!!j.full;PUB.n=j.n||0;PUB.max=j.max||0;if(was!==PUB.full&&view==='welcome')softRender();}}catch(e){}}
 function ownRawCode(){return document.getElementById('gs-code').textContent.trim();}
@@ -4238,7 +4286,7 @@ ${sec==='home'?whoBanner()+ownWarn()+tDash():TP[sec]()}`;};
 const TP={};TP.tc=tpTc;TP.at=tpAt;
 /* ===== 📘 టీచర్: పాఠ్యపుస్తకం నోట్స్ & టెస్ట్ ప్రశ్నలు సరిచేయడం / కొత్త పాఠం ===== */
 const TBE={c:0,s:''};
-function tbGuide(c,s,id){if(!tbLes(c,s).some(x=>x.id===id)){const s2=learnSubs(c).find(x=>tbLes(c,x).some(y=>y.id===id));if(s2){s=s2;TBE.s=s2;}}const L=tbLes(c,s).find(x=>x.id===id);if(!L)return '<div class="empty">పాఠం దొరకలేదు</div>';if(L._lite&&!tbFull(c,s))return TBWAIT;const G=(L.tg||[]).map(g=>Array.isArray(g)&&Array.isArray(g[1])?[g[0],g[1].map(unz)]:g);
+function tbGuide(c,s,id){if(!tbLes(c,s).some(x=>x.id===id)){const s2=learnSubs(c).find(x=>tbLes(c,x).some(y=>y.id===id));if(s2){s=s2;TBE.s=s2;}}const L=tbLes(c,s).find(x=>x.id===id);if(!L)return '<div class="empty">పాఠం దొరకలేదు</div>';if(L._lite&&!tbFull(c,s))return TBWAIT;let T0=L.tg||[];if(!Array.isArray(T0)){const x=T0.e?akOpen('tg|'+c+'|'+L.id,T0,()=>{if(view==='teacher')softRender();}):null;if(!Array.isArray(x)){const w=ANSD['tg|'+c+'|'+L.id]==='…'||ANSD['tg|'+c+'|'+L.id]===undefined;return `<div class="bar"><button class="ib" onclick="go('teacher',{t:'tb'})">←</button><h2>📗 టీచర్ గైడ్</h2></div><div class="empty">${w?'⏳ టీచర్ గైడ్ తెరుస్తోంది…':'⚠️ '+akErrMsg()+' <br><button class="btn sm" onclick="softRender()">🔄 మళ్ళీ</button>'}</div>`;}T0=x;}const G=T0.map(g=>Array.isArray(g)&&Array.isArray(g[1])?[g[0],g[1].map(unz)]:g);
  return `<div class="bar"><button class="ib" onclick="go('teacher',{t:'tb'})">←</button><h2>📗 టీచర్ గైడ్ • ${c}వ • ${SUBJ[s].n}</h2></div>
 <div class="tbhero" style="--sc:${SUBJ[s].col};--sb:${SUBJ[s].bg}"><small>పాఠ్యపుస్తకంలోని కృత్యాలు, అభ్యాసాలకు జవాబులు (ఉపాధ్యాయులకు మాత్రమే)</small><h2>${L.no}. ${esc(L.t)}</h2><div class="tbtags"><span>📅 ${tbMonths(L)}</span><span>${G.length} భాగాలు</span></div></div>
 <div class="row2" style="margin-bottom:8px"><button class="btn sm ghost" onclick="document.querySelectorAll('.tgsec').forEach(d=>d.open=true)">▾ అన్నీ తెరువు</button><button class="btn sm ghost" onclick="window.print()">🖨 ప్రింట్</button></div>
@@ -5441,9 +5489,29 @@ window.RAAY_ANS=window.RAAY_ANS||{};const ANSL={};
 function unz(x){if(typeof x!=='string'||x[0]!=='⁂')return x;let o='';for(const ch of x.slice(1)){const y=ch.codePointAt(0);o+=String.fromCodePoint(y>=7&&y<0xCFF7?y-7:y);}return o;}
 function wbaLoad(c){c=+c;if(!c||ANSL[c])return;if(window.RAAY_ANS[c]){ANSL[c]='ok';return;}ANSL[c]='ld';const sc=document.createElement('script');sc.src='answers-'+c+'.js';sc.async=true;
  sc.onload=()=>{ANSL[c]=window.RAAY_ANS[c]?'ok':'no';if(view==='book')akShowBtn();else if(view==='teacher'&&param.t==='tb')softRender();};sc.onerror=()=>{ANSL[c]='no';sc.remove();};document.head.appendChild(sc);}
+
+/* 🔐 జవాబుల తాళం చెవులు (client, 2026.11.12-20): జవాబు = {l:label, e:base64(iv12+AES-GCM)} – సర్వర్ (a:'akey') ఇచ్చిన key తో తెరుస్తాం.
+   keys localStorage 'raiAK' లో (ఒకసారి వస్తే ఆఫ్‌లైన్‌లో కూడా). పాత రూపం (శ్రేణి/⁂) కూడా పనిచేస్తుంది. */
+const AKQ={err:'',busy:null,wait:new Set()};
+function akCache(){try{return JSON.parse(localStorage.getItem('raiAK')||'{}')||{};}catch(e){return {};}}
+async function akKeys(labels){const c=akCache(),need=labels.filter(l=>!c[l]);
+ if(need.length){if(S.cfg.type!=='gs'||!S.cfg.url){AKQ.err='nosrv';return c;}
+  try{const j=await (await fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'akey',s:S.cfg.sid,k:GS.key(),dev:S.dev,l:need})})).json();
+   if(j&&j.ok&&j.keys){Object.assign(c,j.keys);try{localStorage.setItem('raiAK',JSON.stringify(c));}catch(e){}AKQ.err=need.some(l=>!j.keys[l])?'locked':'';}else AKQ.err=(j&&j.err)||'srv';}catch(e){AKQ.err='net';}}
+ return c;}
+const b64u8=x=>Uint8Array.from(atob(x),ch=>ch.charCodeAt(0));
+async function akDec(o){const c=await akKeys([o.l]),kb=c[o.l];if(!kb)return null;
+ const key=await crypto.subtle.importKey('raw',b64u8(kb),'AES-GCM',false,['decrypt']),d=b64u8(o.e);
+ return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:d.slice(0,12)},key,d.slice(12))));}
+const ANSD={};
+/* ఒకే చోట: గూఢలిపి వస్తువు o → తెరిచిన విలువ (లేకపోతే null; వెనుక తెరిచి done() పిలుస్తుంది) */
+function akOpen(ck,o,done){const v=ANSD[ck];if(v!==undefined&&v!=='…')return v;if(v==='…')return null;ANSD[ck]='…';
+ akDec(o).then(x=>{ANSD[ck]=x||null;if(!x)setTimeout(()=>{if(ANSD[ck]===null)delete ANSD[ck];},20000);try{done&&done();}catch(e){}}).catch(()=>{ANSD[ck]=null;setTimeout(()=>{delete ANSD[ck];},20000);try{done&&done();}catch(e){}});return null;}
+function akErrMsg(){return AKQ.err==='nokey'?'సర్వర్‌లో జవాబుల తాళం చెవి (AKS) లేదు – రాయ్ ఎడ్యుకేషన్‌ను సంప్రదించండి':AKQ.err==='nosrv'?'జవాబులకు ☁️ ఆన్‌లైన్ సింక్ అవసరం':AKQ.err==='net'?'ఇంటర్నెట్ లేదు – నెట్ ఆన్ చేసి మళ్ళీ తెరవండి':AKQ.err==='locked'?'🔒 టీచర్ ఈ పాఠం జవాబులు ఇంకా తెరవలేదు':'జవాబులు తెరవలేకపోయాం – కాసేపాగి మళ్ళీ ప్రయత్నించండి';}
 function ansCls(){return (view==='teacher'||param.ak)?(TBE.c||3):(S.cur?+S.cur.c:3);}
 function ansFile(u){return String(u||'').split('/').pop();}
-function ansPage(u,pg){const A=window.RAAY_ANS[ansCls()],r=A&&A[ansFile(u)]?A[ansFile(u)][pg]||null:null;return r?r.map(unz):null;}
+function ansRaw(u,pg){const A=window.RAAY_ANS[ansCls()];return A&&A[ansFile(u)]?A[ansFile(u)][pg]||null:null;}
+function ansPage(u,pg){const r=ansRaw(u,pg);if(!r)return null;if(Array.isArray(r))return r.map(unz);if(!r.e)return null;const x=akOpen(ansCls()+'|'+ansFile(u)+'|'+pg,r,()=>{if(view==='book'){akShowBtn();}});return Array.isArray(x)?x:null;}
 function ansLessonOf(u,pg){const c=ansCls();for(const s of learnSubs(c))for(const L of tbLes(c,s)){const R=akRange(L);if(R&&ansFile(R.f)===ansFile(u)&&pg>=R.a&&pg<=R.b)return {s,L};}return null;}
 function wbaOpen(c,ln){const r=S.ak.find(x=>x.id==='akl_'+c+'_'+ln&&!x.del);return !!(r&&r.on);}
 function wbaBook(c,s){const r=S.ak.find(x=>x.id==='akb_'+c+'_'+s&&!x.del);return !!(r&&r.on);}
@@ -5453,10 +5521,11 @@ async function akBookLock(s,on){const c=TBE.c,ls=tbLes(c,s).filter(L=>akRange(L)
  ls.forEach(L=>{const R=akRange(L),o=on||wbaOpen(c,L.id);S.ak.filter(r=>!r.del&&r.f===R.f&&r.pg>=R.a&&r.pg<=R.b).forEach(r=>{if(!!r.on!==o)put('ak',Object.assign({},r,{on:o?1:0}));});});
  put('ak',{id:'akb_'+c+'_'+s,c,sb:s,on:on?1:0});toast(on?'📖 మొత్తం పుస్తకం జవాబులు తెరిచాం':'🔒 మొత్తం పుస్తకం లాక్ – పాఠం వారీగా తెరిచినవి మాత్రమే కనిపిస్తాయి');go('teacher',{t:'tb'});}
 function ansCount(L){const R=akRange(L),A=window.RAAY_ANS[TBE.c];if(!R||!A||!A[ansFile(R.f)])return 0;let n=0;for(let p=R.a;p<=R.b;p++)if(A[ansFile(R.f)][p])n++;return n;}
-function ansPanel(){let el=document.getElementById('ansp');const a=ansPage(BV.url,BV.page);if(!el||!a||!akState().open){if(el)el.hidden=true;return;}
+function ansPanel(){let el=document.getElementById('ansp');if(!el||!ansRaw(BV.url,BV.page)||!akState().open){if(el)el.hidden=true;return;}const a=INK.showAns?ansPage(BV.url,BV.page):null;
+ if(!a){const ck=ansCls()+'|'+ansFile(BV.url)+'|'+BV.page,w=ANSD[ck]==='…'||ANSD[ck]===undefined;el.innerHTML=`<div class="ansh"><b>🔑 ఈ పేజీ జవాబులు</b><button onclick="INK.showAns=false;ansPanel();akShowBtn()">✕</button></div><p style="padding:10px 4px">${w?'⏳ జవాబులు తెరుస్తోంది…':'⚠️ '+akErrMsg()}</p>`;el.hidden=!INK.showAns;return;}
  el.innerHTML=`<div class="ansh"><b>🔑 ఈ పేజీ జవాబులు</b><button onclick="INK.showAns=false;ansPanel();akShowBtn()">✕</button></div><ol class="ansl">${a.map(x=>/^— /.test(x)?`<li class="ah">${esc(x.replace(/^— | —$/g,''))}</li>`:`<li>${esc(x)}</li>`).join('')}</ol><small>👀 నీ జవాబుతో పోల్చి చూసుకో. తప్పు ఉంటే 🧽 తో తుడిచి సరిచేయి.</small>`;el.hidden=!INK.showAns;}
 /* విద్యార్థి: జవాబుల పొర చూపించడం */
-function akState(){const k=akGet(BV.url,BV.page),a=ansPage(BV.url,BV.page),lo=ansLessonOf(BV.url,BV.page),t=!!param.ak||view==='teacher';
+function akState(){const k=akGet(BV.url,BV.page),a=ansRaw(BV.url,BV.page),lo=ansLessonOf(BV.url,BV.page),t=!!param.ak||view==='teacher';
  const open=t||!!(k&&k.on)||!!(lo&&(wbaOpen(ansCls(),lo.L.id)||wbaBook(ansCls(),lo.s)));return {k,a,open,has:!!((k&&k.has)||a)};}
 function akShowBtn(){const b=document.getElementById('akbtn');if(!b)return;const st=akState();if(!st.has){b.hidden=true;ansPanel();return;}b.hidden=false;
  const on=INK.showKey||INK.showAns;b.textContent=st.open?(on?'🔑 దాచు':'🔑 జవాబులు'):'🔒 జవాబులు';b.classList.toggle('on',!!(st.open&&on));ansPanel();}
