@@ -863,6 +863,11 @@ body{background:#eef4f7}
 #app.v4bg .v4p .thero{margin-bottom:10px}
 #app.v4bg .v4p .thero:last-child{margin-bottom:0}
 #app.v4bg .v4p .wk{box-shadow:none}
+#app.v4bg main>.sec,#app.v4bg main>.sec small,#app.v4bg main>.sec a{color:#fff}
+#app.v4bg main>p.mut,#app.v4bg main>.empty{color:#d1fae5}
+.v4hint{margin:10px 2px 0;text-align:center;font-size:12.5px;color:#14532d;font-weight:600}
+.v4sb.on{outline:3px solid #111827;outline-offset:2px;transform:translateY(-2px)}
+#app.v4bg .lsub,#app.v4bg .cl{margin-top:12px}
 @media(max-width:360px){.v4rnd button{width:76px;height:76px;font-size:10.5px}.v4b3{font-size:13px;padding:9px 8px}}
 </style>
 </head>
@@ -2760,7 +2765,7 @@ function slDownload(){const cv=document.getElementById('slCv');if(!cv||!cv.width
  if(SL.bg==='grid'){x.fillStyle='#e5e7eb';for(let y=0;y<o.height;y+=24*d)x.fillRect(0,y,o.width,d);for(let z=0;z<o.width;z+=24*d)x.fillRect(z,0,d,o.height);}
  x.drawImage(cv,0,0);const a=document.createElement('a');a.download='Raay_Palaka_'+SL.sec+'_page'+(SL.page+1)+'.png';a.href=o.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();toast('చిత్రం సేవ్ అయింది ⬇');}
 function render(){render0();slSync();}
-function render0(){const app=$('#app');app.classList.toggle('v4bg',(view==='home'&&!!S.cur)||(view==='teacher'&&tAuth&&!TP[param.t]));
+function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='home'||view==='learn'||view==='test')&&!!S.cur)||(view==='teacher'&&tAuth&&!TP[param.t]));
  try{budHook();}catch(e){}
  if(view==='teacher'){app.innerHTML='<main>'+V.teacher()+'</main>'+footer();return;}
  if(view==='privacy'&&!S.cur){app.innerHTML='<main>'+V.privacy()+'</main>'+footer();return;}
@@ -2773,7 +2778,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',(view==='home
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.12-13';
+const APPV='2026.11.12-14';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3636,10 +3641,8 @@ function lsubCard(c,s,open){const tl=tbLes(c,s),p=subjProg(c,s);if(!p.n)return '
   return `<div class="lrow ${d?'ok':''} ${now?'now':''}"><button class="lrm" onclick="go('tbl',{s:'${s}',id:'${L.id}'})"><span class="lno">${d?'✓':L.no}</span><span><b>${esc(L.t)}</b><small>📖 నోట్స్ చదువు • 📅 ${tbMonths(L)}${now?' • <b style="display:inline;font-size:13px;color:var(--sc)">ఈ నెల</b>':''}</small></span></button><button class="lrt ${b!=null?pctCls(b):''}" onclick="startLesTest('${s}','${L.id}')">📝<br>${b!=null?b+'%':'టెస్ట్'}</button></div>`;}).join('')}
 <button class="lmore" onclick="go('subject',{s:'${s}'})">${tl.some(L=>L.wb)?'📒 '+esc(tl.find(L=>L.wb).wb.lb||'వర్క్‌బుక్')+' & ':''}✏️ అదనపు అభ్యాసం ▸</button></div></details>`;}
 V.learn=()=>{const c=S.cur.c,ms=tbMonthSec(),op=param.open||'';if(op)setTimeout(()=>{const e=document.getElementById('ls-'+op);if(e)window.scrollTo({top:e.getBoundingClientRect().top+window.scrollY-70,behavior:'smooth'});},120);
- return `${+c===10?RSPBN:''}${ms}
-${vlBanner(c)}${+c===10?SSCBN:''}<h4 class="sec">📚 నోట్స్ ఉన్న అన్ని పాఠాలు <small>${c}వ తరగతి • <a onclick="go('cls')">మార్చు</a></small></h4>
-<p class="mut" style="margin:-4px 2px 12px;font-size:13.5px">సబ్జెక్టు నొక్కు → పాఠాలు తెరుచుకుంటాయి. పాఠం నొక్కితే నోట్స్, 📝 నొక్కితే టెస్ట్.</p>
-${learnSubs(c).map(s=>lsubCard(c,s,s===op)).join('')}${ms?'':`<h4 class="sec">నీ కోసం సూచన</h4>${recommend()}`}${offCard(+c)}`;};
+ return `${+c===10?RSPBN:''}${(()=>{const ss=learnSubs(c).filter(s=>subjProg(c,s).n),sel=ss.includes(op)?op:ss[0];return ss.length?`<section class="v4p" style="--pc:#e11d2a"><div class="v4t">📚 సబ్జెక్టు ఎంచుకో <small>• ${c}వ తరగతి • <a style="color:#fde047" onclick="go('cls')">మార్చు</a></small></div><div class="v4sg">${ss.map(s=>v4sub(c,s).replace('class="v4sb','class="v4sb'+(s===sel?' on':''))).join('')}</div><p class="v4hint">పాఠం నొక్కితే నోట్స్ • 📝 నొక్కితే టెస్ట్</p></section>${lsubCard(c,sel,true)}`:'';})()}${ms}
+${vlBanner(c)}${+c===10?SSCBN:''}${ms?'':`<h4 class="sec">నీ కోసం సూచన</h4>${recommend()}`}${offCard(+c)}`;};
 /* ⭐ రాయ్ స్పెషల్ SSC 2027 (10వ తరగతి – నేర్చుకో లో వీడియో పాఠాల కింద). కొత్త ప్రత్యేక టూల్ వస్తే RSP లో ఒక వరుస చేర్చాలి (+ offFiles ఆటో) */
 const RSP=[['ssc/Mission-March-SSC-2027-Action-Plan-Tool.html','🚀','SSC FULL Mission March 2027','రోజువారీ యాక్షన్ ప్లాన్ • అన్ని సబ్జెక్టుల Q-Bank • స్లిప్ టెస్టులు • దశలవారీ జవాబులు','linear-gradient(135deg,#ef4444,#1d4ed8)']];
 const RSPBN=`<div class="sscbn rspbn" onclick="go('rsp')"><span class="rspic">🚀</span><div><b>రాయ్ స్పెషల్ SSC 2027 <i class="rspnew">NEW</i></b><small>SSC FULL Mission March 2027 • పూర్తి ప్రణాళిక + జవాబులు</small></div><em class="rspgo">▶</em><u class="rspst s1">✦</u><u class="rspst s2">✦</u><u class="rspst s3">✦</u></div>`;
@@ -3738,8 +3741,8 @@ function parentSend(){const t=parentRep();if(navigator.share){navigator.share({t
 function parentCard(){return `<div class="prep"><h3>👪 తల్లిదండ్రులకు ఈ వారం రిపోర్ట్</h3><p>ఈ వారం రాసిన టెస్టులు, మార్కులు, నేటి లెక్కలు, హోంవర్క్ – ఒక్క నొక్కుతో అమ్మా–నాన్నలకు.</p><div class="row2"><button class="btn" style="margin:0;background:#16a34a" onclick="parentSend()">🟢 WhatsApp లో పంపు</button><button class="btn ghost" style="margin:0" onclick="copyText(parentRep())">📋 కాపీ</button></div></div>`;}
 V.test=()=>{const tab=param.tab||'new';const st=stats();const c=S.cur.c;
  let body='';
- if(tab==='new')body=examCards(c)+qpStudentCards()+wsCard()+(+c===10?`<div class="sscbn" onclick="go('ssc',{tab:'quiz'})"><span>🎯</span><div><b>SSC క్విజ్</b><small>పాఠం వారీ 1 మార్కు ప్రశ్నలు – random గా</small></div></div>`:'')+learnSubs(c).map(s=>{const rs=myScored().filter(r=>r.sb===s&&r.kind!=='ws');const best=rs.length?Math.max(...rs.map(r=>Math.round(r.s*100/r.t))):null;const n=s==='mat'?10:((Q[c]||{})[s]||[]).length;
-  return `<div class="tcard"><div class="th" style="background:${SUBJ[s].bg}"><span class="si" style="width:34px;height:34px;font-size:16px;color:${SUBJ[s].col}">${SUBJ[s].ic}</span>${SUBJ[s].n} టెస్ట్</div><div class="tb">${n} ప్రశ్నలు • ${rs.length} సార్లు రాశావు${best!=null?` • ఉత్తమం <span class="pct ${pctCls(best)}">${best}%</span>`:''}<div class="r"><small class="mut">${s==='mat'?'ప్రతిసారీ కొత్త లెక్కలు':'ప్రశ్నలు కలగలుపుగా'}</small><button class="lk b" onclick="startTest('${s}')">ప్రారంభించు ▶</button></div></div></div>`;}).join('');
+ if(tab==='new')body=`<section class="v4p" style="--pc:#2563eb"><div class="v4t">📝 సబ్జెక్టు టెస్ట్ రాయి</div><div class="v4sg">${learnSubs(c).map(s=>{const rs=myScored().filter(r=>r.sb===s&&r.kind!=='ws');const best=rs.length?Math.max(...rs.map(r=>Math.round(r.s*100/r.t))):null;const n=s==='mat'?10:((Q[c]||{})[s]||[]).length;if(!n)return '';
+  return `<button class="v4sb c-${s}" onclick="startTest('${s}')"><b>${SUBJ[s].ic}</b><span>${SUBJ[s].n}</span><small>${n} ప్రశ్నలు${rs.length?' • '+rs.length+' సార్లు':''}</small>${best!=null?`<i>${best}%</i>`:''}</button>`;}).join('')}</div><p class="v4hint">నొక్కితే టెస్ట్ మొదలవుతుంది • పసుపు గుర్తు = నీ ఉత్తమ స్కోరు</p></section>`+examCards(c)+qpStudentCards()+wsCard()+(+c===10?`<div class="sscbn" onclick="go('ssc',{tab:'quiz'})"><span>🎯</span><div><b>SSC క్విజ్</b><small>పాఠం వారీ 1 మార్కు ప్రశ్నలు – random గా</small></div></div>`:'')
  if(tab==='done'){const rs=myRes().slice().reverse();
   body=parentCard()+`<div class="card"><h3>సబ్జెక్టుల వారీ ప్రదర్శన</h3>${subjectsFor(c).map(s=>{const p=st.by[s];return `<div class="sbar"><span>${SUBJ[s].n}</span><span class="tr"><i style="width:${p||0}%;background:${SUBJ[s].col}"></i></span><b>${p==null?'–':p+'%'}</b></div>`;}).join('')}</div>`+
   (rs.length?rs.map(r=>{const p=Math.round(r.s*100/r.t);if(r.kind==='ws')return `<div class="tcard"><div class="th" style="background:#d3f9f2">${r.m==='day'?'📅 నేటి లెక్కలు':'✎ అభ్యాసం'} • ${WSLV[(r.lv||2)-1].t}</div><div class="tb">${fmtD(r.d)} • ${new Date(r.d).toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'})} • ${wsByTxt(r.by)}<div class="r"><span>సమయం: <b>${mmss(r.sec)}</b> &nbsp; మార్కులు: <b>${r.s}/${r.t}</b></span><span class="pct ${pctCls(p)}">${p}%</span></div><div class="r"><span></span><button class="lk" onclick="go('wsres',{id:'${r.id}'})">వివరాలు చూడు ▸</button></div></div></div>`;return `<div class="tcard"><div class="th" style="background:${SUBJ[r.sb].bg}">${SUBJ[r.sb].ic} ${r.ti?esc(r.ti):SUBJ[r.sb].n+' టెస్ట్'}</div><div class="tb">${fmtD(r.d)} • ${new Date(r.d).toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'})} • ${r.t} ప్రశ్నలు<div class="r"><span>సమయం: <b>${mmss(r.sec)}</b> &nbsp; స్కోరు: <b>${r.s}/${r.t}</b></span><span class="pct ${pctCls(p)}">${p}%</span></div><div class="r"><span></span><button class="lk" onclick="go('result',{id:'${r.id}'})">వివరాలు చూడు ▸</button></div></div></div>`;}).join(''):'<div class="empty">ఇంకా టెస్టులు రాయలేదు</div>');}
