@@ -2724,7 +2724,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.12-1';
+const APPV='2026.11.12-2';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -5236,7 +5236,7 @@ async function libLoad(force){if(view!=='library')return;const tab=param.tab||'b
 }
 let LIB=[],LIB_LOAD=0;
 /* 🔗 ఉపయోగకర బయటి వెబ్ లింకులు (తరగతి వారీ) – లైబ్రరీ 📚 అన్నీ లో; [పేరు, వివరణ, URL] */
-const XLINKS={10:[['NCERT Solutions – 10వ తరగతి గణితం (అధ్యా. 6–14)','ncertbooks.org • సాధనలు, అదనపు ప్రశ్నలు, రివిజన్ నోట్స్ (English)','https://ncertbooks.org/ncert-solutions/class-10/maths/'],['గణిత సూత్రాల హ్యాండ్‌బుక్ – 10వ తరగతి','ncertbooks.org • Formulas (English)','https://ncertbooks.org/ncert-class-10-maths-formulas-handbook/']]};
+const XLINKS={10:[['NCERT Solutions – 10వ తరగతి గణితం (అధ్యా. 6–14)','ncertbooks.org • సాధనలు, అదనపు ప్రశ్నలు, రివిజన్ నోట్స్ (English)','https://ncertbooks.org/ncert-solutions/class-10/maths/'],['గణిత సూత్రాల హ్యాండ్‌బుక్ – 10వ తరగతి','ncertbooks.org • Formulas (English)','https://ncertbooks.org/ncert-class-10-maths-formulas-handbook/'],['NCERT Solutions – 10వ తరగతి సైన్స్ (భౌతిక, రసాయన, జీవ శాస్త్రం)','ncertbooks.org • సాధనలు, అదనపు ప్రశ్నలు, రివిజన్ నోట్స్ (English)','https://ncertbooks.org/ncert-class-10-science-solutions/'],['సైన్స్ సూత్రాల హ్యాండ్‌బుక్ – 10వ తరగతి','ncertbooks.org • Formulas (English)','https://ncertbooks.org/class-10-science-formulas-handbook-chapter-wise/']]};
 /* 2025–26 CSE లింకులు (APBOOKS25) – గత సంవత్సరం; SEM2 2026–27 రాని తరగతులకు + టీచర్ హ్యాండ్‌బుక్స్ */
 function ap25(c){return (typeof APBOOKS25!=='undefined'&&APBOOKS25[c]||[]).map(([t,raw,u,sem,ty])=>({t,u,k:'aplink',ic:ty==='H'?'📗':ty==='W'?'📒':'📘',sub:raw+' • 2025–26',sem}));}
 /* పుస్తకం పేరు/ఫైల్ పేరులో SEM1/SEM2 గుర్తు → 1/2; లేకపోతే 0 (సంవత్సరం మొత్తం) */

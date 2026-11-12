@@ -21,3 +21,7 @@ ITEMS = [
  ('bi13', 8, 'ఓజోన్ పొర క్షీణత కారణాలు, ప్రభావాలు, జీవవిఘటనీయ – జీవవిఘటనీయం కాని వ్యర్థాల నిర్వహణ వివరించండి.', 'ఓజోన్ (O₃) పొర సూర్యుని హానికర అతినీలలోహిత కిరణాలను అడ్డుకుంటుంది. క్లోరోఫ్లోరోకార్బన్లు (CFCలు – రిఫ్రిజిరేటర్లు, ఏసీలు, స్ప్రేలు) దీన్ని క్షీణింపజేస్తాయి. ప్రభావం: చర్మ క్యాన్సర్, కంటి శుక్లాలు, రోగనిరోధక శక్తి తగ్గడం, పంటలకు నష్టం. 1987 మాంట్రియల్ ఒప్పందం ద్వారా CFCల నియంత్రణ.\nవ్యర్థాలు: జీవవిఘటనీయం (కూరగాయల తొక్కలు, కాగితం) – కంపోస్ట్ చేయవచ్చు; జీవవిఘటనీయం కానివి (ప్లాస్టిక్, గాజు, లోహాలు) – పర్యావరణంలో చాలా కాలం ఉండి నేల, నీటిని కలుషితం చేస్తాయి; జీవ ఆవర్ధనం (biomagnification). నిర్వహణ: తడి–పొడి చెత్త వేరు చేయడం, 3R (Reduce, Reuse, Recycle), ప్లాస్టిక్ వాడకం తగ్గించడం, కంపోస్టింగ్.',
   'Explain the causes and effects of ozone depletion and the management of biodegradable and non-biodegradable waste.', 'The ozone layer absorbs harmful UV radiation. CFCs (refrigerants, aerosols) deplete it, causing skin cancer, cataracts, weak immunity and crop damage; the Montreal Protocol (1987) controls CFCs. Biodegradable waste (peels, paper) can be composted; non-biodegradable (plastic, glass, metal) persists, pollutes and causes biomagnification. Manage by segregating wet and dry waste, 3Rs, reducing plastic and composting.'),
 ]
+# అదనపు సాధన ప్రశ్నలు – xq_bio.py
+import os as _os, importlib.util as _iu
+_sp = _iu.spec_from_file_location('xq_bio', _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), 'xq_bio.py')); _m = _iu.module_from_spec(_sp); _sp.loader.exec_module(_m)
+ITEMS += list(_m.ITEMS)
