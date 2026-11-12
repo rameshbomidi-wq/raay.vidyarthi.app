@@ -44,7 +44,7 @@ self.addEventListener('fetch', e => {
   }
   // HTML టూల్స్: ముందు నెట్‌వర్క్ (కొత్త వెర్షన్), లేకపోతే కాష్
   if (same && (req.mode === 'navigate' || /\.html?$/i.test(url.pathname))) {
-    e.respondWith(fetch(req).then(r => keep(req, r)).catch(() => caches.match(req)));
+    e.respondWith(fetch(req, {cache: 'no-cache'}).then(r => keep(req, r)).catch(() => caches.match(req)));  // HTML ఎప్పుడూ తాజా (2026-11-13)
     return;
   }
   // పుస్తకాలు (PDF), ఐకాన్లు, ఫాంట్లు, pdf.js: ముందు కాష్ (ఒకసారి తెరిస్తే ఆఫ్లైన్‌లో)
