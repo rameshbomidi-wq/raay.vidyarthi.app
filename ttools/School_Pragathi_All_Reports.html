@@ -344,6 +344,7 @@
   .menu .mg.m3{grid-template-columns:repeat(3,1fr)}.menu .mg button.e{background:linear-gradient(135deg,#166534,#15803d);color:#fff;border:0;font-weight:700}.menu .mg button.e small{color:#d1fae5}
   details.msgd{margin:8px 0}details.msgd>summary{cursor:pointer;font-weight:700;padding:8px 10px;background:#fff;border-radius:10px;color:var(--green-dark)}
   .imp .chips2{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.imp .chips2 button.on{background:var(--green);color:#fff;border-color:var(--green)}
+  .imp .bkd{border:2px dashed #2e7d32;border-radius:12px;background:#f1f8f1;margin:8px 0;padding:6px 10px}.imp .bkd summary{font-weight:700;color:#1b5e20;cursor:pointer;padding:4px 0}.imp .bkd textarea{width:100%;box-sizing:border-box;border:1px solid #bbb;border-radius:8px;padding:6px;font-size:.85rem}.imp .bkd .row button{margin:3px 4px 3px 0}
   .imp table.et{border-collapse:collapse;width:100%;font-size:.85rem}.imp table.et th,.imp table.et td{border:1px solid #e5e7eb;padding:3px 4px;text-align:center}.imp table.et td.nm{text-align:left;font-weight:600;min-width:120px}
   .imp table.et input{width:52px;padding:5px 3px;border:1px solid #bbb;border-radius:6px;text-align:center;font-size:.9rem}.imp table.et tr:nth-child(even){background:#f9fafb}.imp table.et .lo{color:#c0392b;font-weight:700}
   .imp-open{background:#fde68a!important;color:#5b3c00!important;}
@@ -551,6 +552,7 @@
 <div id="entView" class="ovl">
   <div class="att-bar"><span id="entTitle">✏️ నమోదు</span><select id="entCls" onchange="currentClass=this.value;drawEnt()"></select><button class="close" onclick="closeOvl('entView')">✖ మూసివేయి</button></div>
   <div class="imp" id="entBox"></div>
+  <input type="file" id="bkFile" accept=".xlsx,.xls,.xlsm,.ods,.csv,.txt,.tsv" style="display:none" onchange="bkFilePick(this)">
 </div>
 <div id="plView" class="ovl">
   <div class="att-bar">
@@ -2308,7 +2310,7 @@ function drawEnt(){const cls=currentClass,c=cnum(cls),C=clsDef(c),L=DATA[cls]||[
     h+='<div class="chips2">'+ASMT.map(x=>'<button class="'+(x===A?'on':'')+'" onclick="ENT.A=\''+x+'\';drawEnt()">'+ASL[x]+'</button>').join('')+'</div>'
       +'<div class="chips2">'+C.subs.map((sb,k)=>'<button class="'+(k===i?'on':'')+'" onclick="ENT.i='+k+';drawEnt()">'+tn(sb.n)+'</button>').join('')+'</div>'
       +'<div class="st">'+(isFA?'FA = ప్రతిస్పందనలు 5 + రాత అంశాలు 5 + ప్రాజెక్ట్ 5 + రాత పరీక్ష 35 = 50':'ఈ సబ్జెక్టు SA = '+SP.map(x=>x[0]+' '+x[1]).join(' + ')+' = '+saMax(c,(C.subs[i]||{}).n))+' • గైర్హాజరు అయితే <b>AB</b> • టైప్ చేయగానే సేవ్ అవుతుంది • Enter = కింది విద్యార్థి</div>';
-    h+='<div style="overflow-x:auto"><table class="et"><tr><th>#</th><th>పేరు</th>'+(isFA?TOOLS.map((t,q)=>'<th>'+t+'<br><small>/'+tm[q]+'</small></th>').join(''):SP.map(x=>'<th>'+x[0]+'<br><small>/'+x[1]+'</small></th>').join(''))+'<th>మొత్తం</th><th>గ్రేడ్</th></tr>';
+    h+=bulkBox();h+='<div style="overflow-x:auto"><table class="et"><tr><th>#</th><th>పేరు</th>'+(isFA?TOOLS.map((t,q)=>'<th>'+t+'<br><small>/'+tm[q]+'</small></th>').join(''):SP.map(x=>'<th>'+x[0]+'<br><small>/'+x[1]+'</small></th>').join(''))+'<th>మొత్తం</th><th>గ్రేడ్</th></tr>';
     L.forEach((s,k)=>{const r=aRes(s,c,A,i),v=((PS.mk[s.id]||{})[A]||{})[i];let vv=v||(r&&r.t)||[];if(!isFA&&v&&v.length!==n)vv=v.some(x=>String(x).toUpperCase()==='AB')?['AB']:[];
       h+='<tr><td>'+(k+1)+'</td><td class="nm">'+s.name+'</td>'+Array.from({length:isFA?4:n},(_,q)=>'<td><input class="em" inputmode="decimal" data-sid="'+s.id+'" data-q="'+q+'" data-max="'+(isFA?tm[q]:SP[q][1])+'" value="'+(vv[q]===null||vv[q]===undefined?'':vv[q])+'"></td>').join('')
         +'<td id="emt_'+s.id+'">'+(r?(r.ab?'AB':nf(r.tot)):'')+'</td><td id="emg_'+s.id+'" class="gd '+(r&&!r.ab?gcl(r.g,sc):'')+'">'+(r&&!r.ab?r.g:'')+'</td></tr>';});
@@ -2317,10 +2319,73 @@ function drawEnt(){const cls=currentClass,c=cnum(cls),C=clsDef(c),L=DATA[cls]||[
     h+='<div class="row"><span>నెల</span><select onchange="ENT.mi=+this.value;drawEnt()">'+MONTHS.map((m,k)=>'<option value="'+k+'"'+(k===mi?' selected':'')+'>'+m+'</option>').join('')+'</select>'
       +'<span>పని దినాలు</span><input id="eaW" type="number" inputmode="numeric" min="0" max="31" style="width:70px" value="'+(wd||'')+'"><button class="go" onclick="eaAll()">✅ అందరూ పూర్తి హాజరు</button></div>'
       +'<div class="st">ముందు ఆ నెల పని దినాలు ఇవ్వండి → ప్రతి విద్యార్థి హాజరైన రోజులు రాయండి (లేదా “అందరూ పూర్తి హాజరు” నొక్కి గైర్హాజరైనవారివి మార్చండి). టైప్ చేయగానే సేవ్.</div>'
-      +'<div style="overflow-x:auto"><table class="et"><tr><th>#</th><th>పేరు</th><th>హాజరైన రోజులు</th><th>%</th></tr>'
+      +bulkBox()+'<div style="overflow-x:auto"><table class="et"><tr><th>#</th><th>పేరు</th><th>హాజరైన రోజులు</th><th>%</th></tr>'
       +L.map((s,k)=>{const [w,p]=attM(s,mi),has=w>0;return '<tr><td>'+(k+1)+'</td><td class="nm">'+s.name+'</td><td><input class="ea" type="number" inputmode="numeric" min="0" data-sid="'+s.id+'" value="'+(has?p:'')+'"></td><td id="eap_'+s.id+'" class="'+(has&&p*100/w<75?'lo':'')+'">'+(has?r1(Math.min(p,w)*100/w)+'%':'')+'</td></tr>';}).join('')+'</table></div>';}
   h+='<div class="row"><button class="go" onclick="closeOvl(\'entView\')">✅ పూర్తయింది</button></div>';
   document.getElementById('entBox').innerHTML=h;}
+/* 📥 మార్కులు / హాజరు – Excel / Google Sheets / పేస్ట్ తో ఒకేసారి (టీచర్ + HM; LOCK ఉంటే వారి తరగతికే) */
+let BK='p',BKOPEN=false;
+function bulkBox(){const mk=ENT.m==='mk',c=cnum(currentClass),C=clsDef(c);
+  return '<details class="bkd"'+(BKOPEN?' open':'')+' ontoggle="BKOPEN=this.open"><summary>📥 Excel / పేస్ట్ తో అందరివీ ఒకేసారి ('+(mk?'మార్కులు':'హాజరు – అన్ని నెలలు')+')</summary>'
+   +(mk?'<div class="row"><span>కాలమ్‌లు</span><select onchange="BK=this.value;BKOPEN=true;drawEnt()"><option value="p"'+(BK==='p'?' selected':'')+'>'+ASL[ENT.A]+' • '+tn((C.subs[ENT.i]||{}).n||'')+' – గడులు ('+(ENT.A[0]==='F'?'5+5+5+35':saParts(c,(C.subs[ENT.i]||{}).n).map(x=>x[0]).join(' + '))+')</option><option value="a"'+(BK==='a'?' selected':'')+'>'+ASL[ENT.A]+' • అన్ని సబ్జెక్టుల మొత్తం మార్కులు</option></select></div>':'')
+   +'<div class="st">① “ఫార్మ్” తీసుకోండి (ID, పేర్లతో) → ② Excel / Google Sheets లో నింపండి → ③ ఆ ఫైల్ ఎంచుకోండి లేదా కాపీ చేసి కింద పేస్ట్ చేయండి. ID లేదా పేరుతో సరిపోలుస్తుంది • ఖాళీ గడి = మార్పు లేదు • గైర్హాజరు = AB'
+   +(mk?(BK==='a'&&ENT.A[0]==='F'?' • FA మొత్తం (50) ఇస్తే 5+5+5+35 గా ఆటోగా విభజిస్తుంది':''):' • నెల గడిలో హాజరైన రోజులు (లేదా 20/22 = హాజరు/పని దినాలు); “పని దినాలు” వరుసలో ఆ నెల పని దినాలు')+'</div>'
+   +'<div class="row"><button onclick="bkTpl(1)">📋 ఫార్మ్ కాపీ</button><button onclick="bkTpl(0)">⬇️ ఫార్మ్ (CSV / Excel)</button><button class="go" onclick="document.getElementById(\'bkFile\').click()">📂 నింపిన ఫైల్ ఎంచుకో</button></div>'
+   +'<textarea id="bkTxt" rows="4" placeholder="లేదా Excel / Sheets నుండి (శీర్షిక వరుసతో) కాపీ చేసి ఇక్కడ పేస్ట్ చేయండి"></textarea><div class="row"><button class="go" onclick="bkPaste()">✅ పేస్ట్ చేసినవి చేర్చు</button></div><div id="bkMsg"></div></details>';}
+function bkHead(){const c=cnum(currentClass),C=clsDef(c);if(ENT.m!=='mk')return MONTHS.slice();
+  if(BK==='a')return C.subs.map(sb=>tn(sb.n)+' /'+(ENT.A[0]==='F'?50:saMax(c,sb.n)));
+  const i=ENT.i,sn=(C.subs[i]||{}).n;return ENT.A[0]==='F'?TOOLS.map((t,q)=>t+' /'+faMaxOf(c,i)[q]):saParts(c,sn).map(x=>x[0]+' /'+x[1]);}
+function bkCur(s){const c=cnum(currentClass),C=clsDef(c),A=ENT.A;
+  if(ENT.m!=='mk')return MONTHS.map((_,mi)=>{const a=attM(s,mi);return a[0]>0?a[1]:'';});
+  if(BK==='a')return C.subs.map((sb,i)=>{const r=aRes(s,c,A,i);return r?(r.ab?'AB':nf(r.tot)):'';});
+  const v=((PS.mk[s.id]||{})[A]||{})[ENT.i]||[],n=A[0]==='F'?4:saN(c);return Array.from({length:n},(_,q)=>v.length===n&&v[q]!=null?v[q]:'');}
+function bkRows(){const L=DATA[currentClass]||[],rows=[['ID','పేరు'].concat(bkHead())];
+  if(ENT.m!=='mk')rows.push(['','పని దినాలు'].concat(MONTHS.map((_,mi)=>{const w=Math.max(0,...L.map(s=>attM(s,mi)[0]));return w||'';})));
+  L.forEach(s=>rows.push([s.id,s.name].concat(bkCur(s))));return rows;}
+function bkTpl(copy){const rows=bkRows();
+  if(copy){const t=rows.map(r=>r.join('\t')).join('\n'),fb=()=>{const ta=document.getElementById('bkTxt');ta.value=t;ta.focus();ta.select();showToast('కింది పెట్టెలో ఫార్మ్ ఉంది – కాపీ చేసుకోండి');};
+    try{navigator.clipboard.writeText(t).then(()=>showToast('📋 ఫార్మ్ కాపీ అయింది – Excel / Google Sheets లో పేస్ట్ చేయండి'),fb);}catch(e){fb();}return;}
+  const csv='﻿'+rows.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\r\n'),C=clsDef(cnum(currentClass));
+  const nm=(CLS_NAME[currentClass]||currentClass)+'_'+(ENT.m==='mk'?ASL[ENT.A]+'_'+(BK==='a'?'All_Subjects':(C.subs[ENT.i]||{}).n||''):'Attendance')+'_Form';
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=nm.replace(/[^\w-]+/g,'_')+'.csv';document.body.appendChild(a);a.click();a.remove();}
+function bkPaste(){const t=document.getElementById('bkTxt').value;if(!t.trim()){showToast('ముందు పేస్ట్ చేయండి');return;}bkApply(csvGrid(t));}
+async function bkFilePick(el){const f=el.files[0];el.value='';if(!f)return;BKOPEN=true;bkMsg('<div class="st">⏳ చదువుతోంది...</div>');
+  try{let g;if(/\.(xlsx|xlsm|xls|ods)$/i.test(f.name)){await impLoadXLSX();const wb=XLSX.read(new Uint8Array(await f.arrayBuffer()),{type:'array'});g=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,raw:true,defval:''});}
+    else g=csvGrid(await f.text());bkApply(g);}
+  catch(e){bkMsg('<div class="warn">ఈ ఫైల్ చదవలేకపోయాను (Excel మొదటిసారి చదవడానికి ఇంటర్నెట్ కావాలి). Excel లో “Save As → CSV” చేసి ప్రయత్నించండి, లేదా కాపీ చేసి పేస్ట్ చేయండి.</div>');}}
+function bkMsg(h){const b=document.getElementById('bkMsg');if(b)b.innerHTML=h;}
+function faSplit(t){const o=[0,0,0,Math.min(35,t)];let r=r1(t-o[3]);for(let k=0;k<3;k++){const x=Math.min(5,r);o[k]=x;r=r1(r-x);}return o;}
+function bkSetM(id,A,i,arr){PS.mk[id]=PS.mk[id]||{};PS.mk[id][A]=PS.mk[id][A]||{};PS.mk[id][A][i]=arr;dirtM(id,A,i);}
+function bkApply(G){G=(G||[]).map(r=>(r||[]).map(x=>x===null||x===undefined?'':(x instanceof Date?'':String(x).trim()))).filter(r=>r.some(x=>x!==''));if(!G.length){bkMsg('<div class="warn">డేటా దొరకలేదు.</div>');return;}
+  const mk=ENT.m==='mk',c=cnum(currentClass),C=clsDef(c),L=DATA[currentClass]||[],A=ENT.A,nv=bkHead().length,NM=/^(పేరు|name|student|విద్యార్థి)/i;
+  let hi=G.findIndex(r=>r.some(x=>NM.test(x))),idc=-1,nc=0,vc=1;
+  if(hi>=0){const h=G[hi];idc=h.findIndex(x=>/^(id|ఐడి|చైల్డ్|child|sid|student id)/i.test(x));nc=h.findIndex(x=>NM.test(x));vc=Math.max(idc,nc)+1;}
+  else{const r0=G[0];if(/^\d{3,}$/.test(r0[0])&&r0[1]&&!/^[\d.]+$/.test(r0[1])){idc=0;nc=1;vc=2;}}
+  const data=G.slice(hi+1),WD=/^(పని|work)/i,wrow=data.find(r=>WD.test(r[nc]||'')||WD.test(r[0]||''))||null,used=new Set(),miss=[],pend=[];
+  const num=(x,mx)=>{x=String(x||'').trim();if(x==='')return undefined;if(/^a\.?b\.?$/i.test(x))return 'AB';const v=parseFloat(x.replace(',','.'));if(isNaN(v))return undefined;return Math.max(0,Math.min(mx,r1(v)));};
+  data.forEach(r=>{if(r===wrow)return;const id=idc>=0?String(r[idc]||'').replace(/\.0+$/,'').replace(/[^\w-]/g,''):'',nm=nc>=0?r[nc]||'':'';if(!id&&!nm)return;
+    let s=id?L.find(x=>x.id===id):null;if(!s&&nm){const k=nmKey(nm);s=L.find(x=>!used.has(x.id)&&nmKey(x.name)===k);}
+    if(!s){miss.push(nm||id);return;}used.add(s.id);pend.push([s,r.slice(vc,vc+nv)]);});
+  if(!pend.length){bkMsg('<div class="warn">ఒక్క విద్యార్థి ID / పేరు కూడా '+CLS_NAME[currentClass]+' తరగతి జాబితాతో సరిపోలలేదు. ముందు “ఫార్మ్” తీసుకుని అందులోనే నింపండి.</div>');return;}
+  if(!confirm(CLS_NAME[currentClass]+' తరగతి – '+pend.length+' మంది '+(mk?ASL[A]+' మార్కులు':'హాజరు')+' చేర్చాలా?\n(ఉన్న గడుల్లో కొత్త విలువలు వస్తాయి; ఖాళీ గడులు మారవు)'))return;
+  let n=0,cells=0,noW=0;
+  pend.forEach(([s,vals])=>{let ch=0;
+    if(mk){if(BK==='a'){const isFA=A[0]==='F';C.subs.forEach((sb,i)=>{const v=num(vals[i],isFA?50:saMax(c,sb.n));if(v===undefined)return;
+          let arr;if(v==='AB'){arr=Array(isFA?4:saN(c)).fill(null);arr[0]='AB';}else arr=isFA?faSplit(v):[v];bkSetM(s.id,A,i,arr);ch++;});}
+      else{const i=ENT.i,isFA=A[0]==='F',mx=isFA?faMaxOf(c,i):saParts(c,(C.subs[i]||{}).n).map(x=>x[1]),cur=((PS.mk[s.id]||{})[A]||{})[i];
+        const b=cur&&cur.length===mx.length&&!cur.some(x=>String(x).toUpperCase()==='AB')?cur.slice():Array(mx.length).fill(null);let any=0;
+        mx.forEach((m,q)=>{const v=num(vals[q],m);if(v===undefined)return;if(v==='AB'){b.fill(null);b[0]='AB';any=1;return;}if(b[0]==='AB')return;b[q]=v;any=1;});
+        if(any){bkSetM(s.id,A,i,b);ch++;}}}
+    else MONTHS.forEach((_,mi)=>{const x=String(vals[mi]||'').trim();if(x==='')return;let w,p;const m=x.match(/^(\d+(?:\.\d+)?)\s*\/\s*(\d+)/);
+      if(m){p=+m[1];w=+m[2];}else{p=parseFloat(x);w=wrow?parseFloat(wrow[vc+mi]):NaN;if(!(w>0))w=attM(s,mi)[0];}
+      if(isNaN(p))return;if(!(w>0)){noW++;return;}w=Math.min(31,Math.round(w));p=Math.max(0,Math.min(w,Math.round(p)));
+      PS.att[s.id]=PS.att[s.id]||{};PS.att[s.id][mi]=[w,p];dirtA(s.id,mi);ch++;});
+    if(ch){n++;cells+=ch;}});
+  savePS();BKOPEN=true;drawEnt();
+  bkMsg('<div class="'+(miss.length||noW?'warn':'st')+'">✅ '+n+' మంది • '+cells+' '+(mk?'మార్కుల గడులు':'నెలల హాజరు')+' చేరాయి'+(APP?' (యాప్ ద్వారా HM కి కూడా వెళ్తాయి)':'')
+    +(noW?'<br>⚠️ '+noW+' గడులు వదిలేశాం – ఆ నెల పని దినాలు లేవు (“పని దినాలు” వరుస నింపండి లేదా 20/22 లాగా రాయండి)':'')
+    +(miss.length?'<br>⚠️ జాబితాలో దొరకనివి ('+miss.length+'): '+miss.slice(0,10).map(esc0).join(', ')+(miss.length>10?' …':''):'')+'</div>');}
+
 function eaW(){const v=+document.getElementById('eaW').value||0;if(!(v>0)){showToast('ముందు ఆ నెల పని దినాలు ఇవ్వండి');return 0;}return Math.min(31,v);}
 function eaSet(sid,p){const w=eaW();if(!w)return;const mi=ENT.mi;dirtA(sid,mi);PS.att[sid]=PS.att[sid]||{};
   if(p===''||p===null){delete PS.att[sid][mi];}else{p=Math.max(0,Math.min(w,+p||0));PS.att[sid][mi]=[w,p];}
