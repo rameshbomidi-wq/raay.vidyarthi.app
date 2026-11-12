@@ -12,3 +12,4 @@
 - Class10_Social_Economics_Textbook.pdf – సాంఘిక శాస్త్రం: అర్థశాస్త్రం (Understanding Economic Development, అధ్యాయాలు 1–5; PDF = ముద్రిత + 6; సరి పేజీలు English, బేసి తెలుగు)
 - Class10_Social_History_Textbook.pdf – సాంఘిక శాస్త్రం: చరిత్ర (India and the Contemporary World – II, అధ్యాయాలు 1–5; PDF = ముద్రిత + 6; సరి English, బేసి తెలుగు)
 - Class10_Social_Geography_Textbook.pdf – సాంఘిక శాస్త్రం: భూగోళం (Contemporary India – II, అధ్యాయాలు 1–7; PDF = ముద్రిత + 6)
+- Class10_Social_Civics_Textbook.pdf – సాంఘిక శాస్త్రం: పౌరశాస్త్రం (Democratic Politics – II, అధ్యాయాలు 1–5; PDF = ముద్రిత + 2; సరి English, బేసి తెలుగు; అధ్యాయాల PDF పరిధులు: 1 → 6–29, 2 → 30–61, 3 → 62–95, 4 → 96–129, 5 → 130–153)
