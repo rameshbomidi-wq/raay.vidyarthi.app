@@ -2725,7 +2725,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.12-10';
+const APPV='2026.11.12-11';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -4144,7 +4144,7 @@ ${sec==='home'?whoBanner()+ownWarn()+tDash():TP[sec]()}`;};
 const TP={};TP.tc=tpTc;TP.at=tpAt;
 /* ===== 📘 టీచర్: పాఠ్యపుస్తకం నోట్స్ & టెస్ట్ ప్రశ్నలు సరిచేయడం / కొత్త పాఠం ===== */
 const TBE={c:0,s:''};
-function tbGuide(c,s,id){if(!tbLes(c,s).some(x=>x.id===id)){const s2=learnSubs(c).find(x=>tbLes(c,x).some(y=>y.id===id));if(s2){s=s2;TBE.s=s2;}}const L=tbLes(c,s).find(x=>x.id===id);if(!L)return '<div class="empty">పాఠం దొరకలేదు</div>';if(L._lite&&!tbFull(c,s))return TBWAIT;const G=L.tg||[];
+function tbGuide(c,s,id){if(!tbLes(c,s).some(x=>x.id===id)){const s2=learnSubs(c).find(x=>tbLes(c,x).some(y=>y.id===id));if(s2){s=s2;TBE.s=s2;}}const L=tbLes(c,s).find(x=>x.id===id);if(!L)return '<div class="empty">పాఠం దొరకలేదు</div>';if(L._lite&&!tbFull(c,s))return TBWAIT;const G=(L.tg||[]).map(g=>Array.isArray(g)&&Array.isArray(g[1])?[g[0],g[1].map(unz)]:g);
  return `<div class="bar"><button class="ib" onclick="go('teacher',{t:'tb'})">←</button><h2>📗 టీచర్ గైడ్ • ${c}వ • ${SUBJ[s].n}</h2></div>
 <div class="tbhero" style="--sc:${SUBJ[s].col};--sb:${SUBJ[s].bg}"><small>పాఠ్యపుస్తకంలోని కృత్యాలు, అభ్యాసాలకు జవాబులు (ఉపాధ్యాయులకు మాత్రమే)</small><h2>${L.no}. ${esc(L.t)}</h2><div class="tbtags"><span>📅 ${tbMonths(L)}</span><span>${G.length} భాగాలు</span></div></div>
 <div class="row2" style="margin-bottom:8px"><button class="btn sm ghost" onclick="document.querySelectorAll('.tgsec').forEach(d=>d.open=true)">▾ అన్నీ తెరువు</button><button class="btn sm ghost" onclick="window.print()">🖨 ప్రింట్</button></div>
@@ -5343,11 +5343,13 @@ function akOpen(s,id){const L=tbGet(TBE.c,s,id),W=L&&L.wb;if(!W||!W.f)return;S.b
  go('book',{u:W.f,t:'🔑 జవాబులు – '+L.t,k:'pdf',ak:1,back:{tch:1}});INK.akm={c:TBE.c,s,ln:id};pdfInit();}
 /* ===== 🔑 వర్క్‌బుక్ జవాబుల పుస్తకం (answers-<తరగతి>.js) – టీచర్ పాఠం వారీగా తెరిచాకే పిల్లలకు ===== */
 window.RAAY_ANS=window.RAAY_ANS||{};const ANSL={};
+/* 🔐 జవాబుల దాపరికం (tools/ans_lock.py): "⁂" + అక్షరాలు +7 → తిరిగి మార్చు */
+function unz(x){if(typeof x!=='string'||x[0]!=='⁂')return x;let o='';for(const ch of x.slice(1)){const y=ch.codePointAt(0);o+=String.fromCodePoint(y>=7&&y<0xCFF7?y-7:y);}return o;}
 function wbaLoad(c){c=+c;if(!c||ANSL[c])return;if(window.RAAY_ANS[c]){ANSL[c]='ok';return;}ANSL[c]='ld';const sc=document.createElement('script');sc.src='answers-'+c+'.js';sc.async=true;
  sc.onload=()=>{ANSL[c]=window.RAAY_ANS[c]?'ok':'no';if(view==='book')akShowBtn();else if(view==='teacher'&&param.t==='tb')softRender();};sc.onerror=()=>{ANSL[c]='no';sc.remove();};document.head.appendChild(sc);}
 function ansCls(){return (view==='teacher'||param.ak)?(TBE.c||3):(S.cur?+S.cur.c:3);}
 function ansFile(u){return String(u||'').split('/').pop();}
-function ansPage(u,pg){const A=window.RAAY_ANS[ansCls()];return A&&A[ansFile(u)]?A[ansFile(u)][pg]||null:null;}
+function ansPage(u,pg){const A=window.RAAY_ANS[ansCls()],r=A&&A[ansFile(u)]?A[ansFile(u)][pg]||null:null;return r?r.map(unz):null;}
 function ansLessonOf(u,pg){const c=ansCls();for(const s of learnSubs(c))for(const L of tbLes(c,s)){const R=akRange(L);if(R&&ansFile(R.f)===ansFile(u)&&pg>=R.a&&pg<=R.b)return {s,L};}return null;}
 function wbaOpen(c,ln){const r=S.ak.find(x=>x.id==='akl_'+c+'_'+ln&&!x.del);return !!(r&&r.on);}
 function wbaBook(c,s){const r=S.ak.find(x=>x.id==='akb_'+c+'_'+s&&!x.del);return !!(r&&r.on);}

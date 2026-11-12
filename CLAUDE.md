@@ -24,6 +24,7 @@
   పాఠం: `{id,no,t,m:[నెలలు],ty,th,by,sum,te?(eng),pts[],w:[[పదం,అర్థం]],gr:{t,p[]},qa:[[q,a]],act,kn,qz:[[q,సరైనది,తప్పు1,తప్పు2,తప్పు3]] (≥10; maths లో concept ప్రశ్నలు కూడా – random 10),
   wb:{pg,f:'books/<c>/...pdf',p:(PDF పేజీ),ws[],mis,qz[]}, tg:[[శీర్షిక,[జవాబులు]]]}` (tg = టీచర్ గైడ్: చిత్రం చూడండి, ఇవి చేయండి, Activities, Do these, Exercises)
 - `answers-<c>.js` → `(window.RAAY_ANS=...)[c]={'<workbook file>':{'<pdf page>':['— శీర్షిక —','జవాబు',...]}}` – టీచర్ లాక్ తెరిచాకే పిల్లలకు.
+- 🔐 జవాబుల దాపరికం (2026.11.12-11): answers-*.js జవాబులు + notes-*.js `tg` జవాబులు “⁂”+అక్షరం+7 రూపంలో (`tools/ans_lock.py`; client `unz()` – ansPage, tbGuide). **ఏ build/import/split నడిపినా తర్వాత `python3 tools/ans_lock.py` తప్పక నడపాలి** (idempotent; JSON ఆకారం మారదు). కొత్తగా జవాబులు చదివే చోటు చేర్చితే `unz` వాడాలి. repo లో `LICENSE` (© బోమిడి రమేష్ / రాయ్ ఎడ్యుకేషన్, All rights reserved).
 - వర్క్‌బుక్ PDFలు: `books/<c>/Class<c>_Workbook_*_Sem<n>.pdf` (`qpdf --linearize`).
 - అకాడమిక్ క్యాలెండర్ `ACAL` (1–5) లో తప్పు తెలుగు పాఠం పేర్లను పుస్తకం చూసి సరిచేయాలి.
 - PDF text: English/Maths ఫాంట్లు shift cipher (chr+29 లేదా −2) – decode చేయాలి; తెలుగు పేజీలు బొమ్మలుగా చదవాలి.
