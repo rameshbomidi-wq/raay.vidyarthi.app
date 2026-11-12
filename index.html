@@ -2724,7 +2724,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.12-3';
+const APPV='2026.11.12-4';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3528,11 +3528,15 @@ V.home=()=>{setTimeout(checkBadges,50);launchHello();const g=greet(),stc=stars()
  const hi=(v,ic,tx,p,b)=>`<button onclick="go('${v}'${p?','+p:''})"><span>${ic}</span>${tx}${b?`<i>${b}</i>`:''}</button>`;
  return `<section class="hero hsm"><div class="htop"><div><small>${g[0]} ${g[1]}${S.cfg.sname?' • 🏫 '+esc(S.cfg.sname):''}</small><h2>${esc(S.cur.n)}</h2><p class="motto">నేర్చుకో • సాధన చేయి • ఎదుగు</p></div><span class="starb" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐ ${stc}</span><div class="mascot bob" onclick="go('avatar')" title="బొమ్మ మార్చు">${avOf(S.cur.n)}<i class="edit">✏️</i></div></div>
 <div class="hico">${hi('events','📅','ఈవెంట్లు','',evT?'ఈరోజు':'')}${hi('daily','💡','సూక్తి')}${hi('library','🧰','టూల్స్',"{tab:'tools'}")}${hi('idmk','🪪','ID కార్డు')}${hi('card','🎓','ప్రగతి కార్డు')}${hi('badges','🏅','బ్యాడ్జీలు','',badgeCount()||'')}${+c===10?hi('ssc','📝','SSC')+hi('book','🚀','SSC FULL Mission March 2027',"{u:RSP[0][0],t:'🚀 SSC FULL Mission March 2027',k:'tool',back:{v:'home'}}").replace('<button','<button class="w2"'):''}</div></section>
-${tickerHtml()}${slidesHtml()}${reconnectCard()}${installBanner()}${nextLes()}
+${tickerHtml()}${noBagHtml()}${slidesHtml()}${reconnectCard()}${installBanner()}${nextLes()}
 ${sl?`<h4 class="sec">📖 నా సబ్జెక్టులు <small>${c}వ తరగతి</small></h4><div class="sline">${sl}</div>`:''}
 ${hStats()}
 <h4 class="sec">⚡ త్వరిత యాక్సెస్</h4><div class="qgrid">${qb('doubts','💬','సందేహం','p')}${qb('schedule','📅','షెడ్యూల్','t')}${qb('library','📚','పుస్తకాలు','b',"{tab:'books'}")}${qb('dict','🔤','డిక్షనరీ','o')}</div>
 `;};
+/* 🎒 శనివారం “నో బ్యాగ్ డే” (I–IX) – School Bag SOP 10-11-2026; శుక్రవారం ముందస్తు గుర్తు. సెలవు ఈవెంట్ ఉన్న రోజు చూపదు */
+function noBagHtml(){const c=+S.cur.c,d=new Date().getDay();if(!(c>=1&&c<=9)||(d!==5&&d!==6))return '';
+ const day=d===6?todayS():addDays(todayS(),1);if(evAll().some(e=>e.d===day&&e.ty==='hol'&&(e.c===0||e.c===c)))return '';
+ return `<div class="card" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border:0;display:flex;gap:12px;align-items:center;padding:12px 14px"><span style="font-size:34px">🎒</span><div><b>${d===6?'ఈరోజు శనివారం – నో బ్యాగ్ డే!':'రేపు శనివారం – నో బ్యాగ్ డే!'}</b><div style="font-size:.88rem">${d===6?'పుస్తకాల సంచి లేకుండా బడికి – ఆటలు, కృత్యాలు, సృజనాత్మక పనుల రోజు.':'రేపు పుస్తకాల సంచి అవసరం లేదు. సోమవారం టైమ్‌టేబుల్ పుస్తకాలే సర్దుకో.'}</div></div></div>`;}
 /* 📅 ఈవెంట్లు – పెద్ద కార్డులు */
 V.events=()=>{const t=todayS(),es=evAll().filter(e=>e.d>=t&&(e.c===0||e.c===S.cur.c)).sort((a,b)=>(a.d+(a.tm||''))<(b.d+(b.tm||''))?-1:1);
  const col={test:'#dc2626',hol:'#16a34a',live:'#7c3aed'};
@@ -4082,7 +4086,11 @@ function tBack(){tAuth=false;go(S.cur||S.cfg.type||S.offline?'home':'welcome');}
 const TSEC=[['sy','☁️ ఆన్‌లైన్ సింక్'],['tc','👥 ఉపాధ్యాయులు'],['pg','🧑‍🎓 విద్యార్థులు & మార్కులు'],['ac','📅 అకాడమిక్ క్యాలెండర్'],['hw','📒 హోంవర్క్'],['ev','📅 ఈవెంట్/టెస్ట్'],['qp','📝 ప్రశ్నాపత్రం'],['dq','💬 సందేహాలు'],['ws','📅 రోజువారీ లెక్కలు'],['nt','📖 పాఠం నోట్స్'],['tb','📘 పాఠ్యపుస్తకం నోట్స్ & టెస్ట్'],['yg','🧘 యోగా & ఆటలు'],['lb','📚 పుస్తకాలు/టూల్స్'],['fl','📢 ఫ్లాష్/ఫోటోలు'],['rp','📊 రిపోర్ట్'],['st','⚙️ సెట్టింగ్స్']];
 function clsSel(id,all){return `<select id="${id}" onchange="fillSubj('${id}','${id}s')">${all&&isAdmin()?'<option value="0">అన్ని తరగతులు</option>':''}${myCls().map(c=>`<option value="${c}">${c}వ తరగతి</option>`).join('')}</select>`;}
 function subjOpts(c){return mySubs(c).map(s=>`<option value="${s}">${SUBJ[s].n}</option>`).join('');}
-function fillSubj(cid,sid){const s=document.getElementById(sid);if(s)s.innerHTML=subjOpts(document.getElementById(cid).value);}
+function fillSubj(cid,sid){const s=document.getElementById(sid);if(s)s.innerHTML=subjOpts(document.getElementById(cid).value);if(cid==='hc'){const w=document.getElementById('hwLim');if(w)w.innerHTML=hwLim(document.getElementById(cid).value);}}
+/* ✏️ హోంవర్క్ పరిమితులు – School Bag SOP (Rc.No.ESE02/564/2022-SCERT, 10-11-2026) */
+function hwLimTx(c){c=+c;return c<=2?'I–II తరగతులకు హోంవర్క్ ఇవ్వకూడదు':c<=5?'III–V: వారానికి గరిష్ఠంగా 2 గంటలు (అన్ని సబ్జెక్టులు కలిపి)':c<=8?'VI–VIII: రోజుకు గరిష్ఠంగా 1 గంట (అన్ని సబ్జెక్టులు కలిపి)':'IX–X: రోజుకు గరిష్ఠంగా 2 గంటలు (అన్ని సబ్జెక్టులు కలిపి)';}
+function hwLim(c){c=+c;if(!c)return '';const n=live('hw').filter(h=>h.c===c&&h.due>=todayS()).length;
+ return `<div class="${c<=2?'warn':'mut'}" style="margin:8px 0;padding:8px 10px;border-radius:10px;background:${c<=2?'#fee2e2':'#fffbeb'};font-size:.88rem">⏱️ SOP హోంవర్క్ పరిమితి: <b>${hwLimTx(c)}</b>${n?` • ఈ తరగతికి ఇప్పటికే ${n} హోంవర్క్‌లు గడువులో ఉన్నాయి`:''}</div>`;}
 /* ===== ✅ రోజువారీ హాజరు – roster రికార్డులో dd{YYMMDD:1/0}; ఆ నెల att[m]=[వేసిన రోజులు, హాజరైన రోజులు] ఆటో (సర్వర్ మార్పు అక్కర్లేదు) ===== */
 const ATD={};
 function atKey(d){return d.slice(2).replace(/-/g,'');}
@@ -4574,10 +4582,10 @@ function frType(el){T.ans[T.i]=el.value;const b=document.getElementById('tnext')
 
 TP.ws=()=>{const r=param.id&&live('results').find(x=>x.id===param.id&&x.kind==='ws');return r?wsTOne(r):wsTList();};
 TP.hw=()=>`<div class="card"><h3>కొత్త హోంవర్క్ ఇవ్వండి</h3><div class="g2"><div><label>తరగతి</label>${clsSel('hc')}</div><div><label>సబ్జెక్ట్</label><select id="hcs">${subjOpts(myCls()[0])}</select></div></div>
-<label>శీర్షిక</label><input id="ht" placeholder="ఉదా: ఎక్కాలు 2 నుండి 5 రాయండి"><label>వివరాలు (ఐచ్ఛికం)</label><textarea id="hx" rows="2"></textarea>
+<div id="hwLim">${hwLim(myCls()[0])}</div><label>శీర్షిక</label><input id="ht" placeholder="ఉదా: ఎక్కాలు 2 నుండి 5 రాయండి"><label>వివరాలు (ఐచ్ఛికం)</label><textarea id="hx" rows="2"></textarea>
 <label>గడువు తేదీ</label><input id="hd" type="date" value="${addDays(todayS(),1)}"><button class="btn" onclick="addHw()">➕ జోడించు</button></div>
 <h4 class="sec">ఇచ్చిన హోంవర్క్‌లు (${live('hw').filter(h=>canSee(h.c,h.s)).length})</h4>${live('hw').filter(h=>canSee(h.c,h.s)).sort((a,b)=>a.due<b.due?1:-1).map(h=>{const who=live('subs').filter(x=>x.hw===h.id).map(x=>x.n);return `<div class="titem"><div><b>${esc(h.t)}</b><small>${h.c}వ తరగతి • ${SUBJ[h.s].n} • గడువు ${fmtD(h.due)}${h.seed?' • (నమూనా)':''}${h.byn?' • 👩‍🏫 '+esc(h.byn):''}</small><small>✓ ${who.length} మంది సమర్పించారు${who.length?': '+who.map(esc).join(', '):''}</small></div><button class="del" onclick="delItem('hw','${h.id}')">తొలగించు</button></div>`;}).join('')||'<div class="empty">లేవు</div>'}`;
-function addHw(){const t=$('#ht').value.trim();if(!t)return toast('శీర్షిక రాయండి');put('hw',{id:uid(),c:+$('#hc').value,s:$('#hcs').value,t,x:$('#hx').value.trim(),due:$('#hd').value||addDays(todayS(),1)});toast('హోంవర్క్ జోడించబడింది ✓');go('teacher',{t:'hw'});}
+function addHw(){const t=$('#ht').value.trim();if(!t)return toast('శీర్షిక రాయండి');if(+$('#hc').value<=2&&!confirm('⚠️ School Bag SOP ప్రకారం I–II తరగతులకు హోంవర్క్ ఇవ్వకూడదు.\nఅయినా ఇవ్వాలా?'))return;put('hw',{id:uid(),c:+$('#hc').value,s:$('#hcs').value,t,x:$('#hx').value.trim(),due:$('#hd').value||addDays(todayS(),1)});toast('హోంవర్క్ జోడించబడింది ✓');go('teacher',{t:'hw'});}
 TP.ev=()=>`<div class="card"><h3>ఈవెంట్ / టెస్ట్ / సెలవు</h3><label>శీర్షిక</label><input id="et" placeholder="ఉదా: తల్లిదండ్రుల సమావేశం">
 <div class="g2"><div><label>తేదీ</label><input id="ed" type="date" value="${todayS()}"></div><div><label>సమయం</label><input id="etm" type="time" value="10:00"></div></div>
 <div class="g2"><div><label>తరగతి</label>${clsSel('ec',true)}</div><div><label>రకం</label><select id="ety"><option value="ev">ఈవెంట్</option><option value="test">టెస్ట్</option><option value="hol">సెలవు</option><option value="live">లైవ్ క్లాస్</option></select></div></div>
@@ -5364,7 +5372,7 @@ document.addEventListener('touchstart',e=>{if(view==='book'&&param.k==='pdf'&&e.
 document.addEventListener('touchend',e=>{if(tsx==null)return;const t=e.changedTouches[0],dx=t.clientX-tsx,dy=t.clientY-tsy;tsx=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)pdfGo(dx<0?1:-1);},{passive:true});
 /* టీచర్: పుస్తకం / టూల్ లింక్ జోడించడం */
 /* 🧑‍🏫 టీచర్ టూల్స్ – repo లో ttools/ ఫోల్డర్‌లోని HTML ఫైళ్లు ఆటోగా (టీచర్ ప్యానెల్‌లో మాత్రమే; విద్యార్థులకు కాదు). TTN = తెలుగు పేర్లు (లేకపోతే ఫైల్ పేరు) */
-const TTN={'School_Pragathi_All_Reports.html':['🏫','School ప్రగతి – రిజిస్టర్లు','విద్యార్థులు • మార్కులు • హాజరు నమోదు → ప్రగతి కార్డు, HPC, రిజిస్టర్లు, ప్రమోషన్ లిస్ట్ (I–X)'],'MDM_Akshayapatra_Voucher_RagiJava_Chikki_Egg.html':['🍛','MDM వోచర్ – అక్షయపాత్ర','డే-వైజ్ వోచర్ + రాగి జావ • చిక్కీ • గుడ్డు నెలవారీ రిజిస్టర్ (A4 ప్రింట్)']};
+const TTN={'School_Pragathi_All_Reports.html':['🏫','School ప్రగతి – రిజిస్టర్లు','విద్యార్థులు • మార్కులు • హాజరు నమోదు → ప్రగతి కార్డు, HPC, రిజిస్టర్లు, ప్రమోషన్ లిస్ట్ (I–X)'],'School_Bag_Weight_Register_SOP.html':['🎒','స్కూల్ బ్యాగ్ బరువు రిజిస్టర్','SOP 2026: విద్యార్థి బరువు, బ్యాగ్ బరువు → 10% / తరగతి పరిమితి హెచ్చరిక • HM నెలవారీ ఆడిట్ (A4 ప్రింట్)'],'MDM_Akshayapatra_Voucher_RagiJava_Chikki_Egg.html':['🍛','MDM వోచర్ – అక్షయపాత్ర','డే-వైజ్ వోచర్ + రాగి జావ • చిక్కీ • గుడ్డు నెలవారీ రిజిస్టర్ (A4 ప్రింట్)']};
 let TTF=0;
 function ttList(){const st=(S.lib||{})['dir:ttools'];return ((st&&st.v)||[]).filter(f=>/\.html?$/i.test(f.name)).sort((a,b)=>a.name.localeCompare(b.name));}
 async function ttRefresh(force){TTF=1;const old=JSON.stringify(ttList());const v=await listDir('ttools',force);if(view==='teacher'&&param.t==='lb'&&(force||JSON.stringify(ttList())!==old))render();if(force)toast(v===null?'📴 ఇంటర్నెట్ లేదు':'🔄 టీచర్ టూల్స్ జాబితా తాజా అయింది');}

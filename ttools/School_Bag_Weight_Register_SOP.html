@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>స్కూల్ బ్యాగ్ బరువు రిజిస్టర్ – SOP 2026 | రాయ్ ఎడ్యుకేషన్</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700&family=Baloo+Tamma+2:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--p:#0e7490;--p2:#155e75;--ok:#16a34a;--warn:#d97706;--bad:#dc2626;--bg:#f0f9ff;--card:#fff;--line:#cbd5e1}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Noto Sans Telugu',sans-serif;background:var(--bg);color:#0f172a;font-size:15px}
+h1,h2,h3,.num{font-family:'Baloo Tamma 2','Noto Sans Telugu',sans-serif}
+header{background:linear-gradient(135deg,#0e7490,#7c3aed);color:#fff;padding:12px 14px;display:flex;gap:10px;align-items:center;position:sticky;top:0;z-index:5}
+header h1{font-size:1.15rem;margin:0;flex:1;line-height:1.3}
+header small{display:block;font-weight:400;opacity:.9;font-size:.78rem}
+button,select,input{font:inherit}
+button{cursor:pointer;border:0;border-radius:10px;padding:9px 14px;min-height:44px;background:var(--p);color:#fff;font-weight:600}
+button.sec{background:#e2e8f0;color:#0f172a}
+button.red{background:var(--bad)}
+button.mini{min-height:34px;padding:4px 10px;font-size:.85rem}
+.hb{background:rgba(255,255,255,.2)}
+main{max-width:1000px;margin:0 auto;padding:12px}
+.card{background:var(--card);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(15,23,42,.08)}
+.card h3{margin:0 0 8px;font-size:1.05rem}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row>*{flex:0 0 auto}
+label{font-size:.85rem;color:#475569;display:block;margin:6px 0 2px}
+input,select{border:1px solid var(--line);border-radius:8px;padding:8px;min-height:40px;background:#fff}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.chips button{background:#e0f2fe;color:#075985;min-height:38px;padding:6px 12px}
+.chips button.on{background:var(--p);color:#fff}
+.sop{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.sop div{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:8px;font-size:.88rem}
+.sop b{display:block;color:var(--p2)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid var(--line);padding:6px;text-align:center;font-size:.88rem}
+th{background:#e0f2fe}
+td.n{text-align:left}
+td input{width:64px;min-height:38px;text-align:center;padding:4px}
+@media(max-width:420px){th,td{padding:4px 3px;font-size:.8rem}.st{padding:1px 4px}}
+.st{font-weight:700;border-radius:8px;padding:2px 8px;white-space:nowrap}
+.s0{color:#64748b}.s1{background:#dcfce7;color:#166534}.s2{background:#fef3c7;color:#92400e}.s3{background:#fee2e2;color:#991b1b}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-top:8px}
+.stats div{border-radius:12px;padding:10px;text-align:center;background:#f1f5f9}
+.stats b{display:block;font-size:1.5rem;font-family:'Baloo Tamma 2',sans-serif}
+.mut{color:#64748b;font-size:.85rem}
+.note{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:8px;font-size:.88rem}
+textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit;min-height:90px}
+footer{text-align:center;padding:16px;font-size:.9rem}
+footer a{color:var(--p2);font-weight:700;text-decoration:none}
+#toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#0f172a;color:#fff;padding:10px 16px;border-radius:10px;opacity:0;transition:.3s;pointer-events:none;z-index:20;max-width:90%}
+#toast.show{opacity:1}
+#prt{display:none}
+@media print{
+ @page{size:A4;margin:10mm}
+ body{background:#fff;font-size:10.5pt}
+ header,main,footer,#toast{display:none!important}
+ #prt{display:block}
+ #prt table{min-width:0}
+ #prt th,#prt td{font-size:9.5pt;padding:3px}
+ #prt h2{text-align:center;margin:0 0 2mm;font-size:14pt}
+ #prt .ph{text-align:center;font-size:10pt;margin-bottom:3mm}
+ #prt .pb{page-break-after:always}
+ #prt .sg{display:flex;justify-content:space-between;margin-top:14mm}
+ .st{background:none!important;padding:0}
+}
+</style>
+</head>
+<body>
+<header>
+ <h1>🎒 స్కూల్ బ్యాగ్ బరువు రిజిస్టర్<small>School Bag Policy-2020 • SOP (Rc.No.ESE02/564/2022-SCERT, 10-11-2026)</small></h1>
+ <button class="hb" onclick="printReg()" title="A4 ప్రింట్">🖨️</button>
+</header>
+<main id="app"></main>
+<div id="prt"></div>
+<footer><a href="https://raayeducation.in" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a> • Raay Education</footer>
+<div id="toast"></div>
+<script>
+/* 🎒 స్కూల్ బ్యాగ్ బరువు రిజిస్టర్ – రాయ్ విద్యార్థి టీచర్ టూల్ (2026.11.12).
+   డేటా ఈ పరికరంలోనే (localStorage 'rv_bag_v1'). యాప్ లోపల తెరిస్తే యాప్ విద్యార్థుల జాబితా తెచ్చుకోవచ్చు. */
+const KEY='rv_bag_v1';
+const LIM={1:[1.6,2.2],2:[1.6,2.2],3:[1.7,2.5],4:[1.7,2.5],5:[1.7,2.5],6:[2,3],7:[2,3],8:[2.5,4],9:[2.5,4.5],10:[2.5,4.5]};
+const ROM=['','I','II','III','IV','V','VI','VII','VIII','IX','X'];
+const MON=['జనవరి','ఫిబ్రవరి','మార్చి','ఏప్రిల్','మే','జూన్','జూలై','ఆగస్టు','సెప్టెంబర్','అక్టోబర్','నవంబర్','డిసెంబర్'];
+let S={sch:{name:'',place:'',udise:''},cls:{},rec:{},aud:{}};
+try{const o=JSON.parse(localStorage.getItem(KEY)||'null');if(o)S=Object.assign(S,o);}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));return true;}catch(e){toast('సేవ్ కాలేదు – స్థలం నిండింది');return false;}}
+const now=new Date();
+let U={c:1,m:now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0'),tab:'reg'};
+try{const k=Object.keys(S.cls).map(Number).filter(c=>(S.cls[c]||[]).length).sort((a,b)=>a-b);if(k.length)U.c=k[0];}catch(e){}
+const APP=(function(){try{return (window.parent&&window.parent!==window&&typeof window.parent.live==='function')?window.parent:null;}catch(e){return null;}})();
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2200);}
+function delOK(m){return confirm(m)&&confirm('⚠️ మళ్ళీ అడుగుతున్నాం: నిజంగా తొలగించాలా? ఇది తిరిగి రాదు.');}
+function uid(){return 's'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function list(c){return S.cls[c]||(S.cls[c]=[]);}
+function recM(m,c){const R=S.rec[m]||(S.rec[m]={});return R[c]||(R[c]={});}
+function num(v){const n=parseFloat(String(v).replace(',','.'));return isFinite(n)&&n>0?Math.round(n*100)/100:null;}
+function monLbl(m){const [y,mm]=m.split('-');return MON[+mm-1]+' '+y;}
+/* స్థితి: 0 = నమోదు లేదు, 1 = సరి, 2 = తరగతి పరిమితి పైన, 3 = శరీర బరువులో 10% పైన */
+function status(c,r){if(!r||r.bg==null)return {k:0,t:'–',p:''};const L=LIM[c]||[0,99],p=r.bw?Math.round(r.bg*1000/r.bw)/10:null;
+ if(p!=null&&p>10)return {k:3,t:'10% పైన',p};if(r.bg>L[1])return {k:2,t:'పరిమితి పైన',p};return {k:1,t:'సరి',p};}
+function render(){const c=U.c,L=list(c),R=recM(U.m,c),lim=LIM[c];
+ const months=[];for(let i=-6;i<=1;i++){const d=new Date(now.getFullYear(),now.getMonth()+i,1);months.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'));}
+ Object.keys(S.rec).forEach(m=>{if(!months.includes(m))months.push(m);});months.sort();
+ let h=`<div class="card"><div class="chips">${[['reg','📝 బరువు నమోదు'],['aud','📊 HM నెలవారీ ఆడిట్'],['stu','👥 విద్యార్థులు'],['sop','📜 SOP నియమాలు']].map(([k,n])=>`<button class="${U.tab===k?'on':''}" onclick="U.tab='${k}';render()">${n}</button>`).join('')}</div>
+ <div class="row"><div><label>నెల</label><select onchange="U.m=this.value;render()">${months.map(m=>`<option value="${m}"${m===U.m?' selected':''}>${monLbl(m)}</option>`).join('')}</select></div>
+ ${U.tab==='aud'||U.tab==='sop'?'':`<div><label>తరగతి</label><select onchange="U.c=+this.value;render()">${ROM.slice(1).map((r,i)=>`<option value="${i+1}"${i+1===c?' selected':''}>${r} తరగతి (${list(i+1).length})</option>`).join('')}</select></div>`}</div></div>`;
+ if(U.tab==='sop')h+=sopCard();
+ else if(U.tab==='stu')h+=stuCard(c,L);
+ else if(U.tab==='aud')h+=audCard();
+ else{
+  h+=`<div class="card"><h3>📝 ${ROM[c]} తరగతి – ${monLbl(U.m)}</h3>
+  <p class="mut">SOP పరిమితి: <b>${lim[0]} – ${lim[1]} కిలోలు</b> • బ్యాగ్ బరువు శరీర బరువులో <b>10%</b> మించరాదు. బరువులు కిలోల్లో (ఉదా: 24.5, 2.3). శరీర బరువు ఒకసారి రాస్తే తర్వాతి నెలలకు ఆటోగా వస్తుంది.</p>`;
+  if(!L.length)h+=`<div class="note">ఈ తరగతిలో విద్యార్థులు లేరు. “👥 విద్యార్థులు” ట్యాబ్‌లో పేర్లు చేర్చండి${APP?' లేదా యాప్ జాబితా తెచ్చుకోండి':''}.</div><div class="row" style="margin-top:8px"><button onclick="U.tab='stu';render()">👥 విద్యార్థులను చేర్చు</button><button class="sec" onclick="demo()">🧪 నమూనా డేటా</button></div>`;
+  else{h+=`<div class="row" style="margin-bottom:8px"><label style="margin:0">తనిఖీ తేదీ</label><input type="date" id="cd" value="${(S.aud[U.m]||{})['d'+c]||todayS()}" onchange="setD(this.value)"></div>
+  <div class="tw"><table><tr><th>క్ర.సం</th><th>పేరు</th><th>శరీర బరువు (kg)</th><th>బ్యాగ్ బరువు (kg)</th><th>%</th><th>స్థితి</th></tr>
+  ${L.map((s,i)=>{const r=R[s.id]||{},bw=r.bw!=null?r.bw:lastBw(s.id),st=status(c,{bw,bg:r.bg});
+   return `<tr><td>${i+1}</td><td class="n">${esc(s.n)}</td><td><input inputmode="decimal" value="${bw??''}" onchange="setW('${s.id}','bw',this.value)" onkeydown="nextIn(event,this)"></td><td><input inputmode="decimal" value="${r.bg??''}" onchange="setW('${s.id}','bg',this.value)" onkeydown="nextIn(event,this)"></td><td>${st.p===''||st.p==null?'–':st.p+'%'}</td><td><span class="st s${st.k}">${st.k===1?'🟢 ':st.k===2?'🟠 ':st.k===3?'🔴 ':''}${st.t}</span></td></tr>`;}).join('')}</table></div>
+  ${sumHtml(c)}`;}
+  h+=`</div>`;}
+ $('#app').innerHTML=h;}
+function todayS(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function setD(v){const A=S.aud[U.m]||(S.aud[U.m]={});A['d'+U.c]=v;save();}
+function lastBw(id){const ms=Object.keys(S.rec).filter(m=>m<U.m).sort().reverse();for(const m of ms){const r=(S.rec[m][U.c]||{})[id];if(r&&r.bw)return r.bw;}return null;}
+function setW(id,k,v){const R=recM(U.m,U.c),r=R[id]||(R[id]={});const n=num(v);if(n==null&&String(v).trim()!==''){toast('సంఖ్య మాత్రమే రాయండి (ఉదా: 2.4)');render();return;}
+ if(k==='bg'&&n!=null&&n>15){toast('బ్యాగ్ బరువు కిలోల్లో రాయండి (ఉదా: 2.4)');render();return;}
+ if(k==='bw'&&n!=null&&(n<8||n>120)){toast('శరీర బరువు కిలోల్లో సరిచూడండి');}
+ r[k]=n;if(k==='bg'&&r.bw==null){const lb=lastBw(id);if(lb)r.bw=lb;}if(!(S.aud[U.m]||{})['d'+U.c])setD(todayS());save();const y=scrollY;render();scrollTo(0,y);}
+function nextIn(e,el){if(e.key!=='Enter')return;e.preventDefault();const row=el.closest('tr').rowIndex,col=el.closest('td').cellIndex;el.blur();
+ setTimeout(()=>{const t=document.querySelector('.tw table');const tr=t&&t.rows[row+1];const i=tr&&tr.cells[col]&&tr.cells[col].querySelector('input');if(i)i.focus();},40);}
+function stats(c,m){const L=list(c),R=(S.rec[m]||{})[c]||{};let n=0,ok=0,ov=0,o10=0,sum=0;L.forEach(s=>{const r=R[s.id];if(!r||r.bg==null)return;const st=status(c,{bw:r.bw!=null?r.bw:null,bg:r.bg});n++;sum+=r.bg;if(st.k===1)ok++;else if(st.k===2)ov++;else o10++;});
+ return {tot:L.length,n,ok,ov,o10,avg:n?Math.round(sum*100/n)/100:null};}
+function sumHtml(c){const s=stats(c,U.m);return `<div class="stats"><div><b>${s.n}/${s.tot}</b>తనిఖీ</div><div style="background:#dcfce7"><b>${s.ok}</b>🟢 సరి</div><div style="background:#fef3c7"><b>${s.ov}</b>🟠 పరిమితి పైన</div><div style="background:#fee2e2"><b>${s.o10}</b>🔴 10% పైన</div><div><b>${s.avg??'–'}</b>సగటు బ్యాగ్ (kg)</div></div>`;}
+function audCard(){const A=S.aud[U.m]||{};let rows='',T={tot:0,n:0,ok:0,ov:0,o10:0};
+ for(let c=1;c<=10;c++){if(!list(c).length)continue;const s=stats(c,U.m);['tot','n','ok','ov','o10'].forEach(k=>T[k]+=s[k]);rows+=`<tr><td>${ROM[c]}</td><td>${LIM[c][0]}–${LIM[c][1]}</td><td>${s.tot}</td><td>${s.n}</td><td>${s.ok}</td><td>${s.ov}</td><td>${s.o10}</td><td>${s.avg??'–'}</td><td>${A['d'+c]?fmt(A['d'+c]):'–'}</td></tr>`;}
+ return `<div class="card"><h3>📊 HM నెలవారీ ఆడిట్ – ${monLbl(U.m)}</h3>
+ ${rows?`<div class="tw"><table><tr><th>తరగతి</th><th>SOP (kg)</th><th>విద్యార్థులు</th><th>తనిఖీ</th><th>🟢 సరి</th><th>🟠 పరిమితి పైన</th><th>🔴 10% పైన</th><th>సగటు (kg)</th><th>తేదీ</th></tr>${rows}<tr style="font-weight:700"><td colspan="2">మొత్తం</td><td>${T.tot}</td><td>${T.n}</td><td>${T.ok}</td><td>${T.ov}</td><td>${T.o10}</td><td colspan="2"></td></tr></table></div>`:'<div class="note">ఇంకా విద్యార్థులు లేరు.</div>'}
+ <label>HM గమనికలు / తీసుకున్న చర్యలు (ఉదా: వర్క్‌బుక్స్ పాఠశాలలోనే ఉంచాం, తల్లిదండ్రులకు చెప్పాం)</label><textarea id="rem" onchange="(S.aud[U.m]=S.aud[U.m]||{}).rem=this.value;save();toast('సేవ్ అయింది ✓')">${esc(A.rem||'')}</textarea>
+ <div class="row" style="margin-top:8px"><button onclick="printReg('all')">🖨️ ఆడిట్ + అన్ని తరగతుల రిజిస్టర్ (A4)</button><button class="sec" onclick="csv()">⬇️ CSV (Excel)</button></div></div>`;}
+function fmt(d){const [y,m,dd]=d.split('-');return dd+'-'+m+'-'+y;}
+function stuCard(c,L){return `<div class="card"><h3>👥 ${ROM[c]} తరగతి విద్యార్థులు (${L.length})</h3>
+ ${APP?`<div class="row" style="margin-bottom:8px"><button onclick="fromApp()">📥 రాయ్ విద్యార్థి యాప్ జాబితా తెచ్చుకో (అన్ని తరగతులు)</button></div>`:''}
+ <label>పేర్లు పేస్ట్ చేయండి (ఒక వరుసకు ఒక పేరు; Excel నుండి కాపీ అయినా సరే)</label><textarea id="pn" placeholder="ఉదా:&#10;ఆర్. సాయి&#10;కె. లక్ష్మి"></textarea>
+ <div class="row" style="margin-top:6px"><button onclick="addNames()">➕ ${ROM[c]} తరగతికి చేర్చు</button><button class="sec" onclick="demo()">🧪 నమూనా డేటా</button>${L.length?`<button class="red" onclick="clrCls()">🗑 ఈ తరగతి జాబితా తొలగించు</button>`:''}</div>
+ ${L.length?`<div class="tw" style="margin-top:10px"><table><tr><th>క్ర.సం</th><th>పేరు</th><th></th></tr>${L.map((s,i)=>`<tr><td>${i+1}</td><td class="n">${esc(s.n)}</td><td><button class="mini red" onclick="delStu('${s.id}')">తొలగించు</button></td></tr>`).join('')}</table></div>`:''}
+ <hr style="border:0;border-top:1px solid #e2e8f0;margin:14px 0"><h3>🏫 పాఠశాల వివరాలు (ప్రింట్ శీర్షిక కోసం)</h3>
+ <div class="row"><div><label>పాఠశాల పేరు</label><input id="sn" value="${esc(S.sch.name)}" placeholder="ఉదా: ZPHS TV Palli"></div><div><label>మండలం / జిల్లా</label><input id="sp" value="${esc(S.sch.place)}" placeholder="గూడూరు, SPSR నెల్లూరు"></div><div><label>UDISE</label><input id="su" value="${esc(S.sch.udise)}" inputmode="numeric"></div></div>
+ <div class="row" style="margin-top:8px"><button onclick="S.sch={name:$('#sn').value.trim(),place:$('#sp').value.trim(),udise:$('#su').value.trim()};save();toast('సేవ్ అయింది ✓')">💾 సేవ్</button>
+ <button class="sec" onclick="bk()">⬇️ బ్యాకప్</button><button class="sec" onclick="$('#bf').click()">⬆️ బ్యాకప్ ఎక్కించు</button><input type="file" id="bf" accept=".json" style="display:none" onchange="rs(this)"></div></div>`;}
+function sopCard(){return `<div class="card"><h3>📜 SOP ముఖ్యాంశాలు (School Bag Policy-2020)</h3>
+ <p class="note">⚖️ బ్యాగ్ బరువు విద్యార్థి శరీర బరువులో <b>10%</b> మించరాదు.</p>
+ <div class="sop"><div><b>ప్రీ-ప్రైమరీ</b>బ్యాగ్ లేదు</div><div><b>I–II తరగతులు</b>1.6 – 2.2 కిలోలు</div><div><b>III–V తరగతులు</b>1.7 – 2.5 కిలోలు</div><div><b>VI–VII తరగతులు</b>2 – 3 కిలోలు</div><div><b>VIII తరగతి</b>2.5 – 4 కిలోలు</div><div><b>IX–X తరగతులు</b>2.5 – 4.5 కిలోలు</div><div><b>XI–XII తరగతులు</b>3.5 – 5 కిలోలు</div></div>
+ <h3 style="margin-top:12px">✏️ హోంవర్క్ పరిమితులు</h3><div class="sop"><div><b>I–II</b>హోంవర్క్ లేదు</div><div><b>III–V</b>వారానికి గరిష్ఠంగా 2 గంటలు</div><div><b>VI–VIII</b>రోజుకు గరిష్ఠంగా 1 గంట</div><div><b>IX–XII</b>రోజుకు గరిష్ఠంగా 2 గంటలు</div></div>
+ <ul style="margin:12px 0 0;padding-left:20px;line-height:1.8"><li>ప్రతి శనివారం <b>“నో బ్యాగ్ డే”</b> – I నుండి IX తరగతుల వరకు</li><li>సెమిస్టర్ విధానం: Sem-1 (జూన్–అక్టోబర్), Sem-2 (నవంబర్–మార్చి) – ఆ సెమిస్టర్ పుస్తకాలే తీసుకురావాలి</li><li>వర్క్‌బుక్స్, డిక్షనరీలు, రిఫరెన్స్ పుస్తకాలు పాఠశాలలోనే భద్రపరచాలి</li><li>హెడ్‌మాస్టర్ నెలవారీ ఆడిట్ చేసి, బ్యాగ్ వెయిట్ రిజిస్టర్ నిర్వహించాలి</li></ul>
+ <p class="mut" style="margin-top:8px">ఆధారం: పాఠశాల విద్యా డైరెక్టర్ Rc.No.ESE02/564/2022-SCERT, తేదీ 10-11-2026 (యూజర్ పంపిన సమాచారం ప్రకారం).</p></div>`;}
+function addNames(){const t=$('#pn').value.split(/\r?\n/).map(x=>x.split('\t').map(y=>y.trim()).filter(Boolean).find(y=>/[^\d.\s-]/.test(y))||'').map(x=>x.replace(/^\d+[.)]\s*/,'').trim()).filter(Boolean);
+ if(!t.length){toast('పేర్లు పేస్ట్ చేయండి');return;}const L=list(U.c),have=new Set(L.map(s=>s.n));let a=0;t.forEach(n=>{if(!have.has(n)){L.push({id:uid(),n:n.slice(0,60)});have.add(n);a++;}});save();toast('✓ '+a+' మంది చేరారు');render();}
+function fromApp(){let r=null;try{r=JSON.parse(APP.eval("JSON.stringify(live('roster').map(x=>({c:x.c,n:x.n,sid:x.sid,ord:x.ord||0})))"));}catch(e){}
+ if(!r||!r.length){toast('యాప్ జాబితా దొరకలేదు');return;}let a=0;r.sort((x,y)=>(x.c-y.c)||(x.ord-y.ord)).forEach(x=>{const c=+x.c;if(!(c>=1&&c<=10)||!x.n)return;const L=list(c),id='a'+String(x.sid).replace(/[^\w-]/g,'');
+  const e=L.find(s=>s.id===id);if(e){e.n=x.n;return;}L.push({id,n:String(x.n).slice(0,60)});a++;});save();toast('✓ యాప్ నుండి '+a+' మంది కొత్తగా');render();}
+function delStu(id){const s=list(U.c).find(x=>x.id===id);if(!s||!delOK(s.n+' ను జాబితా నుండి తొలగించాలా?'))return;S.cls[U.c]=list(U.c).filter(x=>x.id!==id);save();render();}
+function clrCls(){if(!delOK(ROM[U.c]+' తరగతి జాబితా మొత్తం (నమోదు చేసిన బరువులతో) తొలగించాలా?'))return;S.cls[U.c]=[];Object.values(S.rec).forEach(R=>delete R[U.c]);save();render();}
+function demo(){const N=['ఆర్. సాయి','కె. లక్ష్మి','పి. వంశీ','ఎం. హారిక','జి. చరణ్','బి. దీప్తి'],c=U.c,L=list(c);if(L.length&&!confirm('ఈ తరగతికి 6 నమూనా పేర్లు, బరువులు చేర్చాలా?'))return;
+ const R=recM(U.m,c),base=14+c*2.6;N.forEach((n,i)=>{const id=uid();L.push({id,n:n+' (నమూనా)'});const bw=Math.round((base+i*1.3)*10)/10;R[id]={bw,bg:Math.round((LIM[c][0]+i*0.35)*10)/10};});save();U.tab='reg';render();toast('నమూనా డేటా చేర్చాం – ఇష్టం లేకపోతే 👥 లో తొలగించండి');}
+function bk(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({app:'rv_bag',v:1,at:new Date().toISOString(),S})],{type:'application/json'}));a.download='School_Bag_Weight_Register_backup_'+todayS()+'.json';document.body.appendChild(a);a.click();a.remove();}
+function rs(el){const f=el.files[0];el.value='';if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(o.app!=='rv_bag'||!o.S)throw 0;if(!confirm('ఇప్పటి డేటా స్థానంలో ఈ బ్యాకప్ వస్తుంది. ఎక్కించాలా?'))return;S=Object.assign({sch:{},cls:{},rec:{},aud:{}},o.S);save();render();toast('ఎక్కించబడింది ✓');}catch(e){toast('ఈ ఫైల్ సరైన బ్యాకప్ కాదు');}};r.readAsText(f);}
+function csv(){const rows=[['నెల','తరగతి','క్ర.సం','పేరు','శరీర బరువు (kg)','బ్యాగ్ బరువు (kg)','%','స్థితి']];
+ for(let c=1;c<=10;c++){const R=(S.rec[U.m]||{})[c]||{};list(c).forEach((s,i)=>{const r=R[s.id]||{},st=status(c,r);rows.push([monLbl(U.m),ROM[c],i+1,s.n,r.bw??'',r.bg??'',st.p??'',st.t]);});}
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+rows.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\n')],{type:'text/csv;charset=utf-8'}));a.download='School_Bag_Weight_Register_'+U.m+'.csv';document.body.appendChild(a);a.click();a.remove();}
+function head(t){return `<h2>${esc(S.sch.name||'పాఠశాల')}</h2><div class="ph">${esc(S.sch.place||'')}${S.sch.udise?' • UDISE: '+esc(S.sch.udise):''}<br><b>${t}</b> – ${monLbl(U.m)} • SOP: బ్యాగ్ బరువు శరీర బరువులో 10% మించరాదు</div>`;}
+function regTbl(c){const R=(S.rec[U.m]||{})[c]||{},A=S.aud[U.m]||{};return head('స్కూల్ బ్యాగ్ బరువు రిజిస్టర్ – '+ROM[c]+' తరగతి (SOP '+LIM[c][0]+'–'+LIM[c][1]+' kg)')+(A['d'+c]?`<div class="ph">తనిఖీ తేదీ: ${fmt(A['d'+c])}</div>`:'')+
+ `<table><tr><th>క్ర.సం</th><th>పేరు</th><th>శరీర బరువు (kg)</th><th>బ్యాగ్ బరువు (kg)</th><th>%</th><th>స్థితి</th></tr>${list(c).map((s,i)=>{const r=R[s.id]||{},st=status(c,r);return `<tr><td>${i+1}</td><td class="n">${esc(s.n)}</td><td>${r.bw??''}</td><td>${r.bg??''}</td><td>${st.p===''||st.p==null?'':st.p+'%'}</td><td>${st.k?st.t:''}</td></tr>`;}).join('')}</table>
+ ${(()=>{const s=stats(c,U.m);return `<p>తనిఖీ: ${s.n}/${s.tot} • సరి: ${s.ok} • పరిమితి పైన: ${s.ov} • 10% పైన: ${s.o10} • సగటు: ${s.avg??'–'} kg</p>`;})()}
+ <div class="sg"><span>తరగతి ఉపాధ్యాయుడు</span><span>ప్రధానోపాధ్యాయుడు</span></div>`;}
+function printReg(w){const P=$('#prt');let h='';
+ if(w==='all'||U.tab==='aud'){const A=S.aud[U.m]||{};let rows='';for(let c=1;c<=10;c++){if(!list(c).length)continue;const s=stats(c,U.m);rows+=`<tr><td>${ROM[c]}</td><td>${LIM[c][0]}–${LIM[c][1]}</td><td>${s.tot}</td><td>${s.n}</td><td>${s.ok}</td><td>${s.ov}</td><td>${s.o10}</td><td>${s.avg??'–'}</td></tr>`;}
+  h+=`<div class="pb">${head('HM నెలవారీ బ్యాగ్ బరువు ఆడిట్')}<table><tr><th>తరగతి</th><th>SOP (kg)</th><th>విద్యార్థులు</th><th>తనిఖీ</th><th>సరి</th><th>పరిమితి పైన</th><th>10% పైన</th><th>సగటు (kg)</th></tr>${rows}</table><p><b>గమనికలు / చర్యలు:</b> ${esc(A.rem||'')}</p><div class="sg"><span>తేదీ</span><span>ప్రధానోపాధ్యాయుల సంతకం</span></div></div>`;
+  for(let c=1;c<=10;c++)if(list(c).length)h+=`<div class="pb">${regTbl(c)}</div>`;}
+ else{if(!list(U.c).length){toast('ఈ తరగతిలో విద్యార్థులు లేరు');return;}h=regTbl(U.c);}
+ P.innerHTML=h;setTimeout(()=>window.print(),80);}
+/* యాప్ బ్యాక్ బటన్: లోపలి ట్యాబ్ ఉంటే నమోదు ట్యాబ్‌కు, లేకపోతే టూల్ మూసు */
+window.rvBack=function(){if(U.tab!=='reg'){U.tab='reg';render();return true;}return false;};
+render();
+</script>
+</body>
+</html>
