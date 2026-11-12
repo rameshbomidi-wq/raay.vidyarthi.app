@@ -2724,7 +2724,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.11-13';
+const APPV='2026.11.12-1';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -5230,10 +5230,13 @@ async function libLoad(force){if(view!=='library')return;const tab=param.tab||'b
    +(old.length?`<div class="sect"><h3>📙 2025–26 SEM ${semF} పుస్తకాలు <small class="mut" style="font-weight:600">(గత సంవత్సరం)</small></h3><p class="mut">2026–27 SEM ${semF} పుస్తకాలు ఇంకా CSE పోర్టల్‌లో రాలేదు. అవి వచ్చేవరకు గత ఏడాది పుస్తకాలు చూడవచ్చు – పాఠాలు కొంత మారవచ్చు.</p></div><div class="list">${old.map(it=>row(it,-1)).join('')}</div>`:'')
    +(yr.length?`<h3>📗 సంవత్సరం మొత్తం <small class="mut" style="font-weight:600">(SEM గుర్తు లేని పుస్తకాలు)</small></h3><div class="list">${yr.map(([it,i])=>row(it,i)).join('')}</div>`:'');return;}
  const o25=tab==='books'?ap25(c):[],more=o25.length?`<details class="sect" style="margin-top:12px"><summary style="cursor:pointer;font-weight:700">📙 2025–26 పుస్తకాలు + టీచర్ హ్యాండ్‌బుక్స్ (${o25.length}) <small class="mut">– గత సంవత్సరం, SEM 1 + SEM 2</small></summary><p class="mut">గత ఏడాది (2025–26) అధికారిక CSE లింకులు – కొత్త ట్యాబ్‌లో తెరుచుకుంటాయి. ఈ ఏడాది పుస్తకాలతో పాఠాలు కొంత మారవచ్చు.</p><div class="list">${o25.map(it=>row(it,-1)).join('')}</div><button class="btn" style="margin-top:8px" onclick="go('book',{u:'books/AP_CSE_TextBooks_2025-26_Telugu_English.html',t:'📚 AP CSE పుస్తకాలు 2025–26',k:'tool',back:{tab:'books',c:${c}}})">🔎 అన్ని తరగతుల పుస్తకాలు వెతుకు</button></details>`:'';
- box.innerHTML=items.length||more?catalog+more+(local.length?`${ap.length?'<h3>ఈ appలో PDFs / టీచర్ జోడించిన పుస్తకాలు</h3>':''}<div class="list">${local.map(([it,i])=>row(it,i)).join('')}</div>`:'')
+ const xl=tab==='books'?(XLINKS[c]||[]).map(([t,sub,u])=>({t,u,k:'aplink',ic:'🔗',sub})):[],xlH=xl.length?`<div class="sect" style="margin-top:12px"><h3>🔗 ఉపయోగకర వెబ్ లింకులు</h3><p class="mut">బయటి వెబ్‌సైట్లు – కొత్త ట్యాబ్‌లో తెరుచుకుంటాయి (ఇంటర్నెట్ అవసరం).</p></div><div class="list">${xl.map(it=>row(it,-1)).join('')}</div>`:'';
+ box.innerHTML=items.length||more||xlH?catalog+more+xlH+(local.length?`${ap.length?'<h3>ఈ appలో PDFs / టీచర్ జోడించిన పుస్తకాలు</h3>':''}<div class="list">${local.map(([it,i])=>row(it,i)).join('')}</div>`:'')
   :`<div class="empty">${tab==='books'?'ఈ తరగతికి పుస్తకాలు ఇంకా జోడించలేదు 📚':'టూల్స్ ఇంకా జోడించలేదు 🧰'}</div>`;}
 }
 let LIB=[],LIB_LOAD=0;
+/* 🔗 ఉపయోగకర బయటి వెబ్ లింకులు (తరగతి వారీ) – లైబ్రరీ 📚 అన్నీ లో; [పేరు, వివరణ, URL] */
+const XLINKS={10:[['NCERT Solutions – 10వ తరగతి గణితం (అధ్యా. 6–14)','ncertbooks.org • సాధనలు, అదనపు ప్రశ్నలు, రివిజన్ నోట్స్ (English)','https://ncertbooks.org/ncert-solutions/class-10/maths/'],['గణిత సూత్రాల హ్యాండ్‌బుక్ – 10వ తరగతి','ncertbooks.org • Formulas (English)','https://ncertbooks.org/ncert-class-10-maths-formulas-handbook/']]};
 /* 2025–26 CSE లింకులు (APBOOKS25) – గత సంవత్సరం; SEM2 2026–27 రాని తరగతులకు + టీచర్ హ్యాండ్‌బుక్స్ */
 function ap25(c){return (typeof APBOOKS25!=='undefined'&&APBOOKS25[c]||[]).map(([t,raw,u,sem,ty])=>({t,u,k:'aplink',ic:ty==='H'?'📗':ty==='W'?'📒':'📘',sub:raw+' • 2025–26',sem}));}
 /* పుస్తకం పేరు/ఫైల్ పేరులో SEM1/SEM2 గుర్తు → 1/2; లేకపోతే 0 (సంవత్సరం మొత్తం) */

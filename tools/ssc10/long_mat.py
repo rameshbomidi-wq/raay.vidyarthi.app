@@ -59,3 +59,7 @@ ITEMS = [
  ('ma14', 8, '52 కార్డుల కట్ట నుండి ఒక కార్డు తీస్తే (i) ఎరుపు రాజు (ii) ముఖ కార్డు (iii) ఇస్పేటు రాణి (iv) డైమండ్ కార్డు కాకపోవడం – సంభావ్యతలు కనుగొనండి.', 'మొత్తం ఫలితాలు 52.\n(i) ఎరుపు రాజులు 2 ⇒ 2/52 = 1/26\n(ii) ముఖ కార్డులు 12 (J, Q, K × 4) ⇒ 12/52 = 3/13\n(iii) ఇస్పేటు రాణి 1 ⇒ 1/52\n(iv) డైమండ్ 13 ⇒ డైమండ్ కాకపోవడం = 1 − 13/52 = 39/52 = 3/4',
   'One card is drawn from a well-shuffled deck of 52 cards. Find the probability of getting (i) a king of red colour (ii) a face card (iii) the queen of spades (iv) a non-diamond card.', '(i) 2/52 = 1/26 (ii) 12/52 = 3/13 (iii) 1/52 (iv) 1 − 13/52 = 3/4.'),
 ]
+# అదనపు సాధన ప్రశ్నలు (అధ్యా. 6–14) – xq_mat.py
+import os as _os, importlib.util as _iu
+_sp = _iu.spec_from_file_location('xq_mat', _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), 'xq_mat.py')); _m = _iu.module_from_spec(_sp); _sp.loader.exec_module(_m)
+ITEMS += list(_m.ITEMS)
