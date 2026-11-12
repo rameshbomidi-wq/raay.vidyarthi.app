@@ -2773,7 +2773,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',(view==='home
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.12-12';
+const APPV='2026.11.12-13';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3577,7 +3577,7 @@ V.home=()=>{setTimeout(checkBadges,50);launchHello();const g=greet(),stc=stars()
  const hi=(v,ic,tx,p,b)=>`<button onclick="go('${v}'${p?','+p:''})"><span>${ic}</span>${tx}${b?`<i>${b}</i>`:''}</button>`;
  const qt=(v,ic,tx,cl,p)=>`<button class="v4sb ${cl}" onclick="go('${v}'${p?','+p:''})"><b>${ic}</b><span>${tx}</span></button>`;
  return `<section class="hero hsm"><div class="htop"><div><small>${g[0]} ${g[1]}${S.cfg.sname?' • 🏫 '+esc(S.cfg.sname):''}</small><h2>${esc(S.cur.n)}</h2><p class="motto">నేర్చుకో • సాధన చేయి • ఎదుగు</p></div><span class="starb" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐ ${stc}</span><div class="mascot bob" onclick="go('avatar')" title="బొమ్మ మార్చు">${avOf(S.cur.n)}<i class="edit">✏️</i></div></div></section>
-${tickerHtml()}${noBagHtml()}<section class="v4p w">${slidesHtml()}<div class="v4cb"><button class="v4b3 r" onclick="carTo(CAR.i-1);CAR.hold=Date.now()+8000">« ముందు</button><button class="v4b3 g" onclick="carOpen()">తెరువు ▶</button><button class="v4b3 b" onclick="carTo(CAR.i+1);CAR.hold=Date.now()+8000">తర్వాత »</button></div></section>${reconnectCard()}${installBanner()}${nextLes()}
+${tickerHtml()}${noBagHtml()}<section class="v4p w">${slidesHtml()}<div class="v4cb"><button class="v4b3 r" onclick="carTo(CAR.i-1);CAR.hold=Date.now()+8000">« ముందు</button><button class="v4b3 g" onclick="carOpen()">ఓపెన్ ▶</button><button class="v4b3 b" onclick="carTo(CAR.i+1);CAR.hold=Date.now()+8000">తర్వాత »</button></div></section>${reconnectCard()}${installBanner()}${nextLes()}
 ${sl?`<section class="v4p" style="--pc:#e11d2a"><div class="v4t">📖 నా సబ్జెక్టులు <small>• ${c}వ తరగతి</small></div><div class="v4sg">${sl}</div></section>`:''}
 <section class="v4p" style="--pc:#2563eb"><div class="v4t">⚡ త్వరిత యాక్సెస్</div><div class="v4sg" style="grid-template-columns:repeat(4,1fr)">${qt('doubts','💬','సందేహం','c-tel')}${qt('schedule','📅','షెడ్యూల్','c-eng')}${qt('library','📚','పుస్తకాలు','c-evs',"{tab:'books'}")}${qt('dict','🔤','డిక్షనరీ','c-phy')}</div></section>
 ${hStats()}
