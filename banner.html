@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="te"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>రాయ్ విద్యార్థి బ్యానర్</title>
+<meta property="og:title" content="రాయ్ విద్యార్థి లెర్నింగ్ యాప్ – Raay Vidyarthi Learning App">
+<meta property="og:description" content="1 – 10 తరగతులు • ఉచితం. బొమ్మను తాకితే English / తెలుగు.">
+<meta property="og:image" content="https://rameshbomidi-wq.github.io/raay.vidyarthi.app/help/banner/phone_te.jpg">
+<meta name="theme-color" content="#1a237e">
+<link rel="icon" href="icon-192.png">
+<style>
+html,body{margin:0;height:100%;background:#0b1a5e;font-family:system-ui,'Noto Sans Telugu',sans-serif;color:#fff}
+body{display:flex;flex-direction:column;align-items:center}
+.hint{margin:10px 16px 8px;padding:7px 16px;border-radius:999px;background:#ffd60a;color:#0b1a5e;font-weight:800;font-size:15px;text-align:center;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.05)}}
+@media (prefers-reduced-motion:reduce){.hint{animation:none}}
+.wrap{position:relative;width:min(100vw - 16px,1400px);flex:1;min-height:0;display:flex;justify-content:center;align-items:flex-start;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
+.wrap img{max-width:100%;max-height:calc(100vh - 130px);border-radius:14px;box-shadow:0 8px 24px #0008;transition:opacity .25s,transform .25s}
+.wrap img.fade{opacity:0;transform:scale(.97)}
+.btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:10px 16px 14px}
+.btns a,.btns button{border:0;border-radius:12px;padding:10px 16px;font:inherit;font-weight:800;font-size:15px;text-decoration:none;color:#fff;cursor:pointer}
+.b1{background:linear-gradient(90deg,#ff6d00,#e53935)}.b2{background:linear-gradient(90deg,#00a152,#00695c)}.b3{background:linear-gradient(90deg,#8e24aa,#c2185b)}
+:focus-visible{outline:3px solid #ffd60a;outline-offset:2px}
+</style></head><body>
+<div class="hint" id="hint">👆 బొమ్మను తాకితే English</div>
+<div class="wrap" id="wrap" role="button" tabindex="0" aria-label="భాష మార్చు / Switch language"><img id="pic" alt="రాయ్ విద్యార్థి బ్యానర్"></div>
+<div class="btns">
+ <a class="b1" id="bApp" href="./">📲 యాప్ తెరువు</a>
+ <a class="b2" id="bVid" href="video.html">🎬 30 సె. వీడియో</a>
+ <button class="b3" id="bShare">📤 షేర్</button>
+</div>
+<script>
+(function(){
+var T={te:{hint:'👆 బొమ్మను తాకితే English',app:'📲 యాప్ తెరువు',vid:'🎬 30 సె. వీడియో',sh:'📤 షేర్',alt:'రాయ్ విద్యార్థి బ్యానర్'},
+       en:{hint:'👆 Tap the picture for తెలుగు',app:'📲 Open App',vid:'🎬 30 s Video',sh:'📤 Share',alt:'Raay Vidyarthi banner'}};
+var q=new URLSearchParams(location.search),L=q.get('lang')==='en'?'en':'te';
+var pic=document.getElementById('pic'),wrap=document.getElementById('wrap');
+function kind(){return innerWidth>innerHeight*1.1?'wide':'phone';}
+function src(l){return 'help/banner/'+kind()+'_'+l+'.jpg';}
+['te','en'].forEach(function(l){var i=new Image();i.src=src(l);});
+function show(anim){
+  var t=T[L];document.documentElement.lang=L;
+  document.getElementById('hint').textContent=t.hint;document.getElementById('bApp').textContent=t.app;
+  document.getElementById('bVid').textContent=t.vid;document.getElementById('bShare').textContent=t.sh;
+  if(!anim){pic.src=src(L);pic.alt=t.alt;return;}
+  pic.classList.add('fade');setTimeout(function(){pic.src=src(L);pic.alt=t.alt;pic.classList.remove('fade');},200);
+}
+function flip(){L=L==='te'?'en':'te';show(true);try{history.replaceState(null,'',L==='en'?'?lang=en':location.pathname);}catch(e){}}
+wrap.addEventListener('click',flip);
+wrap.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();flip();}});
+var lk=kind();addEventListener('resize',function(){if(kind()!==lk){lk=kind();show(false);}});
+document.getElementById('bShare').addEventListener('click',function(){
+  var u=location.href.split('?')[0],txt='రాయ్ విద్యార్థి లెర్నింగ్ యాప్ – 1 నుండి 10 తరగతులు, ఉచితం 🎉';
+  if(navigator.share){navigator.share({title:'Raay Vidyarthi',text:txt,url:u}).catch(function(){});}
+  else location.href='https://wa.me/?text='+encodeURIComponent(txt+' '+u);
+});
+show(false);
+})();
+</script>
+</body></html>

@@ -164,6 +164,7 @@
 
 - 🎬 2026-11-12 బ్యానర్ QR → `video.html` (ముద్రించిన బ్యానర్లలో ఉంది – **ఈ URL/ఫైల్ పేరు మార్చకూడదు**): 30 సె. పరిచయ వీడియో `help/raay_vidyarthi_app_parichayam_30sec.mp4` (720×1280, 6 స్లైడ్లు, నిశ్శబ్దం; autoplay muted) + “యాప్ తెరువు” బటన్. కొత్త వీడియో = అదే ఫైల్ పేరుతో మార్చాలి. యాప్ (index.html) లో లింక్ లేదు. ↳ 2026-11-12 HD: వీడియో 1080×1920, 30fps, 6 స్లైడ్లు × 5 సె. (కొత్త v4 రూపం స్క్రీన్‌షాట్లతో; 6.6MB, faststart) – video.html లో `?v=hd2` (వీడియో మార్చితే ఈ సంఖ్య పెంచాలి – పాత కాష్ రాకుండా) + poster jpg. తయారీ: Playwright HTML స్లైడ్లు → ffmpeg (scratch /tmp/vid; తెలుగు ఫాంట్లు google/fonts repo sparse checkout: BalooTammudu2, NotoSansTelugu → ~/.fonts).
 
+- 🖼 2026-11-13 `banner.html` – ప్రచార బ్యానర్ పేజీ: బొమ్మను తాకితే తెలుగు ↔ English (`?lang=en`); నిలువు స్క్రీన్ = `help/banner/phone_<te|en>.jpg`, అడ్డం = `wide_<te|en>.jpg`; యాప్ తెరువు / వీడియో / షేర్ బటన్లు. బొమ్మలు scratchpad HTML (b2/phone_bold*.html, banner_bold*.html) నుండి Playwright తో. యాప్ (index.html) లో లింక్ లేదు.
 - 📅 2026.11.12-9 తేదీలు: papers `sd` = పంపిన తేదీ (`qpSentD(p)` fallback on→d); hw `gd` = ఇచ్చిన తేదీ (`hwGd(h)` fallback upd). కొత్త రికార్డులకు తేదీ ఫీల్డ్ తప్పక పెట్టాలి. 2026.11.12-10: notes/qb కి put() లో ఆటో `d`; ప్రదర్శనకు `recD(x)`; సందేహం జవాబు = `ra`.
 - 📝 2026.11.12-10 ప్రశ్నాపత్రం మూలాలు: 1–5 QBK బ్యాంక్ + 6–10 Q (సబ్జెక్టుకు 8) + గణితం ఆటో + టీచర్ qb + **పాఠ్యపుస్తకం** (`qpTbLes`, topics `tball`/`tb:<lid>` – notes qz/wb.qz/qa). SSC బ్యాంక్ ఇంకా చేర్చలేదు.
 
