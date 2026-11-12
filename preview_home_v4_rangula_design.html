@@ -64,102 +64,162 @@ body{font-family:'Poppins','Noto Sans Telugu',system-ui,sans-serif;background:#0
 .nav button span{display:block;font-size:1.4rem}
 .nav .on{color:#7c3aed}
 .note{margin:12px 10px 0;background:#fef3c7;border-radius:14px;padding:10px 12px;font-size:.82rem;line-height:1.6}
+/* సబ్జెక్టు రంగులు */
+.c-tel{background:linear-gradient(#fb923c,#ea580c);box-shadow:0 5px 0 #9a3412,inset 0 2px 0 #fff5}
+.c-eng{background:linear-gradient(#60a5fa,#1d4ed8);box-shadow:0 5px 0 #1e3a8a,inset 0 2px 0 #fff5}
+.c-mat{background:linear-gradient(#f87171,#b91c1c);box-shadow:0 5px 0 #7f1d1d,inset 0 2px 0 #fff5}
+.c-evs{background:linear-gradient(#4ade80,#15803d);box-shadow:0 5px 0 #14532d,inset 0 2px 0 #fff5}
+.c-hin{background:linear-gradient(#f472b6,#be185d);box-shadow:0 5px 0 #831843,inset 0 2px 0 #fff5}
+.c-sci{background:linear-gradient(#2dd4bf,#0f766e);box-shadow:0 5px 0 #134e4a,inset 0 2px 0 #fff5}
+.c-phy{background:linear-gradient(#a78bfa,#6d28d9);box-shadow:0 5px 0 #4c1d95,inset 0 2px 0 #fff5}
+.c-bio{background:linear-gradient(#a3e635,#4d7c0f);box-shadow:0 5px 0 #365314,inset 0 2px 0 #fff5}
+.c-soc{background:linear-gradient(#fbbf24,#b45309);box-shadow:0 5px 0 #78350f,inset 0 2px 0 #fff5}
+.c-te2{background:linear-gradient(#fdba74,#c2410c);box-shadow:0 5px 0 #7c2d12,inset 0 2px 0 #fff5}
+.subs{grid-template-columns:repeat(auto-fill,minmax(74px,1fr))}
+/* దారి ట్యాగ్ */
+.go{display:block;margin-top:5px;background:#fef08a;color:#713f12;font-size:.62rem;font-weight:700;border-radius:8px;padding:2px 4px;line-height:1.3}
+.rb .go{position:absolute;left:50%;bottom:-22px;transform:translateX(-50%);white-space:nowrap;margin:0}
+.nav .go{font-size:.55rem;padding:1px 3px}
+.hidego .go,.hidego .go2{display:none}
+.rnd{row-gap:30px;padding-bottom:16px}
+.ctl{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:8px}
+.ctl button{border:0;border-radius:10px;padding:6px 10px;font:inherit;font-weight:700;font-size:.8rem;background:#fff;cursor:pointer}
+.ctl button.on{background:#7c3aed;color:#fff}
+/* వివరాల పాప్‌అప్ */
+#pop{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center;z-index:9}
+#pop.show{display:flex}
+#pop .box{background:#fff;width:100%;max-width:520px;border-radius:22px 22px 0 0;padding:16px 16px 26px;animation:up .25s}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+#pop h3{font-size:1.15rem;margin-bottom:4px}
+#pop .path{display:inline-block;background:#fef08a;color:#713f12;border-radius:10px;padding:3px 10px;font-weight:700;font-size:.85rem;margin:4px 0 10px}
+#pop ul{padding-left:20px;line-height:1.8;font-size:.92rem}
+#pop .x{margin-top:14px;width:100%}
 #toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 16px;border-radius:12px;font-size:.88rem;opacity:0;transition:.3s;pointer-events:none;max-width:90%}
 #toast.show{opacity:1}
 @media (max-width:380px){.rb{width:80px;height:80px;font-size:.7rem}.slide h3{font-size:1.25rem}.sb span{font-size:.78rem}}
 </style></head><body><div class="wrap">
 
-<header class="top">
- <div class="av" onclick="t('బొమ్మ మార్చు (యాప్‌లో ఉన్నదే)')">🦁</div>
+<header class="top" id="hd">
+ <div class="av" onclick="pp('av')" style="position:relative">🦁</div>
  <div class="tt"><small>శుభ సాయంత్రం 🌇 • 🏫 ZPHS TV పల్లి</small><h1>సాయి కుమార్</h1><div class="motto">నేర్చుకో • సాధన చేయి • ఎదుగు</div></div>
- <button class="pill" onclick="t('టెస్ట్ 80%+ = 3⭐, హోంవర్క్ = 1⭐')">⭐ 24</button>
+ <button class="pill" onclick="pp('st')">⭐ 24<em class="go">➜ స్టార్ల వివరం</em></button>
 </header>
 
-<div class="note">👀 ఇది <b>ప్రివ్యూ మాత్రమే</b> – యాప్ మారలేదు. బటన్లు నొక్కితే యాప్‌లో అది ఎక్కడికి వెళ్తుందో చూపిస్తుంది.</div>
+<div class="note">👀 ఇది <b>ప్రివ్యూ మాత్రమే</b> – యాప్ మారలేదు. ప్రతి బటన్ కింద <b style="background:#fef08a">పసుపు దారి</b> = అది ఎక్కడికి వెళ్తుంది; నొక్కితే ఆ పేజీలో ఏముందో చూపిస్తుంది.<div class="ctl"><b>తరగతి:</b><span id="cls"></span><button id="gob" onclick="tg()">🗺️ దారులు దాచు</button></div></div>
 
 <!-- 1. కరోసెల్ (ఫ్లాష్ + ఫీచర్ స్లైడ్లు) -->
 <section class="panel white">
  <div class="bar"></div>
- <div class="slide on" data-go="తదుపరి పాఠం తెరుచుకుంటుంది">
+ <div class="slide on" data-k="nx">
   <h3>👉 తదుపరి పాఠం</h3>
   <div class="big">📗</div>
   <p style="text-align:center;font-weight:800;font-size:1.15rem">గణితం • 3. గుణకారం</p>
   <p style="text-align:center;color:#6b7280;margin-top:4px">ఈ నెల చదవాల్సింది</p>
   <div class="chipbox">📖 నోట్స్ · 📝 టెస్ట్ · 📒 వర్క్‌బుక్</div>
  </div>
- <div class="slide" data-go="నేర్చుకో ట్యాబ్">
+ <div class="slide" data-k="ln">
   <h3>📚 నేర్చుకో — ఏమేమి ఉన్నాయి</h3>
   <ol><li>పాఠం నోట్స్ (సారాంశం, ముఖ్యాంశాలు)</li><li>పదాలు – అర్థాలు</li><li>పాఠం టెస్ట్ (10 ప్రశ్నలు)</li><li>వర్క్‌బుక్ + జవాబులు</li><li>వీడియో పాఠాలు</li><li>పుస్తకం మీద రాయడం ✏️</li></ol>
   <div class="chipbox">🔊 వినడం · 🎯 బలహీన పాఠాలు · ⭐ స్టార్లు</div>
  </div>
- <div class="slide" data-go="ఈవెంట్లు పేజీ">
+ <div class="slide" data-k="ev">
   <h3>🎉 బాలల దినోత్సవం</h3>
   <div class="big">🚀</div>
   <p style="text-align:center;font-weight:800">14 నవంబర్ – రాయ్ విద్యార్థి యాప్ ప్రారంభం!</p>
   <div class="chipbox">📸 ఫ్లాష్ ఫోటోలు ఇక్కడే తిరుగుతాయి</div>
  </div>
- <div class="slide" data-go="టెస్ట్ → నేటి లెక్కలు">
+ <div class="slide" data-k="lk">
   <h3>🧮 నేటి లెక్కలు</h3>
   <div class="big">➕✖️</div>
   <p style="text-align:center;font-weight:800">10 లెక్కలు • ర్యాంక్ చూడు</p>
   <div class="chipbox">🏆 తరగతిలో నీ స్థానం</div>
  </div>
  <div class="dots" id="dots"></div>
- <div class="cbtns"><button class="b3 red" onclick="mv(-1)">« ముందు</button><button class="b3 grn" onclick="op()">తెరువు ▶</button><button class="b3 blu" onclick="mv(1)">తర్వాత »</button></div>
+ <div class="cbtns"><button class="b3 red" onclick="mv(-1)">« ముందు</button><button class="b3 grn" onclick="op()">తెరువు ▶<em class="go" id="slgo">➜</em></button><button class="b3 blu" onclick="mv(1)">తర్వాత »</button></div>
 </section>
 
 <!-- 2. నా సబ్జెక్టులు -->
 <section class="panel">
- <div class="ptitle">📖 నా సబ్జెక్టులు • 5వ తరగతి</div>
- <div class="subs">
-  <button class="sb" onclick="t('నేర్చుకో → తెలుగు')"><b>అ</b><span>తెలుగు</span><small>5 పాఠాలు</small></button>
-  <button class="sb" onclick="t('నేర్చుకో → English')"><b>Aa</b><span>English</span><small>4 పాఠాలు</small></button>
-  <button class="sb" onclick="t('నేర్చుకో → గణితం')"><b>➗</b><span>గణితం</span><small>4 పాఠాలు</small></button>
-  <button class="sb" onclick="t('నేర్చుకో → EVS')"><b>🌳</b><span>EVS</span><small>6 పాఠాలు</small></button>
- </div>
+ <div class="ptitle" id="stt">📖 నా సబ్జెక్టులు</div>
+ <div class="subs" id="subs"></div>
 </section>
 
 <!-- 3. త్వరిత యాక్సెస్ -->
 <section class="panel">
  <div class="ptitle">⚡ త్వరిత యాక్సెస్</div>
  <div class="q4">
-  <button class="qt or" onclick="t('సందేహాలు')"><span>💬</span>సందేహం</button>
-  <button class="qt bl2" onclick="t('షెడ్యూల్')"><span>📅</span>షెడ్యూల్</button>
-  <button class="qt gr2" onclick="t('పుస్తకాలు')"><span>📚</span>పుస్తకాలు</button>
-  <button class="qt pu" onclick="t('డిక్షనరీ')"><span>🔤</span>డిక్షనరీ</button>
+  <button class="qt or" onclick="pp('dbt')"><span>💬</span>సందేహం<em class="go">➜ సందేహాలు</em></button>
+  <button class="qt bl2" onclick="pp('sch')"><span>📅</span>షెడ్యూల్<em class="go">➜ టైమ్‌టేబుల్</em></button>
+  <button class="qt gr2" onclick="pp('lib')"><span>📚</span>పుస్తకాలు<em class="go">➜ లైబ్రరీ</em></button>
+  <button class="qt pu" onclick="pp('dic')"><span>🔤</span>డిక్షనరీ<em class="go">➜ పద నిఘంటువు</em></button>
  </div>
 </section>
 
 <!-- 4. నీ ప్రగతి -->
-<section class="panel">
- <div class="ptitle">📊 నీ ప్రగతి</div>
+<section class="panel" onclick="pp('pr')" style="cursor:pointer">
+ <div class="ptitle">📊 నీ ప్రగతి <small style="background:#fef08a;color:#713f12;border-radius:8px;padding:1px 6px;font-size:.65rem" class="go2">➜ టెస్ట్ › పూర్తయినవి</small></div>
  <div class="st"><div><b>12</b><small>టెస్టులు</small></div><div><b>78%</b><small>సగటు</small></div><div><b>9</b><small>హోంవర్క్</small></div><div><b>2</b><small>🎯 బలహీన</small></div></div>
 </section>
 
 <!-- 5. గుండ్రని ఐకాన్లు (పేరు పెట్టె లోని .hico) -->
 <section class="panel">
  <div class="rnd">
-  <button class="rb" onclick="t('ఈవెంట్లు')"><span>📅</span>ఈవెంట్లు<i>ఈరోజు</i></button>
-  <button class="rb" onclick="t('సూక్తి')"><span>💡</span>సూక్తి</button>
-  <button class="rb" onclick="t('టూల్స్')"><span>🧰</span>టూల్స్</button>
-  <button class="rb" onclick="t('ID కార్డు')"><span>🪪</span>ID కార్డు</button>
-  <button class="rb" onclick="t('ప్రగతి కార్డు')"><span>🎓</span>ప్రగతి కార్డు</button>
-  <button class="rb" onclick="t('బ్యాడ్జీలు')"><span>🏅</span>బ్యాడ్జీలు<i>3</i></button>
+  <button class="rb" onclick="pp('ev')"><span>📅</span>ఈవెంట్లు<i>ఈరోజు</i><em class="go">➜ ఈవెంట్ కార్డులు</em></button>
+  <button class="rb" onclick="pp('dl')"><span>💡</span>సూక్తి<em class="go">➜ నేటి సూక్తి</em></button>
+  <button class="rb" onclick="pp('tl')"><span>🧰</span>టూల్స్<em class="go">➜ లైబ్రరీ › టూల్స్</em></button>
+  <button class="rb" onclick="pp('id')"><span>🪪</span>ID కార్డు<em class="go">➜ నా ID కార్డు</em></button>
+  <button class="rb" onclick="pp('pc')"><span>🎓</span>ప్రగతి కార్డు<em class="go">➜ FA/SA మార్కులు</em></button>
+  <button class="rb" onclick="pp('bd')"><span>🏅</span>బ్యాడ్జీలు<i>3</i><em class="go">➜ నా బ్యాడ్జీలు</em></button>
  </div>
 </section>
 
 <p class="foot"><a href="https://raayeducation.in" target="_blank" rel="noopener">© రాయ్ ఎడ్యుకేషన్</a></p>
 </div>
 
-<nav class="nav"><button class="on"><span>🏠</span>హోమ్</button><button onclick="t('నేర్చుకో')"><span>📚</span>నేర్చుకో</button><button onclick="t('టెస్ట్')"><span>📝</span>టెస్ట్</button><button onclick="t('ఆటలు')"><span>🎮</span>ఆటలు</button><button onclick="t('హోంవర్క్')"><span>📒</span>హోంవర్క్</button></nav>
+<nav class="nav"><button class="on"><span>🏠</span>హోమ్<em class="go">ఇక్కడే</em></button><button onclick="pp('ln')"><span>📚</span>నేర్చుకో<em class="go">పాఠాలు</em></button><button onclick="pp('ts')"><span>📝</span>టెస్ట్<em class="go">క్విజ్‌లు</em></button><button onclick="pp('gm')"><span>🎮</span>ఆటలు<em class="go">ఆటలు</em></button><button onclick="pp('hw')"><span>📒</span>హోంవర్క్<em class="go">పనులు</em></button></nav>
+<div id="pop" onclick="if(event.target===this)cl()"><div class="box"><h3 id="ph"></h3><span class="path" id="pa"></span><ul id="pl"></ul><button class="b3 grn x" onclick="cl()">సరే 👍</button></div></div>
 <div id="toast"></div>
 <script>
 const S=[...document.querySelectorAll('.slide')],D=document.getElementById('dots');let k=0,tm;
 S.forEach((_,i)=>{const d=document.createElement('i');d.onclick=()=>sh(i);D.appendChild(d)});
-function sh(i){k=(i+S.length)%S.length;S.forEach((s,j)=>s.classList.toggle('on',j===k));[...D.children].forEach((d,j)=>d.classList.toggle('on',j===k));clearInterval(tm);tm=setInterval(()=>sh(k+1),5000)}
+function sh(i){const z=document.getElementById('slgo');if(z)z.textContent='➜ '+({nx:'పాఠం నోట్స్',ln:'నేర్చుకో',ev:'ఈవెంట్లు',lk:'నేటి లెక్కలు'})[S[(i+S.length)%S.length].dataset.k];k=(i+S.length)%S.length;S.forEach((s,j)=>s.classList.toggle('on',j===k));[...D.children].forEach((d,j)=>d.classList.toggle('on',j===k));clearInterval(tm);tm=setInterval(()=>sh(k+1),5000)}
 function mv(n){sh(k+n)}
-function op(){t('తెరువు ▶ → '+S[k].dataset.go)}
+function op(){pp(S[k].dataset.k)}
 function t(m){const e=document.getElementById('toast');e.textContent='యాప్‌లో: '+m;e.classList.add('show');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('show'),1800)}
+
+const SB={tel:['అ','తెలుగు'],eng:['Aa','English'],mat:['➗','గణితం'],evs:['🌳','EVS'],hin:['हि','హిందీ'],sci:['🔬','సైన్స్'],phy:['⚡','భౌతిక'],bio:['🧬','జీవ'],soc:['🌏','సాంఘికం'],te2:['ఆ','తెలుగు-2']};
+function subsFor(c){return c<=2?['tel','eng','mat']:c<=5?['tel','eng','mat','evs']:c<=7?['tel','hin','eng','mat','sci','soc','te2']:['tel','hin','eng','mat','phy','bio','soc','te2']}
+let C=5;
+const CL=document.getElementById('cls');
+for(let c=1;c<=10;c++){const b=document.createElement('button');b.textContent=c;b.onclick=()=>{C=c;dr()};CL.appendChild(b)}
+function dr(){[...CL.children].forEach((b,i)=>b.classList.toggle('on',i+1===C));
+ document.getElementById('stt').textContent='📖 నా సబ్జెక్టులు • '+C+'వ తరగతి';
+ document.getElementById('subs').innerHTML=subsFor(C).map(k=>`<button class="sb c-${k}" onclick="pp('s:${k}')"><b>${SB[k][0]}</b><span>${SB[k][1]}</span><em class="go">➜ నేర్చుకో › ${SB[k][1]}</em></button>`).join('');}
+dr();
+function tg(){const h=document.body.classList.toggle('hidego');document.getElementById('gob').textContent=h?'🗺️ దారులు చూపు':'🗺️ దారులు దాచు'}
+const P={
+ nx:['👉 తదుపరి పాఠం','హోమ్ › స్లైడ్ › తెరువు ➜ పాఠం నోట్స్',['ఈ నెల చదవాల్సిన / ఇంకా చదవని పాఠం నేరుగా','సారాంశం, ముఖ్యాంశాలు, పదాలు–అర్థాలు','పాఠం టెస్ట్, వర్క్‌బుక్, వీడియో']],
+ ln:['📚 నేర్చుకో','కింది నావ్ › నేర్చుకో',['📅 ఈ నెల పాఠాలు','సబ్జెక్టు వారీ పాఠాల పెద్ద కార్డులు','🎬 వీడియో పాఠాలు','📥 ఆఫ్‌లైన్ సేవ్','(10వ) ⭐ రాయ్ స్పెషల్ SSC, 🎓 SSC ప్రశ్నలు']],
+ ev:['📅 ఈవెంట్లు','హోమ్ › ఈవెంట్లు',['రాబోయే పరీక్షలు, సెలవులు, లైవ్ క్లాసులు – పెద్ద కార్డులు','ఈరోజు / రేపు గుర్తు','కింద ← వెనక్కి']],
+ lk:['🧮 నేటి లెక్కలు','టెస్ట్ ట్యాబ్ › నేటి లెక్కలు',['రోజూ 10 లెక్కలు','తరగతిలో ర్యాంక్','🧮 లెక్కల బడి']],
+ dbt:['💬 సందేహం','త్వరిత యాక్సెస్ › సందేహాలు',['ప్రశ్న రాయి / 📷 ఫోటో పంపు','టీచర్ జవాబు + 🎬 వీడియో జవాబు','జవాబు వచ్చిన తేదీ']],
+ sch:['📅 షెడ్యూల్','త్వరిత యాక్సెస్ › షెడ్యూల్',['ఈ వారం టైమ్‌టేబుల్','పరీక్షలు/ఈవెంట్ల తేదీలు']],
+ lib:['📚 పుస్తకాలు','త్వరిత యాక్సెస్ › లైబ్రరీ › పుస్తకాలు',['📚 అన్నీ / SEM 1 / SEM 2','పాఠ్యపుస్తకం, వర్క్‌బుక్ PDF','పేజీ మీద ✏️ రాయడం']],
+ dic:['🔤 డిక్షనరీ','త్వరిత యాక్సెస్ › డిక్షనరీ',['English ↔ తెలుగు పదాలు','🔊 ఉచ్చారణ']],
+ dl:['💡 సూక్తి','హోమ్ › నేటి సూక్తి',['రోజుకో మంచి మాట','కింద ← వెనక్కి']],
+ tl:['🧰 టూల్స్','హోమ్ › లైబ్రరీ › టూల్స్ ట్యాబ్',['✏️ పలక','నేర్చుకునే చిన్న టూల్స్']],
+ id:['🪪 ID కార్డు','హోమ్ › ID కార్డు',['ఫోటో, పేరు, తరగతి, పాఠశాల','📥 డౌన్‌లోడ్ / ప్రింట్']],
+ pc:['🎓 ప్రగతి కార్డు','హోమ్ › ప్రగతి కార్డు',['FA1–FA4, SA1–SA2 మార్కులు, గ్రేడ్','నెల వారీ హాజరు']],
+ bd:['🏅 బ్యాడ్జీలు','హోమ్ › బ్యాడ్జీలు',['సంపాదించిన బ్యాడ్జీలు','ఇంకా ఏమి చేస్తే వస్తాయో']],
+ st:['⭐ స్టార్లు','హెడర్ › ⭐',['టెస్ట్ 80%+ = 3⭐','హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐']],
+ av:['🦁 నా బొమ్మ','హెడర్ › బొమ్మ',['12 జంతు బొమ్మల్లో నచ్చింది ఎంచుకో']],
+ pr:['📊 నీ ప్రగతి','హోమ్ › ప్రగతి ➜ టెస్ట్ › పూర్తయినవి',['రాసిన టెస్టులు, సగటు %','🎯 బలహీన పాఠాలు (60% లోపు) – మళ్ళీ సాధన']],
+ ts:['📝 టెస్ట్','కింది నావ్ › టెస్ట్',['సబ్జెక్టు / పాఠం / వర్క్‌బుక్ టెస్ట్','టీచర్ ప్రశ్నాపత్రం','📝 FA/SA పరీక్ష జవాబులు','👪 తల్లిదండ్రులకు రిపోర్ట్']],
+ gm:['🎮 ఆటలు','కింది నావ్ › ఆటలు',['పదాల, లెక్కల ఆటలు','యోగా & ఆటలు']],
+ hw:['📒 హోంవర్క్','కింది నావ్ › హోంవర్క్',['టీచర్ ఇచ్చిన పనులు (తేదీతో)','📷 ఫోటో తీసి సమర్పించు']]};
+function pp(k){let d;if(k.startsWith('s:')){const n=SB[k.slice(2)][1];d=['📖 '+n,'నేర్చుకో › '+n+' (ఆ సబ్జెక్టు నేరుగా తెరుచుకుంటుంది)',[n+' లోని అన్ని పాఠాలు – నెలల వారీగా','ఒక పాఠం నొక్కితే: నోట్స్, పదాలు, ప్రశ్న–జవాబులు','📝 పాఠం టెస్ట్, 📒 వర్క్‌బుక్, 🎬 వీడియో']]}else d=P[k];
+ document.getElementById('ph').textContent=d[0];document.getElementById('pa').textContent='🗺️ '+d[1];document.getElementById('pl').innerHTML=d[2].map(x=>'<li>'+x+'</li>').join('');document.getElementById('pop').classList.add('show')}
+function cl(){document.getElementById('pop').classList.remove('show')}
 sh(0);
 </script>
 </body></html>
