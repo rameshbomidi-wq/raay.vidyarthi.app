@@ -151,6 +151,8 @@
 - 🎨 HD రంగుల థీమ్ (అన్ని పేజీలు, CSS మాత్రమే) ✅ live 2026.11.09-8 (యూజర్ ఆమోదం) – index.html లో “HD రంగుల థీమ్ – అన్ని పేజీలు” CSS బ్లాక్ (`--hdT` gradient, `.btn`, `.tabs`, `.card`, `.tcard`, `.gt`, `.hw`, `.tbmon`, `.tbcard`…). కొత్త పేజీలు కూడా ఇవే classes వాడాలి.
 - help: item లో `vid` (వీడియో). విద్యార్థి వీడియో = `help/vidyarthi_ela_cherali_kotha_roopam.mp4` (1:06, కొత్త రూపం, తెలుగు captions, నిశ్శబ్దం; `/home/claude/w11/vid/shoot_s.py` + mock సర్వర్ తో తీశాను). యూజర్ ఎడిట్ చేసిన పాత వీడియో `help/విద్యార్థి ఎలా చేరాలి.mp4` repo లో ఉంచాను (లింక్ లేదు).
 
+- 🎬 2026-11-12 బ్యానర్ QR → `video.html` (ముద్రించిన బ్యానర్లలో ఉంది – **ఈ URL/ఫైల్ పేరు మార్చకూడదు**): 30 సె. పరిచయ వీడియో `help/raay_vidyarthi_app_parichayam_30sec.mp4` (720×1280, 6 స్లైడ్లు, నిశ్శబ్దం; autoplay muted) + “యాప్ తెరువు” బటన్. కొత్త వీడియో = అదే ఫైల్ పేరుతో మార్చాలి. యాప్ (index.html) లో లింక్ లేదు.
+
 ## పరీక్ష
 - `python3 -m http.server` + Playwright (chromium ముందే ఉంది). `node --check` అన్ని `<script>` blocks.
 - pdf.js CDN sandbox లో అందదు → `/opt/npm-tools/node_modules/pdfjs-dist/legacy/build/` ని route చేసి పరీక్షించాలి.
