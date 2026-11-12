@@ -2708,7 +2708,7 @@ function slInit(){if(document.getElementById('slate'))return;const d=document.cr
  while(d.firstChild)document.body.appendChild(d.firstChild);
  slFabDrag();
  const cv=document.getElementById('slCv');
- const pos=e=>{const r=cv.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top];};
+ const pos=e=>{const r=cv.getBoundingClientRect(),k=(cv.offsetWidth&&r.width)?cv.offsetWidth/r.width:1;return [(e.clientX-r.left)*k,(e.clientY-r.top)*k];};
  cv.addEventListener('pointerdown',e=>{if(SL.pid!=null||SL.tab!=='d')return;e.preventDefault();SL.pid=e.pointerId;try{cv.setPointerCapture(e.pointerId);}catch(x){}
   SL.cur={c:SL.col,w:SL.er?SL.w*3+14:SL.w,er:SL.er,p:[pos(e)]};slSeg(SL.cur);});
  cv.addEventListener('pointermove',e=>{if(e.pointerId!==SL.pid||!SL.cur)return;e.preventDefault();const evs=e.getCoalescedEvents?e.getCoalescedEvents():[e];(evs.length?evs:[e]).forEach(x=>{SL.cur.p.push(pos(x));slSeg(SL.cur);});});
@@ -2747,9 +2747,9 @@ function slTools(){const el=document.getElementById('slTools');if(!el)return;
 function slFabPos(y){const f=document.getElementById('slFab');if(!f)return;if(y==null){try{y=parseFloat(localStorage.getItem('raiSlFabY'));}catch(e){}}if(!(y>=0))return;
  y=Math.min(Math.max(64,y),window.innerHeight-130);f.style.top=y+'px';f.style.bottom='auto';return y;}
 function slFabDrag(){const f=document.getElementById('slFab');let sy=null,st=0,mv=false;slFabPos();
- f.addEventListener('pointerdown',e=>{sy=e.clientY;st=f.getBoundingClientRect().top;mv=false;try{f.setPointerCapture(e.pointerId);}catch(x){}});
- f.addEventListener('pointermove',e=>{if(sy==null)return;const dy=e.clientY-sy;if(!mv&&Math.abs(dy)<8)return;mv=true;f.classList.add('drag');slFabPos(st+dy);});
- const up=()=>{if(sy==null)return;sy=null;f.classList.remove('drag');if(mv){SL.nofab=Date.now();try{localStorage.setItem('raiSlFabY',String(f.getBoundingClientRect().top));}catch(x){}}};
+ f.addEventListener('pointerdown',e=>{const fr=f.getBoundingClientRect();f._z=(f.offsetHeight&&fr.height)?fr.height/f.offsetHeight:1;sy=e.clientY;st=fr.top/f._z;mv=false;try{f.setPointerCapture(e.pointerId);}catch(x){}});
+ f.addEventListener('pointermove',e=>{if(sy==null)return;const dy=(e.clientY-sy)/(f._z||1);if(!mv&&Math.abs(dy)<8)return;mv=true;f.classList.add('drag');slFabPos(st+dy);});
+ const up=()=>{if(sy==null)return;sy=null;f.classList.remove('drag');if(mv){SL.nofab=Date.now();try{localStorage.setItem('raiSlFabY',String(f.getBoundingClientRect().top/(f._z||1)));}catch(x){}}};
  f.addEventListener('pointerup',up);f.addEventListener('pointercancel',up);
  window.addEventListener('resize',()=>slFabPos());}
 function slFabClick(){if(SL.nofab&&Date.now()-SL.nofab<400)return;slOpen();}
@@ -2816,7 +2816,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.12-18';
+const APPV='2026.11.12-19';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -5052,7 +5052,7 @@ async function ansPhoto(inp){const f=inp.files&&inp.files[0];if(!f)return;const 
 function ansPadOpen(){ANS.pad=true;ANS.st=[];ansRender();setTimeout(()=>{const c=document.getElementById('ansCv');if(c)c.scrollIntoView({block:'center',behavior:'smooth'});},50);}
 function ansPadInit(){const cv=document.getElementById('ansCv');if(!cv)return;const w=cv.parentElement.clientWidth||320,h=Math.round(w*1.15),dpr=Math.min(2,window.devicePixelRatio||1);ANS.dpr=dpr;ANS.W=w;ANS.H=h;
  cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);cv.style.width=w+'px';cv.style.height=h+'px';ansPadDraw();
- const pos=e=>{const r=cv.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top];};let pid=null;
+ const pos=e=>{const r=cv.getBoundingClientRect(),k=(cv.offsetWidth&&r.width)?cv.offsetWidth/r.width:1;return [(e.clientX-r.left)*k,(e.clientY-r.top)*k];};let pid=null;
  cv.onpointerdown=e=>{if(pid!=null)return;e.preventDefault();pid=e.pointerId;try{cv.setPointerCapture(pid);}catch(x){}ANS.cur={c:ANS.col,w:ANS.w,p:[pos(e)]};ANS.st.push(ANS.cur);ansPadDraw();};
  cv.onpointermove=e=>{if(e.pointerId!==pid)return;e.preventDefault();(e.getCoalescedEvents?e.getCoalescedEvents():[e]).forEach(x=>ANS.cur.p.push(pos(x)));ansPadDraw();};
  cv.onpointerup=cv.onpointercancel=e=>{if(e.pointerId===pid){pid=null;ANS.cur=null;}};}
