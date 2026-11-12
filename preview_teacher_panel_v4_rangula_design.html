@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="te"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ప్రివ్యూ – రాయ్ విద్యార్థి టీచర్ ప్యానెల్ v4 (రంగుల డిజైన్)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins','Noto Sans Telugu',system-ui,sans-serif;background:#0b4d24;color:#1f2937;min-height:100vh;padding-bottom:84px}
+.wrap{max-width:520px;margin:0 auto}
+/* హెడర్ */
+.top{background:linear-gradient(110deg,#7c3aed 0%,#a855f7 45%,#ec4899 100%);color:#fff;padding:16px 14px 18px;border-radius:0 0 22px 22px;display:flex;align-items:center;gap:10px;box-shadow:0 6px 18px #0005}
+.top .tt{flex:1;min-width:0}
+.top h1{font-size:1.25rem;font-weight:800;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top small{opacity:.92;font-size:.82rem}
+.top .motto{font-size:.75rem;opacity:.85;margin-top:2px}
+.pill{background:#ffffff33;border:0;color:#fff;font:inherit;font-weight:700;padding:8px 12px;border-radius:14px;font-size:.85rem;cursor:pointer;white-space:nowrap}
+.av{width:46px;height:46px;border-radius:14px;background:#ffffff33;display:grid;place-items:center;font-size:26px;cursor:pointer}
+/* ప్యానెల్‌లు */
+.panel{margin:14px 10px 0;border:5px solid #e11d2a;border-radius:24px;padding:14px 10px;background:#b4f1c1;box-shadow:0 4px 0 #0003}
+.panel.white{background:#fff}
+.ptitle{display:table;margin:-2px auto 12px;background:#0f5a2c;color:#fff;font-weight:800;padding:8px 22px;border-radius:16px;font-size:1rem;box-shadow:0 4px 0 #06331a}
+/* కరోసెల్ */
+.bar{height:10px;border-radius:9px;background:linear-gradient(90deg,#6d4de6,#22c3a6);margin:2px 6px 12px}
+.slide{display:none;min-height:250px;padding:0 10px;animation:fd .35s}
+.slide.on{display:block}
+@keyframes fd{from{opacity:0;transform:translateX(14px)}to{opacity:1}}
+.slide h3{text-align:center;font-size:1.45rem;font-weight:800;background:linear-gradient(90deg,#db2777,#7c3aed);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:10px;line-height:1.35}
+.slide ol{padding-left:26px;font-weight:700;font-size:1.02rem;line-height:1.9}
+.slide ol li:nth-child(6n+1){color:#1f2937}.slide ol li:nth-child(6n+2){color:#c026d3}.slide ol li:nth-child(6n+3){color:#1f2937}.slide ol li:nth-child(6n+4){color:#0891b2}.slide ol li:nth-child(6n+5){color:#6d28d9}.slide ol li:nth-child(6n){color:#059669}
+.chipbox{margin:12px 0 4px;border:4px solid #d06ae8;border-radius:22px;padding:10px;text-align:center;font-weight:700;font-size:.95rem}
+.big{font-size:56px;text-align:center;margin:8px 0}
+.dots{display:flex;justify-content:center;gap:8px;margin:12px 0}
+.dots i{width:14px;height:14px;border-radius:9px;background:#d1d5db;transition:.3s;cursor:pointer}
+.dots i.on{width:42px;background:#6d4de6}
+.cbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.b3{border:0;color:#fff;font:inherit;font-weight:800;font-size:1rem;padding:12px 18px;border-radius:999px;cursor:pointer;box-shadow:0 5px 0 #0003;min-width:96px}
+.b3:active{transform:translateY(3px);box-shadow:0 2px 0 #0003}
+.red{background:linear-gradient(#f05252,#c81e1e)}.grn{background:linear-gradient(#3fb24a,#1f7a2a)}.blu{background:linear-gradient(#3b8de6,#155bb5)}
+/* సబ్జెక్టులు (ఎరుపు పెద్ద బటన్లు) */
+.subs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sb{border:0;border-radius:20px;color:#fff;font:inherit;padding:10px 4px 8px;background:linear-gradient(#ef4444,#b91c1c);box-shadow:0 5px 0 #7f1d1d,inset 0 2px 0 #fff5;cursor:pointer;text-align:center}
+.sb b{display:block;font-size:1.6rem;line-height:1.2}
+.sb span{display:block;font-weight:800;font-size:.86rem}
+.sb small{display:block;font-size:.7rem;opacity:.95;margin-top:2px}
+/* త్వరిత యాక్సెస్ (రంగుల టైల్స్) */
+.q4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.qt{border:0;border-radius:20px;color:#fff;font:inherit;font-weight:800;font-size:.82rem;padding:12px 4px 10px;cursor:pointer;box-shadow:0 5px 0 #0004,inset 0 2px 0 #fff4;text-align:center}
+.qt span{display:block;font-size:2rem;line-height:1.2}
+.or{background:linear-gradient(#fb923c,#e05a0c)}.bl2{background:linear-gradient(#3b82f6,#1e40af)}.gr2{background:linear-gradient(#22c55e,#15803d)}.pu{background:linear-gradient(#a855f7,#6d28d9)}
+/* ప్రగతి */
+.st{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.st div{background:#fff;border-radius:16px;text-align:center;padding:8px 2px;box-shadow:0 3px 0 #0002}
+.st b{display:block;font-size:1.3rem;color:#7c3aed}.st small{font-size:.7rem;font-weight:700}
+/* గుండ్రని ఐకాన్లు */
+.rnd{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 6px;justify-items:center}
+.rb{width:92px;height:92px;border-radius:50%;background:radial-gradient(circle at 50% 35%,#2d3a9e,#18217a);border:5px solid #f6d343;color:#fff;font:inherit;font-weight:800;font-size:.78rem;cursor:pointer;box-shadow:0 4px 0 #0004;position:relative;line-height:1.25}
+.rb span{display:block;font-size:1.7rem}
+.rb i{position:absolute;top:-4px;right:-4px;background:#e11d2a;color:#fff;font-style:normal;font-size:.68rem;border-radius:9px;padding:1px 6px}
+.foot{text-align:center;margin:16px 0 6px;font-weight:800}
+.foot a{color:#f6d343;text-decoration:none}
+/* కింది నావ్ (యాప్‌లో ఉన్నదే) */
+.nav{position:fixed;left:0;right:0;bottom:0;background:#fff;display:flex;justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom));border-radius:18px 18px 0 0;box-shadow:0 -4px 14px #0004;max-width:520px;margin:0 auto}
+.nav button{border:0;background:none;font:inherit;font-size:.72rem;font-weight:700;color:#6b7280;cursor:pointer}
+.nav button span{display:block;font-size:1.4rem}
+.nav .on{color:#7c3aed}
+.note{margin:12px 10px 0;background:#fef3c7;border-radius:14px;padding:10px 12px;font-size:.82rem;line-height:1.6}
+/* సబ్జెక్టు రంగులు */
+.c-tel{background:linear-gradient(#fb923c,#ea580c);box-shadow:0 5px 0 #9a3412,inset 0 2px 0 #fff5}
+.c-eng{background:linear-gradient(#60a5fa,#1d4ed8);box-shadow:0 5px 0 #1e3a8a,inset 0 2px 0 #fff5}
+.c-mat{background:linear-gradient(#f87171,#b91c1c);box-shadow:0 5px 0 #7f1d1d,inset 0 2px 0 #fff5}
+.c-evs{background:linear-gradient(#4ade80,#15803d);box-shadow:0 5px 0 #14532d,inset 0 2px 0 #fff5}
+.c-hin{background:linear-gradient(#f472b6,#be185d);box-shadow:0 5px 0 #831843,inset 0 2px 0 #fff5}
+.c-sci{background:linear-gradient(#2dd4bf,#0f766e);box-shadow:0 5px 0 #134e4a,inset 0 2px 0 #fff5}
+.c-phy{background:linear-gradient(#a78bfa,#6d28d9);box-shadow:0 5px 0 #4c1d95,inset 0 2px 0 #fff5}
+.c-bio{background:linear-gradient(#a3e635,#4d7c0f);box-shadow:0 5px 0 #365314,inset 0 2px 0 #fff5}
+.c-soc{background:linear-gradient(#fbbf24,#b45309);box-shadow:0 5px 0 #78350f,inset 0 2px 0 #fff5}
+.c-te2{background:linear-gradient(#fdba74,#c2410c);box-shadow:0 5px 0 #7c2d12,inset 0 2px 0 #fff5}
+.subs{grid-template-columns:repeat(auto-fill,minmax(74px,1fr))}
+/* దారి ట్యాగ్ */
+.go{display:block;margin-top:5px;background:#fef08a;color:#713f12;font-size:.62rem;font-weight:700;border-radius:8px;padding:2px 4px;line-height:1.3}
+.rb .go{position:absolute;left:50%;bottom:-22px;transform:translateX(-50%);white-space:nowrap;margin:0}
+.nav .go{font-size:.55rem;padding:1px 3px}
+.hidego .go,.hidego .go2{display:none}
+.rnd{row-gap:30px;padding-bottom:16px}
+.ctl{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:8px}
+.ctl button{border:0;border-radius:10px;padding:6px 10px;font:inherit;font-weight:700;font-size:.8rem;background:#fff;cursor:pointer}
+.ctl button.on{background:#7c3aed;color:#fff}
+/* వివరాల పాప్‌అప్ */
+#pop{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center;z-index:9}
+#pop.show{display:flex}
+#pop .box{background:#fff;width:100%;max-width:520px;border-radius:22px 22px 0 0;padding:16px 16px 26px;animation:up .25s}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+#pop h3{font-size:1.15rem;margin-bottom:4px}
+#pop .path{display:inline-block;background:#fef08a;color:#713f12;border-radius:10px;padding:3px 10px;font-weight:700;font-size:.85rem;margin:4px 0 10px}
+#pop ul{padding-left:20px;line-height:1.8;font-size:.92rem}
+#pop .x{margin-top:14px;width:100%}
+#toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 16px;border-radius:12px;font-size:.88rem;opacity:0;transition:.3s;pointer-events:none;max-width:90%}
+#toast.show{opacity:1}
+@media (max-width:380px){.rb{width:80px;height:80px;font-size:.7rem}.slide h3{font-size:1.25rem}.sb span{font-size:.78rem}}
+</style><style>
+.hero2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hcol{border:4px solid #d06ae8;border-radius:20px;padding:10px;text-align:center;cursor:pointer}
+.hic{font-size:2.2rem;display:block}
+.hcol b{font-size:1rem}
+.att{display:flex;flex-direction:column;gap:4px;margin:6px 0}
+.att i{font-style:normal;font-weight:700;font-size:.8rem;border-radius:9px;padding:2px 6px}
+.att .p{background:#dcfce7;color:#166534}.att .a{background:#fee2e2;color:#991b1b}.att .b{background:#dbeafe;color:#1e40af}
+.wk{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.day{border:0;border-radius:14px;background:#fff;padding:8px 2px;font:inherit;cursor:pointer;box-shadow:0 3px 0 #0002}
+.day b{display:block;font-size:.8rem}.day small{font-size:.65rem}
+.day.td{background:linear-gradient(#a855f7,#6d28d9);color:#fff}
+.tg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.tg .sb{position:relative;padding:12px 6px 10px}
+.tg .sb span{font-size:.9rem}
+.bd{position:absolute;top:-6px;right:-6px;background:#facc15;color:#000;font-style:normal;font-weight:800;border-radius:10px;padding:0 7px;font-size:.75rem}
+</style></head><body><div class="wrap">
+<header class="top">
+ <div class="av" onclick="pp('me')">👩‍🏫</div>
+ <div class="tt"><small>శుభ సాయంత్రం 🌇 • 🏫 ZPHS TV పల్లి</small><h1>ఉపాధ్యాయుల ప్యానెల్</h1><div class="motto">5వ తరగతి • అన్ని సబ్జెక్టులు</div></div>
+ <button class="pill" onclick="pp('help')">❓<em class="go">➜ సహాయం</em></button>
+</header>
+
+<div class="note">👀 <b>టీచర్ ప్యానెల్ ప్రివ్యూ</b> – యాప్ మారలేదు. <b style="background:#fef08a">పసుపు దారి</b> = ఎక్కడికి వెళ్తుంది; నొక్కితే ఆ పేజీలో ఏముందో చూపిస్తుంది.<div class="ctl"><button id="gob" onclick="tg()">🗺️ దారులు దాచు</button><button onclick="hm()" id="hmb">👑 HM గా చూడు</button></div></div>
+
+<!-- ఈరోజు హాజరు + హోంవర్క్ హీరో -->
+<section class="panel white">
+ <div class="bar"></div>
+ <div class="hero2">
+  <div class="hcol" onclick="pp('at')"><span class="hic">✅</span><b>ఈరోజు హాజరు</b><div class="att"><i class="p">28 హాజరు</i><i class="a">3 గైర్హాజరు</i></div><em class="go">➜ హాజరు వేయి</em></div>
+  <div class="hcol" onclick="pp('hw')"><span class="hic">📒</span><b>హోంవర్క్</b><div class="att"><i class="p">4 నడుస్తున్నాయి</i><i class="b">31 పిల్లలు</i></div><em class="go">➜ హోంవర్క్ ఇవ్వు/చూడు</em></div>
+ </div>
+ <div class="cbtns" style="margin-top:12px"><button class="b3 grn" onclick="pp('at')">✅ హాజరు వేయి</button><button class="b3 blu" onclick="pp('hw')">➕ హోంవర్క్</button></div>
+</section>
+
+<!-- ఈ వారం -->
+<section class="panel">
+ <div class="ptitle">📅 ఈ వారం</div>
+ <div class="wk" id="wk"></div>
+</section>
+
+<div id="grps"></div>
+
+<p class="foot"><a href="https://raayeducation.in" target="_blank" rel="noopener">© రాయ్ ఎడ్యుకేషన్</a></p>
+</div>
+<nav class="nav"><button onclick="pp('back')"><span>←</span>వెనక్కి<em class="go">విద్యార్థి హోమ్</em></button><button class="on"><span>👩‍🏫</span>ప్యానెల్<em class="go">ఇక్కడే</em></button><button onclick="pp('out')"><span>🔒</span>లాక్<em class="go">PIN</em></button></nav>
+<div id="pop" onclick="if(event.target===this)cl()"><div class="box"><h3 id="ph"></h3><span class="path" id="pa"></span><ul id="pl"></ul><button class="b3 grn x" onclick="cl()">సరే 👍</button></div></div>
+<div id="toast"></div>
+<script>
+const G=[
+ ['📌 రోజువారీ పనులు','#e11d2a',[['dq','💬','సందేహాలు','c-hin',5],['pg','🧑‍🎓','విద్యార్థులు & మార్కులు','c-eng'],['qp','📝','ప్రశ్నాపత్రం','c-mat'],['ws','🔢','రోజువారీ లెక్కలు','c-tel']]],
+ ['📘 పాఠాలు','#2563eb',[['tb','📘','పాఠ్యపుస్తకం నోట్స్ & టెస్ట్','c-phy'],['vl','🎬','వీడియో పాఠాలు','c-mat'],['nt','📖','పాఠం నోట్స్','c-sci'],['ac','🗓️','అకాడమిక్ క్యాలెండర్','c-soc'],['yg','🧘','యోగా & ఆటలు','c-evs']]],
+ ['🏫 పాఠశాల','#16a34a',[['ev','📅','ఈవెంట్ / టెస్ట్','c-eng'],['fl','📢','ఫ్లాష్ / ఫోటోలు','c-hin'],['lb','📚','పుస్తకాలు / టూల్స్','c-bio'],['rp','📊','రిపోర్ట్','c-phy'],['sp','🏫','School ప్రగతి','c-tel','',1]]],
+ ['⚙️ సెటప్','#6b7280',[['sy','☁️','ఆన్‌లైన్ సింక్','c-sci'],['tc','👥','ఉపాధ్యాయులు','c-eng','',1],['st','⚙️','సెట్టింగ్స్','c-te2'],['help','❓','సహాయం','c-soc']]]];
+const P={
+ at:['✅ ఈరోజు హాజరు','ప్యానెల్ › ఈరోజు హాజరు',['తరగతి పిల్లల జాబితా – ✔/✘ ఒక్క నొక్కులో','సేవ్ చేస్తే నెల హాజరు ఆటో','గైర్హాజరు జాబితా WhatsApp కు']],
+ hw:['📒 హోంవర్క్','ప్యానెల్ › హోంవర్క్',['➕ కొత్తది: తరగతి, సబ్జెక్టు, పని, గడువు','🎒 Bag SOP పరిమితి గుర్తు','సమర్పించినవి 📷 ఫోటోతో చూడు']],
+ dq:['💬 సందేహాలు','ప్యానెల్ › సందేహాలు',['పిల్లల ప్రశ్నలు (ఫోటోతో)','🤖 ChatGPT/Gemini తో జవాబు తయారు','జవాబు + 🎬 వీడియో లింక్ పంపు']],
+ pg:['🧑‍🎓 విద్యార్థులు & మార్కులు','ప్యానెల్ › విద్యార్థులు & మార్కులు',['పిల్లల జాబితా (పేస్ట్ / CSV)','FA (5+5+5+35), SA (MCQ+FRS) మార్కులు','ప్రగతి కార్డులకు ఆటో']],
+ qp:['📝 ప్రశ్నాపత్రం','ప్యానెల్ › ప్రశ్నాపత్రం',['బ్యాంక్ / 📘 పాఠ్యపుస్తకం ప్రశ్నలతో తయారు','🖨 ప్రింట్ లేదా ఆన్‌లైన్ పంపు','ఫలితాలు + రాసిన తేదీ']],
+ ws:['🔢 రోజువారీ లెక్కలు','ప్యానెల్ › రోజువారీ లెక్కలు',['రోజూ 10 లెక్కలు సెట్ చేయి','తరగతి ర్యాంకులు']],
+ tb:['📘 పాఠ్యపుస్తకం నోట్స్ & టెస్ట్','ప్యానెల్ › పాఠ్యపుస్తకం',['పాఠాలు సరిచేయి / కొత్త పాఠం / దాచు','🔒/🔓 జవాబుల లాక్ పాఠం వారీ','📗 టీచర్ గైడ్, 📖 మొత్తం పుస్తకం']],
+ vl:['🎬 వీడియో పాఠాలు','ప్యానెల్ › వీడియో పాఠాలు',['YouTube/Drive లింక్ – పాఠం వారీ ఫోల్డర్','🔎 YouTube లో వెతుకు']],
+ nt:['📖 పాఠం నోట్స్','ప్యానెల్ › పాఠం నోట్స్',['మీ సొంత నోట్స్ / PDF','పిల్లల నేర్చుకో లో కనిపిస్తాయి']],
+ ac:['🗓️ అకాడమిక్ క్యాలెండర్','ప్యానెల్ › క్యాలెండర్',['నెల వారీ పాఠాలు (1–5 ACAL, 6–10 HSCAL)']],
+ yg:['🧘 యోగా & ఆటలు','ప్యానెల్ › యోగా & ఆటలు',['ఆసనాలు, PE కృత్యాలు']],
+ ev:['📅 ఈవెంట్ / టెస్ట్','ప్యానెల్ › ఈవెంట్లు',['పరీక్షలు, సెలవులు, లైవ్ క్లాస్ – ఫోటోలతో','పిల్లల హోమ్ & షెడ్యూల్‌లో']],
+ fl:['📢 ఫ్లాష్ / ఫోటోలు','ప్యానెల్ › ఫ్లాష్',['ఫ్లాష్ న్యూస్ వరుస','హోమ్ స్లైడ్ ఫోటోలు']],
+ lb:['📚 పుస్తకాలు / టూల్స్','ప్యానెల్ › పుస్తకాలు/టూల్స్',['🧑‍🏫 టీచర్ టూల్స్: MDM వోచర్, బ్యాగ్ బరువు రిజిస్టర్','PDF అప్‌లోడ్ + స్థలం మేనేజర్']],
+ rp:['📊 రిపోర్ట్','ప్యానెల్ › రిపోర్ట్',['టెస్ట్/హోంవర్క్ ఫలితాలు – పిల్లల వారీ','బలహీన పాఠాలు']],
+ sp:['🏫 School ప్రగతి','పుస్తకాలు/టూల్స్ › School ప్రగతి (HM మాత్రమే – పాఠశాల మొత్తం)',['అన్ని తరగతుల మార్కులు, హాజరు','ప్రగతి/HPC కార్డులు, CCE రిజిస్టర్ ప్రింట్','పాఠశాల గ్రేడ్ నివేదిక']],
+ sy:['☁️ ఆన్‌లైన్ సింక్','ప్యానెల్ › సింక్',['పబ్లిక్ / సొంత సర్వర్','జాయిన్ లింక్ – పిల్లలకు పంపు']],
+ tc:['👥 ఉపాధ్యాయులు','ప్యానెల్ › ఉపాధ్యాయులు (HM మాత్రమే)',['టీచర్ల జాబితా, తరగతి/సబ్జెక్టు','PIN ఇవ్వు/మార్చు']],
+ st:['⚙️ సెట్టింగ్స్','ప్యానెల్ › సెట్టింగ్స్',['పాఠశాల పేరు, PIN','బ్యాకప్']],
+ help:['❓ సహాయం','ప్యానెల్ › సహాయం',['ప్రశ్నలు–జవాబులు, బొమ్మలతో','🎬 వీడియో']],
+ me:['👩‍🏫 నేను','హెడర్',['లాగిన్ అయిన టీచర్ – మీ తరగతులే కనిపిస్తాయి']],
+ back:['← వెనక్కి','విద్యార్థి హోమ్',['ప్యానెల్ నుండి బయటకు']],
+ out:['🔒 లాక్','PIN పేజీ',['మళ్ళీ తెరవాలంటే PIN']],
+ day:['📅 ఆ రోజు','ఈ వారం › రోజు',['ఆ రోజు ఈవెంట్లు + హోంవర్క్ (toast)']]};
+let HM=0;
+function dr(){document.getElementById('grps').innerHTML=G.map(([g,col,it])=>`<section class="panel" style="border-color:${col}"><div class="ptitle" style="background:${col}">${g}</div><div class="tg">${it.filter(x=>HM||!x[5]).map(([k,ic,n,c,b])=>`<button class="sb ${c}" onclick="pp('${k}')"><b>${ic}</b><span>${n}</span>${b?`<i class="bd">${b}</i>`:''}<em class="go">➜ ${P[k][1].split(' › ').pop()}</em></button>`).join('')}</div></section>`).join('');}
+const D=['సోమ','మంగళ','బుధ','గురు','శుక్ర','శని'],E=['📝 FA2','','📒 2','','🎒 రేపు','🎒 నో బ్యాగ్'];
+document.getElementById('wk').innerHTML=D.map((d,i)=>`<button class="day${i===3?' td':''}" onclick="pp('day')"><b>${d}</b><small>${E[i]||'–'}</small></button>`).join('');
+dr();
+function hm(){HM=!HM;document.getElementById('hmb').textContent=HM?'🧑‍🏫 టీచర్ గా చూడు':'👑 HM గా చూడు';dr()}
+function tg(){const h=document.body.classList.toggle('hidego');document.getElementById('gob').textContent=h?'🗺️ దారులు చూపు':'🗺️ దారులు దాచు'}
+function pp(k){const d=P[k];document.getElementById('ph').textContent=d[0];document.getElementById('pa').textContent='🗺️ '+d[1];document.getElementById('pl').innerHTML=d[2].map(x=>'<li>'+x+'</li>').join('');document.getElementById('pop').classList.add('show')}
+function cl(){document.getElementById('pop').classList.remove('show')}
+</script></body></html>
