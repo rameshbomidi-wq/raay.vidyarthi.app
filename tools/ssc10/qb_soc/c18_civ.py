@@ -1,5 +1,5 @@
 # పౌరశాస్త్రం – ప్రజాస్వామ్య రాజకీయాలు (cv1–cv5) – Mission March SSC-2027 ప్రశ్నల బ్యాంక్ (Social_Final.pdf ముద్రిత పేజీలు 16–23)
-# పౌరశాస్త్రం పాఠ్యపుస్తకం repo లో ఇంకా లేదు (notes-10.js లో పాఠాలు లేవు) – పాఠం పేర్లు LESSONS ద్వారా (build_ssc → window.RAAY_SSC_LN)
+# పౌరశాస్త్రం పాఠాలు ఇప్పుడు notes-10.js లో ఉన్నాయి (2026-11-12, tools/class10_lang/ch/civ01–05.py); ఈ LESSONS sscLName fallback మాత్రమే
 LESSONS = [
     {'id': 'cv1', 'no': 18, 't': 'అధికార విభజన (Power-sharing) – పౌరశాస్త్రం'},
     {'id': 'cv2', 'no': 19, 't': 'సమాఖ్య వ్యవస్థ (Federalism)'},
