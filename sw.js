@@ -21,10 +21,19 @@ self.addEventListener('fetch', e => {
   // సింక్, GitHub లిస్ట్, config – ఎప్పుడూ నెట్‌వర్క్ నుండే
   if (url.pathname.endsWith('/config.json') || /script\.google(usercontent)?\.com|api\.github\.com|firestore\.googleapis|identitytoolkit|securetoken|drive\.google\.com|docs\.google\.com/.test(url.host)) return;
   const same = url.origin === location.origin;
-  // యాప్ పేజీ: ముందు నెట్‌వర్క్, లేకపోతే కాష్
+  // యాప్ పేజీ: సేవ్ అయిన కాపీ వెంటనే (వేగంగా తెరుచుకోవడానికి) + వెనుక కొత్త వెర్షన్ తెచ్చి, మారితే యాప్‌కు 'newver' చెబుతాం
   if (same && (url.pathname === BASE || url.pathname === BASE + 'index.html')) {
-    e.respondWith(fetch(req).then(r => { if (r.status === 200) { const cp = r.clone(); caches.open(VER).then(c => c.put('./index.html', cp)); } return r; })
-      .catch(() => caches.match('./index.html')));
+    const tag = r => r ? (r.headers.get('etag') || r.headers.get('last-modified') || r.headers.get('content-length') || '') : '';
+    const hit = caches.match('./index.html');
+    const net = fetch(req).then(async r => {
+      if (r.status !== 200) return r;
+      const old = await hit, cp = r.clone(), c = await caches.open(VER);
+      await c.put('./index.html', cp);
+      if (old && tag(old) !== tag(r)) (await self.clients.matchAll({type: 'window', includeUncontrolled: true})).forEach(w => w.postMessage({t: 'newver'}));
+      return r;
+    });
+    e.waitUntil(net.catch(() => {}));
+    e.respondWith(hit.then(h => h || net).catch(() => net));
     return;
   }
   // పాఠం నోట్స్ (notes-3.js …): ముందు నెట్‌వర్క్ (కొత్త నోట్స్ వెంటనే), లేకపోతే కాష్ (ఆఫ్లైన్)
