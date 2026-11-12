@@ -1325,12 +1325,19 @@ const SRC='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
 const PKK='rv_sp_pack_v1';
 /* పాత 'School ప్రగతి – అన్ని నివేదికలు' (2026.11.11-5) డేటా ఉంటే ఒక్కసారి ఆటోగా తెచ్చుకో */
 try{if(!localStorage.getItem('rv_sp_pack_v1')&&!localStorage.getItem('rv_sp_ps_v1')){const old=localStorage.getItem('raay_school_pragathi_v1');if(old)localStorage.setItem('rv_sp_ps_v1',old);}}catch(e){}let PACK={};try{PACK=JSON.parse(localStorage.getItem(PKK)||'{}')||{};}catch(e){PACK={};}
-function savePack(){try{localStorage.setItem(PKK,JSON.stringify(PACK));return true;}catch(e){showToast('సేవ్ కాలేదు — స్థలం నిండింది. బ్యాకప్ తీసుకోండి');return false;}}
+function savePack(){try{const H=(typeof HIDDEN==='object'&&HIDDEN&&Object.keys(HIDDEN).length)?HIDDEN:null;const P=H?Object.assign({},PACK,{DATA:Object.assign({},H,PACK.DATA||{})}):PACK;localStorage.setItem(PKK,JSON.stringify(P));return true;}catch(e){showToast('సేవ్ కాలేదు — స్థలం నిండింది. బ్యాకప్ తీసుకోండి');return false;}}
 const SUBDEF=[{"c":1,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":2,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":3,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]},{"n":"EVS","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":4,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]},{"n":"EVS","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":5,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]},{"n":"EVS","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":6,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"Second Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]},{"n":"General Science","max":50,"tm":[10,10,10,20]},{"n":"Social Studies","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":7,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"Second Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]},{"n":"General Science","max":50,"tm":[10,10,10,20]},{"n":"Social Studies","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":8,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"Second Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]},{"n":"Physical Science","max":25,"tm":[5,5,5,10]},{"n":"Biological Science","max":25,"tm":[5,5,5,10]},{"n":"Social Studies","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":9,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"Second Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]},{"n":"Physical Science","max":25,"tm":[5,5,5,10]},{"n":"Biological Science","max":25,"tm":[5,5,5,10]},{"n":"Social Studies","max":50,"tm":[10,10,10,20]}],"st":[]},{"c":10,"subs":[{"n":"First Language","max":50,"tm":[10,10,10,20]},{"n":"Second Language","max":50,"tm":[10,10,10,20]},{"n":"English","max":50,"tm":[10,10,10,20]},{"n":"Mathematics","max":50,"tm":[10,10,10,20]},{"n":"Physical Science","max":25,"tm":[5,5,5,10]},{"n":"Biological Science","max":25,"tm":[5,5,5,10]},{"n":"Social Studies","max":50,"tm":[10,10,10,20]}],"st":[]}];
 const SCH=Object.assign({name:"మా పాఠశాల",short:"మా పాఠశాల",place:"",udise:"",year:"2026-27"},PACK.SCH||{},{key:"rv_sp_ps_v1"});
 try{const o=JSON.parse(localStorage.getItem(SCH.key)||'{}').sch;if(o)Object.assign(SCH,o,{key:SCH.key});}catch(e){}
+/* 👩‍🏫 టీచర్ లాగిన్ = వారి తరగతులు మాత్రమే; HM (admin) / టీచర్ తరగతి ఇవ్వకపోతే = అన్నీ */
+var LOCK=(function(){try{const P=window.parent;if(!P||P===window||typeof P.tScope!=='function')return null;const t=P.tScope();
+  if(!t||!t.cls||!t.cls.length)return null;const L=t.cls.map(Number).filter(c=>c>=1&&c<=10).sort((a,b)=>a-b).map(c=>c+'A');return L.length?L:null;}catch(e){return null;}})();
+var LOCKN=(function(){try{return LOCK?(window.parent.tScope().n||''):'';}catch(e){return '';}})();
+var HIDDEN={};
 const DATA=(function(){const D={},src=PACK.DATA||{},rng=Array.isArray(PACK.rng)?PACK.rng:[1,10];
   for(let c=1;c<=10;c++){const k=c+'A';if((c>=rng[0]&&c<=rng[1])||(src[k]&&src[k].length))D[k]=(src[k]||[]).map(fixStu).filter(s=>s.id&&s.name);}
+  if(LOCK){Object.keys(D).forEach(k=>{if(!LOCK.includes(k)){HIDDEN[k]=D[k];delete D[k];}});Object.keys(src).forEach(k=>{if(!LOCK.includes(k)&&!(k in HIDDEN))HIDDEN[k]=src[k];});
+    const all={};LOCK.forEach(k=>all[k]=D[k]||(src[k]||[]).map(fixStu).filter(s=>s.id&&s.name));Object.keys(D).forEach(k=>delete D[k]);Object.assign(D,all);}
   if(!Object.keys(D).length)D['1A']=[];return D;})();
 PACK.DATA=DATA;
 
@@ -1531,7 +1538,7 @@ function hres(C,i,rec){if(!rec)return null;const tot=rec[4],g=rec[5]||'';if(tot=
   return {tot:tot,max:max,p:Math.min(100,tot/max*100),dbl:n>1};}
 
 function loadPS(){try{const r=localStorage.getItem(PKEY);if(r)PS=Object.assign({mk:{},att:{},hpc:null},JSON.parse(r));}catch(e){}}
-function savePS(){try{localStorage.setItem(PKEY,JSON.stringify(PS));}catch(e){showToast('సేవ్ కాలేదు — బ్యాకప్ తీసుకోండి');}}
+function savePS(){try{localStorage.setItem(PKEY,JSON.stringify(PS));if(typeof appPushSoon==='function')appPushSoon();}catch(e){showToast('సేవ్ కాలేదు — బ్యాకప్ తీసుకోండి');}}
 function indexHPC(){HPC=JSON.parse(JSON.stringify(PS.hpc||HPC_BASE));HX={};
   HPC.forEach(C=>{C.eff=C.subs.map((sb,i)=>effMax(C,i));C.st.forEach(s=>HX[s.id]={C:C,s:s});});}
 function cnum(cls){return parseInt(cls,10);}
@@ -1648,13 +1655,13 @@ document.addEventListener('input',e=>{
   const el=e.target;if(!el.closest||!el.closest('#progSheet'))return;
   const s=DATA[progCls][progIdx],c=cnum(progCls);
   if(el.classList.contains('ai')){const mi=+el.dataset.mi,k=+el.dataset.k,cur=attM(s,mi).slice();cur[k]=el.value===''?0:Math.max(0,+el.value||0);
-    PS.att[s.id]=PS.att[s.id]||{};PS.att[s.id][mi]=cur;savePS();
+    PS.att[s.id]=PS.att[s.id]||{};PS.att[s.id][mi]=cur;dirtA(s.id,mi);savePS();
     updAtt(s);
     return;}
   if(el.classList.contains('mi')){const i=+el.dataset.i,row=[...document.querySelectorAll('#entryBox input[data-i="'+i+'"]')];
     let vals=row.map(x=>{let v=x.value.trim();if(v==='')return null;if(v.toUpperCase()==='AB')return 'AB';let n=+v;if(isNaN(n))return null;const mx=+x.max||1e9;if(n<0)n=0;if(n>mx){n=mx;x.value=n;}return n;});
     PS.mk[s.id]=PS.mk[s.id]||{};PS.mk[s.id][curA]=PS.mk[s.id][curA]||{};
-    if(vals.every(v=>v===null))delete PS.mk[s.id][curA][i];else PS.mk[s.id][curA][i]=vals;savePS();
+    if(vals.every(v=>v===null))delete PS.mk[s.id][curA][i];else PS.mk[s.id][curA][i]=vals;dirtM(s.id,curA,i);savePS();
     const r=aRes(s,c,curA,i),sc=scOf(c,clsDef(c).subs[i].n);
     document.getElementById('et'+i).textContent=r?(r.ab?'AB':nf(r.tot)+'/'+r.max):'';const g=document.getElementById('eg'+i);g.textContent=r&&!r.ab?r.g:'';g.className='gd '+(r&&!r.ab?gcl(r.g,sc):'');
     drawMkBox(s,c);}
@@ -1820,7 +1827,7 @@ function drawMenu(){const box=document.getElementById('menuBox');if(!box)return;
    +B('p','openPL(true)','🎓 ప్రమోషన్ లిస్ట్<br><small>సంవత్సరాంతం</small>')
    +B('p',"openTbl('det')",'🪪 విద్యార్థుల వివరాలు<br><small>అడ్మిషన్ రిజిస్టర్ లాగా</small>')
    +B('p',"openBook('all')",'📦 తరగతి మొత్తం ఫైల్<br><small>పైవన్నీ ఒకేసారి</small>')+'</div>'
-   +'<div class="mt" style="margin-top:10px">🏫 పాఠశాల మొత్తం</div><div class="mg">'+B('s',"openSchGrade('ANN')",'🏫 పాఠశాల గ్రేడ్ నివేదిక<br><small>అన్ని తరగతులు • గ్రేడ్ వారీ సంఖ్య • సబ్జెక్టు సగటు</small>')+B('s','openPLGroupAll()','🎓 ప్రమోషన్ లిస్ట్ — విభాగం మొత్తం<br><small>I–V / VI–VIII / IX–X</small>')+'</div>';
+   +(LOCK?'<div class="hint" style="margin-top:10px;background:#eef6ff;border:1px solid #bcd;border-radius:10px;padding:8px 10px">👩‍🏫 '+(LOCKN?LOCKN+' — ':'')+'మీ లాగిన్‌లో మీ తరగతి ('+LOCK.map(k=>CLS_NAME[k]||k).join(', ')+') మాత్రమే. మీరు ఇక్కడ వేసిన మార్కులు / హాజరు యాప్ ద్వారా HM గారికి ఆటోగా వెళ్తాయి. 🏫 పాఠశాల మొత్తం నివేదికలు HM లాగిన్‌లో.</div>':'<div class="mt" style="margin-top:10px">🏫 పాఠశాల మొత్తం</div><div class="mg">'+B('s',"openSchGrade('ANN')",'🏫 పాఠశాల గ్రేడ్ నివేదిక<br><small>అన్ని తరగతులు • గ్రేడ్ వారీ సంఖ్య • సబ్జెక్టు సగటు</small>')+B('s','openPLGroupAll()','🎓 ప్రమోషన్ లిస్ట్ — విభాగం మొత్తం<br><small>I–V / VI–VIII / IX–X</small>')+'</div>');
   box.innerHTML=h;}
 
 /* ---------- హార్డ్ కాపీ ఫైల్స్ (తరగతి / విద్యార్థి) ---------- */
@@ -2141,7 +2148,7 @@ function impMatch(r,cls){if(r.id){const e=findStu(r.id);if(e)return e;}const k=n
   const i=L.findIndex(s=>nmKey(s.name)===k&&(!r.father||!s.father||nmKey(s.father)===nmKey(r.father)));return i>=0?{cls:cls,k:i,s:L[i]}:null;}
 function impGo(){const I=IMP;if(!I)return;const cls=document.getElementById('stuCls').value;let all=[];I.T.forEach(T=>all=all.concat(impRows(T)));if(!all.length)return;
   let add=0,upd=0;const seen=new Set();
-  all.forEach(r=>{const k=r.cls||I.to||cls;ensureCls(k);const e=impMatch(r,k);const v={};['name','father','mother','mobile','dob','g','caste','pen','apaar','adm','medium','addr','ht','wt'].forEach(f=>{if(r[f])v[f]=r[f];});
+  let skip=0;all.forEach(r=>{const k=r.cls||I.to||cls;if(LOCK&&!LOCK.includes(k)){skip++;return;}ensureCls(k);const e=impMatch(r,k);const v={};['name','father','mother','mobile','dob','g','caste','pen','apaar','adm','medium','addr','ht','wt'].forEach(f=>{if(r[f])v[f]=r[f];});
     if(e&&!seen.has(e.s.id)){Object.assign(e.s,v);const n=fixStu(e.s);if(e.cls!==k){DATA[e.cls].splice(DATA[e.cls].indexOf(e.s),1);DATA[k].push(n);}else DATA[e.cls][DATA[e.cls].indexOf(e.s)]=n;seen.add(n.id);upd++;}
     else{const id=r.id&&!findStu(r.id)?r.id:newStuId();const n=fixStu(Object.assign(v,{id:id}));DATA[k].push(n);seen.add(id);add++;}});
   const first=all[0].cls||I.to||cls;IMP=null;if(stuSaved())showToast('✅ కొత్తగా '+add+' మంది'+(upd?' • అప్‌డేట్ '+upd:''));
@@ -2199,9 +2206,9 @@ function apSet(id,A,i,v){const P=PS.mk[id]=PS.mk[id]||{};P[A]=P[A]||{};const cur
 /* 📥 యాప్ (roster + marks) → ఇక్కడికి. టూల్ తెరిచిన ప్రతిసారీ ఆటోగా (appAuto) + బటన్ (stuFromApp) */
 function appPull(){let o=null;try{o=JSON.parse(appEval("JSON.stringify({r:live('roster'),m:live('marks'),n:(S.cfg&&S.cfg.sname)||''})"));}catch(e){}
   if(!o||!Array.isArray(o.r)||!o.r.length)return null;const R={n:o.r.length,add:0,upd:0,mk:0,sa:0,ch:false},b0=JSON.stringify([DATA,PS.mk,PS.sch||0]);
-  o.r.slice().sort((a,b)=>(a.c-b.c)||((a.ord||0)-(b.ord||0))).forEach(r=>{const cls=(+r.c)+'A';if(!(+r.c>=1&&+r.c<=10)||!r.sid||!r.n)return;ensureCls(cls);
+  o.r.slice().sort((a,b)=>(a.c-b.c)||((a.ord||0)-(b.ord||0))).forEach(r=>{const cls=(+r.c)+'A';if(!(+r.c>=1&&+r.c<=10)||!r.sid||!r.n)return;if(LOCK&&!LOCK.includes(cls))return;ensureCls(cls);
     const id=String(r.sid).replace(/[^\w-]/g,''),e=findStu(id),att=Array.from({length:11},(_,i)=>{const a=(r.att||[])[i];return Array.isArray(a)&&+a[0]>0?[+a[0],Math.max(+a[1]||0,0)]:null;});
-    if(e){const s=e.s,was=JSON.stringify(s)+e.cls;s.name=cleanTxt(r.n);if(r.f)s.father=cleanTxt(r.f);if(r.ph)s.mobile=String(r.ph).replace(/\D/g,'').slice(-10);if(r.med)s.medium=cleanTxt(r.med);att.forEach((a,i)=>{if(a)s.m[i]=a;});
+    if(e){const s=e.s,was=JSON.stringify(s)+e.cls;s.name=cleanTxt(r.n);if(r.f)s.father=cleanTxt(r.f);if(r.ph)s.mobile=String(r.ph).replace(/\D/g,'').slice(-10);if(r.med)s.medium=cleanTxt(r.med);att.forEach((a,i)=>{if(!a)return;s.m[i]=a;const pa=(PS.att[id]||{})[i];if(pa&&!(PS.dt&&PS.dt['a|'+id+'|'+i])&&(+pa[0]!==a[0]||+pa[1]!==a[1]))delete PS.att[id][i];});
       if(e.cls!==cls){DATA[e.cls].splice(e.k,1);DATA[cls].push(s);}if(JSON.stringify(s)+cls!==was)R.upd++;}
     else{DATA[cls].push(fixStu({id:id,name:r.n,father:r.f,mobile:r.ph,medium:r.med,m:att.map(a=>a||[0,0])}));R.add++;}});
   (o.m||[]).forEach(m=>{const e=findStu(String(m.sid||'').replace(/[^\w-]/g,'')),sn=APPSUB[m.s];if(!e||!sn)return;const c=cnum(e.cls),i=clsDef(c).subs.findIndex(sb=>sb.n===sn);if(i<0)return;
@@ -2213,9 +2220,38 @@ function appMsg(R){return (R.add?' • కొత్తగా '+R.add+' మంద
 function stuFromApp(){const R=appPull();if(!R){showToast('యాప్ జాబితా దొరకలేదు');return;}
   if(R.ch)stuDirty=true;showToast(R.ch?'✅ యాప్ నుండి'+appMsg(R):'✅ యాప్‌తో సరిపోయింది — కొత్త మార్పులు లేవు');stuDraw();}
 /* టూల్ తెరిచిన ప్రతిసారీ: యాప్‌లో ఎక్కించిన/పేస్ట్ చేసిన పేర్లు, హాజరు, FA/SA మార్కులు ఆటోగా ఇక్కడికి */
-function appAuto(){if(!APP)return;let R=null;try{R=appPull();}catch(e){}if(R&&R.ch){try{if(!DATA[currentClass]||!DATA[currentClass].length){const k=Object.keys(DATA).find(x=>DATA[x].length);if(k)currentClass=k;}}catch(e){}
+function appAuto(){if(!APP)return;let R=null;try{R=appPull();}catch(e){}try{appPushInit();appPushSoon();}catch(e){}if(R&&R.ch){try{if(!DATA[currentClass]||!DATA[currentClass].length){const k=Object.keys(DATA).find(x=>DATA[x].length);if(k)currentClass=k;}}catch(e){}
   setTimeout(()=>showToast('🔄 యాప్ నుండి ఆటోగా'+appMsg(R)),600);}}
 
+/* ⬆️ టూల్‌లో వేసిన మార్కులు / హాజరు → యాప్ (సర్వర్) → HM గారి పరికరంలో School ప్రగతి కి ఆటోగా.
+   మార్చిన గడులు మాత్రమే (PS.dt) పంపుతాం – ఇతరుల డేటాను పాత విలువలతో మార్చము. */
+function dirtM(id,A,i){PS.dt=PS.dt||{};PS.dt['m|'+id+'|'+A+'|'+i]=1;}
+function dirtA(id,mi){PS.dt=PS.dt||{};PS.dt['a|'+id+'|'+mi]=1;}
+let PUSHT=null;function appPushSoon(){if(!APP||!PS.dt||!Object.keys(PS.dt).length)return;clearTimeout(PUSHT);PUSHT=setTimeout(appPush,1500);}
+const SUBAPP={};Object.keys(APPSUB).forEach(k=>SUBAPP[APPSUB[k]]=k);
+function toAppMk(c,s,A,v){if(!v||!v.some(x=>x!==null&&x!==''&&x!==undefined))return null;const ab=v.some(x=>String(x).toUpperCase()==='AB'),tot=r1(v.reduce((a,x)=>a+(+x||0),0));
+  if(A[0]==='F'){if(ab)return v.map(x=>String(x).toUpperCase()==='AB'?'AB':(x===null||x===''||x===undefined?null:+x||0));if(c>=8&&(s==='phy'||s==='bio'))return {tot:tot,max:50};return v.map(x=>x===null||x===''||x===undefined?null:+x||0);}
+  return ab?{ab:1}:{tot:tot,max:saMax(c,APPSUB[s])};}
+function appPush(){if(!APP||!PS.dt)return;const keys=Object.keys(PS.dt);if(!keys.length)return;let o=null;
+  try{o=JSON.parse(appEval("JSON.stringify({isT:!!(S.cfg&&S.cfg.isT),r:live('roster'),m:live('marks')})"));}catch(e){}if(!o||!o.isT||!Array.isArray(o.r))return;
+  const R={},M={},MK={},RS={},done=[];o.r.forEach(r=>R[String(r.sid)]=r);(o.m||[]).forEach(m=>M[m.sid+'|'+m.s]=m);
+  let by='';try{by=APP.tName();}catch(e){}
+  keys.forEach(k=>{const p=k.split('|'),id=p[1],r=R[id];done.push(k);if(!r)return;const c=+r.c;if(LOCK&&!LOCK.includes(c+'A'))return;
+    if(p[0]==='m'){const A=p[2],i=+p[3],sb=clsDef(c).subs[i],s=sb&&SUBAPP[sb.n];if(!s)return;
+      const key=id+'|'+s,old=MK[key]||M[key],a=Object.assign({},old?old.a:{}),nv=toAppMk(c,s,A,((PS.mk[id]||{})[A]||{})[i]);
+      if(nv==null){if(!(A in a))return;delete a[A];}else a[A]=nv;if(old&&JSON.stringify(old.a||{})===JSON.stringify(a))return;
+      MK[key]=Object.assign({},old||{id:'mk_'+id+'_'+s,sid:id,c:c,s:s},{c:c,a:a,by:by});}
+    else if(p[0]==='a'){const mi=+p[2],v=(PS.att[id]||{})[mi],rr=RS[id]||r,att=(rr.att||[]).slice();while(att.length<11)att.push([0,0]);
+      const nv=v?[+v[0]||0,+v[1]||0]:[0,0];if(JSON.stringify(att[mi])===JSON.stringify(nv))return;att[mi]=nv;RS[id]=Object.assign({},rr,{att:att});}});
+  const mks=Object.values(MK),rss=Object.values(RS);
+  try{if(mks.length)APP.putMany('marks',APP.JSON.parse(JSON.stringify(mks)));if(rss.length)APP.putMany('roster',APP.JSON.parse(JSON.stringify(rss)));}catch(e){return;}
+  done.forEach(k=>delete PS.dt[k]);try{localStorage.setItem(PKEY,JSON.stringify(PS));}catch(e){}
+  if(mks.length||rss.length)showToast('⬆️ యాప్‌కు పంపాం'+(mks.length?' • మార్కులు '+mks.length:'')+(rss.length?' • హాజరు '+rss.length:'')+' — HM గారికి కనిపిస్తాయి');}
+/* టీచర్ లాగిన్‌లో మొదటిసారి: ఇంతకుముందు ఇక్కడ వేసిన (యాప్‌లో లేని) మార్కులు / హాజరు కూడా పంపు */
+function appPushInit(){if(!APP||!LOCK||PS.dtInit)return;PS.dt=PS.dt||{};const ap=PS.ap||{};
+  LOCK.forEach(cls=>(DATA[cls]||[]).forEach(st=>{const id=st.id,mk=PS.mk[id]||{};Object.keys(mk).forEach(A=>Object.keys(mk[A]||{}).forEach(i=>{const cs=JSON.stringify(mk[A][i]);if((ap[id]||{})[A+'|'+i]!==cs)PS.dt['m|'+id+'|'+A+'|'+i]=1;}));
+    Object.keys(PS.att[id]||{}).forEach(mi=>PS.dt['a|'+id+'|'+mi]=1);}));
+  PS.dtInit=1;try{localStorage.setItem(PKEY,JSON.stringify(PS));}catch(e){}appPushSoon();}
 /* ---------- తరగతుల పరిధి ---------- */
 function saveRng(){const [a,b]=document.getElementById('sc_rng').value.split('-').map(Number);PACK.rng=[a,b];PACK.DATA=DATA;if(savePack()){showToast('తరగతులు సేవ్ అయ్యాయి ✅');setTimeout(()=>location.reload(),500);}}
 
@@ -2286,7 +2322,7 @@ function drawEnt(){const cls=currentClass,c=cnum(cls),C=clsDef(c),L=DATA[cls]||[
   h+='<div class="row"><button class="go" onclick="closeOvl(\'entView\')">✅ పూర్తయింది</button></div>';
   document.getElementById('entBox').innerHTML=h;}
 function eaW(){const v=+document.getElementById('eaW').value||0;if(!(v>0)){showToast('ముందు ఆ నెల పని దినాలు ఇవ్వండి');return 0;}return Math.min(31,v);}
-function eaSet(sid,p){const w=eaW();if(!w)return;const mi=ENT.mi;PS.att[sid]=PS.att[sid]||{};
+function eaSet(sid,p){const w=eaW();if(!w)return;const mi=ENT.mi;dirtA(sid,mi);PS.att[sid]=PS.att[sid]||{};
   if(p===''||p===null){delete PS.att[sid][mi];}else{p=Math.max(0,Math.min(w,+p||0));PS.att[sid][mi]=[w,p];}
   const e=document.getElementById('eap_'+sid);if(e){const s=findStu(sid).s,[ww,pp]=attM(s,mi);e.textContent=ww?r1(Math.min(pp,ww)*100/ww)+'%':'';e.className=ww&&pp*100/ww<75?'lo':'';}}
 function eaAll(){const w=eaW();if(!w)return;let n=0;document.querySelectorAll('#entBox input.ea').forEach(x=>{if(x.value===''){x.value=w;n++;}eaSet(x.dataset.sid,x.value);});savePS();showToast('✅ '+w+' రోజులు — మిగిలినవారికి పూర్తి హాజరు ('+n+')');}
@@ -2295,7 +2331,7 @@ document.addEventListener('input',e=>{const el=e.target;if(!el.closest||!el.clos
   if(el.classList.contains('ea')){eaSet(el.dataset.sid,el.value.trim());savePS();return;}
   if(el.classList.contains('em')){const sid=el.dataset.sid,A=ENT.A,i=ENT.i,c=cnum(currentClass),row=[...document.querySelectorAll('#entBox input.em[data-sid="'+sid+'"]')];
     const vals=row.map(x=>{let v=x.value.trim();if(v==='')return null;if(v.toUpperCase()==='AB')return 'AB';let n=+v;if(isNaN(n))return null;const mx=+x.dataset.max||1e9;if(n<0)n=0;if(n>mx){n=mx;x.value=n;}return n;});
-    PS.mk[sid]=PS.mk[sid]||{};PS.mk[sid][A]=PS.mk[sid][A]||{};if(vals.every(v=>v===null))delete PS.mk[sid][A][i];else PS.mk[sid][A][i]=vals;savePS();
+    PS.mk[sid]=PS.mk[sid]||{};PS.mk[sid][A]=PS.mk[sid][A]||{};if(vals.every(v=>v===null))delete PS.mk[sid][A][i];else PS.mk[sid][A][i]=vals;dirtM(sid,A,i);savePS();
     const s=findStu(sid).s,r=aRes(s,c,A,i),sc=scOf(c,clsDef(c).subs[i].n);document.getElementById('emt_'+sid).textContent=r?(r.ab?'AB':nf(r.tot)):'';
     const g=document.getElementById('emg_'+sid);g.textContent=r&&!r.ab?r.g:'';g.className='gd '+(r&&!r.ab?gcl(r.g,sc):'');}});
 document.addEventListener('keydown',e=>{const el=e.target;if(e.key!=='Enter'||!el.closest||!el.closest('#entBox')||el.tagName!=='INPUT')return;e.preventDefault();
