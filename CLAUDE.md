@@ -158,6 +158,8 @@
 
 - 🎬 2026-11-12 బ్యానర్ QR → `video.html` (ముద్రించిన బ్యానర్లలో ఉంది – **ఈ URL/ఫైల్ పేరు మార్చకూడదు**): 30 సె. పరిచయ వీడియో `help/raay_vidyarthi_app_parichayam_30sec.mp4` (720×1280, 6 స్లైడ్లు, నిశ్శబ్దం; autoplay muted) + “యాప్ తెరువు” బటన్. కొత్త వీడియో = అదే ఫైల్ పేరుతో మార్చాలి. యాప్ (index.html) లో లింక్ లేదు.
 
+- 📅 2026.11.12-9 తేదీలు: papers `sd` = పంపిన తేదీ (`qpSentD(p)` fallback on→d); hw `gd` = ఇచ్చిన తేదీ (`hwGd(h)` fallback upd). కొత్త రికార్డులకు తేదీ ఫీల్డ్ తప్పక పెట్టాలి.
+
 ## పరీక్ష
 - `python3 -m http.server` + Playwright (chromium ముందే ఉంది). `node --check` అన్ని `<script>` blocks.
 - pdf.js CDN sandbox లో అందదు → `/opt/npm-tools/node_modules/pdfjs-dist/legacy/build/` ని route చేసి పరీక్షించాలి.

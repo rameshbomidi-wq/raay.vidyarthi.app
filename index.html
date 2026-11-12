@@ -2724,7 +2724,7 @@ function render0(){const app=$('#app');
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.12-8';
+const APPV='2026.11.12-9';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -4035,8 +4035,9 @@ V.gamerun=()=>{const g=GAMES[G.g];
 <div class="gscore">⭐ స్కోరు: <b id="gsc">${G.score}</b></div><div id="garea">${gameArea()}</div>`;};
 
 /* ---------- హోంవర్క్ ---------- */
+function hwGd(h){return h.gd||(h.upd?new Date(h.upd).toISOString().slice(0,10):'');}
 function hwCard(h){const sd=subOf(h);
- return `<div class="hw" style="background:${SUBJ[h.s].bg}"><div class="hwt"><span>${SUBJ[h.s].ic}</span><b>${esc(h.t)}</b></div>${h.x?`<p>${esc(h.x)}</p>`:''}${h.byn?`<span class="st" style="color:#475569">👩‍🏫 ${esc(h.byn)}</span>`:''}${dueText(h)}
+ return `<div class="hw" style="background:${SUBJ[h.s].bg}"><div class="hwt"><span>${SUBJ[h.s].ic}</span><b>${esc(h.t)}</b></div>${h.x?`<p>${esc(h.x)}</p>`:''}${h.byn?`<span class="st" style="color:#475569">👩‍🏫 ${esc(h.byn)}</span>`:''}${hwGd(h)?`<span class="st" style="color:#475569">📅 ఇచ్చిన తేదీ: ${fmtD(hwGd(h))}</span>`:''}${dueText(h)}${sd&&typeof sd==='string'?`<span class="st" style="color:#166534">✓ సమర్పించిన తేదీ: ${fmtD(sd)}</span>`:''}
 <div class="hwa">${sd?`<button class="lk" onclick="unsubHw('${h.id}')">↺ రద్దు</button><button class="lk" onclick="go('subject',{s:'${h.s}'})">పాఠం చూడు ▸</button>`:`<button class="lk" onclick="go('subject',{s:'${h.s}'})">పాఠం ▸</button><button class="lk b" onclick="subHw('${h.id}')">పూర్తి చేశాను ✓</button>`}</div></div>`;}
 V.homework=()=>{const tab=param.tab||'all';const all=myHw();const pend=all.filter(h=>!subOf(h)),done=all.filter(h=>subOf(h));const list=tab==='all'?all:tab==='pend'?pend:done;
  return `<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>నా హోంవర్క్‌లు</h2></div>
@@ -4471,7 +4472,7 @@ function qpAdd(){const src=qpSrc(QP.f),used=new Set(QP.qs.map(q=>q.k)),txt=new S
 function qpEnc(v,id){const s=unescape(encodeURIComponent(JSON.stringify(v)));let o='';for(let i=0;i<s.length;i++)o+=String.fromCharCode(s.charCodeAt(i)^(id.charCodeAt(i%id.length)%31+1));return btoa(o);}
 function qpDec(k,id){try{const s=atob(k);let o='';for(let i=0;i<s.length;i++)o+=String.fromCharCode(s.charCodeAt(i)^(id.charCodeAt(i%id.length)%31+1));return JSON.parse(decodeURIComponent(escape(o)));}catch(e){return null;}}
 function qpRec(on){qpRead();const f=QP.f,id=QP.pid||('qp'+uid()),old=live('papers').find(p=>p.id===id);
- return Object.assign({},old||{},{id,c:+f.c,s:f.s,med:f.med,ty:f.ty,t:String(f.ti||qpDefTitle()).slice(0,80),mk:+f.mk||1,tm:+f.tm||0,n:QP.qs.length,on:on==null?!!(old&&old.on):on,d:old&&old.d||new Date().toISOString(),
+ return Object.assign({},old||{},{id,c:+f.c,s:f.s,med:f.med,ty:f.ty,t:String(f.ti||qpDefTitle()).slice(0,80),mk:+f.mk||1,tm:+f.tm||0,n:QP.qs.length,on:on==null?!!(old&&old.on):on,d:old&&old.d||new Date().toISOString(),sd:(on===true||(on==null&&old&&old.on))?(old&&old.on&&old.sd||new Date().toISOString()):(old&&old.sd||''),
   qs:QP.qs.map(q=>({q:q.q,o:q.o,k:qpEnc(q.o?q.o.indexOf(q.a):q.a,id),d:q.d,b:q.b})),sn:S.cfg.sname||'',byn:tName()});}
 async function qpStore(on){if(!QP.qs||!QP.qs.length)return toast('ముందు ప్రశ్నాపత్రం తయారు చేయండి');const rec=qpRec(on);
  if(JSON.stringify(rec).length>18500)return toast('పత్రం చాలా పెద్దది – కొన్ని ప్రశ్నలు తగ్గించండి');
@@ -4480,7 +4481,8 @@ async function qpStore(on){if(!QP.qs||!QP.qs.length)return toast('ముంద�
 async function qpServerOk(){try{const j=await (await fetch(S.cfg.url+'?a=ping&_='+Date.now())).json();return j&&j.qp?'':'సర్వర్ కోడ్ పాతది – కొత్త సర్వర్ కోడ్ పెట్టి మూడు deployments కూ New version Deploy చేయండి';}catch(e){return 'సర్వర్ చేరలేదు – నెట్ చూడండి';}}
 function qpOpen(id){const p=live('papers').find(x=>x.id===id);if(!p)return;qpInit();QP.f=Object.assign(QP.f,{c:+p.c,s:p.s,med:p.med||'te',ty:p.ty||'M4',ti:p.t,mk:p.mk,tm:p.tm||''});
  QP.qs=p.qs.map(q=>{const a=qpDec(q.k,p.id);return {q:q.q,o:q.o,a:q.o?q.o[a]:String(a),d:q.d||2,b:q.b||'R',t:'',st:'',k:'x'+Math.random()};});QP.pid=p.id;QP.short={};qpFix();QP.f.t='';qpSave();go('teacher',{t:'qp'});}
-function qpToggle(id){const p=live('papers').find(x=>x.id===id);if(p)put('papers',Object.assign({},p,{on:!p.on}));go('teacher',{t:'qp',v:'ls'});}
+function qpSentD(p){return p.sd||(p.on?p.d:'')||'';}
+function qpToggle(id){const p=live('papers').find(x=>x.id===id);if(p)put('papers',Object.assign({},p,{on:!p.on},!p.on?{sd:new Date().toISOString()}:{}));go('teacher',{t:'qp',v:'ls'});}
 function qpRemove(id){if(!delOK('ఈ ప్రశ్నాపత్రం తొలగించాలా? (పిల్లల ఫలితాలు ఉంటాయి)'))return;remove('papers',id);if(QP&&QP.pid===id)QP.pid='';go('teacher',{t:'qp',v:'ls'});}
 /* ---------- ప్రింట్ ---------- */
 function qpSheet(p,key){const L='ABCD',f=p,tot=p.qs.length*(+p.mk||1);
@@ -4535,13 +4537,13 @@ function qpResOf(id){return live('results').filter(r=>r.pid===id);}
 function qpListV(){const ps=live('papers').filter(p=>canSee(p.c,p.s)).sort((a,b)=>(b.d||'')<(a.d||'')?-1:1);
  if(!ps.length)return '<div class="empty">ఇంకా ప్రశ్నాపత్రాలు లేవు.<br><small>“🧩 తయారు చేయి” లో తయారు చేసి సేవ్ / పంపండి.</small></div>';
  return ps.map(p=>{const rs=qpResOf(p.id),av=rs.length?Math.round(rs.reduce((a,r)=>a+r.s*100/r.t,0)/rs.length):null;
-  return `<div class="titem"><div style="flex:1;min-width:0"><b>${esc(p.t)}</b><br><small class="mut">${p.c}వ తరగతి • ${SUBJ[p.s].n} • ${p.n} ప్రశ్నలు • ${fmtD(String(p.d||'').slice(0,10))} • ${esc(p.byn||'')}</small><br>
+  return `<div class="titem"><div style="flex:1;min-width:0"><b>${esc(p.t)}</b><br><small class="mut">${p.c}వ తరగతి • ${SUBJ[p.s].n} • ${p.n} ప్రశ్నలు • ${esc(p.byn||'')}</small><br><small class="mut">🛠 తయారు: ${fmtD(String(p.d||'').slice(0,10))}${qpSentD(p)?` • 📤 పంపిన తేదీ: <b>${fmtD(String(qpSentD(p)).slice(0,10))}</b>`:''}</small><br>
 <small>${p.on?'🟢 పిల్లలకు అందుబాటులో':'⏸ పిల్లలకు కనిపించదు'} • 👥 ${rs.length} మంది రాశారు${av!=null?` • సగటు <b>${av}%</b>`:''}</small>
 <div class="ansrow" style="margin:6px 0 0"><button class="upbtn" onclick="go('teacher',{t:'qp',v:'res',id:'${p.id}'})">📊 ఫలితాలు</button><button class="upbtn" onclick="qpPrintId('${p.id}',true)">🖨️ ప్రింట్</button><button class="upbtn" onclick="qpToggle('${p.id}')">${p.on?'⏸ ఆపు':'📤 పంపు'}</button><button class="upbtn" onclick="qpOpen('${p.id}')">✏️ మార్చు</button><button class="upbtn" onclick="qpRemove('${p.id}')">🗑️</button></div></div></div>`;}).join('');}
 function qpResV(id){const p=live('papers').find(x=>x.id===id);if(!p)return '<div class="empty">పత్రం దొరకలేదు</div>';const rs=qpResOf(id).sort((a,b)=>b.s-a.s||a.sec-b.sec);
  const qn=p.qs.map((q,i)=>{const ok=rs.filter(r=>r.rv&&r.rv[i]&&r.rv[i].ok).length;return rs.length?Math.round(ok*100/rs.length):null;});
- return `<div class="card"><h3>📊 ${esc(p.t)}</h3><p class="mut">${p.c}వ తరగతి • ${SUBJ[p.s].n} • ${p.n} ప్రశ్నలు • ${rs.length} మంది రాశారు</p>
-${rs.length?`<div class="tscroll"><table class="tbl"><tr><th>#</th><th>పేరు</th><th>మార్కులు</th><th>%</th><th>సమయం</th></tr>${rs.map((r,i)=>{const pc=Math.round(r.s*100/r.t);return `<tr><td>${i+1}</td><td class="s">${esc(r.n)}</td><td>${r.s*(+p.mk||1)}/${r.t*(+p.mk||1)}</td><td><span class="pct ${pctCls(pc)}">${pc}%</span></td><td>${mmss(r.sec)}</td></tr>`;}).join('')}</table></div>`:'<div class="empty">ఇంకా ఎవరూ రాయలేదు</div>'}</div>
+ return `<div class="card"><h3>📊 ${esc(p.t)}</h3><p class="mut">${p.c}వ తరగతి • ${SUBJ[p.s].n} • ${p.n} ప్రశ్నలు • ${rs.length} మంది రాశారు${qpSentD(p)?` • 📤 పంపిన తేదీ: ${fmtD(String(qpSentD(p)).slice(0,10))}`:''}</p>
+${rs.length?`<div class="tscroll"><table class="tbl"><tr><th>#</th><th>పేరు</th><th>మార్కులు</th><th>%</th><th>సమయం</th><th>రాసిన తేదీ</th></tr>${rs.map((r,i)=>{const pc=Math.round(r.s*100/r.t);return `<tr><td>${i+1}</td><td class="s">${esc(r.n)}</td><td>${r.s*(+p.mk||1)}/${r.t*(+p.mk||1)}</td><td><span class="pct ${pctCls(pc)}">${pc}%</span></td><td>${mmss(r.sec)}</td><td>${r.d?fmtD(r.d):''}</td></tr>`;}).join('')}</table></div>`:'<div class="empty">ఇంకా ఎవరూ రాయలేదు</div>'}</div>
 ${rs.length?`<div class="card"><h3>ప్రశ్న వారీగా – ఎంతమంది సరిగా రాశారు</h3>${p.qs.map((q,i)=>`<div class="sbar"><span>${i+1}. ${esc(q.q.length>38?q.q.slice(0,38)+'…':q.q)}</span><span class="tr"><i style="width:${qn[i]||0}%;background:${qn[i]>=60?'#16a34a':qn[i]>=35?'#f59e0b':'#e5484d'}"></i></span><b>${qn[i]}%</b></div>`).join('')}<p class="mut" style="margin-top:6px">ఎర్రని ప్రశ్నలు – మళ్ళీ బోధించాల్సిన అంశాలు.</p></div>`:''}
 <button class="btn ghost" onclick="go('teacher',{t:'qp',v:'ls'})">← ప్రశ్నాపత్రాలు</button>`;}
 /* ---------- ✍️ ఉపాధ్యాయుల ప్రశ్నలు (పాఠశాల అంతా షేర్) ---------- */
@@ -4571,7 +4573,7 @@ function qbDel(id){if(delOK('ఈ ప్రశ్న తొలగించాల�
 /* ---------- 🧒 విద్యార్థి: టీచర్ ఇచ్చిన ఆన్‌లైన్ టెస్టులు ---------- */
 function qpMine(pid){return myRes().find(r=>r.pid===pid);}
 function qpStudentCards(){const c=S.cur.c,ps=live('papers').filter(p=>p.on&&+p.c===+c).sort((a,b)=>(b.d||'')<(a.d||'')?-1:1);if(!ps.length)return '';
- return ps.map(p=>{const r=qpMine(p.id),pc=r?Math.round(r.s*100/r.t):null;return `<div class="tcard qptc"><div class="th" style="background:#ede9fe"><span class="si" style="width:34px;height:34px;font-size:17px;color:#6d28d9">📝</span>${esc(p.t)}</div><div class="tb">${SUBJ[p.s]?SUBJ[p.s].n:''} • ${p.n} ప్రశ్నలు${p.tm?' • ⏱ '+p.tm+' ని.':''}${p.byn?' • '+esc(p.byn):''}
+ return ps.map(p=>{const r=qpMine(p.id),pc=r?Math.round(r.s*100/r.t):null;return `<div class="tcard qptc"><div class="th" style="background:#ede9fe"><span class="si" style="width:34px;height:34px;font-size:17px;color:#6d28d9">📝</span>${esc(p.t)}</div><div class="tb">${SUBJ[p.s]?SUBJ[p.s].n:''} • ${p.n} ప్రశ్నలు${p.tm?' • ⏱ '+p.tm+' ని.':''}${p.byn?' • '+esc(p.byn):''}${qpSentD(p)?'<br><small class="mut">📅 ఇచ్చిన తేదీ: '+fmtD(String(qpSentD(p)).slice(0,10))+(r&&r.d?' • ✍️ రాసిన తేదీ: '+fmtD(r.d):'')+'</small>':''}
 <div class="r">${r?`<span>మార్కులు: <b>${r.s}/${r.t}</b> <span class="pct ${pctCls(pc)}">${pc}%</span></span><button class="lk" onclick="go('result',{id:'${r.id}'})">ఫలితం ▸</button>`:`<small class="mut">🆕 టీచర్ ఇచ్చిన టెస్ట్ – ఒక్కసారే రాయాలి</small><button class="lk b" onclick="qpStart('${p.id}')">రాయి ▶</button>`}</div></div></div>`;}).join('');}
 function qpStart(id){const p=live('papers').find(x=>x.id===id);if(!p)return;if(qpMine(id))return toast('ఈ టెస్ట్ ఇప్పటికే రాశావు');
  const qs=p.qs.map(q=>{const a=qpDec(q.k,p.id);return q.o?{q:q.q,o:q.o,a:q.o[a]!=null?q.o[a]:''}:{q:q.q,o:[],fr:1,a:String(a==null?'':a)};});
@@ -4584,8 +4586,8 @@ TP.ws=()=>{const r=param.id&&live('results').find(x=>x.id===param.id&&x.kind==='
 TP.hw=()=>`<div class="card"><h3>కొత్త హోంవర్క్ ఇవ్వండి</h3><div class="g2"><div><label>తరగతి</label>${clsSel('hc')}</div><div><label>సబ్జెక్ట్</label><select id="hcs">${subjOpts(myCls()[0])}</select></div></div>
 <div id="hwLim">${hwLim(myCls()[0])}</div><label>శీర్షిక</label><input id="ht" placeholder="ఉదా: ఎక్కాలు 2 నుండి 5 రాయండి"><label>వివరాలు (ఐచ్ఛికం)</label><textarea id="hx" rows="2"></textarea>
 <label>గడువు తేదీ</label><input id="hd" type="date" value="${addDays(todayS(),1)}"><button class="btn" onclick="addHw()">➕ జోడించు</button></div>
-<h4 class="sec">ఇచ్చిన హోంవర్క్‌లు (${live('hw').filter(h=>canSee(h.c,h.s)).length})</h4>${live('hw').filter(h=>canSee(h.c,h.s)).sort((a,b)=>a.due<b.due?1:-1).map(h=>{const who=live('subs').filter(x=>x.hw===h.id).map(x=>x.n);return `<div class="titem"><div><b>${esc(h.t)}</b><small>${h.c}వ తరగతి • ${SUBJ[h.s].n} • గడువు ${fmtD(h.due)}${h.seed?' • (నమూనా)':''}${h.byn?' • 👩‍🏫 '+esc(h.byn):''}</small><small>✓ ${who.length} మంది సమర్పించారు${who.length?': '+who.map(esc).join(', '):''}</small></div><button class="del" onclick="delItem('hw','${h.id}')">తొలగించు</button></div>`;}).join('')||'<div class="empty">లేవు</div>'}`;
-function addHw(){const t=$('#ht').value.trim();if(!t)return toast('శీర్షిక రాయండి');if(+$('#hc').value<=2&&!confirm('⚠️ School Bag SOP ప్రకారం I–II తరగతులకు హోంవర్క్ ఇవ్వకూడదు.\nఅయినా ఇవ్వాలా?'))return;put('hw',{id:uid(),c:+$('#hc').value,s:$('#hcs').value,t,x:$('#hx').value.trim(),due:$('#hd').value||addDays(todayS(),1)});toast('హోంవర్క్ జోడించబడింది ✓');go('teacher',{t:'hw'});}
+<h4 class="sec">ఇచ్చిన హోంవర్క్‌లు (${live('hw').filter(h=>canSee(h.c,h.s)).length})</h4>${live('hw').filter(h=>canSee(h.c,h.s)).sort((a,b)=>a.due<b.due?1:-1).map(h=>{const who=live('subs').filter(x=>x.hw===h.id).map(x=>x.n);return `<div class="titem"><div><b>${esc(h.t)}</b><small>${h.c}వ తరగతి • ${SUBJ[h.s].n}${hwGd(h)?' • ఇచ్చిన తేదీ '+fmtD(hwGd(h)):''} • గడువు ${fmtD(h.due)}${h.seed?' • (నమూనా)':''}${h.byn?' • 👩‍🏫 '+esc(h.byn):''}</small><small>✓ ${who.length} మంది సమర్పించారు${who.length?': '+who.map(esc).join(', '):''}</small></div><button class="del" onclick="delItem('hw','${h.id}')">తొలగించు</button></div>`;}).join('')||'<div class="empty">లేవు</div>'}`;
+function addHw(){const t=$('#ht').value.trim();if(!t)return toast('శీర్షిక రాయండి');if(+$('#hc').value<=2&&!confirm('⚠️ School Bag SOP ప్రకారం I–II తరగతులకు హోంవర్క్ ఇవ్వకూడదు.\nఅయినా ఇవ్వాలా?'))return;put('hw',{id:uid(),c:+$('#hc').value,s:$('#hcs').value,t,x:$('#hx').value.trim(),gd:todayS(),due:$('#hd').value||addDays(todayS(),1)});toast('హోంవర్క్ జోడించబడింది ✓');go('teacher',{t:'hw'});}
 TP.ev=()=>`<div class="card"><h3>ఈవెంట్ / టెస్ట్ / సెలవు</h3><label>శీర్షిక</label><input id="et" placeholder="ఉదా: తల్లిదండ్రుల సమావేశం">
 <div class="g2"><div><label>తేదీ</label><input id="ed" type="date" value="${todayS()}"></div><div><label>సమయం</label><input id="etm" type="time" value="10:00"></div></div>
 <div class="g2"><div><label>తరగతి</label>${clsSel('ec',true)}</div><div><label>రకం</label><select id="ety"><option value="ev">ఈవెంట్</option><option value="test">టెస్ట్</option><option value="hol">సెలవు</option><option value="live">లైవ్ క్లాస్</option></select></div></div>
