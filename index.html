@@ -2623,11 +2623,38 @@ function navRec(v,p){if(view)SCR[navKey(view,param)]=window.scrollY;if(NAVH.pop)
    history బ్యాక్ తర్వాత కొత్త entry చేర్చకుండా history.forward() తో అదే guard కి తిరిగి వెళ్తాం (NAVH.fwd). */
 function navWatch(g){if(NAVH.exit||document.getElementById('exitOv'))return;
  /* రెండూ: CloseWatcher (Android back) + history guard (iframe లోపల టచ్ చేసినప్పుడు back history ద్వారా వస్తుంది) */
- if(window.CloseWatcher&&!NAVH.cw){try{const w=new CloseWatcher();w.onclose=()=>{NAVH.cw=null;navBack();setTimeout(navWatch,0);};NAVH.cw=w;}catch(e){}}
+ if(window.CloseWatcher&&!NAVH.cw){try{const w=new CloseWatcher();w.onclose=()=>{NAVH.cw=null;if(Date.now()-(NAVH.lb||0)>500){NAVH.lb=Date.now();navBack();}setTimeout(navWatch,0);};NAVH.cw=w;}catch(e){}}
  if(g&&!NAVH.armed){try{history.pushState({raay:1},'');NAVH.armed=1;}catch(e){}}}
 function navRearm(){if(NAVH.exit||document.getElementById('exitOv'))return;navWatch();try{window.focus();}catch(e){}NAVH.fwd=1;try{history.forward();}catch(e){NAVH.fwd=0;}setTimeout(()=>{NAVH.fwd=0;},500);}
-window.addEventListener('popstate',()=>{if(NAVH.fwd){NAVH.fwd=0;NAVH.armed=1;return;}NAVH.armed=0;if(NAVH.skip){NAVH.skip=0;return;}if(NAVH.exit)return;navBack();navRearm();});
+window.addEventListener('popstate',()=>{if(NAVH.fwd){NAVH.fwd=0;NAVH.armed=1;return;}NAVH.armed=0;if(NAVH.skip){NAVH.skip=0;return;}if(NAVH.exit)return;if(Date.now()-(NAVH.lb||0)>500){NAVH.lb=Date.now();navBack();}navRearm();});
 ['pointerup','click','keydown'].forEach(t=>document.addEventListener(t,()=>{if(!NAVH.cw||!NAVH.armed)navWatch(1);},{capture:true,passive:true}));
+
+/* 📺 TV రిమోట్ (2026.11.12-17): బ్యాక్ కీ (Samsung 10009, LG 461, GoBack/BrowserBack, Esc, ఇన్‌పుట్ బయట Backspace) → navBack (500ms లోపు CloseWatcher/popstate రెండోసారి చేయవు – NAVH.lb);
+   బాణాలు → దగ్గరి బటన్‌కు ఫోకస్ (spatial), OK/Enter → onclick ఉన్న div లు కూడా నొక్కబడతాయి (tvFocusable – render తర్వాత tabindex) */
+const TVBACK=new Set(['GoBack','BrowserBack','XF86Back','Back']),TVBACKC=new Set([10009,461]);
+function tvIsBack(e){return TVBACK.has(e.key)||TVBACKC.has(e.keyCode)||e.key==='Escape'||(e.key==='Backspace'&&!(e.target&&(/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)||e.target.isContentEditable)));}
+function tvFocusable(){const a=document.getElementById('app');if(!a)return;a.querySelectorAll('[onclick]:not(button):not(a):not(input):not(select):not(textarea):not([tabindex])').forEach(x=>{x.tabIndex=0;x.setAttribute('role','button');});}
+function tvCands(){return [...document.querySelectorAll('button:not([disabled]),a[href],a[onclick],input:not([type=hidden]),select,textarea,[tabindex="0"]')].filter(x=>{const r=x.getBoundingClientRect();return r.width>0&&r.height>0&&getComputedStyle(x).visibility!=='hidden';});}
+function tvMove(dir){const cur=document.activeElement&&document.activeElement!==document.body?document.activeElement:null,A=tvCands();if(!A.length)return false;
+ const fx=x=>!!x.closest('.bn,.slfab,.dqbar'),inFx=cur&&fx(cur);let L=A.filter(x=>fx(x)===!!inFx);
+ if(!inFx&&dir==='ArrowDown'){const r=tvPick(cur,L,dir);if(r)return tvGo(r);L=A;}else if(inFx&&dir==='ArrowUp'){const r=tvPick(cur,A.filter(x=>!fx(x)),dir);if(r)return tvGo(r);}
+ if(!cur||!A.includes(cur)){const v=A.find(x=>{const r=x.getBoundingClientRect();return !fx(x)&&r.top>=0&&r.top<innerHeight;})||A[0];v.focus({preventScroll:false});return true;}
+ const r=tvPick(cur,L,dir);return r?tvGo(r):false;}
+function tvGo(x){x.focus({preventScroll:true});x.scrollIntoView({block:'nearest',inline:'nearest',behavior:'smooth'});return true;}
+function tvPick(cur,L,dir){if(!cur)return null;
+ const c=cur.getBoundingClientRect(),cx=c.left+c.width/2,cy=c.top+c.height/2;let best=null,bs=1e9;
+ for(const x of L){if(x===cur||cur.contains(x)||x.contains(cur))continue;const r=x.getBoundingClientRect(),X=r.left+r.width/2,Y=r.top+r.height/2,dx=X-cx,dy=Y-cy;
+  const hz=dir==='ArrowRight'||dir==='ArrowLeft';let m,o;
+  if(hz){m=dir==='ArrowRight'?dx:-dx;o=Math.abs(dy);if(m<=4||o>Math.max(c.height,r.height)*0.75)continue;}
+  else{m=dir==='ArrowDown'?dy:-dy;o=Math.abs(dx);if(m<=4)continue;}
+  const sc=m+o*(hz?2:0.6);if(sc<bs){bs=sc;best=x;}}
+ return best;}
+document.addEventListener('keydown',e=>{
+ if(tvIsBack(e)){if(view==='book'&&param.k==='pdf'&&(e.key==='Escape'||e.key==='Backspace'))return;e.preventDefault();if(Date.now()-(NAVH.lb||0)<500)return;NAVH.lb=Date.now();navBack();return;}
+ const t=e.target,tg=t&&t.tagName;
+ if((e.key==='Enter'||e.key===' ')&&t&&t.getAttribute&&t.getAttribute('role')==='button'&&tg!=='BUTTON'){e.preventDefault();t.click();return;}
+ if(/^Arrow(Up|Down|Left|Right)$/.test(e.key)){if(view==='book'||/^(INPUT|TEXTAREA|SELECT)$/.test(tg||'')||(t&&t.isContentEditable))return;if(tvMove(e.key))e.preventDefault();}
+});
 function navBack(){
  if(document.getElementById('exitOv')){exitDo();return;}
  for(const id of ['zoom','ansSheet','budHelp']){const e=document.getElementById(id);if(e){e.remove();return;}}
@@ -2775,7 +2802,7 @@ function slDownload(){const cv=document.getElementById('slCv');if(!cv||!cv.width
  if(SL.bg==='lines'){x.fillStyle='#c7d2fe';for(let y=35*d;y<o.height;y+=36*d)x.fillRect(0,y,o.width,d);}
  if(SL.bg==='grid'){x.fillStyle='#e5e7eb';for(let y=0;y<o.height;y+=24*d)x.fillRect(0,y,o.width,d);for(let z=0;z<o.width;z+=24*d)x.fillRect(z,0,d,o.height);}
  x.drawImage(cv,0,0);const a=document.createElement('a');a.download='Raay_Palaka_'+SL.sec+'_page'+(SL.page+1)+'.png';a.href=o.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();toast('చిత్రం సేవ్ అయింది ⬇');}
-function render(){render0();slSync();}
+function render(){render0();slSync();try{tvFocusable();}catch(e){}}
 function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='home'||view==='learn'||view==='test')&&!!S.cur)||(view==='teacher'&&tAuth&&!TP[param.t]));
  try{budHook();}catch(e){}
  if(view==='teacher'){app.innerHTML='<main>'+V.teacher()+'</main>'+footer();return;}
@@ -5456,7 +5483,7 @@ function pdfZoom(f){if(!BV.doc)return;BV.zoom=Math.min(4,Math.max(0.6,BV.zoom*f)
 function closeBook(){try{inkFlush();}catch(e){}INK.on=false;INK.key='';INK.d=null;inkTxNo();try{BV.rt&&BV.rt.cancel();}catch(e){}try{BV.doc&&BV.doc.destroy();}catch(e){}try{BV.task0&&BV.task0.destroy();}catch(e){}const b=param.back||{};BV={};if(b.test)go('test');else if(b.tch)go('teacher',{t:'tb'});else if(b.tbl)go('tbl',{s:b.s,id:b.id,wb:1});else if(b.v)go(b.v,b.p);else go('library',b);}
 document.addEventListener('keydown',e=>{if(view!=='book'||param.k!=='pdf'||(e.target&&e.target.tagName==='INPUT'))return;
  if(e.key==='ArrowRight'||e.key==='PageDown'){pdfGo(1);e.preventDefault();}else if(e.key==='ArrowLeft'||e.key==='PageUp'){pdfGo(-1);e.preventDefault();}
- else if(e.key==='+'||e.key==='='){pdfZoom(1.25);}else if(e.key==='-'){pdfZoom(0.8);}else if(e.key==='Escape'||e.key==='Backspace'){closeBook();}});
+ else if(e.key==='+'||e.key==='='){pdfZoom(1.25);}else if(e.key==='-'){pdfZoom(0.8);}else if(e.key==='Escape'||e.key==='Backspace'){NAVH.lb=Date.now();closeBook();}});
 let tsx=null,tsy=null;
 document.addEventListener('touchstart',e=>{if(view==='book'&&param.k==='pdf'&&e.touches.length===1&&BV.zoom<=1){tsx=e.touches[0].clientX;tsy=e.touches[0].clientY;}else tsx=null;},{passive:true});
 document.addEventListener('touchend',e=>{if(tsx==null)return;const t=e.changedTouches[0],dx=t.clientX-tsx,dy=t.clientY-tsy;tsx=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)pdfGo(dx<0?1:-1);},{passive:true});
