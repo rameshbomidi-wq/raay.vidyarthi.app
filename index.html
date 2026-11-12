@@ -875,6 +875,11 @@ body:has(#app.v4bg){background:#083a1b}
 @media(max-width:360px){.v4p{padding:10px 7px}.v4t{font-size:13.5px;padding:6px 14px}.v4sg{gap:7px}.v4sb{border-radius:15px;padding:8px 2px 7px}.v4sb b{font-size:20px}.v4sb span{font-size:11.5px}.v4sb small{font-size:9.5px}.v4tg .v4sb b{font-size:22px}}
 @media(min-width:700px){#app,.bn,.dqbar{max-width:820px}.v4sg{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:12px}.v4sb b{font-size:30px}.v4sb span{font-size:15px}.v4sb small{font-size:12px}.v4tg{grid-template-columns:repeat(3,1fr);gap:12px}.v4rnd{grid-template-columns:repeat(auto-fill,minmax(112px,1fr))}.v4rnd button{width:100px;height:100px;font-size:13px}.v4rnd button span{font-size:30px}.slide{height:240px}.v4b3{max-width:180px;font-size:15px}.slfab{right:max(0px,calc((100vw - 820px)/2))}}
 @media(min-width:1100px){#app,.bn,.dqbar{max-width:960px}.v4tg{grid-template-columns:repeat(4,1fr)}.slide{height:280px}.slfab{right:max(0px,calc((100vw - 960px)/2))}}
+/* 📺 పాఠశాల TV / స్మార్ట్ బోర్డు (2026.11.12-16): Full HD (≥1600px) – మొత్తం 1.4× పెద్దగా, 4K (≥2600px) – 2×; దూరం నుండి కనిపించేలా. రిమోట్ బాణాలతో కదిలితే పసుపు గీత */
+@media(min-width:1600px){html{zoom:1.4}#app,.bn,.dqbar{max-width:1240px}.v4tg{grid-template-columns:repeat(5,1fr)}.v4sg{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}.slide{height:300px}.v4rnd{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}.slfab{right:0}}
+@media(min-width:2600px){html{zoom:2}}
+:focus-visible{outline:4px solid #facc15!important;outline-offset:3px}
+.v4sb b,.v4rnd button span,.slide.def span,.qa span{text-rendering:geometricPrecision;-webkit-font-smoothing:antialiased}
 </style>
 </head>
 <body>
@@ -2784,7 +2789,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.12-15';
+const APPV='2026.11.12-16';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
