@@ -1346,6 +1346,18 @@ function akey_(b, isT, sh) {
   });
   return json_({ok: true, keys: keys});
 }
+/* 🙋 సొంతంగా చదువుకునేవారు (పాఠశాల లేకుండా, ఉచితం): పాఠాల జవాబుల తాళం చెవులు (T| టీచర్ గైడ్ కాదు).
+   దుర్వినియోగం ఆపడానికి పరికరానికి 6 గం.లో 600, మొత్తం 6 గం.లో 30000 పరిమితి. */
+function akeySelf_(b) {
+  var sec = akSec_(); if (!sec) return json_({ok: false, err: 'nokey'});
+  var L = (b.l || []).slice(0, 100).map(String).filter(function (l) { var p = l.split('|'); return p[0] !== 'T' && p.length >= 3; });
+  var c = CacheService.getScriptCache(), dk = 'aks_' + String(b.dev || 'x').replace(/\W/g, '').slice(0, 24), dn = Number(c.get(dk) || 0), gn = Number(c.get('aks_all') || 0);
+  if (dn + L.length > 600 || gn + L.length > 30000) return json_({ok: false, err: 'limit'});
+  c.put(dk, String(dn + L.length), 21600); c.put('aks_all', String(gn + L.length), 21600);
+  var keys = {};
+  L.forEach(function (l) { keys[l] = Utilities.base64Encode(Utilities.computeHmacSha256Signature(l, sec, Utilities.Charset.UTF_8)); });
+  return json_({ok: true, keys: keys});
+}
 
 /* డేటా చదవడం */
 function doGet(e) {
@@ -1385,6 +1397,7 @@ function doPost(e) {
   var b;
   try { b = JSON.parse(e.postData.contents); } catch (x) { return json_({ok: false, err: 'bad'}); }
   if (b.a === 'reg') return reg_(b);
+  if (b.a === 'akey' && b.self) return akeySelf_(b);
   var a = auth_(b);
   if (a.err) return json_({ok: false, err: a.err});
   if (b.a === 'up') return up_(b, a, a.sc.id);
@@ -2864,7 +2877,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.12-20';
+const APPV='2026.11.12-21';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -5495,8 +5508,10 @@ function wbaLoad(c){c=+c;if(!c||ANSL[c])return;if(window.RAAY_ANS[c]){ANSL[c]='o
 const AKQ={err:'',busy:null,wait:new Set()};
 function akCache(){try{return JSON.parse(localStorage.getItem('raiAK')||'{}')||{};}catch(e){return {};}}
 async function akKeys(labels){const c=akCache(),need=labels.filter(l=>!c[l]);
- if(need.length){if(S.cfg.type!=='gs'||!S.cfg.url){AKQ.err='nosrv';return c;}
-  try{const j=await (await fetch(S.cfg.url,{method:'POST',body:JSON.stringify({a:'akey',s:S.cfg.sid,k:GS.key(),dev:S.dev,l:need})})).json();
+ if(need.length){const sch=S.cfg.type==='gs'&&S.cfg.url,pu=PUB.server||S.pub;
+  /* 🙋 పాఠశాల సర్వర్ లేకపోతే (సొంతంగా / ఆఫ్‌లైన్) – పబ్లిక్ సర్వర్ నుండి ఉచితంగా (టీచర్ గైడ్ కాదు) */
+  if(!sch&&!pu){AKQ.err='nosrv';return c;}
+  try{const j=await (await fetch(sch?S.cfg.url:pu,{method:'POST',body:JSON.stringify(sch?{a:'akey',s:S.cfg.sid,k:GS.key(),dev:S.dev,l:need}:{a:'akey',self:1,dev:S.dev,l:need.slice(0,100)})})).json();
    if(j&&j.ok&&j.keys){Object.assign(c,j.keys);try{localStorage.setItem('raiAK',JSON.stringify(c));}catch(e){}AKQ.err=need.some(l=>!j.keys[l])?'locked':'';}else AKQ.err=(j&&j.err)||'srv';}catch(e){AKQ.err='net';}}
  return c;}
 const b64u8=x=>Uint8Array.from(atob(x),ch=>ch.charCodeAt(0));
@@ -5507,7 +5522,7 @@ const ANSD={};
 /* ఒకే చోట: గూఢలిపి వస్తువు o → తెరిచిన విలువ (లేకపోతే null; వెనుక తెరిచి done() పిలుస్తుంది) */
 function akOpen(ck,o,done){const v=ANSD[ck];if(v!==undefined&&v!=='…')return v;if(v==='…')return null;ANSD[ck]='…';
  akDec(o).then(x=>{ANSD[ck]=x||null;if(!x)setTimeout(()=>{if(ANSD[ck]===null)delete ANSD[ck];},20000);try{done&&done();}catch(e){}}).catch(()=>{ANSD[ck]=null;setTimeout(()=>{delete ANSD[ck];},20000);try{done&&done();}catch(e){}});return null;}
-function akErrMsg(){return AKQ.err==='nokey'?'సర్వర్‌లో జవాబుల తాళం చెవి (AKS) లేదు – రాయ్ ఎడ్యుకేషన్‌ను సంప్రదించండి':AKQ.err==='nosrv'?'జవాబులకు ☁️ ఆన్‌లైన్ సింక్ అవసరం':AKQ.err==='net'?'ఇంటర్నెట్ లేదు – నెట్ ఆన్ చేసి మళ్ళీ తెరవండి':AKQ.err==='locked'?'🔒 టీచర్ ఈ పాఠం జవాబులు ఇంకా తెరవలేదు':'జవాబులు తెరవలేకపోయాం – కాసేపాగి మళ్ళీ ప్రయత్నించండి';}
+function akErrMsg(){return AKQ.err==='nokey'?'సర్వర్‌లో జవాబుల తాళం చెవి (AKS) లేదు – రాయ్ ఎడ్యుకేషన్‌ను సంప్రదించండి':AKQ.err==='nosrv'?'జవాబులకు ఒక్కసారి ఇంటర్నెట్ అవసరం – నెట్ ఆన్ చేసి మళ్ళీ తెరవండి':AKQ.err==='limit'?'ఈరోజు చాలా జవాబులు తెరిచారు – కొన్ని గంటల తర్వాత మళ్ళీ ప్రయత్నించండి':AKQ.err==='net'?'ఇంటర్నెట్ లేదు – నెట్ ఆన్ చేసి మళ్ళీ తెరవండి':AKQ.err==='locked'?'🔒 టీచర్ ఈ పాఠం జవాబులు ఇంకా తెరవలేదు':'జవాబులు తెరవలేకపోయాం – కాసేపాగి మళ్ళీ ప్రయత్నించండి';}
 function ansCls(){return (view==='teacher'||param.ak)?(TBE.c||3):(S.cur?+S.cur.c:3);}
 function ansFile(u){return String(u||'').split('/').pop();}
 function ansRaw(u,pg){const A=window.RAAY_ANS[ansCls()];return A&&A[ansFile(u)]?A[ansFile(u)][pg]||null:null;}
