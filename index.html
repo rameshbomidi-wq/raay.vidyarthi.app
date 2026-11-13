@@ -883,6 +883,39 @@ body:has(#app.v4bg){background:#083a1b}
 :focus-visible{outline:4px solid #facc15!important;outline-offset:3px}
 .v4sb b,.v4rnd button span,.slide.def span,.qa span{text-rendering:geometricPrecision;-webkit-font-smoothing:antialiased}
 </style>
+<style id="gxcss">
+/* కొత్త ఆటలు (2026.11.13-2) */
+.gxtabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}.gxtabs::-webkit-scrollbar{display:none}
+.gxtabs button{flex:0 0 auto;padding:10px 12px;white-space:nowrap}
+.gq.gxq{font-size:30px;padding:22px 10px;line-height:1.4}.gq.gxq.em{font-size:28px;letter-spacing:2px}
+.gopts.gx3{grid-template-columns:1fr 1fr 1fr}.gopts.oog button{font-size:52px;padding:14px 6px}
+.bkroad{margin:10px 14px;background:#374151;border-radius:18px;padding:8px;display:grid;gap:8px}
+.bkl{display:flex;align-items:center;width:100%;border:0;background:#4b5563;border-radius:12px;min-height:66px;padding:6px 10px;color:#fff;overflow:hidden}
+.bkl:active{background:#6b7280}
+.bkl i{flex:1;height:4px;margin:0 10px;background:repeating-linear-gradient(90deg,#fde047 0 18px,transparent 18px 36px);animation:gxroad .6s linear infinite}
+.bkl b{background:#fff;color:#111827;border-radius:12px;padding:8px 12px;font-size:24px;min-width:76px;text-align:center}
+.gxbike{width:52px;height:44px;font-size:36px;line-height:44px;display:inline-block;transform:scaleX(-1)}
+.gxbike.ok{animation:gxzoom .5s ease-out}.gxbike.no{animation:gxshake .45s}
+@keyframes gxroad{to{background-position:-36px 0}}
+@keyframes gxzoom{from{transform:translateX(-70px) scaleX(-1)}to{transform:translateX(0) scaleX(-1)}}
+@keyframes gxshake{0%,100%{transform:scaleX(-1) rotate(0)}25%{transform:scaleX(-1) rotate(-18deg)}75%{transform:scaleX(-1) rotate(18deg)}}
+.lrinfo{background:#fff;margin:0 14px;border-radius:18px;padding:14px 10px;text-align:center;font-size:18px;box-shadow:0 4px 14px rgba(0,0,0,.06)}.lrinfo b{font-size:24px;color:#c2410c}
+.lrtruck{display:flex;align-items:flex-end;justify-content:center;margin:12px 14px 4px}.lrtruck.ok{animation:gxin .5s ease-out}
+@keyframes gxin{from{transform:translateX(-90px);opacity:.3}to{transform:none;opacity:1}}
+.lrbed{flex:1;max-width:240px;min-height:58px;border:3px solid #92400e;border-top:0;border-radius:0 0 10px 10px;background:#fef3c7;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:center;gap:4px;padding:6px}
+.lrbed span{background:#d97706;color:#fff;font-weight:700;border-radius:6px;padding:6px 9px;font-size:16px}.lrbed em{font-style:normal;color:#92400e;font-size:13px;align-self:center}
+.lrcab{font-size:58px;line-height:1;transform:scaleX(-1);display:inline-block}
+.lrbar{height:10px;background:#e5e7eb;border-radius:8px;margin:6px 24px;overflow:hidden}.lrbar i{display:block;height:100%;background:#16a34a;border-radius:8px;transition:width .2s}.lrbar i.ov{background:#dc2626}
+.lrboxes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 14px}
+.lrboxes button{border:0;border-radius:16px;padding:10px 4px;font-size:26px;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.08);color:var(--ink);display:flex;flex-direction:column;align-items:center}
+.lrboxes button b{font-size:22px}.lrboxes button.on{background:#fed7aa;box-shadow:inset 0 0 0 3px #ea580c;opacity:.75}
+.mrgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 14px}
+.mrgrid button{border:0;border-radius:16px;aspect-ratio:1/1;font-size:34px;background:#7c3aed;color:#fff;box-shadow:0 3px 0 #5b21b6;padding:0}
+.mrgrid button.open{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 3px #7c3aed}.mrgrid button.done{background:#bbf7d0;color:var(--ink);box-shadow:none;opacity:.7}
+.mrgrid.txt button.open,.mrgrid.txt button.done{font-size:21px;font-weight:700}
+@media(max-width:320px){.gq.gxq{font-size:24px}.bkl b{font-size:20px;min-width:60px}.mrgrid button{font-size:26px}.mrgrid.txt button.open,.mrgrid.txt button.done{font-size:16px}.gopts.oog button{font-size:40px}.lrcab{font-size:46px}}
+@media(prefers-reduced-motion:reduce){.bkl i,.gxbike.ok,.gxbike.no,.lrtruck.ok{animation:none}}
+</style>
 </head>
 <body>
 <div id="splash"><img src="icon-192.png?v=3" alt=""><b>రాయ్ విద్యార్థి</b><small>లెర్నింగ్ యాప్ • రాయ్ ఎడ్యుకేషన్</small></div>
@@ -2488,6 +2521,11 @@ const TEL=[['🐄','ఆవు','ఆ'],['🏠','ఇల్లు','ఇ'],['🐿️
  ['☀️','సూర్యుడు','సూ'],['🌙','చంద్రుడు','చం'],['⭐','నక్షత్రం','న'],['🍌','అరటిపండు','అ'],['🥭','మామిడి','మా'],['🍋','నిమ్మకాయ','ని'],['🐸','కప్ప','క'],['🦋','సీతాకోకచిలుక','సీ'],['🐔','కోడి','కో'],['🥚','గుడ్డు','గు']];
 const GAMES_LO={mm:{n:'Mental Maths',t:'మనసులో లెక్కలు',ic:'🧮',bg:'#ffad94',sec:60},ew:{n:'English Words',t:'పదాన్ని కూర్చు',ic:'🔤',bg:'#cdc6fb',sec:90},tl:{n:'తెలుగు అక్షరాలు',t:'మొదటి అక్షరం గుర్తించు',ic:'అ',bg:'#a8e6c8',sec:60}};
 const GAMES_HI={mm:{n:'Mental Maths',t:'పూర్ణసంఖ్యలు, వర్గాలు, శాతాలు',ic:'🧮',bg:'#ffad94',sec:60},vw:{n:'Word Builder',t:'అర్థం చూసి English పదం కూర్చు',ic:'🔠',bg:'#cdc6fb',sec:90},tf:{n:'నిజమా? అబద్ధమా?',t:'అన్ని సబ్జెక్టుల ప్రశ్నలు',ic:'✅',bg:'#a8e6c8',sec:60},hw:{n:'हिंदी పదాలు',t:'హిందీ పదం – తెలుగు అర్థం',ic:'अ',bg:'#fde68a',sec:60}};
+const GAMES_NEW={bk:{n:'బైక్ రేస్',t:'సరైన జవాబు దారిలో బైక్ నడుపు',ic:'🏍️',bg:'#bfe3ff',sec:60,grp:'v'},lr:{n:'లారీ లోడ్',t:'సరైన పెట్టెలు ఎక్కించు',ic:'🚚',bg:'#ffd8a8',sec:90,grp:'v'},
+ pt:{n:'తర్వాత ఏది?',t:'వరుస క్రమం కనిపెట్టు',ic:'🧩',bg:'#d9f99d',sec:60,grp:'m'},mr:{n:'జ్ఞాపకశక్తి',t:'ఒకేలాంటి జతలు కనిపెట్టు',ic:'🧠',bg:'#fbcfe8',sec:90,grp:'m'},
+ oo:{n:'వేరైనది ఏది?',t:'గుంపులో కలవనిది గుర్తించు',ic:'🔍',bg:'#bae6fd',sec:60,grp:'m'},op:{n:'గుర్తు పజిల్',t:'+ − × ÷ సరైన గుర్తు పెట్టు',ic:'➗',bg:'#fde68a',sec:60,grp:'m'}};
+Object.assign(GAMES_LO,GAMES_NEW);Object.assign(GAMES_HI,GAMES_NEW);
+const GAME_GRP=[['v','🏍️ బండి ఆటలు'],['m','🧠 మైండ్ • లాజిక్ • పజిల్'],['e','📚 చదువు ఆటలు']];
 const GAMES=Object.assign({},GAMES_LO,GAMES_HI);
 function gamesOf(c){return +c>=6?GAMES_HI:GAMES_LO;}
 const VW=[[['garden','తోట'],['market','సంత / మార్కెట్'],['village','గ్రామం'],['farmer','రైతు'],['doctor','వైద్యుడు'],['river','నది'],['mountain','పర్వతం'],['forest','అడవి'],['library','గ్రంథాలయం'],['kitchen','వంటగది'],['brave','ధైర్యవంతుడు'],['honest','నిజాయితీ గల'],['clever','తెలివైన'],['healthy','ఆరోగ్యకరమైన'],['quickly','వేగంగా'],['teacher','ఉపాధ్యాయుడు'],['student','విద్యార్థి'],['festival','పండుగ'],['weather','వాతావరణం'],['country','దేశం'],['island','ద్వీపం'],['planet','గ్రహం'],['animal','జంతువు'],['window','కిటికీ'],['bridge','వంతెన'],['friend','స్నేహితుడు'],['family','కుటుంబం'],['hungry','ఆకలిగా'],['thirsty','దాహంగా'],['answer','జవాబు'],['question','ప్రశ్న'],['science','విజ్ఞాన శాస్త్రం'],['picture','చిత్రం'],['kindness','దయ'],['morning','ఉదయం'],['evening','సాయంత్రం']],
@@ -2889,7 +2927,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.13-1';
+const APPV='2026.11.13-2';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -4140,9 +4178,9 @@ V.games=()=>{const pend=pendingHw();const lb=param.lb||'mm';
  return `${pend.slice(0,2).map(h=>`<div class="task"><span class="si" style="background:${SUBJ[h.s].bg};color:${SUBJ[h.s].col}">${SUBJ[h.s].ic}</span><div><b>${esc(h.t)}</b><small>${diffDays(h.due,todayS())<0?'గడువు దాటింది':'గడువు: '+fmtD(h.due)}</small></div><span>›</span></div>`).join('')}
 ${pend.length?`<button class="btn dark" style="width:100%;margin-top:4px" onclick="go('homework')">అన్ని పనులు చూడు</button>`:''}
 <div class="concept"><h3>కాన్సెప్ట్స్ బలపరచుకో</h3><p>ఎంపిక చేసిన పాఠాల నుండి నేర్చుకుని, నీ అవగాహన పెంచుకో.</p><button class="btn dark" onclick="go('learn')">నేర్చుకోవడం ప్రారంభించు</button><span>📄</span></div>
-<h4 class="sec">ఆటలతో నేర్చుకో</h4><div class="gtiles">${Object.entries(gamesOf(S.cur.c)).map(([k,g],i,a)=>`<button class="gt ${i===2&&a.length===3?'wide':''}" style="background:${g.bg}" onclick="startGame('${k}')"><div><b>${g.n}</b><br><small>${g.t} • ${g.sec} సెకన్లు</small></div><em>ఆడు ▶</em><i>${g.ic}</i></button>`).join('')}</div>
+${GAME_GRP.map(([gk,gt])=>{const a=Object.entries(gamesOf(S.cur.c)).filter(([,g])=>(g.grp||'e')===gk);return a.length?`<h4 class="sec">${gt}</h4><div class="gtiles">${a.map(([k,g],i)=>`<button class="gt ${i===a.length-1&&a.length%2?'wide':''}" style="background:${g.bg}" onclick="startGame('${k}')"><div><b>${g.n}</b><br><small>${g.t} • ${g.sec} సెకన్లు</small></div><em>ఆడు ▶</em><i>${g.ic}</i></button>`).join('')}</div>`:'';}).join('')}
 <h4 class="sec">🏆 స్నేహితులతో పోల్చు (${S.cur.c}వ తరగతి)</h4>
-<div class="tabs">${Object.entries(gamesOf(S.cur.c)).map(([k,g])=>`<button class="${lb===k?'on':''}" onclick="go('games',{lb:'${k}'})">${g.n}</button>`).join('')}</div>
+<div class="tabs gxtabs">${Object.entries(gamesOf(S.cur.c)).map(([k,g])=>`<button class="${lb===k?'on':''}" onclick="go('games',{lb:'${k}'})">${g.grp?g.ic+' ':''}${g.n}</button>`).join('')}</div>
 <div class="lb">${rows.length?rows.map(([n,s],i)=>`<div class="lbr ${n===me()?'me':''}"><span class="rk">${['🥇','🥈','🥉'][i]||i+1}</span><span class="nm">${esc(n)}${n===me()?' (నువ్వు)':''}</span><b>${s}</b></div>`).join(''):'<p class="mut" style="padding:14px 0;text-align:center">ఇంకా ఎవరూ ఆడలేదు – మొదటివాడివి నువ్వే అవ్వు!</p>'}</div>
 ${S.cfg.type?'<p class="mut" style="margin-top:8px">☁️ నీ తరగతిలోని అందరి స్కోర్లు ఆన్‌లైన్‌లో పోల్చబడతాయి.</p>':'<p class="mut" style="margin-top:8px">ఆఫ్లైన్‌లో ఈ ఫోన్‌లో ఆడినవారే కనిపిస్తారు. అందరితో పోల్చడానికి ఆన్‌లైన్ సింక్ ఆన్ చేయాలి.</p>'}`;};
 function genMental(c){let q,a;const k=R(0,2);
@@ -4156,9 +4194,81 @@ function genMental(c){let q,a;const k=R(0,2);
   else{const x=R(2,c>=8?15:10),y=R(2,9);q=`${y}x = ${x*y} అయితే x`;a=x;}}
  else{if(k===0){const x=R(11,20),y=R(3,9);q=`${x} × ${y}`;a=x*y;}else if(k===1){const d=R(11,20),y=R(3,12);q=`${d*y} ÷ ${d}`;a=y;}else{const x=R(2,15);q=`${x} × ${x}`;a=x*x;}}
  return {q:q+' = ?',a:String(a),o:numOpts(a,a>40?10:4)};}
+/* ---------- కొత్త ఆటలు (2026.11.13-2): 🏍️ బైక్ రేస్, 🚚 లారీ లోడ్, 🧩 తర్వాత ఏది?, 🧠 జ్ఞాపకశక్తి, 🔍 వేరైనది ఏది?, ➗ గుర్తు పజిల్ ---------- */
+const GX_EMO=['🐶','🐱','🐘','🦁','🐒','🦜','🐟','🦋','🍎','🍌','🥭','🍇','🚗','🚌','🚲','⚽','🌞','🌙','⭐','🌳','🌹','🏠'];
+const GX_ODD_E=[['పండ్లు',['🍎','🍌','🍇','🥭','🍊','🍉','🍍']],['కూరగాయలు',['🥕','🍆','🌽','🥔','🧅','🥒']],['జంతువులు',['🦁','🐯','🐘','🐒','🐄','🐐','🐕']],['పక్షులు',['🦜','🦚','🦆','🦉','🐓','🕊️']],
+ ['వాహనాలు',['🚗','🚌','🚲','🏍️','🚚','🚂']],['పూలు',['🌹','🌻','🌺','🌷','🌼']],['బడి వస్తువులు',['✏️','📏','📚','🎒','✂️']],['బట్టలు',['👕','👗','🧦','🧢','👖']]];
+const GX_ODD_T=[['గ్రహాలు',['బుధుడు','శుక్రుడు','అంగారకుడు','గురుడు','శని','భూమి']],['లోహాలు',['ఇనుము','రాగి','బంగారం','వెండి','అల్యూమినియం']],['వాయువులు',['ఆక్సిజన్','నైట్రోజన్','హైడ్రోజన్','కార్బన్ డయాక్సైడ్']],
+ ['నదులు',['గోదావరి','కృష్ణా','పెన్నా','గంగా','కావేరి']],['రాష్ట్రాలు',['ఆంధ్రప్రదేశ్','తమిళనాడు','కేరళ','కర్ణాటక','ఒడిశా']],['చతుర్భుజాలు',['చతురస్రం','దీర్ఘచతురస్రం','రాంబస్','సమాంతర చతుర్భుజం']],
+ ['శరీర అవయవాలు',['గుండె','ఊపిరితిత్తులు','కాలేయం','మూత్రపిండం','మెదడు']],['ఖండాలు',['ఆసియా','ఆఫ్రికా','ఐరోపా','ఆస్ట్రేలియా','అంటార్కిటికా']],['భాషలు',['తెలుగు','హిందీ','తమిళం','కన్నడ','మలయాళం']]];
+function gxBike(c){const q=genMental(c),w=shuffle(q.o.filter(x=>x!==q.a)).slice(0,2);return {q:q.q,a:q.a,o:shuffle([q.a,...w])};}
+function gxLorry(c){const f=c<=1?[1,9,1]:c===2?[2,20,1]:c===3?[1,10,5]:c<=5?[2,19,5]:c<=7?[11,60,1]:[15,120,1],k=c<=2?2:R(2,3),set=new Set();
+ while(set.size<6)set.add(R(f[0],f[1])*f[2]);const b=[...set],sol=b.slice(0,k);
+ return {t:sol.reduce((x,y)=>x+y,0),sol,boxes:shuffle(b).map(w=>({w,u:false}))};}
+function gxPattern(c){
+ if(c<=3&&Math.random()<(c<=2?.5:.25)){const e=shuffle(['🔴','🔵','🟢','🟡','⭐','🔺','🟣']).slice(0,3),p=[[0,1],[0,0,1],[0,1,2],[0,1,1]][R(0,3)],n=R(5,7),q=[];
+  for(let i=0;i<=n;i++)q.push(e[p[i%p.length]]);const a=q.pop();return {q:q.join(' ')+' ❓',a,o:shuffle(e),em:1,why:'అదే క్రమం మళ్ళీ మళ్ళీ వస్తుంది'};}
+ const ty=shuffle(['add','add'].concat(c>=2?['sub']:[],c>=3?['mul']:[],c>=4?['alt']:[],c>=5?['inc']:[],c>=6?['sq','fib']:[],c>=8?['cube']:[]))[0];
+ const D=c<=1?[1,2]:c===2?[2,5]:c===3?[3,10]:c<=5?[5,25]:[7,40];let q=[],why='';
+ if(ty==='add'){const d=R(D[0],D[1]),s=R(1,c<=2?10:50);for(let i=0;i<5;i++)q.push(s+d*i);why=`ప్రతిసారీ +${d}`;}
+ else if(ty==='sub'){const d=R(D[0],D[1]),s=R(1,c<=2?5:30)+d*4;for(let i=0;i<5;i++)q.push(s-d*i);why=`ప్రతిసారీ −${d}`;}
+ else if(ty==='mul'){const k=R(2,c>=5?4:3),s=R(1,5);for(let i=0;i<5;i++)q.push(s*k**i);why=`ప్రతిసారీ ×${k}`;}
+ else if(ty==='alt'){const a=R(2,9),b=R(10,20),s=R(1,20);let v=s;for(let i=0;i<6;i++){q.push(v);v+=i%2?b:a;}why=`ఒకసారి +${a}, ఒకసారి +${b}`;}
+ else if(ty==='inc'){const k=R(1,3),s=R(1,10);let v=s;for(let i=0;i<6;i++){q.push(v);v+=k*(i+1);}why=`తేడా పెరుగుతుంది: +${k}, +${2*k}, +${3*k}…`;}
+ else if(ty==='sq'){const s=R(1,6);for(let i=0;i<5;i++)q.push((s+i)**2);why='వర్గ సంఖ్యలు (n²)';}
+ else if(ty==='cube'){const s=R(1,4);for(let i=0;i<5;i++)q.push((s+i)**3);why='ఘన సంఖ్యలు (n³)';}
+ else{let a=R(1,4),b=R(2,6);q=[a,b];for(let i=0;i<4;i++)q.push(q[i]+q[i+1]);why='ముందు రెండు సంఖ్యల మొత్తం';}
+ const a=q.pop();return {q:q.join(', ')+', ?',a:String(a),o:numOpts(a,a>40?10:4),why};}
+function gxMem(c){const n=c<=2?4:6;let pr;
+ if(c>=6){const u=new Set();pr=[];while(pr.length<n){const x=R(2,c>=8?15:12),y=R(2,9),v=x*y;if(u.has(v))continue;u.add(v);pr.push([`${x}×${y}`,String(v)]);}}
+ else pr=shuffle(GX_EMO).slice(0,n).map(e=>[e,e]);
+ const cards=[];pr.forEach((p,k)=>{cards.push({k,l:p[0],s:0},{k,l:p[1],s:0});});return {cards:shuffle(cards),lock:false,txt:c>=6};}
+function gxOdd(c){
+ if(c>=6&&Math.random()<.5){const ty=R(0,3),pick=(arr,n)=>shuffle(arr).slice(0,n);let g,o,why;
+  if(ty===0){const ev=Math.random()<.5;g=pick([12,18,24,36,48,54,62,76,88,94],3);o=pick([15,27,33,45,51,69,81,97],1)[0];if(!ev)[g,o]=[pick([15,27,33,45,51,69,81,97],3),pick([12,18,24,36,48,54,62,76,88,94],1)[0]];why=ev?'మిగిలినవి సరి సంఖ్యలు':'మిగిలినవి బేసి సంఖ్యలు';}
+  else if(ty===1){g=pick([11,13,17,19,23,29,31,37,41,43],3);o=pick([9,15,21,25,27,33,35,39,49],1)[0];why='మిగిలినవి ప్రధాన సంఖ్యలు';}
+  else if(ty===2){g=pick([16,25,36,49,64,81,100,121,144],3);o=pick([20,30,45,50,72,90,110,125],1)[0];why='మిగిలినవి వర్గ సంఖ్యలు';}
+  else{const k=[3,5,7,9][R(0,3)],ms=new Set();while(ms.size<3)ms.add(k*R(2,12));g=[...ms];do{o=R(2*k,12*k);}while(o%k===0);why=`మిగిలినవి ${k} గుణిజాలు`;}
+  return {o:shuffle(g.concat(o)).map(String),a:String(o),why,txt:1};}
+ const P=c>=6?GX_ODD_T:GX_ODD_E,[A,B]=shuffle(P);
+ return {o:shuffle(shuffle(A[1]).slice(0,3).concat(shuffle(B[1])[0])),a:null,why:`మిగిలినవి ${A[0]}`,txt:c>=6,odd:B[1]};}
+function gxOp(c){const ops=c<=2?['+','−']:['+','−','×','÷'],f={'+':(a,b)=>a+b,'−':(a,b)=>a-b,'×':(a,b)=>a*b,'÷':(a,b)=>a/b},mx=c<=1?9:c===2?20:c<=5?12:20,big=mx*(c>=3?4:1);
+ for(let g=0;g<200;g++){const op=ops[R(0,ops.length-1)];let a,b;
+  if(op==='÷'){b=R(2,mx>12?12:9);a=b*R(2,mx>12?12:9);}else if(op==='×'){a=R(2,mx);b=R(2,9);}else if(op==='−'){a=R(2,big);b=R(1,a);}else{a=R(1,big);b=R(1,big);}
+  const r=f[op](a,b);if(ops.filter(o=>f[o](a,b)===r).length!==1)continue;return {q:`${a} ⬜ ${b} = ${r}`,a:op,o:ops,full:`${a} ${op} ${b} = ${r}`};}
+ return {q:'2 ⬜ 3 = 5',a:'+',o:ops,full:'2 + 3 = 5'};}
+const GX={
+ bk:{gen:gxBike,view:(c,m)=>{const ln=G.lane==null?1:G.lane;return `<div class="gq gxq">${c.q}</div>${m}<div class="bkroad">${c.o.map((o,j)=>`<button class="bkl" onclick="gxBkPick(${j})"><span class="gxbike ${ln===j?(G.fx||''):''}">${ln===j?'🏍️':''}</span><i></i><b>${o}</b></button>`).join('')}</div>
+<p class="center mut">సరైన జవాబు ఉన్న దారిని నొక్కు – బైక్ ముందుకు దూసుకెళ్తుంది! 🏁 ${G.score*100} మీ.</p>`;}},
+ lr:{gen:gxLorry,view:(c,m)=>{const on=c.boxes.filter(b=>b.u),sum=on.reduce((x,b)=>x+b.w,0);return `<div class="lrinfo">🎯 లారీలో సరిగ్గా <b>${c.t} కిలోలు</b> ఎక్కించు</div>
+<div class="lrtruck ${G.fx||''}"><div class="lrbed">${on.map(b=>`<span>${b.w}</span>`).join('')||'<em>ఖాళీ లారీ</em>'}</div><span class="lrcab">🚚</span></div>
+<div class="lrbar"><i class="${sum>c.t?'ov':''}" style="width:${Math.min(100,sum/c.t*100)}%"></i></div><p class="center" style="margin:4px 0"><b>${sum}</b> / ${c.t} కిలోలు</p>${m}
+<div class="lrboxes">${c.boxes.map((b,i)=>`<button class="${b.u?'on':''}" onclick="gxLrTap(${i})">📦<b>${b.w}</b></button>`).join('')}</div>
+<div class="row2 qnav"><button class="btn ghost" onclick="gxLrClear()">↺ అన్నీ దించు</button><button class="btn ghost" onclick="gxLrSkip()">దాటవేయి ⏭</button></div>`;}},
+ pt:{gen:gxPattern,view:(c,m)=>`<div class="gq gxq ${c.em?'em':''}">${c.q}</div><p class="center">తర్వాత వచ్చేది ఏది?</p>${m}<div class="gopts ${c.em?'gx3':''}">${c.o.map((o,j)=>`<button onclick="gxPick(${j})">${o}</button>`).join('')}</div>`},
+ mr:{gen:gxMem,view:(c,m)=>`<p class="center">రెండు కార్డులు తెరిచి ${c.txt?'లెక్క – జవాబు':'ఒకేలాంటి'} జత కలుపు</p>${m}<div class="mrgrid ${c.txt?'txt':''}">${c.cards.map((d,i)=>`<button class="${d.s===2?'done':d.s?'open':''}" onclick="gxMrTap(${i})">${d.s?d.l:'❓'}</button>`).join('')}</div>`},
+ oo:{gen:gxOdd,view:(c,m)=>`<p class="center" style="font-weight:700;font-size:17px">ఈ నాలుగింటిలో వేరైనది ఏది?</p>${m}<div class="gopts ${c.txt?'':'oog'}">${c.o.map((o,j)=>`<button class="${c.txt?'hwo':''}" onclick="gxPick(${j})">${esc(o)}</button>`).join('')}</div>`},
+ op:{gen:gxOp,view:(c,m)=>`<div class="gq gxq">${c.q}</div><p class="center">⬜ లో ఏ గుర్తు పెడితే సరిపోతుంది?</p>${m}<div class="gopts">${c.o.map((o,j)=>`<button onclick="gxPick(${j})">${o}</button>`).join('')}</div>`}};
+function gxRight(c,j){return c.odd?c.odd.includes(c.o[j]):c.o[j]===c.a;}
+function gxPick(j){const c=G.cur,ok=gxRight(c,j),ans=c.full||(c.odd?c.o.find(x=>c.odd.includes(x)):c.a);beep(ok?'ok':'no');
+ if(ok){G.score++;G.msg='✓ సరైనది!'+(c.why?' '+c.why:'');G.mc='ok';}else{G.msg=`✗ సరైన జవాబు: ${ans}${c.why?' – '+c.why:''}`;G.mc='no';}nextRound();upd();}
+function gxBkPick(j){const c=G.cur,ok=c.o[j]===c.a;beep(ok?'ok':'no');G.lane=j;G.fx=ok?'ok':'no';
+ if(ok){G.score++;G.msg='✓ సరైనది! బైక్ ముందుకు 🏍️💨';G.mc='ok';}else{G.msg=`✗ తప్పు దారి! ${c.q.replace('?',c.a)}`;G.mc='no';}nextRound();upd();}
+function gxLrTap(i){const c=G.cur,b=c.boxes[i];b.u=!b.u;G.fx='';const on=c.boxes.filter(x=>x.u),sum=on.reduce((x,y)=>x+y.w,0);
+ if(sum===c.t){G.score++;beep('ok');G.msg=`✓ సరైన లోడ్! ${on.map(x=>x.w).join(' + ')} = ${c.t} – లారీ బయలుదేరింది 🚚💨`;G.mc='ok';G.fx='ok';nextRound();}
+ else if(sum>c.t){beep('no');G.msg=`✗ ${sum-c.t} కిలోలు ఎక్కువైంది – ఒక పెట్టె దించు`;G.mc='no';}else G.msg='';upd();}
+function gxLrClear(){G.cur.boxes.forEach(b=>b.u=false);G.msg='';G.fx='';upd();}
+function gxLrSkip(){const c=G.cur;G.msg=`➡ జవాబు: ${c.sol.join(' + ')} = ${c.t}`;G.mc='no';G.fx='';nextRound();upd();}
+function gxMrTap(i){const c=G.cur,d=c.cards[i];if(c.lock||d.s)return;d.s=1;const o=c.cards.filter(x=>x.s===1);G.msg='';
+ if(o.length===2){if(o[0].k===o[1].k){o.forEach(x=>x.s=2);G.score++;beep('ok');G.msg='✓ జత దొరికింది!';G.mc='ok';
+   if(c.cards.every(x=>x.s===2)){c.lock=true;G.score+=2;G.msg='🎉 అన్ని జతలూ దొరికాయి! +2 బోనస్';upd();setTimeout(()=>{if(G.cur===c&&!G.done){nextRound();upd();}},700);return;}}
+  else{c.lock=true;beep('no');upd();setTimeout(()=>{if(G.cur!==c)return;o.forEach(x=>x.s=0);c.lock=false;if(!G.done)upd();},750);return;}}
+ upd();}
+
 function startGame(g){G={g,score:0,left:GAMES[g].sec,done:false,used:[],msg:'',mc:''};nextRound();go('gamerun');
  tick=setInterval(()=>{G.left--;const e=$('#gleft');if(e)e.textContent=G.left;if(G.left<=0)endGame();},1000);}
 function nextRound(){const c=S.cur.c;
+ if(GX[G.g]){G.cur=GX[G.g].gen(+c);return;}
  if(G.g==='mm')G.cur=genMental(c);
  else if(G.g==='tl'){let pool=TEL.filter(x=>!G.used.includes(x[1]));if(!pool.length){G.used=[];pool=TEL;}const it=pool[R(0,pool.length-1)];G.used.push(it[1]);
   const o=new Set([it[2]]);while(o.size<4)o.add(TEL[R(0,TEL.length-1)][2]);G.cur={e:it[0],w:it[1],a:it[2],o:shuffle([...o])};}
@@ -4171,6 +4281,7 @@ function nextRound(){const c=S.cur.c;
   const it=pool[R(0,pool.length-1)];G.used.push(it[1]);let tl=shuffle(it[1].split(''));let g2=0;while(tl.join('')===it[1]&&g2++<10)tl=shuffle(tl);
   G.cur={e:it[0],w:it[1],tiles:tl.map(l=>({l,u:false})),typed:[]};}}
 function gameArea(){const c=G.cur;const m=`<div class="gmsg ${G.mc}">${G.msg}</div>`;
+ if(GX[G.g])return GX[G.g].view(c,m);
  if(G.g==='mm')return `<div class="gq">${c.q}</div>${m}<div class="gopts">${c.o.map((o,j)=>`<button onclick="mmPick(${j})">${o}</button>`).join('')}</div>`;
  if(G.g==='tl')return `<div class="gemo">${c.e}</div><p class="center">ఈ బొమ్మ పేరు ఏ అక్షరంతో మొదలవుతుంది?</p>${m}<div class="gopts">${c.o.map((o,j)=>`<button onclick="tlPick(${j})">${o}</button>`).join('')}</div>`;
  if(G.g==='tf')return `<div class="tfq"><small>${SUBJ[c.s]?SUBJ[c.s].ic+' '+SUBJ[c.s].n:''}</small><p>${esc(c.q)}</p><div class="tfv">👉 ${esc(c.v)}</div></div>${m}<div class="tfb"><button class="y" onclick="tfPick(true)">✅ నిజం</button><button class="n" onclick="tfPick(false)">❌ అబద్ధం</button></div>`;
