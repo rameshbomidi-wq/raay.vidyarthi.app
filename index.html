@@ -203,7 +203,7 @@ html{scroll-padding:84px 0 104px}
 .tbl td{padding:8px 6px;border-bottom:1px solid #f1f5f9}
 .tscroll{overflow-x:auto;border-radius:12px}
 .inst{background:linear-gradient(135deg,#063a5b,#1d8c8c);color:#fff;border-radius:18px;padding:14px 16px;margin-top:14px;display:flex;align-items:center;gap:12px}
-.inst img{width:46px;height:46px;border-radius:12px;flex:none}.inst div{flex:1;font-size:13px}.inst b{font-size:15px;display:block}
+.inst img{width:46px;height:46px;border-radius:12px;flex:none}.inst div{flex:1;font-size:13px}.inst b{font-size:15px;display:block}.inst{text-align:left}
 .inst button{border:0;background:#fde047;color:#111827;font-weight:700;padding:9px 14px;border-radius:20px;font-size:13px}
 .wel{padding:26px 16px;text-align:center}.wel .logo{font-size:60px}.wel h1{font-size:22px;margin-top:4px}.wel>p{color:var(--mut);margin:4px 0 18px}
 .role{display:flex;align-items:center;gap:14px;width:100%;border:0;border-radius:20px;padding:18px;margin-bottom:12px;text-align:left;color:var(--ink);box-shadow:0 3px 10px rgba(0,0,0,.07)}
@@ -2927,7 +2927,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.13-2';
+const APPV='2026.11.13-3';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -2938,6 +2938,7 @@ ${S.cfg.sname?`<div class="sbadge">🏫 ${esc(S.cfg.sname)}</div>`:''}
 <div class="card"><label>నీ మొదటి పేరు</label><input id="ln" placeholder="ఉదా: రవి" maxlength="30"><small class="mut">మొదటి పేరు మాత్రమే – ఇంటిపేరు అవసరం లేదు</small>
 <label>తరగతి ఎంచుకో</label><div class="clsrow">${CLASSES.map(c=>`<button class="cb ${selCls===c?'on':''}" data-c="${c}" onclick="pickCls(${c})">${c}</button>`).join('')}</div>
 <button class="btn" onclick="doLogin()">ప్రారంభించు ▶</button></div>
+${installBanner()}
 ${S.local.length?`<div class="card"><h3>ఈ ఫోన్‌లో వాడిన విద్యార్థులు</h3>${S.local.map((s,i)=>`<button class="chip" onclick="quick(${i})">${(S.av||{})[s.n]||'👤'} ${esc(s.n)} • ${s.c}వ</button>`).join('')}</div>`:''}
 ${S.cfg.type?'':`<button class="link" onclick="S.offline=false;save();go('welcome',{w:'s'})">🏫 పాఠశాల కోడ్‌తో చేరు</button><br>`}<button class="link" onclick="go('teacher')">👩‍🏫 ఉపాధ్యాయుల ప్యానెల్${S.cfg.type?'':' – పాఠశాల నమోదు'}</button></div>`;
 /* ---------- మొదటి స్క్రీన్: పాఠశాల వివరాలు ముందుగానే ---------- */
@@ -2993,7 +2994,7 @@ V.welcome=()=>{const w=param.w||'';const ps=pubServer();const back=`<button clas
  return `${reconnectCard()?'<div style="padding:14px 14px 0">'+reconnectCard()+'</div>':''}<div class="wel"><div class="logo">📚</div><h1>రాయ్ విద్యార్థి లెర్నింగ్ యాప్</h1><p>1 నుండి 10 తరగతులు • పాఠాలు, టెస్టులు, ఆటలు, హోంవర్క్</p>
 <button class="role" style="background:#ccf0ee" onclick="go('welcome',{w:'t'})"><span>👩‍🏫</span><div><b>నేను ఉపాధ్యాయుడు / ఉపాధ్యాయురాలు</b><small>పాఠశాల వివరాలు నమోదు చేసి, పిల్లలకు కోడ్ ఇవ్వండి</small></div></button>
 <button class="role" style="background:#fdeaa8" onclick="go('welcome',{w:'s'})"><span>🧒</span><div><b>నేను విద్యార్థి</b><small>టీచర్ ఇచ్చిన పాఠశాల కోడ్‌తో చేరు</small></div></button>
-<button class="link" onclick="S.offline=true;save();go('home')">పాఠశాల లేకుండా సొంతంగా వాడుకో →</button><br><button class="link" onclick="go('help',{back:'welcome'})">❓ ఎలా వాడాలి (వీడియో)</button> • <button class="link" onclick="go('privacy')">🔒 గోప్యత & నిబంధనలు</button></div>`;};
+${installBanner()}<button class="link" onclick="S.offline=true;save();go('home')">పాఠశాల లేకుండా సొంతంగా వాడుకో →</button><br><button class="link" onclick="go('help',{back:'welcome'})">❓ ఎలా వాడాలి (వీడియో)</button> • <button class="link" onclick="go('privacy')">🔒 గోప్యత & నిబంధనలు</button></div>`;};
 /* ================= 🖥️ సొంత సర్వర్ – 3 అడుగులు (పాఠశాల Google ఖాతాలో, ఉచితం, పరిమితి లేదు) ================= */
 const OWN_V=3,OWN={chk:0,v:0};
 async function pubCap(){if(!pubServer()||Date.now()-PUB.capAt<300000)return;PUB.capAt=Date.now();
@@ -4424,7 +4425,7 @@ function tWeek(){const t=todayS(),d0=addDays(t,-parseD(t).getDay()),DN=['ఆద�
  return `<div class="wk">${[0,1,2,3,4,5,6].map(i=>{const d=addDays(d0,i);return `<button class="${d===t?'td':''}" onclick="tDayInfo('${d}')">${DN[i]}<b>${parseD(d).getDate()}</b><i class="${ev.has(d)||hw.has(d)?'':'no'}"></i></button>`;}).join('')}</div>`;}
 const TGC={'📌':'#e11d2a','📘':'#2563eb','🏫':'#16a34a','⚙️':'#64748b'},TCL={g:'c-evs',s:'c-sci',i:'c-eng',o:'c-tel',t:'c-soc',v:'c-phy',r:'c-mat',p:'c-hin',l:'c-bio',b:'c-eng',y:'c-te2',z:'c-gry'};
 function tDash(){const t=todayS(),stu=live('students').filter(x=>canSee(x.c)).length,hwA=live('hw').filter(h=>canSee(h.c,h.s)&&h.due>=t).length;
- return `<section class="v4p w" style="margin-top:0">`+tAtHero()+`<div class="thero"><div><h3>📒 హోంవర్క్</h3><p>${hwA} నడుస్తున్నాయి • ${stu} విద్యార్థులు<br>కొత్తది ఇవ్వండి – 1 నిమిషంలో పిల్లల ఫోన్లకు.</p><button onclick="go('teacher',{t:'hw'})">➕ హోంవర్క్ ఇవ్వు / చూడు</button></div><span>🧑‍🏫</span></div></section>
+ return installBanner()+`<section class="v4p w" style="margin-top:${installBanner()?'12px':'0'}">`+tAtHero()+`<div class="thero"><div><h3>📒 హోంవర్క్</h3><p>${hwA} నడుస్తున్నాయి • ${stu} విద్యార్థులు<br>కొత్తది ఇవ్వండి – 1 నిమిషంలో పిల్లల ఫోన్లకు.</p><button onclick="go('teacher',{t:'hw'})">➕ హోంవర్క్ ఇవ్వు / చూడు</button></div><span>🧑‍🏫</span></div></section>
 <section class="v4p" style="--pc:#7c3aed"><div class="v4t">📅 ఈ వారం <small>• రోజు నొక్కండి</small></div>${tWeek()}</section>
 ${TGRP.map(([g,ks])=>{const its=ks.filter(tSecOk);if(g.includes('సెటప్'))its.push('help');const pc=TGC[Object.keys(TGC).find(e=>g.startsWith(e))]||'#e11d2a';
  return `<section class="v4p" style="--pc:${pc}"><div class="v4t">${g}</div><div class="v4tg">${its.map(k=>k==='help'?`<button class="v4sb c-soc" onclick="go('help',{back:'teacher',s:'teacher'})"><b>❓</b><span>సహాయం</span></button>`:`<button class="v4sb ${TCL[TIC[k][2]]||'c-eng'}" onclick="go('teacher',{t:'${k}'})"><b>${TIC[k][0]}</b><span>${TIC[k][1]}</span>${tBadge(k)?`<i>${tBadge(k)}</i>`:''}</button>`).join('')}</div></section>`;}).join('')}`;}
