@@ -1014,6 +1014,22 @@ body:has(#app.v4bg){background:#083a1b}
 .mrgrid.txt button.open,.mrgrid.txt button.done{font-size:21px;font-weight:700}
 @media(max-width:320px){.gq.gxq{font-size:24px}.bkl b{font-size:20px;min-width:60px}.mrgrid button{font-size:26px}.mrgrid.txt button.open,.mrgrid.txt button.done{font-size:16px}.gopts.oog button{font-size:40px}.lrcab{font-size:46px}}
 @media(prefers-reduced-motion:reduce){.bkl i,.gxbike.ok,.gxbike.no,.lrtruck.ok{animation:none}}
+
+/* 🎨 బొమ్మలు • రంగులు ఆటలు (2026.11.14-5) */
+.artg{display:grid;grid-template-columns:repeat(10,1fr);gap:2px;max-width:340px;margin:6px auto;background:#cbd5e1;padding:2px;border-radius:10px}
+.artg button{aspect-ratio:1;border:0;border-radius:3px;padding:0;font:inherit;font-weight:800;font-size:clamp(10px,3.4vw,15px);color:#1f2937;display:grid;place-items:center;cursor:pointer;transition:background .25s}
+.artg button.f{animation:artpop .3s}.artg button i{font-style:normal;font-size:11px;color:#64748b}
+@keyframes artpop{0%{transform:scale(.6)}100%{transform:scale(1)}}
+.cqq{display:flex;gap:10px;align-items:center;background:#fff;border-radius:14px;padding:8px 10px;margin:6px 0;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.cqq .cqn{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;text-shadow:0 1px 2px #0006;border:3px solid #fff;box-shadow:0 0 0 2px #334155}
+.cqq small{display:block;color:#64748b;font-size:11px}.cqq b{font-size:15px;line-height:1.35}
+.lcins{background:#ede9fe;border-radius:12px;padding:7px 10px;font-size:14px;text-align:center}.lcins small{display:block;color:#6d28d9;font-weight:700}
+.pabox,.frbox,.ckbox{display:flex;justify-content:center}.pasvg{width:min(62vw,230px);height:auto;background:#f0f9ff;border-radius:16px}
+.pasvg .pp.hi{animation:pablink 1s infinite;filter:drop-shadow(0 0 4px #facc15) drop-shadow(0 0 8px #f59e0b)}.pasvg .pp.hi.o *{stroke:#facc15;stroke-width:5}.pasvg .pp.hi.l *{stroke:#eab308!important;stroke-width:8}.pasvg .pp.hi.f *{fill:#fde047!important}
+@keyframes pablink{50%{opacity:.45}}
+.pao button{font-size:14px}
+.frsvg{width:min(62vw,220px);height:auto}.cksvg{width:min(56vw,210px);height:auto}
+@media (prefers-reduced-motion:reduce){.pasvg .pp.hi{animation:none}.artg button.f{animation:none}}
 </style>
 </head>
 <body>
@@ -2075,7 +2091,6 @@ G3('nth','pr',4,5,'U',(c,d)=>{const P=[2,3,5,7,11,13,17,19,23,29,31,37,41,43,47]
  if(d===2)return M('వీటిలో సంయుక్త సంఖ్య ఏది?','Which of these is a composite number?',pick(C.slice(4)),[pick([2,3,5]),pick([7,11,13]),pick([17,19,23])]);
  return M('ఏకైక సరి ప్రధాన సంఖ్య ఏది?','Which is the only even prime number?',2,[4,1,0]);});
 G3('nth','dvt',4,5,'N',(c,d)=>{const k=pick(d===1?[2,5,10]:d===2?[3,9]:[4,6]);let y=k*r(15,250),n1=[];while(n1.length<3){const z=r(30,2000);if(z%k&&!n1.includes(z))n1.push(z);}return M(`వీటిలో ${k} చేత నిశ్శేషంగా భాగించబడే సంఖ్య ఏది?`,`Which of these is divisible by ${k}?`,y,n1);});
-const gcd=(a,b)=>b?gcd(b,a%b):a;
 G3('nth','lh',5,5,'A',(c,d)=>{const a=r(2,d===1?10:15)*(d===3?2:1),b=r(2,d===1?10:15)*(d===3?3:1);const A=Math.min(a,b),B=Math.max(a,b)+(a===b?1:0),g=gcd(A,B),l=A*B/g;
  return r(0,1)?M(`${A}, ${B} ల క.సా.గు (LCM) ఎంత?`,`What is the LCM of ${A} and ${B}?`,l,[A*B===l?l+A:A*B,g,l+B].filter(x=>x!==l)):M(`${A}, ${B} ల గ.సా.భా (HCF) ఎంత?`,`What is the HCF of ${A} and ${B}?`,g,[l,g+1,A].filter(x=>x!==g).concat([B]).slice(0,3));});
 
@@ -3034,7 +3049,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${view==='home'?`<button class="ib hstar" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐<small>${stars()}</small></button><button class="ib hav" onclick="go('avatar')" aria-label="బొమ్మ మార్చు">${avOf(S.cur.n)}</button>`:''}${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.14-4';
+const APPV='2026.11.14-5';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -4385,6 +4400,168 @@ const GX={
  mr:{gen:gxMem,view:(c,m)=>`<p class="center">రెండు కార్డులు తెరిచి ${c.txt?'లెక్క – జవాబు':'ఒకేలాంటి'} జత కలుపు</p>${m}<div class="mrgrid ${c.txt?'txt':''}">${c.cards.map((d,i)=>`<button class="${d.s===2?'done':d.s?'open':''}" onclick="gxMrTap(${i})">${d.s?d.l:'❓'}</button>`).join('')}</div>`},
  oo:{gen:gxOdd,view:(c,m)=>`<p class="center" style="font-weight:700;font-size:17px">ఈ నాలుగింటిలో వేరైనది ఏది?</p>${m}<div class="gopts ${c.txt?'':'oog'}">${c.o.map((o,j)=>`<button class="${c.txt?'hwo':''}" onclick="gxPick(${j})">${esc(o)}</button>`).join('')}</div>`},
  op:{gen:gxOp,view:(c,m)=>`<div class="gq gxq">${c.q}</div><p class="center">⬜ లో ఏ గుర్తు పెడితే సరిపోతుంది?</p>${m}<div class="gopts">${c.o.map((o,j)=>`<button onclick="gxPick(${j})">${o}</button>`).join('')}</div>`}};
+/* 🎨 బొమ్మలు • రంగులు ఆటలు (2026.11.14-5, యూజర్ కోరిక): pa బొమ్మ భాగాలు, cq జవాబులకు రంగు → బొమ్మ, lc అక్షరాలు/సంఖ్యలకు రంగు → బొమ్మ, fr భిన్నాలకు రంగు, ck గడియారం.
+   GX ఆటల పద్ధతే (gen/view + pick ఫంక్షన్లు); స్కోర్లు పాత games collection లోనే. బొమ్మలు = 10×10 పిక్సెల్ ఆర్ట్ (ART) లేదా SVG (PARTS). */
+const ART_PAL={r:'#ef4444',p:'#f9a8d4',o:'#fb923c',y:'#facc15',g:'#22c55e',d:'#15803d',b:'#2563eb',s:'#7dd3fc',v:'#8b5cf6',n:'#92400e',k:'#1f2937',w:'#f8fafc'};
+const ART_PALN={r:'ఎరుపు',p:'గులాబీ',o:'నారింజ',y:'పసుపు',g:'ఆకుపచ్చ',d:'ముదురు ఆకుపచ్చ',b:'నీలం',s:'లేత నీలం',v:'ఊదా',n:'గోధుమ',k:'నలుపు',w:'తెలుపు'};
+const ART=[
+ ['గుండె ❤️',['..........','.rr....rr.','rppr..rrrr','rprrrrrrrr','rrrrrrrrrr','.rrrrrrrr.','..rrrrrr..','...rrrr...','....rr....','..........']],
+ ['చెట్టు 🌳',['...dddd...','..dggggd..','.dggggggd.','dggggggggd','dggggggggd','.dggggggd.','..ddnndd..','....nn....','....nn....','..nnnnnn..']],
+ ['ఇల్లు 🏠',['....rr....','...rrrr...','..rrrrrr..','.rrrrrrrr.','rrrrrrrrrr','.yyyyyyyy.','.yssyyssy.','.yssyyssy.','.yyynnyyy.','.yyynnyyy.']],
+ ['చేప 🐟',['..........','....yy....','...oooo..o','.oooooo.oo','okoooooooo','oooooooooo','.oooooo.oo','...oooo..o','....yy....','..........']],
+ ['పువ్వు 🌸',['...pp.....','..pppp.pp.','..ppyypppp','...pyyyp..','..pppyypp.','.pp..pp...','.....g....','..gg.g....','...ggg....','.....g....']],
+ ['సూర్యుడు ☀️',['o...o....o','.o..o...o.','..yyyyyy..','.yyyyyyyy.','oyyyyyyyyo','oyyyyyyyyo','.yyyyyyyy.','..yyyyyy..','.o..o...o.','o...o....o']],
+ ['ఆపిల్ 🍎',['.....n....','.....ngg..','....n.gg..','..rrrrrrr.','.rrrrrrrrr','.rprrrrrrr','.rprrrrrrr','.rrrrrrrrr','..rrrrrrr.','...rr.rr..']],
+ ['పడవ ⛵',['....v.....','....vv....','....vvv...','....vvvv..','....vvvvv.','....n.....','nnnnnnnnnn','.nnnnnnnn.','..nnnnnn..','bbbbbbbbbb']],
+ ['గాలిపటం 🪁',['....r.....','...rrr....','..rrrbb...','.rrrrbbb..','yyyyybbbbb','.yyyygggg.','..yyygg...','...yg.....','....v.....','.....vv...']],
+ ['నక్షత్రం ⭐',['....yy....','....yy....','...yyyy...','yyyyyyyyyy','.yyyyyyyy.','..yyyyyy..','..yyoyyy..','.yyo..oyy.','.yo....oy.','o........o']],
+ ['గొడుగు ☂️',['....vv....','..vvrrvv..','.vrrvvrrv.','vrrvvvvrrv','vvvvvvvvvv','....n.....','....n.....','....n.....','....n..n..','.....nn...']],
+ ['కారు 🚗',['..........','..........','...bbbb...','..bssbsb..','.bbbbbbbbb','bbbbbbbbbb','bbybbbbybb','..kk..kk..','..kk..kk..','..........']]];
+function artCells(a){const g=a[1],cells=[];for(let r=0;r<10;r++)for(let c=0;c<10;c++)cells.push((g[r]||'')[c]||'.');return cells;}
+let ART_I=-1;function artPick(){ART_I=ART_I<0?R(0,ART.length-1):(ART_I+1)%ART.length;return ART[ART_I];}
+function artGrid(cells,show,label,tap){return `<div class="artg">${cells.map((ch,i)=>{const sh=show(i,ch),bg=sh?(ch==='.'?'#ffffff':ART_PAL[ch]):'#f1f5f9';
+ return `<button class="${sh?'f':''}" style="background:${bg}" ${tap?`onclick="${tap}(${i})"`:'tabindex="-1"'}>${label(i,ch)}</button>`;}).join('')}</div>`;}
+/* పాఠ్యాంశ బిట్లు: నేర్చుకో పాఠాల qz (లోడ్ అయినవి) → ప్రశ్నల బ్యాంక్ Q → మనసులో లెక్కలు */
+function gxLesQ(c){const pool=[];try{learnSubs(c).forEach(s=>{(tbLes(c,s)||[]).forEach(L=>(L.qz||[]).forEach(z=>{if(z&&z.length>=4&&String(z[0]).length<140)pool.push({q:z[0],a:String(z[1]),o:z.slice(1,5).map(String),s});}));});}catch(e){}
+ if(pool.length&&Math.random()<.7){const z=pool[R(0,pool.length-1)];return {q:z.q,a:z.a,o:shuffle(z.o),s:z.s};}
+ const qq=[];Object.entries(Q[c]||{}).forEach(([s,arr])=>arr.forEach(x=>{const op=String(x[1]).split('|');if(op.length>=2)qq.push({q:x[0],a:op[0],o:op.slice(0,4),s});}));
+ if(qq.length&&Math.random()<.6){const z=qq[R(0,qq.length-1)];return {q:z.q,a:z.a,o:shuffle(z.o),s:z.s};}
+ const m=genMental(c);return {q:m.q,a:String(m.a),o:m.o.map(String),s:'mat'};}
+/* ① బొమ్మలు – భాగాలు (SVG; mode o = అంచు, f = రంగు నింపు, l = గీత) */
+const PARTS=[
+ {k:'plant',t:'మొక్క 🌱',c:[1,7],bg:'<rect x="0" y="160" width="200" height="40" fill="#d6b88f"/>',p:[
+  ['root','వేరు (Root)','o','<path d="M100 160 L100 188 M100 170 L82 190 M100 170 L118 192 M100 178 L90 196 M100 178 L110 197" stroke="#92400e" stroke-width="4" fill="none" stroke-linecap="round"/>'],
+  ['stem','కాండం (Stem)','o','<rect x="96" y="58" width="8" height="102" rx="3" fill="#15803d"/>'],
+  ['leaf','ఆకు (Leaf)','o','<path d="M100 122 Q72 98 50 116 Q74 138 100 122Z M100 98 Q128 74 152 90 Q128 112 100 98Z" fill="#22c55e" stroke="#15803d" stroke-width="2"/>'],
+  ['flower','పువ్వు (Flower)','o','<g><circle cx="100" cy="36" r="10" fill="#f472b6"/><circle cx="84" cy="46" r="10" fill="#f472b6"/><circle cx="116" cy="46" r="10" fill="#f472b6"/><circle cx="90" cy="62" r="9" fill="#f472b6"/><circle cx="110" cy="62" r="9" fill="#f472b6"/><circle cx="100" cy="50" r="8" fill="#facc15"/></g>'],
+  ['fruit','కాయ / పండు (Fruit)','o','<path d="M104 136 L126 140" stroke="#15803d" stroke-width="3"/><circle cx="132" cy="146" r="11" fill="#ef4444"/>']]},
+ {k:'body',t:'మన శరీరం 🧒',c:[1,4],p:[
+  ['head','తల (Head)','o','<circle cx="100" cy="42" r="26" fill="#fcd9b6" stroke="#b45309" stroke-width="2"/>'],
+  ['eye','కన్ను (Eye)','o','<circle cx="90" cy="38" r="4" fill="#1f2937"/><circle cx="110" cy="38" r="4" fill="#1f2937"/>'],
+  ['nose','ముక్కు (Nose)','o','<path d="M100 42 L95 52 L104 52Z" fill="#e8a87c"/>'],
+  ['ear','చెవి (Ear)','o','<ellipse cx="73" cy="44" rx="5" ry="9" fill="#f5c79e"/><ellipse cx="127" cy="44" rx="5" ry="9" fill="#f5c79e"/>'],
+  ['hand','చేయి (Hand)','o','<path d="M74 82 L44 120 M126 82 L156 120" stroke="#fcd9b6" stroke-width="12" stroke-linecap="round"/>'],
+  ['leg','కాలు (Leg)','o','<path d="M88 138 L82 190 M112 138 L118 190" stroke="#2563eb" stroke-width="14" stroke-linecap="round"/>']],
+  bg:'<rect x="72" y="70" width="56" height="72" rx="14" fill="#f59e0b"/><path d="M90 58 Q100 64 110 58" stroke="#b45309" stroke-width="2" fill="none"/>'},
+ {k:'bird',t:'పక్షి 🐦',c:[1,5],bg:'<ellipse cx="96" cy="112" rx="50" ry="32" fill="#60a5fa"/>',p:[
+  ['beak','ముక్కు (Beak)','o','<path d="M160 82 L184 90 L160 96Z" fill="#f59e0b"/>'],
+  ['eye','కన్ను (Eye)','o','<circle cx="148" cy="84" r="4" fill="#111827"/>'],
+  ['wing','రెక్క (Wing)','o','<path d="M70 104 Q100 76 128 102 Q100 126 70 104Z" fill="#1d4ed8"/>'],
+  ['tail','తోక (Tail)','o','<path d="M48 104 L10 86 L18 112 L10 136 L48 120Z" fill="#3b82f6"/>'],
+  ['leg','కాలు (Leg)','o','<path d="M86 142 L82 176 M106 142 L110 176 M74 178 L90 178 M102 178 L118 178" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/>']],
+  bg2:'<circle cx="146" cy="88" r="20" fill="#60a5fa"/>'},
+ {k:'fish',t:'చేప 🐟',c:[1,6],bg:'<ellipse cx="96" cy="100" rx="66" ry="38" fill="#fb923c"/>',p:[
+  ['tail','తోక (Tail)','o','<path d="M30 100 L4 70 L4 130Z" fill="#f97316"/>'],
+  ['eye','కన్ను (Eye)','o','<circle cx="136" cy="90" r="6" fill="#111827"/>'],
+  ['gill','మొప్పలు (Gills)','l','<path d="M118 76 Q108 100 118 124" stroke="#9a3412" stroke-width="4" fill="none"/>'],
+  ['fin','వాజాలు / రెక్కలు (Fins)','o','<path d="M80 62 L100 38 L110 64Z M84 136 L100 160 L106 136Z" fill="#facc15"/>'],
+  ['mouth','నోరు (Mouth)','l','<path d="M156 104 Q150 108 160 110" stroke="#7c2d12" stroke-width="3" fill="none"/>']]},
+ {k:'leaf',t:'ఆకు 🍃',c:[4,8],p:[
+  ['lamina','పత్రదళం / ఆకు పలక (Lamina)','f','<path d="M100 20 Q160 60 100 150 Q40 60 100 20Z" fill="#4ade80" stroke="#15803d" stroke-width="2"/>'],
+  ['midrib','మధ్య ఈనె (Midrib)','l','<path d="M100 26 L100 150" stroke="#166534" stroke-width="4"/>'],
+  ['vein','ఈనెలు (Veins)','l','<path d="M100 60 L78 46 M100 60 L122 46 M100 88 L70 72 M100 88 L130 72 M100 116 L76 102 M100 116 L124 102" stroke="#166534" stroke-width="2.5"/>'],
+  ['petiole','పత్రవృంతం / ఆకు కాడ (Petiole)','l','<path d="M100 150 L100 192" stroke="#854d0e" stroke-width="6" stroke-linecap="round"/>']]},
+ {k:'flower2',t:'పుష్పం భాగాలు 🌺',c:[5,10],p:[
+  ['pedicel','పుష్ప వృంతం (Pedicel)','l','<path d="M100 196 L100 128" stroke="#15803d" stroke-width="7"/>'],
+  ['sepal','రక్షక పత్రాలు (Sepals)','o','<path d="M100 130 L70 112 L84 132Z M100 130 L130 112 L116 132Z" fill="#16a34a"/>'],
+  ['petal','ఆకర్షక పత్రాలు / రేకలు (Petals)','o','<path d="M100 120 Q40 110 52 40 Q84 70 100 120Z M100 120 Q160 110 148 40 Q116 70 100 120Z" fill="#f472b6" stroke="#db2777" stroke-width="2"/>'],
+  ['stamen','కేసరాలు (Stamens)','l','<path d="M92 118 L76 66 M108 118 L124 66" stroke="#a16207" stroke-width="3"/><circle cx="76" cy="62" r="6" fill="#facc15"/><circle cx="124" cy="62" r="6" fill="#facc15"/>'],
+  ['pistil','అండకోశం (Pistil)','o','<path d="M94 122 Q88 100 97 86 L97 50 L103 50 L103 86 Q112 100 106 122Z" fill="#84cc16" stroke="#3f6212" stroke-width="2"/><ellipse cx="100" cy="47" rx="8" ry="5" fill="#65a30d"/>']]},
+ {k:'cell',t:'మొక్క కణం 🔬',c:[6,10],p:[
+  ['wall','కణకవచం (Cell wall)','l','<rect x="16" y="26" width="168" height="148" rx="12" fill="none" stroke="#15803d" stroke-width="8"/>'],
+  ['membrane','కణత్వచం (Cell membrane)','l','<rect x="26" y="36" width="148" height="128" rx="8" fill="none" stroke="#f59e0b" stroke-width="3"/>'],
+  ['cyto','కణద్రవ్యం (Cytoplasm)','f','<rect x="28" y="38" width="144" height="124" rx="7" fill="#ecfccb"/>'],
+  ['vacuole','రిక్తిక (Vacuole)','o','<ellipse cx="108" cy="104" rx="46" ry="36" fill="#bae6fd" stroke="#0284c7" stroke-width="2"/>'],
+  ['nucleus','కేంద్రకం (Nucleus)','o','<circle cx="52" cy="66" r="16" fill="#a78bfa" stroke="#6d28d9" stroke-width="2"/><circle cx="54" cy="64" r="5" fill="#6d28d9"/>'],
+  ['chloro','హరితరేణువు (Chloroplast)','o','<ellipse cx="150" cy="56" rx="10" ry="6" fill="#16a34a"/><ellipse cx="46" cy="140" rx="10" ry="6" fill="#16a34a"/><ellipse cx="156" cy="146" rx="10" ry="6" fill="#16a34a"/>']]},
+ {k:'circle',t:'వృత్తం భాగాలు ⭕',c:[6,10],p:[
+  ['center','కేంద్రం (Centre)','o','<circle cx="100" cy="100" r="5" fill="#111827"/>'],
+  ['radius','వ్యాసార్థం (Radius)','l','<path d="M100 100 L156 156" stroke="#2563eb" stroke-width="4"/>'],
+  ['diameter','వ్యాసం (Diameter)','l','<path d="M20 100 L180 100" stroke="#16a34a" stroke-width="4"/>'],
+  ['chord','జ్యా (Chord)','l','<path d="M40 52 L152 40" stroke="#db2777" stroke-width="4"/>'],
+  ['arc','చాపం (Arc)','l','<path d="M44 156 A80 80 0 0 1 21 112" stroke="#f97316" stroke-width="7" fill="none"/>']],
+  bg:'<circle cx="100" cy="100" r="80" fill="#f8fafc" stroke="#475569" stroke-width="3"/>'},
+ {k:'tri',t:'త్రిభుజం భాగాలు 🔺',c:[4,8],bg:'<path d="M100 26 L176 170 L24 170Z" fill="#fef9c3" stroke="#475569" stroke-width="3"/>',p:[
+  ['vertex','శీర్షం (Vertex)','o','<circle cx="100" cy="26" r="7" fill="#dc2626"/>'],
+  ['side','భుజం (Side)','l','<path d="M24 170 L176 170" stroke="#2563eb" stroke-width="6"/>'],
+  ['angle','కోణం (Angle)','l','<path d="M150 120 A40 40 0 0 0 136 170" stroke="#16a34a" stroke-width="6" fill="none"/>']]}];
+function partsSvg(d,hi){return `<svg viewBox="0 0 200 200" class="pasvg">${d.bg||''}${d.p.map(([k,n,m,svg])=>`<g class="pp ${k===hi?'hi '+m:''}">${svg}</g>`).join('')}${d.bg2||''}</svg>`;}
+function gxParts(c){const ds=PARTS.filter(d=>c>=d.c[0]&&c<=d.c[1]);const d=ds[R(0,ds.length-1)];const ps=d.p;
+ const p=ps[R(0,ps.length-1)],o=shuffle([p[1]].concat(shuffle(ps.filter(x=>x!==p).map(x=>x[1])).slice(0,3)));return {d,hi:p[0],a:p[1],o,why:''};}
+/* ② జవాబులకు రంగు → బొమ్మ (ప్రతి రంగు ఒక ప్రశ్న) */
+function gxColorQ(c){const a=artPick(),cells=artCells(a),cols=[...new Set(cells.filter(x=>x!=='.'))];return {art:a,cells,cols,done:[],qi:0,q:gxLesQ(c)};}
+function gxCqPick(j){const c=G.cur,col=c.cols[c.qi],ok=c.q.o[j]===c.q.a;beep(ok?'ok':'no');
+ if(ok){G.score++;c.done.push(col);G.msg=`✓ సరైనది! ${ART_PALN[col]} రంగు వేశాం 🎨`;G.mc='ok';}
+ else{G.msg=`✗ సరైన జవాబు: ${c.q.a} – మళ్ళీ ఇంకో ప్రశ్న`;G.mc='no';c.q=gxLesQ(+S.cur.c);upd();return;}
+ c.qi++;if(c.qi>=c.cols.length){G.score+=2;G.msg=`🎉 బొమ్మ పూర్తి: ${c.art[0]} (+2 బోనస్)`;c.fin=1;upd();setTimeout(()=>{if(G.cur===c&&!G.done){nextRound();upd();}},1600);return;}
+ c.q=gxLesQ(+S.cur.c);upd();}
+/* ③ అక్షరాలు / సంఖ్యలకు రంగు → బొమ్మ */
+const LCSET={te:{n:'తెలుగు',A:['అచ్చులు','అ ఆ ఇ ఈ ఉ ఊ ఋ ఎ ఏ ఐ ఒ ఓ ఔ'],B:['హల్లులు','క ఖ గ ఘ చ ఛ జ ఝ ట ఠ డ ఢ ణ త థ ద ధ న ప ఫ బ భ మ య ర ల వ శ ష స హ ళ']},
+ en:{n:'English',A:['Vowels (అచ్చులు)','A E I O U a e i o u'],B:['Consonants (హల్లులు)','B C D F G H J K L M N P Q R S T V W X Y Z b c d f g h k m n p r s t']},
+ hi:{n:'हिंदी',A:['स्वर (అచ్చులు)','अ आ इ ई उ ऊ ए ऐ ओ औ'],B:['व्यंजन (హల్లులు)','क ख ग घ च छ ज झ ट ठ ड ढ त थ द ध न प फ ब भ म य र ल व श स ह']}};
+function gxLetCol(c){const a=artPick(),cells=artCells(a);const kinds=['te','en'].concat(c>=6?['hi']:[]).concat(['num','num']);let k=kinds[R(0,kinds.length-1)];
+ let lab=[],ins='',why='';const pic=i=>cells[i]!=='.';
+ if(k==='num'){const ty=c<=2?'even':shuffle(['even','odd'].concat(c>=3?['mul']:[],c>=6?['prime']:[]))[0],mx=c<=2?20:c<=5?50:99,m=R(3,c>=5?9:5);
+  const isP=n=>{if(n<2)return false;for(let d=2;d*d<=n;d++)if(n%d===0)return false;return true;},test={even:n=>n%2===0,odd:n=>n%2===1,mul:n=>n%m===0,prime:isP}[ty];
+  let yes=[],no=[];for(let n=1;n<=mx;n++)(test(n)?yes:no).push(n);yes=shuffle(yes).slice(0,R(6,8));no=shuffle(no).slice(0,8);
+  ins={even:'సరి సంఖ్యలు',odd:'బేసి సంఖ్యలు',mul:`${m} గుణిజాలు`,prime:'ప్రధాన సంఖ్యలు'}[ty];lab=cells.map((ch,i)=>String(pic(i)?yes[R(0,yes.length-1)]:no[R(0,no.length-1)]));
+  why={even:'2 తో భాగించబడేవి',odd:'2 తో భాగించబడనివి',mul:`${m} తో భాగించబడేవి`,prime:'1 మరియు అదే సంఖ్యతో మాత్రమే భాగించబడేవి'}[ty];}
+ else{const L=LCSET[k],tA=Math.random()<.5,T=(tA?L.A:L.B),F=(tA?L.B:L.A),ty=shuffle(T[1].split(' ')).slice(0,R(5,7)),fn=shuffle(F[1].split(' ')).slice(0,8);ins=`${T[0]} (${L.n})`;
+  lab=cells.map((ch,i)=>pic(i)?ty[R(0,ty.length-1)]:fn[R(0,fn.length-1)]);why=`${T[0]} ఉన్న గడులే బొమ్మ`;}
+ return {art:a,cells,lab,ins,why,on:cells.map(()=>false),need:new Set(lab.filter((l,i)=>pic(i))).size,got:0,miss:0};}
+/* ఒక అక్షరం/సంఖ్య నొక్కితే అదే ఉన్న అన్ని గడులకూ రంగు */
+function gxLcTap(i){const c=G.cur;if(c.fin||c.on[i])return;const ok=c.cells[i]!=='.',L=c.lab[i];
+ if(!ok){beep('no');c.miss++;G.msg=`✗ “${L}” – ${c.ins} కాదు`;G.mc='no';upd();return;}
+ c.lab.forEach((x,j)=>{if(x===L)c.on[j]=true;});c.got++;G.msg=`✓ “${L}” – అన్ని “${L}” గడులకు రంగు!`;G.mc='ok';
+ if(c.got>=c.need){c.fin=1;beep('win');G.score+=c.miss===0?4:3;G.msg=`🎉 బొమ్మ వచ్చింది: ${c.art[0]} • ${c.why} (+${c.miss===0?4:3})`;G.mc='ok';upd();setTimeout(()=>{if(G.cur===c&&!G.done){nextRound();upd();}},1700);return;}
+ beep('ok');upd();}
+function gxLcSkip(){const c=G.cur;c.fin=1;G.msg=`➡ బొమ్మ: ${c.art[0]} – ${c.why}`;G.mc='no';c.on=c.cells.map(x=>x!=='.');upd();setTimeout(()=>{if(G.cur===c&&!G.done){nextRound();upd();}},1300);}
+/* ④ భిన్నాలకు రంగు */
+function gxFrac(c){const D=c<=1?[2,4]:c<=3?[2,3,4,6,8]:c<=5?[2,3,4,5,6,8,10,12]:[2,3,4,5,6,8,10,12];
+ let b=D[R(0,D.length-1)],a=c<=1?1:R(1,b-1);if(c<=1&&b===4)a=R(1,3);
+ const k=c>=4&&Math.random()<.45?(b<=4?R(2,3):2):1,n=b*k,sh=n<=8&&Math.random()<.55?'pie':n<=12?'bar':'grid';
+ const mode=Math.random()<.55?'shade':'read';
+ let lab=`${a}/${b}`;if(c>=6&&mode==='shade'&&Math.random()<.35&&[2,4,5,10].includes(b))lab=`${Math.round(a/b*100)}%`;
+ if(mode==='read'){const m=R(1,n-1),opts=new Set([`${m}/${n}`]);const cand=[`${n-m}/${n}`,`${m}/${n+1}`,`${m+1}/${n}`,`${n}/${m}`,`${Math.max(1,m-1)}/${n}`];
+  shuffle(cand).forEach(x=>{const [p,q]=x.split('/').map(Number);if(opts.size<4&&q&&p*n!==m*q)opts.add(x);});
+  return {mode,n,sh,on:Array.from({length:n},(_,i)=>i<m),a:`${m}/${n}`,o:shuffle([...opts]),why:(gcd(m,n)>1?`${m}/${n} = ${m/gcd(m,n)}/${n/gcd(m,n)}`:'')};}
+ return {mode,n,sh,on:Array(n).fill(false),need:a*k,lab,a:`${a}/${b}`};}
+function fracSvg(c,tap){const n=c.n,col='#8b5cf6';
+ if(c.sh==='pie'){let s='';for(let i=0;i<n;i++){const a0=-Math.PI/2+i*2*Math.PI/n,a1=a0+2*Math.PI/n,x0=100+80*Math.cos(a0),y0=100+80*Math.sin(a0),x1=100+80*Math.cos(a1),y1=100+80*Math.sin(a1);
+   s+=`<path d="M100 100 L${x0.toFixed(1)} ${y0.toFixed(1)} A80 80 0 0 1 ${x1.toFixed(1)} ${y1.toFixed(1)}Z" fill="${c.on[i]?col:'#fff'}" stroke="#334155" stroke-width="2" ${tap?`onclick="gxFrTap(${i})" style="cursor:pointer"`:''}/>`;}
+  return `<svg viewBox="0 0 200 200" class="frsvg">${s}</svg>`;}
+ const cols=c.sh==='bar'?n:(n%4===0?4:n%3===0?3:n%5===0?5:n),rows=Math.ceil(n/cols),w=180/cols,h=c.sh==='bar'?70:Math.min(60,160/rows);let s='';
+ for(let i=0;i<n;i++){const x=10+(i%cols)*w,y=10+Math.floor(i/cols)*h;s+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" fill="${c.on[i]?col:'#fff'}" stroke="#334155" stroke-width="2" ${tap?`onclick="gxFrTap(${i})" style="cursor:pointer"`:''}/>`;}
+ return `<svg viewBox="0 0 200 ${20+rows*h}" class="frsvg">${s}</svg>`;}
+function gxFrTap(i){const c=G.cur;if(c.mode!=='shade'||c.fin)return;c.on[i]=!c.on[i];G.msg='';upd();}
+function gxFrCheck(){const c=G.cur,m=c.on.filter(Boolean).length;
+ if(m===c.need){beep('ok');G.score++;G.msg=`✓ సరైనది! ${c.n} భాగాల్లో ${m} = ${c.lab}${c.lab!==`${m}/${c.n}`?` (${m}/${c.n})`:''}`;G.mc='ok';nextRound();}
+ else{beep('no');G.msg=m<c.need?`✗ ఇంకా ${c.need-m} భాగాలకు రంగు వేయాలి`:`✗ ${m-c.need} భాగాలు ఎక్కువ – నొక్కి తీసేయి`;G.mc='no';}upd();}
+/* ⑤ గడియారం – సమయం చదువు */
+function gxClock(c){const st=c<=1?60:c===2?30:c===3?15:c<=5?5:1,h=R(1,12),m=R(0,60/st-1)*st,f=(h,m)=>`${h}:${String(m).padStart(2,'0')}`,a=f(h,m),o=new Set([a]);
+ const alt=[[h,(m+30)%60],[(h%12)+1,m],[Math.round(m/5)||12,h*5%60],[h===1?12:h-1,m],[h,(m+st*2)%60]];shuffle(alt).forEach(([x,y])=>{if(o.size<4&&x>=1&&x<=12)o.add(f(x,y));});
+ let g=0;while(o.size<4&&g++<30)o.add(f(R(1,12),R(0,11)*5));return {h,m,a,o:shuffle([...o]),why:m===0?`${h} గంటలు`:m===30?`${h}న్నర`:''};}
+function clockSvg(h,m){let s='<circle cx="100" cy="100" r="88" fill="#fff" stroke="#1e3a8a" stroke-width="6"/>';
+ for(let i=1;i<=12;i++){const a=i*Math.PI/6-Math.PI/2;s+=`<text x="${(100+70*Math.cos(a)).toFixed(1)}" y="${(100+70*Math.sin(a)+6).toFixed(1)}" text-anchor="middle" font-size="17" font-weight="700" fill="#1f2937">${i}</text>`;}
+ for(let i=0;i<60;i++){const a=i*Math.PI/30,r1=i%5?82:78;s+=`<line x1="${(100+r1*Math.cos(a)).toFixed(1)}" y1="${(100+r1*Math.sin(a)).toFixed(1)}" x2="${(100+86*Math.cos(a)).toFixed(1)}" y2="${(100+86*Math.sin(a)).toFixed(1)}" stroke="#64748b" stroke-width="${i%5?1:2.5}"/>`;}
+ const ha=((h%12)+m/60)*Math.PI/6-Math.PI/2,ma=m*Math.PI/30-Math.PI/2;
+ s+=`<line x1="100" y1="100" x2="${(100+44*Math.cos(ha)).toFixed(1)}" y2="${(100+44*Math.sin(ha)).toFixed(1)}" stroke="#dc2626" stroke-width="7" stroke-linecap="round"/><line x1="100" y1="100" x2="${(100+66*Math.cos(ma)).toFixed(1)}" y2="${(100+66*Math.sin(ma)).toFixed(1)}" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/><circle cx="100" cy="100" r="6" fill="#111827"/>`;
+ return `<svg viewBox="0 0 200 200" class="cksvg">${s}</svg>`;}
+const GAMES_ART={pa:{n:'బొమ్మ భాగాలు',t:'మెరిసే భాగం పేరు చెప్పు',ic:'🌱',bg:'#bbf7d0',sec:90,grp:'a'},cq:{n:'జవాబుకు రంగు',t:'పాఠం బిట్లు సరిగా చెప్తే బొమ్మ వస్తుంది',ic:'🎨',bg:'#fecdd3',sec:120,grp:'a'},
+ lc:{n:'అక్షరాల బొమ్మ',t:'అచ్చులు / హల్లులు / సంఖ్యలకు రంగు',ic:'🖍️',bg:'#ddd6fe',sec:120,grp:'a'},fr:{n:'భిన్నాలకు రంగు',t:'సరైన భాగాలకు రంగు వేయి',ic:'🍕',bg:'#fde68a',sec:90,grp:'a'},
+ ck:{n:'గడియారం',t:'ముళ్ళు చూసి సమయం చెప్పు',ic:'⏰',bg:'#bfdbfe',sec:60,grp:'a'}};
+Object.assign(GAMES_LO,GAMES_ART);Object.assign(GAMES_HI,GAMES_ART);Object.assign(GAMES,GAMES_ART);GAME_GRP.splice(1,0,['a','🎨 బొమ్మలు • రంగులు']);
+Object.assign(GX,{
+ pa:{gen:gxParts,view:(c,m)=>`<p class="center" style="font-weight:700;margin:0">${c.d.t} – <span style="color:#ca8a04">మెరుస్తున్న భాగం</span> పేరు ఏమిటి?</p><div class="pabox">${partsSvg(c.d,c.hi)}</div>${m}<div class="gopts pao">${c.o.map((o,j)=>`<button onclick="gxPick(${j})">${esc(o)}</button>`).join('')}</div>`},
+ cq:{gen:gxColorQ,view:(c,m)=>{const q=c.q,col=c.cols[c.qi];return `<div class="cqtop">${artGrid(c.cells,(i,ch)=>ch==='.'?!!c.fin:c.done.includes(ch),(i,ch)=>ch==='.'||c.done.includes(ch)?'':`<i>${c.cols.indexOf(ch)+1}</i>`)}</div>
+${c.fin?'':`<div class="cqq"><span class="cqn" style="background:${ART_PAL[col]}">${c.qi+1}</span><div><small>${SUBJ[q.s]?SUBJ[q.s].ic+' '+SUBJ[q.s].n+' • ':''}సరిగా చెప్తే ${c.qi+1} గడులకు ${ART_PALN[col]} రంగు</small><b>${esc(q.q)}</b></div></div>`}${m}
+${c.fin?'':`<div class="gopts">${q.o.map((o,j)=>`<button class="hwo" onclick="gxCqPick(${j})">${esc(o)}</button>`).join('')}</div>`}`;}},
+ lc:{gen:gxLetCol,view:(c,m)=>`<div class="lcins">🖍️ <b>${esc(c.ins)}</b> ఉన్న గడిని నొక్కు – అదే అక్షరం/సంఖ్య ఉన్న గడులన్నీ రంగు పడతాయి, బొమ్మ కనిపిస్తుంది! <small>${c.got}/${c.need}</small></div>
+${artGrid(c.cells,(i,ch)=>c.on[i]||(c.fin&&ch==='.'),(i,ch)=>c.on[i]?'':esc(c.lab[i]),c.fin?'':'gxLcTap')}${m}<div class="row2 qnav"><button class="btn ghost" onclick="gxLcSkip()">దాటవేయి ⏭</button></div>`},
+ fr:{gen:gxFrac,view:(c,m)=>c.mode==='shade'?`<div class="gq gxq">${c.lab} కి రంగు వేయి</div><p class="center" style="margin:2px 0">భాగాలను నొక్కు (మళ్ళీ నొక్కితే తీసేయవచ్చు) • ${c.on.filter(Boolean).length}/${c.n}</p><div class="frbox">${fracSvg(c,1)}</div>${m}<div class="row2 qnav"><button class="btn" onclick="gxFrCheck()">✔ సరిచూడు</button></div>`
+  :`<p class="center" style="font-weight:700">రంగు వేసిన భాగం ఏ భిన్నం?</p><div class="frbox">${fracSvg(c,0)}</div>${m}<div class="gopts">${c.o.map((o,j)=>`<button onclick="gxPick(${j})">${o}</button>`).join('')}</div>`},
+ ck:{gen:gxClock,view:(c,m)=>`<p class="center" style="font-weight:700;margin:0">గడియారం ఎంత సమయం చూపిస్తోంది? <small class="mut">(ఎరుపు = గంటల ముల్లు, నీలం = నిమిషాల ముల్లు)</small></p><div class="ckbox">${clockSvg(c.h,c.m)}</div>${m}<div class="gopts">${c.o.map((o,j)=>`<button onclick="gxPick(${j})">${o}</button>`).join('')}</div>`}});
+
 function gxRight(c,j){return c.odd?c.odd.includes(c.o[j]):c.o[j]===c.a;}
 function gxPick(j){const c=G.cur,ok=gxRight(c,j),ans=c.full||(c.odd?c.o.find(x=>c.odd.includes(x)):c.a);beep(ok?'ok':'no');
  if(ok){G.score++;G.msg='✓ సరైనది!'+(c.why?' '+c.why:'');G.mc='ok';}else{G.msg=`✗ సరైన జవాబు: ${ans}${c.why?' – '+c.why:''}`;G.mc='no';}nextRound();upd();}
