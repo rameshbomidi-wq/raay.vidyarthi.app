@@ -1030,6 +1030,16 @@ body:has(#app.v4bg){background:#083a1b}
 .pao button{font-size:14px}
 .frsvg{width:min(62vw,220px);height:auto}.cksvg{width:min(56vw,210px);height:auto}
 @media (prefers-reduced-motion:reduce){.pasvg .pp.hi{animation:none}.artg button.f{animation:none}}
+
+/* 🎮 ఆటల టైల్స్ చిన్నవి (2026.11.14-6, యూజర్: ఐకాన్లు పెద్దవి – తగ్గించు): వరుసకు 3, ఐకాన్ పైన, పేరు కింద */
+.gtiles{grid-template-columns:repeat(3,1fr);gap:8px}
+.gt,.gt.wide{grid-column:auto;min-height:0;padding:8px 6px 7px;border-radius:16px;align-items:center;text-align:center;justify-content:flex-start;gap:2px}
+.gt i{position:static;order:-1;font-size:26px;line-height:1.1}
+.gt b{font-size:13px;line-height:1.2}.gt br{display:none}
+.gt small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:10px;line-height:1.25;color:#475569;margin-top:2px}
+.gt em{display:none}
+@media(min-width:700px){.gtiles{grid-template-columns:repeat(4,1fr)}.gt i{font-size:32px}.gt b{font-size:15px}.gt small{font-size:11.5px}}
+@media(max-width:320px){.gtiles{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
 <body>
@@ -3049,7 +3059,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${view==='home'?`<button class="ib hstar" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐<small>${stars()}</small></button><button class="ib hav" onclick="go('avatar')" aria-label="బొమ్మ మార్చు">${avOf(S.cur.n)}</button>`:''}${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.14-5';
+const APPV='2026.11.14-6';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -4329,7 +4339,7 @@ V.games=()=>{const pend=pendingHw();const lb=param.lb||'mm';
  return `${pend.slice(0,2).map(h=>`<div class="task"><span class="si" style="background:${SUBJ[h.s].bg};color:${SUBJ[h.s].col}">${SUBJ[h.s].ic}</span><div><b>${esc(h.t)}</b><small>${diffDays(h.due,todayS())<0?'గడువు దాటింది':'గడువు: '+fmtD(h.due)}</small></div><span>›</span></div>`).join('')}
 ${pend.length?`<button class="btn dark" style="width:100%;margin-top:4px" onclick="go('homework')">అన్ని పనులు చూడు</button>`:''}
 <div class="concept"><h3>కాన్సెప్ట్స్ బలపరచుకో</h3><p>ఎంపిక చేసిన పాఠాల నుండి నేర్చుకుని, నీ అవగాహన పెంచుకో.</p><button class="btn dark" onclick="go('learn')">నేర్చుకోవడం ప్రారంభించు</button><span>📄</span></div>
-${GAME_GRP.map(([gk,gt])=>{const a=Object.entries(gamesOf(S.cur.c)).filter(([,g])=>(g.grp||'e')===gk);return a.length?`<h4 class="sec">${gt}</h4><div class="gtiles">${a.map(([k,g],i)=>`<button class="gt ${i===a.length-1&&a.length%2?'wide':''}" style="background:${g.bg}" onclick="startGame('${k}')"><div><b>${g.n}</b><br><small>${g.t} • ${g.sec} సెకన్లు</small></div><em>ఆడు ▶</em><i>${g.ic}</i></button>`).join('')}</div>`:'';}).join('')}
+${GAME_GRP.map(([gk,gt])=>{const a=Object.entries(gamesOf(S.cur.c)).filter(([,g])=>(g.grp||'e')===gk);return a.length?`<h4 class="sec">${gt}</h4><div class="gtiles">${a.map(([k,g],i)=>`<button class="gt ${i===a.length-1&&a.length%2?'wide':''}" style="background:${g.bg}" onclick="startGame('${k}')"><div><b>${g.n}</b><br><small>${g.t}</small></div><em>ఆడు ▶</em><i>${g.ic}</i></button>`).join('')}</div>`:'';}).join('')}
 <h4 class="sec">🏆 స్నేహితులతో పోల్చు (${S.cur.c}వ తరగతి)</h4>
 <div class="tabs gxtabs">${Object.entries(gamesOf(S.cur.c)).map(([k,g])=>`<button class="${lb===k?'on':''}" onclick="go('games',{lb:'${k}'})">${g.grp?g.ic+' ':''}${g.n}</button>`).join('')}</div>
 <div class="lb">${rows.length?rows.map(([n,s],i)=>`<div class="lbr ${n===me()?'me':''}"><span class="rk">${['🥇','🥈','🥉'][i]||i+1}</span><span class="nm">${esc(n)}${n===me()?' (నువ్వు)':''}</span><b>${s}</b></div>`).join(''):'<p class="mut" style="padding:14px 0;text-align:center">ఇంకా ఎవరూ ఆడలేదు – మొదటివాడివి నువ్వే అవ్వు!</p>'}</div>
