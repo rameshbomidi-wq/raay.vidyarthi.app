@@ -3071,7 +3071,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${view==='home'?`<button class="ib hstar" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐<small>${stars()}</small></button><button class="ib hav" onclick="go('avatar')" aria-label="బొమ్మ మార్చు">${avOf(S.cur.n)}</button>`:''}${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.14-11';
+const APPV='2026.11.14-12';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -4345,8 +4345,15 @@ V.schedule=()=>{const t=todayS();const sel=param.d||t;const base=param.w||sel;co
   return `<button class="day ${x===sel?'on':''} ${x===t?'td':''} ${hasEv?'ev':''}" onclick="go('schedule',{d:'${x}',w:'${base}'})">${DAYS[dd.getDay()]}<b>${dd.getDate()}</b></button>`;}).join('')}</div><button class="ar" onclick="go('schedule',{d:'${sel}',w:'${addDays(base,7)}'})">›</button></div>
 <h4 class="sec">${fmtLong(sel)}</h4>
 ${ev.length?`<div class="hscroll">${ev.map(evCard).join('')}</div>`:''}
-<h4 class="sec">టైమ్ టేబుల్</h4>${wd===6&&+S.cur.c>=6&&!hol?'<div class="holiday">🎒 నో బ్యాగ్ డే – జ్ఞానం & వినోదం<br><small class="mut">కథలు, Spell Bee, Spoken English, విద్యా చిత్రాలు, క్విజ్, చర్చలు, ఆర్ట్, స్కిట్, పాటలు–నృత్యం</small></div>':''}${tt}${mkPlanCard(+S.cur.c)}`;};
+<h4 class="sec">టైమ్ టేబుల్</h4>${wd===6&&+S.cur.c>=6&&!hol?'<div class="holiday">🎒 నో బ్యాగ్ డే – జ్ఞానం & వినోదం<br><small class="mut">కథలు, Spell Bee, Spoken English, విద్యా చిత్రాలు, క్విజ్, చర్చలు, ఆర్ట్, స్కిట్, పాటలు–నృత్యం</small></div>':''}${tt}${mkPlanCard(+S.cur.c)}${mdmQtyCard(+S.cur.c)}`;};
 /* 📝 పరీక్షల మార్కుల విధానం (యూజర్ నోట్‌బుక్ స్కాన్ 12-11-2026) – నా షెడ్యూల్ లో; విలువలు pgFaMax/pgSaParts నుండే (మార్కుల నమోదుతో ఒకటే) */
+/* 🍛 AP MDM (డొక్కా సీతమ్మ) – ఒక్కో విద్యార్థికి రోజుకు ఆహార పదార్థాల పరిమాణం (యూజర్ చిత్రం 14-11-2026); నా షెడ్యూల్ లో మార్కుల విధానం కింద */
+const MDMQ=[['🍚','బియ్యం','100 గ్రాములు','150 గ్రాములు'],['🫘','పప్పులు','20 గ్రాములు','30 గ్రాములు'],['🥕','కూరగాయలు','50 గ్రాములు','75 గ్రాములు'],['🫙','నూనె / కొవ్వు','5 గ్రాములు','7.5 గ్రాములు'],['🧂','ఉప్పు, మిరియాల పొడి, మసాలాలు','అవసరమైన మేరకు','అవసరమైన మేరకు'],['🔥','ఇంధనం','అవసరమైన మేరకు','అవసరమైన మేరకు'],['🥚','గుడ్డు','45–55 గ్రాములు (ఒక గుడ్డు)','45–55 గ్రాములు (ఒక గుడ్డు)'],['🥜','పప్పు చెక్క (చిక్కీ)','25 గ్రాములు','25 గ్రాములు']];
+function mdmQtyCard(c){const hi=c>=6,k=hi?3:2;
+ return `<details class="card mkp" open><summary><b>🍛 నా మధ్యాహ్న భోజనం – రోజుకు పరిమాణం</b> <small class="mut">• ${hi?'6–10 తరగతులు (ప్రాథమికోన్నత / ఉన్నత పాఠశాల)':'1–5 తరగతులు (ప్రాథమిక పాఠశాల)'}</small></summary>
+<p class="mut" style="margin:6px 0;font-size:12px">డొక్కా సీతమ్మ మధ్యాహ్న భోజన పథకం (AP MDM) – ప్రభుత్వ పాఠశాలల్లో ప్రతి విద్యార్థికి రోజుకు ఇవ్వవలసినది</p>
+<div class="tscroll"><table class="mkt"><tr><th>పదార్థం</th><th>నాకు రోజుకు</th><th class="mut">${hi?'1–5 తరగతులకు':'6–10 తరగతులకు'}</th></tr>${MDMQ.map(r=>`<tr><td style="text-align:left">${r[0]} ${r[1]}</td><td><b>${r[k]}</b></td><td class="mut">${r[hi?2:3]}</td></tr>`).join('')}</table></div>
+<p class="mut" style="margin:6px 0 0;font-size:12px">🎯 ఉద్దేశం: శక్తి (Calories), ప్రోటీన్లు, విటమిన్లు, ఖనిజ లవణాలు అందించి శారీరక, మానసిక అభివృద్ధికి తోడ్పడటం.${MDM[new Date().getDay()]?`<br>🍽️ ఈరోజు మెనూ: ${MDM[new Date().getDay()]}`:''}</p></details>`;}
 function mkPlanCard(c){const subs=subjectsFor(c).filter(s=>SUBJ[s]),fa=pgFaMax(c);
  const sa=subs.map(s=>{const p=pgSaParts(c,s);return `<tr><td>${SUBJ[s].ic} ${SUBJ[s].n}</td>${p.map(x=>`<td>${x[1]}</td>`).join('')}<td><b>${pgSaMax(c,s)}</b></td></tr>`;}).join('');
  const hd=pgSaParts(c,subs[0]||'tel').map(x=>`<th>${({MCQ:'MCQ<small>బహుళైచ్ఛిక</small>',FRS:'FRS<small>రాత జవాబులు</small>',Awareness:'Awareness<small>అవగాహన</small>',Sensitivity:'Sensitivity<small>సున్నితత్వం</small>',Creativity:'Creativity<small>సృజనాత్మకత</small>'})[x[0]]||x[0]}</th>`).join('');
