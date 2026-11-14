@@ -17,6 +17,12 @@
         .tile:active { transform: translateY(3px); box-shadow: 0 1px #1565c0; }
         .win { background: #8bc34a !important; border-color: #689f38 !important; animation: bounce 0.4s; }
         @keyframes bounce { 0%, 100% {transform: scale(1);} 50% {transform: scale(1.1);} }
+        .slot { cursor: pointer; background: #fff8e1; }
+        .slot.full { background: #fff3c4; border-color: #ff9800; }
+        .wrong { background: #ffcdd2 !important; border-color: #e53935 !important; animation: shake .35s; }
+        @keyframes shake { 0%,100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 75% {transform: translateX(5px);} }
+        #msg { min-height: 22px; font-size: 15px; font-weight: bold; color: #e53935; }
+        .hint { font-size: 13px; color: #777; margin-top: 4px; }
     </style>
 </head>
 <body>
@@ -29,7 +35,9 @@
     <h2 id="title">అక్షరాలను అమర్చండి</h2>
     <div id="counter" style="font-size: 14px; color: #777;"></div>
     <div class="slots" id="slots"></div>
+    <div id="msg"></div>
     <div class="letters" id="letters"></div>
+    <div class="hint">👆 పై గడిలోని అక్షరాన్ని తాకితే అది కిందికి తిరిగి వస్తుంది</div>
     <button class="btn next-btn" onclick="start()">మరో పదం (Next)</button>
 </div>
 
@@ -48,6 +56,8 @@
     let mode = 'te';
     let word = "";
     let ans = [];
+    let src = [];   /* ప్రతి గడిలో ఏ టైల్ నుండి వచ్చిందో – తాకితే వెనక్కి పంపడానికి */
+    let done = false;
 
     function setMode(m) { mode = m; start(); }
 
@@ -57,12 +67,16 @@
     }
 
     function start() {
-        const list = bank[mode];
+        /* ఖాళీ/ZWNJ/ఇంగ్లీష్ అక్షరాలు కలిసిన తెలుగు పదాలు అమర్చితే సరిపోవు – వాటిని వదిలేస్తాం */
+        const list = bank[mode].filter(w => splitTe(w).join('') === w);
         word = list[Math.floor(Math.random() * list.length)];
         document.getElementById('counter').innerText = `Total Words: ${list.length}`;
         const chars = splitTe(word);
         const shuf = [...chars].sort(() => Math.random() - 0.5);
         ans = new Array(chars.length).fill("");
+        src = new Array(chars.length).fill(null);
+        done = false;
+        document.getElementById('msg').innerText = '';
         
         const sD = document.getElementById('slots');
         const lD = document.getElementById('letters');
@@ -70,7 +84,8 @@
 
         chars.forEach((_, i) => {
             let d = document.createElement('div');
-            d.className = 'box'; d.id = 's'+i;
+            d.className = 'box slot'; d.id = 's'+i;
+            d.onclick = () => back(i);
             sD.appendChild(d);
         });
 
@@ -79,11 +94,14 @@
             b.className = 'box tile';
             b.innerText = c;
             b.onclick = () => {
+                if (done) return;
                 let idx = ans.indexOf("");
                 if (idx !== -1) {
-                    ans[idx] = c;
-                    document.getElementById('s'+idx).innerText = c;
+                    ans[idx] = c; src[idx] = b;
+                    const s = document.getElementById('s'+idx);
+                    s.innerText = c; s.classList.add('full');
                     b.style.visibility = 'hidden';
+                    document.getElementById('msg').innerText = '';
                     if (!ans.includes("")) check();
                 }
             };
@@ -91,14 +109,28 @@
         });
     }
 
+    /* పై గడిలోని అక్షరాన్ని తాకితే కింది వరుసలోకి తిరిగి వస్తుంది */
+    function back(i) {
+        if (done || !ans[i]) return;
+        if (src[i]) src[i].style.visibility = 'visible';
+        ans[i] = ""; src[i] = null;
+        const s = document.getElementById('s'+i);
+        s.innerText = ''; s.classList.remove('full');
+        document.querySelectorAll('.slot').forEach(x => x.classList.remove('wrong'));
+        document.getElementById('msg').innerText = '';
+    }
+
     function check() {
         if (ans.join('') === word) {
+            done = true;
             document.querySelectorAll('.box').forEach(b => b.classList.add('win'));
             let u = new SpeechSynthesisUtterance(word);
             u.lang = mode === 'te' ? 'te-IN' : 'en-US';
             speechSynthesis.speak(u);
         } else {
-            setTimeout(() => { alert("Try Again!"); start(); }, 300);
+            /* తప్పు అయితే అదే పదం – అక్షరాన్ని తాకి వెనక్కి తెచ్చి సరిచేసుకోవచ్చు */
+            document.querySelectorAll('.slot').forEach(x => x.classList.add('wrong'));
+            document.getElementById('msg').innerText = '❌ Try Again! అక్షరాన్ని తాకి వెనక్కి తెచ్చి మళ్ళీ అమర్చు';
         }
     }
     start();
