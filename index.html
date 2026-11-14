@@ -3071,7 +3071,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${view==='home'?`<button class="ib hstar" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐<small>${stars()}</small></button><button class="ib hav" onclick="go('avatar')" aria-label="బొమ్మ మార్చు">${avOf(S.cur.n)}</button>`:''}${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.14-8';
+const APPV='2026.11.14-9';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -4321,7 +4321,9 @@ const TT_P={
   g:[['tel','tel','tel','tel','tel','tel'],['tel','tel','tel','tel','eng','eng'],['eng','eng','eng','eng','eng','eng'],['eng','eng','av','av','av','av'],['mat','mat','mat','mat','mat','mat'],['mat','mat','mat','mat','art','art'],['av','av','wlr','wlr','wlr','he'],['gm','gm','gm','gm','gm','md']]},
  35:{sl:[[545,10,'🙏 ప్రార్థన'],[555,40,0],[595,35,1],[630,15,'స్వల్ప విరామం'],[645,35,2],[680,35,3],[715,60,'🍱 భోజన విరామం'],[775,35,4],[810,5,'💧 నీటి గంట'],[815,35,5],[850,10,'స్వల్ప విరామం'],[860,35,6],[895,35,7]],
   g:[['avm','avs','avs','ava','ava','avh'],['tel','tel','mat','mat','eng','tel'],['tel','tel','mat','mat','eng','eng'],['evs','evs','evs','evs','evs','evs'],['eng','eng','eng','tel','tel','mat'],['eng','eng','eng','tel','tel','art'],['mat','mat','ve','eng','he','wlr'],['md','gm','gm','gm','gm','gm']]}};
-function ttOf(c){c=+c;return c>=1&&c<=2?TT_P[12]:c>=3&&c<=5?TT_P[35]:null;}
+/* 6–10: APUS హైస్కూల్ సమయాలు 2026-27 (యూజర్ PDF) – 9:05 ప్రార్థన … 8వ పీరియడ్ 4:00 వరకు + ఐచ్ఛిక 4–5; సబ్జెక్టులు ఇంకా periodSubj (పాఠశాల సబ్జెక్టు పట్టిక వస్తే g పెట్టాలి) */
+TT_P.hs={sl:[[545,10,'🙏 ప్రార్థన'],[555,45,0],[600,40,1],[640,15,'🥣 స్వల్ప విరామం (రాగి మాల్ట్)'],[655,40,2],[695,40,3],[735,50,'🍱 భోజన విరామం'],[785,40,4],[825,5,'💧 నీటి గంట'],[830,40,5],[870,10,'స్వల్ప విరామం'],[880,40,6],[920,40,7],[960,60,'🏃 ఐచ్ఛిక పీరియడ్ (ఆటలు / స్టడీ అవర్)']]};
+function ttOf(c){c=+c;return c>=1&&c<=2?TT_P[12]:c>=3&&c<=5?TT_P[35]:c>=6&&c<=10?TT_P.hs:null;}
 function periodSubj(c,wd,k){const base=c<=2?['tel','eng','mat','tel','mat','eng']:c<=5?['tel','eng','mat','evs','mat','tel']:subjectsFor(c);return base[(k+wd)%base.length];}
 function minTo12(m){const h=Math.floor(m/60),mm=m%60;return ((h%12)||12)+':'+String(mm).padStart(2,'0')+(h>=12?' PM':' AM');}
 V.schedule=()=>{const t=todayS();const sel=param.d||t;const base=param.w||sel;const d=parseD(sel);const wd=d.getDay();
@@ -4333,14 +4335,14 @@ V.schedule=()=>{const t=todayS();const sel=param.d||t;const base=param.w||sel;co
  else if(hol)tt=`<div class="holiday">🏖️ ${esc(hol.t)}<br><small class="mut">ఈరోజు సెలవు</small></div>`;
  else{const TT=ttOf(S.cur.c);tt=(TT?TT.sl:SLOTS).map(([st,du,x])=>{const isNow=sel===t&&nm>=st&&nm<st+du;
   if(typeof x==='string')return `<div class="period"><div class="tm">${minTo12(st)}</div><div class="pc brk ${isNow?'now':''}">${isNow?'<span class="now-tag">ఇప్పుడు</span>':''}<b>${x}</b><span>${du} ని.</span></div></div>`;
-  const s=TT?TT.g[x][wd-1]:periodSubj(S.cur.c,wd,x),q=SUBJ[s]?{ic:SUBJ[s].ic,n:SUBJ[s].n,col:SUBJ[s].col,tc:TEACH[s]}:{ic:XTT[s][0],n:XTT[s][1],col:XTT[s][2]};return `<div class="period"><div class="tm">${minTo12(st)}</div><div class="pc ${isNow?'now':''}" style="border-left-color:${q.col}">${isNow?'<span class="now-tag">ఇప్పుడు</span>':''}<small>పీరియడ్ ${x+1} • ${minTo12(st)}–${minTo12(st+du)}</small><b>${q.ic} ${q.n}</b><span>${du} ని.${q.tc?' • '+q.tc:''}</span></div></div>`;}).join('');}
+  const s=TT&&TT.g?TT.g[x][wd-1]:periodSubj(S.cur.c,wd,x),q=SUBJ[s]?{ic:SUBJ[s].ic,n:SUBJ[s].n,col:SUBJ[s].col,tc:TEACH[s]}:{ic:XTT[s][0],n:XTT[s][1],col:XTT[s][2]};return `<div class="period"><div class="tm">${minTo12(st)}</div><div class="pc ${isNow?'now':''}" style="border-left-color:${q.col}">${isNow?'<span class="now-tag">ఇప్పుడు</span>':''}<small>పీరియడ్ ${x+1} • ${minTo12(st)}–${minTo12(st+du)}</small><b>${q.ic} ${q.n}</b><span>${du} ని.${q.tc?' • '+q.tc:''}</span></div></div>`;}).join('');}
  return `<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>📅 నా షెడ్యూల్</h2></div>
 <div class="month"><b>${MON[d.getMonth()]}, ${d.getFullYear()}</b>${sel!==t?`<button class="lk" onclick="go('schedule')">ఈరోజుకు ▸</button>`:''}</div>
 <div class="strip"><button class="ar" onclick="go('schedule',{d:'${sel}',w:'${addDays(base,-7)}'})">‹</button><div class="days">${days.map(x=>{const dd=parseD(x);const hasEv=evAll().some(e=>e.d===x&&(e.c===0||e.c===S.cur.c));
   return `<button class="day ${x===sel?'on':''} ${x===t?'td':''} ${hasEv?'ev':''}" onclick="go('schedule',{d:'${x}',w:'${base}'})">${DAYS[dd.getDay()]}<b>${dd.getDate()}</b></button>`;}).join('')}</div><button class="ar" onclick="go('schedule',{d:'${sel}',w:'${addDays(base,7)}'})">›</button></div>
 <h4 class="sec">${fmtLong(sel)}</h4>
 ${ev.length?`<div class="hscroll">${ev.map(evCard).join('')}</div>`:''}
-<h4 class="sec">టైమ్ టేబుల్</h4>${tt}${mkPlanCard(+S.cur.c)}`;};
+<h4 class="sec">టైమ్ టేబుల్</h4>${wd===6&&+S.cur.c>=6&&!hol?'<div class="holiday">🎒 నో బ్యాగ్ డే – జ్ఞానం & వినోదం<br><small class="mut">కథలు, Spell Bee, Spoken English, విద్యా చిత్రాలు, క్విజ్, చర్చలు, ఆర్ట్, స్కిట్, పాటలు–నృత్యం</small></div>':''}${tt}${mkPlanCard(+S.cur.c)}`;};
 /* 📝 పరీక్షల మార్కుల విధానం (యూజర్ నోట్‌బుక్ స్కాన్ 12-11-2026) – నా షెడ్యూల్ లో; విలువలు pgFaMax/pgSaParts నుండే (మార్కుల నమోదుతో ఒకటే) */
 function mkPlanCard(c){const subs=subjectsFor(c).filter(s=>SUBJ[s]),fa=pgFaMax(c);
  const sa=subs.map(s=>{const p=pgSaParts(c,s);return `<tr><td>${SUBJ[s].ic} ${SUBJ[s].n}</td>${p.map(x=>`<td>${x[1]}</td>`).join('')}<td><b>${pgSaMax(c,s)}</b></td></tr>`;}).join('');
