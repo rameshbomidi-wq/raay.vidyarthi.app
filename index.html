@@ -819,7 +819,7 @@ body{background:#eef4f7}
 /* జాబితాలు (మెనూ, లైబ్రరీ) */
 .li{border-radius:16px}
 </style>
-<style id="v4css">
+<style id="v4css">.pc .mdm{display:block;margin-top:6px;font-weight:700;color:#065f46;line-height:1.5}
 /* 🎨 v4 రంగుల డిజైన్ (2026.11.12-12, యూజర్ “A”) – విద్యార్థి హోమ్ + టీచర్ డాష్‌బోర్డ్ మాత్రమే (#app.v4bg) */
 #app.v4bg{background:#0b4d24}
 #app.v4bg .ft,#app.v4bg .ft a{color:#f6d343}
@@ -3071,7 +3071,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${view==='home'?`<button class="ib hstar" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐<small>${stars()}</small></button><button class="ib hav" onclick="go('avatar')" aria-label="బొమ్మ మార్చు">${avOf(S.cur.n)}</button>`:''}${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.14-10';
+const APPV='2026.11.14-11';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -4315,14 +4315,17 @@ ${r.ws.map((x,i)=>`<div class="wsck ${wsOk(x)?'':'x'}"><span class="n">${i+1}</s
 const SLOTS=[[540,30,'ప్రార్థన & హాజరు'],[570,45,0],[615,45,1],[660,15,'విరామం'],[675,45,2],[720,45,3],[765,60,'మధ్యాహ్న భోజనం'],[825,45,4],[870,45,5],[915,30,'ఆటలు / కథలు']];
 const TEACH={tel:'తెలుగు ఉపాధ్యాయులు',eng:'English టీచర్',mat:'గణిత ఉపాధ్యాయులు',evs:'EVS ఉపాధ్యాయులు',hin:'హిందీ ఉపాధ్యాయులు',sci:'సైన్స్ ఉపాధ్యాయులు',phy:'భౌతిక శాస్త్ర ఉపాధ్యాయులు',bio:'జీవ శాస్త్ర ఉపాధ్యాయులు',soc:'సాంఘిక శాస్త్ర ఉపాధ్యాయులు'};
 /* 🕘 పాఠశాల అసలు టైమ్‌టేబుల్ 1–5 తరగతులు (యూజర్ ఫోటోలు 14-11-2026): sl = [ప్రారంభ నిమిషం, నిడివి, పీరియడ్ సూచిక | విరామం పేరు]; g[పీరియడ్] = సోమ…శని (SUBJ key లేదా XTT key). 6–10 కి పాత SLOTS/periodSubj. */
-const XTT={av:['😊','ఆనంద వేదిక','#f59e0b'],avm:['🧘','ఆనంద వేదిక – మైండ్‌ఫుల్‌నెస్','#f59e0b'],avs:['📖','ఆనంద వేదిక – కథ చెప్పడం','#f59e0b'],ava:['🤸','ఆనంద వేదిక – కృత్యం','#f59e0b'],avh:['🗣️','ఆనంద వేదిక – పంచుకోవడం','#f59e0b'],art:['🎨','ఆర్ట్ & కల్చర్','#db2777'],wlr:['📚','We Love Reading','#7c3aed'],he:['🩺','హెల్త్ ఎడ్యుకేషన్','#0891b2'],ve:['🌼','విలువల విద్య (VE)','#16a34a'],gm:['⚽','ఆటలు','#ea580c'],md:['🏃','మాస్ డ్రిల్','#ea580c']};
+const XTT={av:['😊','ఆనంద వేదిక','#f59e0b'],wv:['📚','WLR / VE (We Love Reading / విలువల విద్య)','#7c3aed'],avm:['🧘','ఆనంద వేదిక – మైండ్‌ఫుల్‌నెస్','#f59e0b'],avs:['📖','ఆనంద వేదిక – కథ చెప్పడం','#f59e0b'],ava:['🤸','ఆనంద వేదిక – కృత్యం','#f59e0b'],avh:['🗣️','ఆనంద వేదిక – పంచుకోవడం','#f59e0b'],art:['🎨','ఆర్ట్ & కల్చర్','#db2777'],wlr:['📚','We Love Reading','#7c3aed'],he:['🩺','హెల్త్ ఎడ్యుకేషన్','#0891b2'],ve:['🌼','విలువల విద్య (VE)','#16a34a'],gm:['⚽','ఆటలు','#ea580c'],md:['🏃','మాస్ డ్రిల్','#ea580c']};
+/* 2026-27 టైమ్‌టేబుల్ (యూజర్ పట్టికలు 14-11-2026): I–II, III–V ఒకే బెల్ సమయాలు; P7 అన్ని రోజులు ఆనంద వేదిక */
 const TT_P={
- 12:{sl:[[545,10,'🙏 ప్రార్థన'],[555,40,0],[595,5,'💧 నీటి గంట'],[600,35,1],[635,10,'స్వల్ప విరామం'],[645,35,2],[680,35,3],[715,60,'🍱 భోజన విరామం'],[775,35,4],[810,5,'💧 నీటి గంట'],[815,35,5],[850,10,'స్వల్ప విరామం'],[860,35,6],[895,35,7]],
-  g:[['tel','tel','tel','tel','tel','tel'],['tel','tel','tel','tel','eng','eng'],['eng','eng','eng','eng','eng','eng'],['eng','eng','av','av','av','av'],['mat','mat','mat','mat','mat','mat'],['mat','mat','mat','mat','art','art'],['av','av','wlr','wlr','wlr','he'],['gm','gm','gm','gm','gm','md']]},
+ 12:{sl:[[545,10,'🙏 ప్రార్థన'],[555,40,0],[595,35,1],[630,15,'స్వల్ప విరామం'],[645,35,2],[680,35,3],[715,60,'🍱 భోజన విరామం'],[775,35,4],[810,5,'💧 నీటి గంట'],[815,35,5],[850,10,'స్వల్ప విరామం'],[860,35,6],[895,35,7]],
+  g:[['tel','tel','tel','tel','tel','tel'],['tel','tel','tel','tel','eng','eng'],['eng','eng','eng','eng','wv','mat'],['eng','eng','eng','eng','wv','wv'],['mat','mat','mat','mat','mat','art'],['mat','mat','mat','mat','art','he'],['av','av','av','av','av','av'],['gm','gm','gm','gm','gm','md']]},
  35:{sl:[[545,10,'🙏 ప్రార్థన'],[555,40,0],[595,35,1],[630,15,'స్వల్ప విరామం'],[645,35,2],[680,35,3],[715,60,'🍱 భోజన విరామం'],[775,35,4],[810,5,'💧 నీటి గంట'],[815,35,5],[850,10,'స్వల్ప విరామం'],[860,35,6],[895,35,7]],
-  g:[['avm','avs','avs','ava','ava','avh'],['tel','tel','mat','mat','eng','tel'],['tel','tel','mat','mat','eng','eng'],['evs','evs','evs','evs','evs','evs'],['eng','eng','eng','tel','tel','mat'],['eng','eng','eng','tel','tel','art'],['mat','mat','ve','eng','he','wlr'],['md','gm','gm','gm','gm','gm']]}};
+  g:[['tel','evs','mat','tel','eng','eng'],['tel','evs','mat','tel','eng','eng'],['eng','eng','evs','mat','mat','wv'],['eng','eng','evs','mat','mat','wv'],['mat','tel','eng','evs','tel','art'],['mat','tel','eng','evs','tel','he'],['av','av','av','av','av','av'],['gm','gm','gm','gm','gm','md']]}};
 /* 6–10: APUS హైస్కూల్ సమయాలు 2026-27 (యూజర్ PDF) – 9:05 ప్రార్థన … 8వ పీరియడ్ 4:00 వరకు + ఐచ్ఛిక 4–5; సబ్జెక్టులు ఇంకా periodSubj (పాఠశాల సబ్జెక్టు పట్టిక వస్తే g పెట్టాలి) */
 TT_P.hs={sl:[[545,10,'🙏 ప్రార్థన'],[555,45,0],[600,40,1],[640,15,'🥣 స్వల్ప విరామం (రాగి మాల్ట్)'],[655,40,2],[695,40,3],[735,50,'🍱 భోజన విరామం'],[785,40,4],[825,5,'💧 నీటి గంట'],[830,40,5],[870,10,'స్వల్ప విరామం'],[880,40,6],[920,40,7],[960,60,'🏃 ఐచ్ఛిక పీరియడ్ (ఆటలు / స్టడీ అవర్)']]};
+/* 🍛 డొక్కా సీతమ్మ మధ్యాహ్న బడి భోజన పథకం – Zone-3 (గుంటూరు, పల్నాడు, బాపట్ల, ప్రకాశం, SPSR నెల్లూరు) మెనూ; key = getDay() */
+const MDM={1:'అన్నం + కూరగాయల సాంబారు + కోడిగుడ్డు ఫ్రై + చిక్కి',2:'పులిహోర/నిమ్మకాయ అన్నం + టమాటో/పుదీనా చట్నీ + కోడిగుడ్డు ఫ్రై + రాగిజావ',3:'అన్నం + మిక్స్ వెజిటబుల్ కూర + కోడిగుడ్డు ఫ్రై + చిక్కి',4:'వెజిటబుల్ రైస్/పులావ్ + బంగాళాదుంప కుర్మా + ఉడికించిన కోడిగుడ్డు + రాగిజావ',5:'అన్నం + ఆకుకూర పప్పు + కోడిగుడ్డు ఫ్రై + చిక్కి',6:'అన్నం + కూరగాయల కూర + స్వీట్ పొంగల్ + రాగిజావ'};
 function ttOf(c){c=+c;return c>=1&&c<=2?TT_P[12]:c>=3&&c<=5?TT_P[35]:c>=6&&c<=10?TT_P.hs:null;}
 function periodSubj(c,wd,k){const base=c<=2?['tel','eng','mat','tel','mat','eng']:c<=5?['tel','eng','mat','evs','mat','tel']:subjectsFor(c);return base[(k+wd)%base.length];}
 function minTo12(m){const h=Math.floor(m/60),mm=m%60;return ((h%12)||12)+':'+String(mm).padStart(2,'0')+(h>=12?' PM':' AM');}
@@ -4334,7 +4337,7 @@ V.schedule=()=>{const t=todayS();const sel=param.d||t;const base=param.w||sel;co
  if(wd===0)tt=`<div class="holiday">🎉 ఆదివారం – సెలవు దినం<br><small class="mut">విశ్రాంతి తీసుకో, కొంచెం చదువు, ఆటలు ఆడు!</small></div>`;
  else if(hol)tt=`<div class="holiday">🏖️ ${esc(hol.t)}<br><small class="mut">ఈరోజు సెలవు</small></div>`;
  else{const TT=ttOf(S.cur.c);tt=(TT?TT.sl:SLOTS).map(([st,du,x])=>{const isNow=sel===t&&nm>=st&&nm<st+du;
-  if(typeof x==='string')return `<div class="period"><div class="tm">${minTo12(st)}</div><div class="pc brk ${isNow?'now':''}">${isNow?'<span class="now-tag">ఇప్పుడు</span>':''}<b>${x}</b><span>${du} ని.</span></div></div>`;
+  if(typeof x==='string')return `<div class="period"><div class="tm">${minTo12(st)}</div><div class="pc brk ${isNow?'now':''}">${isNow?'<span class="now-tag">ఇప్పుడు</span>':''}<b>${x}</b><span>${du} ని.</span>${/భోజన/.test(x)&&MDM[wd]?`<span class="mdm">🍛 నేటి భోజనం: ${MDM[wd]}</span>`:''}</div></div>`;
   const s=TT&&TT.g?TT.g[x][wd-1]:periodSubj(S.cur.c,wd,x),q=SUBJ[s]?{ic:SUBJ[s].ic,n:SUBJ[s].n,col:SUBJ[s].col,tc:TEACH[s]}:{ic:XTT[s][0],n:XTT[s][1],col:XTT[s][2]};return `<div class="period"><div class="tm">${minTo12(st)}</div><div class="pc ${isNow?'now':''}" style="border-left-color:${q.col}">${isNow?'<span class="now-tag">ఇప్పుడు</span>':''}<small>పీరియడ్ ${x+1} • ${minTo12(st)}–${minTo12(st+du)}</small><b>${q.ic} ${q.n}</b><span>${du} ని.${q.tc?' • '+q.tc:''}</span></div></div>`;}).join('');}
  return `<div class="bar"><button class="ib" onclick="go('home')">←</button><h2>📅 నా షెడ్యూల్</h2></div>
 <div class="month"><b>${MON[d.getMonth()]}, ${d.getFullYear()}</b>${sel!==t?`<button class="lk" onclick="go('schedule')">ఈరోజుకు ▸</button>`:''}</div>
