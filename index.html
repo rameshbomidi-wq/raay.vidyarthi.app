@@ -214,6 +214,7 @@ html{scroll-padding:84px 0 104px}
 .note .lnk{background:#fff;margin:4px 0 0}
 .sbadge{display:inline-block;background:#e0f2f1;color:#0f766e;border-radius:20px;padding:6px 14px;font-size:13px;font-weight:600;margin-bottom:10px}
 .bview{position:fixed;inset:0;display:flex;flex-direction:column;background:#3f4447;z-index:40}
+.bvbig .bvtop{padding:2px 8px}.bvbig .bvtop b{font-size:12px}
 .bvtop{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--navy);color:#fff}.bvtop b{flex:1;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bvtop a.ib{text-decoration:none;color:#fff}
 .bbox{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding:6px;text-align:center;position:relative}.bbox canvas{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.4);display:inline-block}
@@ -3110,7 +3111,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${view==='home'?`<button class="ib hstar" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐<small>${stars()}</small></button><button class="ib hav" onclick="go('avatar')" aria-label="బొమ్మ మార్చు">${avOf(S.cur.n)}</button>`:''}${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.14-18';
+const APPV='2026.11.14-19';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -6061,7 +6062,7 @@ function toolHook(f){try{const w=f.contentWindow,tp=Object.assign({},param);tool
  w.openPdf=async function(id){try{const all=await w.pdfs(),x=all.find(y=>y.id===id);if(!x||!x.blob)return;const u=URL.createObjectURL(x.blob);
   go('book',{u,t:'📄 '+String(x.name||'PDF').replace(/\.pdf$/i,''),k:'pdf',back:{v:'book',p:tp}});pdfInit();}catch(e){toast('PDF తెరవలేకపోయాను');}};}catch(e){}}
 V.book=()=>{const p=param,k=p.k;const ext=/^https?:/i.test(p.u);
- const top=`<div class="bvtop"><button class="ib" onclick="closeBook()" aria-label="మూసివేయి">✕</button><b>${esc(p.t||'')}</b>${k!=='pdf'?`<a class="ib" href="${esc(k==='drive'?'https://drive.google.com/file/d/'+driveId(p.u)+'/view':p.u)}" target="_blank" rel="noopener" aria-label="కొత్త ట్యాబ్">↗</a>`:`<button class="ib" id="akbtn" hidden onclick="akToggle()">🔑</button><button class="ib" id="inkbtn" onclick="inkToggle()">${p.ak?'✏️ జవాబు రాయి':'✏️ రాయి'}</button><a class="ib" href="${esc(p.u)}" target="_blank" rel="noopener" download aria-label="డౌన్‌లోడ్">⬇</a>`}</div>`;
+ const top=`<div class="bvtop"><button class="ib" onclick="closeBook()" aria-label="మూసివేయి">✕</button><b>${esc(p.t||'')}</b>${k==='tool'&&!ext?`<button class="ib" id="bvfs" onclick="bvFull()" aria-label="పూర్తి స్క్రీన్">⛶</button>`:k!=='pdf'?`<a class="ib" href="${esc(k==='drive'?'https://drive.google.com/file/d/'+driveId(p.u)+'/view':p.u)}" target="_blank" rel="noopener" aria-label="కొత్త ట్యాబ్">↗</a>`:`<button class="ib" id="akbtn" hidden onclick="akToggle()">🔑</button><button class="ib" id="inkbtn" onclick="inkToggle()">${p.ak?'✏️ జవాబు రాయి':'✏️ రాయి'}</button><a class="ib" href="${esc(p.u)}" target="_blank" rel="noopener" download aria-label="డౌన్‌లోడ్">⬇</a>`}</div>`;
  if(k==='drive')return `<div class="bview">${top}<iframe class="bframe" src="https://drive.google.com/file/d/${esc(driveId(p.u))}/preview" allow="autoplay; fullscreen" referrerpolicy="no-referrer"></iframe></div>`;
  if(k==='tool')return `<div class="bview">${top}<iframe class="bframe" onload="toolHook(this)" src="${esc(p.u)}" allow="autoplay; fullscreen; clipboard-write; microphone; camera" ${ext?'referrerpolicy="no-referrer"':''}></iframe></div>`;
  return `<div class="bview">${top}<div id="bbox" class="bbox"><div id="bmsg" class="bmsg">⏳ పుస్తకం తెరుస్తోంది...</div><div class="bwrap"><canvas id="bcv"></canvas><canvas id="bink"></canvas><div id="btxl"></div></div></div><div id="ansp" class="ansp" hidden></div><div id="inkbar"></div><div id="btxin" hidden><textarea placeholder="✍️ జవాబు ఇక్కడ టైప్ చేయి" maxlength="300"></textarea><button class="x" onclick="inkTxNo()">✕</button><button onclick="inkTxOk()">✓</button></div>
@@ -6194,7 +6195,12 @@ async function pdfDraw(){if(!BV.doc)return;const tok=++BV.tok,n=BV.page;const pg
 function pdfGo(d){if(!BV.doc)return;const n=Math.min(BV.n,Math.max(1,BV.page+d));if(n!==BV.page){BV.page=n;pdfDraw();}}
 function pdfTo(v){if(!BV.doc)return;const n=parseInt(v,10);if(n>=1&&n<=BV.n){BV.page=n;pdfDraw();}else{const pg=document.getElementById('bpg');if(pg)pg.value=BV.page;}}
 function pdfZoom(f){if(!BV.doc)return;BV.zoom=Math.min(4,Math.max(0.6,BV.zoom*f));pdfDraw();}
-function closeBook(){try{inkFlush();}catch(e){}INK.on=false;INK.key='';INK.d=null;inkTxNo();try{BV.rt&&BV.rt.cancel();}catch(e){}try{BV.doc&&BV.doc.destroy();}catch(e){}try{BV.task0&&BV.task0.destroy();}catch(e){}const b=param.back||{};BV={};if(b.test)go('test');else if(b.tch)go('teacher',{t:'tb'});else if(b.tbl)go('tbl',{s:b.s,id:b.id,wb:1});else if(b.v)go(b.v,b.p);else go('library',b);}
+/* 2026.11.14-19: యాప్ టూల్ ↗ (కొత్త ట్యాబ్) బదులు ⛶ పూర్తి స్క్రీన్ – యాప్ లోపలే, కాబట్టి బ్యాక్ = యాప్ బ్యాక్ (కొత్త ట్యాబ్‌లో బ్యాక్ = మూసుకునేది) */
+function bvFsOn(){return !!(document.fullscreenElement||document.webkitFullscreenElement);}
+function bvFsOff(){try{if(document.exitFullscreen&&document.fullscreenElement)document.exitFullscreen().catch(()=>{});else if(document.webkitExitFullscreen&&document.webkitFullscreenElement)document.webkitExitFullscreen();}catch(e){}}
+function bvFull(){if(bvFsOn()){bvFsOff();return;}const d=document.documentElement,f=d.requestFullscreen||d.webkitRequestFullscreen;
+ if(!f){document.body.classList.toggle('bvbig');return;}try{const r=f.call(d,{navigationUI:'hide'});if(r&&r.catch)r.catch(()=>document.body.classList.toggle('bvbig'));}catch(e){document.body.classList.toggle('bvbig');}}
+function closeBook(){bvFsOff();document.body.classList.remove('bvbig');try{inkFlush();}catch(e){}INK.on=false;INK.key='';INK.d=null;inkTxNo();try{BV.rt&&BV.rt.cancel();}catch(e){}try{BV.doc&&BV.doc.destroy();}catch(e){}try{BV.task0&&BV.task0.destroy();}catch(e){}const b=param.back||{};BV={};if(b.test)go('test');else if(b.tch)go('teacher',{t:'tb'});else if(b.tbl)go('tbl',{s:b.s,id:b.id,wb:1});else if(b.v)go(b.v,b.p);else go('library',b);}
 document.addEventListener('keydown',e=>{if(view!=='book'||param.k!=='pdf'||(e.target&&e.target.tagName==='INPUT'))return;
  if(e.key==='ArrowRight'||e.key==='PageDown'){pdfGo(1);e.preventDefault();}else if(e.key==='ArrowLeft'||e.key==='PageUp'){pdfGo(-1);e.preventDefault();}
  else if(e.key==='+'||e.key==='='){pdfZoom(1.25);}else if(e.key==='-'){pdfZoom(0.8);}else if(e.key==='Escape'||e.key==='Backspace'){NAVH.lb=Date.now();closeBook();}});

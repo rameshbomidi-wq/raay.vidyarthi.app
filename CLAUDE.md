@@ -187,6 +187,8 @@
 
 - 🔙 2026.11.14-18 (యూజర్: టూల్‌లో బ్యాక్ = యాప్ మూసుకుంటుంది): iframe టూల్ లోపలి టచ్‌లు యాప్ document listeners కు రావు → guard మళ్ళీ వేయబడదు. `toolNavHook(w)` (toolHook మొదట్లో, అన్ని same-origin టూల్స్‌కు) – iframe document లో pointerup/click/keydown → `navWatch(1)`; iframe లోపల Esc/TV బ్యాక్ కీ → navBack. Playwright లో guard తీసేసి iframe టచ్ → మళ్ళీ armed, back/Esc → ఆటలు ✅. Android లో యూజర్ సరిచూడాలి.
 
+- ⛶ 2026.11.14-19 (యూజర్ స్క్రీన్‌షాట్: టూల్ పై ↗ నొక్కి ఆడి బ్యాక్ = మూసుకుంటుంది – ↗ కొత్త ట్యాబ్/Chrome లో తెరిచేది): యాప్ లోపలి టూల్స్ (k:'tool', same-origin) కు ↗ బదులు `⛶` `bvFull()` = Fullscreen API (లేకపోతే `body.bvbig`), యాప్ లోపలే → బ్యాక్ = యాప్ బ్యాక్; `closeBook` లో `bvFsOff()`. బయటి లింకులు/Drive కి ↗ అలాగే.
+
 ## పరీక్ష
 - `python3 -m http.server` + Playwright (chromium ముందే ఉంది). `node --check` అన్ని `<script>` blocks.
 - pdf.js CDN sandbox లో అందదు → `/opt/npm-tools/node_modules/pdfjs-dist/legacy/build/` ని route చేసి పరీక్షించాలి.
