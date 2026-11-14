@@ -63,12 +63,13 @@
 
     function splitTe(w) {
         if (mode === 'en') return w.split('');
-        return w.match(/[\u0c00-\u0c7f][\u0c00-\u0c03\u0c3e-\u0c56\u0c62-\u0c63]*/g) || [];
+        /* తెలుగు అక్షరం = ఒత్తుల సహా ఒకే ముక్క (ఉదా: ఆగస్టు → ఆ | గ | స్టు; అమ్మ → అ | మ్మ); పదం చివర పొల్లు (ర్) విడిగా */
+        return w.match(/(?:[\u0c15-\u0c39]\u0c4d)*[\u0c05-\u0c14\u0c15-\u0c39\u0c60\u0c61][\u0c00-\u0c03\u0c3e-\u0c4c\u0c55\u0c56\u0c62\u0c63]*(?:\u0c4d(?![\u0c15-\u0c39]))?/g) || [];
     }
 
     function start() {
         /* ఖాళీ/ZWNJ/ఇంగ్లీష్ అక్షరాలు కలిసిన తెలుగు పదాలు అమర్చితే సరిపోవు – వాటిని వదిలేస్తాం */
-        const list = bank[mode].filter(w => splitTe(w).join('') === w);
+        const list = bank[mode].filter(w => splitTe(w).join('') === w && splitTe(w).length > 1);
         word = list[Math.floor(Math.random() * list.length)];
         document.getElementById('counter').innerText = `Total Words: ${list.length}`;
         const chars = splitTe(word);
