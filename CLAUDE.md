@@ -185,6 +185,8 @@
 
 - 🌟 2026.11.14-15 (యూజర్): ఆటలు పేజీలో “కాన్సెప్ట్స్ బలపరచుకో” కింద `cgCard()` = “రాయ్ విద్యార్థి – C గ్రేడ్ పిల్లల కోసం” (పసుపు నేపథ్యం, ఎరుపు అంచు, నీలి మందపాటి అక్షరాలు; `.cgcard`); `CGT` 3 టూల్స్ `cgrade/` – `C_Grade_Saral_Padalu_Multi_Learning.html` (యూజర్ ఫైల్ నుండి 17 కూడిక/18 తీసివేత/19 భాగహారం తీసేసి 20–28 → 17–25 సంఖ్యలు), `Telugu_English_Word_Game.html` (2026.11.14-16 బగ్ సరి: పై గడిలోని అక్షరం తాకితే కిందికి తిరిగి వస్తుంది `back(i)`/`src[]`; తప్పైతే alert+కొత్త పదం కాదు – ఎరుపు గడులు + సందేశం, అదే పదం; ఖాళీ/ZWNJ/ఇంగ్లీష్ కలిసిన తెలుగు పదాలు వదిలేస్తాం; 2026.11.14-17: `splitTe` = ఒత్తులతో పూర్తి అక్షరం ఒకే టైల్ – ఆగస్టు → ఆ|గ|స్టు, చివర పొల్లు విడిగా; ఒకే ముక్క పదాలు వదిలేస్తాం), `AP_TaRL_Testing_Tool.html` (⚠️ అసలు ఫైల్‌లో ZPHS 3–5 పిల్లల పేర్లు+IDలు `DEFAULT_STU` ఉన్నాయి → ఖాళీ {III,IV,V} చేశాం, schoolName డిఫాల్ట్ ''). go('book',{k:'tool',back:{v:'games'}}); offFiles లో కూడా.
 
+- 🔙 2026.11.14-18 (యూజర్: టూల్‌లో బ్యాక్ = యాప్ మూసుకుంటుంది): iframe టూల్ లోపలి టచ్‌లు యాప్ document listeners కు రావు → guard మళ్ళీ వేయబడదు. `toolNavHook(w)` (toolHook మొదట్లో, అన్ని same-origin టూల్స్‌కు) – iframe document లో pointerup/click/keydown → `navWatch(1)`; iframe లోపల Esc/TV బ్యాక్ కీ → navBack. Playwright లో guard తీసేసి iframe టచ్ → మళ్ళీ armed, back/Esc → ఆటలు ✅. Android లో యూజర్ సరిచూడాలి.
+
 ## పరీక్ష
 - `python3 -m http.server` + Playwright (chromium ముందే ఉంది). `node --check` అన్ని `<script>` blocks.
 - pdf.js CDN sandbox లో అందదు → `/opt/npm-tools/node_modules/pdfjs-dist/legacy/build/` ని route చేసి పరీక్షించాలి.

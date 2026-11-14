@@ -3110,7 +3110,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${view==='home'?`<button class="ib hstar" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐<small>${stars()}</small></button><button class="ib hav" onclick="go('avatar')" aria-label="బొమ్మ మార్చు">${avOf(S.cur.n)}</button>`:''}${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.14-17';
+const APPV='2026.11.14-18';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -6053,7 +6053,11 @@ function ap25(c){return (typeof APBOOKS25!=='undefined'&&APBOOKS25[c]||[]).map((
 function semOf(x){x=String(x||'');if(/SEM[\s_-]*2(?!\d)/i.test(x))return 2;if(/SEM[\s_-]*1(?!\d)/i.test(x))return 1;return 0;}
 function openItem(i){const it=LIB[i];if(!it)return;if(it.k==='aplink'){window.open(it.u,'_blank','noopener,noreferrer');return;}go('book',{u:it.u,t:it.t,k:it.k,back:{tab:param.tab||'books',c:param.c||S.cur.c}});if(it.k==='pdf')pdfInit();}
 /* iframe టూల్ లోపల జత చేసిన PDF (Mission March 📎) – window.open(blob) యాప్‌లో తెరుచుకోదు → యాప్ PDF viewer లో, ✕ = టూల్‌కు తిరిగి. టూల్ ఫైల్ మార్చకుండా. */
-function toolHook(f){try{const w=f.contentWindow,tp=Object.assign({},param);if(!w||typeof w.openPdf!=='function'||typeof w.pdfs!=='function')return;
+/* 2026.11.14-18: టూల్ iframe లోపలి టచ్‌లు యాప్ document కు రావు → బ్యాక్ guard మళ్ళీ వేయబడక రెండో బ్యాక్ యాప్‌నే మూసేది. iframe లోపలి టచ్/కీ తోనూ navWatch(1); iframe లోపల Esc/TV బ్యాక్ కీ → navBack */
+function toolNavHook(w){try{const d=w.document;if(!d||d.__rvNav)return;d.__rvNav=1;
+ ['pointerup','click','keydown'].forEach(t=>d.addEventListener(t,()=>{if(!NAVH.cw||!NAVH.armed)navWatch(1);},{capture:true,passive:true}));
+ d.addEventListener('keydown',e=>{if(!tvIsBack(e)||e.key==='Backspace')return;e.preventDefault();if(Date.now()-(NAVH.lb||0)<500)return;NAVH.lb=Date.now();navBack();},true);}catch(e){}}
+function toolHook(f){try{const w=f.contentWindow,tp=Object.assign({},param);toolNavHook(w);if(!w||typeof w.openPdf!=='function'||typeof w.pdfs!=='function')return;
  w.openPdf=async function(id){try{const all=await w.pdfs(),x=all.find(y=>y.id===id);if(!x||!x.blob)return;const u=URL.createObjectURL(x.blob);
   go('book',{u,t:'📄 '+String(x.name||'PDF').replace(/\.pdf$/i,''),k:'pdf',back:{v:'book',p:tp}});pdfInit();}catch(e){toast('PDF తెరవలేకపోయాను');}};}catch(e){}}
 V.book=()=>{const p=param,k=p.k;const ext=/^https?:/i.test(p.u);
