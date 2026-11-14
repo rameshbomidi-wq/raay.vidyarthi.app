@@ -819,7 +819,7 @@ body{background:#eef4f7}
 /* జాబితాలు (మెనూ, లైబ్రరీ) */
 .li{border-radius:16px}
 </style>
-<style id="v4css">.ttw td,.ttw th{font-size:12px;white-space:nowrap}.ttw .ttbrk td{background:#fef9c3;font-weight:700;text-align:left}.ttw .ttd{background:#dcfce7;font-weight:700}.pc .mdm{display:block;margin-top:6px;font-weight:700;color:#065f46;line-height:1.5}
+<style id="v4css">.sllock{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:6px}.sllock[hidden]{display:none}.sllk{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;color:#111827}.sllk input{font-size:26px;letter-spacing:10px;text-align:center;width:150px;padding:8px;border:2px solid #0f766e;border-radius:12px}.ttw td,.ttw th{font-size:12px;white-space:nowrap}.ttw .ttbrk td{background:#fef9c3;font-weight:700;text-align:left}.ttw .ttd{background:#dcfce7;font-weight:700}.pc .mdm{display:block;margin-top:6px;font-weight:700;color:#065f46;line-height:1.5}
 /* 🎨 v4 రంగుల డిజైన్ (2026.11.12-12, యూజర్ “A”) – విద్యార్థి హోమ్ + టీచర్ డాష్‌బోర్డ్ మాత్రమే (#app.v4bg) */
 #app.v4bg{background:#0b4d24}
 #app.v4bg .ft,#app.v4bg .ft a{color:#f6d343}
@@ -2954,7 +2954,7 @@ function slSync(){if(!document.body)return;slInit();const f=document.getElementB
 function slInit(){if(document.getElementById('slate'))return;const d=document.createElement('div');
  d.innerHTML=`<button id="slFab" class="slfab" onclick="slFabClick()" aria-label="పలక తెరువు – పైకి కిందికి లాగవచ్చు" hidden><span>✏️</span><small>పలక</small></button>
 <div id="slate" class="slate" hidden role="dialog" aria-label="పలక"><div class="slhd"><div class="sltabs"><button id="slTd" class="on" onclick="slTab('d')">✏️ పలక</button><button id="slTn" onclick="slTab('n')">📝 నోట్</button></div><b id="slTitle"></b><button class="slb" id="slFull" onclick="slFullT()" aria-label="పెద్దది / చిన్నది">⤢</button><button class="slb" onclick="slClose()" aria-label="మూసివేయి">✕</button></div>
-<div class="sltools" id="slTools"></div><div class="slbody bg-slate" id="slBody"><canvas id="slCv"></canvas><textarea id="slTx" hidden maxlength="8000" placeholder="ఇక్కడ నీ నోట్ రాయి… ఈ విభాగానికి మాత్రమే సేవ్ అవుతుంది"></textarea></div><div class="slpg" id="slPg"></div></div>`;
+<div class="sltools" id="slTools"></div><div class="slbody bg-slate" id="slBody"><canvas id="slCv"></canvas><textarea id="slTx" hidden maxlength="60000" placeholder="ఇక్కడ నీ నోట్ రాయి… ఏ పేజీలో తెరిచినా అదే నోట్ పుస్తకం – ఆటోగా సేవ్ అవుతుంది"></textarea><div id="slLock" class="sllock" hidden></div></div><div class="slpg" id="slPg"></div></div>`;
  while(d.firstChild)document.body.appendChild(d.firstChild);
  slFabDrag();
  const cv=document.getElementById('slCv');
@@ -2966,7 +2966,7 @@ function slInit(){if(document.getElementById('slate'))return;const d=document.cr
  cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);cv.addEventListener('lostpointercapture',end);
  document.getElementById('slTx').addEventListener('input',()=>{clearTimeout(SL.th);SL.th=setTimeout(slSaveTx,400);});
  window.addEventListener('resize',()=>{if(SL.open)slResize();});
- document.addEventListener('visibilitychange',()=>{if(document.hidden&&SL.open){slSave();slSaveTx();}});}
+ document.addEventListener('visibilitychange',()=>{if(document.hidden&&SL.open){slSave();slSaveTx();if(slNtLocked()&&SL.nUnl){SL.nUnl=0;if(SL.tab==='n')slNoteEnter();}}});}
 function slCtx(){const cv=document.getElementById('slCv'),x=cv.getContext('2d');x.setTransform(SL.dpr,0,0,SL.dpr,0,0);x.lineCap='round';x.lineJoin='round';return x;}
 function slStyle(x,s){x.lineWidth=s.w;x.strokeStyle=s.c;x.fillStyle=s.c;x.globalCompositeOperation=s.er?'destination-out':'source-over';}
 function slSeg(s){const x=slCtx(),p=s.p,n=p.length;slStyle(x,s);x.beginPath();
@@ -2988,7 +2988,7 @@ function slResize(){const cv=document.getElementById('slCv'),body=document.getEl
  SL.W=w;SL.H=Math.max(h,SL.H);SL.dpr=dpr;cv.width=Math.round(w*dpr);cv.height=Math.round(SL.H*dpr);cv.style.width=w+'px';cv.style.height=SL.H+'px';
  if(SL.base&&!SL.base.complete)SL.base.onload=slRedraw;slRedraw();}
 function slTools(){const el=document.getElementById('slTools');if(!el)return;
- if(SL.tab==='n'){el.innerHTML=`<span class="mut" style="font-size:12px;white-space:normal">📝 టైప్ చేసింది ఈ ఫోన్‌లో, ఈ విభాగానికే సేవ్ అవుతుంది</span><button class="slt" onclick="slTxClear()" aria-label="నోట్ తుడువు">🗑️</button>`;return;}
+ if(SL.tab==='n'){const L=slNtLocked();el.innerHTML=`<span class="mut" style="font-size:12px;white-space:normal;flex:1">📝 ఒకే నోట్ పుస్తకం – ఏ పేజీలో తెరిచినా ఆ పేజీ పేరు ఆటోగా చేరుతుంది • ఆటో సేవ్ ✓</span><button class="slt ${L?'on':''}" onclick="slLockBtn()" aria-label="నోట్ తాళం">${L?'🔒':'🔓'}</button><button class="slt" onclick="slTxClear()" aria-label="నోట్ తుడువు">🗑️</button>`;return;}
  const cols=SLCOL[SL.bg==='slate'?'dark':'light'];
  el.innerHTML=cols.map(c=>`<button class="slc ${!SL.er&&SL.col===c?'on':''}" style="background:${c}" onclick="slColor('${c}')" aria-label="రంగు"></button>`).join('')+`<span class="slsep"></span>`+
  [2,4,8].map(w=>`<button class="slt ${!SL.er&&SL.w===w?'on':''}" onclick="slWidth(${w})" aria-label="మందం"><i style="width:${w+3}px;height:${w+3}px"></i></button>`).join('')+
@@ -3011,7 +3011,7 @@ function slClear(){if(slEmpty())return;SL.strokes.push({clear:1});slRedraw();slL
 function slBg(b){const dark=b==='slate',was=SL.bg==='slate';SL.bg=b;if(dark!==was)SL.col=SLCOL[dark?'dark':'light'][0];try{localStorage.setItem('raiSlBg',b);}catch(e){}slApplyBg();slTools();slLater();}
 function slApplyBg(){const b=document.getElementById('slBody');if(b)b.className='slbody bg-'+SL.bg;}
 function slTab(t){SL.tab=t;document.getElementById('slTd').classList.toggle('on',t==='d');document.getElementById('slTn').classList.toggle('on',t==='n');
- document.getElementById('slCv').hidden=t!=='d';const tx=document.getElementById('slTx');tx.hidden=t!=='n';slTools();slPgBar();if(t==='n')setTimeout(()=>{try{tx.focus();}catch(e){}},50);}
+ document.getElementById('slCv').hidden=t!=='d';const tx=document.getElementById('slTx');tx.hidden=t!=='n';slTools();slPgBar();if(t==='n')slNoteEnter();else{const lk=document.getElementById('slLock');if(lk)lk.hidden=true;}}
 function slFullT(){SL.full=!SL.full;document.getElementById('slate').classList.toggle('full',SL.full);document.getElementById('slFull').textContent=SL.full?'⤡':'⤢';setTimeout(slResize,30);}
 async function slOpen(){slInit();if(SL.open)return;const [sec,title]=slSec();SL.sec=sec;SL.key=me()+'|'+sec;SL.open=true;
  const el=document.getElementById('slate');el.hidden=false;document.getElementById('slFab').hidden=true;document.getElementById('slTitle').textContent=title;
@@ -3022,7 +3022,7 @@ async function slOpen(){slInit();if(SL.open)return;const [sec,title]=slSec();SL.
  if(d&&('img' in d)&&!('n' in d)){if(d.img)await slPut(k+'#p0',{img:d.img,pw:d.pw});d={n:1,cur:0,bg:d.bg};await slPut(k,d);}
  SL.n=Math.min(SLMAXP,Math.max(1,(d&&d.n)||1));SL.page=Math.min(Math.max(0,(d&&d.cur)||0),SL.n-1);
  SL.bg=(d&&d.bg)||bg0;SL.col=SLCOL[SL.bg==='slate'?'dark':'light'][0];slApplyBg();
- document.getElementById('slTx').value=slTxAll()[k]||'';
+ slNoteLoad();
  slTab(SL.tab);SL.W=0;slResize();await slLoadPage(SL.page);}
 const SLMAXP=20;
 async function slLoadPage(i){const k=SL.key;SL.page=i;SL.strokes=[];SL.base=null;SL.bw=0;SL.cur=null;slRedraw();slPgBar();
@@ -3043,9 +3043,48 @@ async function slDelPage(){if(SL.busy)return;if(!delOK(`పేజీ ${SL.page+1
 function slLater(){clearTimeout(SL.sv);SL.sv=setTimeout(slSave,700);}
 function slSave(){clearTimeout(SL.sv);if(!SL.key)return;const cv=document.getElementById('slCv');if(!cv||!cv.width)return;
  slPut(SL.key+'#p'+SL.page,slEmpty()?null:{img:cv.toDataURL('image/png'),pw:cv.width});slMeta();}
-function slSaveTx(){clearTimeout(SL.th);if(!SL.key)return;const v=document.getElementById('slTx').value;const all=slTxAll();if(v.trim())all[SL.key]=v;else delete all[SL.key];try{localStorage.setItem('raiSlTx',JSON.stringify(all));}catch(e){toast('నోట్ సేవ్ కాలేదు – ఫోన్ స్టోరేజ్ నిండింది');}}
-function slTxClear(){const t=document.getElementById('slTx');if(!t.value)return;if(!delOK('ఈ నోట్ తుడిచేయాలా?'))return;t.value='';slSaveTx();}
-function slClose(){if(!SL.open)return;if(SL.cur){SL.strokes.push(SL.cur);SL.cur=null;}slSave();slSaveTx();SL.open=false;SL.key='';SL.pid=null;
+function slSaveTx(){clearTimeout(SL.th);if(!SL.key||!SL.nk||SL.nLoad!==SL.nk)return;if(slNtLocked()&&!SL.nUnl)return;const v=document.getElementById('slTx').value;const all=slTxAll();if(v.trim())all[SL.nk]=v;else delete all[SL.nk];try{localStorage.setItem('raiSlTx',JSON.stringify(all));}catch(e){toast('నోట్ సేవ్ కాలేదు – ఫోన్ స్టోరేజ్ నిండింది');}}
+function slTxClear(){const t=document.getElementById('slTx');if(slNtLocked()&&!SL.nUnl)return toast('ముందు PIN తో తెరవండి');if(!t.value)return;if(!delOK('ఈ నోట్ తుడిచేయాలా?'))return;t.value='';slSaveTx();}
+/* 📝 నోట్ = ఒక్కో విద్యార్థికి ఒకే నోట్ పుస్తకం (యూజర్ 14-11-2026): యాప్‌లో ఎక్కడ తెరిచినా అదే నోట్; తెరిచిన పేజీ పేరు + సమయం శీర్షికగా ఆటోగా చేరుతుంది; 🔒 4 అంకెల PIN తాళం (ఈ ఫోన్‌లో మాత్రమే); పలక మాత్రం విభాగం వారీగా అలాగే */
+function slNtLockAll(){try{return JSON.parse(localStorage.getItem('raiNtLock')||'{}')||{};}catch(e){return {};}}
+function slNtLocked(){return !!(S.cur&&slNtLockAll()[me()]);}
+function slPinH(p){return slHash('rai|'+me()+'|'+p);}
+function slPageLabel(){if(view==='book')return param.t||'పుస్తకం';if(view==='home')return 'హోమ్';
+ const h=document.querySelector('#app .bar h2,#app h2');const t=h?h.textContent.replace(/\s+/g,' ').trim():'';return (t||slSec()[1]).slice(0,60);}
+function slNoteLoad(){const nk=me()+'|note',all=slTxAll();
+ /* పాత విభాగం వారీ నోట్లు ఒక్కసారి ఈ నోట్ పుస్తకంలోకి కలుపుతాం */
+ const pre=me()+'|';let add='';Object.keys(all).forEach(k=>{if(k.indexOf(pre)===0&&k!==nk){const sec=k.slice(pre.length),nm={gen:'నా పలక',les:'పాఠాలు',test:'టెస్ట్',hw:'హోంవర్క్',dbt:'సందేహాలు',book:'పుస్తకం',ws:'అభ్యాస పత్రం',game:'ఆట'}[sec.split('-')[0]]||'విభాగం';add+=`\n\n📄 పాత నోట్ – ${nm}\n`+all[k];delete all[k];}});
+ if(add){all[nk]=((all[nk]||'')+add).replace(/^\n+/,'');try{localStorage.setItem('raiSlTx',JSON.stringify(all));}catch(e){}}
+ SL.nk=nk;SL.nLoad=nk;SL.nLbl=slPageLabel();document.getElementById('slTx').value=all[nk]||'';}
+function slNoteHead(){const tx=document.getElementById('slTx');let v=tx.value;const lbl=SL.nLbl||slPageLabel();
+ const d=new Date(),ts=String(d.getDate()).padStart(2,'0')+'-'+String(d.getMonth()+1).padStart(2,'0')+' '+minTo12(d.getHours()*60+d.getMinutes());
+ const lines=v.replace(/\s+$/,'').split('\n'),li=lines.map(x=>x.startsWith('📄 ')).lastIndexOf(true);
+ if(li>=0){const last=lines[li].slice(2).split(' — ')[0].trim(),after=lines.slice(li+1).join('').trim();
+  if(last===lbl&&after)return;           // అదే పేజీ – శీర్షిక మళ్ళీ వద్దు
+  if(!after){lines.splice(li);v=lines.join('\n');} // ఖాళీ శీర్షిక → కొత్తదానితో మార్చు
+  else if(last===lbl)return;}
+ v=v.replace(/\s+$/,'');tx.value=(v?v+'\n\n':'')+`📄 ${lbl} — ${ts}\n`;slSaveTx();}
+function slNoteEnter(){const tx=document.getElementById('slTx'),lk=document.getElementById('slLock');
+ if(slNtLocked()&&!SL.nUnl){tx.hidden=true;lk.hidden=false;
+  lk.innerHTML=`<div class="sllk"><div style="font-size:42px">🔒</div><b>నా నోట్ – తాళం ఉంది</b><input id="slPin" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="PIN" onkeydown="if(event.key==='Enter')slUnlock()"><button class="btn" onclick="slUnlock()">🔓 తెరువు</button><button class="lk" onclick="slForgot()">PIN మర్చిపోయారా?</button></div>`;
+  slTools();setTimeout(()=>{try{document.getElementById('slPin').focus();}catch(e){}},60);return;}
+ lk.hidden=true;tx.hidden=false;slNoteHead();slTools();
+ setTimeout(()=>{try{tx.focus();tx.selectionStart=tx.selectionEnd=tx.value.length;tx.scrollTop=tx.scrollHeight;}catch(e){}},50);}
+function slUnlock(){const i=document.getElementById('slPin');const v=(i&&i.value||'').trim();if(!v)return;
+ if(slPinH(v)!==slNtLockAll()[me()]){toast('PIN సరిగా లేదు');i.value='';return;}SL.nUnl=1;slNoteEnter();toast('నోట్ తెరుచుకుంది 🔓');}
+function slLockBtn(){const all=slNtLockAll(),has=!!all[me()];
+ if(has&&!SL.nUnl)return toast('ముందు PIN తో తెరవండి');
+ const p=prompt(has?'కొత్త 4 అంకెల PIN ఇవ్వండి\n(ఖాళీగా వదిలి OK నొక్కితే తాళం తీసేస్తాం)':'నా నోట్‌కు 4 అంకెల PIN పెట్టండి 🔒\n(పలకకు తాళం ఉండదు – నోట్‌కు మాత్రమే)');
+ if(p===null)return;const v=p.trim();
+ if(!v){if(has&&confirm('నోట్ తాళం తీసేయాలా?')){delete all[me()];try{localStorage.setItem('raiNtLock',JSON.stringify(all));}catch(e){}toast('తాళం తీసేశాం 🔓');slTools();}return;}
+ if(!/^\d{4}$/.test(v))return toast('PIN = 4 అంకెలు మాత్రమే');
+ if(prompt('అదే PIN మళ్ళీ ఇవ్వండి')!==v)return toast('రెండు PIN లు సరిపోలేదు – మళ్ళీ ప్రయత్నించండి');
+ all[me()]=slPinH(v);try{localStorage.setItem('raiNtLock',JSON.stringify(all));}catch(e){}SL.nUnl=1;slTools();toast('నోట్‌కు తాళం వేశాం 🔒 – PIN గుర్తుంచుకోండి');}
+function slForgot(){if(!delOK('PIN మర్చిపోతే నోట్ మొత్తం తుడిచేసి తాళం తీసేస్తాం. సరేనా?'))return;
+ const all=slNtLockAll();delete all[me()];try{localStorage.setItem('raiNtLock',JSON.stringify(all));}catch(e){}
+ const t=slTxAll();delete t[me()+'|note'];try{localStorage.setItem('raiSlTx',JSON.stringify(t));}catch(e){}
+ document.getElementById('slTx').value='';SL.nUnl=1;slNoteEnter();toast('కొత్త నోట్ మొదలు');}
+function slClose(){if(!SL.open)return;if(SL.cur){SL.strokes.push(SL.cur);SL.cur=null;}slSave();slSaveTx();SL.open=false;SL.key='';SL.pid=null;SL.nUnl=0;
  const el=document.getElementById('slate');if(el)el.hidden=true;const f=document.getElementById('slFab');if(f)f.hidden=!slShow();}
 function slDownload(){const cv=document.getElementById('slCv');if(!cv||!cv.width)return;const o=document.createElement('canvas');o.width=cv.width;o.height=cv.height;const x=o.getContext('2d');
  x.fillStyle=SLBG[SL.bg].c;x.fillRect(0,0,o.width,o.height);const d=SL.dpr;
@@ -3071,7 +3110,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${view==='home'?`<button class="ib hstar" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐<small>${stars()}</small></button><button class="ib hav" onclick="go('avatar')" aria-label="బొమ్మ మార్చు">${avOf(S.cur.n)}</button>`:''}${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.14-13';
+const APPV='2026.11.14-14';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
