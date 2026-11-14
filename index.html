@@ -1040,6 +1040,18 @@ body:has(#app.v4bg){background:#083a1b}
 .gt em{display:none}
 @media(min-width:700px){.gtiles{grid-template-columns:repeat(4,1fr)}.gt i{font-size:32px}.gt b{font-size:15px}.gt small{font-size:11.5px}}
 @media(max-width:320px){.gtiles{grid-template-columns:repeat(3,1fr)}}
+
+/* 🖼️ బొమ్మలతో ఆటలు (2026.11.14-7) */
+.pnemo{font-size:min(28vw,110px)!important;line-height:1.15;margin:4px 0}
+.pncat{display:inline-block;background:#fef3c7;color:#92400e;border-radius:999px;padding:2px 12px;font-size:12px;font-weight:700}
+.spsc{position:relative;height:190px;max-width:340px;margin:4px auto;background:linear-gradient(#e0f2fe 70%,#bbf7d0 70%);border-radius:16px;overflow:hidden}
+.spsc .spa{position:absolute;transform:translate(-50%,-50%);font-size:70px;z-index:2;line-height:1}
+.spsc .spb{position:absolute;font-size:44px;line-height:1}
+.spbox{position:absolute;left:50%;top:60%;transform:translate(-50%,-50%);width:120px;height:86px;border:6px solid #92400e;border-top:0;border-radius:0 0 12px 12px;background:#fde68a66;z-index:2;display:flex;align-items:flex-end;justify-content:center}
+.spbox small{font-size:11px;color:#78350f;font-weight:700;margin-bottom:2px}
+.mpbox{display:flex;justify-content:center}.mpsvg{width:min(86vw,330px);height:auto;background:#bae6fd;border-radius:14px}.mpsvg.in{width:min(74vw,280px)}
+.mpsvg path{fill:#bbf7d0;stroke:#475569;stroke-width:1}.mpsvg.w path{stroke-width:.8;fill:#d9f99d}.mpsvg path.hi{fill:#ef4444;animation:pablink 1.1s infinite}
+.mpst{font-size:40px}.mpsvg.w .mpst{font-size:46px}
 </style>
 </head>
 <body>
@@ -3059,7 +3071,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${view==='home'?`<button class="ib hstar" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐<small>${stars()}</small></button><button class="ib hav" onclick="go('avatar')" aria-label="బొమ్మ మార్చు">${avOf(S.cur.n)}</button>`:''}${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.14-6';
+const APPV='2026.11.14-7';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -4571,6 +4583,62 @@ ${artGrid(c.cells,(i,ch)=>c.on[i]||(c.fin&&ch==='.'),(i,ch)=>c.on[i]?'':esc(c.la
  fr:{gen:gxFrac,view:(c,m)=>c.mode==='shade'?`<div class="gq gxq">${c.lab} కి రంగు వేయి</div><p class="center" style="margin:2px 0">భాగాలను నొక్కు (మళ్ళీ నొక్కితే తీసేయవచ్చు) • ${c.on.filter(Boolean).length}/${c.n}</p><div class="frbox">${fracSvg(c,1)}</div>${m}<div class="row2 qnav"><button class="btn" onclick="gxFrCheck()">✔ సరిచూడు</button></div>`
   :`<p class="center" style="font-weight:700">రంగు వేసిన భాగం ఏ భిన్నం?</p><div class="frbox">${fracSvg(c,0)}</div>${m}<div class="gopts">${c.o.map((o,j)=>`<button onclick="gxPick(${j})">${o}</button>`).join('')}</div>`},
  ck:{gen:gxClock,view:(c,m)=>`<p class="center" style="font-weight:700;margin:0">గడియారం ఎంత సమయం చూపిస్తోంది? <small class="mut">(ఎరుపు = గంటల ముల్లు, నీలం = నిమిషాల ముల్లు)</small></p><div class="ckbox">${clockSvg(c.h,c.m)}</div>${m}<div class="gopts">${c.o.map((o,j)=>`<button onclick="gxPick(${j})">${o}</button>`).join('')}</div>`}});
+
+/* 🖼️ బొమ్మలతో ఆటలు (2026.11.14-7, యూజర్ నోట్‌బుక్): pn బొమ్మ పేరు (పక్షులు, శరీర భాగాలు, జంతువులు, పండ్లు, కూరగాయలు, వస్తువులు),
+   mp పటాల క్విజ్ (భారత రాష్ట్రాలు, రాజధానులు, సముద్రాలు; ప్రపంచ ఖండాలు, మహాసముద్రాలు – games-maps.js lazy), sp ఎడమ–కుడి/లోపల–బయట/పైన–కింద/ముందు–వెనుక, ex హావభావాలు & వృత్తులు */
+const PN={
+ 'పక్షులు':[['🦜','చిలుక','Parrot'],['🦚','నెమలి','Peacock'],['🦆','బాతు','Duck'],['🦉','గుడ్లగూబ','Owl'],['🐓','కోడి','Hen / Rooster'],['🕊️','పావురం','Pigeon / Dove'],['🦅','గద్ద','Eagle'],['🐧','పెంగ్విన్','Penguin'],['🦢','హంస','Swan'],['🐦','పిచ్చుక','Sparrow']],
+ 'శరీర భాగాలు':[['👁️','కన్ను','Eye'],['👂','చెవి','Ear'],['👃','ముక్కు','Nose'],['👄','పెదవులు','Lips'],['✋','చేయి','Hand'],['🦶','పాదం','Foot'],['🦵','కాలు','Leg'],['🦷','పన్ను','Tooth'],['👅','నాలుక','Tongue'],['🧠','మెదడు','Brain'],['💪','కండ','Muscle']],
+ 'జంతువులు':[['🐘','ఏనుగు','Elephant'],['🦁','సింహం','Lion'],['🐅','పులి','Tiger'],['🐒','కోతి','Monkey'],['🐄','ఆవు','Cow'],['🐃','గేదె','Buffalo'],['🐐','మేక','Goat'],['🐕','కుక్క','Dog'],['🐈','పిల్లి','Cat'],['🐎','గుర్రం','Horse'],['🐪','ఒంటె','Camel'],['🦒','జిరాఫీ','Giraffe'],['🐇','కుందేలు','Rabbit'],['🐿️','ఉడుత','Squirrel'],['🐻','ఎలుగుబంటి','Bear'],['🐍','పాము','Snake'],['🐢','తాబేలు','Tortoise'],['🐑','గొర్రె','Sheep'],['🦌','జింక','Deer'],['🐀','ఎలుక','Rat']],
+ 'పండ్లు':[['🍎','ఆపిల్','Apple'],['🍌','అరటి పండు','Banana'],['🥭','మామిడి పండు','Mango'],['🍇','ద్రాక్ష','Grapes'],['🍉','పుచ్చకాయ','Watermelon'],['🍊','నారింజ','Orange'],['🍍','అనాస','Pineapple'],['🍓','స్ట్రాబెర్రీ','Strawberry'],['🍐','బేరి పండు','Pear'],['🥥','కొబ్బరికాయ','Coconut'],['🍋','నిమ్మకాయ','Lemon'],['🍒','చెర్రీ','Cherry']],
+ 'కూరగాయలు':[['🍅','టమాటా','Tomato'],['🥕','క్యారెట్','Carrot'],['🥔','బంగాళాదుంప','Potato'],['🧅','ఉల్లిపాయ','Onion'],['🧄','వెల్లుల్లి','Garlic'],['🍆','వంకాయ','Brinjal'],['🌶️','మిరపకాయ','Chilli'],['🌽','మొక్కజొన్న','Maize / Corn'],['🥒','దోసకాయ','Cucumber'],['🍄','పుట్టగొడుగు','Mushroom'],['🥬','ఆకుకూర','Leafy vegetable']],
+ 'వస్తువులు':[['✏️','పెన్సిల్','Pencil'],['📚','పుస్తకాలు','Books'],['🎒','బడి సంచి','School bag'],['☂️','గొడుగు','Umbrella'],['⏰','గడియారం','Clock'],['🔑','తాళం చెవి','Key'],['🪑','కుర్చీ','Chair'],['🛏️','మంచం','Bed'],['📱','ఫోన్','Mobile phone'],['💡','బల్బు','Bulb'],['✂️','కత్తెర','Scissors'],['🧹','చీపురు','Broom'],['🕯️','కొవ్వొత్తి','Candle'],['🧺','బుట్ట','Basket'],['🔔','గంట','Bell'],['🥄','చెంచా','Spoon'],['🚲','సైకిల్','Bicycle'],['🚌','బస్సు','Bus']]};
+function pnName(x,c){return c>=3?`${x[1]} (${x[2]})`:x[1];}
+function gxPicName(c){const cats=Object.keys(PN),cat=cats[R(0,cats.length-1)],L=PN[cat],x=L[R(0,L.length-1)];
+ const o=shuffle([x].concat(shuffle(L.filter(y=>y!==x)).slice(0,3))).map(y=>pnName(y,c));return {cat,e:x[0],a:pnName(x,c),o,why:''};}
+/* హావభావాలు & వృత్తులు */
+const GXEXF=[['😀','సంతోషం','Happy'],['😢','దుఃఖం','Sad'],['😠','కోపం','Angry'],['😨','భయం','Afraid'],['😲','ఆశ్చర్యం','Surprised'],['😴','నిద్ర','Sleepy'],['🤔','ఆలోచన','Thinking'],['😋','రుచిగా ఉంది','Tasty'],['🤒','జ్వరం / అనారోగ్యం','Sick'],['😂','పగలబడి నవ్వు','Laughing']];
+const OCC=[['🧑‍🌾','రైతు','Farmer','పంటలు పండిస్తారు'],['🧑‍⚕️','వైద్యుడు','Doctor','రోగులకు చికిత్స చేస్తారు'],['🧑‍🏫','ఉపాధ్యాయుడు','Teacher','పాఠాలు చెబుతారు'],['👮','పోలీసు','Police','మనల్ని రక్షిస్తారు'],['🧑‍🍳','వంట మనిషి','Cook','వంట చేస్తారు'],['🧑‍🔧','మెకానిక్','Mechanic','బండ్లు బాగు చేస్తారు'],['👷','భవన నిర్మాణ కార్మికుడు','Construction worker','ఇళ్ళు కడతారు'],['🧑‍🚒','అగ్నిమాపక సిబ్బంది','Firefighter','మంటలు ఆర్పుతారు'],['🧑‍✈️','పైలట్','Pilot','విమానం నడుపుతారు'],['🧑‍⚖️','న్యాయమూర్తి','Judge','తీర్పు ఇస్తారు'],['🧑‍🔬','శాస్త్రవేత్త','Scientist','పరిశోధనలు చేస్తారు'],['🧑‍🎨','చిత్రకారుడు','Painter / Artist','బొమ్మలు గీస్తారు'],['🧑‍💻','కంప్యూటర్ ఇంజనీర్','Software engineer','కంప్యూటర్ ప్రోగ్రాములు రాస్తారు'],['🧑‍🚀','వ్యోమగామి','Astronaut','అంతరిక్షంలోకి వెళ్తారు']];
+function gxExp(c){const f=Math.random()<.45,L=f?GXEXF:OCC,x=L[R(0,L.length-1)],nm=y=>c>=3?`${y[1]} (${y[2]})`:y[1];
+ return {k:f?'f':'o',e:x[0],a:nm(x),o:shuffle([x].concat(shuffle(L.filter(y=>y!==x)).slice(0,3))).map(nm),why:f?'':x[3]};}
+/* ఎడమ–కుడి, పైన–కింద, లోపల–బయట, ముందు–వెనుక (చూసేవారి వైపు నుండి) */
+const SPA=[['📦','పెట్టె'],['🌳','చెట్టు'],['🏠','ఇల్లు'],['🪑','కుర్చీ'],['🧺','బుట్ట']],SPB=[['🐱','పిల్లి'],['⚽','బంతి'],['🐶','కుక్క'],['🐦','పిట్ట'],['🍎','ఆపిల్'],['🧒','పాప']];
+const SPR={l:['ఎడమ వైపు','Left'],r:['కుడి వైపు','Right'],u:['పైన','Above / On'],d:['కింద','Below / Under'],i:['లోపల','Inside'],o:['బయట','Outside'],f:['ముందు','In front'],b:['వెనుక','Behind']};
+function gxSpace(c){const pairs=[['l','r'],['u','d']].concat(c>=1?[['i','o']]:[]).concat(c>=2?[['f','b']]:[]),pr=pairs[R(0,pairs.length-1)],rel=pr[R(0,1)];
+ let A=SPA[R(0,SPA.length-1)];if(pr[0]==='i')A=Math.random()<.5?SPA[0]:SPA[4];const B=SPB[R(0,SPB.length-1)],nm=k=>c>=3?`${SPR[k][0]} (${SPR[k][1]})`:SPR[k][0];
+ const others=Object.keys(SPR).filter(k=>!pr.includes(k));const o=shuffle([rel,rel===pr[0]?pr[1]:pr[0]].concat(shuffle(others).slice(0,c<=2?0:2))).map(nm);
+ return {A,B,rel,q:`${B[1]} ఎక్కడ ఉంది? → ${A[1]}కు ___`,a:nm(rel),o,why:pr[0]==='l'?'చిత్రం చూస్తున్న నీ వైపు నుండి ఎడమ / కుడి':''};}
+function spScene(c){const A=c.A[0],B=c.B[0],r=c.rel;let a='left:50%;top:52%',b='',zb=3,sb=1,box='';
+ if(r==='l')b='left:20%;top:58%';else if(r==='r')b='left:80%;top:58%';else if(r==='u')b='left:50%;top:14%';else if(r==='d')b='left:50%;top:88%';
+ else if(r==='i'){box=1;b='left:50%;top:58%';sb=.62;}else if(r==='o'){box=1;b='left:82%;top:70%';sb=.8;}
+ else if(r==='f'){b='left:56%;top:66%';sb=.95;zb=3;}else{b='left:40%;top:40%';sb=.62;zb=1;}
+ return `<div class="spsc">${box?`<div class="spbox"><small>${esc(c.A[1])}</small></div>`:`<span class="spa" style="${a}">${A}</span>`}<span class="spb" style="${b};z-index:${zb};transform:translate(-50%,-50%) scale(${sb})">${B}</span><i class="spg"></i></div>`;}
+/* 🗺️ పటాల క్విజ్ */
+const MAPST={ap:['ఆంధ్రప్రదేశ్','అమరావతి'],ar:['అరుణాచల్ ప్రదేశ్','ఇటానగర్'],as:['అస్సాం','దిస్పూర్'],br:['బీహార్','పాట్నా'],ct:['ఛత్తీస్‌గఢ్','రాయ్‌పూర్'],ga:['గోవా','పనాజీ'],gj:['గుజరాత్','గాంధీనగర్'],hr:['హర్యానా','చండీగఢ్'],hp:['హిమాచల్ ప్రదేశ్','సిమ్లా'],jh:['జార్ఖండ్','రాంచీ'],ka:['కర్ణాటక','బెంగళూరు'],kl:['కేరళ','తిరువనంతపురం'],mp:['మధ్యప్రదేశ్','భోపాల్'],mh:['మహారాష్ట్ర','ముంబై'],mn:['మణిపూర్','ఇంఫాల్'],ml:['మేఘాలయ','షిల్లాంగ్'],mz:['మిజోరం','ఐజ్వాల్'],nl:['నాగాలాండ్','కోహిమా'],or:['ఒడిశా','భువనేశ్వర్'],pb:['పంజాబ్','చండీగఢ్'],rj:['రాజస్థాన్','జైపూర్'],sk:['సిక్కిం','గ్యాంగ్‌టక్'],tn:['తమిళనాడు','చెన్నై'],tg:['తెలంగాణ','హైదరాబాద్'],tr:['త్రిపుర','అగర్తలా'],up:['ఉత్తరప్రదేశ్','లక్నో'],ut:['ఉత్తరాఖండ్','డెహ్రాడూన్'],wb:['పశ్చిమ బెంగాల్','కోల్‌కతా'],jk:['జమ్మూ కాశ్మీర్, లడఖ్ (కేంద్రపాలిత ప్రాంతాలు)',''],an:['అండమాన్ నికోబార్ దీవులు (కేంద్రపాలిత ప్రాంతం)','']};
+const MAPSEA=[['అరేబియా సముద్రం',60,480],['బంగాళాఖాతం',470,500],['హిందూ మహాసముద్రం',350,670]];
+const MAPCON={AS:'ఆసియా',AF:'ఆఫ్రికా',EU:'ఐరోపా',NA:'ఉత్తర అమెరికా',SA:'దక్షిణ అమెరికా',OC:'ఆస్ట్రేలియా (ఓషియానియా)'};
+const MAPOC=[['పసిఫిక్ మహాసముద్రం',60,350],['అట్లాంటిక్ మహాసముద్రం',400,300],['హిందూ మహాసముద్రం',736,560],['ఆర్కిటిక్ మహాసముద్రం',560,14],['పసిఫిక్ మహాసముద్రం',950,330]];
+let MAPS_LD=0;function mapsLoad(){if(window.RAAY_MAPS||MAPS_LD)return;MAPS_LD=1;const s=document.createElement('script');s.src='games-maps.js?v='+APPV;s.onload=()=>{if(G&&G.g==='mp'&&!G.done){nextRound();upd();}};s.onerror=()=>{MAPS_LD=0;toast('పటాలు లోడ్ కాలేదు – నెట్ చూడండి');};document.head.appendChild(s);}
+function gxMap(c){const M=window.RAAY_MAPS;if(!M){mapsLoad();return {wait:1,o:[],a:''};}
+ const ty=shuffle(['st','st','st'].concat(c>=5?['cap']:[],['sea']).concat(c>=4?['con','con','oc']:[]))[0];
+ const pick=(arr,a,n)=>shuffle([a].concat(shuffle([...new Set(arr.filter(x=>x&&x!==a))]).slice(0,n)));
+ if(ty==='st'||ty==='cap'){const ks=Object.keys(MAPST).filter(k=>M.in.p[k]&&(ty==='st'||MAPST[k][1]));const k=ks[R(0,ks.length-1)],i=ty==='st'?0:1;
+  return {m:'in',hi:k,q:ty==='st'?'ఎరుపు రంగులో ఉన్న రాష్ట్రం / ప్రాంతం ఏది?':`ఎరుపు రంగు రాష్ట్రం (${MAPST[k][0]}) రాజధాని ఏది?`,a:MAPST[k][i],o:pick(Object.values(MAPST).map(v=>v[i]),MAPST[k][i],3),why:ty==='st'&&MAPST[k][1]?`రాజధాని: ${MAPST[k][1]}`:''};}
+ if(ty==='sea'){const s=MAPSEA[R(0,2)];return {m:'in',pt:[s[1],s[2]],q:'⭐ గుర్తు ఉన్న చోట ఉన్నది ఏది?',a:s[0],o:pick(MAPSEA.map(x=>x[0]).concat(['ఎర్ర సముద్రం']),s[0],3),why:''};}
+ if(ty==='con'){const ks=Object.keys(MAPCON).filter(k=>M.w.p[k]),k=ks[R(0,ks.length-1)];return {m:'w',hi:k,q:'ఎరుపు రంగులో ఉన్న ఖండం ఏది?',a:MAPCON[k],o:pick(Object.values(MAPCON).concat(['అంటార్కిటికా']),MAPCON[k],3),why:''};}
+ const s=MAPOC[R(0,MAPOC.length-1)];return {m:'w',pt:[s[1],s[2]],q:'⭐ గుర్తు ఉన్న మహాసముద్రం ఏది?',a:s[0],o:pick(MAPOC.map(x=>x[0]).concat(['దక్షిణ మహాసముద్రం']),s[0],3),why:''};}
+function mapSvg(c){const M=window.RAAY_MAPS[c.m],pt=c.pt;
+ return `<svg viewBox="${M.vb}" class="mpsvg ${c.m}">${Object.entries(M.p).map(([k,d])=>`<path d="${d}" class="${k===c.hi?'hi':''}" fill-rule="evenodd"/>`).join('')}${pt?`<text x="${pt[0]}" y="${pt[1]}" text-anchor="middle" dominant-baseline="central" class="mpst">⭐</text>`:''}</svg>`;}
+const GAMES_PIC={pn:{n:'బొమ్మ పేరు చెప్పు',t:'పక్షులు, జంతువులు, పండ్లు, కూరలు, వస్తువులు',ic:'🦜',bg:'#fef08a',sec:60,grp:'a'},
+ mp:{n:'పటాల క్విజ్',t:'భారత రాష్ట్రాలు, సముద్రాలు, ఖండాలు',ic:'🗺️',bg:'#a7f3d0',sec:90,grp:'a'},
+ sp:{n:'ఎక్కడ ఉంది?',t:'ఎడమ–కుడి, లోపల–బయట, పైన–కింద',ic:'↔️',bg:'#fed7aa',sec:60,grp:'a'},
+ ex:{n:'హావభావాలు • వృత్తులు',t:'ముఖం చూసి భావం, మనిషిని చూసి వృత్తి',ic:'😀',bg:'#fbcfe8',sec:60,grp:'a'}};
+Object.assign(GAMES_LO,GAMES_PIC);Object.assign(GAMES_HI,GAMES_PIC);Object.assign(GAMES,GAMES_PIC);
+Object.assign(GX,{
+ pn:{gen:gxPicName,view:(c,m)=>`<p class="center" style="margin:0"><span class="pncat">${c.cat}</span></p><div class="gemo pnemo">${c.e}</div><p class="center" style="font-weight:700;margin:0">ఈ బొమ్మ పేరు ఏమిటి?</p>${m}<div class="gopts pao">${c.o.map((o,j)=>`<button onclick="gxPick(${j})">${esc(o)}</button>`).join('')}</div>`},
+ ex:{gen:gxExp,view:(c,m)=>`<div class="gemo pnemo">${c.e}</div><p class="center" style="font-weight:700;margin:0">${c.k==='f'?'ఈ ముఖం ఏ భావం చూపిస్తోంది?':'వీరు ఏ పని చేస్తారు? (వృత్తి)'}</p>${m}<div class="gopts pao">${c.o.map((o,j)=>`<button onclick="gxPick(${j})">${esc(o)}</button>`).join('')}</div>`},
+ sp:{gen:gxSpace,view:(c,m)=>`${spScene(c)}<p class="center" style="font-weight:700;margin:4px 0">${c.q}</p>${m}<div class="gopts pao">${c.o.map((o,j)=>`<button onclick="gxPick(${j})">${esc(o)}</button>`).join('')}</div>`},
+ mp:{gen:gxMap,view:(c,m)=>c.wait?`<div class="empty">⏳ పటాలు లోడ్ అవుతున్నాయి...</div>`:`<p class="center" style="font-weight:700;margin:0">${c.q}</p><div class="mpbox">${mapSvg(c)}</div><p class="mut center" style="font-size:10px;margin:0">పటం ఆధారం: svg-maps (CC BY 4.0) • జమ్మూ కాశ్మీర్, లడఖ్ ఒకే రంగులో</p>${m}<div class="gopts pao">${c.o.map((o,j)=>`<button onclick="gxPick(${j})">${esc(o)}</button>`).join('')}</div>`}});
 
 function gxRight(c,j){return c.odd?c.odd.includes(c.o[j]):c.o[j]===c.a;}
 function gxPick(j){const c=G.cur,ok=gxRight(c,j),ans=c.full||(c.odd?c.o.find(x=>c.odd.includes(x)):c.a);beep(ok?'ok':'no');
