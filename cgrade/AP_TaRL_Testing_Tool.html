@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AP TaRL టెస్టింగ్ టూల్స్ (Tool 1 &amp; Tool 2) | రాయ్ ఎడ్యుకేషన్</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;700;800&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Baloo+Tamma+2:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16202b;
+  --slate:#25384d;
+  --board:#0f2a2f;
+  --paper:#fffdf7;
+  --wash:#eef1ec;
+  --line:#c9cfc6;
+  --mark:#b5471d;
+  --gold:#e0a226;
+  --ok:#1f6f4a;
+  --pad-top: env(safe-area-inset-top, 0px);
+  box-sizing:border-box;
+  padding-top:var(--pad-top);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --rf:1;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:var(--pad-top)}
+body{
+  margin:0;background:var(--wash);color:var(--ink);
+  font-family:'Noto Sans Telugu','Nirmala UI',system-ui,sans-serif;
+  -webkit-text-size-adjust:100%;
+}
+
+/* ---------- header ---------- */
+header{background:var(--board);color:#f3f1e7;padding:14px 14px 0}
+.brandline{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.crest{width:38px;height:38px;flex:0 0 38px;border-radius:50%;background:var(--gold);color:var(--board);
+  display:grid;place-items:center;font-family:'Baloo Tamma 2',cursive;font-weight:800;font-size:17px}
+h1{margin:0;font-size:17px;font-weight:800;line-height:1.25;letter-spacing:.2px}
+.sub{margin:2px 0 0;font-size:12.5px;opacity:.72}
+nav{display:flex;gap:4px;overflow-x:auto;margin-top:12px;padding-bottom:0;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{
+  flex:0 0 auto;background:transparent;border:0;border-bottom:3px solid transparent;
+  color:#cdd6cf;font:inherit;font-size:14px;font-weight:600;padding:9px 12px;cursor:pointer;
+  border-radius:6px 6px 0 0;
+}
+nav button[aria-selected="true"]{color:#fff;background:#1a3a40;border-bottom-color:var(--gold)}
+nav button:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+
+main{padding:14px 12px 30px;max-width:900px;margin:0 auto}
+.panel[hidden]{display:none}
+
+/* ---------- controls ---------- */
+.bar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.chip{
+  border:1.5px solid var(--line);background:#fff;color:var(--slate);
+  font:inherit;font-size:13.5px;font-weight:600;padding:7px 13px;border-radius:999px;cursor:pointer;
+}
+.chip[aria-pressed="true"],.chip.on{background:var(--board);border-color:var(--board);color:#fff}
+.chip:focus-visible{outline:2px solid var(--mark);outline-offset:2px}
+.bar .lab{font-size:12.5px;color:#5c6a5f;font-weight:600;margin-right:2px}
+.spacer{flex:1 1 auto}
+.icon{width:36px;height:34px;display:grid;place-items:center;padding:0;font-size:16px;font-weight:800}
+
+/* ---------- printed sheet card ---------- */
+.sheet{
+  background:var(--paper);border:2px solid var(--ink);border-radius:16px;
+  box-shadow:0 0 0 4px var(--paper),0 0 0 6px var(--ink);
+  margin:20px 4px 24px;padding:26px 16px 18px;position:relative;
+}
+.tab{
+  position:absolute;top:-15px;left:50%;transform:translateX(-50%);
+  background:var(--paper);border:2px solid var(--ink);border-radius:999px;
+  padding:3px 18px;font-size:13px;font-weight:700;white-space:nowrap;
+}
+.read{margin:0;text-align:center;line-height:1.85;font-weight:700}
+.read.te{font-family:'Noto Sans Telugu',sans-serif;font-size:calc(21px * var(--rf))}
+.read.en{font-family:'Noto Serif',Georgia,serif;font-size:calc(21px * var(--rf))}
+.read.story{text-align:justify;text-align-last:left;hyphens:none;padding:0 2px}
+.grid10{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 8px;justify-items:center;align-items:center}
+.grid10 span{font-weight:700;line-height:1.3}
+.grid10.te span{font-family:'Noto Sans Telugu',sans-serif;font-size:calc(30px * var(--rf))}
+.grid10.en span{font-family:'Noto Serif',Georgia,serif;font-size:calc(31px * var(--rf))}
+.note{
+  margin:16px -6px -4px;border:1.5px solid var(--ink);border-radius:8px;background:#fff;
+  padding:7px 10px;font-size:12.5px;font-weight:600;text-align:center;line-height:1.5
+}
+.say{
+  display:block;margin:14px auto 0;background:var(--board);color:#fff;border:0;border-radius:999px;
+  font:inherit;font-size:13.5px;font-weight:600;padding:8px 18px;cursor:pointer
+}
+.say:disabled{opacity:.45}
+
+/* ---------- maths ---------- */
+.numlevels{display:grid;gap:14px}
+@media(min-width:620px){.numlevels{grid-template-columns:repeat(3,1fr)}}
+.lvlbox{border:2px solid var(--ink);border-radius:12px;padding:10px;background:#fff}
+.lvlbox h3{margin:0 0 10px;font-size:13.5px;text-align:center;font-weight:700;border-bottom:1.5px solid var(--ink);padding-bottom:7px}
+.numgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.numgrid b{
+  border:1.5px solid var(--ink);border-radius:6px;text-align:center;padding:9px 2px;background:var(--paper);
+  font-family:'Noto Serif',Georgia,serif;font-size:calc(26px * var(--rf));font-weight:700
+}
+.sums{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;align-items:flex-start}
+.sum{font-family:'Noto Serif',Georgia,serif;font-size:calc(25px * var(--rf));font-weight:700;line-height:1.35;min-width:96px}
+.sum .row{display:flex;justify-content:flex-end;gap:10px}
+.sum .op{color:var(--mark)}
+.sum .rule{border-bottom:2.5px solid var(--ink);height:8px;margin-top:2px}
+.sum .blank{height:34px}
+.div{font-family:'Noto Serif',Georgia,serif;font-size:calc(26px * var(--rf));font-weight:700;
+  border-top:2.5px solid var(--ink);border-left:2.5px solid var(--ink);padding:4px 12px 4px 8px;border-radius:2px 0 0 0}
+
+/* ---------- generic card ---------- */
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+.card h2{margin:0 0 8px;font-size:15.5px;font-weight:800}
+.card h3{margin:14px 0 6px;font-size:14px;font-weight:700;color:var(--slate)}
+.card p,.card li{font-size:14px;line-height:1.7;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:left}
+th{background:var(--wash);font-weight:700}
+td.lv{font-weight:800;text-align:center;color:var(--mark)}
+
+/* ---------- assessment ---------- */
+.field{display:block;margin-bottom:10px}
+.field span{display:block;font-size:12.5px;font-weight:700;color:var(--slate);margin-bottom:4px}
+input,select{
+  width:100%;font:inherit;font-size:15px;padding:9px 10px;border:1.5px solid var(--line);
+  border-radius:9px;background:#fff;color:var(--ink)
+}
+.btn{
+  font:inherit;font-size:15px;font-weight:700;border:0;border-radius:10px;padding:12px 16px;cursor:pointer;
+  background:var(--board);color:#fff
+}
+.btn.alt{background:#fff;color:var(--board);border:1.5px solid var(--board)}
+.btn.yes{background:var(--ok);color:#fff}
+.btn.no{background:var(--mark);color:#fff}
+.btn.sm{font-size:13px;padding:8px 12px}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.row2{display:flex;gap:8px;flex-wrap:wrap}
+.row2 .btn{flex:1 1 140px}
+.step{border-left:4px solid var(--gold);padding-left:12px;margin:4px 0 14px}
+.step h3{margin:0 0 4px;font-size:15px}
+.step p{margin:0;font-size:13.5px;color:#4a5850;line-height:1.6}
+.trail{font-size:12.5px;color:#5c6a5f;margin-top:10px;line-height:1.7}
+.result{border:2px solid var(--ok);border-radius:12px;padding:14px;text-align:center;background:#f2f8f4}
+.result .big{font-family:'Baloo Tamma 2',cursive;font-size:40px;font-weight:800;color:var(--ok);line-height:1}
+.result .nm{font-size:16px;font-weight:700;margin-top:4px}
+
+footer{
+  text-align:center;padding:20px 14px 28px;color:#5c6a5f;font-size:12.5px;line-height:1.7
+}
+footer .mark{font-family:'Baloo Tamma 2',cursive;font-size:19px;font-weight:800;color:var(--board);display:block}
+
+
+.sheetwrap .sheet{margin:20px 2px 22px}
+.sheetwrap .sheet:first-child{margin-top:18px}
+.t1tbl th{font-size:11px;line-height:1.3;text-align:center}
+.t1tbl td{text-align:center}
+.t1tbl .sumrow td{background:var(--wash);font-weight:700;font-size:12px}
+.t1tbl .t1sel{width:56px}
+/* levels table */
+.tblcard{padding:12px}
+.thead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.thead h2{margin:0;flex:1 1 auto}
+.sampbadge{background:var(--gold);color:#3b2a06;font-size:12.5px;font-weight:700;border-radius:999px;padding:4px 12px}
+.datebadge{background:#e6ecea;color:var(--board);font-size:12.5px;font-weight:700;border-radius:999px;padding:4px 12px}
+.scrollx{overflow-x:auto}
+.lvtbl{min-width:560px}
+.lvtbl td{padding:5px 6px;font-size:13px}
+.lvtbl td.nm{font-weight:600;white-space:nowrap}
+.lvtbl td.pen{font-size:11.5px;color:#5c6a5f;font-variant-numeric:tabular-nums}
+.gsel{width:62px;padding:4px 6px;font-size:14px;font-weight:700;text-align:center;border-radius:7px}
+.tfoot{font-size:11.5px;color:#5c6a5f;margin:10px 0 0;line-height:1.6}
+.printhead{display:none}
+@media print{
+  .printhead{display:block;text-align:center;font-weight:800;font-size:14px;margin-bottom:10px}
+  .tblcard{border:0;padding:0;break-inside:auto}
+  .scrollx{overflow:visible}
+  .lvtbl{min-width:0;font-size:11.5px}
+  .gsel{border:0;background:transparent;-webkit-appearance:none;appearance:none;width:auto;font-size:13px}
+  .tfoot{font-size:10px}
+  @page{size:A4 portrait;margin:10mm}
+}
+@media print{
+  header,nav,.bar,.say,footer .hidep,.noprint{display:none!important}
+  body{background:#fff}
+  .sheet{break-inside:avoid;box-shadow:none;border-width:2px;margin:10px 0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brandline">
+    <div class="crest">రా</div>
+    <div>
+      <h1>AP TaRL టెస్టింగ్ టూల్స్</h1>
+      <p class="sub">Tool 2 (2025-26) · Tool 1 (2026-27) | తెలుగు · గణితం · ఇంగ్లీష్</p>
+    </div>
+  </div>
+  <nav role="tablist" id="nav">
+    <button role="tab" data-p="te" aria-selected="true">తెలుగు</button>
+    <button role="tab" data-p="ma" aria-selected="false">గణితం</button>
+    <button role="tab" data-p="en" aria-selected="false">ఇంగ్లీష్</button>
+    <button role="tab" data-p="t1" aria-selected="false">Tool 1 (2026-27)</button>
+    <button role="tab" data-p="gd" aria-selected="false">మార్గదర్శకాలు</button>
+    <button role="tab" data-p="as" aria-selected="false">మూల్యాంకనం</button>
+    <button role="tab" data-p="st" aria-selected="false">విద్యార్థులు</button>
+    <button role="tab" data-p="tb" aria-selected="false">పట్టిక</button>
+    <button role="tab" data-p="rc" aria-selected="false">రికార్డులు</button>
+  </nav>
+</header>
+
+<main>
+  <!-- ============ TELUGU ============ -->
+  <section class="panel" id="p-te">
+    <div class="bar">
+      <span class="lab">శాంపిల్</span>
+      <button class="chip on" data-ts="0">1</button><button class="chip" data-ts="1">2</button>
+      <button class="chip" data-ts="2">3</button><button class="chip" data-ts="3">4</button>
+      <span class="spacer"></span>
+      <button class="chip icon" id="fmin" title="అక్షర పరిమాణం తగ్గించు">A−</button>
+      <button class="chip icon" id="fpls" title="అక్షర పరిమాణం పెంచు">A+</button>
+    </div>
+    <div class="bar">
+      <span class="lab">విభాగం</span>
+      <button class="chip on" data-tsec="para">పేరా</button>
+      <button class="chip" data-tsec="story">కథ</button>
+      <button class="chip" data-tsec="words">పదాలు</button>
+      <button class="chip" data-tsec="letters">అక్షరాలు</button>
+    </div>
+    <div id="te-out"></div>
+  </section>
+
+  <!-- ============ MATHS ============ -->
+  <section class="panel" id="p-ma" hidden>
+    <div class="bar">
+      <span class="lab">శాంపిల్</span>
+      <button class="chip on" data-ms="0">1</button><button class="chip" data-ms="1">2</button>
+      <button class="chip" data-ms="2">3</button><button class="chip" data-ms="3">4</button>
+    </div>
+    <div class="bar">
+      <span class="lab">విభాగం</span>
+      <button class="chip on" data-msec="num">సంఖ్యల గుర్తింపు</button>
+      <button class="chip" data-msec="add">సంకలనం</button>
+      <button class="chip" data-msec="sub">వ్యవకలనం</button>
+      <button class="chip" data-msec="mul">గుణకారం</button>
+      <button class="chip" data-msec="divi">భాగాహారం</button>
+    </div>
+    <div id="ma-out"></div>
+  </section>
+
+  <!-- ============ ENGLISH ============ -->
+  <section class="panel" id="p-en" hidden>
+    <div class="bar">
+      <span class="lab">Sample</span>
+      <button class="chip on" data-es="0">1</button><button class="chip" data-es="1">2</button>
+      <button class="chip" data-es="2">3</button><button class="chip" data-es="3">4</button>
+    </div>
+    <div class="bar">
+      <span class="lab">Section</span>
+      <button class="chip on" data-esec="para">Para</button>
+      <button class="chip" data-esec="story">Story</button>
+      <button class="chip" data-esec="words">Word</button>
+      <button class="chip" data-esec="letters">Letter</button>
+    </div>
+    <div id="en-out"></div>
+  </section>
+
+  <!-- ============ TOOL 1 (2026-27) ============ -->
+  <section class="panel" id="p-t1" hidden>
+    <div class="bar noprint">
+      <button class="chip on" data-t1v="read">భాష (Reading)</button>
+      <button class="chip" data-t1v="math">గణితం (Maths)</button>
+      <button class="chip" data-t1v="eng">ఇంగ్లీష్ (English)</button>
+      <button class="chip" data-t1v="test">మూల్యాంకనం (ఆటో)</button>
+      <button class="chip" data-t1v="entry">నమోదు పట్టిక</button>
+    </div>
+    <div class="bar noprint" id="t1-sampbar">
+      <span class="lab">Sample</span>
+      <button class="chip on" data-t1s="0">1</button>
+      <button class="chip" data-t1s="1">2</button>
+      <button class="chip" data-t1s="2">3</button>
+      <button class="chip" data-t1s="3">4</button>
+      <span class="spacer"></span>
+      <button class="chip icon" id="t1-min">A−</button>
+      <button class="chip icon" id="t1-pls">A+</button>
+    </div>
+    <div class="bar noprint" id="t1-entrybar" style="display:none">
+      <span class="lab">తరగతి</span><span id="t1-clschips" style="display:contents"></span>
+      <span class="spacer"></span>
+      <button class="chip" id="t1-print">ప్రింట్</button>
+      <button class="chip" id="t1-csv">CSV</button>
+    </div>
+    <div class="bar noprint" id="t1-roundbar" style="display:none">
+      <span class="lab">రౌండ్</span>
+      <button class="chip on" data-t1r="B">Baseline</button>
+      <button class="chip" data-t1r="M">Midline</button>
+      <button class="chip" data-t1r="E">Endline</button>
+      <span class="spacer"></span>
+      <span class="lab">Sample No</span>
+      <select id="t1-esamp" style="width:auto;padding:6px 9px;font-size:13.5px"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>
+      <input type="date" id="t1-date" style="width:auto;padding:6px 9px;font-size:13.5px">
+    </div>
+    <div class="card noprint" id="t1-testbar" style="display:none">
+      <h2>విద్యార్థిని ఎంచుకోండి</h2>
+      <div class="row2">
+        <label class="field" style="flex:1 1 110px"><span>తరగతి</span><select id="t1-tcls"></select></label>
+        <label class="field" style="flex:2 1 200px"><span>విద్యార్థి</span><select id="t1-tstu"></select></label>
+      </div>
+      <div class="row2">
+        <label class="field" style="flex:1 1 130px"><span>సబ్జెక్ట్</span>
+          <select id="t1-tsub"><option value="te">తెలుగు (భాష)</option><option value="ma">గణితం</option><option value="en">ఇంగ్లీష్</option></select></label>
+        <label class="field" style="flex:1 1 120px"><span>రౌండ్</span>
+          <select id="t1-tround"><option value="B">Baseline</option><option value="M">Midline</option><option value="E">Endline</option></select></label>
+        <label class="field" style="flex:1 1 110px"><span>Sample</span>
+          <select id="t1-tsamp"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option></select></label>
+      </div>
+      <button class="btn" id="t1-tstart" style="width:100%">పరీక్ష ప్రారంభించు</button>
+    </div>
+    <div id="t1-out"></div>
+  </section>
+
+  <!-- ============ GUIDELINES ============ -->
+  <section class="panel" id="p-gd" hidden>
+    <div class="card">
+      <h2>సాధారణ సూచనలు</h2>
+      <ul>
+        <li>పిల్లవాడు సాధించిన అత్యున్నత స్థాయిని మాత్రమే నమోదు చేయాలి.</li>
+        <li>పరీక్షను వ్యక్తిగతంగా, స్నేహపూర్వక ఒత్తిడి లేని వాతావరణంలో నిర్వహించాలి.</li>
+        <li>టెస్టింగ్ టూల్‌లో సంబంధిత విభాగాన్ని మాత్రమే చూపించాలి (షీట్‌ను మడిచి).</li>
+        <li>పేరా/కథ స్థాయిలో ఒకే పదాన్ని పదేపదే తప్పుగా చదివితే దానిని ఒకే తప్పుగా లెక్కించాలి.</li>
+        <li>అత్యున్నత స్థాయిని OMR షీట్ (Tool 2) మరియు School Learning Progress Sheet లో నమోదు చేయాలి.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>తెలుగు / ఇంగ్లీష్ — స్థాయిలు</h2>
+      <table>
+        <tr><th>కోడ్</th><th>స్థాయి</th></tr>
+        <tr><td class="lv">0</td><td>Beginner Level</td></tr>
+        <tr><td class="lv">1</td><td>Letter Level</td></tr>
+        <tr><td class="lv">2</td><td>Word Level</td></tr>
+        <tr><td class="lv">3</td><td>Paragraph Level</td></tr>
+        <tr><td class="lv">4</td><td>Story Level</td></tr>
+        <tr><td class="lv">5</td><td>Comprehension Level</td></tr>
+      </table>
+      <h3>పరీక్ష విధానం</h3>
+      <p><b>1. పేరా నుండి ప్రారంభం:</b> పరీక్షను Paragraph Level (3) నుండి మొదలుపెట్టాలి.</p>
+      <p><b>2. పేరా:</b> ధారాళంగా చదివితే కథ స్థాయికి వెళ్ళాలి. 3 కంటే ఎక్కువ తప్పులు, పదం-పదం చదవడం లేదా ధారాళత లేకపోతే పద స్థాయికి దిగాలి.</p>
+      <p><b>3. పదాలు:</b> 10 పదాలు చూపి ఏవైనా 5 చదవమనాలి. పిల్లవాడు ఎంచుకోలేకపోతే మొదటి 5 పదాలు. 5లో కనీసం 4 సరిగ్గా చదివితే Word Level (2). లేకపోతే అక్షర స్థాయి.</p>
+      <p><b>4. అక్షరాలు:</b> 10 అక్షరాలు చూపి ఏవైనా 5 చదవమనాలి. 5లో కనీసం 4 సరిగ్గా చదివితే Letter Level (1), లేకపోతే Beginner Level (0).</p>
+      <p><b>5. కథ:</b> కథను ధారాళంగా చదివితే Comprehension స్థాయికి. ధారాళత లేకపోతే లేదా 3 కంటే ఎక్కువ తప్పులు ఉంటే Paragraph Level (3).</p>
+      <p><b>6. Comprehension:</b> నిర్దేశిత రెండు ప్రశ్నలు అడగాలి. <b>రెండింటికీ</b> సరైన సమాధానం ఇస్తేనే Level 5. లేకపోతే Story Level (4).</p>
+      <p><b>కీలక నియమం:</b> కథ చదవడం ఒక్కటే Level 5కి సరిపోదు — రెండు ప్రశ్నలకూ సరిగా సమాధానం చెప్పాలి.</p>
+    </div>
+
+    <div class="card">
+      <h2>గణితం — స్థాయిలు</h2>
+      <table>
+        <tr><th>కోడ్</th><th>స్థాయి</th></tr>
+        <tr><td class="lv">0</td><td>No Operations (Beginner)</td></tr>
+        <tr><td class="lv">1</td><td>Addition</td></tr>
+        <tr><td class="lv">2</td><td>Subtraction</td></tr>
+        <tr><td class="lv">3</td><td>Multiplication</td></tr>
+        <tr><td class="lv">4</td><td>Division</td></tr>
+        <tr><td class="lv">5</td><td>Word Problem</td></tr>
+      </table>
+      <h3>పరీక్ష విధానం</h3>
+      <p>సంఖ్యల గుర్తింపు ఉపాధ్యాయుని అవగాహన కొరకు — School Learning Progress Sheet లో నమోదు చేయాలి. చివరి TaRL స్థాయిని క్రియలు మరియు వర్డ్ ప్రాబ్లమ్స్ ఆధారంగా నిర్ణయిస్తారు.</p>
+      <p><b>క్రియలు:</b> సంకలనం → వ్యవకలనం → గుణకారం → భాగాహారం ఈ క్రమంలో పరీక్షించాలి. ప్రతి క్రియలో 2కి 2 ప్రశ్నలు సరిగా చేస్తేనే తర్వాతి క్రియకు వెళ్ళాలి.</p>
+      <p><b>భాగాహారం:</b> రెండు భాగాహార ప్రశ్నలూ సరిగా చేస్తేనే Division Level మరియు వర్డ్ ప్రాబ్లమ్స్‌కు అర్హత.</p>
+      <p><b>వర్డ్ ప్రాబ్లమ్:</b> నిర్దేశిత రెండు వర్డ్ ప్రాబ్లమ్స్ ఇవ్వాలి. <b>రెండూ</b> సరిగా చేస్తేనే Level 5.</p>
+      <p><b>కీలక నియమం:</b> రెండింటిలో ఒకటి మాత్రమే చేస్తే Level 5 ఇవ్వరాదు.</p>
+    </div>
+  </section>
+
+  <!-- ============ ASSESSMENT ============ -->
+  <section class="panel" id="p-as" hidden>
+    <div class="card" id="as-setup">
+      <h2>విద్యార్థి మూల్యాంకనం</h2>
+      <div class="row2">
+        <label class="field" style="flex:1 1 120px"><span>తరగతి</span>
+          <select id="f-class"></select></label>
+        <label class="field" style="flex:2 1 220px"><span>విద్యార్థి</span>
+          <select id="f-stu"></select></label>
+      </div>
+      <div class="row2">
+        <label class="field" style="flex:1 1 140px"><span>సబ్జెక్ట్</span>
+          <select id="f-sub"><option value="te">తెలుగు</option><option value="ma">గణితం</option><option value="en">ఇంగ్లీష్</option></select></label>
+        <label class="field" style="flex:1 1 120px"><span>శాంపిల్</span>
+          <select id="f-samp"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option></select></label>
+        <label class="field" style="flex:1 1 150px"><span>పరీక్ష తేదీ</span>
+          <input type="date" id="f-date"></label>
+      </div>
+      <button class="btn" id="as-start" style="width:100%">పరీక్ష ప్రారంభించు</button>
+    </div>
+    <div id="as-run"></div>
+  </section>
+
+  <!-- ============ ROSTER ============ -->
+  <section class="panel" id="p-st" hidden>
+    <div class="card">
+      <h2>పాఠశాల వివరాలు</h2>
+      <label class="field"><span>పాఠశాల పేరు (ప్రింట్ హెడర్‌లో వస్తుంది)</span>
+        <input id="sc-name" placeholder="ఉదా: ZPHS TV Palli, గూడూరు మండలం"></label>
+    </div>
+    <div class="card">
+      <h2>తరగతి ఎంచుకోండి</h2>
+      <div class="bar" id="st-clschips" style="margin:0"></div>
+    </div>
+    <div id="st-out"></div>
+    <div class="card">
+      <h2>బల్క్ దిగుమతి</h2>
+      <p style="font-size:12.5px;color:#5c6a5f;margin:0 0 8px">ఒక్కో లైన్‌లో ఒక విద్యార్థి. <b>పేరు</b> మాత్రమే, లేదా <b>PEN,పేరు,లిం</b> (కామాతో వేరు చేసి).</p>
+      <textarea id="st-bulk" rows="6" style="width:100%;font:inherit;font-size:14px;padding:9px;border:1.5px solid var(--line);border-radius:9px" placeholder="రమేష్&#10;1234567890,సునీత,G"></textarea>
+      <div class="row2" style="margin-top:8px">
+        <button class="btn" id="st-add">ఈ తరగతికి చేర్చు</button>
+        <button class="btn alt" id="st-replace">జాబితాను మార్చు (రీప్లేస్)</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>బ్యాకప్ / పునరుద్ధరణ</h2>
+      <div class="row2">
+        <button class="btn alt sm" id="st-export">జాబితా ఎగుమతి (JSON)</button>
+        <button class="btn alt sm" id="st-import">JSON దిగుమతి</button>
+        <button class="btn alt sm" id="st-blank">ఖాళీ చేయి (కొత్త స్కూల్)</button>
+        <button class="btn alt sm" id="st-default">డిఫాల్ట్ జాబితా</button>
+      </div>
+      <input type="file" id="st-file" accept=".json,application/json" hidden>
+      <p style="font-size:12px;color:#5c6a5f;margin:10px 0 0">గమనిక: విద్యార్థిని తొలగిస్తే అతని నమోదైన స్థాయిలు పట్టికలో కనిపించవు.</p>
+    </div>
+  </section>
+
+  <!-- ============ LEVELS TABLE ============ -->
+  <section class="panel" id="p-tb" hidden>
+    <div class="bar noprint">
+      <span class="lab">తరగతి</span>
+      <span id="tb-clschips" style="display:contents"></span>
+      <span class="spacer"></span>
+      <button class="chip" id="tb-print">ప్రింట్</button>
+      <button class="chip" id="tb-csv">CSV</button>
+    </div>
+    <div class="bar noprint" id="tb-sampbar">
+      <span class="lab">ఈ తరగతికి శాంపిల్</span>
+      <button class="chip" data-csamp="1">1</button><button class="chip" data-csamp="2">2</button>
+      <button class="chip" data-csamp="3">3</button><button class="chip" data-csamp="4">4</button>
+      <span class="spacer"></span>
+      <span class="lab">పరీక్ష తేదీ</span>
+      <input type="date" id="tb-date" style="width:auto;padding:6px 9px;font-size:13.5px">
+    </div>
+    <div id="tb-out"></div>
+  </section>
+
+  <!-- ============ RECORDS ============ -->
+  <section class="panel" id="p-rc" hidden>
+    <div class="bar noprint">
+      <button class="chip" id="rc-print">ప్రింట్</button>
+      <button class="chip" id="rc-csv">CSV డౌన్‌లోడ్</button>
+      <span class="spacer"></span>
+      <button class="chip" id="rc-clear">అన్నీ తొలగించు</button>
+    </div>
+    <div id="rc-out"></div>
+  </section>
+</main>
+
+<footer>
+  <span class="mark">రాయ్ ఎడ్యుకేషన్</span>
+  Raay Education · AP TaRL Testing Tools (2025-26 &amp; 2026-27)
+  <div class="hidep" style="margin-top:6px;opacity:.75">SCERT / Samagra Shiksha / LEAP ద్వారా విడుదలైన టూల్స్‌లోని సమాచారం యథాతథంగా ఉంచబడింది.</div>
+</footer>
+
+<script>
+/* ================= DATA — AP TaRL 2025-26 (as printed, unchanged) ================= */
+const TE=[
+{story:"ఒక రోజు రామాపురం అనే ఊరిలో దొంగతనం జరిగింది. ఊరి పెద్ద దొంగతనం గురించి తెలుసుకొని దొంగను పట్టుకోవడానికి ఒక ఉపాయం ఆలోచించాడు. ఊరిలో ఉన్న ప్రతి ఒక్కరికి ఒక కర్రముక్కను ఇచ్చి, ఎవరి కర్రముక్క పెరిగితే వారే దొంగ అని చెప్పాడు. అది విని దొంగ తన కర్ర ముక్కను తగ్గించి చిన్నదిగా చేశాడు. తరువాత రోజు ఊరి పెద్ద అందరి కర్రముక్కలను చూశాడు. అందరిలో ఒకరి కర్రముక్క చిన్నదిగా ఉండటం గమనించి అతనే దొంగ అని తెలుసుకున్నాడు.",
+ paras:["నదిలో చేపలు ఉంటాయి.\nజాలరులు చేపలను వలలతో పడతారు.\nతరువాత చేపలను బజారుకి తీసుకువెళతారు.\nచేపలను అమ్మి డబ్బులను సంపాదిస్తారు.",
+        "ఇంటి వెనుక ఒక తోట ఉంది.\nతోటలో ఒక ఊయల ఉంది.\nరోజూ అందరం తోటలోకి వెళతాం.\nఆనందంగా ఊయల ఊగుతాం."],
+ letters:["ఆ","ఓ","చ","ఖ","ఊ","భ","హ","డ","ద","మ"],
+ words:["ఆట","ఊట","ఈత","ఒక","ఉలి","జడ","బావి","వల","కోతి","కల"]},
+{story:"అశోకుడు అనే ఒక రాజు ఉండేవాడు. అతను రోజూ వేటకు వెళ్ళేవాడు. ఒక రోజు రాజుకు దారిలో ఒక ముసలివాడు మామిడి మొక్కను నాటడం చూశాడు. రాజు అతని వద్దకు వెళ్ళి, \u201Cఈ మొక్క ఎప్పుడు పెరిగి, ఫలాలు ఇస్తుంది?, అంతవరకు నీవు జీవించి వుంటావా!\u201D అని అడిగాడు. దానికి ముసలివాడు, \u201Cనా కోసం కాదు, నా పిల్లల కోసం, వారు ఆ ఫలాలు తిని నన్ను తలుచుకుంటారు\u201D అని చెప్పాడు. అప్పుడు రాజు అతని తెలివికి సంతోషించి బంగారు నాణేలను బహుమతిగా ఇచ్చాడు.",
+ paras:["రాము నాగలి భుజాన వేశాడు.\nపంటలు బాగా పండించాడు.\nధనం చాలా సంపాదించాడు.\nహాయిగా జీవనం సాగించాడు.",
+        "బడికి పోదాం చకచక\nచదువులు చదువుదాం టకటక\nఆట పాటలతో సందడి చేసి\nహాయిగా ఇంటికి వెళదాం."],
+ letters:["ఉ","ఈ","ప","వ","జ","జౌ","ట","ఘ","ర","త"],
+ words:["ఆశ","ఏడు","ఊక","తల","పాప","రవి","యమ","బడి","గది","నీరు"]},
+{story:"ఒక రోజు రాజు బజారుకు వెళ్ళాడు. అతను బజారు నుండి వస్తుండగా అతనికి దారిలో ఒక ఉడత పిల్ల కనిపించింది. దానికి గాయం అయింది. రాజు దానిని తీసుకొని ఇంటికి వచ్చి, వాళ్ళ నాన్నకి చూపించాడు. అతను ఆ ఉడత పిల్ల గాయానికి మందు రాసి కట్టు కట్టాడు. ఉడతకు గాయం నయం అయిపోయింది. అది రాజుతో చాలా సేపు ఆడుకుంది. ఆ ఉడత పిల్ల రోజూ రాజుతోనే ఉండేది. ఉడత పిల్ల, రాజు మంచి మిత్రులుగా మారారు.",
+ paras:["నేను రోజూ బడికి వెళ్తాను.\nమా బడి చాలా పెద్దది.\nనేను బడిలో చదువుతాను, రాస్తాను.\nమేము బడిలో ఆడుకుంటాం.",
+        "ఇంటిలో అమ్మ పాయసం చేసింది.\nఅందులో బాదం, కిస్మిస్ ఉన్నాయి.\nఇంటిలో అందరం పాయసం తిన్నాం.\nపాయసం చాలా రుచిగా ఉంది."],
+ letters:["వ","ఇ","గ","న","య","ధ","ఓ","ఎ","ఋ","స"],
+ words:["అర","ఊత","దయ","ఇల","ఏరు","జౌను","పగ","చీమ","కూత","పాట"]},
+{story:"ఒక ఊరిలో రాజయ్య అనే షావుకారు ఉండేవాడు. అతని వద్ద చాలా ధనం, బంగారం ఉండేది. ఒక రోజు బంగారం కొరకు దేవతను పూజించి తను ఏది తాకితే అది బంగారంలా మారిపోయే వరం పొందాడు. దానితో రాజయ్య సంతోషించి ఇంటిలో గల వస్తువులను తాకాడు, అవి బంగారంగా మారిపోయాయి. ఒక రోజు తన కూతురిని కూడా తాకాడు, ఆమె కూడా బంగారంగా మారిపోయింది. దానితో రాజయ్య బాధతో ఏడవ సాగాడు. ఆశ ఉండాలి కానీ, దురాశ ఉండకూడదని తెలుసుకున్నాడు.",
+ paras:["రామాపురం అనే ఒక ఊరు ఉంది.\nఆ ఊరిలో ఒక చెరువు ఉంది.\nచెరువులో ఒక మొసలి ఉండేది.\nఅందరూ మొసలిని చూసి భయపడేవారు.",
+        "తాత మా ఇంటికి వచ్చారు.\nఅమ్మ వేడి వేడి పకోడీలు చేసింది.\nపకోడీలు కోసం చట్నీ కూడా చేసింది.\nఅందరం టీతో పాటు పకోడీలు తిన్నాము."],
+ letters:["అ","క","ఫ","బ","ట","ల","ఛ","ఐ","త","ఏ"],
+ words:["అల","ఊహ","ఈక","ఒర","గద","చలి","పాము","వాన","గాలి","ఓడ"]}
+];
+
+const EN=[
+{story:"Rohit lived in a small village. He lived with his mother. His brother Ajay lived in a city. Rohit was happy when Ajay came home. They played games and had fun. Their mother made them lots of food. Rohit was sad when Ajay left. He told Ajay to come back soon. His mother was sad too.",
+ paras:["Rani is a tall girl.\nShe loves to drink milk.\nRani likes to run fast.\nShe runs to school every day.",
+        "Aamir has a big dog.\nThe dog is called Raja.\nThey play every day.\nThey like to play outside."],
+ letters:["c","j","X","n","p","u","s","o","k","h"],
+ words:["run","book","cat","tall","fan","jump","cup","rope","bag","nice"]},
+{story:"On Monday, Alia was very happy. She went to school for the first time. She had a new school bag for her books. She put a red flower on the bag. Alia went to school with her sister. Their mother also went with them. The school was not far from their house. Alia made many new friends in school.",
+ paras:["Ramu has a new ball.\nHis father gave him the ball.\nRamu plays with it every day.\nHe loves his new ball.",
+        "Rima likes to read.\nHer school has many books.\nRima also has books at home.\nShe likes to read every day."],
+ letters:["r","f","m","b","y","z","e","g","q","v"],
+ words:["ball","hat","nose","day","sing","cup","wish","red","face","hot"]},
+{story:"One day, Samir was in school. He saw some old books on a table. Samir picked up a big book. The book had many stories. Samir took it home to show his mother. He read the book with his mother. His mother was very happy. Samir was happy too. Then Samir took the book back to school.",
+ paras:["Sana lives in a village.\nHer home is near a river.\nGita likes to swim\nHer sister swims with her.",
+        "Anil loves to eat sweets.\nHe buys sweets from the shop.\nAnil gives some to his friends.\nThey also like eating sweets."],
+ letters:["d","i","k","t","x","c","o","s","f","v"],
+ words:["like","bus","door","dog","park","run","back","sit","fast","cat"]},
+{story:"Nina was a little girl. She lived near a big garden. One day, she went to the garden. She saw a man selling flowers. Nina asked him for a flower. The man gave her two big red flowers. Then Nina ran back to her home. She gave the flowers to her mother. They both felt very happy.",
+ paras:["Amit lives with his mother.\nHe wakes up very early.\nHe helps his mother cook food.\nThen he goes to school.",
+        "Abdul loves to play cricket.\nHe goes to the big park.\nHe meets his friends there.\nThey play cricket in the park."],
+ letters:["c","h","n","p","u","j","o","z","r","t"],
+ words:["hand","eat","moon","day","fish","dog","come","leg","jump","bad"]}
+];
+
+const MA=[
+{l1:[2,7,5,3,9,8], l2:[13,98,26,42,37,74], l3:[209,108,811,473,175,756],
+ add:[[14,57],[35,38],[13,49]], sub:[[36,19],[62,37],[92,68]],
+ mul:[[34,2],[88,6],[91,8]], div:[[4,54],[8,98],[6,89]]},
+{l1:[3,7,1,4,8,2], l2:[31,95,78,49,36,17], l3:[109,656,572,220,352,806],
+ add:[[55,27],[36,29],[68,13]], sub:[[37,18],[66,28],[73,57]],
+ mul:[[21,3],[65,5],[37,8]], div:[[8,99],[4,57],[6,74]]},
+{l1:[5,7,8,4,2,9], l2:[96,15,24,61,39,89], l3:[346,704,937,109,573,890],
+ add:[[43,28],[18,57],[69,23]], sub:[[33,16],[58,29],[97,69]],
+ mul:[[33,2],[86,5],[67,8]], div:[[4,54],[7,86],[6,75]]},
+{l1:[9,4,7,3,6,1], l2:[94,11,26,87,76,35], l3:[872,143,205,606,687,494],
+ add:[[47,19],[36,56],[15,67]], sub:[[84,18],[67,38],[91,72]],
+ mul:[[22,3],[94,6],[75,8]], div:[[6,76],[7,89],[4,58]]}
+];
+
+const DEFAULT_STU={"III":[],"IV":[],"V":[]}; /* రాయ్ విద్యార్థి యాప్: పిల్లల పేర్లు/IDలు పబ్లిక్ ఫైల్‌లో ఉంచము – ప్రతి పాఠశాల తమ జాబితా ఇక్కడే చేర్చుకోవాలి (ఈ ఫోన్‌లోనే సేవ్) */
+const RKEY='tarl2526_roster', SCKEY='tarl2526_school';
+const CLASS_ORDER=['I','II','III','IV','V','VI','VII','VIII','IX','X'];
+let STU=(function(){try{const r=JSON.parse(localStorage.getItem(RKEY));
+  if(r&&Object.keys(r).length)return r;}catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULT_STU));})();
+function saveRoster(){try{localStorage.setItem(RKEY,JSON.stringify(STU))}catch(e){}}
+function classes(){return CLASS_ORDER.filter(c=>Array.isArray(STU[c])&&STU[c].length);}
+function schoolName(){return localStorage.getItem(SCKEY)||'';}
+
+/* ========= TOOL 1 — AP TaRL 2026-27 (as printed, unchanged) ========= */
+const T1R=[
+{story:"సీత రామాపురం అనే ఊరిలో నివసించేది. ఊరిలోని అందరి వద్ద ఆవులు, మేకలు, గేదెలు మొదలగు జంతువులు ఉండేవి. గత కొంతకాలంగా ఊరిలోని జంతువులు అనారోగ్యానికి గురికావడం జరుగుతుంది. దీని వెనుక గల కారణాలు ఊరిలోని జనాలకి తెలియలేదు. ఊరిలో ఒక చెరువు ఉండేది. రోజూ జంతువులు ఆ చెరువులోని నీటిని తాగేవి. ఆ చెరువు చుట్టూ చెత్తాచెదారం పేరుకుపోయింది. మురికి నీటి వలన జంతువులు అనారోగ్యానికి గురి కావడం జరుగుతుందని సీత వివరించింది. అందరూ కలిసి చెరువును శుభ్రం చేశారు.",
+ q:["సీత ఏ ఊరిలో నివసించేది?","చెత్త ఎక్కడ పేరుకుపోయింది?"],
+ para:"రాము వద్ద ఒక మేక ఉండేది.\nమేక చాలా చిన్నది.\nదాని పేరు రాకెట్.\nరాకెట్ వేగంగా పరుగు పెడుతుంది.",
+ words:["ఆట","బాల","వాన","ఒడి","నేల","మన","ఈగ","కూర","ఏరు","పాప"],
+ letters:["అ","ఫ","క","బ","ట","ఛ","ఐ","ల","త","ఏ"]},
+{story:"రవి ఊరి దగ్గర ఒక అందమైన నది పారుతుంది. ఆ ఊరిలో జనాలు నది పరిసరాలలో వారి పశువులను మేపుతారు. ఒక రోజు ఊరికి చెందిన కొందరు నది పరిసరాలను చూడటానికి రావడం జరిగింది. అక్కడ వారు తమ చెత్తను విసిరి వెళ్ళిపోయారు. ఇది చూసిన రవికి బాధ కలిగింది. అతనికి ఒక ఆలోచన వచ్చింది. అతను నది పరిసరాలలో అనేక చెత్తబుట్టలను ఉంచాడు. ఇప్పుడు జనాలు నదిని చూడటానికి వస్తారు, కానీ వారు చెత్తను వేయరు.",
+ q:["రవి వాళ్ళ ఊరి దగ్గర ఏం ఉంది?","రవి ఏం తయారుచేశాడు?"],
+ para:"ఆకాశంలో మేఘాలు ఉన్నాయి.\nవాటి వలన బలమైన గాలి వీచింది.\nమెరుపులు కూడా మెరిశాయి.\nజోరున వాన కూడా కురిసింది.",
+ words:["పాము","బాల","ఆరు","పది","మేడ","లయ","తోక","పని","పూజ","వాన"],
+ letters:["ఆ","ఓ","చ","ఖ","ఊ","భ","త","హ","ద","మ"]},
+{story:"మోహన్ వాళ్ల ఊరు పోవడానికి మట్టిరోడ్డు ఉండేది. వానాకాలంలో రోడ్ నీటితో నిండిపోతుంది. ఆ ఊరిలోని జనాలు రావడానికి పోవడానికి ఇబ్బందిపడేవారు. మోహన్ చాలాసార్లు రోడ్ పైన ఇసుక పోశాడు. కానీ ఇసుక వేసిన ప్రతిసారీ నీటిలో కొట్టుకుపోతుంది. ఈసారి రోడ్ బాగుచేయడానికి ఇసుక, కలప, రాళ్లను మరియు కంకరను ఉపయోగించారు. నీరు పోవడానికి కాలువను కూడా తయారు చేశారు. ఇలా చేయడం వలన వానాకాలంలో రోడ్ పైన నీరు చేరడం లేదు.",
+ q:["మోహన్ వాళ్ల ఊరు పోవడానికి రోడ్ ఎలా ఉంది?","మోహన్ రోడ్ పై ఏం పోశాడు?"],
+ para:"అది వేసవి కాలం.\nవేడికి అందరూ అలిసిపోయారు.\nఅమ్మ అందరికీ మామిడిరసం చేసింది.\nఅందరూ మామిడిరసం తాగారు.",
+ words:["పాట","జామ","అది","చలి","గల","ఏరు","ఒక","ఊరు","బడి","వేప"],
+ letters:["వ","గ","ఇ","న","య","ధ","ఎ","ఓ","ఝ","స"]},
+{story:"అది వేసవి కాలం దేవి తన గదిలో చదువుకుంటుంది. ఆమె కిటికీ దగ్గర అనారోగ్యంతో ఉన్న పిచ్చుకను చూసింది. పిచ్చుక నీటి కోసం కుండ వైపు చూడటం చూసింది. పిచ్చుకకి దాహంగా ఉందని దేవి అనుకుంది. ఆమె పిచ్చుక కోసం ఒక గిన్నెలో నీరు పోసి ఉంచింది. ఆ రోజు నుండి రోజూ దేవి కిటికీ దగ్గర ఒక గిన్నెలో నీటిని ఉంచడం మొదలుపెట్టింది. ఇప్పుడు రోజూ కిటికీ దగ్గరకి చాలా పిచ్చుకలు రావడం జరుగుతుంది.",
+ q:["దేవి తన గదిలో ఏం చేస్తుంది?","దేవి పిచ్చుకకు ఏం పోసింది?"],
+ para:"చెట్టు కింద పండు పడింది.\nమీనా ఆ పండును తీసింది.\nఆ పండును రవికి ఇచ్చింది.\nఇద్దరూ కలిసి ఆ పండును తిన్నారు.",
+ words:["మాట","అలా","ఇది","బడి","మేక","తడ","వీణ","ఎలా","పొగ","జామ"],
+ letters:["ఉ","ఈ","ప","వ","జ","ఘ","ఔ","ట","ర","డ"]}
+];
+const T1M=[
+{add:[[45,28],[14,78]], sub:[[44,17],[98,79]], mul:[[42,2],[76,6]], div:[[3,46],[8,99]],
+ wp:["ఒక పాఠశాలలో తొమ్మిది మంది పిల్లలకు 72 పెన్సిళ్లను సమానంగా పంచారు. ఒక్కొక్క పిల్లవాడికి ఎన్ని పెన్సిళ్లు లభిస్తాయో చెప్పండి?",
+     "కిషన్ తన ఆరుగురు స్నేహితులకు 84 రూపాయలు ఇచ్చాడు. ఒకవేళ ప్రతి స్నేహితునికి సమానంగా పంచినట్లయితే ఒక్కొక్కరికి ఎన్ని రూపాయలు వచ్చాయో చెప్పండి?"]},
+{add:[[46,29],[16,68]], sub:[[35,17],[86,69]], mul:[[32,3],[57,9]], div:[[3,49],[6,83]],
+ wp:["ఒక దుకాణదారుడు ఐదు పెట్టెల్లో 75 సబ్బులను సమానంగా సర్దాడు. ఒక్కో పెట్టెలో ఎన్ని సబ్బులు ఉంటాయో చెప్పండి?",
+     "రీమా తన ఏడుగురు స్నేహితులకు 91 చాక్లెట్లను పంచింది. ఒకవేళ ప్రతి స్నేహితుడికి సమాన సంఖ్యలో చాక్లెట్లు పంచినట్లయితే, ఒక్కొక్క స్నేహితుడికి ఎన్ని చాక్లెట్లు వచ్చాయో చెప్పండి?"]},
+{add:[[36,17],[13,69]], sub:[[47,18],[83,57]], mul:[[41,2],[75,7]], div:[[2,35],[7,87]],
+ wp:["ఒక గ్రంథాలయంలో ఐదు అల్మారాల్లో 65 పుస్తకాలను సమానంగా సర్దారు. ఒక్కో అల్మారాలో ఎన్ని పుస్తకాలు ఉంటాయో చెప్పండి?",
+     "రాహుల్ 78 గోళీలను తన ఆరుగురు స్నేహితులకు సమానంగా పంచాడు. ఒకవేళ ప్రతి స్నేహితునికి సమాన సంఖ్యలో గోళీలు పంచినట్లయితే, ఒక్కొక్క స్నేహితునికి ఎన్ని గోళీలు వచ్చాయో చెప్పండి?"]},
+{add:[[42,19],[24,67]], sub:[[32,18],[72,57]], mul:[[23,3],[68,8]], div:[[2,37],[7,85]],
+ wp:["ఒక పాఠశాల బస్సులో నాలుగు వరుసల్లో 64 మంది పిల్లలు సమానంగా కూర్చున్నారు. ఒక్కో వరుసలో ఎంతమంది పిల్లలు కూర్చున్నారో చెప్పండి?",
+     "ఒక ఉపాధ్యాయుడు 96 చిత్రాల కార్డులను 8 మంది విద్యార్థులకు పంచాడు. ఒకవేళ ప్రతి విద్యార్థికి సమాన సంఖ్యలో కార్డులు పంచినట్లయితే, ఒక్కొక్క విద్యార్థికి ఎన్ని కార్డులు వచ్చాయో చెప్పండి?"]}
+];
+/* English Reading Testing Tool 2026-27 (as printed) */
+const T1E=[
+{story:"Rohit lived in a small village. He lived with his mother. His brother Ajay lived in a city. Rohit was happy when Ajay came home. They played games and had fun. Their mother made them lots of food. Rohit was sad when Ajay left. He told Ajay to come back soon. His mother was sad too.",
+ q:["Who lived in a city?","Where did Rohit live?"],
+ para:"Rani is a tall girl.\nShe loves to drink milk.\nRani likes to run fast.\nShe runs to school every day.",
+ words:["bag","nice","jump","cup","rope","tall","fan","run","book","cat"],
+ letters:["k","h","u","s","o","n","p","c","j","x"]},
+{story:"On Monday, Alia was very happy. She went to school for the first time. She had a new school bag for her books. She put a red flower on the bag. Alia went to school with her sister. Their mother also went with them. The school was not far from their house. Alia made many new friends in school.",
+ q:["When did Alia go to school for the first time?","What did Alia put on her school bag?"],
+ para:"Ramu has a new ball.\nHis father gave him the ball.\nRamu plays with it every day.\nHe loves his new ball.",
+ words:["face","hot","cup","wish","red","day","sing","ball","hat","nose"],
+ letters:["q","v","z","e","g","b","y","r","f","m"]},
+{story:"One day, Samir was in school. He saw some old books on a table. Samir picked up a big book. The book had many stories. Samir took it home to show his mother. He read the book with his mother. His mother was very happy. Samir was happy too. Then Samir took the book back to school.",
+ q:["Where did Samir see the old books?","What did Samir take home?"],
+ para:"Sana lives in a village.\nHer home is near a river.\nGita likes to swim.\nHer sister swims with her.",
+ words:["fast","cat","run","back","sit","dog","park","like","bus","door"],
+ letters:["f","v","c","o","s","t","x","d","i","k"]},
+{story:"Nina was a little girl. She lived near a big garden. One day, she went to the garden. She saw a man selling flowers. Nina asked him for a flower. The man gave her two big red flowers. Then Nina ran back to her home. She gave the flowers to her mother. They both felt very happy.",
+ q:["Where did Nina go one day?","What did the man give Nina?"],
+ para:"Amit lives with his mother.\nHe wakes up very early.\nHe helps his mother cook food.\nThen he goes to school.",
+ words:["jump","bad","dog","come","leg","day","fish","hand","eat","moon"],
+ letters:["r","t","j","o","z","p","u","c","h","n"]}
+];
+const T1_LANG=['','Beginner','Letter','Word','Para','Story'];
+const T1_OPS=['','No Operations','Addition','Subtraction','Multiplication','Division'];
+
+const LVL_LANG=["Beginner Level","Letter Level","Word Level","Paragraph Level","Story Level","Comprehension Level"];
+const LVL_MATH=["No Operations","Addition","Subtraction","Multiplication","Division","Word Problem"];
+
+/* ================= helpers ================= */
+const $=s=>document.querySelector(s);
+const esc=t=>String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const nl=t=>esc(t).replace(/\n/g,"<br>");
+let rf=1;
+function setRf(v){rf=Math.min(1.8,Math.max(.7,v));document.documentElement.style.setProperty('--rf',rf.toFixed(2));}
+$('#fpls').onclick=()=>setRf(rf+.1);
+$('#fmin').onclick=()=>setRf(rf-.1);
+
+function speak(text,lang,btn){
+  if(!('speechSynthesis' in window)){return;}
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text.replace(/\n/g,' '));
+  u.lang=lang; u.rate=.85;
+  const vs=speechSynthesis.getVoices().filter(v=>v.lang&&v.lang.toLowerCase().startsWith(lang.slice(0,2)));
+  if(vs.length)u.voice=vs[0];
+  speechSynthesis.speak(u);
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.say'); if(!b)return;
+  speak(b.dataset.text,b.dataset.lang,b);
+});
+
+/* ================= tabs ================= */
+$('#nav').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-p]'); if(!b)return;
+  document.querySelectorAll('#nav button').forEach(x=>x.setAttribute('aria-selected',x===b));
+  document.querySelectorAll('.panel').forEach(p=>p.hidden=(p.id!=='p-'+b.dataset.p));
+  if(b.dataset.p==='rc')renderRecords();
+  if(b.dataset.p==='tb'){buildClsChips();renderTable();}
+  if(b.dataset.p==='st')renderRoster();
+  if(b.dataset.p==='t1')renderT1();
+  window.scrollTo({top:0});
+});
+function chipGroup(attr,cb){
+  document.querySelectorAll('[data-'+attr+']').forEach(b=>{
+    b.onclick=()=>{
+      document.querySelectorAll('[data-'+attr+']').forEach(x=>x.classList.toggle('on',x===b));
+      cb(b.dataset[attr]);
+    };
+  });
+}
+
+/* ================= renderers ================= */
+function sheetHead(title,sample,sub){
+  return '<div class="bar" style="justify-content:center;margin:0"><span class="lab">AP TaRL 2025-26 · '+sub+' · SAMPLE ('+(sample+1)+')</span></div>';
+}
+function readCard(tab,text,lang,cls){
+  const L=lang==='te'?'te-IN':'en-US';
+  return '<div class="sheet"><span class="tab">'+tab+'</span>'+
+    '<p class="read '+lang+' '+(cls||'')+'">'+nl(text)+'</p>'+
+    '<button class="say noprint" data-lang="'+L+'" data-text="'+esc(text)+'">🔊 చదివి వినిపించు</button></div>';
+}
+function gridCard(tab,items,lang,note){
+  return '<div class="sheet"><span class="tab">'+tab+'</span>'+
+    '<div class="grid10 '+lang+'">'+items.map(x=>'<span>'+esc(x)+'</span>').join('')+'</div>'+
+    '<div class="note">'+note+'</div></div>';
+}
+
+let tS=0,tSec='para',eS=0,eSec='para',mS=0,mSec='num';
+
+function renderTe(){
+  const d=TE[tS];let h=sheetHead('','',0)&&'';
+  h='<div style="text-align:center;font-size:12.5px;color:#5c6a5f;font-weight:600">AP TaRL 2025-26 · భాషలో పరీక్ష · SAMPLE ('+(tS+1)+')</div>';
+  if(tSec==='para') h+=d.paras.map(p=>readCard('పేరా',p,'te')).join('');
+  if(tSec==='story') h+=readCard('కథ',d.story,'te','story');
+  if(tSec==='words') h+=gridCard('పదాలు',d.words,'te','ఏవైనా 5 పదాలను గుర్తించమని అడగండి. వాటిలో కనీసం 4 పదాలను సరిగ్గా చదవాలి.');
+  if(tSec==='letters') h+=gridCard('అక్షరాలు',d.letters,'te','ఏవైనా 5 అక్షరాలను గుర్తించమని అడగండి. వాటిలో కనీసం 4 అక్షరాలు సరిగ్గా చదవాలి.');
+  $('#te-out').innerHTML=h;
+}
+function renderEn(){
+  const d=EN[eS];
+  let h='<div style="text-align:center;font-size:12.5px;color:#5c6a5f;font-weight:600">AP TaRL 2025-26 · READING TEST SAMPLE ('+(eS+1)+')</div>';
+  if(eSec==='para') h+=d.paras.map(p=>readCard('Para',p,'en')).join('');
+  if(eSec==='story') h+=readCard('Story',d.story,'en','story');
+  if(eSec==='words') h+=gridCard('Word',d.words,'en','Ask the child to read any 5 words. at least 4 must be correct.');
+  if(eSec==='letters') h+=gridCard('Letter',d.letters,'en','Ask the child to read any 5 letters. at least 4 must be correct.');
+  $('#en-out').innerHTML=h;
+}
+function sumBox(a,b,op){
+  return '<div class="sum"><div class="row"><span>&nbsp;</span><span>'+a+'</span></div>'+
+    '<div class="row"><span class="op">'+op+'</span><span>'+b+'</span></div>'+
+    '<div class="rule"></div><div class="blank"></div><div class="rule"></div></div>';
+}
+function divBox(d,n){
+  return '<div class="sum"><span class="div">'+d+'&nbsp;)&nbsp;'+n+'&nbsp;(</span><div class="rule" style="margin-top:14px"></div><div class="blank"></div></div>';
+}
+function renderMa(){
+  const d=MA[mS];
+  let h='<div style="text-align:center;font-size:12.5px;color:#5c6a5f;font-weight:600">AP TaRL 2025-26 · Maths Testing Tools · Sample - '+(mS+1)+'</div>';
+  if(mSec==='num'){
+    h+='<div class="sheet"><span class="tab">1వ భాగం — సంఖ్యల గుర్తింపు</span><div class="numlevels">'+
+      [['స్థాయి – 1<br>1 – 9 అంకెల గుర్తింపు',d.l1],['స్థాయి – 2<br>10 – 99 సంఖ్యల గుర్తింపు',d.l2],['స్థాయి – 3<br>100 – 999 సంఖ్యల గుర్తింపు',d.l3]]
+      .map(([t,arr])=>'<div class="lvlbox"><h3>'+t+'</h3><div class="numgrid">'+arr.map(n=>'<b>'+n+'</b>').join('')+'</div></div>').join('')+
+      '</div><div class="note">1వ స్థాయి నుంచి మొదలు పెట్టి, ప్రతి స్థాయి కొరకు పిల్లలను అన్ని సంఖ్యలను గుర్తించమనండి. కనీసం 4 సంఖ్యలను అయినా సరిగ్గా గుర్తించాలి.</div></div>';
+  } else {
+    const map={add:['సంకలనం',d.add,'+'],sub:['వ్యవకలనం',d.sub,'−'],mul:['గుణకారం',d.mul,'×']};
+    if(mSec==='divi'){
+      h+='<div class="sheet"><span class="tab">భాగాహారం</span><div class="sums">'+d.div.map(p=>divBox(p[0],p[1])).join('')+'</div>'+
+        '<div class="note">పిల్లల యొక్క మూల్యాంకనం కూడికల స్థాయి నుండి మొదలు పెట్టాలి. ఈ స్థాయిలో 3 ప్రశ్నలలో 2 ప్రశ్నలు సాధించగలిగితేనే తీసివేత స్థాయి వరకు పెట్టాలి. అలా ప్రతి స్థాయి చేయగలిగినప్పుడు తరువాతి స్థాయి ఇవ్వబడును.</div></div>';
+    } else {
+      const [t,arr,op]=map[mSec];
+      h+='<div class="sheet"><span class="tab">'+t+'</span><div class="sums">'+arr.map(p=>sumBox(p[0],p[1],op)).join('')+'</div>'+
+        '<div class="note">పిల్లల యొక్క మూల్యాంకనం కూడికల స్థాయి నుండి మొదలు పెట్టాలి. ఈ స్థాయిలో 3 ప్రశ్నలలో 2 ప్రశ్నలు సాధించగలిగితేనే తీసివేత స్థాయి వరకు పెట్టాలి. అలా ప్రతి స్థాయి చేయగలిగినప్పుడు తరువాతి స్థాయి ఇవ్వబడును.</div></div>';
+    }
+  }
+  $('#ma-out').innerHTML=h;
+}
+
+chipGroup('ts',v=>{tS=+v;renderTe();});
+chipGroup('tsec',v=>{tSec=v;renderTe();});
+chipGroup('es',v=>{eS=+v;renderEn();});
+chipGroup('esec',v=>{eSec=v;renderEn();});
+chipGroup('ms',v=>{mS=+v;renderMa();});
+chipGroup('msec',v=>{mSec=v;renderMa();});
+renderTe();renderEn();renderMa();
+
+/* ================= assessment flow ================= */
+const FLOW_LANG={
+  para:{h:'1. పేరా స్థాయి (Level 3)',p:'పేరాను చూపి చదవమనండి. ధారాళంగా చదివాడా? (3 కంటే ఎక్కువ తప్పులు / పదం-పదం చదివితే \u201Cలేదు\u201D)',yes:'story',no:'words',ylab:'ధారాళంగా చదివాడు',nlab:'ధారాళత లేదు'},
+  words:{h:'2. పద స్థాయి (Level 2)',p:'10 పదాలు చూపి ఏవైనా 5 చదవమనండి. 5లో కనీసం 4 సరిగ్గా చదివాడా?',yes:{lvl:2},no:'letters',ylab:'4/5 సరిగ్గా చదివాడు',nlab:'4 కంటే తక్కువ'},
+  letters:{h:'3. అక్షర స్థాయి (Level 1)',p:'10 అక్షరాలు చూపి ఏవైనా 5 చదవమనండి. 5లో కనీసం 4 సరిగ్గా చదివాడా?',yes:{lvl:1},no:{lvl:0},ylab:'4/5 సరిగ్గా చదివాడు',nlab:'4 కంటే తక్కువ'},
+  story:{h:'4. కథ స్థాయి (Level 4)',p:'కథను చూపి చదవమనండి. ధారాళంగా చదివాడా?',yes:'comp',no:{lvl:3},ylab:'ధారాళంగా చదివాడు',nlab:'ధారాళత లేదు'},
+  comp:{h:'5. Comprehension (Level 5)',p:'నిర్దేశిత రెండు ప్రశ్నలు అడగండి. రెండింటికీ సరైన సమాధానం ఇచ్చాడా?',yes:{lvl:5},no:{lvl:4},ylab:'రెండింటికీ సరైనవి',nlab:'రెండూ సరైనవి కావు'}
+};
+const FLOW_MATH={
+  add:{h:'1. సంకలనం (Level 1)',p:'సంకలనం ప్రశ్నలు ఇవ్వండి. 2కి 2 సరిగ్గా చేశాడా?',yes:'sub',no:{lvl:0},ylab:'2/2 సరిగ్గా',nlab:'సాధించలేదు'},
+  sub:{h:'2. వ్యవకలనం (Level 2)',p:'వ్యవకలనం ప్రశ్నలు ఇవ్వండి. 2కి 2 సరిగ్గా చేశాడా?',yes:'mul',no:{lvl:1},ylab:'2/2 సరిగ్గా',nlab:'సాధించలేదు'},
+  mul:{h:'3. గుణకారం (Level 3)',p:'గుణకారం ప్రశ్నలు ఇవ్వండి. 2కి 2 సరిగ్గా చేశాడా?',yes:'divi',no:{lvl:2},ylab:'2/2 సరిగ్గా',nlab:'సాధించలేదు'},
+  divi:{h:'4. భాగాహారం (Level 4)',p:'రెండు భాగాహార ప్రశ్నలూ ఇవ్వండి. రెండూ సరిగ్గా చేశాడా?',yes:'word',no:{lvl:3},ylab:'రెండూ సరిగ్గా',nlab:'సాధించలేదు'},
+  word:{h:'5. వర్డ్ ప్రాబ్లమ్ (Level 5)',p:'నిర్దేశిత రెండు వర్డ్ ప్రాబ్లమ్స్ ఇవ్వండి. రెండూ సరిగ్గా చేశాడా?',yes:{lvl:5},no:{lvl:4},ylab:'రెండూ సరిగ్గా',nlab:'ఒకటే / ఏదీ కాదు'}
+};
+let cur=null;
+const CLSNAME={I:'1వ',II:'2వ',III:'3వ',IV:'4వ',V:'5వ',VI:'6వ',VII:'7వ',VIII:'8వ',IX:'9వ',X:'10వ'};
+const SUBNAME={te:'తెలుగు',ma:'గణితం',en:'ఇంగ్లీష్'};
+
+function fillClasses(){
+  const cs=classes(),sel=$('#f-class'),keep=sel.value;
+  sel.innerHTML=cs.map(c=>'<option value="'+c+'">'+CLSNAME[c]+' తరగతి</option>').join('');
+  if(cs.includes(keep))sel.value=keep;
+  fillStudents();
+}
+function fillStudents(){
+  const c=$('#f-class').value,sel=$('#f-stu'),rows=STU[c]||[];
+  sel.innerHTML=rows.map((r,i)=>'<option value="'+i+'">'+(i+1)+'. '+r[1]+'</option>').join('')
+    +'<option value="-1">— ఇతర విద్యార్థి —</option>';
+}
+$('#f-class').onchange=()=>{const c=$('#f-class').value;fillStudents();
+  $('#f-samp').value=String(getSamp(c)-1);$('#f-date').value=getDate(c);};
+fillClasses();
+
+$('#as-start').onclick=()=>{
+  const c=$('#f-class').value,idx=+$('#f-stu').value;
+  if(!c){alert('ముందుగా విద్యార్థులు ట్యాబ్‌లో జాబితా చేర్చండి.');return;}
+  let name,pen;
+  if(idx<0){name=(prompt('విద్యార్థి పేరు రాయండి')||'').trim();if(!name)return;pen='';}
+  else {pen=STU[c][idx][0];name=STU[c][idx][1];}
+  const sub=$('#f-sub').value;
+  cur={name,pen,cls:c,sub,samp:+$('#f-samp').value,idx,date:$('#f-date').value||today(),
+       flow:sub==='ma'?FLOW_MATH:FLOW_LANG, step:sub==='ma'?'add':'para', trail:[]};
+  drawStep();
+};
+function stepSheet(){
+  const i=cur.samp;
+  if(cur.sub==='ma'){
+    const d=MA[i], map={add:['సంకలనం',d.add,'+'],sub:['వ్యవకలనం',d.sub,'−'],mul:['గుణకారం',d.mul,'×']};
+    if(cur.step==='divi')
+      return '<div class="sheet"><span class="tab">భాగాహారం</span><div class="sums">'+
+             d.div.map(p=>divBox(p[0],p[1])).join('')+'</div></div>';
+    if(cur.step==='word')
+      return '<div class="sheet"><span class="tab">వర్డ్ ప్రాబ్లమ్</span>'+
+             '<p class="read te" style="font-size:calc(16px * var(--rf));line-height:1.8">నిర్దేశిత రెండు వర్డ్ ప్రాబ్లమ్స్‌ను పిల్లవాడికి ఇవ్వండి.<br>(ఇవి టెస్టింగ్ టూల్ షీట్‌లో ముద్రించబడలేదు.)</p></div>';
+    const [t,arr,op]=map[cur.step];
+    return '<div class="sheet"><span class="tab">'+t+'</span><div class="sums">'+
+           arr.map(p=>sumBox(p[0],p[1],op)).join('')+'</div></div>';
+  }
+  const te=cur.sub==='te', d=te?TE[i]:EN[i], lg=te?'te':'en';
+  const T=te?{para:'పేరా',story:'కథ',words:'పదాలు',letters:'అక్షరాలు'}
+            :{para:'Para',story:'Story',words:'Word',letters:'Letter'};
+  const NW=te?'ఏవైనా 5 పదాలను గుర్తించమని అడగండి. వాటిలో కనీసం 4 పదాలను సరిగ్గా చదవాలి.'
+             :'Ask the child to read any 5 words. at least 4 must be correct.';
+  const NL=te?'ఏవైనా 5 అక్షరాలను గుర్తించమని అడగండి. వాటిలో కనీసం 4 అక్షరాలు సరిగ్గా చదవాలి.'
+             :'Ask the child to read any 5 letters. at least 4 must be correct.';
+  if(cur.step==='para') return d.paras.map(p=>readCard(T.para,p,lg)).join('');
+  if(cur.step==='story') return readCard(T.story,d.story,lg,'story');
+  if(cur.step==='words') return gridCard(T.words,d.words,lg,NW);
+  if(cur.step==='letters') return gridCard(T.letters,d.letters,lg,NL);
+  return '';
+}
+function drawStep(){
+  const f=cur.flow[cur.step];
+  const names=cur.sub==='ma'?LVL_MATH:LVL_LANG;
+  const subName=SUBNAME[cur.sub];
+  $('#as-setup').hidden=true;
+  $('#as-run').innerHTML=
+    '<div class="card"><h2>'+esc(cur.name)+' · '+CLSNAME[cur.cls]+' తరగతి · '+subName+' · శాంపిల్ '+(cur.samp+1)+'</h2>'+
+    '<p style="margin:-4px 0 10px;font-size:12.5px;color:#5c6a5f">పరీక్ష తేదీ: '+dmy(cur.date)+'</p>'+
+    '<div class="step"><h3>'+f.h+'</h3><p>'+f.p+'</p></div>'+
+    '<div class="bar noprint" style="justify-content:flex-end;margin:0">'+
+      '<button class="chip icon" id="s-min">A−</button><button class="chip icon" id="s-pls">A+</button></div>'+
+    '<div class="sheetwrap">'+stepSheet()+'</div>'+
+    '<div class="row2"><button class="btn yes" id="b-yes">'+f.ylab+'</button>'+
+    '<button class="btn no" id="b-no">'+f.nlab+'</button></div>'+
+    (cur.trail.length?'<div class="trail">'+cur.trail.join('<br>')+'</div>':'')+
+    '<div class="row2" style="margin-top:12px"><button class="btn alt sm" id="b-cancel">రద్దు చేయి</button></div></div>';
+  $('#s-pls').onclick=()=>setRf(rf+.1);
+  $('#s-min').onclick=()=>setRf(rf-.1);
+  $('#b-yes').onclick=()=>advance(true);
+  $('#b-no').onclick=()=>advance(false);
+  $('#b-cancel').onclick=reset;
+}
+function advance(ok){
+  const f=cur.flow[cur.step];
+  cur.trail.push('• '+f.h+' → '+(ok?f.ylab:f.nlab));
+  const nxt=ok?f.yes:f.no;
+  if(typeof nxt==='string'){cur.step=nxt;drawStep();}
+  else finish(nxt.lvl);
+}
+function finish(lvl){
+  const names=cur.sub==='ma'?LVL_MATH:LVL_LANG;
+  const subName=SUBNAME[cur.sub];
+  const rec={name:cur.name,pen:cur.pen,cls:cur.cls,sub:cur.sub,samp:cur.samp+1,lvl,
+             lname:names[lvl],date:cur.date};
+  save(rec); if(cur.pen)setGrid(cur.pen,cur.sub,lvl,cur.date);
+  $('#as-run').innerHTML='<div class="card"><div class="result"><div class="big">'+lvl+'</div>'+
+    '<div class="nm">'+names[lvl]+'</div>'+
+    '<p style="margin:6px 0 0;font-size:13px">'+esc(cur.name)+' · '+CLSNAME[cur.cls]+' తరగతి · '+subName+'<br>పరీక్ష తేదీ: '+dmy(cur.date)+'</p></div>'+
+    '<div class="trail">'+cur.trail.join('<br>')+'</div>'+
+    '<p style="font-size:12.5px;color:#5c6a5f">ఈ స్థాయిని OMR షీట్ (Tool 2) మరియు School Learning Progress Sheet లో నమోదు చేయండి.</p>'+
+    '<div class="row2"><button class="btn" id="b-next">తదుపరి విద్యార్థి</button>'+
+    '<button class="btn alt" id="b-tb">పట్టిక చూడు</button></div></div>';
+  $('#b-next').onclick=()=>{const c=cur.cls,i=cur.idx;reset();
+    if(i>=0&&i+1<STU[c].length)$('#f-stu').value=String(i+1);};
+  $('#b-tb').onclick=()=>document.querySelector('#nav button[data-p="tb"]').click();
+}
+function reset(){cur=null;$('#as-run').innerHTML='';$('#as-setup').hidden=false;window.scrollTo({top:0});}
+
+/* ================= records ================= */
+const KEY='tarl2526_records';
+function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}}
+function save(r){const a=load();a.push(r);try{localStorage.setItem(KEY,JSON.stringify(a))}catch(e){}}
+function renderRecords(){
+  const a=load(),subName={te:'తెలుగు',ma:'గణితం',en:'ఇంగ్లీష్'};
+  if(!a.length){$('#rc-out').innerHTML='<div class="card"><h2>ఇంకా రికార్డులు లేవు</h2><p>మూల్యాంకనం ట్యాబ్‌లో విద్యార్థి పరీక్ష పూర్తి చేస్తే ఇక్కడ కనిపిస్తుంది.</p></div>';return;}
+  let h='<div class="card"><h2>నమోదైన స్థాయిలు ('+a.length+')</h2><table><tr><th>తేదీ</th><th>పేరు</th><th>తరగతి</th><th>సబ్జెక్ట్</th><th>స్థాయి</th><th class="noprint"></th></tr>';
+  a.forEach((r,i)=>{h+='<tr><td>'+r.date+'</td><td>'+esc(r.name)+'</td><td>'+(CLSNAME[r.cls]||r.cls)+'</td><td>'+subName[r.sub]+'</td>'+
+    '<td class="lv">'+r.lvl+' · '+r.lname+'</td><td class="noprint"><button class="btn alt sm" data-del="'+i+'">×</button></td></tr>';});
+  h+='</table></div>';
+  $('#rc-out').innerHTML=h;
+  $('#rc-out').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
+    const a2=load();a2.splice(+b.dataset.del,1);localStorage.setItem(KEY,JSON.stringify(a2));renderRecords();
+  });
+}
+$('#rc-print').onclick=()=>window.print();
+$('#rc-csv').onclick=()=>{
+  const a=load();if(!a.length)return;
+  const csv='Date,Name,Class,Subject,Sample,Level,LevelName\n'+
+    a.map(r=>[r.date,'"'+r.name+'"',r.cls,r.sub,r.samp,r.lvl,r.lname].join(',')).join('\n');
+  const b=new Blob(["\ufeff"+csv],{type:'text/csv;charset=utf-8'});
+  const u=URL.createObjectURL(b),l=document.createElement('a');
+  l.href=u;l.download='TaRL_levels.csv';l.click();URL.revokeObjectURL(u);
+};
+$('#rc-clear').onclick=()=>{if(confirm('అన్ని రికార్డులను తొలగించాలా?')){localStorage.removeItem(KEY);renderRecords();}};
+
+/* ================= levels grid (class-wise table) ================= */
+const GKEY='tarl2526_grid', SKEY='tarl2526_samples', DKEY='tarl2526_dates';
+const today=()=>new Date().toISOString().slice(0,10);
+const dmy=d=>d?d.split('-').reverse().join('-'):'—';
+function dateAll(){try{return JSON.parse(localStorage.getItem(DKEY)||'{}')}catch(e){return{}}}
+function getDate(c){return dateAll()[c]||today();}
+function setDate(c,v){const a=dateAll();a[c]=v;try{localStorage.setItem(DKEY,JSON.stringify(a))}catch(e){}}
+function gridAll(){try{return JSON.parse(localStorage.getItem(GKEY)||'{}')}catch(e){return{}}}
+function setGrid(pen,sub,lvl,dt){const g=gridAll();g[pen]=g[pen]||{};g[pen][sub]=lvl;
+  if(dt)g[pen][sub+'_d']=dt;
+  try{localStorage.setItem(GKEY,JSON.stringify(g))}catch(e){}}
+function sampAll(){try{return JSON.parse(localStorage.getItem(SKEY)||'{}')}catch(e){return{}}}
+function getSamp(c){return sampAll()[c]||1;}
+function setSamp(c,v){const a=sampAll();a[c]=v;try{localStorage.setItem(SKEY,JSON.stringify(a))}catch(e){}}
+
+let tbCls='III';
+function lvlSel(pen,sub,val,max){
+  let o='<option value="">–</option>';
+  const names=sub==='ma'?LVL_MATH:LVL_LANG;
+  for(let i=0;i<=5;i++)o+='<option value="'+i+'"'+(val===i?' selected':'')+'>'+i+'</option>';
+  return '<select class="gsel" data-pen="'+pen+'" data-sub="'+sub+'">'+o+'</select>';
+}
+function classTable(c){
+  const g=gridAll(),sp=getSamp(c),dt=getDate(c),rows=STU[c];
+  let done=0;
+  let h='<div class="card tblcard"><div class="thead"><h2>'+CLSNAME[c]+' తరగతి — TaRL స్థాయిల పట్టిక</h2>'+
+    '<span class="sampbadge">శాంపిల్ '+sp+'</span>'+
+    '<span class="datebadge">పరీక్ష తేదీ: '+dmy(dt)+'</span></div>'+
+    '<div class="scrollx"><table class="lvtbl"><tr><th>క్ర.సం</th><th>PEN</th><th>విద్యార్థి పేరు</th><th>లిం</th>'+
+    '<th>శాంపిల్</th><th>తెలుగు</th><th>ఇంగ్లీష్</th><th>గణితం</th></tr>';
+  rows.forEach((r,i)=>{
+    const v=g[r[0]]||{};
+    if(v.te!=null&&v.en!=null&&v.ma!=null)done++;
+    h+='<tr><td>'+(i+1)+'</td><td class="pen">'+r[0]+'</td><td class="nm">'+esc(r[1])+'</td><td>'+r[2]+'</td>'+
+       '<td>'+sp+'</td><td>'+lvlSel(r[0],'te',v.te)+'</td><td>'+lvlSel(r[0],'en',v.en)+'</td>'+
+       '<td>'+lvlSel(r[0],'ma',v.ma)+'</td></tr>';
+  });
+  h+='</table></div><p class="tfoot">మొత్తం '+rows.length+' మంది · పూర్తయినవి '+done+
+     ' · స్థాయి కోడ్‌లు: తెలుగు/ఇంగ్లీష్ 0 Beginner · 1 Letter · 2 Word · 3 Para · 4 Story · 5 Comprehension | గణితం 0 None · 1 Add · 2 Sub · 3 Mul · 4 Div · 5 Word Problem</p></div>';
+  return h;
+}
+function renderTable(){
+  const cs=classes();
+  const list=tbCls==='ALL'?cs:(cs.includes(tbCls)?[tbCls]:[]);
+  if(!list.length){$('#tb-out').innerHTML='<div class="card"><h2>విద్యార్థుల జాబితా లేదు</h2><p>"విద్యార్థులు" ట్యాబ్‌లో తరగతి ఎంచుకుని పేర్లు చేర్చండి.</p></div>';return;}
+  $('#tb-sampbar').style.display=tbCls==='ALL'?'none':'';
+  document.querySelectorAll('[data-csamp]').forEach(b=>b.classList.toggle('on',+b.dataset.csamp===getSamp(tbCls)));
+  if(tbCls!=='ALL')$('#tb-date').value=getDate(tbCls);
+  $('#tb-out').innerHTML='<div class="printhead">'+esc(schoolName())+' · AP TaRL 2025-26 స్థాయిల పట్టిక'+
+      (tbCls==='ALL'?'':' · పరీక్ష తేదీ: '+dmy(getDate(tbCls)))+'</div>'+
+    list.map(classTable).join('');
+  $('#tb-out').querySelectorAll('.gsel').forEach(sel=>{
+    sel.onchange=()=>{const v=sel.value===''?null:+sel.value;
+      const g=gridAll();g[sel.dataset.pen]=g[sel.dataset.pen]||{};
+      if(v===null)delete g[sel.dataset.pen][sel.dataset.sub];else g[sel.dataset.pen][sel.dataset.sub]=v;
+      try{localStorage.setItem(GKEY,JSON.stringify(g))}catch(e){}};
+  });
+}
+document.querySelectorAll('[data-csamp]').forEach(b=>b.onclick=()=>{
+  if(tbCls==='ALL')return; setSamp(tbCls,+b.dataset.csamp);renderTable();
+});
+$('#tb-date').onchange=()=>{if(tbCls!=='ALL'){setDate(tbCls,$('#tb-date').value);renderTable();}};
+$('#tb-print').onclick=()=>window.print();
+$('#tb-csv').onclick=()=>{
+  const g=gridAll(),cs=classes(),list=tbCls==='ALL'?cs:[tbCls];
+  let csv='Class,ExamDate,PEN,Name,Gender,Sample,Telugu,English,Maths\n';
+  list.forEach(c=>{const sp=getSamp(c),dt=getDate(c);STU[c].forEach(r=>{const v=g[r[0]]||{};
+    csv+=[c,dt,r[0],'"'+r[1]+'"',r[2],sp,v.te??'',v.en??'',v.ma??''].join(',')+'\n';});});
+  const b=new Blob(["\ufeff"+csv],{type:'text/csv;charset=utf-8'});
+  const u=URL.createObjectURL(b),l=document.createElement('a');
+  l.href=u;l.download='TaRL_levels_table.csv';l.click();URL.revokeObjectURL(u);
+};
+
+/* ================= class chips (table tab) ================= */
+function buildClsChips(){
+  const cs=classes();
+  if(!cs.includes(tbCls)&&tbCls!=='ALL')tbCls=cs[0]||'ALL';
+  $('#tb-clschips').innerHTML=cs.map(c=>'<button class="chip'+(c===tbCls?' on':'')+'" data-cls="'+c+'">'+CLSNAME[c]+'</button>').join('')+
+    (cs.length>1?'<button class="chip'+(tbCls==='ALL'?' on':'')+'" data-cls="ALL">అన్నీ</button>':'');
+  $('#tb-clschips').querySelectorAll('[data-cls]').forEach(b=>b.onclick=()=>{tbCls=b.dataset.cls;buildClsChips();renderTable();});
+}
+
+/* ================= roster editor ================= */
+let rCls=classes()[0]||'III';
+$('#sc-name').value=schoolName();
+$('#sc-name').oninput=()=>{localStorage.setItem(SCKEY,$('#sc-name').value.trim());};
+function refreshAll(){saveRoster();fillClasses();buildClsChips();renderTable();renderRoster();}
+function renderRoster(){
+  $('#st-clschips').innerHTML=CLASS_ORDER.map(c=>{
+    const n=(STU[c]||[]).length;
+    return '<button class="chip'+(c===rCls?' on':'')+'" data-rcls="'+c+'">'+CLSNAME[c]+(n?' ('+n+')':'')+'</button>';
+  }).join('');
+  $('#st-clschips').querySelectorAll('[data-rcls]').forEach(b=>b.onclick=()=>{rCls=b.dataset.rcls;renderRoster();});
+  const rows=STU[rCls]||[];
+  let h='<div class="card"><h2>'+CLSNAME[rCls]+' తరగతి — విద్యార్థుల జాబితా ('+rows.length+')</h2>'+
+    '<div class="scrollx"><table class="lvtbl"><tr><th>క్ర.సం</th><th>PEN</th><th>పేరు</th><th>లిం</th><th></th></tr>';
+  rows.forEach((r,i)=>{
+    h+='<tr><td>'+(i+1)+'</td>'+
+      '<td><input class="ri" data-i="'+i+'" data-f="0" value="'+esc(r[0])+'" style="width:110px;font-size:12px"></td>'+
+      '<td><input class="ri" data-i="'+i+'" data-f="1" value="'+esc(r[1])+'" style="min-width:150px"></td>'+
+      '<td><input class="ri" data-i="'+i+'" data-f="2" value="'+esc(r[2]||'')+'" style="width:52px;text-align:center"></td>'+
+      '<td><button class="btn no sm" data-del="'+i+'">×</button></td></tr>';
+  });
+  h+='</table></div>'+
+    '<h3>కొత్త విద్యార్థి</h3><div class="row2">'+
+    '<input id="n-name" placeholder="పేరు" style="flex:2 1 160px">'+
+    '<input id="n-gen" placeholder="లిం (B/G)" style="flex:0 1 110px">'+
+    '<input id="n-pen" placeholder="PEN (ఐచ్ఛికం)" style="flex:1 1 130px">'+
+    '<button class="btn" id="n-add" style="flex:0 1 120px">చేర్చు</button></div></div>';
+  $('#st-out').innerHTML=h;
+  $('#st-out').querySelectorAll('.ri').forEach(inp=>inp.onchange=()=>{
+    STU[rCls][+inp.dataset.i][+inp.dataset.f]=inp.value.trim();refreshAll();});
+  $('#st-out').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
+    if(confirm(STU[rCls][+b.dataset.del][1]+' — తొలగించాలా?')){STU[rCls].splice(+b.dataset.del,1);
+      if(!STU[rCls].length)delete STU[rCls];refreshAll();}});
+  $('#n-add').onclick=()=>{
+    const nm=$('#n-name').value.trim();if(!nm)return;
+    STU[rCls]=STU[rCls]||[];
+    STU[rCls].push([$('#n-pen').value.trim()||newPen(),nm,$('#n-gen').value.trim()]);
+    refreshAll();};
+}
+function newPen(){return 'S'+Date.now().toString().slice(-9)+Math.floor(Math.random()*90+10);}
+function parseBulk(){
+  return $('#st-bulk').value.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>{
+    const p=l.split(',').map(x=>x.trim());
+    if(p.length>=2)return [p[0]||newPen(),p[1],p[2]||''];
+    return [newPen(),p[0],''];
+  });
+}
+$('#st-add').onclick=()=>{const a=parseBulk();if(!a.length)return;
+  STU[rCls]=(STU[rCls]||[]).concat(a);$('#st-bulk').value='';refreshAll();};
+$('#st-replace').onclick=()=>{const a=parseBulk();if(!a.length)return;
+  if(!confirm(CLSNAME[rCls]+' తరగతి జాబితాను పూర్తిగా మార్చాలా?'))return;
+  STU[rCls]=a;$('#st-bulk').value='';refreshAll();};
+$('#st-export').onclick=()=>{
+  const b=new Blob([JSON.stringify({school:schoolName(),students:STU,grid:gridAll(),samples:sampAll(),dates:dateAll()},null,1)],{type:'application/json'});
+  const u=URL.createObjectURL(b),l=document.createElement('a');
+  l.href=u;l.download='TaRL_school_data.json';l.click();URL.revokeObjectURL(u);};
+$('#st-import').onclick=()=>$('#st-file').click();
+$('#st-file').onchange=e=>{
+  const f=e.target.files[0];if(!f)return;const rd=new FileReader();
+  rd.onload=()=>{try{const d=JSON.parse(rd.result);
+    if(d.students){STU=d.students;}else if(typeof d==='object'){STU=d;}
+    if(d.school){localStorage.setItem(SCKEY,d.school);$('#sc-name').value=d.school;}
+    if(d.grid)localStorage.setItem(GKEY,JSON.stringify(d.grid));
+    if(d.samples)localStorage.setItem(SKEY,JSON.stringify(d.samples));
+    if(d.dates)localStorage.setItem(DKEY,JSON.stringify(d.dates));
+    rCls=classes()[0]||'III';refreshAll();alert('దిగుమతి పూర్తయింది.');
+  }catch(err){alert('ఫైల్ చదవడం కుదరలేదు.');}};
+  rd.readAsText(f);e.target.value='';};
+$('#st-blank').onclick=()=>{if(!confirm('అన్ని తరగతుల విద్యార్థులను తొలగించాలా? (స్థాయిల డేటా కూడా పోతుంది)'))return;
+  STU={};localStorage.removeItem(GKEY);rCls='III';refreshAll();};
+$('#st-default').onclick=()=>{if(!confirm('ఖాళీ జాబితా (3, 4, 5 తరగతులు) తిరిగి తేవాలా? ఇప్పుడున్న పేర్లు పోతాయి.'))return;
+  STU=JSON.parse(JSON.stringify(DEFAULT_STU));rCls='III';refreshAll();};
+buildClsChips();renderRoster();
+
+/* ================= TOOL 1 (2026-27) ================= */
+const T1KEY='tarl2627_tool1';
+let t1v='read', t1s=0, t1cls=classes()[0]||'III', t1r='B';
+const ROUND={B:'Baseline',M:'Midline',E:'Endline'};
+function t1All(){try{return JSON.parse(localStorage.getItem(T1KEY)||'{}')}catch(e){return{}}}
+function t1Save(o){try{localStorage.setItem(T1KEY,JSON.stringify(o))}catch(e){}}
+function t1Get(pen){const a=t1All();return (a[t1r]&&a[t1r][pen])||{};}
+function t1Set(pen,f,v){const a=t1All();a[t1r]=a[t1r]||{};a[t1r][pen]=a[t1r][pen]||{};
+  if(v==='')delete a[t1r][pen][f];else a[t1r][pen][f]=v;t1Save(a);}
+function t1Meta(){const a=t1All();return (a.meta&&a.meta[t1cls+t1r])||{};}
+function t1SetMeta(f,v){const a=t1All();a.meta=a.meta||{};const k=t1cls+t1r;
+  a.meta[k]=a.meta[k]||{};a.meta[k][f]=v;t1Save(a);}
+
+function t1Sel(pen,f,val,opts){
+  let o='<option value="">–</option>';
+  opts.forEach((lbl,i)=>{if(i===0)return;o+='<option value="'+i+'"'+(+val===i?' selected':'')+'>'+i+'</option>';});
+  return '<select class="t1sel" data-pen="'+pen+'" data-f="'+f+'" title="'+opts.filter(Boolean).map((l,i)=>(i+1)+'-'+l).join(', ')+'">'+o+'</select>';
+}
+const CANOPT=['','Cannot','Can'];
+
+function renderT1(){
+  document.querySelectorAll('[data-t1v]').forEach(b=>b.classList.toggle('on',b.dataset.t1v===t1v));
+  $('#t1-sampbar').style.display=(t1v==='read'||t1v==='math'||t1v==='eng')?'':'none';
+  $('#t1-entrybar').style.display=$('#t1-roundbar').style.display=(t1v==='entry')?'':'none';
+  $('#t1-testbar').style.display=(t1v==='test')?'':'none';
+  if(t1v==='test'){if(!t1c){t1FillCls();$('#t1-out').innerHTML='';}return;}
+  if(t1v==='read')return renderT1Read();
+  if(t1v==='math')return renderT1Math();
+  if(t1v==='eng')return renderT1Eng();
+  renderT1Entry();
+}
+function renderT1Read(){
+  const d=T1R[t1s];
+  $('#t1-out').innerHTML=
+    '<div style="text-align:center;font-size:12.5px;color:#5c6a5f;font-weight:600">AP TaRL 2026-27 · Reading Testing Tool · Sample - '+(t1s+1)+'</div>'+
+    readCard('కథ',d.story,'te','story')+
+    '<div class="sheet"><span class="tab">ప్రశ్నలు</span>'+
+      '<p class="read te" style="font-size:calc(18px * var(--rf));text-align:left">Q1) '+esc(d.q[0])+'<br><br>Q2) '+esc(d.q[1])+'</p>'+
+      '<div class="note">క్రింద ఇవ్వబడిన ప్రశ్నలను కేవలం కథాస్థాయి పిల్లలను మాత్రమే అడగాలి. కథ చదివేటప్పుడు 3 లేదా 3 కంటే ఎక్కువ తప్పులు చేయకూడదు.</div></div>'+
+    readCard('పేరా',d.para,'te')+
+    gridCard('పదాలు',d.words,'te','ఏవైనా 5 పదాలు చదవండి. కనీసం 4 పదాలు సరిగ్గా చదవాలి.')+
+    gridCard('అక్షరాలు',d.letters,'te','ఏవైనా 5 అక్షరాలు చదవండి, కనీసం 4 అక్షరాలు సరిగ్గా చదవాలి.');
+}
+function renderT1Eng(){
+  const d=T1E[t1s];
+  $('#t1-out').innerHTML=
+    '<div style="text-align:center;font-size:12.5px;color:#5c6a5f;font-weight:600">AP English Reading Testing Tool 2026-27 · Sample - '+(t1s+1)+'</div>'+
+    '<div class="card" style="margin-top:10px"><h2>Start here: Para నుండి ప్రారంభించండి</h2>'+
+    '<p style="font-size:12.5px;color:#5c6a5f;margin:0">పేరా ధారాళంగా చదివితే Story కి, లేకపోతే Words కి వెళ్ళండి.</p></div>'+
+    readCard('4 - Story',d.story,'en','story')+
+    '<div class="sheet"><span class="tab">5 - Comprehension Questions</span>'+
+      '<p class="read en" style="font-size:calc(18px * var(--rf));text-align:left">Q1. '+esc(d.q[0])+'<br><br>Q2. '+esc(d.q[1])+'</p>'+
+      '<div class="note">Ask both comprehension questions after the child reads the story. The child is at the Comprehension Level only if they answer both questions correctly.</div></div>'+
+    readCard('3 - Para',d.para,'en')+
+    gridCard('2 - Words',d.words,'en','Ask the child to read any 5 words. At least 4 out of 5 words must be read correctly.')+
+    gridCard('1 - Letters',d.letters,'en','Ask the child to read any 5 letters. At least 4 out of 5 letters must be read correctly.');
+}
+function renderT1Math(){
+  const d=T1M[t1s];
+  const lvl=(t,arr,op)=>'<div class="sheet"><span class="tab">'+t+'</span><div class="sums">'+
+    arr.map(x=>op==='/'?divBox(x[0],x[1]):sumBox(x[0],x[1],op)).join('')+'</div></div>';
+  $('#t1-out').innerHTML=
+    '<div style="text-align:center;font-size:12.5px;color:#5c6a5f;font-weight:600">AP TaRL 2026-27 · Maths Testing Tool · Sample - '+(t1s+1)+'</div>'+
+    '<div class="card" style="margin-top:10px"><h2>భాగం-1 చతుర్విధ ప్రక్రియలు (Number Operations)</h2>'+
+    '<p style="font-size:12.5px;color:#5c6a5f;margin:0">స్థాయి-1 (సంకలనం) నుండి మొదలుపెట్టి, ప్రతి స్థాయిలో రెండు ప్రశ్నలూ సరిగ్గా చేస్తేనే తరువాతి స్థాయి ఇవ్వాలి.</p></div>'+
+    lvl('స్థాయి - 1 (సంకలనం)',d.add,'+')+lvl('స్థాయి - 2 (వ్యవకలనం)',d.sub,'−')+
+    lvl('స్థాయి - 3 (గుణకారం)',d.mul,'×')+lvl('స్థాయి - 4 (భాగాహారం)',d.div,'/')+
+    '<div class="card"><h2>భాగం-2 వాక్యరూప ప్రశ్నలు (Word Problems)</h2>'+
+    '<p style="font-size:12.5px;color:#5c6a5f;margin:0 0 4px">స్థాయి-4 (భాగాహారం) పూర్తి చేసిన పిల్లలకు మాత్రమే ఇవ్వాలి.</p></div>'+
+    '<div class="sheet"><span class="tab">ప్రశ్న - 1</span>'+
+      '<p class="read te" style="font-size:calc(18px * var(--rf));text-align:left">1. '+esc(d.wp[0])+'</p></div>'+
+    '<div class="sheet"><span class="tab">ప్రశ్న - 2</span>'+
+      '<p class="read te" style="font-size:calc(18px * var(--rf));text-align:left">2. '+esc(d.wp[1])+'</p></div>';
+}
+function t1Chips(){
+  const cs=classes();
+  if(!cs.includes(t1cls))t1cls=cs[0]||'III';
+  $('#t1-clschips').innerHTML=cs.map(c=>'<button class="chip'+(c===t1cls?' on':'')+'" data-t1c="'+c+'">'+CLSNAME[c]+'</button>').join('');
+  $('#t1-clschips').querySelectorAll('[data-t1c]').forEach(b=>b.onclick=()=>{t1cls=b.dataset.t1c;t1Chips();renderT1Entry();});
+}
+function renderT1Entry(){
+  t1Chips();
+  document.querySelectorAll('[data-t1r]').forEach(b=>b.classList.toggle('on',b.dataset.t1r===t1r));
+  const m=t1Meta();
+  $('#t1-esamp').value=m.samp||'1';
+  $('#t1-date').value=m.date||today();
+  const rows=STU[t1cls]||[];
+  if(!rows.length){$('#t1-out').innerHTML='<div class="card"><h2>విద్యార్థుల జాబితా లేదు</h2><p>"విద్యార్థులు" ట్యాబ్‌లో పేర్లు చేర్చండి.</p></div>';return;}
+  let h='<div class="card tblcard"><div class="thead"><h2>'+CLSNAME[t1cls]+' తరగతి — TaRL 2026-27 నమోదు</h2>'+
+    '<span class="sampbadge">Sample '+(m.samp||1)+'</span><span class="datebadge">'+ROUND[t1r]+': '+dmy(m.date||today())+'</span></div>'+
+    '<div class="scrollx"><table class="lvtbl t1tbl"><tr><th rowspan="2">క్ర.<br>సం</th><th rowspan="2">విద్యార్థి పేరు</th><th rowspan="2">లిం</th>'+
+    '<th colspan="3">తెలుగు (Section-1 / 2)</th><th colspan="3">గణితం (Section-1 / 2)</th><th colspan="3">English (Section-1 / 2)</th><th rowspan="2" class="noprint">సాధించిన స్థాయి</th></tr>'+
+    '<tr><th>Language<br>1-5</th><th>Q1</th><th>Q2</th><th>Operations<br>1-5</th><th>Q1<br>WP</th><th>Q2<br>WP</th><th>Language<br>1-5</th><th>Q1</th><th>Q2</th></tr>';
+  const cntL=[0,0,0,0,0,0],cntO=[0,0,0,0,0,0],cntE=[0,0,0,0,0,0];
+  rows.forEach((r,i)=>{
+    const v=t1Get(r[0]);
+    if(v.lang)cntL[+v.lang]++; if(v.ops)cntO[+v.ops]++; if(v.elang)cntE[+v.elang]++;
+    const st=[];
+    if(v.lang)st.push('తె: '+T1_LANG[v.lang]+(+v.q1===2&&+v.q2===2?' + Comp.':''));
+    if(v.ops)st.push('గ: '+T1_OPS[v.ops]+(+v.w1===2&&+v.w2===2?' + WP':''));
+    if(v.elang)st.push('En: '+T1_LANG[v.elang]+(+v.eq1===2&&+v.eq2===2?' + Comp.':''));
+    h+='<tr><td>'+(i+1)+'</td><td class="nm">'+esc(r[1])+'</td><td>'+esc(r[2]||'')+'</td>'+
+      '<td>'+t1Sel(r[0],'lang',v.lang,T1_LANG)+'</td>'+
+      '<td>'+t1Sel(r[0],'q1',v.q1,CANOPT)+'</td>'+
+      '<td>'+t1Sel(r[0],'q2',v.q2,CANOPT)+'</td>'+
+      '<td>'+t1Sel(r[0],'ops',v.ops,T1_OPS)+'</td>'+
+      '<td>'+t1Sel(r[0],'w1',v.w1,CANOPT)+'</td>'+
+      '<td>'+t1Sel(r[0],'w2',v.w2,CANOPT)+'</td>'+
+      '<td>'+t1Sel(r[0],'elang',v.elang,T1_LANG)+'</td>'+
+      '<td>'+t1Sel(r[0],'eq1',v.eq1,CANOPT)+'</td>'+
+      '<td>'+t1Sel(r[0],'eq2',v.eq2,CANOPT)+'</td>'+
+      '<td class="noprint" style="font-size:11.5px;text-align:left;white-space:nowrap">'+(st.join('<br>')||'–')+'</td></tr>';
+  });
+  h+='<tr class="sumrow"><td colspan="3">Count of 1 / 2 / 3 / 4 / 5</td>'+
+     '<td colspan="3">'+cntL.slice(1).join(' / ')+'</td>'+
+     '<td colspan="3">'+cntO.slice(1).join(' / ')+'</td>'+
+     '<td colspan="3">'+cntE.slice(1).join(' / ')+'</td><td class="noprint"></td></tr>';
+  h+='</table></div><p class="tfoot">Language: 1-Beginner · 2-Letter · 3-Word · 4-Para · 5-Story | Comprehension Q1/Q2: 1-Cannot · 2-Can | '+
+     'Operations: 1-No Operations · 2-Addition · 3-Subtraction · 4-Multiplication · 5-Division | Word Problems Q1, Q2: 1-Cannot · 2-Can | English: Language, Q1/Q2 తెలుగు లాగే</p></div>';
+  $('#t1-out').innerHTML='<div class="printhead">'+esc(schoolName())+' · AP TaRL School Learning Progress · 2026-27 · '+
+    CLSNAME[t1cls]+' తరగతి · '+ROUND[t1r]+' · Sample '+(m.samp||1)+' · '+dmy(m.date||today())+'</div>'+h;
+  $('#t1-out').querySelectorAll('.t1sel').forEach(sel=>sel.onchange=()=>t1Set(sel.dataset.pen,sel.dataset.f,sel.value));
+}
+document.querySelectorAll('[data-t1v]').forEach(b=>b.onclick=()=>{t1v=b.dataset.t1v;renderT1();});
+document.querySelectorAll('[data-t1s]').forEach(b=>b.onclick=()=>{
+  t1s=+b.dataset.t1s;document.querySelectorAll('[data-t1s]').forEach(x=>x.classList.toggle('on',x===b));renderT1();});
+document.querySelectorAll('[data-t1r]').forEach(b=>b.onclick=()=>{t1r=b.dataset.t1r;renderT1Entry();});
+$('#t1-esamp').onchange=()=>{t1SetMeta('samp',$('#t1-esamp').value);renderT1Entry();};
+$('#t1-date').onchange=()=>{t1SetMeta('date',$('#t1-date').value);renderT1Entry();};
+$('#t1-pls').onclick=()=>setRf(rf+.1);
+$('#t1-min').onclick=()=>setRf(rf-.1);
+$('#t1-print').onclick=()=>window.print();
+$('#t1-csv').onclick=()=>{
+  const m=t1Meta(),rows=STU[t1cls]||[];
+  let csv='School,Class,Round,Date,Sample,SNo,PEN,Name,Sex,Language,Q1,Q2,Operations,WP_Q1,WP_Q2,English,En_Q1,En_Q2\n';
+  rows.forEach((r,i)=>{const v=t1Get(r[0]);
+    csv+=['"'+schoolName()+'"',t1cls,ROUND[t1r],m.date||today(),m.samp||1,i+1,r[0],'"'+r[1]+'"',r[2]||'',
+          v.lang||'',v.q1||'',v.q2||'',v.ops||'',v.w1||'',v.w2||'',v.elang||'',v.eq1||'',v.eq2||''].join(',')+'\n';});
+  const b=new Blob(["\ufeff"+csv],{type:'text/csv;charset=utf-8'});
+  const u=URL.createObjectURL(b),l=document.createElement('a');
+  l.href=u;l.download='TaRL2026-27_Tool1_'+t1cls+'_'+ROUND[t1r]+'.csv';l.click();URL.revokeObjectURL(u);
+};
+
+/* ======= TOOL 1 guided auto-fill assessment (per 2026-27 guidelines) ======= */
+const T1FLOW_TE={
+  para:{h:'1. పేరా స్థాయి',p:'పేరాను చూపి చదవమనండి. ధారాళంగా చదివాడా? (3 కంటే ఎక్కువ తప్పులు / పదం-పదం చదివితే "లేదు")',y:'story',n:'words',yl:'ధారాళంగా చదివాడు',nl:'ధారాళత లేదు'},
+  words:{h:'2. పద స్థాయి',p:'10 పదాలు చూపి ఏవైనా 5 చదవమనండి. కనీసం 4 సరిగ్గా చదివాడా?',y:{lang:3},n:'letters',yl:'4/5 సరిగ్గా',nl:'4 కంటే తక్కువ'},
+  letters:{h:'3. అక్షర స్థాయి',p:'10 అక్షరాలు చూపి ఏవైనా 5 చదవమనండి. కనీసం 4 సరిగ్గా చదివాడా?',y:{lang:2},n:{lang:1},yl:'4/5 సరిగ్గా',nl:'4 కంటే తక్కువ'},
+  story:{h:'4. కథ స్థాయి',p:'కథను చదవమనండి. ధారాళంగా చదివాడా? (3 లేదా అంతకంటే ఎక్కువ తప్పులు చేయకూడదు)',y:'q1',n:{lang:4},yl:'ధారాళంగా చదివాడు',nl:'ధారాళత లేదు'},
+  q1:{h:'5. Comprehension — Q1',p:'మొదటి ప్రశ్న అడగండి. సరైన సమాధానం చెప్పాడా?',y:'q2',n:'q2b',yl:'చెప్పాడు (Can)',nl:'చెప్పలేదు (Cannot)'},
+  q2:{h:'6. Comprehension — Q2',p:'రెండవ ప్రశ్న అడగండి. సరైన సమాధానం చెప్పాడా?',y:{lang:5,q1:2,q2:2},n:{lang:5,q1:2,q2:1},yl:'చెప్పాడు (Can)',nl:'చెప్పలేదు (Cannot)'},
+  q2b:{h:'6. Comprehension — Q2',p:'రెండవ ప్రశ్న అడగండి. సరైన సమాధానం చెప్పాడా?',y:{lang:5,q1:1,q2:2},n:{lang:5,q1:1,q2:1},yl:'చెప్పాడు (Can)',nl:'చెప్పలేదు (Cannot)'}
+};
+const T1FLOW_EN={
+  para:{h:'1. Para Level',p:'Para చూపి చదవమనండి. ధారాళంగా, సరిగ్గా చదివాడా? (Independent, fluent, accurate)',y:'story',n:'words',yl:'ధారాళంగా చదివాడు',nl:'ధారాళత లేదు'},
+  words:{h:'2. Word Level',p:'10 పదాలలో ఏవైనా 5 చదవమనండి. కనీసం 4 సరిగ్గా చదివాడా?',y:{lang:3},n:'letters',yl:'4/5 సరిగ్గా',nl:'4 కంటే తక్కువ'},
+  letters:{h:'3. Letter Level',p:'10 అక్షరాలలో ఏవైనా 5 చదవమనండి. కనీసం 4 సరిగ్గా చదివాడా?',y:{lang:2},n:{lang:1},yl:'4/5 సరిగ్గా',nl:'4 కంటే తక్కువ'},
+  story:{h:'4. Story Level',p:'Story చదవమనండి. ధారాళంగా చదివాడా?',y:'q1',n:{lang:4},yl:'ధారాళంగా చదివాడు',nl:'ధారాళత లేదు'},
+  q1:{h:'5. Comprehension — Q1',p:'మొదటి ప్రశ్న అడగండి. సరైన సమాధానం చెప్పాడా?',y:'q2',n:'q2b',yl:'చెప్పాడు (Can)',nl:'చెప్పలేదు (Cannot)'},
+  q2:{h:'6. Comprehension — Q2',p:'రెండవ ప్రశ్న అడగండి. సరైన సమాధానం చెప్పాడా?',y:{lang:5,q1:2,q2:2},n:{lang:5,q1:2,q2:1},yl:'చెప్పాడు (Can)',nl:'చెప్పలేదు (Cannot)'},
+  q2b:{h:'6. Comprehension — Q2',p:'రెండవ ప్రశ్న అడగండి. సరైన సమాధానం చెప్పాడా?',y:{lang:5,q1:1,q2:2},n:{lang:5,q1:1,q2:1},yl:'చెప్పాడు (Can)',nl:'చెప్పలేదు (Cannot)'}
+};
+const T1FLOW_MA={
+  add:{h:'1. స్థాయి-1 సంకలనం',p:'రెండు సంకలనం ప్రశ్నలు ఇవ్వండి. 2కి 2 సరిగ్గా చేశాడా?',y:'sub',n:{ops:1},yl:'2/2 సరిగ్గా',nl:'సాధించలేదు'},
+  sub:{h:'2. స్థాయి-2 వ్యవకలనం',p:'రెండు వ్యవకలనం ప్రశ్నలు ఇవ్వండి. 2కి 2 సరిగ్గా చేశాడా?',y:'mul',n:{ops:2},yl:'2/2 సరిగ్గా',nl:'సాధించలేదు'},
+  mul:{h:'3. స్థాయి-3 గుణకారం',p:'రెండు గుణకారం ప్రశ్నలు ఇవ్వండి. 2కి 2 సరిగ్గా చేశాడా?',y:'div',n:{ops:3},yl:'2/2 సరిగ్గా',nl:'సాధించలేదు'},
+  div:{h:'4. స్థాయి-4 భాగాహారం',p:'రెండు భాగాహార ప్రశ్నలూ ఇవ్వండి. రెండూ సరిగ్గా చేశాడా?',y:'wp1',n:{ops:4},yl:'రెండూ సరిగ్గా',nl:'సాధించలేదు'},
+  wp1:{h:'5. Word Problem Q1',p:'మొదటి వాక్యరూప ప్రశ్న ఇవ్వండి. సాధించాడా?',y:'wp2',n:'wp2b',yl:'సాధించాడు (Can)',nl:'సాధించలేదు (Cannot)'},
+  wp2:{h:'6. Word Problem Q2',p:'రెండవ వాక్యరూప ప్రశ్న ఇవ్వండి. సాధించాడా?',y:{ops:5,w1:2,w2:2},n:{ops:5,w1:2,w2:1},yl:'సాధించాడు (Can)',nl:'సాధించలేదు (Cannot)'},
+  wp2b:{h:'6. Word Problem Q2',p:'రెండవ వాక్యరూప ప్రశ్న ఇవ్వండి. సాధించాడా?',y:{ops:5,w1:1,w2:2},n:{ops:5,w1:1,w2:1},yl:'సాధించాడు (Can)',nl:'సాధించలేదు (Cannot)'}
+};
+let t1c=null;
+function t1FillCls(){const cs=classes(),sel=$('#t1-tcls'),k=sel.value;
+  sel.innerHTML=cs.map(c=>'<option value="'+c+'">'+CLSNAME[c]+' తరగతి</option>').join('');
+  if(cs.includes(k))sel.value=k; t1FillStu();}
+function t1FillStu(){const c=$('#t1-tcls').value,rows=STU[c]||[];
+  $('#t1-tstu').innerHTML=rows.map((r,i)=>'<option value="'+i+'">'+(i+1)+'. '+r[1]+'</option>').join('');}
+$('#t1-tcls').onchange=t1FillStu;
+
+function t1StepSheet(){
+  const st=t1c.step;
+  if(t1c.sub==='en'){
+    const d=T1E[t1c.samp];
+    if(st==='para')return readCard('3 - Para',d.para,'en');
+    if(st==='story')return readCard('4 - Story',d.story,'en','story');
+    if(st==='words')return gridCard('2 - Words',d.words,'en','Ask the child to read any 5 words. At least 4 out of 5 words must be read correctly.');
+    if(st==='letters')return gridCard('1 - Letters',d.letters,'en','Ask the child to read any 5 letters. At least 4 out of 5 letters must be read correctly.');
+    if(st==='q1')return '<div class="sheet"><span class="tab">Q1</span><p class="read en" style="text-align:left;font-size:calc(19px * var(--rf))">'+esc(d.q[0])+'</p></div>';
+    if(st==='q2'||st==='q2b')return '<div class="sheet"><span class="tab">Q2</span><p class="read en" style="text-align:left;font-size:calc(19px * var(--rf))">'+esc(d.q[1])+'</p></div>';
+    return '';
+  }
+  if(t1c.sub==='te'){
+    const d=T1R[t1c.samp];
+    if(st==='para')return readCard('పేరా',d.para,'te');
+    if(st==='story')return readCard('కథ',d.story,'te','story');
+    if(st==='words')return gridCard('పదాలు',d.words,'te','ఏవైనా 5 పదాలు చదవండి. కనీసం 4 పదాలు సరిగ్గా చదవాలి.');
+    if(st==='letters')return gridCard('అక్షరాలు',d.letters,'te','ఏవైనా 5 అక్షరాలు చదవండి, కనీసం 4 అక్షరాలు సరిగ్గా చదవాలి.');
+    if(st==='q1')return '<div class="sheet"><span class="tab">ప్రశ్న 1</span><p class="read te" style="text-align:left;font-size:calc(19px * var(--rf))">'+esc(d.q[0])+'</p></div>';
+    if(st==='q2'||st==='q2b')return '<div class="sheet"><span class="tab">ప్రశ్న 2</span><p class="read te" style="text-align:left;font-size:calc(19px * var(--rf))">'+esc(d.q[1])+'</p></div>';
+    return '';
+  }
+  const m=T1M[t1c.samp],mk=(t,arr,op)=>'<div class="sheet"><span class="tab">'+t+'</span><div class="sums">'+
+    arr.map(x=>op==='/'?divBox(x[0],x[1]):sumBox(x[0],x[1],op)).join('')+'</div></div>';
+  if(t1c.step==='add')return mk('స్థాయి - 1 సంకలనం',m.add,'+');
+  if(t1c.step==='sub')return mk('స్థాయి - 2 వ్యవకలనం',m.sub,'−');
+  if(t1c.step==='mul')return mk('స్థాయి - 3 గుణకారం',m.mul,'×');
+  if(t1c.step==='div')return mk('స్థాయి - 4 భాగాహారం',m.div,'/');
+  const i=t1c.step.indexOf('1')>-1?0:1;
+  return '<div class="sheet"><span class="tab">వాక్యరూప ప్రశ్న '+(i+1)+'</span><p class="read te" style="text-align:left;font-size:calc(18px * var(--rf))">'+esc(m.wp[i])+'</p></div>';
+}
+function t1DrawStep(){
+  const f=t1c.flow[t1c.step];
+  $('#t1-testbar').style.display='none';
+  $('#t1-out').innerHTML='<div class="card"><h2>'+esc(t1c.name)+' · '+CLSNAME[t1c.cls]+' తరగతి · '+
+    ({te:'తెలుగు',ma:'గణితం',en:'ఇంగ్లీష్'}[t1c.sub])+' · Sample '+(t1c.samp+1)+' · '+ROUND[t1c.round]+'</h2>'+
+    '<div class="step"><h3>'+f.h+'</h3><p>'+f.p+'</p></div>'+
+    '<div class="bar noprint" style="justify-content:flex-end;margin:0"><button class="chip icon" id="ts-min">A−</button><button class="chip icon" id="ts-pls">A+</button></div>'+
+    '<div class="sheetwrap">'+t1StepSheet()+'</div>'+
+    '<div class="row2"><button class="btn yes" id="ty">'+f.yl+'</button><button class="btn no" id="tn">'+f.nl+'</button></div>'+
+    (t1c.trail.length?'<div class="trail">'+t1c.trail.join('<br>')+'</div>':'')+
+    '<div class="row2" style="margin-top:12px"><button class="btn alt sm" id="tc">రద్దు</button></div></div>';
+  $('#ts-pls').onclick=()=>setRf(rf+.1);$('#ts-min').onclick=()=>setRf(rf-.1);
+  $('#ty').onclick=()=>t1Adv(true);$('#tn').onclick=()=>t1Adv(false);
+  $('#tc').onclick=t1Reset;
+}
+function t1Adv(ok){
+  const f=t1c.flow[t1c.step];
+  t1c.trail.push('• '+f.h+' → '+(ok?f.yl:f.nl));
+  const nx=ok?f.y:f.n;
+  if(typeof nx==='string'){t1c.step=nx;t1DrawStep();}else t1Finish(nx);
+}
+function t1Finish(res){
+  const a=t1All(),r=t1c.round,pen=t1c.pen;
+  a[r]=a[r]||{};a[r][pen]=a[r][pen]||{};
+  const row=a[r][pen];
+  if(t1c.sub==='te'){row.lang=res.lang;
+    if(res.q1){row.q1=res.q1;row.q2=res.q2;}else{delete row.q1;delete row.q2;}}
+  else if(t1c.sub==='en'){row.elang=res.lang;
+    if(res.q1){row.eq1=res.q1;row.eq2=res.q2;}else{delete row.eq1;delete row.eq2;}}
+  else {row.ops=res.ops;
+    if(res.w1){row.w1=res.w1;row.w2=res.w2;}else{delete row.w1;delete row.w2;}}
+  a.meta=a.meta||{};const mk=t1c.cls+r;a.meta[mk]=a.meta[mk]||{};
+  a.meta[mk].samp=String(t1c.samp+1);a.meta[mk].date=a.meta[mk].date||today();
+  t1Save(a);
+  let big,nm,extra='';
+  if(t1c.sub==='te'||t1c.sub==='en'){big=res.lang;nm=T1_LANG[res.lang];
+    if(res.q1)extra='Q1: '+(res.q1===2?'Can':'Cannot')+' · Q2: '+(res.q2===2?'Can':'Cannot')+
+      (res.q1===2&&res.q2===2?' → Comprehension పూర్తి':'');}
+  else{big=res.ops;nm=T1_OPS[res.ops];
+    if(res.w1)extra='WP Q1: '+(res.w1===2?'Can':'Cannot')+' · WP Q2: '+(res.w2===2?'Can':'Cannot')+
+      (res.w1===2&&res.w2===2?' → Word Problem పూర్తి':'');}
+  $('#t1-out').innerHTML='<div class="card"><div class="result"><div class="big">'+big+'</div>'+
+    '<div class="nm">'+nm+'</div>'+(extra?'<p style="margin:6px 0 0;font-size:13px">'+extra+'</p>':'')+
+    '<p style="margin:6px 0 0;font-size:13px">'+esc(t1c.name)+' · '+CLSNAME[t1c.cls]+' తరగతి · '+ROUND[r]+'</p></div>'+
+    '<div class="trail">'+t1c.trail.join('<br>')+'</div>'+
+    '<p style="font-size:12.5px;color:#5c6a5f">ఈ ఫలితం నమోదు పట్టికలో ఆటోమేటిక్‌గా చేరింది.</p>'+
+    '<div class="row2"><button class="btn" id="tnx">తదుపరి విద్యార్థి</button>'+
+    '<button class="btn alt" id="ttb">పట్టిక చూడు</button></div></div>';
+  $('#tnx').onclick=()=>{const c=t1c.cls,i=t1c.idx;t1Reset();
+    $('#t1-tcls').value=c;t1FillStu();if(i+1<(STU[c]||[]).length)$('#t1-tstu').value=String(i+1);};
+  $('#ttb').onclick=()=>{t1c=null;t1cls=$('#t1-tcls').value;t1v='entry';renderT1();};
+}
+function t1Reset(){t1c=null;$('#t1-out').innerHTML='';$('#t1-testbar').style.display='';window.scrollTo({top:0});}
+$('#t1-tstart').onclick=()=>{
+  const c=$('#t1-tcls').value,idx=+$('#t1-tstu').value,rows=STU[c]||[];
+  if(!rows.length){alert('ఈ తరగతిలో విద్యార్థులు లేరు.');return;}
+  const sub=$('#t1-tsub').value;
+  t1c={cls:c,idx,pen:rows[idx][0],name:rows[idx][1],sub,round:$('#t1-tround').value,
+       samp:+$('#t1-tsamp').value,flow:{te:T1FLOW_TE,ma:T1FLOW_MA,en:T1FLOW_EN}[sub],
+       step:sub==='ma'?'add':'para',trail:[]};
+  t1DrawStep();
+};
+
+t1FillCls();
+renderT1();
+
+renderTable();
+$('#f-samp').value=String(getSamp($('#f-class').value)-1);
+$('#f-date').value=getDate($('#f-class').value);
+
+if('speechSynthesis' in window)speechSynthesis.getVoices();
+</script>
+</body>
+</html>

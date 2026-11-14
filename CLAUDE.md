@@ -183,6 +183,8 @@
 
 - 📝 2026.11.14-14 (యూజర్): పలక ప్యానెల్‌లోని నోట్ = ఒక్కో విద్యార్థికి **ఒకే నోట్ పుస్తకం** (`raiSlTx[me()+'|note']`, maxlength 60000; `slNoteLoad` పాత విభాగం వారీ నోట్లను ఒక్కసారి కలుపుతుంది) – యాప్‌లో ఎక్కడ తెరిచినా అదే; నోట్ ట్యాబ్ తెరిస్తే `slNoteHead` ఆ పేజీ పేరు (`slPageLabel` = #app h2 / పుస్తకం పేరు) + సమయం `📄 … — dd-mm hh:mm` శీర్షిక చేర్చుతుంది (అదే పేజీ అయితే మళ్ళీ కాదు; ఖాళీ శీర్షిక మార్చుతుంది); 🔒 4 అంకెల PIN (`raiNtLock[me()]` = slHash, ఈ ఫోన్‌లో మాత్రమే; `slLockBtn`/`slUnlock`/`slForgot` = నోట్ తుడిచి తాళం తీసేయి; మూసినా/యాప్ వెనక్కి వెళ్ళినా మళ్ళీ తాళం). పలక (బొమ్మలు) విభాగం వారీగా అలాగే.
 
+- 🌟 2026.11.14-15 (యూజర్): ఆటలు పేజీలో “కాన్సెప్ట్స్ బలపరచుకో” కింద `cgCard()` = “రాయ్ విద్యార్థి – C గ్రేడ్ పిల్లల కోసం” (పసుపు నేపథ్యం, ఎరుపు అంచు, నీలి మందపాటి అక్షరాలు; `.cgcard`); `CGT` 3 టూల్స్ `cgrade/` – `C_Grade_Saral_Padalu_Multi_Learning.html` (యూజర్ ఫైల్ నుండి 17 కూడిక/18 తీసివేత/19 భాగహారం తీసేసి 20–28 → 17–25 సంఖ్యలు), `Telugu_English_Word_Game.html` (యథాతథం), `AP_TaRL_Testing_Tool.html` (⚠️ అసలు ఫైల్‌లో ZPHS 3–5 పిల్లల పేర్లు+IDలు `DEFAULT_STU` ఉన్నాయి → ఖాళీ {III,IV,V} చేశాం, schoolName డిఫాల్ట్ ''). go('book',{k:'tool',back:{v:'games'}}); offFiles లో కూడా.
+
 ## పరీక్ష
 - `python3 -m http.server` + Playwright (chromium ముందే ఉంది). `node --check` అన్ని `<script>` blocks.
 - pdf.js CDN sandbox లో అందదు → `/opt/npm-tools/node_modules/pdfjs-dist/legacy/build/` ని route చేసి పరీక్షించాలి.

@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>సరళ పదాలు - మల్టీ లెర్నింగ్ టూల్</title>
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body {
+    font-family: 'Noto Sans Telugu', 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg,#667eea,#764ba2);
+    min-height: 100vh;
+    display:flex; flex-direction:column; align-items:center;
+    padding: 10px;
+  }
+  h1 {
+    color:#fff; text-align:center; margin: 10px 0 15px;
+    font-size: 1.4em; text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+  }
+  .tabs {
+    display:flex; flex-wrap:wrap; justify-content:center; gap:6px;
+    margin-bottom: 14px; max-width: 700px;
+  }
+  .tab-btn {
+    background:#ffffffcc; border:none; padding:9px 12px; border-radius:20px;
+    font-size:0.85em; font-weight:bold; color:#4a3f8f; cursor:pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn.active { background:#ffd166; color:#5b3a00; box-shadow:0 2px 8px rgba(0,0,0,0.25); }
+
+  .card {
+    background:#fff; border-radius:22px; width:100%; max-width:520px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    padding: 26px 18px; text-align:center;
+  }
+  .category-label {
+    font-size:0.95em; color:#764ba2; font-weight:bold; margin-bottom:6px;
+  }
+  .display-box {
+    background: linear-gradient(135deg,#f6f7fb,#e9ecf7);
+    border-radius:18px; padding: 30px 10px; margin: 14px 0;
+    min-height: 140px; display:flex; align-items:center; justify-content:center;
+  }
+  .big-text {
+    font-size: 4.2em; font-weight:800; color:#333;
+    word-break: break-word;
+  }
+  .big-text.english, .big-text.number, .big-text.alpha {
+    font-family: 'Trebuchet MS', sans-serif; color:#2b3a67;
+  }
+  .cap-letter {
+    font-size: 1em; font-weight:800; color:#2b3a67; line-height:1;
+  }
+  .small-letter {
+    font-size: 0.5em; font-weight:700; color:#764ba2; margin-top:10px;
+  }
+  .big-text.tableeq {
+    font-family: 'Trebuchet MS', sans-serif; color:#2b3a67;
+    font-size: 2.6em;
+  }
+  .big-text.picword {
+    font-family: 'Trebuchet MS', sans-serif; color:#2b3a67;
+    font-size: 2.2em; line-height:1.3;
+  }
+  .sub-text {
+    font-size: 1em; color:#888; margin-top:6px;
+  }
+  .btn-row { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:10px; }
+  button.action {
+    border:none; border-radius:14px; padding:14px 20px; font-size:1.05em;
+    font-weight:bold; cursor:pointer; color:#fff; min-width:130px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.1s;
+  }
+  button.action:active { transform: scale(0.96); }
+  .btn-random { background: linear-gradient(135deg,#ff6b6b,#ee5253); }
+  .btn-voice { background: linear-gradient(135deg,#1dd1a1,#10ac84); }
+  .btn-auto { background: linear-gradient(135deg,#54a0ff,#2e86de); }
+
+  .auto-row { margin-top:14px; display:flex; align-items:center; justify-content:center; gap:8px; color:#555; font-size:0.9em;}
+  .counter { margin-top:10px; font-size:0.85em; color:#999; }
+
+  .menu-row {
+    display:flex; align-items:center; gap:8px; margin-bottom:14px;
+    width:100%; max-width:520px; justify-content:center;
+  }
+  .menu-row label { color:#fff; font-weight:bold; font-size:0.95em; white-space:nowrap; }
+  #tabSelect {
+    flex:1; max-width:400px; padding:12px 10px; border-radius:14px; border:none;
+    font-size:0.95em; font-weight:bold; color:#4a3f8f; background:#fff;
+  }
+
+  .tool-title { font-weight:bold; color:#764ba2; font-size:1.05em; margin-bottom:12px; }
+  .select-row { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:12px; }
+  .opt-btn {
+    background:#eef0fb; border:2px solid #c7cdf0; border-radius:12px; padding:10px 16px;
+    font-weight:bold; color:#4a3f8f; cursor:pointer; font-size:0.95em;
+  }
+  .opt-btn.selected { background:#764ba2; color:#fff; border-color:#764ba2; }
+  .tool-display {
+    background: linear-gradient(135deg,#f6f7fb,#e9ecf7); border-radius:16px;
+    padding: 22px 10px; min-height: 90px; display:flex; align-items:center; justify-content:center;
+    font-size: 1.5em; font-weight:800; color:#333; margin:12px 0; text-align:center;
+  }
+  .pv-row {
+    display:flex; justify-content:space-between; background:#f6f7fb; border-radius:10px;
+    padding:10px 14px; margin:6px 0; font-size:1.1em;
+  }
+  .pv-place { color:#764ba2; font-weight:bold; }
+  .pv-digit { font-weight:800; color:#333; }
+  .pv-inputs { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:14px 0; }
+  .pv-inputs > div { display:flex; flex-direction:column; align-items:center; }
+  .pv-inputs input {
+    width:56px; text-align:center; font-size:1.3em; padding:8px; border-radius:10px; border:2px solid #c7cdf0;
+  }
+  .pv-inputs label { font-size:0.75em; color:#764ba2; margin-bottom:4px; font-weight:bold; }
+  input.wide-input {
+    width:100%; font-size:1.3em; padding:10px; border-radius:10px; border:2px solid #c7cdf0;
+    text-align:center; margin-bottom:10px;
+  }
+  .shape-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:10px; }
+  .shape-btn {
+    background:#eef0fb; border:2px solid #c7cdf0; border-radius:14px; padding:16px 6px;
+    cursor:pointer; font-size:1.8em; font-weight:bold; color:#4a3f8f; display:flex;
+    flex-direction:column; align-items:center; gap:4px;
+  }
+  .shape-btn .sname { font-size:0.4em; }
+  .shape-btn.selected { background:#764ba2; border-color:#764ba2; color:#fff; }
+  .number-list { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:12px 0; }
+  .number-chip {
+    background:#eef0fb; border-radius:10px; padding:8px 14px;
+    font-weight:800; color:#4a3f8f; font-size:1.1em;
+  }
+  .list-summary { color:#764ba2; font-weight:bold; margin-top:6px; }
+
+  footer { color:#f0f0f0cc; margin-top:16px; font-size:0.8em; text-align:center; }
+  @media (max-width:400px){
+    .big-text { font-size: 3.2em; }
+  }
+</style>
+</head>
+<body>
+
+<h1>📚 తెలుగు సరళ పదాలు - Learning Tool 🔊</h1>
+
+<div class="menu-row">
+  <label for="tabSelect">📂 విభాగం:</label>
+  <select id="tabSelect" onchange="switchTab(this.value)"></select>
+</div>
+
+<div class="card" id="standardCard">
+  <div class="category-label" id="categoryLabel">అక్షరాలు / గుణింతాలు</div>
+  <div class="display-box">
+    <div class="big-text" id="mainDisplay">అ</div>
+  </div>
+  <div class="sub-text" id="subText"></div>
+
+  <div class="btn-row">
+    <button class="action btn-random" onclick="showRandom(true)">🔀 యాదృచ్ఛికం</button>
+    <button class="action btn-voice" onclick="speakCurrent()">🔊 వినండి</button>
+    <button class="action btn-voice" id="revealBtn" style="display:none;" onclick="revealAnswer()">✅ సమాధానం చూపు</button>
+  </div>
+  <div class="auto-row">
+    <button class="action btn-auto" id="autoBtn" onclick="toggleAuto()">▶️ ఆటో ప్లే</button>
+  </div>
+  <div class="counter" id="counter"></div>
+</div>
+
+<!-- 16: Rounding to nearest 10/100/1000 -->
+<div class="card tool-panel" id="panel-round" style="display:none;">
+  <div class="tool-title">1️⃣6️⃣ సమీప సంఖ్యకు సవరించడం (Rounding)</div>
+  <div class="select-row">
+    <button class="opt-btn" id="rb-10" onclick="setRoundBase(10)">10కి</button>
+    <button class="opt-btn" id="rb-100" onclick="setRoundBase(100)">100కి</button>
+    <button class="opt-btn" id="rb-1000" onclick="setRoundBase(1000)">1000కి</button>
+  </div>
+  <div class="tool-display" id="roundDisplay">బేస్ ఎంచుకోండి</div>
+  <div class="btn-row">
+    <button class="action btn-random" onclick="newRoundQuestion()">🔀 కొత్త సంఖ్య</button>
+    <button class="action btn-voice" onclick="showRoundAnswer()">✅ సమాధానం చూపు</button>
+  </div>
+</div>
+
+<!-- 17: Place value separation -->
+<div class="card tool-panel" id="panel-placevalue" style="display:none;">
+  <div class="tool-title">1️⃣7️⃣ సంఖ్య స్థానాలు వేరు చేయడం</div>
+  <input type="number" id="pvInput" class="wide-input" placeholder="సంఖ్య టైప్ చేయండి (ఉదా: 4325)">
+  <div class="btn-row">
+    <button class="action btn-voice" onclick="showPlaceValue()">✅ స్థానాలు చూపు</button>
+  </div>
+  <div id="pvResult"></div>
+</div>
+
+<!-- 18: Build number from place-value digits -->
+<div class="card tool-panel" id="panel-buildnumber" style="display:none;">
+  <div class="tool-title">1️⃣8️⃣ అంకెలతో సంఖ్య తయారీ</div>
+  <div class="pv-inputs">
+    <div><label>వేలు</label><input type="number" id="d3" min="0" max="9" value="0"></div>
+    <div><label>వందలు</label><input type="number" id="d2" min="0" max="9" value="0"></div>
+    <div><label>పదులు</label><input type="number" id="d1" min="0" max="9" value="0"></div>
+    <div><label>ఒకట్లు</label><input type="number" id="d0" min="0" max="9" value="0"></div>
+  </div>
+  <div class="btn-row">
+    <button class="action btn-voice" onclick="buildNumber()">✅ సంఖ్యను తయారు చేయండి</button>
+  </div>
+  <div class="tool-display" id="buildResult">సంఖ్య ఇక్కడ కనిపిస్తుంది</div>
+</div>
+
+<!-- 19: 2D / 3D shape names -->
+<div class="card tool-panel" id="panel-shapes" style="display:none;">
+  <div class="tool-title">1️⃣9️⃣ 2D / 3D ఆకారాలు పేర్లు</div>
+  <div class="tool-display" id="shapeDisplay">ఒక ఆకారాన్ని ఎంచుకోండి</div>
+  <div style="font-weight:bold;color:#764ba2;margin:10px 0 4px;">2D ఆకారాలు</div>
+  <div class="shape-grid" id="shapeGrid2D"></div>
+  <div style="font-weight:bold;color:#764ba2;margin:14px 0 4px;">3D ఆకారాలు</div>
+  <div class="shape-grid" id="shapeGrid3D"></div>
+</div>
+
+<!-- 20: Arrange given digits largest-to-smallest / smallest-to-largest -->
+<div class="card tool-panel" id="panel-arrange" style="display:none;">
+  <div class="tool-title">2️⃣0️⃣ ఇచ్చిన అంకెలతో పెద్ద/చిన్న సంఖ్య అమర్చడం</div>
+  <input type="text" id="digits23" class="wide-input" placeholder="అంకెలు కామాతో ఇవ్వండి (ఉదా: 7,8,6,7,8,9,6)">
+  <div class="btn-row">
+    <button class="action btn-voice" onclick="arrangeDigits23()">✅ అమర్చు</button>
+  </div>
+  <div id="result23"></div>
+</div>
+
+<!-- 21: 3,4,5 తో ఏర్పడే 3 అంకెల సంఖ్యలు -->
+<div class="card tool-panel" id="panel-perm3" style="display:none;">
+  <div class="tool-title">2️⃣1️⃣ అంకెలతో ఏర్పడే 3 అంకెల సంఖ్యలు</div>
+  <input type="text" id="digits24" class="wide-input" placeholder="3 అంకెలు ఇవ్వండి (ఉదా: 3,4,5)">
+  <div class="btn-row">
+    <button class="action btn-voice" onclick="generatePerm3()">✅ సంఖ్యలు రాయి</button>
+  </div>
+  <div id="result24"></div>
+</div>
+
+<!-- 22: 3,8,7,9 తో ఏర్పడే 4 అంకెల సంఖ్యలు -->
+<div class="card tool-panel" id="panel-perm4" style="display:none;">
+  <div class="tool-title">2️⃣2️⃣ అంకెలతో ఏర్పడే 4 అంకెల సంఖ్యలు</div>
+  <input type="text" id="digits25" class="wide-input" placeholder="4 అంకెలు ఇవ్వండి (ఉదా: 3,8,7,9)">
+  <div class="btn-row">
+    <button class="action btn-voice" onclick="generatePerm4()">✅ సంఖ్యలు రాయి</button>
+  </div>
+  <div id="result25"></div>
+</div>
+
+<!-- 23: 3,9,0,8 తో ఏర్పడే 2/3/4 అంకెల సంఖ్యలు -->
+<div class="card tool-panel" id="panel-perm234" style="display:none;">
+  <div class="tool-title">2️⃣3️⃣ అంకెలతో ఏర్పడే 2, 3, 4 అంకెల సంఖ్యలు</div>
+  <input type="text" id="digits26" class="wide-input" placeholder="అంకెలు ఇవ్వండి (ఉదా: 3,9,0,8)">
+  <div class="select-row">
+    <button class="opt-btn" id="pl-2" onclick="setPermLen(2)">2 అంకెలు</button>
+    <button class="opt-btn" id="pl-3" onclick="setPermLen(3)">3 అంకెలు</button>
+    <button class="opt-btn" id="pl-4" onclick="setPermLen(4)">4 అంకెలు</button>
+  </div>
+  <div class="btn-row">
+    <button class="action btn-voice" onclick="generatePerm26()">✅ సంఖ్యలు రాయి</button>
+  </div>
+  <div id="result26"></div>
+</div>
+
+<!-- 24: Comma-separate places (Indian numbering system) -->
+<div class="card tool-panel" id="panel-comma" style="display:none;">
+  <div class="tool-title">2️⃣4️⃣ సంఖ్యను స్థానాలు కామాతో వేరు చేయుట</div>
+  <input type="number" id="commaInput" class="wide-input" placeholder="సంఖ్య టైప్ చేయండి (ఉదా: 786543)">
+  <div class="btn-row">
+    <button class="action btn-voice" onclick="showCommaFormat()">✅ కామాలు వేయి</button>
+  </div>
+  <div class="tool-display" id="commaResult">సమాధానం ఇక్కడ కనిపిస్తుంది</div>
+</div>
+
+<!-- 25: Class 1-5 English Main Words -->
+<div class="card tool-panel" id="panel-mainwords" style="display:none;">
+  <div class="tool-title">2️⃣5️⃣ 1-5 తరగతుల ఇంగ్లీష్ మెయిన్ వర్డ్స్</div>
+  <div class="select-row">
+    <button class="opt-btn" id="mw-1" onclick="setMainWordClass(1)">1వ తరగతి</button>
+    <button class="opt-btn" id="mw-2" onclick="setMainWordClass(2)">2వ తరగతి</button>
+    <button class="opt-btn" id="mw-3" onclick="setMainWordClass(3)">3వ తరగతి</button>
+    <button class="opt-btn" id="mw-4" onclick="setMainWordClass(4)">4వ తరగతి</button>
+    <button class="opt-btn" id="mw-5" onclick="setMainWordClass(5)">5వ తరగతి</button>
+  </div>
+  <div class="tool-display" id="mainWordDisplay">తరగతి ఎంచుకోండి</div>
+  <div class="btn-row">
+    <button class="action btn-random" onclick="newMainWord()">🔀 కొత్త పదం</button>
+    <button class="action btn-voice" onclick="speakMainWord()">🔊 వినండి</button>
+    <button class="action btn-voice" onclick="showMainWordMeaning()">✅ అర్థం చూపు</button>
+  </div>
+  <div class="counter" id="mainWordCounter"></div>
+</div>
+
+<footer>BOMIDI RAMESH,SGT,ZPHS TV Palli · offline తెలుగు లెర్నింగ్ టూల్</footer>
+
+<div id="remoteLegend" style="max-width:520px;width:100%;margin:14px auto 0;background:#ffffffdd;border-radius:14px;padding:12px 16px;color:#333;font-size:0.82em;text-align:center;">
+  🎮 <b>రిమోట్ క్లికర్ (Bluetooth Presenter) కీలు:</b><br>
+  ➡️ / Space / Page Down → తదుపరి / సమాధానం చూపు &nbsp;|&nbsp;
+  ⬅️ / Page Up → మళ్ళీ వినండి<br>
+  ⬆️ ⬇️ → విభాగం మార్చు
+</div>
+
+<script>
+/* ================= DATA GENERATION ================= */
+
+const vowels = ['అ','ఆ','ఇ','ఈ','ఉ','ఊ','ఎ','ఏ','ఐ','ఒ','ఓ','ఔ'];
+const matraSuffix = ['','ా','ి','ీ','ు','ూ','ె','ే','ై','ొ','ో','ౌ'];
+const consonants = ['క','గ','చ','జ','ట','డ','త','ద','న','ప','బ','మ','య','ర','ల','వ','ళ','శ','ష','స','హ'];
+
+// Base consonant char without inherent vowel mark removed (already correct forms)
+function buildGunintham(){
+  let list = [];
+  consonants.forEach(c=>{
+    vowels.forEach((v,i)=>{
+      const base = c + matraSuffix[i];
+      list.push(base);        // original letter, unchanged
+      list.push(base + 'ం');  // same letter + సున్నా (anusvara)
+    });
+  });
+  return list;
+}
+
+const letterPool = [...vowels, 'ం', ...buildGunintham()];
+
+// Telugu simple (సరళ) words - built only from allowed letters, no conjuncts
+const teluguWords = [
+"తల","జల","నది","పడవ","కమల","కలము","పాప","రవి","శివ","తాత","మామ","రాజు","పులి","కోడి","మేక",
+"చేప","కాకి","పాము","నీరు","పండు","తోట","బడి","పలక","గోడ","తలుపు","కుండ","జడ","వల","తామర",
+"మామిడి","జామ","నేల","గాలి","నీడ","ఎలుక","పాట","మాట","రాత","చాప","నావ","తాడు","గోరు","కాలు",
+"కాయ","తీపి","కారం","వేడి","చలి","పగలు","నెల","ఏడు","ఆరు","పది","వరి","కూర","పాలు","తేలు",
+"జేబు","సంత","పంట","రంగు","తేనె","రోజు","తారా","వాన","వేళ","తీగ","రేగు","కోతి","ఏనుగు","గోవు",
+"ఆవు","పసి","పసుపు","రసం","గురువు","శిల","హరి","వాహనం","మహిమ","రాయి","మాయ","తెలుగు","దోషం",
+"వంట","కొండ","చెంప","తుంపర","పందిరి",
+  "అరక", "అలక", "అమల", "అచల", "అభయ", "అమర", "అలస", "అటక", "అణగ", "అధర",
+  "అనస", "అవతల", "అవసర", "అహహ", "అంతం", "అందం", "అంబరం", "అంగణం", "అండం", "అంచన",
+  "అంజన", "అంతర", "అందర", "ఆమడ", "ఆసన", "ఆవరం", "ఆసనం", "ఆహరం", "ఇటక", "ఇతర",
+  "ఇంధన", "ఇంధనం", "ఈకల", "ఈషణ", "ఉదర", "ఉదయ", "ఉదయం", "ఉపమ", "ఉపల", "ఉషర",
+  "ఊయల", "ఎండ", "సంత", "ఎరక", "ఎలక", "ఒదగ", "ఒరవ", "ఔషధం", "ఐదవ", "ఏడవ",
+  "కంకణ", "కంకణం", "కండర", "కండరం", "కమల", "కమలం", "కదన", "కదనం", "కవన", "కవనం",
+  "కలశం", "కలత", "కడప", "కనక", "కనకం", "కంఠం", "కందర", "కందరం", "కటక", "కటకం",
+  "కవచం", "కలప", "కలం", "కండ", "కంత", "కంస", "కమండలం", "కంకరం", "గగన", "గగనం",
+  "గమన", "గమనం", "గరళం", "గలగల", "గడప", "గరవ", "గంప", "గండం", "గంధం", "గడన",
+  "ఘటం", "చదరంగం", "చమక", "చమకం", "చరణం", "చలనం", "చపల", "చదరం", "చందనం", "చంపక",
+  "జగం", "జడత", "జననం", "జలజ", "జలజం", "జయం", "జలకరం", "జంతకం", "ఝషం", "టంకం",
+  "తలం", "తపం", "తరంగ", "తరణం", "తనయ", "తమలం", "తరల", "తడక", "తండం", "తపన",
+  "తపనం", "తమం", "తరం", "తల", "తప", "తలపం", "తంబరం", "దయ", "దశ", "దళం",
+  "దమనం", "దండం", "దంతం", "ధనం", "ధర", "ధవళం", "నడక", "నయనం", "నరకం", "నటన",
+  "నటనం", "నగరం", "నలత", "నందనం", "నరం", "నగ", "నట", "నవ", "నయం", "నల",
+  "నంద", "నవన", "పడవ", "పలక", "పవనం", "పయనం", "పఠనం", "పరమం", "పతకం", "పతంగం",
+  "పగడం", "పనస", "పలచ", "పంచం", "పండం", "ఫలం", "బలం", "బలపం", "బండం", "బదర",
+  "భయం", "భరతం", "భవనం", "భజన", "భరం", "మకరం", "మరణం", "మదనం", "మమత", "మంచం",
+  "మంటపం", "మండలం", "మందరం", "యమక", "యశం", "యంత్రం", "రజతం", "రమణ", "రసం", "రథం",
+  "రంజన", "రంగం", "రంపం", "లలన", "లవణం", "లయం", "వలస", "వనజ", "వచనం", "వదనం",
+  "వలయ", "వంశం", "శకటం", "శపథం", "శరణం", "శతకం", "శంఖం", "శవం", "శరం", "షడంగం",
+  "సమత", "సరళ", "సరసం", "సమరం", "సదనం", "సవరం", "సఫలం", "సంతకం", "సంబరం", "హంస",
+  "కల", "గజ", "చద", "జల", "జవ", "దడ", "నడ", "పగ", "మద", "మన",
+  "రవ", "లత", "వల", "హల", "జడ", "వన", "శనగ", "మలమల", "సలసల", "కలకల",
+  "దలదల", "తలతల", "వలవల", "చకచక", "టపటప", "లకలక", "ఝణఝణ", "కటకట", "లకలకం", "ఝలఝల",
+
+];
+
+// 3-letter English words (kid-friendly)
+const englishWords = [
+"CAT","DOG","SUN","PEN","CUP","BAT","RAT","MAT","HAT","CAR","BUS","BOX","PIG","HEN","COW",
+"OWL","BEE","ANT","FOX","EGG","ICE","TEA","MAN","BOY","TOY","BAG","CAP","FAN","JAM","JAR",
+"KEY","LEG","ARM","EAR","EYE","LIP","TOE","WEB","ZIP","YES","TOP","MOP","HOP","HOT","BIG",
+"RED","BED","BIN","WIN","WIG","FIG","FIN","GUN","GUM","HUT","HUG","JOG","JOB","LOG","LOT",
+"MUD","MUG","NUT","OIL","PAN","PIN","POT","RUG","RUN","SAD","SAT","SEA","SET","SIT","SIX",
+"SKY","SON","TAP","TEN","TIN","TIP","VAN","WAX","YAK","ZOO","BUD","BUG","BUN","CAB","CAN",
+"COB","COD","COT","CUB","CUT","DAD","DAM","DAY","DIG","DIP","DOT","DUG","FAR","FAT","FED",
+"FIT","FOG","FOR","FUN","FUR","GAP","GAS","GEM","GET","GOD","GOT","GUY","HAM","HAY","HID",
+"HIM","HIP","HIT","HOW","HUB","JOY","JUG","KID","KIT","LAB","LAP","LAW","LEG","LID","LIT",
+"LOW","MAD","MAP","MAY","MOM","NET","NEW","NOD","NOT","NOW","OAK","ODD","OWN","PAD","PAT",
+"PAW","PAY","PEA","PET","PIE","PIT","POP","PUB","PUP","RAG","RAN","RAW","RIB","RID","RIM",
+"RIP","ROB","ROD","ROT","ROW","RUB","SAP","SAW","SAY","SEW","SHE","SHY","SIN","SIP","SIR",
+"SLY","SOW","SPY","SUM","TAG","TAN","TAR","TAX","TIE","TOP","TUB","TUG","VAT","VET","WAR",
+"WAS","WAY","WED","WET","WHY","WIN","WIT","YET","YOU"
+];
+
+// Dvitva (double-letter) words using only allowed letters
+const dvitvaWords = [
+"అక్క","కుక్క","బొమ్మ","అమ్మ","నాన్న","చెల్లి","పిల్ల","గుడ్డ","వడ్డి","తప్పు",
+"మొగ్గ","వెళ్ళు","నల్ల","పళ్ళు","ఇల్లు","కళ్ళు","వెన్న","చిన్న","మజ్జిగ","రొట్టె",
+"గుట్ట","పుట్ట","బొట్టు","కొత్త","వత్తి","పువ్వు","అవ్వ","జుత్తు","బస్సు","గొప్ప",
+"తుమ్మ","జొన్న","దుమ్ము","ఎర్ర","మర్రి","కర్ర",
+  "అక్క", "చెక్క", "ముక్క", "నక్క", "చుక్క", "పక్క", "తక్కెడ", "బొక్క", "మక్కువ", "దిక్కు",
+  "మిక్కుటం", "చక్కన", "తక్కువ", "ఎక్కువ", "ముక్కు", "కుక్క", "ఒక్కడు", "చిక్కు", "నిక్కం", "రొక్కం",
+  "డొక్క", "తొక్క", "పిక్క", "నక్కలు", "చక్కటి", "మొగ్గ", "బుగ్గ", "అగ్గి", "దగ్గు", "సిగ్గు",
+  "బొగ్గు", "రగ్గు", "ముగ్గు", "దిగ్గజం", "జగ్గయ్య", "ఒగ్గు", "సుగ్గు", "ముగ్గురు", "నిగ్గు", "దగ్గరకు",
+  "పచ్చ", "పిచ్చుక", "మచ్చ", "గుచ్చు", "రచ్చ", "నచ్చజెప్పు", "విచ్చలవిడి", "వెచ్చన", "కుచ్చు", "లొచ్చు",
+  "గజ్జెలు", "బజ్జీ", "బుజ్జి", "మజ్జిగ", "సజ్జలు", "లజ్జ", "గజ్జి", "సజ్జన", "బొజ్జ", "దజ్జా",
+  "చెట్టు", "పిట్ట", "పుట్ట", "गట్టు", "రొట్టె", "పొట్ట", "కట్టు", "కొట్టు", "జట్టు", "అట్ట",
+  "దిట్ట", "తట్ట", "బుట్ట", "గుట్ట", "మట్ట", "చుట్టూ", "పెట్టె", "జుట్టు", "ఒట్టు", "గిట్టెడు",
+  "తిట్టడం", "నెట్టడం", "పట్టు", "బిట్టు", "మొట్టమొదట", "గుడ్డు", "వడ్డీ", "బిడ్డ", "లడ్డు", "గడ్డం",
+  "గొడ్డలి", "దొడ్డి", "గుడ్డ", "అడ్డం", "వడ్డన", "తెడ్డు", "జెడ్డా", "ఒడ్డు", "తుడ్డు", "మొగ్గ",
+  "అత్త", "సుత్తి", "కత్తి", "చెత్త", "నత్త", "పత్తి", "సుత్తె", "కొత్త", "ఒత్తు", "గొత్తు",
+  "మెత్తన", "విత్తనం", "చిత్తం", "పిత్త", "ఉత్తరం", "దత్తత", "సత్తా", "మత్తెక్కిన", "మత్తు", "పొత్తు",
+  "ఎత్తు", "జిత్తులమారి", "నిత్తురు", "కిత్తనార", "ముత్తాత", "పెద్ద", "ఎద్దు", "ముద్దు", "హద్దు", "గుద్దు",
+  "పద్దు", "గద్ద", "చద్ది", "గద్దె", "మొద్దు", "వద్దు", "నిద్దుర", "అద్దం", "లొద్ద", "దుద్దులు",
+  "పొద్దు", "రద్దు", "సుద్దులు", "గిద్ద", "బొద్దు", "నాన్న", "వెన్న", "చిన్న", "జున్ను",
+  "ఉన్న", "కన్ను", "పన్ను", "మన్ను", "నిన్న", "మున్నూరు", "తిన్నగా", "వెన్నెల", "విన్నపం", "మొన్న",
+  "గిన్నె", "దున్నపోతు", "సున్నం", "ఎన్నడు", "పన్నీరు", "చన్నీళ్ళు", "కన్నీరు", "మన్నన", "మిన్న", "తిన్నె",
+  "కప్ప", "తప్పు", "ఉప్పు", "నిప్పు", "గొప్ప", "కుప్ప", "దెబ్బ", "అబ్బా", "కొబ్బరి", "గుబ్బ",
+  "జబ్బ", "బొబ్బలు", "రబ్బరు", "తిప్ప", "చొప్పున", "అప్పడం", "రెప్ప", "ముప్పు", "ఒప్పందం", "చెప్పడం",
+  "దప్పిక", "గొబ్బెమ్మ", "సబ్బి", "డబ్బా", "సుబ్బడు", "అమ్మ", "బొమ్మ", "కొమ్మ", "రెమ్మ", "తమ్ముడు",
+  "నమ్మకం", "తుమ్మ", "గుమ్మం", "కొమ్ము", "సొమ్ము", "కమ్మని", "దుమ్ము", "నిమ్మ", "చెమ్మ", "గమ్మత్తు",
+  "రమ్మను", "పొమ్మను", "జుమ్మని", "తిమ్మన", "దమ్మయ్య", "అయ్య", "నెయ్యి", "గొయ్యి", "నుయ్యి", "చెయ్యి",
+  "కొయ్య", "రొయ్య", "కయ్యం", "వియ్యం", "వియ్యంకుడు", "వెయ్యి", "దయ్యం", "బియ్యం", "చియ్య", "ఉయ్యాల",
+  "పిల్లి", "తల్లి", "చెల్లి", "మల్లి", "బల్లి", "ఒళ్లు", "ఇల్లు", "ముల్లు", "కల్లు", "నల్లని",
+  "చల్లని", "తెల్లని", "గొల్ల", "మల్లె", "పల్లె", "అవ్వ", "బువ్వ", "పువ్వు", "జవ్వనము", "కొవ్వు",
+
+];
+
+// Samyuktakshara (conjunct consonant) words using only allowed letters
+const samyuktaWords = [
+"పుస్తకం","కష్టం","నష్టం","గుర్తు","పర్వతం","సర్వం","గర్వం","మార్గం","దుర్గం","శ్రమ",
+"క్షమ","పరీక్ష","విద్య","సూర్యుడు","తర్వాత","గ్రామం","ప్రమాదం","ప్రయాణం","ప్రజలు","క్రమం",
+"సముద్రం","చంద్రుడు","ఇంద్రుడు","నమస్కారం","మిత్రుడు","పత్రిక","చిత్రం","గోత్రం","రాత్రి","స్నేహితుడు",
+"ఆస్తి","హస్తం","న్యాయం","కర్మ","శర్మ","బ్రహ్మ","పద్మం","పద్యం","శ్రీ","ప్రేమ",
+"స్నానం","స్నేహం","ఆహ్వానం","ఆత్మ","సత్యం","నిత్యం","రాజ్యం",
+  "బ్రహ్మ", "చక్రం", "వస్త్రం", "ఖడ్గం", "రత్నం", "పద్మం", "విద్య", "సత్యం", "మార్గం", "వర్షం",
+  "భక్తి", "ముక్తి", "శక్తి", "రక్తం", "యుక్తం", "సూక్తి", "వ్యక్తం", "ఆసక్తి", "విరక్తి", "అనురక్తి",
+  "అక్షరం", "పక్షి", "శిక్షణ", "రక్షణ", "భక్షణ", "వీక్షణ", "దక్షత", "కాంక్ష", "పరీక్ష", "దీక్ష",
+  "క్షణం", "క్షేమం", "క్షామం", "క్షీరం", "క్షురక", "క్షేత్రం", "క్షీణత", "తీక్ష్ణ", "కుక్షి", "వక్త్రం",
+  "చైత్రం", "జైత్రం", "చిత్రం", "మిత్రం", "పాత్రం", "నేత్రం", "సూత్రం", "గాత్రం", "గోత్రం", "వక్రం",
+  "ప్రకాశం", "ప్రయాణం", "ప్రగతి", "ప్రసాదం", "ప్రభావం", "ప్రముఖం", "ప్రణామం", "ప్రతిమ", "ప్రథమ", "ప్రవాహం",
+  "ప్రార్థన", "ప్రాప్తి", "ప్రతాపం", "ప్రపంచం", "ప్రమోదం", "ప్రవేశం", "ప్రవచనం", "ప్రభుత్వం", "ప్రకటన", "ప్రకారం",
+  "బ్రాహ్మణుడు", "భ్రమ", "భ్రాంతి", "భ్రష్టం", "గ్రంథం", "గ్రహం", "గ్రామం", "గ్రీష్మం", "గ్రూపు", "ద్రవం",
+  "ద్రవ్యం", "ద్రోహం", "ద్రాక్ష", "ద్రుపద", "శ్రేణి", "శ్రవణం", "శ్రామికుడు", "శ్రీకారం", "శ్రోత", "హర్షం",
+  "కర్షకుడు", "స్పర్శ", "ఆకర్షణ", "వికర్షణ", "ప్రదర్శన", "విమర్శ", "ఆదర్శం", "స్పర్థ", "రమ్య" ,"కీర్తి", "మూర్తి",
+  "ఆర్తి", "స్ఫూర్తి", "వర్తకుడు", "కీర్తనం", "నర్తనం", "స్వర్గం", "దుర్గా", "సర్గ", "నిర్గమ", "శార్దూలం",
+  "గర్భం", "దౌర్భాగ్యం", "నిర్భయ", "ఆవిర్భావం", "గర్వం", "పూర్వం", "పర్వం", "శర్వాణి", "నిర్వీర్యం", "ఖర్జూరం",
+  "దర్పం", "సర్పం", "దర్బారు", "పదార్ధం", "విద్యార్థి", "తీర్థం", "సామర్థ్యం", "వ్యర్థం", "ధర్మం", "కర్మ",
+  "మర్మం", "చర్మం", "కూర్మం", "భార్య", "కార్యం", "శౌర్యం", "వీర్యం", "శాస్త్రం", "అస్త్రం", "శస్త్రం",
+  "స్తోత్రం", "మస్తకం", "విస్తీర్ణం", "అగస్త్య", "స్వస్తి", "హస్తం", "స్వామి", "స్వప్నం", "స్వరం", "స్వభావం",
+  "స్వదేశం", "స్వయం", "స్వల్పం", "స్వాగతం", "స్వాతంత్ర్యం", "స్వార్థం", "స్పష్టం", "స్పృహ", "స్పందన", "స్ఫటికం",
+  "స్ఫురణ", "స్ఫోటకం", "స్మరణ", "స్మారకం", "స్మితం", "స్మృతి", "భస్మం", "విస్మయం", "సంస్మరణ", "విస్మరణ",
+  "కష్టం", "నష్టం", "ఇష్టం", "శిష్టం", "సృష్టి", "దృష్టి", "భాగ్యం", "యోగ్యత", "ఆరోగ్యం", "భోగ్యం",
+  "వైరాగ్యం", "సౌభాగ్యం", "యోగ్యుడు", "పద్యం", "గద్యం", "విద్యుత్", "విద్వాంసుడు", "ఉద్యానవనం", "వాద్యం", "వేద్యం",
+  "ఆద్యుడు", "నింద్య", "వంద్య", "హృద్యం", "మధ్యమ", "ధ్యానం", "ధ్యేయం", "సాధ్యం", "ఆరాధ్య", "కన్య",
+  "ధన్యుడు", "మాన్యుడు", "పుణ్యం", "అరణ్యం", "లావణ్యం", "నైపుణ్యం", "దాంపత్యం", "స్తన్యం", "ధాన్యం", "కావ్యం",
+  "దివ్యం", "భవ్యం", "నవ్య", "శ్రావ్యం", "రమ్య", "గమ్యం", "సామ్యం", "లభ్యత", "సభ్యుడు", "దృశ్యం",
+  "అవశ్యం", "కృష్ణుడు", "విష్ణువు", "జిష్ణువు", "ఉష్ణము", "తృష్ణ", "సద్మ", "యత్నం", "పత్ని", "రత్నాకరం",
+  "విఘ్నం", "నగ్న", "లగ్నం", "మగ్నం", "ఆమ్లం", "గుల్మం", "శిల్పం", "కల్పన", "అల్పం", "సంకల్పం",
+  "జ్యోతి", "జ్వాల", "జ్యేష్ట", "జ్యోతిష్యం", "వ్యాసం", "వ్యాప్తి", "వ్యాధి", "వ్యాకరణం", "వ్యయం", "వ్యవస్థ",
+
+];
+
+
+function randomNumber(){ return Math.floor(Math.random()*1000)+1; }
+
+// Small alphabets a-z
+const smallAlphabets = "abcdefghijklmnopqrstuvwxyz".split('');
+// Capital alphabets A-Z (paired with smallAlphabets by index)
+const capitalAlphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+let alphaItem = null;
+
+// Plain vowels + consonants + sunna (no gunintham combining)
+const vowConsPool = [...vowels, ...consonants, 'ం'];
+
+// Picture + word (fill missing middle letter) dataset
+const wordPictures = [
+{word:"CAT", emoji:"🐱"}, {word:"DOG", emoji:"🐶"}, {word:"SUN", emoji:"☀️"}, {word:"CUP", emoji:"☕"},
+{word:"BAT", emoji:"🦇"}, {word:"RAT", emoji:"🐀"}, {word:"HAT", emoji:"🎩"}, {word:"CAR", emoji:"🚗"},
+{word:"BUS", emoji:"🚌"}, {word:"BOX", emoji:"📦"}, {word:"PIG", emoji:"🐷"}, {word:"HEN", emoji:"🐔"},
+{word:"COW", emoji:"🐮"}, {word:"OWL", emoji:"🦉"}, {word:"BEE", emoji:"🐝"}, {word:"ANT", emoji:"🐜"},
+{word:"FOX", emoji:"🦊"}, {word:"EGG", emoji:"🥚"}, {word:"ICE", emoji:"🧊"}, {word:"TEA", emoji:"🍵"},
+{word:"BOY", emoji:"👦"}, {word:"TOY", emoji:"🧸"}, {word:"BAG", emoji:"👜"}, {word:"CAP", emoji:"🧢"},
+{word:"JAM", emoji:"🍯"}, {word:"KEY", emoji:"🔑"}, {word:"LEG", emoji:"🦵"}, {word:"EAR", emoji:"👂"},
+{word:"EYE", emoji:"👁️"}, {word:"SKY", emoji:"🌌"}, {word:"SEA", emoji:"🌊"}, {word:"BED", emoji:"🛏️"},
+{word:"FAN", emoji:"🌀"}, {word:"MAP", emoji:"🗺️"}, {word:"NUT", emoji:"🥜"}, {word:"PIE", emoji:"🥧"},
+{word:"JAR", emoji:"🫙"}, {word:"WEB", emoji:"🕸️"},
+  { "word": "BAT", "emoji": "🦇" },
+  { "word": "DOG", "emoji": "🐶" },
+  { "word": "CAT", "emoji": "🐱" },
+  { "word": "MOUSE", "emoji": "🐭" },
+  { "word": "HAMSTER", "emoji": "🐹" },
+  { "word": "RABBIT", "emoji": "🐰" },
+  { "word": "FOX", "emoji": "🦊" },
+  { "word": "BEAR", "emoji": "🐻" },
+  { "word": "PANDA", "emoji": "🐼" },
+  { "word": "KOALA", "emoji": "🐨" },
+  { "word": "TIGER", "emoji": "🐯" },
+  { "word": "LION", "emoji": "🦁" },
+  { "word": "COW", "emoji": "🐮" },
+  { "word": "PIG", "emoji": "🐷" },
+  { "word": "FROG", "emoji": "🐸" },
+  { "word": "MONKEY", "emoji": "🐵" },
+  { "word": "CHICKEN", "emoji": "🐔" },
+  { "word": "PENGUIN", "emoji": "🐧" },
+  { "word": "BIRD", "emoji": "🐦" },
+  { "word": "DUCK", "emoji": "🦆" },
+  { "word": "EAGLE", "emoji": "🦅" },
+  { "word": "OWL", "emoji": "🦉" },
+  { "word": "WOLF", "emoji": "🐺" },
+  { "word": "HORSE", "emoji": "🐴" },
+  { "word": "UNICORN", "emoji": "🦄" },
+  { "word": "BEE", "emoji": "🐝" },
+  { "word": "BUG", "emoji": "🐛" },
+  { "word": "BUTTERFLY", "emoji": "🦋" },
+  { "word": "SNAIL", "emoji": "🐌" },
+  { "word": "SPIDER", "emoji": "🕷️" },
+  { "word": "TURTLE", "emoji": "🐢" },
+  { "word": "SNAKE", "emoji": "🐍" },
+  { "word": "LIZARD", "emoji": "🦎" },
+  { "word": "OCTOPUS", "emoji": "🐙" },
+  { "word": "SQUID", "emoji": "🦑" },
+  { "word": "SHRIMP", "emoji": "🦐" },
+  { "word": "CRAB", "emoji": "🦀" },
+  { "word": "FISH", "emoji": "🐟" },
+  { "word": "DOLPHIN", "emoji": "🐬" },
+  { "word": "SHARK", "emoji": "🦈" },
+  { "word": "WHALE", "emoji": "🐋" },
+  { "word": "CROCODILE", "emoji": "🐊" },
+  { "word": "LEOPARD", "emoji": "🐆" },
+  { "word": "ZEBRA", "emoji": "🦓" },
+  { "word": "GORILLA", "emoji": "🦍" },
+  { "word": "ELEPHANT", "emoji": "🐘" },
+  { "word": "HIPPOPOTAMUS", "emoji": "🦛" },
+  { "word": "RHINOCEROS", "emoji": "🦏" },
+  { "word": "CAMEL", "emoji": "🐪" },
+  { "word": "GIRAFFE", "emoji": "🦒" },
+  { "word": "KANGAROO", "emoji": "🦘" },
+  { "word": "SHEEP", "emoji": "🐑" },
+  { "word": "GOAT", "emoji": "🐐" },
+  { "word": "DEER", "emoji": "🦌" },
+  { "word": "ROOSTER", "emoji": "🐓" },
+  { "word": "TURKEY", "emoji": "🦃" },
+  { "word": "PEACOCK", "emoji": "🦚" },
+  { "word": "PARROT", "emoji": "🦜" },
+  { "word": "SWAN", "emoji": "🦢" },
+  { "word": "HEDGEHOG", "emoji": "🦔" },
+  { "word": "OTTER", "emoji": "🦦" },
+  { "word": "SLOTH", "emoji": "🦥" },
+  { "word": "SKUNK", "emoji": "🦨" },
+  { "word": "ANT", "emoji": "🐜" },
+  { "word": "MOSQUITO", "emoji": "🦟" },
+  { "word": "CRICKET", "emoji": "🦗" },
+  { "word": "SCORPION", "emoji": "🦂" },
+  { "word": "DINOSAUR", "emoji": "🦖" },
+  { "word": "APPLE", "emoji": "🍎" },
+  { "word": "PEAR", "emoji": "🍐" },
+  { "word": "PEACH", "emoji": "🍑" },
+  { "word": "CHERRY", "emoji": "🍒" },
+  { "word": "STRAWBERRY", "emoji": "🍓" },
+  { "word": "GRAPE", "emoji": "🍇" },
+  { "word": "WATERMELON", "emoji": "🍉" },
+  { "word": "BANANA", "emoji": "🍌" },
+  { "word": "LEMON", "emoji": "🍋" },
+  { "word": "ORANGE", "emoji": "🍊" },
+  { "word": "MANGO", "emoji": "🥭" },
+  { "word": "PINEAPPLE", "emoji": "🍍" },
+  { "word": "MELON", "emoji": "🍈" },
+  { "word": "KIWI", "emoji": "🥝" },
+  { "word": "TOMATO", "emoji": "🍅" },
+  { "word": "EGGPLANT", "emoji": "🍆" },
+  { "word": "AVOCADO", "emoji": "🥑" },
+  { "word": "BROCCOLI", "emoji": "🥦" },
+  { "word": "CUCUMBER", "emoji": "🥒" },
+  { "word": "CHILI", "emoji": "🌶️" },
+  { "word": "CORN", "emoji": "🌽" },
+  { "word": "CARROT", "emoji": "🥕" },
+  { "word": "GARLIC", "emoji": "🧄" },
+  { "word": "ONION", "emoji": "🧅" },
+  { "word": "POTATO", "emoji": "🥔" },
+  { "word": "CROISSANT", "emoji": "🥐" },
+  { "word": "BREAD", "emoji": "🍞" },
+  { "word": "PRETZEL", "emoji": "🥨" },
+  { "word": "PANCAKES", "emoji": "🥞" },
+  { "word": "CHEESE", "emoji": "🧀" },
+  { "word": "MEAT", "emoji": "🍖" },
+  { "word": "STEAK", "emoji": "🥩" },
+  { "word": "BACON", "emoji": "🥓" },
+  { "word": "HAMBURGER", "emoji": "🍔" },
+  { "word": "FRIES", "emoji": "🍟" },
+  { "word": "PIZZA", "emoji": "🍕" },
+  { "word": "HOTDOG", "emoji": "🌭" },
+  { "word": "SANDWICH", "emoji": "🥪" },
+  { "word": "TACO", "emoji": "🌮" },
+  { "word": "BURRITO", "emoji": "🌯" },
+  { "word": "EGG", "emoji": "🥚" },
+  { "word": "POPCORN", "emoji": "🍿" },
+  { "word": "BUTTER", "emoji": "🧈" },
+  { "word": "SUSHI", "emoji": "🍣" },
+  { "word": "RAMEN", "emoji": "🍜" },
+  { "word": "DONUT", "emoji": "🍩" },
+  { "word": "COOKIE", "emoji": "🍪" },
+  { "word": "CAKE", "emoji": "🎂" },
+  { "word": "CUPCAKE", "emoji": "🧁" },
+  { "word": "PIE", "emoji": "🥧" },
+  { "word": "CHOCOLATE", "emoji": "🍫" },
+  { "word": "CANDY", "emoji": "🍬" },
+  { "word": "LOLLIPOP", "emoji": "🍭" },
+  { "word": "HONEY", "emoji": "🍯" },
+  { "word": "ICECREAM", "emoji": "🍦" },
+  { "word": "COFFEE", "emoji": "☕" },
+  { "word": "TEA", "emoji": "🍵" },
+  { "word": "BEER", "emoji": "🍺" },
+  { "word": "WINE", "emoji": "🍷" },
+  { "word": "COCKTAIL", "emoji": "🍹" },
+  { "word": "JUICE", "emoji": "🧃" },
+  { "word": "MILK", "emoji": "🥛" },
+  { "word": "SUN", "emoji": "☀️" },
+  { "word": "MOON", "emoji": "🌙" },
+  { "word": "STAR", "emoji": "⭐" },
+  { "word": "CLOUD", "emoji": "☁️" },
+  { "word": "RAIN", "emoji": "🌧️" },
+  { "word": "SNOW", "emoji": "❄️" },
+  { "word": "LIGHTNING", "emoji": "⚡" },
+  { "word": "FIRE", "emoji": "🔥" },
+  { "word": "WAVE", "emoji": "🌊" },
+  { "word": "TREE", "emoji": "🌳" },
+  { "word": "CACTUS", "emoji": "🌵" },
+  { "word": "TULIP", "emoji": "🌷" },
+  { "word": "ROSE", "emoji": "🌹" },
+  { "word": "SUNFLOWER", "emoji": "🌻" },
+  { "word": "SEEDLING", "emoji": "🌱" },
+  { "word": "CLOVER", "emoji": "🍀" },
+  { "word": "MAPLE", "emoji": "🍁" },
+  { "word": "RAINBOW", "emoji": "🌈" },
+  { "word": "UMBRELLA", "emoji": "☔" },
+  { "word": "VOLCANO", "emoji": "🌋" },
+  { "word": "MOUNTAIN", "emoji": "🗻" },
+  { "word": "GLOBE", "emoji": "🌍" },
+  { "word": "CAR", "emoji": "🚗" },
+  { "word": "TAXI", "emoji": "🚕" },
+  { "word": "ROCKET", "emoji": "🚀" },
+  { "word": "AIRPLANE", "emoji": "✈️" },
+  { "word": "HELICOPTER", "emoji": "🚁" },
+  { "word": "TRAIN", "emoji": "🚂" },
+  { "word": "BUS", "emoji": "🚌" },
+  { "word": "BICYCLE", "emoji": "🚲" },
+  { "word": "MOTORCYCLE", "emoji": "🏍️" },
+  { "word": "SHIP", "emoji": "🚢" },
+  { "word": "ANCHOR", "emoji": "⚓" },
+  { "word": "COMPASS", "emoji": "🧭" },
+  { "word": "MAP", "emoji": "🗺️" },
+  { "word": "TENT", "emoji": "⛺" },
+  { "word": "HOUSE", "emoji": "🏠" },
+  { "word": "CASTLE", "emoji": "🏰" },
+  { "word": "TOWER", "emoji": "🗼" },
+  { "word": "FOUNTAIN", "emoji": "⛲" },
+  { "word": "KEY", "emoji": "🔑" },
+  { "word": "LOCK", "emoji": "🔒" },
+  { "word": "HAMMER", "emoji": "🔨" },
+  { "word": "AXE", "emoji": "🪓" },
+  { "word": "WRENCH", "emoji": "🔧" },
+  { "word": "GEAR", "emoji": "⚙️" },
+  { "word": "SHIELD", "emoji": "🛡️" },
+  { "word": "SWORD", "emoji": "⚔️" },
+  { "word": "BOMB", "emoji": "💣" },
+  { "word": "CANDLE", "emoji": "🕯️" },
+  { "word": "FLASHLIGHT", "emoji": "🔦" },
+  { "word": "BOOK", "emoji": "📖" },
+  { "word": "PAPERCLIP", "emoji": "📎" },
+  { "word": "PEN", "emoji": "🖊️" },
+  { "word": "PENCIL", "emoji": "✏️" },
+  { "word": "SCISSORS", "emoji": "✂️" },
+  { "word": "BRIEFCASE", "emoji": "💼" },
+  { "word": "PURSE", "emoji": "👛" },
+  { "word": "BAG", "emoji": "🎒" },
+  { "word": "CROWN", "emoji": "👑" },
+  { "word": "HAT", "emoji": "🎩" },
+  { "word": "GLASSES", "emoji": "👓" },
+  { "word": "HEADPHONES", "emoji": "🎧" },
+  { "word": "MICROPHONE", "emoji": "🎤" },
+  { "word": "RADIO", "emoji": "📻" },
+  { "word": "TELEVISION", "emoji": "📺" },
+  { "word": "COMPUTER", "emoji": "💻" },
+  { "word": "PHONE", "emoji": "📱" },
+  { "word": "CLOCK", "emoji": "⏰" },
+  { "word": "WATCH", "emoji": "⌚" },
+  { "word": "HOURGLASS", "emoji": "⏳" },
+  { "word": "BALLOON", "emoji": "🎈" },
+  { "word": "POPPER", "emoji": "🎉" },
+  { "word": "GIFT", "emoji": "🎁" },
+  { "word": "ENVELOPE", "emoji": "✉️" },
+  { "word": "TROPHY", "emoji": "🏆" },
+  { "word": "MEDAL", "emoji": "🏅" },
+  { "word": "FOOTBALL", "emoji": "🏈" },
+  { "word": "BASKETBALL", "emoji": "🏀" },
+  { "word": "SOCCER", "emoji": "⚽" },
+  { "word": "BASEBALL", "emoji": "⚾" },
+  { "word": "TENNIS", "emoji": "🎾" },
+  { "word": "VOLLEYBALL", "emoji": "🏐" },
+  { "word": "BILLIARDS", "emoji": "🎱" },
+  { "word": "PINGPONG", "emoji": "🏓" },
+  { "word": "GOLF", "emoji": "⛳" },
+  { "word": "FISHING", "emoji": "🎣" },
+  { "word": "GUITAR", "emoji": "🎸" },
+  { "word": "PIANO", "emoji": "🎹" },
+  { "word": "DRUM", "emoji": "🥁" },
+  { "word": "HEART", "emoji": "❤️" },
+  { "word": "DIAMOND", "emoji": "💎" },
+  { "word": "RING", "emoji": "💍" },
+  { "word": "BELL", "emoji": "🔔" },
+  { "word": "FLAG", "emoji": "🏁" },
+  { "word": "TSHIRT", "emoji": "👕" },
+  { "word": "JEANS", "emoji": "👖" },
+  { "word": "DRESS", "emoji": "👗" },
+  { "word": "SHOES", "emoji": "👟" },
+  { "word": "BOOTS", "emoji": "🥾" },
+  { "word": "SOCKS", "emoji": "🧦" },
+  { "word": "COIN", "emoji": "🪙" },
+  { "word": "CASH", "emoji": "💵" },
+  { "word": "CARD", "emoji": "💳" },
+  { "word": "HANDBAG", "emoji": "👜" },
+  { "word": "MIRROR", "emoji": "🪞" },
+  { "word": "LADDER", "emoji": "🪜" },
+  { "word": "WHEEL", "emoji": "🛞" },
+  { "word": "BRICK", "emoji": "🧱" },
+  { "word": "MAGNET", "emoji": "🧲" },
+  { "word": "MICROSCOPE", "emoji": "🔬" },
+  { "word": "TELESCOPE", "emoji": "🔭" },
+  { "word": "PILL", "emoji": "💊" },
+  { "word": "SYRINGE", "emoji": "💉" },
+  { "word": "DNA", "emoji": "🧬" },
+  { "word": "GHOST", "emoji": "👻" },
+  { "word": "ALIEN", "emoji": "👽" },
+  { "word": "ROBOT", "emoji": "🤖" },
+  { "word": "MONSTER", "emoji": "👹" },
+  { "word": "CLOWN", "emoji": "🤡" },
+  { "word": "SKULL", "emoji": "💀" },
+  { "word": "BRAIN", "emoji": "🧠" },
+  { "word": "BONE", "emoji": "🦴" },
+  { "word": "TOOTH", "emoji": "🦷" },
+  { "word": "EYE", "emoji": "👁️" },
+  { "word": "EAR", "emoji": "👂" },
+  { "word": "NOSE", "emoji": "👃" },
+  { "word": "LIPS", "emoji": "👄" },
+  { "word": "HAND", "emoji": "👋" },
+  { "word": "THUMB", "emoji": "👍" },
+  { "word": "CLAP", "emoji": "👏" },
+  { "word": "PRAY", "emoji": "🙏" },
+  { "word": "CIGARETTE", "emoji": "🚬" },
+  { "word": "COFFIN", "emoji": "⚰️" },
+  { "word": "CRYSTAL", "emoji": "🔮" },
+  { "word": "FEATHER", "emoji": "🪶" },
+  { "word": "SPONGE", "emoji": "🧽" },
+  { "word": "SOAP", "emoji": "🧼" },
+  { "word": "BROOM", "emoji": "🧹" },
+  { "word": "BASKET", "emoji": "🧺" },
+  { "word": "BUCKET", "emoji": "🪣" },
+  { "word": "NEEDLE", "emoji": "🪡" },
+  { "word": "KNOT", "emoji": "🪢" },
+  { "word": "AMULET", "emoji": "🧿" },
+  { "word": "TRUCK", "emoji": "🚚" },
+  { "word": "TRACTOR", "emoji": "🚜" },
+  { "word": "SKATEBOARD", "emoji": "🛹" },
+  { "word": "FIRE_TRUCK", "emoji": "🚒" },
+  { "word": "POLICE_CAR", "emoji": "🚓" },
+  { "word": "AMBULANCE", "emoji": "🚑" },
+  { "word": "PALM_TREE", "emoji": "🌴" },
+  { "word": "LEAF", "emoji": "🍃" },
+  { "word": "MUSHROOM", "emoji": "🍄" },
+  { "word": "SHELL", "emoji": "🐚" },
+  { "word": "FLOWER", "emoji": "💮" },
+  { "word": "ICE", "emoji": "🧊" },
+  { "word": "COCONUT", "emoji": "🥥" },
+  { "word": "OLIVE", "emoji": "🫒" },
+  { "word": "PEANUT", "emoji": "🥜" },
+  { "word": "CHEF", "emoji": "🧑‍🍳" },
+  { "word": "DOCTOR", "emoji": "🧑‍⚕️" },
+  { "word": "GRADUATE", "emoji": "🎓" },
+  { "word": "SOLDIER", "emoji": "🪖" },
+  { "word": "NINJA", "emoji": "🥷" },
+  { "word": "WIZARD", "emoji": "🧙" },
+  { "word": "SANTA", "emoji": "🎅" },
+  { "word": "BOW", "emoji": "🏹" },
+  { "word": "TARGET", "emoji": "🎯" },
+  { "word": "DICE", "emoji": "🎲" },
+  { "word": "CHESS", "emoji": "♟️" },
+
+];
+
+/* ================= TABS CONFIG ================= */
+const tabs = [
+  {id:'letters', label:'1️⃣ అక్షరాలు/గుణింతాలు', lang:'te-IN', cls:''},
+  {id:'words',   label:'2️⃣ సరళ పదాలు',          lang:'te-IN', cls:''},
+  {id:'english', label:'3️⃣ 3-Letter Words',      lang:'en-US', cls:'english'},
+  {id:'numbers', label:'4️⃣ నంబర్స్ (1-1000)',    lang:'en-US', cls:'number'},
+  {id:'alpha',   label:'5️⃣ Capital & Small Letters', lang:'en-US', cls:'alpha'},
+  {id:'dvitva',  label:'6️⃣ ద్విత్వాక్షర పదాలు',   lang:'te-IN', cls:''},
+  {id:'samyukta',label:'7️⃣ సంయుక్తాక్షర పదాలు',   lang:'te-IN', cls:''},
+  {id:'table1',  label:'8️⃣ ఎక్కాలు (2-9)',       lang:'en-US', cls:'tableeq'},
+  {id:'table2',  label:'9️⃣ ఎక్కాలు (10-20)',     lang:'en-US', cls:'tableeq'},
+  {id:'vowcons', label:'🔟 అచ్చులు/హల్లులు',      lang:'te-IN', cls:''},
+  {id:'compare0',label:'1️⃣2️⃣ సంఖ్యలు (0-9)',     lang:'en-US', cls:'tableeq'},
+  {id:'compare1',label:'1️⃣3️⃣ సంఖ్యలు (10-99)',   lang:'en-US', cls:'tableeq'},
+  {id:'compare2',label:'1️⃣4️⃣ సంఖ్యలు (100-999)', lang:'en-US', cls:'tableeq'},
+  {id:'picword', label:'1️⃣5️⃣ చిత్రం + పదం',      lang:'en-US', cls:'picword'}
+];
+
+let currentTab = 'letters';
+let currentValue = '';
+let seenCount = {letters:0, words:0, english:0, numbers:0, alpha:0, dvitva:0, samyukta:0, table1:0, table2:0,
+                  vowcons:0, compare0:0, compare1:0, compare2:0, picword:0};
+let revealTimer = null;
+let tableItem = null;
+let compareItem = null;
+let pictureItem = null;
+let revealed = false;
+let autoTimer = null;
+
+const TABLE_LIKE = ['picword'];
+const REVEAL_DELAY = {picword:4000};
+
+/* ================= MANUAL MATH TOOLS (16-25) — no timers, manual selection ================= */
+const toolPanels = [
+  {id:'round',       panel:'panel-round',       label:'1️⃣6️⃣ సమీప సంఖ్య (Rounding)'},
+  {id:'placevalue',  panel:'panel-placevalue',  label:'1️⃣7️⃣ సంఖ్య స్థానాలు వేరు చేయడం'},
+  {id:'buildnumber', panel:'panel-buildnumber', label:'1️⃣8️⃣ అంకెలతో సంఖ్య తయారీ'},
+  {id:'shapes',      panel:'panel-shapes',      label:'1️⃣9️⃣ 2D/3D ఆకారాలు'},
+  {id:'arrange',     panel:'panel-arrange',     label:'2️⃣0️⃣ పెద్ద/చిన్న సంఖ్య అమర్చడం'},
+  {id:'perm3',       panel:'panel-perm3',       label:'2️⃣1️⃣ 3 అంకెల సంఖ్యలు'},
+  {id:'perm4',       panel:'panel-perm4',       label:'2️⃣2️⃣ 4 అంకెల సంఖ్యలు'},
+  {id:'perm234',     panel:'panel-perm234',     label:'2️⃣3️⃣ 2/3/4 అంకెల సంఖ్యలు'},
+  {id:'comma',       panel:'panel-comma',       label:'2️⃣4️⃣ కామాతో స్థానాలు వేరు చేయుట'},
+  {id:'mainwords',   panel:'panel-mainwords',   label:'2️⃣5️⃣ 1-5 తరగతుల ఇంగ్లీష్ మెయిన్ వర్డ్స్'}
+];
+
+let roundBase = null, roundNumber = null;
+let permLen26 = null;
+let lastManualSpeech = {text:'', lang:'en-US'};
+
+const shapes2D = [
+  {te:'వృత్తం', en:'Circle', emoji:'⚪'},
+  {te:'చతురస్రం', en:'Square', emoji:'🟦'},
+  {te:'దీర్ఘచతురస్రం', en:'Rectangle', emoji:'▭'},
+  {te:'త్రిభుజం', en:'Triangle', emoji:'🔺'},
+  {te:'నక్షత్రం', en:'Star', emoji:'⭐'},
+  {te:'పంచభుజి', en:'Pentagon', emoji:'⬠'},
+  {te:'షట్భుజి', en:'Hexagon', emoji:'⬡'},
+  {te:'అండాకారం', en:'Oval', emoji:'⬭'}
+];
+const shapes3D = [
+  {te:'గోళం', en:'Sphere', emoji:'🌐'},
+  {te:'ఘనం', en:'Cube', emoji:'🧊'},
+  {te:'దీర్ఘఘనం', en:'Cuboid', emoji:'📦'},
+  {te:'స్థూపం', en:'Cylinder', emoji:'🥫'},
+  {te:'శంకువు', en:'Cone', emoji:'🍦'},
+  {te:'పిరమిడ్', en:'Pyramid', emoji:'🔻'}
+];
+
+/* ================= RENDER MENU (dropdown) ================= */
+const tabSelect = document.getElementById('tabSelect');
+const contentGroup = document.createElement('optgroup');
+contentGroup.label = '📖 అభ్యాసం (1-15)';
+tabs.forEach(t=>{
+  const opt = document.createElement('option');
+  opt.value = t.id;
+  opt.textContent = t.label;
+  contentGroup.appendChild(opt);
+});
+tabSelect.appendChild(contentGroup);
+
+const toolGroup = document.createElement('optgroup');
+toolGroup.label = '🧮 గణితం సాధనాలు (16-25)';
+toolPanels.forEach(t=>{
+  const opt = document.createElement('option');
+  opt.value = t.id;
+  opt.textContent = t.label;
+  toolGroup.appendChild(opt);
+});
+tabSelect.appendChild(toolGroup);
+
+function renderShapeGrids(){
+  const g2 = document.getElementById('shapeGrid2D');
+  const g3 = document.getElementById('shapeGrid3D');
+  shapes2D.forEach((s,i)=>{
+    const b = document.createElement('button');
+    b.className = 'shape-btn'; b.id = 'shape2d-'+i; b.type='button';
+    b.innerHTML = `${s.emoji}<span class="sname">${s.te}</span>`;
+    b.onclick = ()=> selectShape('2d', i);
+    g2.appendChild(b);
+  });
+  shapes3D.forEach((s,i)=>{
+    const b = document.createElement('button');
+    b.className = 'shape-btn'; b.id = 'shape3d-'+i; b.type='button';
+    b.innerHTML = `${s.emoji}<span class="sname">${s.te}</span>`;
+    b.onclick = ()=> selectShape('3d', i);
+    g3.appendChild(b);
+  });
+}
+
+
+const catLabel = document.getElementById('categoryLabel');
+const mainDisplay = document.getElementById('mainDisplay');
+const subText = document.getElementById('subText');
+const counterEl = document.getElementById('counter');
+
+function switchTab(id){
+  currentTab = id;
+  if(revealTimer){ clearTimeout(revealTimer); revealTimer = null; }
+  if(autoTimer){
+    clearInterval(autoTimer); autoTimer = null;
+    const ab = document.getElementById('autoBtn'); if(ab) ab.textContent = '▶️ ఆటో ప్లే';
+  }
+  tabSelect.value = id;
+
+  document.getElementById('standardCard').style.display = 'none';
+  document.querySelectorAll('.tool-panel').forEach(p => p.style.display = 'none');
+
+  const toolInfo = toolPanels.find(t=>t.id===id);
+  if(toolInfo){
+    document.getElementById(toolInfo.panel).style.display = 'block';
+    return;
+  }
+
+  document.getElementById('standardCard').style.display = 'block';
+  const tabInfo = tabs.find(t=>t.id===id);
+  catLabel.textContent = tabInfo.label.replace(/^\S+\s/,'');
+  mainDisplay.className = 'big-text ' + tabInfo.cls;
+
+  const revealBtn = document.getElementById('revealBtn');
+  const MANUAL_REVEAL_TABS = ['table1','table2','compare0','compare1','compare2'];
+  revealBtn.style.display = MANUAL_REVEAL_TABS.includes(id) ? 'inline-block' : 'none';
+
+  showRandom(false);
+}
+
+function getRandomForTab(id){
+  switch(id){
+    case 'letters': return letterPool[Math.floor(Math.random()*letterPool.length)];
+    case 'words':   return teluguWords[Math.floor(Math.random()*teluguWords.length)];
+    case 'english': return englishWords[Math.floor(Math.random()*englishWords.length)];
+    case 'numbers': return String(randomNumber());
+    case 'alpha':   return smallAlphabets[Math.floor(Math.random()*smallAlphabets.length)];
+    case 'dvitva':  return dvitvaWords[Math.floor(Math.random()*dvitvaWords.length)];
+    case 'samyukta':return samyuktaWords[Math.floor(Math.random()*samyuktaWords.length)];
+    case 'vowcons': return vowConsPool[Math.floor(Math.random()*vowConsPool.length)];
+  }
+}
+
+function showRandom(speak){
+  if(revealTimer){ clearTimeout(revealTimer); revealTimer = null; }
+
+  if(currentTab==='table1' || currentTab==='table2'){
+    showTableQuestion(speak);
+    return;
+  }
+  if(currentTab==='compare0' || currentTab==='compare1' || currentTab==='compare2'){
+    showCompareQuestion(speak);
+    return;
+  }
+  if(currentTab==='picword'){
+    showPictureWord(speak);
+    return;
+  }
+  if(currentTab==='alpha'){
+    showAlphaQuestion(speak);
+    return;
+  }
+
+  currentValue = getRandomForTab(currentTab);
+  mainDisplay.textContent = currentValue;
+  seenCount[currentTab]++;
+  counterEl.textContent = 'చూసినవి: ' + seenCount[currentTab];
+  if(currentTab==='numbers') subText.textContent = '';
+  else if(currentTab==='alpha') subText.textContent = 'చిన్న అక్షరం';
+  else subText.textContent = '';
+  if(speak !== false) speakCurrent();
+}
+
+function showAlphaQuestion(speak){
+  const idx = Math.floor(Math.random()*capitalAlphabets.length);
+  alphaItem = {cap: capitalAlphabets[idx], small: smallAlphabets[idx]};
+  currentValue = alphaItem.cap;
+  mainDisplay.innerHTML = `<div class="cap-letter">${alphaItem.cap}</div><div class="small-letter">${alphaItem.small}</div>`;
+  subText.textContent = 'పెద్ద అక్షరం + చిన్న అక్షరం';
+  seenCount[currentTab]++;
+  counterEl.textContent = 'చూసినవి: ' + seenCount[currentTab];
+  if(speak !== false) speakAlpha();
+}
+function speakAlpha(){
+  if(!alphaItem) return;
+  if(!('speechSynthesis' in window)) return;
+  try{
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(`${alphaItem.cap}, small ${alphaItem.small}`);
+    utter.lang = 'en-US';
+    utter.rate = 0.8;
+    window.speechSynthesis.speak(utter);
+  }catch(e){}
+}
+
+function showTableQuestion(speak){
+  const range = currentTab==='table1' ? [2,9] : [10,20];
+  const a = range[0] + Math.floor(Math.random()*(range[1]-range[0]+1));
+  const b = Math.floor(Math.random()*11); // 0 to 10
+  tableItem = {a, b, product: a*b};
+  revealed = false;
+
+  mainDisplay.textContent = `${a} × ${b} = ?`;
+  subText.textContent = '👉 సమాధానం చూపు బటన్ నొక్కండి';
+  seenCount[currentTab]++;
+  counterEl.textContent = 'చూసినవి: ' + seenCount[currentTab];
+
+  if(speak !== false) speakTableQuestion();
+}
+
+function revealTableAnswer(){
+  if(!tableItem) return;
+  revealed = true;
+  mainDisplay.textContent = `${tableItem.a} × ${tableItem.b} = ${tableItem.product}`;
+  subText.textContent = '✅ సమాధానం';
+  speakTableAnswer();
+}
+
+function speakTableQuestion(){
+  if(!('speechSynthesis' in window) || !tableItem) return;
+  try{
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(`${tableItem.a} multiplied by ${tableItem.b}`);
+    utter.lang = 'en-US'; utter.rate = 0.85;
+    window.speechSynthesis.speak(utter);
+  }catch(e){}
+}
+
+function speakTableAnswer(){
+  if(!('speechSynthesis' in window) || !tableItem) return;
+  try{
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(`equals ${tableItem.product}`);
+    utter.lang = 'en-US'; utter.rate = 0.85;
+    window.speechSynthesis.speak(utter);
+  }catch(e){}
+}
+
+/* ================= NUMBER COMPARISON (0-9 / 10-99 / 100-999) ================= */
+function randIn(lo,hi){ return lo + Math.floor(Math.random()*(hi-lo+1)); }
+
+function generateComparisonQuestion(min, max){
+  const types = ['before','after','middle','smaller','bigger'];
+  const type = types[Math.floor(Math.random()*types.length)];
+  let q, a, spokenQ, spokenA;
+
+  if(type==='before'){
+    const n = randIn(min+1, max);
+    q = `${n} కి ముందు వచ్చే సంఖ్య ఏది?`;
+    a = `${n-1}`;
+    spokenQ = `What number comes before ${n}?`;
+    spokenA = `${n-1}`;
+  } else if(type==='after'){
+    const n = randIn(min, max-1);
+    q = `${n} తర్వాత వచ్చే సంఖ్య ఏది?`;
+    a = `${n+1}`;
+    spokenQ = `What number comes after ${n}?`;
+    spokenA = `${n+1}`;
+  } else if(type==='middle'){
+    const x = randIn(min, max-2);
+    const z = x+2;
+    q = `${x} మరియు ${z} మధ్య సంఖ్య ఏది?`;
+    a = `${x+1}`;
+    spokenQ = `What number is between ${x} and ${z}?`;
+    spokenA = `${x+1}`;
+  } else if(type==='smaller'){
+    let x = randIn(min,max), y = randIn(min,max);
+    while(y===x) y = randIn(min,max);
+    q = `${x}, ${y} - ఏది చిన్నది?`;
+    a = `${Math.min(x,y)}`;
+    spokenQ = `Which is smaller, ${x} or ${y}?`;
+    spokenA = `${Math.min(x,y)} is smaller`;
+  } else {
+    let x = randIn(min,max), y = randIn(min,max);
+    while(y===x) y = randIn(min,max);
+    q = `${x}, ${y} - ఏది పెద్దది?`;
+    a = `${Math.max(x,y)}`;
+    spokenQ = `Which is bigger, ${x} or ${y}?`;
+    spokenA = `${Math.max(x,y)} is bigger`;
+  }
+  return {q,a,spokenQ,spokenA};
+}
+
+function showCompareQuestion(speak){
+  const ranges = {compare0:[0,9], compare1:[10,99], compare2:[100,999]};
+  const range = ranges[currentTab];
+  compareItem = generateComparisonQuestion(range[0], range[1]);
+  revealed = false;
+
+  mainDisplay.textContent = compareItem.q;
+  subText.textContent = '👉 సమాధానం చూపు బటన్ నొక్కండి';
+  seenCount[currentTab]++;
+  counterEl.textContent = 'చూసినవి: ' + seenCount[currentTab];
+
+  if(speak !== false) speakCompareQuestion();
+}
+
+function revealCompareAnswer(){
+  if(!compareItem) return;
+  revealed = true;
+  mainDisplay.textContent = compareItem.a;
+  subText.textContent = '✅ ' + compareItem.q;
+  speakCompareAnswer();
+}
+
+function revealAnswer(){
+  if(currentTab==='table1' || currentTab==='table2'){ revealTableAnswer(); return; }
+  if(currentTab==='compare0' || currentTab==='compare1' || currentTab==='compare2'){ revealCompareAnswer(); return; }
+}
+
+function speakCompareQuestion(){
+  if(!('speechSynthesis' in window) || !compareItem) return;
+  try{
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(compareItem.spokenQ);
+    utter.lang='en-US'; utter.rate=0.85;
+    window.speechSynthesis.speak(utter);
+  }catch(e){}
+}
+
+function speakCompareAnswer(){
+  if(!('speechSynthesis' in window) || !compareItem) return;
+  try{
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(compareItem.spokenA);
+    utter.lang='en-US'; utter.rate=0.85;
+    window.speechSynthesis.speak(utter);
+  }catch(e){}
+}
+
+/* ================= PICTURE + WORD (missing middle letter) ================= */
+function showPictureWord(speak){
+  pictureItem = wordPictures[Math.floor(Math.random()*wordPictures.length)];
+  revealed = false;
+  const blanked = `${pictureItem.word[0]} _ ${pictureItem.word[2]}`;
+
+  mainDisplay.innerHTML = `<div style="font-size:1.3em;">${pictureItem.emoji}</div><div style="margin-top:8px;">${blanked}</div>`;
+  subText.textContent = '⏳ మిస్సింగ్ లెటర్ ఊహించండి... 4 సెకన్లలో సమాధానం';
+  seenCount[currentTab]++;
+  counterEl.textContent = 'చూసినవి: ' + seenCount[currentTab];
+
+  if(speak !== false) speakPictureQuestion();
+
+  revealTimer = setTimeout(()=>{
+    revealed = true;
+    mainDisplay.innerHTML = `<div style="font-size:1.3em;">${pictureItem.emoji}</div><div style="margin-top:8px;">${pictureItem.word}</div>`;
+    subText.textContent = '✅ సమాధానం';
+    if(speak !== false) speakPictureAnswer();
+  }, REVEAL_DELAY[currentTab]);
+}
+
+function speakPictureQuestion(){
+  if(!('speechSynthesis' in window) || !pictureItem) return;
+  try{
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(
+      `What is the missing letter? ${pictureItem.word[0]}, blank, ${pictureItem.word[2]}`);
+    utter.lang='en-US'; utter.rate=0.85;
+    window.speechSynthesis.speak(utter);
+  }catch(e){}
+}
+
+function speakPictureAnswer(){
+  if(!('speechSynthesis' in window) || !pictureItem) return;
+  try{
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(pictureItem.word);
+    utter.lang='en-US'; utter.rate=0.85;
+    window.speechSynthesis.speak(utter);
+  }catch(e){}
+}
+
+/* ================= MANUAL TOOL FUNCTIONS (16-22) — manual selection, no timers ================= */
+function speakManual(text, lang){
+  lastManualSpeech = {text, lang: lang || 'en-US'};
+  if(!('speechSynthesis' in window)) return;
+  try{
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = lastManualSpeech.lang; utter.rate = 0.85;
+    window.speechSynthesis.speak(utter);
+  }catch(e){}
+}
+
+/* ---- 16: Rounding to nearest 10 / 100 / 1000 ---- */
+function setRoundBase(base){
+  roundBase = base;
+  [10,100,1000].forEach(b=>{
+    document.getElementById('rb-'+b).classList.toggle('selected', b===base);
+  });
+  newRoundQuestion();
+}
+function newRoundQuestion(){
+  if(!roundBase){ document.getElementById('roundDisplay').textContent = 'ముందు బేస్ ఎంచుకోండి (10/100/1000)'; return; }
+  const maxN = roundBase===10 ? 999 : (roundBase===100 ? 9999 : 99999);
+  roundNumber = 1 + Math.floor(Math.random()*maxN);
+  document.getElementById('roundDisplay').textContent = `${roundNumber} ను సమీప ${roundBase} కు సవరించండి`;
+  speakManual(`Round ${roundNumber} to the nearest ${roundBase}`);
+}
+function showRoundAnswer(){
+  if(!roundBase || roundNumber===null){ alert('ముందు బేస్ ఎంచుకోండి'); return; }
+  const rounded = Math.round(roundNumber/roundBase)*roundBase;
+  document.getElementById('roundDisplay').textContent = `${roundNumber} ➝ ${rounded}`;
+  speakManual(`${roundNumber} rounded to the nearest ${roundBase} is ${rounded}`);
+}
+
+/* ---- 17: Place value separation for a manually entered number ---- */
+function showPlaceValue(){
+  const n = parseInt(document.getElementById('pvInput').value);
+  if(isNaN(n) || n<0 || n>9999){ alert('0-9999 మధ్య సంఖ్య ఇవ్వండి'); return; }
+  const th = Math.floor(n/1000)%10, h = Math.floor(n/100)%10, t = Math.floor(n/10)%10, o = n%10;
+  const rows = [
+    ['వేలు (Thousands)', th, th*1000],
+    ['వందలు (Hundreds)', h, h*100],
+    ['పదులు (Tens)', t, t*10],
+    ['ఒకట్లు (Ones)', o, o]
+  ];
+  let html = '';
+  rows.forEach(r=>{ html += `<div class="pv-row"><span class="pv-place">${r[0]}</span><span class="pv-digit">${r[1]}</span></div>`; });
+  const expandedParts = rows.filter(r=>r[2]>0).map(r=>r[2]);
+  html += `<div class="tool-display">${n} = ${expandedParts.length ? expandedParts.join(' + ') : 0}</div>`;
+  document.getElementById('pvResult').innerHTML = html;
+  speakManual(`${n} equals ${expandedParts.join(' plus ') || 0}`);
+}
+
+/* ---- 18: Build a number from manually entered place-value digits ---- */
+function buildNumber(){
+  const d3 = parseInt(document.getElementById('d3').value) || 0;
+  const d2 = parseInt(document.getElementById('d2').value) || 0;
+  const d1 = parseInt(document.getElementById('d1').value) || 0;
+  const d0 = parseInt(document.getElementById('d0').value) || 0;
+  const n = d3*1000 + d2*100 + d1*10 + d0;
+  document.getElementById('buildResult').textContent = `${d3}000 + ${d2}00 + ${d1}0 + ${d0} = ${n}`;
+  speakManual(`The number is ${n}`);
+}
+
+/* ---- 19: 2D / 3D shape names ---- */
+function selectShape(dim, i){
+  document.querySelectorAll('.shape-btn').forEach(b=>b.classList.remove('selected'));
+  const item = dim==='2d' ? shapes2D[i] : shapes3D[i];
+  document.getElementById(dim==='2d' ? 'shape2d-'+i : 'shape3d-'+i).classList.add('selected');
+  document.getElementById('shapeDisplay').innerHTML =
+    `<div style="font-size:1.3em;">${item.emoji}</div><div style="margin-top:6px;font-size:0.5em;">${item.te} (${item.en})</div>`;
+  speakManual(item.en);
+}
+
+/* ---- shared helpers for digit tools (23-26) ---- */
+function digitsFromInput(id){
+  const raw = document.getElementById(id).value;
+  return raw.split(/[^0-9]+/).filter(x=>x!=='').map(Number);
+}
+function renderNumberList(nums){
+  if(nums.length===0) return `<div class="list-summary">సరైన సంఖ్యలు లేవు (మొదటి అంకె 0 కాకూడదు)</div>`;
+  const chips = nums.map(n=>`<span class="number-chip">${n}</span>`).join('');
+  return `<div class="number-list">${chips}</div><div class="list-summary">${nums.length} సంఖ్యలు దొరికాయి — చిన్నది: ${nums[0]}, పెద్దది: ${nums[nums.length-1]}</div>`;
+}
+function speakNumberList(nums){
+  if(nums.length===0){ speakManual('No valid numbers found'); return; }
+  speakManual(`${nums.length} numbers found. Smallest ${nums[0]}, largest ${nums[nums.length-1]}`);
+}
+function permsOfLength(digits, len){
+  const results = new Set();
+  function helper(current, remaining){
+    if(current.length===len){
+      if(current[0]!==0) results.add(current.join(''));
+      return;
+    }
+    for(let i=0;i<remaining.length;i++){
+      const next = remaining.slice();
+      const val = next.splice(i,1)[0];
+      current.push(val);
+      helper(current, next);
+      current.pop();
+    }
+  }
+  helper([], digits);
+  return Array.from(results).map(Number).sort((a,b)=>a-b);
+}
+
+/* ---- 20: Arrange given digits into largest / smallest number ---- */
+function arrangeDigits23(){
+  const digits = digitsFromInput('digits23');
+  if(digits.length===0){ alert('అంకెలు ఇవ్వండి'); return; }
+  const desc = [...digits].sort((a,b)=>b-a);
+  const asc = [...digits].sort((a,b)=>a-b);
+  document.getElementById('result23').innerHTML = `
+    <div class="pv-row"><span class="pv-place">పెద్ద సంఖ్య (అవరోహణ క్రమం)</span><span class="pv-digit">${desc.join('')}</span></div>
+    <div class="pv-row"><span class="pv-place">చిన్న సంఖ్య (ఆరోహణ క్రమం)</span><span class="pv-digit">${asc.join('')}</span></div>`;
+  speakManual(`Largest number ${desc.join('')}, smallest number ${asc.join('')}`);
+}
+
+/* ---- 21: 3-digit numbers from given digits (e.g. 3,4,5) ---- */
+function generatePerm3(){
+  const digits = digitsFromInput('digits24');
+  if(digits.length<2){ alert('కనీసం 2 అంకెలు ఇవ్వండి'); return; }
+  const nums = permsOfLength(digits, 3);
+  document.getElementById('result24').innerHTML = renderNumberList(nums);
+  speakNumberList(nums);
+}
+
+/* ---- 22: 4-digit numbers from given digits (e.g. 3,8,7,9) ---- */
+function generatePerm4(){
+  const digits = digitsFromInput('digits25');
+  if(digits.length<2){ alert('కనీసం 2 అంకెలు ఇవ్వండి'); return; }
+  const nums = permsOfLength(digits, 4);
+  document.getElementById('result25').innerHTML = renderNumberList(nums);
+  speakNumberList(nums);
+}
+
+/* ---- 23: 2/3/4-digit numbers from given digits (e.g. 3,9,0,8) ---- */
+function setPermLen(len){
+  permLen26 = len;
+  [2,3,4].forEach(l=> document.getElementById('pl-'+l).classList.toggle('selected', l===len));
+}
+function generatePerm26(){
+  if(!permLen26){ alert('ముందు అంకెల సంఖ్య (2/3/4) ఎంచుకోండి'); return; }
+  const digits = digitsFromInput('digits26');
+  if(digits.length<2){ alert('అంకెలు ఇవ్వండి'); return; }
+  const nums = permsOfLength(digits, permLen26);
+  document.getElementById('result26').innerHTML = renderNumberList(nums);
+  speakNumberList(nums);
+}
+
+/* ---- 24: Comma-separate places, Indian numbering (7,86,543 style) ---- */
+function indianCommaFormat(n){
+  const numStr = String(n);
+  if(numStr.length<=3) return numStr;
+  let lastThree = numStr.substring(numStr.length-3);
+  let otherNumbers = numStr.substring(0, numStr.length-3);
+  lastThree = ',' + lastThree;
+  const formattedOther = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+  return formattedOther + lastThree;
+}
+function showCommaFormat(){
+  const raw = document.getElementById('commaInput').value;
+  const n = parseInt(raw);
+  if(isNaN(n) || n<0){ alert('సరైన సంఖ్య ఇవ్వండి'); return; }
+  const formatted = indianCommaFormat(n);
+  document.getElementById('commaResult').textContent = `${n} = ${formatted}`;
+  speakManual(`${n} written with commas is ${formatted}`);
+}
+
+/* ---- 25: Class 1-5 English Main Words ---- */
+const mainWordsByClass = {
+  1: [
+    {en:"Apple", te:"ఆపిల్"}, {en:"Ball", te:"బంతి"}, {en:"Cat", te:"పిల్లి"}, {en:"Dog", te:"కుక్క"},
+    {en:"Egg", te:"గుడ్డు"}, {en:"Fish", te:"చేప"}, {en:"Goat", te:"మేక"}, {en:"Hat", te:"టోపీ"},
+    {en:"Ink", te:"సిరా"}, {en:"Jug", te:"జగ్గు"}, {en:"Kite", te:"గాలిపటం"}, {en:"Lion", te:"సింహం"},
+    {en:"Mango", te:"మామిడి"}, {en:"Nest", te:"గూడు"}, {en:"Orange", te:"నారింజ"}, {en:"Pen", te:"పెన్ను"},
+    {en:"Queen", te:"రాణి"}, {en:"Rat", te:"ఎలుక"}, {en:"Sun", te:"సూర్యుడు"}, {en:"Tree", te:"చెట్టు"},
+    {en:"Umbrella", te:"గొడుగు"}, {en:"Van", te:"వ్యాను"}, {en:"Watch", te:"గడియారం"}, {en:"Box", te:"పెట్టె"},
+    {en:"Yak", te:"యాక్"}, {en:"Zebra", te:"జీబ్రా"}, {en:"Mother", te:"అమ్మ"}, {en:"Father", te:"నాన్న"},
+    {en:"Brother", te:"అన్న/తమ్ముడు"}, {en:"Sister", te:"అక్క/చెల్లి"}, {en:"Eye", te:"కన్ను"}, {en:"Nose", te:"ముక్కు"},
+    {en:"Ear", te:"చెవి"}, {en:"Hand", te:"చేయి"}, {en:"Leg", te:"కాలు"}, {en:"One", te:"ఒకటి"},
+    {en:"Two", te:"రెండు"}, {en:"Three", te:"మూడు"}, {en:"Four", te:"నాలుగు"}, {en:"Five", te:"ఐదు"}
+  ],
+  2: [
+    {en:"Banana", te:"అరటిపండు"}, {en:"Grapes", te:"ద్రాక్ష"}, {en:"Papaya", te:"బొప్పాయి"}, {en:"Guava", te:"జామ"},
+    {en:"Watermelon", te:"పుచ్చకాయ"}, {en:"Carrot", te:"క్యారెట్"}, {en:"Potato", te:"బంగాళదుంప"}, {en:"Tomato", te:"టమాటా"},
+    {en:"Onion", te:"ఉల్లిపాయ"}, {en:"Brinjal", te:"వంకాయ"}, {en:"Cow", te:"ఆవు"}, {en:"Horse", te:"గుర్రం"},
+    {en:"Elephant", te:"ఏనుగు"}, {en:"Tiger", te:"పులి"}, {en:"Monkey", te:"కోతి"}, {en:"Rabbit", te:"కుందేలు"},
+    {en:"Bear", te:"ఎలుగుబంటి"}, {en:"Duck", te:"బాతు"}, {en:"Peacock", te:"నెమలి"}, {en:"Parrot", te:"చిలుక"},
+    {en:"Sunday", te:"ఆదివారం"}, {en:"Monday", te:"సోమవారం"}, {en:"Tuesday", te:"మంగళవారం"}, {en:"Wednesday", te:"బుధవారం"},
+    {en:"Thursday", te:"గురువారం"}, {en:"Friday", te:"శుక్రవారం"}, {en:"Saturday", te:"శనివారం"}, {en:"Eat", te:"తినడం"},
+    {en:"Drink", te:"తాగడం"}, {en:"Run", te:"పరుగెత్తడం"}, {en:"Walk", te:"నడవడం"}, {en:"Jump", te:"దూకడం"},
+    {en:"Sleep", te:"నిద్రపోవడం"}, {en:"Play", te:"ఆడడం"}, {en:"Read", te:"చదవడం"}, {en:"Write", te:"రాయడం"}
+  ],
+  3: [
+    {en:"January", te:"జనవరి"}, {en:"February", te:"ఫిబ్రవరి"}, {en:"March", te:"మార్చి"}, {en:"April", te:"ఏప్రిల్"},
+    {en:"May", te:"మే"}, {en:"June", te:"జూన్"}, {en:"July", te:"జూలై"}, {en:"August", te:"ఆగస్టు"},
+    {en:"September", te:"సెప్టెంబర్"}, {en:"October", te:"అక్టోబర్"}, {en:"November", te:"నవంబర్"}, {en:"December", te:"డిసెంబర్"},
+    {en:"Circle", te:"వృత్తం"}, {en:"Square", te:"చతురస్రం"}, {en:"Triangle", te:"త్రిభుజం"}, {en:"Rectangle", te:"దీర్ఘచతురస్రం"},
+    {en:"Star", te:"నక్షత్రం"}, {en:"Big", te:"పెద్ద"}, {en:"Small", te:"చిన్న"}, {en:"Hot", te:"వేడి"},
+    {en:"Cold", te:"చల్లని"}, {en:"Fast", te:"వేగంగా"}, {en:"Slow", te:"నెమ్మదిగా"}, {en:"Up", te:"పైకి"},
+    {en:"Down", te:"కిందకి"}, {en:"Near", te:"దగ్గరగా"}, {en:"Far", te:"దూరంగా"}, {en:"Day", te:"పగలు"},
+    {en:"Night", te:"రాత్రి"}, {en:"Summer", te:"వేసవి"}, {en:"Winter", te:"శీతాకాలం"}, {en:"Rain", te:"వర్షం"},
+    {en:"Wind", te:"గాలి"}, {en:"Cloud", te:"మేఘం"}
+  ],
+  4: [
+    {en:"Doctor", te:"వైద్యుడు"}, {en:"Teacher", te:"ఉపాధ్యాయుడు"}, {en:"Farmer", te:"రైతు"}, {en:"Police", te:"పోలీసు"},
+    {en:"Driver", te:"డ్రైవర్"}, {en:"Nurse", te:"నర్సు"}, {en:"Engineer", te:"ఇంజనీర్"}, {en:"Cook", te:"వంటవాడు"},
+    {en:"Postman", te:"పోస్టుమాన్"}, {en:"Soldier", te:"సైనికుడు"}, {en:"Car", te:"కారు"}, {en:"Bus", te:"బస్సు"},
+    {en:"Train", te:"రైలు"}, {en:"Airplane", te:"విమానం"}, {en:"Bicycle", te:"సైకిల్"}, {en:"Boat", te:"పడవ"},
+    {en:"Auto", te:"ఆటో"}, {en:"Ship", te:"ఓడ"}, {en:"Happy", te:"సంతోషం"}, {en:"Sad", te:"బాధ"},
+    {en:"Angry", te:"కోపం"}, {en:"Afraid", te:"భయం"}, {en:"Surprised", te:"ఆశ్చర్యం"}, {en:"Tired", te:"అలసట"},
+    {en:"Brave", te:"ధైర్యవంతుడు"}, {en:"Kind", te:"దయగల"}, {en:"Honest", te:"నిజాయితీగల"}, {en:"Clever", te:"తెలివైన"},
+    {en:"Strong", te:"బలమైన"}, {en:"Weak", te:"బలహీనమైన"}
+  ],
+  5: [
+    {en:"School", te:"పాఠశాల"}, {en:"Classroom", te:"తరగతి గది"}, {en:"Blackboard", te:"బోర్డు"}, {en:"Notebook", te:"నోట్‌బుక్"},
+    {en:"Pencil", te:"పెన్సిల్"}, {en:"Eraser", te:"రబ్బరు"}, {en:"Ruler", te:"స్కేలు"}, {en:"Library", te:"గ్రంథాలయం"},
+    {en:"Playground", te:"ఆటస్థలం"}, {en:"Uniform", te:"యూనిఫారం"}, {en:"River", te:"నది"}, {en:"Mountain", te:"పర్వతం"},
+    {en:"Forest", te:"అడవి"}, {en:"Ocean", te:"సముద్రం"}, {en:"Sky", te:"ఆకాశం"}, {en:"Moon", te:"చంద్రుడు"},
+    {en:"Earth", te:"భూమి"}, {en:"Village", te:"గ్రామం"}, {en:"City", te:"నగరం"}, {en:"Morning", te:"ఉదయం"},
+    {en:"Afternoon", te:"మధ్యాహ్నం"}, {en:"Evening", te:"సాయంత్రం"}, {en:"Yesterday", te:"నిన్న"}, {en:"Today", te:"ఈరోజు"},
+    {en:"Tomorrow", te:"రేపు"}, {en:"Birthday", te:"పుట్టినరోజు"}, {en:"Festival", te:"పండుగ"}, {en:"Holiday", te:"సెలవు"},
+    {en:"Homework", te:"ఇంటిపని"}
+  ]
+};
+let mainWordClass = null;
+let mainWordItem = null;
+let mainWordSeen = {1:0,2:0,3:0,4:0,5:0};
+
+function setMainWordClass(cls){
+  mainWordClass = cls;
+  [1,2,3,4,5].forEach(c=> document.getElementById('mw-'+c).classList.toggle('selected', c===cls));
+  newMainWord();
+}
+function newMainWord(){
+  if(!mainWordClass){ alert('ముందు తరగతి (1-5) ఎంచుకోండి'); return; }
+  const list = mainWordsByClass[mainWordClass];
+  mainWordItem = list[Math.floor(Math.random()*list.length)];
+  document.getElementById('mainWordDisplay').textContent = mainWordItem.en;
+  mainWordSeen[mainWordClass]++;
+  document.getElementById('mainWordCounter').textContent = 'చూసినవి: ' + mainWordSeen[mainWordClass];
+  speakMainWord();
+}
+function speakMainWord(){
+  if(!mainWordItem) return;
+  if(!('speechSynthesis' in window)) return;
+  try{
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(mainWordItem.en);
+    utter.lang = 'en-US';
+    utter.rate = 0.8;
+    window.speechSynthesis.speak(utter);
+  }catch(e){}
+}
+function showMainWordMeaning(){
+  if(!mainWordItem){ alert('ముందు తరగతి ఎంచుకుని పదం చూడండి'); return; }
+  document.getElementById('mainWordDisplay').innerHTML =
+    `${mainWordItem.en}<br><span style="font-size:0.55em;color:#764ba2;">(${mainWordItem.te})</span>`;
+}
+
+/* ================= VOICE ================= */
+let voiceWarned = false;
+function speakCurrent(){
+  if(!('speechSynthesis' in window)){
+    if(!voiceWarned){ alert('ఈ బ్రౌజర్/యాప్‌లో వాయిస్ సదుపాయం అందుబాటులో లేదు. Chrome బ్రౌజర్‌లో తెరిస్తే వాయిస్ పనిచేస్తుంది.'); voiceWarned = true; }
+    return;
+  }
+  if(currentTab==='table1' || currentTab==='table2'){
+    if(revealed) speakTableAnswer(); else speakTableQuestion();
+    return;
+  }
+  if(currentTab==='compare0' || currentTab==='compare1' || currentTab==='compare2'){
+    if(revealed) speakCompareAnswer(); else speakCompareQuestion();
+    return;
+  }
+  if(currentTab==='picword'){
+    if(revealed) speakPictureAnswer(); else speakPictureQuestion();
+    return;
+  }
+  if(currentTab==='alpha'){
+    speakAlpha();
+    return;
+  }
+  try{
+    window.speechSynthesis.cancel();
+    const tabInfo = tabs.find(t=>t.id===currentTab);
+    const utter = new SpeechSynthesisUtterance(currentValue);
+    utter.lang = tabInfo.lang;
+    utter.rate = 0.8;
+    window.speechSynthesis.speak(utter);
+  }catch(e){}
+}
+
+/* ================= AUTO PLAY ================= */
+function toggleAuto(){
+  const btn = document.getElementById('autoBtn');
+  if(autoTimer){
+    clearInterval(autoTimer);
+    autoTimer = null;
+    btn.textContent = '▶️ ఆటో ప్లే';
+  } else {
+    showRandom(true);
+    const interval = REVEAL_DELAY[currentTab] ? REVEAL_DELAY[currentTab] * 2 : 3500;
+    autoTimer = setInterval(()=> showRandom(true), interval);
+    btn.textContent = '⏸️ ఆపండి';
+  }
+}
+
+/* ================= INIT ================= */
+window.onload = () => {
+  // preload voices (some browsers need this) - guard for environments without speechSynthesis
+  if('speechSynthesis' in window){
+    try{ window.speechSynthesis.getVoices(); }catch(e){}
+  }
+  renderShapeGrids();
+  switchTab('letters');
+};
+
+/* ================= REMOTE CLICKER CONTROL (Bluetooth presenter) ================= */
+const NAV_ORDER = [...tabs.map(t=>t.id), ...toolPanels.map(t=>t.id)];
+
+function remoteNext(){
+  if(toolPanels.find(t=>t.id===currentTab)) return; // tool panels are entered manually, not by remote
+  const revealBtn = document.getElementById('revealBtn');
+  if(revealBtn && revealBtn.style.display !== 'none' && !revealed){
+    revealAnswer();
+  } else {
+    showRandom(true);
+  }
+}
+
+function remotePrev(){
+  if(toolPanels.find(t=>t.id===currentTab)) return;
+  speakCurrent();
+}
+
+function remoteChangeSection(direction){
+  const idx = NAV_ORDER.indexOf(currentTab);
+  if(idx===-1) return;
+  let next = (idx + direction + NAV_ORDER.length) % NAV_ORDER.length;
+  switchTab(NAV_ORDER[next]);
+}
+
+document.addEventListener('keydown', (e)=>{
+  const tag = document.activeElement ? document.activeElement.tagName : '';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return; // don't hijack typing/selecting
+
+  switch(e.key){
+    case 'ArrowRight':
+    case 'PageDown':
+    case ' ':
+      e.preventDefault();
+      remoteNext();
+      break;
+    case 'ArrowLeft':
+    case 'PageUp':
+      e.preventDefault();
+      remotePrev();
+      break;
+    case 'ArrowDown':
+      e.preventDefault();
+      remoteChangeSection(1);
+      break;
+    case 'ArrowUp':
+      e.preventDefault();
+      remoteChangeSection(-1);
+      break;
+    case 'v': case 'V':
+      speakCurrent();
+      break;
+  }
+});
+</script>
+</body>
+</html>
