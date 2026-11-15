@@ -189,7 +189,7 @@
 
 - ⛶ 2026.11.14-19 (యూజర్ స్క్రీన్‌షాట్: టూల్ పై ↗ నొక్కి ఆడి బ్యాక్ = మూసుకుంటుంది – ↗ కొత్త ట్యాబ్/Chrome లో తెరిచేది): యాప్ లోపలి టూల్స్ (k:'tool', same-origin) కు ↗ బదులు `⛶` `bvFull()` = Fullscreen API (లేకపోతే `body.bvbig`), యాప్ లోపలే → బ్యాక్ = యాప్ బ్యాక్; `closeBook` లో `bvFsOff()`. బయటి లింకులు/Drive కి ↗ అలాగే.
 
-- 🎬 2026-11-15 యాప్ టూర్ వీడియో (యూజర్ వాయిస్ ఓవర్ కోసం; చేరే విధానం లేదు): `help/raay_vidyarthi_app_emi_unnayi_tour.mp4` (2:36, 1080×1920, నిశ్శబ్దం, తెలుగు శీర్షికలు; విద్యార్థి → ఉపాధ్యాయుడు → HM → తల్లిదండ్రులు; నమూనా డేటా ZPHS TV పల్లి). యాప్ (index.html) లో లింక్ లేదు. యూజర్ వాయిస్ పంపితే `-c:v copy -map 0:v -map 1:a` తో కలిపి అదే పేరుతో మార్చాలి. మూలం scratch /home/claude/vid/shoot3.py (Playwright స్టిల్స్ → ffmpeg; GitHub API ని local ఫోల్డర్ జాబితాతో mock).
+- 🎬 2026-11-15 యాప్ టూర్ వీడియో (యూజర్ వాయిస్ ఓవర్ కోసం; చేరే విధానం లేదు): `help/raay_vidyarthi_app_emi_unnayi_tour.mp4` (2:36, 1080×1920, నిశ్శబ్దం, తెలుగు శీర్షికలు; విద్యార్థి → ఉపాధ్యాయుడు → HM → తల్లిదండ్రులు; నమూనా డేటా ZPHS TV పల్లి). చూడటానికి/దించుకోవడానికి పేజీ `tour.html` (video + ⬇️ download; యూజర్: నేరుగా mp4 లింక్ పని చేయలేదు) – యూజర్‌కు ఇచ్చే లింక్ ఇదే; వీడియో మార్చితే tour.html లో `?v=` పెంచాలి. యాప్ (index.html) లో లింక్ లేదు. యూజర్ వాయిస్ పంపితే `-c:v copy -map 0:v -map 1:a` తో కలిపి అదే పేరుతో మార్చాలి. మూలం scratch /home/claude/vid/shoot3.py (Playwright స్టిల్స్ → ffmpeg; GitHub API ని local ఫోల్డర్ జాబితాతో mock).
 
 ## పరీక్ష
 - `python3 -m http.server` + Playwright (chromium ముందే ఉంది). `node --check` అన్ని `<script>` blocks.
