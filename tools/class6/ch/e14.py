@@ -1,0 +1,53 @@
+# 6వ తరగతి English – Spring Bloom Sem-2 Unit 5 (Culture and Tradition): National War Memorial (poem)
+S = 'eng'
+BK = 'eng2'
+PAGES = (248, 249)
+L = dict(id='e6u5d', no=14, t='National War Memorial (Poem)', m=[3], ty='Unit 5 – Culture and Tradition (Poem)', by='Spring Bloom Sem-2 (pp. 240–241)',
+th='Honouring the courage and sacrifice of our soldiers; the National War Memorial, New Delhi (February 2019) and its eternal flame',
+sum='The National War Memorial, New Delhi, was established in February 2019 by the Government of India to honour our brave soldiers. The poem describes it as a grand sight in the heart of Bharat that retells the stories of brave soldiers. It stands with pride, respect and grace; each name and stone is etched with a story. Soldiers of the army, air force and navy – on battlefields, in the skies and on the oceans – stand side by side for Bharat. The eternal flame glows silently, paying homage to their courage. Their sacrifice stays always in our minds and in blessed memory. The poem asks us to always remember their sacrifice with pride and respect.',
+te='న్యూఢిల్లీలోని జాతీయ యుద్ధ స్మారకం (ఫిబ్రవరి 2019) మన వీర సైనికుల గౌరవార్థం నిర్మించారు. ప్రతి రాయిపై వీరుల పేర్లు చెక్కి ఉన్నాయి. భూమి, ఆకాశం, సముద్రం – సైన్యం, వాయుసేన, నౌకాదళం పక్కపక్కనే దేశం కోసం నిలిచారు. అమర జ్యోతి (eternal flame) నిశ్శబ్దంగా వెలుగుతూ వారి ధైర్యానికి నివాళి అర్పిస్తుంది. వారి త్యాగాన్ని గర్వంతో, గౌరవంతో ఎప్పటికీ గుర్తుంచుకోవాలని కవిత చెబుతుంది.',
+pts=['National War Memorial, New Delhi – established in February 2019 to honour soldiers.',
+ 'It retells stories of brave soldiers; names are etched on stones.',
+ 'Army (battlefields), Air Force (skies), Navy (oceans) stand side by side for Bharat.',
+ 'The eternal flame (Amar Jawan Jyoti) glows in silence as homage.',
+ 'Message: remember soldiers’ sacrifice with pride and respect forever.',
+ 'Rhyming pairs: behold–retold, pride–confide, wide–side, glows–shows, mind–remind.'],
+w=[['behold', 'see, look at – చూడు'], ['memorial', 'structure built to remember people – స్మారకం'], ['retold', 'told again – మళ్ళీ చెప్పబడిన'], ['etched', 'carved/engraved – చెక్కబడిన'],
+   ['confide', 'tell secretly / share – చెప్పుకొను'], ['eternal flame', 'flame that always burns – అమర జ్యోతి'], ['homage', 'respect shown publicly – నివాళి'], ['sacrifice', 'giving up life/comfort for others – త్యాగం'],
+   ['heartland', 'central part of a country – హృదయ భాగం']],
+gr=dict(t='Rhyme • Describing words', p=['behold – retold; pride – confide; wide – side; glows – shows; mind – remind', 'Describing words: grand, brave, eternal, blessed']),
+qa=[['When was the National War Memorial established?', 'In February 2019.'],
+    ['Where is it?', 'In New Delhi (Bharat’s heartland).'],
+    ['Why was it built?', 'To honour our brave soldiers and their sacrifice.'],
+    ['What is etched on the stones?', 'The names (and stories) of the soldiers.'],
+    ['Which forces are referred to by “battlefields, skies and oceans”?', 'Army, Air Force and Navy.'],
+    ['What does the eternal flame do?', 'It glows in silence, paying homage to the soldiers’ courage.'],
+    ['What does the poem ask us to do?', 'Always remember the soldiers’ sacrifice with pride and respect.']],
+act='Write a slogan or a short verse to thank our soldiers (e.g., “They guard our nation day and night – salute the heroes, brave and bright!”). Read about Param Vir Chakra awardees.',
+kn='The National War Memorial is near India Gate in New Delhi; the names of over 25,000 soldiers who died for India after 1947 are inscribed there.',
+qz=[['The National War Memorial was established in …', 'February 2019', 'August 1947', 'January 1950', 'June 2021'],
+    ['It is in …', 'New Delhi', 'Mumbai', 'Kolkata', 'Hyderabad'],
+    ['It honours our …', 'brave soldiers', 'farmers', 'teachers', 'kings'],
+    ['“Etched” means …', 'carved', 'painted', 'burnt', 'hidden'],
+    ['“Homage” means …', 'respect shown publicly', 'a house', 'a song', 'a game'],
+    ['The flame is …', 'eternal', 'small', 'blue', 'temporary'],
+    ['“Behold” means …', 'look at', 'hold tightly', 'run', 'forget'],
+    ['Rhyming word for “glows”:', 'shows', 'mind', 'wide', 'pride'],
+    ['“From battle fields to skies, and to oceans wide” refers to …', 'Army, Air Force, Navy', 'farmers', 'students', 'doctors'],
+    ['The poem asks us to remember their …', 'sacrifice', 'games', 'songs', 'money']],
+wb=dict(mis='The eternal flame does not glow for one day only – it burns always, as an everlasting tribute.',
+        qz=[['“Sacrifice” means …', 'giving up something for others', 'winning', 'sleeping', 'buying'],
+            ['Rhyming word for “pride”:', 'confide', 'glows', 'mind', 'retold'],
+            ['The memorial stands with …', 'pride', 'fear', 'anger', 'shame'],
+            ['The soldiers stand for Bharat …', 'side by side', 'alone', 'far away', 'sometimes'],
+            ['Their sacrifice is always in our …', 'mind', 'pocket', 'bag', 'house']]))
+SEC = [
+ (248, 'Let us do these activities', [
+  'Read the poem aloud with expression, recite it with classmates and learn it by heart. Rhyming words: behold–retold, pride–confide, wide–side, glows–shows, mind–remind, remember–forever (near rhyme).']),
+ (249, 'Let us think and reflect 1–5; Let us explore', [
+  '1. It reminds us that soldiers on land, in the sky and at sea protect us and some give their lives; it makes us respect and thank them.',
+  '2. In rhyming couplets – first describing the memorial, then the soldiers of all three forces, then the eternal flame, and finally asking us to remember them forever.',
+  '3. Yes – words like “pride”, “courage”, “sacrifice” and “eternal flame” fill us with love for the nation and respect for soldiers.',
+  '4. When I visited the National War Memorial, I felt proud and emotional. The eternal flame glowed silently. I read the names of brave soldiers etched on the walls and felt grateful for their sacrifice. I promised myself to be a good citizen and serve my country.',
+  '5. Speech: Good morning, everyone. We sleep peacefully at night because our soldiers stay awake at the borders, in the skies and on the seas. Many of them have given their lives for our country. The National War Memorial in New Delhi reminds us of their courage. Let us respect our soldiers, help their families, and serve our nation honestly in our own way. Jai Hind!',
+  'Explore: Visit www.mygov.in / the National War Memorial website, and plan a visit with teachers or parents; note the Param Vir Chakra gallery and the Amar Jawan Jyoti.'])]
