@@ -3,10 +3,11 @@
 # ఉన్న notes-6.js / answers-6.js లోని ఇతర పాఠాలు (ఇక్కడ ch/ లో లేనివి) అలాగే ఉంటాయి.
 import json, glob, importlib.util, os
 H = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.abspath(f'{H}/../..')
-BOOK = {'mat': ('Class6_Maths_Textbook_Sem1.pdf', 8), 'sci': ('Class6_Science_Textbook_Sem1.pdf', 8), 'soc': ('Class6_Social_Textbook_Sem1.pdf', 8), 'soc2': ('Class6_Social_Textbook_Sem2.pdf', 8),
+BOOK = {'mat': ('Class6_Maths_Textbook_Sem1.pdf', 8), 'sci': ('Class6_Science_Textbook_Sem1.pdf', 8), 'soc': ('Class6_Social_Textbook_Sem1.pdf', 8), 'soc2': ('Class6_Social_Textbook_Sem2.pdf', 8), 'mat2': ('Class6_Maths_Textbook_Sem2.pdf', 8), 'sci2': ('Class6_Science_Textbook_Sem2.pdf', 8),
+        'tel2': ('Class6_Languages_Textbook_Sem2.pdf', 8), 'hin2': ('Class6_Languages_Textbook_Sem2.pdf', 8), 'eng2': ('Class6_Languages_Textbook_Sem2.pdf', 8),
         'tel': ('Class6_Languages_Textbook_Sem1.pdf', 8), 'hin': ('Class6_Languages_Textbook_Sem1.pdf', 8), 'eng': ('Class6_Languages_Textbook_Sem1.pdf', 8),
         'te2': ('Class6_Telugu_SecondLanguage_Textbook.pdf', 7)}
-BIL = {'mat', 'sci', 'soc', 'soc2'}  # సరి పేజీ English, తర్వాతి (బేసి) పేజీ తెలుగు → జవాబులు రెండింటికీ
+BIL = {'mat', 'sci', 'soc', 'soc2', 'mat2', 'sci2'}  # సరి పేజీ English, తర్వాతి (బేసి) పేజీ తెలుగు → జవాబులు రెండింటికీ
 def load(f):
     sp = importlib.util.spec_from_file_location('c6_' + os.path.basename(f)[:-3], f); m = importlib.util.module_from_spec(sp); sp.loader.exec_module(m); return m
 def rd(fn, key):
