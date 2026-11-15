@@ -3112,7 +3112,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${view==='home'?`<button class="ib hstar" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐<small>${stars()}</small></button><button class="ib hav" onclick="go('avatar')" aria-label="బొమ్మ మార్చు">${avOf(S.cur.n)}</button>`:''}${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.15-6';
+const APPV='2026.11.15-7';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3652,7 +3652,7 @@ const TBL={};
 const TB_SPLIT={10:1},TBF={},TBW={};
 function tbLoad(c){c=+c;if(!c||TBL[c])return;if(window.RAAY_TB[c]){TBL[c]='ok';return;}TBL[c]='ld';
  const sc=document.createElement('script');sc.src='notes-'+c+(TB_SPLIT[c]?'-idx':'')+'.js';sc.async=true;
- sc.onload=()=>{TBL[c]=window.RAAY_TB[c]?'ok':'no';Object.keys(TBW).filter(k=>k.startsWith(c+'|')).forEach(k=>{TBF[k]='';tbFull(c,k.split('|')[1]);});tbRefresh();};sc.onerror=()=>{TBL[c]='no';sc.remove();tbRefresh();};document.head.appendChild(sc);}
+ sc.onload=()=>{TBL[c]=window.RAAY_TB[c]?'ok':'no';if(TBL[c]==='no'){sc.remove();setTimeout(()=>{if(TBL[c]==='no')delete TBL[c];},4000);}Object.keys(TBW).filter(k=>k.startsWith(c+'|')).forEach(k=>{TBF[k]='';tbFull(c,k.split('|')[1]);});tbRefresh();};sc.onerror=()=>{TBL[c]='no';sc.remove();setTimeout(()=>{if(TBL[c]==='no'){delete TBL[c];tbRefresh();}},4000);tbRefresh();};document.head.appendChild(sc);}
 function tbFull(c,s){c=+c;if(!TB_SPLIT[c]||!s)return true;const k=c+'|'+s;if(TBF[k]==='ok')return true;
  const cur=((window.RAAY_TB[c]||{})[s]||[]);if(window.RAAY_TB[c]&&!cur.some(L=>L._lite)){TBF[k]='ok';return true;}
  if(TBF[k]==='ld'||TBF[k]==='wait')return false;
@@ -3662,7 +3662,7 @@ function tbFull(c,s){c=+c;if(!TB_SPLIT[c]||!s)return true;const k=c+'|'+s;if(TBF
  sc.onerror=()=>{TBF[k]='';sc.remove();delete TBW[k];toast('📴 పాఠం లోడ్ కాలేదు – నెట్ ఆన్ చేసి మళ్ళీ ప్రయత్నించండి');tbRefresh();};document.head.appendChild(sc);return false;}
 function tbWhenFull(c,s,f){if(tbFull(c,s))return f();const k=+c+'|'+s;(TBW[k]=TBW[k]||[]).push(f);toast('⏳ పాఠం లోడ్ అవుతోంది...');}
 const TBWAIT='<div class="empty">⏳ పాఠం లోడ్ అవుతోంది...</div>';
-function tbRefresh(){try{if(['learn','subject','tbl','home','ssc','vids'].includes(view)||(view==='teacher'&&(param.t==='tb'||param.t==='vl'||param.t==='qp')))softRender();}catch(e){}}
+function tbRefresh(){try{if(view==='teacher'&&param.t==='vl'&&!(($('#vlu')||{}).value||($('#vlt')||{}).value||($('#vlo')||{}).value)){const y=window.scrollY||0;render();try{window.scrollTo(0,y);}catch(e){}return;}if(['learn','subject','tbl','home','ssc','vids'].includes(view)||(view==='teacher'&&(param.t==='tb'||param.t==='vl'||param.t==='qp')))softRender();}catch(e){}}
 /* ఫైల్ పాఠాలు + టీచర్ మార్పులు (tbx) కలిపి */
 function tbLes(c,s){c=+c;tbLoad(c);const base=((window.RAAY_TB[c]||{})[s]||[]);const ov=live('tbx').filter(x=>+x.c===c&&x.s===s);if(!ov.length)return base;
  const m=new Map(base.map(L=>[L.id,L]));ov.forEach(x=>{if(x.hide)m.delete(x.lid);else if(x.L)m.set(x.lid,Object.assign({},x.L,{id:x.lid,tch:1}));});
@@ -5750,10 +5750,10 @@ TP.nt=()=>`<div class="card"><h3>పాఠం నోట్ జోడించం
 <h4 class="sec">టీచర్ నోట్స్ (${live('notes').filter(n=>!n.kind&&canSee(n.c,n.s)).length})</h4>${live('notes').filter(n=>!n.kind&&canSee(n.c,n.s)).map(n=>`<div class="titem"><div><b>${esc(n.t)}</b><small>${n.c}వ తరగతి • ${SUBJ[n.s].n}${recD(n)?' • 📅 '+recD(n):''}</small></div><button class="del" onclick="delItem('notes','${n.id}')">తొలగించు</button></div>`).join('')||'<div class="empty">లేవు</div>'}`;
 function addNote(){const t=$('#ntt').value.trim(),x=$('#ntx').value.trim();if(!t||!x)return toast('పేరు, ముఖ్యాంశాలు రాయండి');put('notes',{id:uid(),c:+$('#nc').value,s:$('#ncs').value,t,x});toast('పాఠం జోడించబడింది ✓');go('teacher',{t:'nt'});}
 TP.vl=()=>{const cs=myCls(),c=cs.includes(+param.vc)?+param.vc:cs[0];const subs=learnSubs(c).filter(x=>canSee(c,x));const s=subs.includes(param.vs)?param.vs:subs[0];
- const ls=s?tbLes(c,s):[],mine=s?vlAll(c,s):[],sl=param.vl||(ls[0]?ls[0].id:'_');
+ const ls=s?tbLes(c,s):[],mine=s?vlAll(c,s):[],vld=s&&!ls.length&&TBL[c]!=='ok',sl=param.vl||(ls[0]?ls[0].id:(vld?'':'_'));
  return `<div class="card"><h3>🎬 వీడియో లింక్ జోడించండి</h3><p class="mut">YouTube / Google Drive లింకులు మాత్రమే. పిల్లలకు <b>నేర్చుకో → 🎬 వీడియో పాఠాలు</b> లో సబ్జెక్టు → పాఠం (📁) వారీగా, పాఠం నోట్స్ పేజీలో కూడా – app లోనే ప్లే అవుతాయి.</p>
 <div class="g2"><div><label>తరగతి</label><select id="vlc" onchange="go('teacher',{t:'vl',vc:+this.value})">${cs.map(x=>`<option value="${x}" ${x===c?'selected':''}>${x}వ తరగతి</option>`).join('')}</select></div><div><label>సబ్జెక్ట్</label><select id="vls" onchange="go('teacher',{t:'vl',vc:${c},vs:this.value})">${subs.map(x=>`<option value="${x}" ${x===s?'selected':''}>${SUBJ[x].n}</option>`).join('')}</select></div></div>
-<label>పాఠం (📁 ఫోల్డర్)</label><select id="vll" onchange="document.getElementById('vlo').hidden=this.value!=='_'">${ls.map(L=>`<option value="${L.id}" ${L.id===sl?'selected':''}>${esc(vlLT(s,L))}</option>`).join('')}<option value="_" ${sl==='_'?'selected':''}>✏️ వేరే పాఠం / అంశం (పేరు రాయండి)</option></select>
+<label>పాఠం (📁 ఫోల్డర్)</label><select id="vll" onchange="document.getElementById('vlo').hidden=this.value!=='_'">${vld?'<option value="" disabled selected>⏳ పాఠాలు లోడ్ అవుతున్నాయి… (నెట్ ఆన్ చేయండి)</option>':''}${ls.map(L=>`<option value="${L.id}" ${L.id===sl?'selected':''}>${esc(vlLT(s,L))}</option>`).join('')}<option value="_" ${sl==='_'?'selected':''}>✏️ వేరే పాఠం / అంశం (పేరు రాయండి)</option></select>
 <input id="vlo" ${sl==='_'?'':'hidden'} maxlength="60" placeholder="పాఠం / అంశం పేరు" value="${esc(param.vo||'')}">
 <label>వీడియో పేరు</label><input id="vlt" maxlength="80" placeholder="ఉదా: భిన్నాల కూడిక – సులభంగా">
 <label>వీడియో లింక్</label><div class="vrow"><input id="vlu" type="url" inputmode="url" placeholder="https://youtu.be/...  లేదా  Drive లింక్"><button onclick="vlFind()">🔎 YouTube</button></div>
@@ -5761,7 +5761,7 @@ TP.vl=()=>{const cs=myCls(),c=cs.includes(+param.vc)?+param.vc:cs[0];const subs=
 <h4 class="sec">📁 ${c}వ తరగతి • ${s?SUBJ[s].n:''} – వీడియోలు (${mine.length})</h4>${vlFolders(c,s,mine,1)||'<div class="empty">ఇంకా వీడియోలు లేవు</div>'}`;};
 function vlAdd(){const c=+$('#vlc').value,s=$('#vls').value,l=$('#vll').value,u=$('#vlu').value.trim(),t=$('#vlt').value.trim();
  if(!s)return toast('సబ్జెక్ట్ ఎంచుకోండి');if(!u)return toast('వీడియో లింక్ పేస్ట్ చేయండి');if(!vidEmbed(u))return toast('🎬 YouTube లేదా Google Drive లింక్ మాత్రమే (https://...)');
- let lt='';if(l==='_'){lt=$('#vlo').value.trim();if(!lt)return toast('పాఠం / అంశం పేరు రాయండి');}else{const L=tbLes(c,s).find(x=>x.id===l);lt=L?vlLT(s,L):'';}
+ if(!l)return toast('⏳ పాఠాలు ఇంకా లోడ్ అవుతున్నాయి – కొద్దిసేపు ఆగండి');let lt='';if(l==='_'){lt=$('#vlo').value.trim();if(!lt)return toast('పాఠం / అంశం పేరు రాయండి');}else{const L=tbLes(c,s).find(x=>x.id===l);lt=L?vlLT(s,L):'';}
  const ll=l==='_'?'':l;if(vlAll(c,s).some(n=>n.url===u&&(n.l||'')===ll&&(ll||n.lt===lt)))return toast('ఈ వీడియో ఇప్పటికే ఈ పాఠంలో ఉంది');
  put('notes',{id:uid(),kind:'vid',c,s,l:ll,lt,t:(t||'వీడియో').slice(0,80),url:u.slice(0,300),by:tName()});toast('🎬 వీడియో జోడించాం ✓');go('teacher',{t:'vl',vc:c,vs:s,vl:l,vo:l==='_'?lt:''});}
 function vlFind(){const c=+$('#vlc').value,s=$('#vls').value,l=$('#vll').value;const L=tbLes(c,s).find(x=>x.id===l);const lt=l==='_'?($('#vlo').value||''):(L?L.t:'');
