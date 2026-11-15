@@ -1,0 +1,88 @@
+# 6వ తరగతి English – Spring Bloom Sem-2 Unit 3 (Nurturing Nature): What a Bird Thought (poem)
+S = 'eng'
+BK = 'eng2'
+PAGES = (168, 175)
+L = dict(id='e6u3b', no=6, t='What a Bird Thought (Poem)', m=[12], ty='Unit 3 – Nurturing Nature (Poem)', by='Anonymous (pp. 160–167)',
+th='As we grow and explore, our idea of the world grows – the world is bigger than we think; curiosity and experience give knowledge',
+sum='A bird tells how its idea of the world changed as it grew. First it lived in a little house – the egg – and thought the world was small, round and made of pale blue shell. Next it lived in a little nest, needed nothing else, and thought the world was made of straw, nestled by its mother. One day it fluttered out of the nest to see what it could find, and said the world was made of leaves – then realised it had been “very blind” (it had seen so little). At last it flew beyond the tree, grown-up and fit for adult work, and admitted: “I don’t know how the world is made, and neither do my neighbours.” The poem shows that as we grow, explore and gain experience, we understand that the world is much bigger than we imagined.',
+te='ఒక పక్షి తాను పెరిగే కొద్దీ ప్రపంచం గురించి తన ఆలోచన ఎలా మారిందో చెబుతుంది. మొదట గుడ్డు అనే చిన్న ఇంట్లో ఉండి, ప్రపంచం చిన్నగా, గుండ్రంగా, లేత నీలి పెంకుతో చేసినదని అనుకుంది. తర్వాత గూటిలో అమ్మ పక్కన వెచ్చగా ఉంటూ ప్రపంచం గడ్డితో చేసినదనుకుంది. ఒకరోజు గూటి నుండి రెక్కలు ఆడిస్తూ బయటికి వచ్చి ప్రపంచం ఆకులతో చేసినదనుకుంది – “ఇంతకాలం నేను గుడ్డిదానిలా ఉన్నాను” అనుకుంది. చివరకు పెద్దదై చెట్టు దాటి ఎగిరిపోయి – “ప్రపంచం ఎలా తయారైందో నాకు తెలియదు, నా పొరుగువారికీ తెలియదు” అంది. పెరిగే కొద్దీ, అన్వేషించే కొద్దీ ప్రపంచం మనం అనుకున్నదానికంటే చాలా పెద్దదని తెలుస్తుంది.',
+pts=['Stanza 1: The bird lived in an egg – thought the world was small, round and made of pale blue shell.',
+ 'Stanza 2: It lived in a straw nest with its mother – thought the world was made of straw.',
+ 'Stanza 3: It fluttered out of the nest – thought the world was made of leaves; felt it had been “very blind”.',
+ 'Stanza 4: It flew beyond the tree as an adult – said nobody (not even neighbours) knows how the world is made.',
+ 'Message: knowledge grows with curiosity, exploration and experience.',
+ 'Rhyming words: well–shell, other–mother, find–blind, labours–neighbours.',
+ 'Describing words (adjectives): pale, blue, round, little, small, green, wooden.'],
+w=[['pale', 'light in colour – లేత'], ['shell', 'hard outer covering of an egg – పెంకు'], ['straw', 'dry stalks of grain – గడ్డి'], ['nestled', 'settled comfortably and warmly – హాయిగా ఒదిగి'],
+   ['fluttered', 'moved wings lightly and quickly – రెక్కలు ఆడించింది'], ['at length', 'at last, finally – చివరకు'], ['grown-up', 'adult – పెద్దది'], ['labours', 'hard work – శ్రమ'],
+   ['blind', 'unable to see; here – not knowing much – గుడ్డి'], ['neighbours', 'those living nearby – పొరుగువారు']],
+gr=dict(t='Rhyming words • Describing words', p=['well – shell (fell, bell)', 'other – mother (brother)', 'find – blind (kind, mind)', 'labours – neighbours',
+   'Describing words: pointed, green, thin, brown, small, wooden, hanging, round']),
+qa=[['Where did the bird live first?', 'In a little house – the egg.'],
+    ['What did it think the world was made of at first?', 'Pale blue shell; small and round.'],
+    ['What was the second home made of?', 'Straw – a nest.'],
+    ['Who was with the baby bird in the nest?', 'Its mother.'],
+    ['What did it see when it came out of the nest?', 'Leaves.'],
+    ['Why did the bird say it had been “very blind”?', 'Because it had seen only a small part of the world and thought that was everything.'],
+    ['What did the bird do at the end?', 'It flew beyond the tree as a grown-up.'],
+    ['What did the bird say at the end about the world?', 'It does not know how the world is made, and neither do its neighbours.'],
+    ['What is the message of the poem?', 'The world is bigger than we think; curiosity and experience help us learn.']],
+act='Speak as a bird of your choice: what you look like, where you live, what you do, and your message to humans. Draw different kinds of bird nests (weaver bird’s hanging nest, tailor bird’s stitched nest).',
+kn='The weaver bird (గిజిగాడు) weaves a hanging nest with grass strips – one of nature’s best “architects”!',
+qz=[['The bird’s first house was …', 'an egg (shell)', 'a nest', 'a tree', 'a cage'],
+    ['The shell was … in colour.', 'pale blue', 'dark brown', 'green', 'white'],
+    ['The second home was made of …', 'straw', 'leaves', 'mud', 'shell'],
+    ['The bird was nestled by its …', 'mother', 'father', 'neighbours', 'friends'],
+    ['Outside the nest, the bird thought the world was made of …', 'leaves', 'straw', 'shell', 'clouds'],
+    ['“Fluttered” means …', 'moved wings lightly and quickly', 'slept', 'sang', 'fell down'],
+    ['“At length” means …', 'at last', 'very long', 'quickly', 'once'],
+    ['At the end the bird …', 'flew beyond the tree', 'went back to the nest', 'fell down', 'slept'],
+    ['Who do not know how the world is made?', 'the bird and its neighbours', 'only the mother', 'the poet', 'the tree'],
+    ['Rhyming word for “find”:', 'blind', 'mother', 'shell', 'tree'],
+    ['Rhyming word for “labours”:', 'neighbours', 'leaves', 'straw', 'nest'],
+    ['The poem was written by …', 'Anonymous', 'Tagore', 'S. I. Farooqi', 'Wordsworth'],
+    ['The bird changed its home …', 'two times', 'once', 'never', 'five times']],
+wb=dict(mis='“Very blind” does not mean the bird lost its eyesight – it means it knew very little of the world. Neighbours did not tell the bird about the world (False).',
+        qz=[['The parrot’s name is …', 'Paro', 'Polly', 'Mitthu', 'Rani'],
+            ['Paro’s feathers are …', 'bright', 'dull', 'black', 'wet'],
+            ['In the morning Paro …', 'spreads its wings', 'sleeps', 'cries', 'eats seeds'],
+            ['The skies are so …', 'blue', 'grey', 'dark', 'red'],
+            ['Among the trees there are many new …', 'stories', 'nests', 'fruits', 'birds']]))
+SEC = [
+ (168, 'Let us do these activities before we read', [
+  '1. The picture shows a bird feeding its babies in a nest on a tree. Hard work (e.g., preparing for a test / helping in the garden) – it helped me score well / grow plants, and I felt proud and happy.',
+  '2. We see birds on trees, electric wires, rooftops, fields and near water. They fly, sing, build nests, look for food and feed their young ones.',
+  '3. Yes – I want to fly like a bird to see the world from the sky, go anywhere freely and touch the clouds.',
+  '4. A baby bird thinks its world is just the egg, then the nest and its mother – very small and safe.']),
+ (169, 'Before we read Q5 (meanings)', [
+  '(a) pale – light; (b) moved lightly and quickly – fluttered; (c) Finally – at last; (d) hard work – labour.']),
+ (170, 'Let us discuss I–III', [
+  'I. Stanza 1 – 2 (The bird lived happily in a small world). Stanza 2 – 6 (The bird lived in a cosy nest with its mother). Stanza 3 – 1 (The bird steps out into the world). Stanza 4 – 4 (The bird flies away as an adult). Extra sentences: 3 and 5.',
+  'II. a) “And made of pale, blue shell.” (egg) b) “I thought the world was made of straw, / And nestled by my mother.” (nest) c) “I said the world is made of leaves.” (bird among leaves) d) “At length I flew beyond the tree.” (flying bird) – match with the pictures in the book.',
+  'III. a. ROUND b. STRAW c. LEAVES d. FLEW.']),
+ (171, 'Let us think and reflect 1–2', [
+  '1. (a) True – shell (egg) to nest; then it flew away. (b) False – the neighbours also do not know how the world is made.',
+  '2.(a) (i) Its mother. (ii) b. its nest was made of straw. (iii) “nestled”.',
+  '2.(b) (i) When it came out of the nest it saw only leaves all around. (ii) c. spoke. (iii) see … beyond / outside the nest (it could not SEE anything beyond the leaves from INSIDE the nest).']),
+ (171, 'Let us think and reflect 3–10', [
+  '3. Because it was inside an egg – the egg is small, round, and its shell is pale blue; that was all it could see.',
+  '4. It went out among the leaves of the tree (on the branches).',
+  '5. It said it was grown-up – “quite fit for grown-up labours” (strong and ready for adult work).',
+  '6. Other birds, squirrels and creatures living on the same tree/nearby – because neighbours live close to us; they too know only their small part of the world.',
+  '7. Curiosity makes us ask questions and explore; like the bird stepping out of its nest, we learn new things when we try and look around.',
+  '8. Each time the bird saw more, its idea changed – egg → straw → leaves → the big world. Observation and experience correct our ideas.',
+  '9. They were not exactly wrong – they were incomplete; it described only what it could see at that time. As it grew, it saw more.',
+  '10. I felt excited and a little scared. The sky was so wide and blue! Trees, rivers and fields were everywhere. I flapped my wings hard and felt free and proud. I realised the world is much bigger than my nest.']),
+ (172, 'Let us learn I–II', [
+  'I. Stanza 1: well – shell (new: fell, bell, sell) | Stanza 2: other – mother (brother) | Stanza 3: find – blind (kind, mind) | Stanza 4: labours – neighbours. New stanza: “… But one thing I surely know, / … My little nest is the best.”',
+  'II. a. The bird has a pointed beak. b. It sits on a thin, brown branch. c. The leaves are green. d. A small bird is in the nest. e. A round nest is hanging from the tree. f. There is a wooden birdhouse near the tree.']),
+ (173, 'Let us listen; Let us speak', [
+  'Listen: bright; Fly; blue; trees; stories.',
+  'Speak (model): I am a parrot. I’m green in colour with a red beak; I’m a small bird. I live in a hole in a tall tree near the fields. During the day I fly around and eat fruits and seeds; I also copy sounds. My message to humans: please don’t cut trees and don’t keep birds in cages.']),
+ (174, 'Let us write', [
+  'a) A baby: My world is my mother’s lap. It is soft and warm. I see faces smiling at me. I hear sweet songs and lullabies. Slowly my world becomes my house and the garden.',
+  'b) A fish: My world is cool and blue. It is full of water. I see stones, plants and other fish. Sunlight shines from above. I think the whole world is a big pond.']),
+ (175, 'Let us explore I–III', [
+  'I. My home is made of bricks, cement, sand, iron rods, wood (doors), glass (windows) and tiles. Homes are not made of straw because straw is weak – it can catch fire, get spoilt by rain and wind. My dream home: two floors, solar panels, a garden and rainwater harvesting; materials – bricks, cement, wood, eco-friendly paint. A house is a building; a home is a house where a family lives with love and care.',
+  'II. painter – paints walls and doors | electrician – fixes wires, switches and lights | plumber – fixes water pipes and taps | carpenter – makes doors, windows and furniture with wood | architect – plans and designs the building | 6. welder – joins iron grills and gates | 7. tiler – fixes tiles on the floor.',
+  'III. Nests: cup nest (sparrow), hanging nest (weaver bird), stitched leaf nest (tailor bird), mud nest (swallow), tree-hole nest (woodpecker, parrot), ground nest (lapwing).'])]
