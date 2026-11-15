@@ -8,6 +8,10 @@ BOOK = {'mat': ('Class6_Maths_Textbook_Sem1.pdf', 8), 'sci': ('Class6_Science_Te
         'tel': ('Class6_Languages_Textbook_Sem1.pdf', 8), 'hin': ('Class6_Languages_Textbook_Sem1.pdf', 8), 'eng': ('Class6_Languages_Textbook_Sem1.pdf', 8),
         'te2': ('Class6_Telugu_SecondLanguage_Textbook.pdf', 7)}
 BIL = {'mat', 'sci', 'soc', 'soc2', 'mat2', 'sci2'}  # సరి పేజీ English, తర్వాతి (బేసి) పేజీ తెలుగు → జవాబులు రెండింటికీ
+M = '⁂'  # జవాబుల దాపరికం (యాప్ unz: chr−7) – answers + tg జవాబు వరుసలు
+def Z(x):
+    if not isinstance(x, str) or x.startswith(M) or any(ord(c) >= 0xCFF0 for c in x): return x
+    return M + ''.join(chr(ord(c) + 7) for c in x)
 def load(f):
     sp = importlib.util.spec_from_file_location('c6_' + os.path.basename(f)[:-3], f); m = importlib.util.module_from_spec(sp); sp.loader.exec_module(m); return m
 def rd(fn, key):
@@ -32,11 +36,14 @@ cur = rd('notes-6.js', ')[6]=')
 for s, ls in out.items():
     ids = {x['id'] for x in ls}; keep = [x for x in cur.get(s, []) if x['id'] not in ids]
     cur[s] = ls + keep
-for s in cur: cur[s].sort(key=lambda x: x['no'])
-js = '/* రాయ్ విద్యార్థి – 6వ తరగతి పాఠ్యపుస్తకం నోట్స్ (సెమిస్టర్-1) */\n(window.RAAY_TB=window.RAAY_TB||{})[6]=' + json.dumps(cur, ensure_ascii=False, separators=(',', ':')) + ';\n'
+for s in cur:
+    cur[s].sort(key=lambda x: x['no'])
+    for x in cur[s]: x['tg'] = [[t, [Z(a) for a in ls]] for t, ls in x.get('tg', [])]
+js = '/* రాయ్ విద్యార్థి – 6వ తరగతి పాఠ్యపుస్తకం నోట్స్ (సెమిస్టర్-1, 2) */\n(window.RAAY_TB=window.RAAY_TB||{})[6]=' + json.dumps(cur, ensure_ascii=False, separators=(',', ':')) + ';\n'
 open(f'{REPO}/notes-6.js', 'w').write(js)
 ca = rd('answers-6.js', ')[6]=')
 for bk, v in ANS.items(): ca[bk] = {p: v[p] for p in sorted(v, key=int)}
+ca = {bk: {p: [Z(a) for a in ls] for p, ls in v.items()} for bk, v in ca.items()}
 aj = '/* రాయ్ విద్యార్థి – 6వ తరగతి పాఠ్యపుస్తక ప్రశ్నల జవాబులు (టీచర్ లాక్ తెరిస్తేనే) */\n(window.RAAY_ANS=window.RAAY_ANS||{})[6]=' + json.dumps(ca, ensure_ascii=False, separators=(',', ':')) + ';\n'
 open(f'{REPO}/answers-6.js', 'w').write(aj)
 print({s: [(x['id'], len(x['qz']), len(x['tg'])) for x in out[s]] for s in out}, 'notes', len(js), 'answers', len(aj))
