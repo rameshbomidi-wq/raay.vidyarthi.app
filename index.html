@@ -3112,7 +3112,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${view==='home'?`<button class="ib hstar" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐<small>${stars()}</small></button><button class="ib hav" onclick="go('avatar')" aria-label="బొమ్మ మార్చు">${avOf(S.cur.n)}</button>`:''}${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.15-7';
+const APPV='2026.11.15-8';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -3542,7 +3542,7 @@ V.help=()=>{helpLoad();const H=window.RAAY_HELP,sec=param.s||'';
  const bar=`<div class="bar"><button class="ib" onclick="helpBack()">←</button><h2>❓ ఎలా వాడాలి</h2></div>`;
  if(!H)return bar+`<div class="empty">${HLP.st===3?'📴 సహాయ పేజీ లోడ్ కాలేదు – నెట్ ఆన్ చేసి మళ్ళీ తెరవండి':'⏳ లోడ్ అవుతోంది...'}</div>`;
  const pg=appBase().replace(/index\.html$/,'').replace(/\/?$/,'/')+'help.html';
- return bar+`<div class="card hlpv"><h3>🎬 2 నిమిషాల వీడియో</h3><video controls preload="none" playsinline poster="help/img/poster.jpg" src="${esc(H.video)}"></video>
+ return bar+`<div class="card hlpv"><h3>${esc(H.vt||'🎬 2 నిమిషాల వీడియో')}</h3><video controls preload="none" playsinline poster="${esc(H.vp||'help/img/poster.jpg')}" src="${esc(H.video)}"></video>
 <div class="row2"><button class="btn sm ghost" onclick="copyText('${esc(pg)}')">📋 సహాయ పేజీ లింక్</button><button class="btn sm" style="background:#25d366" onclick="window.open('https://wa.me/?text='+encodeURIComponent('📚 రాయ్ విద్యార్థి యాప్ – ఎలా వాడాలి (వీడియో + స్టెప్స్):\n${esc(pg)}'),'_blank')">WhatsApp</button></div></div>
 <input id="hlpq" class="hlpq" placeholder="🔍 వెతకండి – ఉదా: PIN, హోంవర్క్, ప్రింట్" oninput="document.getElementById('hlpL').innerHTML=helpItems('${sec}',this.value)">
 <div class="tchips">${[['','అన్నీ']].concat(H.sec.map(x=>[x.id,x.ic+' '+x.t])).map(([k,n])=>`<button class="${sec===k?'on':''}" onclick="go('help',Object.assign({},param,{s:'${k}'}))">${esc(n)}</button>`).join('')}</div>

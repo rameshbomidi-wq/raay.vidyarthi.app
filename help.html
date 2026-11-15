@@ -53,7 +53,7 @@ footer a{font-weight:700;text-decoration:none}
 <main>
  <div class="card vgrid">
   <video id="vid" controls preload="metadata" playsinline poster="help/img/poster.jpg"></video>
-  <div class="vtxt"><h2>🎬 2 నిమిషాల్లో మొత్తం యాప్</h2>
+  <div class="vtxt"><h2 id="vt">🎬 2 నిమిషాల్లో మొత్తం యాప్</h2>
    <ul><li>పాఠశాల నమోదు, సేవ్ నోట్</li><li>పిల్లలను చేర్చడం, హోంవర్క్, జవాబుల లాక్</li><li>విద్యార్థి: పాఠాలు, టెస్టులు, డిక్షనరీ, ID కార్డు</li><li>పెద్ద పాఠశాలలకు సొంత ఉచిత సర్వర్</li></ul>
    <p style="margin-top:10px;color:var(--mut);font-size:14px">కింద వెతికి, మీ ప్రశ్నకు స్టెప్స్ చూడండి.</p></div>
  </div>
@@ -68,7 +68,7 @@ footer a{font-weight:700;text-decoration:none}
  var H=window.RAAY_HELP,sec='',list=document.getElementById('list'),q=document.getElementById('q'),chips=document.getElementById('chips');
  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
  if(!H){list.innerHTML='<div class="empty">సహాయం లోడ్ కాలేదు – పేజీ మళ్ళీ తెరవండి.</div>';return;}
- document.getElementById('vid').src=H.video;
+ document.getElementById('vid').src=H.video;if(H.vp)document.getElementById('vid').poster=H.vp;if(H.vt)document.getElementById('vt').textContent=H.vt;
  function draw(){var t=q.value.trim().toLowerCase(),n=0;
   chips.innerHTML=[['','అన్నీ']].concat(H.sec.map(function(x){return [x.id,x.ic+' '+x.t];})).map(function(c){return '<button data-s="'+c[0]+'" class="'+(sec===c[0]?'on':'')+'">'+esc(c[1])+'</button>';}).join('');
   list.innerHTML=H.sec.filter(function(s){return !sec||t||s.id===sec;}).map(function(s){
