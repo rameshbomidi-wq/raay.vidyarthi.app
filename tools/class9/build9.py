@@ -4,8 +4,9 @@ import json, glob, importlib.util, os
 H = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.abspath(f'{H}/../..')
 BOOK = {'mat': ('Class9_Maths_Textbook_Sem1.pdf', 10), 'phy': ('Class9_Physical_Science_Textbook_Sem1.pdf', 6), 'bio': ('Class9_Biology_Textbook_Sem1.pdf', -140),
         'soc': ('Class9_Social_Textbook_Sem1.pdf', 6), 'tel': ('Class9_Telugu_Textbook_Sem1.pdf', 6), 'hin': ('Class9_Hindi_Textbook_Sem1.pdf', -120),
-        'eng': ('Class9_English_Textbook_Sem1.pdf', -160), 'te2': ('Class9_Telugu_SecondLanguage_Textbook.pdf', 8)}
-BIL = {'mat', 'phy', 'bio', 'soc'}  # సరి పేజీ English, తర్వాతి పేజీ తెలుగు → జవాబులు రెండింటికీ
+        'eng': ('Class9_English_Textbook_Sem1.pdf', -160), 'te2': ('Class9_Telugu_SecondLanguage_Textbook.pdf', 8),
+        'phy2': ('Class9_Physical_Science_Textbook_Sem2.pdf', 6), 'mat2': ('Class9_Maths_Textbook_Sem2.pdf', 10), 'lan2': ('Class9_Languages_Textbook_Sem2.pdf', 6)}
+BIL = {'mat', 'phy', 'bio', 'soc', 'phy2', 'mat2'}  # సరి పేజీ English, తర్వాతి పేజీ తెలుగు → జవాబులు రెండింటికీ
 def load(f):
     sp = importlib.util.spec_from_file_location('c9_' + os.path.basename(f)[:-3], f); m = importlib.util.module_from_spec(sp); sp.loader.exec_module(m); return m
 out = {}; ANS = {}
