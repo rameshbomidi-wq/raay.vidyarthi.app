@@ -1,0 +1,131 @@
+# 8వ తరగతి English – Blooming Minds Sem-2 Unit 4: The Cherry Tree (Ruskin Bond)
+S = 'eng'
+BK = 'eng2'
+PAGES = (183, 201)
+L = dict(id='e8u4a', no=10, t='The Cherry Tree', m=[11], ty='Unit 4 – Environment (Story)', by='Blooming Minds Sem-2 (pp. 175–193) – Ruskin Bond',
+th='A tiny seed, planted with care and patience, grows into a strong tree – nature teaches us hope, patience and the joy of creating life.',
+sum='Six-year-old Rakesh lives with his grandfather on the outskirts of Mussoorie, because there is no school in his parents’ village. One day he buys cherries, eats them and keeps the last seed. Grandfather tells him that nothing is lucky if you put it away – luck comes when you use it – so Rakesh plants the seed in a shady corner of the garden and forgets about it. Next spring a tiny cherry plant appears. Rakesh waters it and circles it with pebbles. In the monsoon a goat eats all its leaves, and later a woman cutting grass cuts it in two with her scythe, but the tree refuses to die and sends out new shoots. Rakesh grows too; he helps his parents in the village and comes back to find the tree taller. A praying mantis becomes the tree’s first visitor; Rakesh removes a hairy caterpillar. When Rakesh is nine, the four-year-old tree has its first pink blossom; later it gives sour cherries that the birds enjoy. Lying under the tree one evening, Rakesh realises the tree is special because they planted it themselves, and wonders whether this is what it feels like to be God.',
+te='ఆరేళ్ళ రాకేష్ చదువు కోసం ముస్సోరీలో తాతయ్య దగ్గర ఉంటాడు. చెర్రీ పండ్లు తిని చివరి విత్తనాన్ని దాచుకోవాలనుకుంటాడు; “దాచుకుంటే అదృష్టం రాదు, ఉపయోగిస్తేనే వస్తుంది” అని తాతయ్య చెప్పగా దాన్ని తోటలో నాటుతాడు. మరుసటి వసంతంలో చిన్న మొక్క వస్తుంది. మేక ఆకులన్నీ తినేసినా, గడ్డి కోసే స్త్రీ కొడవలితో రెండుగా నరికినా చెట్టు చావకుండా మళ్ళీ చిగురిస్తుంది. రాకేష్‌తో పాటే చెట్టూ పెరుగుతుంది; తొమ్మిదేళ్ళ రాకేష్ పుట్టినరోజు నాటికి మొదటి పూత వస్తుంది, తర్వాత పుల్లని పండ్లు – పక్షులు తింటాయి. “మనమే నాటాం కాబట్టి ఈ చెట్టు ప్రత్యేకం” అని తాతయ్య అంటే, “దేవుడికి ఇలాగే అనిపిస్తుందేమో” అని రాకేష్ ఆశ్చర్యపోతాడు. సందేశం: ఓర్పు, శ్రద్ధ, ఆశ; ప్రకృతితో అనుబంధం.',
+pts=['Setting – the Himalayan foothills near Mussoorie; stony soil, cold dry winds; forests of oak and deodar.',
+ 'Rakesh lives with Grandfather because his parents’ village (fifty miles away) has no school.',
+ 'He buys cherries for fifty paise; Grandfather says, “Nothing is lucky if you put it away… put it to some use.”',
+ 'He plants the seed in a soft, shady corner and forgets it; in spring it comes up as a tiny plant.',
+ 'He waters it and circles it with pebbles “for privacy”.',
+ 'Setbacks – a goat eats all the leaves; a woman’s scythe cuts the tree in two – but the tree has “no intention of dying”.',
+ 'Rakesh grows into a sturdy boy with “blackberry eyes”; he helps his parents with farming in the monsoon.',
+ 'Visitors – a praying mantis (allowed to stay) and a hairy caterpillar (removed: “Come back when you’re a butterfly”).',
+ 'At nine, Rakesh sees the four-year-old tree’s first pale pink blossom; later sour cherries feed bulbuls and minivets.',
+ 'Grandfather enjoys the shade; Rakesh lies under the tree watching the sky and mountains.',
+ '“We planted it ourselves – that’s why it’s special.” Rakesh wonders: “Is this what it feels to be God?”',
+ 'Grammar: simple past, past progressive, past perfect; punctuation marks; taste words; antonyms; syllables.'],
+w=[['stunted', 'stopped from growing to the usual size'], ['outskirts', 'edge of a town or city'], ['tang', 'a strong, sharp taste'], ['yielding', 'soft, giving way under pressure'],
+   ['haunches', 'sitting on the feet with legs bent'], ['peered down', 'looked carefully or with difficulty'], ['plodded', 'walked slowly and heavily'], ['scrambled', 'moved quickly and with difficulty'],
+   ['scythe', 'a tool with a long curved blade and long handle'], ['foliage', 'green leaves'], ['praying mantis', 'a green insect'], ['grumpy', 'bad-tempered'],
+   ['gazed', 'looked for a long time with admiration'], ['flitted', 'flew quickly'], ['reclining', 'lying back'], ['nightjar', 'a bird that calls at night'], ['cicadas', 'insects with loud calls in the evening'], ['sturdy', 'strong and solid']],
+gr=dict(t='Past tenses', p=['Simple Past – completed action: Rakesh bought the cherries.', 'Past Progressive (was/were + -ing) – action going on in the past: Rakesh was looking for Grandfather.',
+  'Past Perfect (had + past participle) – the earlier of two past actions: Grandfather saw what had happened.', 'Together: When I reached the station, the train had left. While I was walking home, it started to rain.',
+  'Punctuation: full stop, comma, question mark, exclamation mark, colon, semicolon, apostrophe, quotation marks, dash, capital letters.']),
+qa=[['Why did Grandfather ask Rakesh to plant the seed?', '1) Rakesh wanted to keep the seed for luck. 2) Grandfather said nothing is lucky if you put it away. 3) Luck comes only when you put a thing to some use – so he asked him to plant it.'],
+ ['What dangers did the cherry tree face?', '1) Stony soil and cold dry winds. 2) A goat ate all its leaves. 3) A woman’s scythe cut it in two. 4) A hairy caterpillar ate its leaves. 5) Heavy snow bent it low. It survived all of them.'],
+ ['Why was the cherry tree special to Rakesh and Grandfather?', 'There were many trees in the forest, but they had planted this one themselves from a single seed and cared for it for years.'],
+ ['What does the story teach us?', '1) Patience – growth takes time. 2) Hope – even after damage, life can grow again. 3) Effort brings results (luck comes with use). 4) Love and care for nature give us joy.']],
+act='Plant a seed (lemon, neem or mango) in a pot or your school garden and keep a growth diary. Speak on Van Mahotsav. Write an article “Trees – Our Lifeline”. Find out about Indian environmentalists (Saalumarada Thimmakka, Jadav Payeng, Kailash Sankhala).',
+kn='Thimmamma Marrimanu in Anantapur district, Andhra Pradesh was recorded in the Guinness Book (1989) as the largest tree specimen in the world. The banyan is India’s National Tree. Birds fly in a V-shape to catch uplifting air currents and save energy.',
+qz=[['Where did Rakesh live with his grandfather?', 'on the outskirts of Mussoorie', 'in the Kashmir Valley', 'in Siberia', 'in his parents’ village'],
+    ['Why did Rakesh’s parents send him to Mussoorie?', 'there was no school in their village', 'to grow cherries', 'to sell cherries', 'Grandfather was ill'],
+    ['How much did Rakesh pay for the cherries?', 'fifty paise', 'five rupees', 'ten paise', 'one rupee'],
+    ['“Nothing is lucky if you …”', 'put it away', 'eat it', 'plant it', 'share it'],
+    ['Why did Rakesh circle the plant with pebbles?', 'for privacy', 'for luck', 'to stop the goat', 'for water'],
+    ['What first damaged the young tree?', 'a goat ate its leaves', 'snow', 'a caterpillar', 'a storm'],
+    ['The woman cut the tree with a …', 'scythe', 'saw', 'knife', 'axe'],
+    ['The cherry tree’s first visitor was a …', 'praying mantis', 'hairy caterpillar', 'bulbul', 'field-mouse'],
+    ['How old was the tree when it first blossomed?', 'four years', 'nine years', 'two years', 'six years'],
+    ['How did the first cherries taste?', 'too sour', 'very sweet', 'bitter', 'salty'],
+    ['Grandfather called Rakesh’s eyes …', 'blackberry eyes', 'cherry eyes', 'deep blue eyes', 'bright eyes'],
+    ['“tang” means …', 'a strong, sharp taste', 'a seed', 'a sweet smell', 'a small branch'],
+    ['“plodded” means …', 'walked slowly and heavily', 'ran fast', 'jumped', 'crawled'],
+    ['“Grandfather saw what had happened.” – “had happened” is …', 'past perfect', 'simple past', 'past progressive', 'present perfect'],
+    ['Antonym of “grumpy” –', 'cheerful', 'shaky', 'hard', 'ordinary'],
+    ['The odd word: stared, peered, pecked, gazed –', 'pecked', 'stared', 'peered', 'gazed']],
+wb=dict(mis='Rakesh did not water the plant heavily – Grandfather warned, “Don’t drown it!” The tree was taller than Rakesh even though it was less than half his age. Past perfect is used for the earlier of two past actions, not for any old action.',
+        qz=[['Antonym of “sturdy” –', 'shaky', 'wide', 'hard', 'special'], ['Taste of neem leaves –', 'bitter', 'sweet', 'salty', 'sour'],
+            ['How many syllables in “caterpillar”?', '4', '3', '2', '5'], ['The Forest Man of India –', 'Jadav Payeng', 'Kailash Sankhala', 'Sunderlal Bahuguna', 'Salim Ali'],
+            ['Colon (:) is used to …', 'introduce a list or explanation', 'end a question', 'show possession', 'show strong emotion']]))
+
+SEC = [
+ (183, 'Before we read – I', [
+  '1. (Sample) Yes, I planted a lemon seed in a pot at home.',
+  '2. It needed water every day, sunlight and a little manure; my mother/grandfather helped me.',
+  '3. I felt very happy and proud when the first leaves came out.']),
+ (184, 'Before we read – II, III', [
+  'II. People plant neem, mango, guava, coconut, curry leaf, lemon, banana and tulasi at home. Trees give us oxygen, shade, fruits and wood; they reduce pollution and heat, bring rain and stop soil erosion.',
+  'III. In our region (SPSR Nellore): lemon, mango, guava, sapota, coconut, banana, papaya. They need warm climate, well-drained red/sandy loam soil, enough water (irrigation) and sunlight.']),
+ (188, 'Let us discuss – I (Order of events)', [
+  'Correct order: 7 (1) → 2 (2) → 5 (3) → 10 (4) → 3 (5) → 1 (6) → 8 (7) → 4 (8) → 6 (9) → 9 (10).',
+  'i.e. 1. Parents grew maize, rice and barley (7) 2. Rakesh was sent to Mussoorie (2) 3. He bought cherries and ate most (5) 4. He rolled the last seed in his mouth (10) 5. He pressed the seed into the soil (3) 6. He found the twig had grown into a cherry tree (1) 7. He sprinkled water and circled it with pebbles (8) 8. It grew quickly after early rains (4) 9. A goat ate the leaves (6) 10. Grandfather said cherry trees are tough (9).']),
+ (189, 'Let us discuss – II', [
+  'Yes, I think the cherry tree would survive. 1) Grandfather said cherry trees are tough. 2) The main stem and two branches were still alive. 3) The monsoon rains would help it grow new leaves. 4) Rakesh cared for it with love.']),
+ (193, 'Let us discuss – Cause and effect (Part II)', [
+  '1. A woman cut the cherry tree → (i) Grandfather scolded the woman.',
+  '2. Rakesh went home to his village to help his parents with ploughing and sowing in the monsoon → (ii) He was thinner but stronger when he came back.',
+  '3. A hairy caterpillar started eating the leaves → (iii) Rakesh removed it quickly and dropped it on a heap of dry leaves.',
+  '4. A pale pink blossom appeared at the end of a branch → (iv) Rakesh and Grandfather gazed at the tree as though it was a miracle.',
+  '5. Rakesh tasted one of the small cherries → (v) He spat it out, saying it was too sour.']),
+ (193, 'Let us think and reflect – Extract 1', [
+  '(i) promptly',
+  '(ii) B. He is enjoying the taste and the moment.',
+  '(iii) Rakesh’s decision to plant the seed shows that he respects and values his grandfather’s advice.',
+  '(iv) Grandfather believes luck does not come by keeping things safely; it comes from effort and using things wisely – planting the seed is the effort that brings good luck (the tree).']),
+ (194, 'Let us think and reflect – Extract 2', [
+  '(i) The phrase suggests that the winter was very cold and harsh, so even small animals searched for warmth and protection.',
+  '(ii) B. The tree could withstand harsh weather.',
+  '(iii) With no newspaper for several days, Grandfather became grumpy (bad-tempered), and his stories began to have unhappy endings.',
+  '(iv) the tree’s growth paralleling Rakesh’s own development.']),
+ (195, 'Let us think and reflect – II (1–6)', [
+  '1. There were no schools in their village, and they were keen that Rakesh should go to school, so they sent him to his grandfather in Mussoorie.',
+  '2. It was the cherry tree’s first visitor; the mantis did not harm the tree, and Rakesh loved and respected all living things.',
+  '3. The soil is stony and cold dry winds stunt plants; winters are cold with snow; monsoons are wet and misty; people live simply, farm on terraced fields and enjoy nature – birds, ferns, lilies, oak and deodar forests.',
+  '4. He means that creating and caring for a living thing from a tiny seed gives a wonderful, almost divine feeling – like God creating life.',
+  '5. They share a loving, close bond. Grandfather tells him stories and guides him; Rakesh reads the newspaper to him. They plant and care for the tree together and share quiet moments under it.',
+  '6. Humans and nature depend on each other. When we care for nature with patience, it rewards us with shade, fruit, beauty and peace; nature also teaches us hope and patience.']),
+ (195, 'Let us think and reflect – II (7–11)', [
+  '7. (Sample) I feel amazed and proud. I remember the tiny seed I rolled in my mouth. I waited, worried when the goat and the scythe hurt it, and rejoiced at every new leaf. Now it gives shade and fruit to birds. I feel I have created a life – patience and love can make miracles.',
+  '8. 1) He told Rakesh to plant the seed and showed him a safe, shady corner. 2) He told him to water it but not drown it. 3) He comforted him when the goat ate the leaves – “cherry trees are tough”. 4) He scolded the woman who cut it. 5) He celebrated its first blossom with him.',
+  '9. The cherry tree was tough; its roots were alive and strong. The rains, sunlight and Rakesh’s constant care helped it send out new shoots. It had “no intention of dying”.',
+  '10. Yes. It survived the goat, the scythe and the snow and kept growing – that is hope. It took years to blossom and give fruit – that is patience. Rakesh too waited patiently and was rewarded.',
+  '11. Diary entry (sample): February, Monday | Dear Diary, Today is my ninth birthday, and our cherry tree gave me the best gift! When the sun came out, Grandfather shouted, “Rakesh, come quickly!” There, at the end of a branch, was a pale pink blossom. We stood gazing at it as if it were a miracle. I remembered the tiny seed, the goat, and the woman’s scythe. My tree never gave up. I feel so happy and proud. – Rakesh']),
+ (195, 'Let us learn – I (Odd word)', [
+  '2. galloped (plodded, scrambled, trudged describe slow or difficult movement on foot; galloped is the fast running of a horse)',
+  '3. smooth (tender, delicate and soft mean gentle/easily hurt; smooth describes a flat, even surface)',
+  '4. pecked (stared, peered and gazed are ways of looking; pecked is striking with a beak)',
+  '5. planting (growing, blossoming and progressing mean developing; planting is putting a seed in the soil)']),
+ (196, 'Let us learn – II, III, IV', [
+  'II. 1. tamarind – sour/tangy 2. jaggery – sweet 3. neem leaves – bitter 4. paneer – bland 5. lemon – sour 6. pickle – spicy/salty 7. a dish of vegetables – spicy/salty',
+  'Sentences: The jaggery payasam is very sweet. Neem juice is bitter. Lemon rice is tangy. Andhra mango pickle is very spicy. Hospital food is often bland.',
+  'III. 1. tender – hard 2. sturdy – shaky 3. narrow – wide 4. warmth – coldness 5. feasting – fasting 6. grumpy – cheerful 7. sheltered – unprotected 8. special – ordinary (extra words: growing, fussing)',
+  'IV. Verbs: 1. was, bought 2. was looking, finding 3. gazed, had performed. Tenses: 1 & 3 (gazed) – simple past; 2 – past progressive; 3 (had performed) – past perfect.']),
+ (197, 'Let us learn – IV (Fill in the blanks), V (Punctuation)', [
+  '(ii) were talking (iii) realised (iv) had imparted (v) was listening (vi) remembered (vii) had spent (viii) had set (ix) felt (x) had nurtured',
+  'V. Every Sunday, Roshni would visit her grandparents’ house on their farm. “Come, sit,” Grandpa would say, patting the bench on their porch.',
+  'Roshni loved these moments, where the world slowed down and stories flowed like magic. Grandma would bring tea, her eyes twinkling with joy. “I’m excited to hear about your younger days – the adventures, the lessons and the memories!” Roshni said eagerly.',
+  'Grandpa smiled softly, his wrinkled hands resting on the cane. “Ah, the old days… when everything was simple, and happiness was all we had.” Roshni could feel the warmth of those memories. They sat in silence, bound not by words but by a timeless bond.',
+  '(Note: the book prints “he sat in silence” – “they sat” fits better.)']),
+ (199, 'Let us listen (Transcript p. 225)', [
+  'True statements: 2, 3, 5, 7.',
+  '2. The son was surprised (“Really?”) to know about the Appiko Movement. 3. He agreed Chipko showed common people coming together to make a difference. 5. The mother was interested to hear what the teacher shared about Saalumarada Thimmakka. 7. The son found Jadav Payeng’s work fascinating and inspiring.',
+  'False: 1 (the project was from his teacher; the mother only helped), 4 (the son shared about Thimmakka, not the mother), 6 (they agreed).']),
+ (199, 'Let us speak – I (Syllables)', [
+  'moun-tains (2), grand-fa-ther (3), ten-der (2), dis-turbed (2), ca-ter-pil-lar (4), Hi-ma-la-yan (4), per-formed (2), in-ten-tion (3), slope (1), news-pa-per (3), fa-vou-rite (3; often spoken as 2: fav-rite)']),
+ (200, 'Let us speak – II (Van Mahotsav)', [
+  'Sample speech: Good morning to all. Van Mahotsav is a tree-planting festival celebrated every year in the first week of July. It was started in 1950 by K. M. Munshi, then Union Minister for Agriculture. Schools, colleges, government offices, NGOs and citizens celebrate it. It is celebrated to create awareness about forests and to increase green cover, which reduces pollution and soil erosion and brings rain. People plant saplings, hold rallies, quiz and essay competitions and promise to protect trees. Its message is “Plant a tree, save a life – trees are our lifeline.” Thank you.']),
+ (200, 'Let us write – Article (Trees – Our Lifeline)', [
+  '(i) Trees-Our Lifeline (ii) would stop existing (iii) absorb carbon dioxide (iv) reduces pollution (v) Additionally (vi) climate control (vii) If trees were not there (viii) Moreover, our planet (ix) To conclude (x) ensures a better future']),
+ (201, 'Let us explore – II (Indian environmentalists)', [
+  '1. Sunderlal Bahuguna – leader of the Chipko Movement in the Himalayas.',
+  '2. Saalumarada Thimmakka (Karnataka) – planted and cared for hundreds of banyan trees and thousands of others; Padma Shri.',
+  '3. Jadav Payeng (Assam) – “Forest Man of India”; grew a forest on a Brahmaputra sandbar; Padma Shri.',
+  '4. Salim Ali – “Birdman of India”, ornithologist.',
+  '5. Vandana Shiva – seed conservation and organic farming.',
+  '6. Medha Patkar – Narmada Bachao Andolan.',
+  '7. Kailash Sankhala – “Tiger Man of India”, first director of Project Tiger.']),
+]
