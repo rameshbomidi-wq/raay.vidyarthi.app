@@ -1,0 +1,125 @@
+# 8వ తరగతి English – Blooming Minds Sem-2 Unit 5: Feathered Friend (Arthur C. Clarke)
+S = 'eng'
+BK = 'eng2'
+PAGES = (236, 252)
+L = dict(id='e8u5a', no=13, t='Feathered Friend', m=[1], ty='Unit 5 – Science and Curiosity (Science fiction story)', by='Blooming Minds Sem-2 (pp. 228–244) – Arthur C. Clarke',
+th='A tiny pet canary becomes a life-saving alarm in a space station – simple, unusual solutions and alert minds can protect us when machines fail.',
+sum='The narrator works on a space station. Sven Olsen, a wiry, skilled construction man who fits floating girders together in zero gravity, secretly brings a pet canary named Claribel from Earth, partly out of scientific curiosity to see how a bird flies without weight. Claribel quickly learns to fly in zero gravity, doing loops no earthbound canary could, and becomes everyone’s pet. The crew hides her from visiting VIPs. One “morning” the narrator wakes with a nagging headache and feels sluggish. Sven finds Claribel unconscious. Jock Duncan, the cook-doctor-dietitian, cannot hear her heart, so they give her oxygen; she revives, sings, then collapses again. The narrator suddenly remembers that miners carried canaries to warn of gas and realises something is wrong with the air. The engineer Jim first says the alarms would have gone off, but the second alarm circuit was not yet connected. During a rare eclipse by Earth’s shadow, part of the air purifier had frozen and the single alarm failed. Without Claribel the crew would have died. The story ends humorously: if you hear birdsong in a space station, you are being doubly safeguarded at almost no extra cost.',
+te='అంతరిక్ష కేంద్రంలో పనిచేసే స్వెన్ ఓల్సెన్ రహస్యంగా క్లారిబెల్ అనే కానరీ పక్షిని భూమి నుండి తీసుకొస్తాడు. బరువు లేని స్థితిలో పక్షి ఎగరడం నేర్చుకుని అందరికీ పెంపుడు పక్షి అవుతుంది. ఒకరోజు ఉదయం కథకుడికి తలనొప్పి, మందకొడితనం; క్లారిబెల్ స్పృహ తప్పి పడి ఉంటుంది. ఆక్సిజన్ ఇస్తే కోలుకుని మళ్ళీ పడిపోతుంది. గనుల్లో విషవాయువు హెచ్చరికకు కార్మికులు కానరీలను తీసుకెళ్ళేవారని కథకుడికి గుర్తొచ్చి గాలిలో లోపం ఉందని గ్రహిస్తాడు. భూమి నీడ (గ్రహణం) వల్ల గాలి శుద్ధి యంత్రం గడ్డకట్టింది; రెండో అలారం ఇంకా కలపలేదు, ఒక్క అలారం పనిచేయలేదు. క్లారిబెల్ లేకపోతే అందరూ చనిపోయేవారు. సందేశం: చిన్న, అసాధారణ ఉపాయాలు కూడా ప్రాణాలు కాపాడతాయి; యంత్రాలపై పూర్తిగా ఆధారపడకూడదు.',
+pts=['Setting – a space station in permanent sunlight; zero gravity.',
+ 'Sven Olsen – wiry, skilled construction man; fits floating girders like a slow-motion “ballet”.',
+ 'Claribel – a small yellow canary smuggled aboard by Sven out of scientific curiosity.',
+ 'She learns to fly in zero gravity, doing backward loops; becomes the general pet; hidden from VIPs.',
+ 'The narrator first hears her musical whistle and mistakes it for the intercom.',
+ 'One morning – nagging headache, fitful dreams, sluggish mind; Claribel found unconscious.',
+ 'Jock Duncan (cook-doctor-dietitian) checks her heart; oxygen revives her, but she faints again.',
+ 'The narrator remembers miners carried canaries to warn of gas – something is wrong with the air.',
+ 'Cause – an eclipse by Earth’s shadow froze part of the air purifier; the second alarm circuit was not connected; the single alarm failed.',
+ '“Without Claribel, we should soon have been slightly dead.” – humour.',
+ 'Ending – birdsong in a space station means you are “doubly safeguarded”.',
+ 'Grammar: adjectives, merged words (blends), future time references, silent letters, asking for/giving advice.'],
+w=[['wiry', 'thin but strong'], ['assorted', 'of various types mixed together'], ['girders', 'long, thick pieces of steel that support a structure'], ['precisely', 'exactly'],
+   ['dovetailed', 'fitted together'], ['garbs', 'clothing of a special kind'], ['abruptly', 'suddenly'], ['aboard', 'on a ship/aircraft/spacecraft'], ['cubbyhole', 'a small enclosed space'],
+   ['ceased', 'stopped'], ['wits', 'ability to think quickly'], ['concealing', 'hiding'], ['bulkheads', 'dividing walls between compartments'], ['nagging', 'persistently painful'],
+   ['clenched', 'pressed tightly together'], ['hushed', 'quiet'], ['keeled over', 'collapsed, fainted'], ['sluggish', 'slow, inactive'], ['sheepish', 'embarrassed'], ['inexplicable', 'unexplainable']],
+gr=dict(t='Talking about the future', p=['will – predictions, promises, offers: I think Kailash House will win. I will help you.', 'Simple present – timetables: My school reopens on 3 January. The flight leaves at 10 a.m.',
+  'Present progressive – fixed personal plans: I am visiting my grandparents during the vacation.', 'going to – intentions/evidence: We are going to buy a new bike. Look at the clouds – it is going to rain.',
+  'Future perfect (will have + V3): She will have completed the portions by next month.', 'Future progressive (will be + -ing): This time tomorrow I will be relaxing.',
+  'Merged words (blends): brunch, motel, smog, sitcom, vlog, spork, webinar, intercom.']),
+qa=[['Why did Sven bring Claribel to the space station?', '1) Out of scientific curiosity. 2) He wanted to see how a bird would fly when it had no weight but could still use its wings. 3) A canary was a sensible choice – very light, eats little, not worried by zero gravity.'],
+ ['How did Claribel save the crew?', '1) She fainted because the air was bad. 2) The narrator remembered miners used canaries to detect gas. 3) The crew checked and found the air purifier had frozen and the alarm had failed. 4) They fixed it in time – so everyone survived.'],
+ ['Why did the alarm fail?', '1) There was a rare eclipse by Earth’s shadow. 2) Part of the air purifier froze. 3) The second alarm circuit was not yet connected. 4) The single alarm failed to go off.'],
+ ['Where is humour seen in the story?', '1) “Without Claribel, we should soon have been slightly dead.” 2) Jock Duncan, the “cook-doctor-dietitian”, admits he has never listened to a canary’s heart. 3) Passing the oxygen bottle “like a pipe of peace”. 4) “Doubly safeguarded at practically no extra expense.”']],
+act='Make a bird feeder with cardboard and hang it in the school garden. Practise asking for and giving advice (solar system model, Chandrayaan-3 quiz). Write an article “The Importance of the Internet”.',
+kn='“A canary in the coal mine” means an early warning sign of danger. Animals often sense calamities early – elephants ran to higher ground before the 2004 tsunami. Salim Ali is the “Birdman of India”; Pulicat Lake (Nellore–Tirupati border) hosts flamingos and pelicans.',
+qz=[['Who wrote “Feathered Friend”?', 'Arthur C. Clarke', 'Ruskin Bond', 'R. K. Narayan', 'Jules Verne'],
+    ['Where is the story set?', 'in a space station', 'in a coal mine', 'on a ship', 'in a forest'],
+    ['Claribel was a …', 'canary', 'parrot', 'sparrow', 'pigeon'],
+    ['Who brought Claribel aboard?', 'Sven Olsen', 'Jock Duncan', 'Jim', 'the narrator'],
+    ['Sven was a …', 'construction man', 'doctor', 'cook', 'pilot'],
+    ['The narrator first thought Claribel’s whistle came from the …', 'intercom', 'radio', 'alarm', 'ventilator'],
+    ['Jock Duncan was the station’s …', 'cook-doctor-dietitian', 'engineer', 'commander', 'pilot'],
+    ['What revived Claribel?', 'oxygen', 'water', 'food', 'warmth'],
+    ['Miners used canaries to warn them of …', 'gas', 'water', 'fire', 'darkness'],
+    ['Part of the air purifier froze because of …', 'an eclipse by Earth’s shadow', 'a meteor', 'a power cut', 'Claribel'],
+    ['The alarm failed because …', 'the second circuit was not connected and the single alarm failed', 'Claribel broke it', 'Jim switched it off', 'there was no electricity'],
+    ['“sheepish” means …', 'embarrassed', 'brave', 'sleepy', 'woolly'],
+    ['“sluggish” means …', 'slow and inactive', 'quick', 'angry', 'noisy'],
+    ['“inexplicable” means …', 'unexplainable', 'expensive', 'unbreakable', 'invisible'],
+    ['smoke + fog = …', 'smog', 'sfog', 'smoke-fog', 'fogsmo'],
+    ['“Our flight leaves at 10 a.m. tomorrow.” – future shown by …', 'simple present', 'present perfect', 'past tense', 'future perfect']],
+wb=dict(mis='Claribel did not break the alarm – the purifier froze during an eclipse. Sven did not bring her for an official experiment; he smuggled her secretly. In “ballet” the t is silent; in “psychologist” the p is silent.',
+        qz=[['video + log = …', 'vlog', 'videolog', 'vilog', 'velog'], ['web + seminar = …', 'webinar', 'websem', 'wenar', 'seminet'],
+            ['Silent letter in “island”:', 's', 'i', 'l', 'd'], ['___ traffic (slow-moving):', 'sluggish', 'hushed', 'sheepish', 'narrow'],
+            ['“This time tomorrow I ___ (relax) at home.”', 'will be relaxing', 'relaxed', 'have relaxed', 'had relaxed']]))
+
+SEC = [
+ (236, 'Before we read – I', [
+  '1. A ‘feathered’ friend can be a bird – a parrot, pigeon, hen, sparrow, myna or canary.',
+  '2. (Sample) I like the parrot because it is colourful and can copy our words.',
+  '3. (Sample) I would choose a feathered friend because birds are cheerful, need less space and their songs are pleasant. (A furry friend like a dog is also loyal – any answer with a reason.)',
+  '4. Yes – a small bird can go with special care because it is light and needs little food (as in the story). / No – space has no gravity, air and food are limited, and animals may suffer. (Real space agencies have sent animals like dogs, monkeys and fish for experiments.)']),
+ (237, 'Before we read – II', [
+  '1. REGULATION 2. FORBID 3. FUSE 4. ABRUPTLY 5. CONFESS 6. DIETITIAN']),
+ (240, 'Let us discuss – I (Part I)', [
+  '1. The narrator thought Sven did it out of personal choice (he did not know why). Sven claimed it was partly scientific curiosity – he wanted to see how a bird would fly when it had no weight but could still use its wings.',
+  '2. She adjusted very quickly – she learned to fly in zero gravity, hung motionless in the air, did backward loops and moved with a few flicks without wasting energy; she thrived and grew fat.',
+  '3. He was busy checking his lists in his office and did not expect a bird in a space station, so he assumed the musical whistle came over the station intercom and waited for an announcement.',
+  '4. Yes, it might – keeping pets was not officially planned, she could be discovered by VIPs, and she got noisy when upset. (Or: No, she was light, needed little food and the crew hid her well.)']),
+ (243, 'Let us discuss – True or False', [
+  '1. False – the second circuit was not connected yet, and the single alarm failed because of the frozen purifier.',
+  '2. False – Sven smuggled her secretly; it was not an official experiment.',
+  '3. True',
+  '4. True – the eclipse by Earth’s shadow froze part of the purifier.',
+  '5. True',
+  '6. False – she became the general pet and everyone cared for her.',
+  '7. True']),
+ (243, 'Let us think and reflect – Extract 1', [
+  '(i) B. He possesses a strong understanding of working in space.',
+  '(ii) The girders floated around in free fall, and the team could admire their work without it being parted from them by gravity – this shows zero gravity.',
+  '(iii) A. Both (A) and (R) are true, and (R) is the correct explanation of (A).',
+  '(iv) garbs (colourful outfits → colourful garbs)']),
+ (244, 'Let us think and reflect – Extract 2', [
+  '(i) explain the reason that caused Claribel to faint suddenly.',
+  '(ii) he believed the alarms would have gone off, since they had duplicate circuits operating independently.',
+  '(iii) B. startled by unexpected information',
+  '(iv) It suggests they were calm, friendly and united, sharing the oxygen fairly without panic – it also adds humour to a dangerous situation.']),
+ (244, 'Let us think and reflect – II (1–6)', [
+  '1. The alarm was meant to warn the crew if the air became unsafe. It failed because during a rare eclipse by Earth’s shadow part of the air purifier froze, the second alarm circuit was not yet connected, and the single alarm in the circuit failed to go off.',
+  '2. At first Claribel was a secret pet of Sven; then she became the general pet whom everyone loved and hid from VIPs; when she fainted they were all distressed; finally she became their saviour and they were grateful to her.',
+  '3. It shows that unusual, simple ideas (like a canary as a gas detector) can solve problems that expensive technology fails to detect; we should use common sense, past knowledge and alertness, not depend only on machines.',
+  '4. The title is apt. Claribel is a bird (feathered) and a true friend – she is everyone’s pet and also saves all their lives. The story is about her.',
+  '5. It shows that life in space is uncertain and risky; even advanced systems can fail suddenly, and a small problem in the air supply can kill everyone without warning.',
+  '6. Clarke mixes real science (zero gravity, air purifiers, eclipses, canaries detecting gas) with funny expressions – “slightly dead”, the “cook-doctor-dietitian” who never listened to a canary’s heart, the oxygen bottle passed “like a pipe of peace”, and being “doubly safeguarded at practically no extra expense”.']),
+ (245, 'Let us think and reflect – II (7–11)', [
+  '7. Sven would feel scared and sad when he found Claribel unconscious, then relieved and proud that the pet he smuggled turned out to be a life-saver. He would say he is glad he followed his curiosity and would love her even more.',
+  '8. Living warning systems (birds, animals) or simple backup checks can be used in mines, submarines, sewers and factories; we should have more than one safety system and train people to notice early warning signs.',
+  '9. She was more sensitive to the bad air and fainted first. This warned the narrator, who remembered miners used canaries to detect gas. They checked the air system, found the fault and fixed it before the crew was harmed.',
+  '10. (Opinion) Not fully justified – rules and safety should be followed honestly, and an animal could create risks. But since she caused no harm and finally saved lives, the crew’s decision turned out useful. Ideally they should have informed the authorities.',
+  '11. Note (sample): Our tiny canary Claribel is a hero. One morning we all had headaches and felt sleepy. Claribel fainted. When oxygen revived her and she fainted again, we realised the air was bad. The purifier had frozen during an eclipse and the alarm had failed. Claribel warned us in time – without her we would not be alive today.']),
+ (245, 'Let us learn – I, II', [
+  'I. 1. narrow path 2. nagging worry 3. vague plan 4. sheepish look 5. inexplicable reason 6. sluggish traffic 7. hushed voices 8. delighted expression',
+  'II. (ii) motel – a roadside hotel for motorists (iii) smog – fog mixed with smoke/pollution (iv) sitcom – a comedy series about everyday situations (v) vlog – a video blog (vi) spork – a spoon with fork-like prongs (vii) webinar – a seminar held over the internet']),
+ (246, 'Let us learn – III', ['future']),
+ (247, 'Let us learn – IV', [
+  '1. leaves 2. will finish / are going to finish 3. is going to rain / will rain 4. are moving 5. am starting 6. is going 7. has / is having 8. will help']),
+ (248, 'Let us learn – V', [
+  '1. will have revolutionised 2. are developing / will develop 3. will transform 4. opens / will open 5. will assist 6. is going to be']),
+ (248, 'Let us listen (Transcript p. 273)', [
+  'I. 1. ✗ (he misses his people and home) 2. ✓ 3. ✓ (his one big eye) 4. ✗ (an apple, not a banana) 5. ✗ (he said he can see even with his eye closed, not “much clearer”)',
+  'II. 1. people 2. Martians; energy 3. chocolates 4. one 5. clouds; metals']),
+ (249, 'Let us speak – I (Silent letters)', [
+  'ballet – t; whistle – t; alarm – r (in British pronunciation); psychologist – p',
+  'receipt – p; debris – s; pneumonia – p; almond – l; foreign – g; island – s; wreck – w; aisle – s; campaign – g; fasten – t']),
+ (249, 'Let us speak – II (Asking for/giving advice)', [
+  'A: I need to make a model of the solar system for the Science Exhibition. What should I use? | B: I feel you should use thermocol balls of different sizes for the planets and a black chart for space. It is best to use wire or sticks for the orbits. You should ensure the planets are in the correct order.',
+  'A: How can I prepare for the inter-class quiz on Chandrayaan-3? | B: It’s good to prepare yourself from ISRO’s website and newspapers. Note key facts – launch on 14 July 2023, landing near the Moon’s south pole on 23 August 2023, Vikram lander and Pragyan rover. If you have an issue remembering, try making flashcards and quizzing with friends.']),
+ (250, 'Let us write – Article (The Importance of the Internet)', [
+  'Social media web – uses: online learning, communication (email, video calls), information/search, banking and payments (UPI), shopping, entertainment, news, government services, job search, social media.',
+  'THE IMPORTANCE OF THE INTERNET – by ______, Class VIII',
+  'The internet is a worldwide network that connects millions of computers and mobile phones. Today it has become a part of almost everyone’s daily life, even in villages like ours.',
+  'It helps students learn through online classes, e-books and educational videos. We can talk to relatives far away through video calls. Farmers check weather and market prices, people pay bills through UPI, book tickets and apply for government services online. During the pandemic, the internet kept schools and offices running.',
+  'However, we must use it wisely – limit screen time, avoid fake news and protect our personal information. Used responsibly, the internet is a window to the whole world.']),
+ (250, 'Let us explore – III (Can animals sense calamities?)', [
+  'Yes, it seems true. Before the 2004 tsunami, elephants ran to higher ground, flamingos left low nests and dogs refused to go out; animals called in alarm before the 1805 Naples earthquake; birds dodge storms; sharks sense pressure drops before hurricanes. Scientists explain that animals can sense ultra-low frequency electromagnetic waves and pressure changes that humans cannot.']),
+]
