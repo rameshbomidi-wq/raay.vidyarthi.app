@@ -3112,7 +3112,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${view==='home'?`<button class="ib hstar" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐<small>${stars()}</small></button><button class="ib hav" onclick="go('avatar')" aria-label="బొమ్మ మార్చు">${avOf(S.cur.n)}</button>`:''}${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.16-7';
+const APPV='2026.11.16-8';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -5471,7 +5471,12 @@ ${ph?`<div class="row2 noprint"><a class="btn" style="background:#16a34a;text-al
 <p class="mut" style="margin:-4px 2px 8px">${isFA?`FA = ${PG_TOOLS.map((t,i)=>t+' '+mx[i]).join(' + ')} = ${mx.reduce((a,b)=>a+b,0)}`:`ఈ సబ్జెక్టు SA = ${SP.map(x=>x[0]+' '+x[1]).join(' + ')} = ${pgSaMax(c,s)}`} • గైర్హాజరు అయితే <b>AB</b> అని టైప్ చేయండి</p>
 <div class="tscroll"><table class="tbl pgin"><tr><th>#</th><th>పేరు</th>${isFA?PG_TOOLS.map((t,i)=>`<th>${t}<br><small>/${mx[i]}</small></th>`).join(''):SP.map(x=>`<th>${x[0]}<br><small>/${x[1]}</small></th>`).join('')}<th>మొత్తం</th><th>గ్రేడ్</th></tr>
 ${L.map((r,k)=>{const a=(pgMkMap(r.sid)[s]||{})[A],old=!isFA&&Array.isArray(a)&&a.length!==n&&a.some(x=>x!==null&&x!==''),arr=Array.isArray(a)&&!old?a:(old&&a.some(x=>String(x).toUpperCase()==='AB')?['AB']:[]),res=pgRes(c,s,A,a);return `<tr data-sid="${esc(r.sid)}"><td>${k+1}</td><td class="s">${esc(r.n)}${old&&res&&!res.ab?`<br><small class="mut">పాత నమోదు: ${r1(res.tot)}/${res.max} – కొత్త గడుల్లో రాస్తే మారుతుంది</small>`:''}${a&&!Array.isArray(a)&&a.tot!=null?`<br><small class="mut">${Array.isArray(a.t)?'📗 ప్రగతి ఫైల్: '+a.t.join(' + ')+' = ':'పోర్టల్: '}${a.tot}/${a.max}</small>`:''}</td>${Array.from({length:n},(_,q)=>`<td><input class="pgi" inputmode="decimal" data-q="${q}" data-mx="${mx[q]}" placeholder="/${mx[q]}" value="${arr[q]==null?'':esc(arr[q])}" oninput="pgLive(this,${c},'${s}','${A}')"></td>`).join('')}<td class="t">${res?(res.ab?'AB':r1(res.tot)+'/'+res.max):''}</td><td class="g">${res&&!res.ab?`<span class="gd ${pgGcl(res.g,pgSc(c,s))}">${res.g}</span>`:''}</td></tr>`;}).join('')}</table></div>
-<button class="btn" onclick="pgSaveMk(${c},'${s}','${A}')">💾 ${PG_AL[A]} ${SUBJ[s].n} మార్కులు సేవ్</button>`;}
+<button class="btn" onclick="pgSaveMk(${c},'${s}','${A}')">💾 ${PG_AL[A]} ${SUBJ[s].n} మార్కులు సేవ్</button>
+<details class="card" style="margin-top:10px"><summary><b>📋 ${PG_AL[A]} – అన్ని సబ్జెక్టుల మార్కులు ఒకేసారి పేస్ట్ (Excel / Sheets)</b></summary>
+<p class="mut">ప్రతి వరుస: <b>పేరు</b>, తర్వాత ${subs.map(k=>SUBJ[k].n+' ('+(isFA?pgFaMax(c,k):pgSaParts(c,k).map(x=>x[0])).join(', ')+')').join(' → ')}. పేరు ఈ జాబితాలోలాగే ఉండాలి (క్ర.సం కాలమ్ ఉన్నా సరే). ఖాళీ గడి = మార్పు లేదు; గైర్హాజరు = AB.</p>
+<button class="btn sec" onclick="pgPasteForm(${c},'${A}')">📄 ఖాళీ ఫార్మ్ కాపీ</button>
+<textarea id="pgPA" rows="6" style="width:100%;margin-top:8px" placeholder="Excel నుండి కాపీ చేసి ఇక్కడ పేస్ట్ చేయండి"></textarea>
+<button class="btn" onclick="pgPasteAll(${c},'${A}')">✅ అన్ని సబ్జెక్టులు సేవ్</button></details>`;}
  if(v==='att'){const m=param.m!=null&&param.m!==''?+param.m:pgCurMonth();const ws=L.map(r=>((r.att||[])[m]||[])[0]).filter(x=>+x>0),w=ws.length?Math.max(...ws):'';
   return head+cchips+`<div class="g2"><div><label>నెల</label><select onchange="go('teacher',{t:'pg',v:'att',c:${c},m:this.value})">${PG_MON.map((n,i)=>`<option value="${i}" ${i===m?'selected':''}>${n}</option>`).join('')}</select></div><div><label>పనిదినాలు</label><input id="pgw" inputmode="numeric" value="${w}" placeholder="ఉదా: 22"></div></div>
 <div class="tscroll" style="margin-top:10px"><table class="tbl pgin"><tr><th>#</th><th>పేరు</th><th>హాజరైన రోజులు</th><th>సంవత్సరం %</th></tr>${L.map((r,k)=>{const a=(r.att||[])[m],y=pgAtt(r.att);return `<tr data-sid="${esc(r.sid)}"><td>${k+1}</td><td class="s">${esc(r.n)}</td><td><input class="pga" inputmode="numeric" oninput="PGDIRTY=true" value="${a&&+a[0]>0?Math.max(+a[1]||0,0):''}"></td><td class="${y.pc!=null&&y.pc<75?'pglo':''}">${y.pc==null?'–':r1(y.pc)+'%'}</td></tr>`;}).join('')}</table></div>
@@ -5498,6 +5503,24 @@ let PGDIRTY=false;
 function pgLive(el,c,s,A){PGDIRTY=true;const tr=el.closest('tr'),v=pgVals(tr),r=pgRes(c,s,A,v);tr.querySelector('.t').textContent=r?(r.ab?'AB':r1(r.tot)+'/'+r.max):'';tr.querySelector('.g').innerHTML=r&&!r.ab?`<span class="gd ${pgGcl(r.g,pgSc(c,s))}">${r.g}</span>`:'';}
 function putMany(col,recs){if(!recs.length)return;const a=S[col],ix=new Map(a.map((x,i)=>[x.id,i]));let t=Date.now();
  recs.forEach(rec=>{rec.upd=Math.max(t++,(rec.upd||0)+1);const i=ix.get(rec.id);if(i!=null)a[i]=rec;else{ix.set(rec.id,a.length);a.push(rec);}if(S.cfg.type)S.q[col+'|'+rec.id]=rec.upd;});save();if(S.cfg.type)Sync.later();}
+/* 📋 ఒక మదింపుకు అన్ని సబ్జెక్టుల మార్కులు ఒకేసారి పేస్ట్ (2026.11.16) */
+function pgPCols(c,A){const subs=mySubs(c).filter(s=>subjectsFor(c).includes(s)),isFA=A[0]==='F';return subs.map(s=>({s,mx:isFA?pgFaMax(c,s):pgSaParts(c,s).map(x=>x[1]),lb:isFA?PG_TOOLS:pgSaParts(c,s).map(x=>x[0])}));}
+function pgNk(x){return String(x||'').toLowerCase().replace(/[^a-z0-9ఀ-౿]/g,'');}
+function pgPasteForm(c,A){const C=pgPCols(c,A),L=pgRoster(c),h=['పేరు'];C.forEach(o=>o.lb.forEach((l,i)=>h.push(SUBJ[o.s].n+' '+l+' /'+o.mx[i])));
+ const t=[h.join('\t')].concat(L.map(r=>r.n)).join('\n');const ta=$('#pgPA');try{navigator.clipboard.writeText(t).then(()=>toast('📋 ఫార్మ్ కాపీ – Excel లో పేస్ట్ చేసి నింపండి'),()=>{ta.value=t;});}catch(e){ta.value=t;}}
+function pgPasteAll(c,A){const t=($('#pgPA')||{}).value||'';if(!t.trim())return toast('ముందు పేస్ట్ చేయండి');
+ const C=pgPCols(c,A),need=C.reduce((a,o)=>a+o.mx.length,0),L=pgRoster(c),by=new Map(L.map(r=>[pgNk(r.n),r])),used=new Set(),miss=[],out=new Map();
+ const num=(x,mx)=>{x=String(x||'').trim();if(x==='')return undefined;if(/^a\.?b\.?$/i.test(x))return 'AB';const v=parseFloat(x.replace(',','.'));if(isNaN(v))return undefined;return Math.max(0,Math.min(mx,v));};
+ t.split(/\r?\n/).map(l=>l.split(/\t|,/).map(x=>x.trim())).filter(r=>r.some(x=>x)).forEach(r=>{
+  let ni=r.findIndex(x=>x&&isNaN(+x));if(ni<0)return;const nm=r[ni];if(/^(పేరు|name)/i.test(nm))return;
+  const st=by.get(pgNk(nm))||L.find(x=>!used.has(x.sid)&&(pgNk(x.n).includes(pgNk(nm))||pgNk(nm).includes(pgNk(x.n))));if(!st){miss.push(nm);return;}used.add(st.sid);
+  const vals=r.slice(ni+1);let k=0;C.forEach(o=>{const part=vals.slice(k,k+o.mx.length);k+=o.mx.length;const v=o.mx.map((m,q)=>num(part[q],m));if(v.every(x=>x===undefined))return;
+   const old=(out.get(st.sid+'|'+o.s))||live('marks').find(m=>m.sid===st.sid&&m.s===o.s),a=pgNormA(c,o.s,old);
+   a[A]=v.includes('AB')?['AB'].concat(Array(o.mx.length-1).fill(null)):v.map(x=>x===undefined?null:x);
+   out.set(st.sid+'|'+o.s,Object.assign({},old||{id:'mk_'+st.sid+'_'+o.s,sid:st.sid,c,s:o.s},{c,a,fv:2,by:tName()}));});});
+ if(!out.size)return toast('ఒక్క పేరు కూడా జాబితాతో సరిపోలలేదు'+(miss.length?': '+miss.slice(0,3).join(', '):''));
+ if(!confirm(`${PG_AL[A]} – ${used.size} మంది, ${out.size} సబ్జెక్టు గడులు సేవ్ చేయాలా?`+(miss.length?`\n⚠️ దొరకనివి: ${miss.join(', ')}`:'')))return;
+ PGDIRTY=false;putMany('marks',[...out.values()]);toast(`✓ ${used.size} మంది మార్కులు సేవ్`+(miss.length?` • ${miss.length} దొరకలేదు`:''));go('teacher',Object.assign({},param));}
 function pgSaveMk(c,s,A){const out=[];document.querySelectorAll('.pgin tr[data-sid]').forEach(tr=>{const sid=tr.dataset.sid,v=pgVals(tr),old=live('marks').find(m=>m.sid===sid&&m.s===s);
   const a=pgNormA(c,s,old),had=a[A];const empty=v.every(x=>x===null);if(empty){if(!Array.isArray(had))return;delete a[A];}else a[A]=v;
   if(JSON.stringify(had)===JSON.stringify(a[A]))return;out.push(Object.assign({},old||{id:'mk_'+sid+'_'+s,sid,c,s},{c,a,fv:2,by:tName()}));});
