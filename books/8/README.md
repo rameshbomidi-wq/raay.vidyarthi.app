@@ -5,3 +5,7 @@
 - Class8_Science_Textbook_Sem1.pdf, Class8_Telugu_SecondLanguage_Textbook.pdf – సైన్స్, ద్వితీయ తెలుగు (వేరే session).
 - Class8_Languages_Textbook_Sem1.pdf – తెలుగు + హిందీ (PDF 154–231) + English Blooming Minds (PDF 252–412); PDF = ముద్రిత + 8. English text: pdftotext -layout + shift decode (+29); హిందీ: tesseract hin+eng 200dpi OCR.
 - Class8_Social_Textbook_Sem1.pdf – సాంఘికం (390 పుటలు; PDF = ముద్రిత + 8; సరి English, బేసి తెలుగు; English text pdftotext తో చదవవచ్చు). Readiness 10–39; అధ్యాయాలు: 1) 40–73 2) 74–131 3) 132–171 4) 172–227 5) 228–247 6) 248–285 7) 286–327 8) 328–365; AI 366–385, Glossary/Mind map 386–.
+
+8వ తరగతి సెమిస్టర్-2
+- Class8_Maths_Textbook_Sem2.pdf – గణితం సెమ్-2 (390 పుటలు; యూజర్ PDF qpdf --linearize; PDF = ముద్రిత + 8; సరి English, బేసి తెలుగు; English text pdftotext తో చదవగలం; BK 'mat2'). పటాలు/పట్టికలు పేజీ బొమ్మలు చూసి (70dpi సరిపోతుంది; దగ్గరగా 200dpi crop).
+  అధ్యాయాల PDF పరిధులు: 8) 10–75  9) 76–117  10) 118–147  11) 148–203  12) 204–267  13) 268–293  14) 294–339; Answers PDF 340–363 (English సరి పేజీలు); Integrated AI 364–383.
