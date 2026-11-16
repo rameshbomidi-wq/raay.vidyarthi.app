@@ -7,8 +7,9 @@ BOOK = {'mat': ('Class7_Maths_Textbook_Sem1.pdf', 8), 'sci': ('Class7_Science_Te
         'tel': ('Class7_Languages_Textbook_Sem1.pdf', 8), 'hin': ('Class7_Languages_Textbook_Sem1.pdf', 8), 'eng': ('Class7_Languages_Textbook_Sem1.pdf', 8),
         'soc': ('Class7_Social_Textbook_Sem1.pdf', 8), 'te2': ('Class7_Telugu_SecondLanguage_Textbook.pdf', 7),
         'sci2': ('Class7_Science_Textbook_Sem2.pdf', 8), 'mat2': ('Class7_Maths_Textbook_Sem2.pdf', 8),
-        'tel2': ('Class7_Languages_Textbook_Sem2.pdf', 8), 'hin2': ('Class7_Languages_Textbook_Sem2.pdf', 8), 'eng2': ('Class7_Languages_Textbook_Sem2.pdf', 8)}
-BIL = {'mat', 'sci', 'soc', 'sci2', 'mat2'}  # సరి పేజీ English, తర్వాతి (బేసి) పేజీ తెలుగు → జవాబులు రెండింటికీ
+        'tel2': ('Class7_Languages_Textbook_Sem2.pdf', 8), 'hin2': ('Class7_Languages_Textbook_Sem2.pdf', 8), 'eng2': ('Class7_Languages_Textbook_Sem2.pdf', 8),
+        'soc2': ('Class7_Social_Textbook_Sem2.pdf', 8)}
+BIL = {'mat', 'sci', 'soc', 'sci2', 'mat2', 'soc2'}  # సరి పేజీ English, తర్వాతి (బేసి) పేజీ తెలుగు → జవాబులు రెండింటికీ
 M = '⁂'  # జవాబుల దాపరికం (యాప్ unz: chr−7) – answers + tg జవాబు వరుసలు
 def Z(x):
     if not isinstance(x, str) or x.startswith(M) or any(ord(c) >= 0xCFF0 for c in x): return x
