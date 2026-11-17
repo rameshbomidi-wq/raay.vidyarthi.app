@@ -7,8 +7,9 @@ BOOK = {'mat': ('Class8_Maths_Textbook_Sem1.pdf', 8), 'phy': ('Class8_Science_Te
         'tel': ('Class8_Languages_Textbook_Sem1.pdf', 8), 'hin': ('Class8_Languages_Textbook_Sem1.pdf', 8), 'eng': ('Class8_Languages_Textbook_Sem1.pdf', 8),
         'te2': ('Class8_Telugu_SecondLanguage_Textbook.pdf', 7), 'soc': ('Class8_Social_Textbook_Sem1.pdf', 8),
         'mat2': ('Class8_Maths_Textbook_Sem2.pdf', 8), 'soc2': ('Class8_Social_Textbook_Sem2.pdf', 6),
-        'tel2': ('Class8_Languages_Textbook_Sem2.pdf', 8), 'hin2': ('Class8_Languages_Textbook_Sem2.pdf', 8), 'eng2': ('Class8_Languages_Textbook_Sem2.pdf', 8)}
-BIL = {'mat', 'phy', 'bio', 'soc', 'mat2', 'soc2'}  # సరి పేజీ English, తర్వాతి (బేసి) పేజీ తెలుగు → జవాబులు రెండింటికీ
+        'tel2': ('Class8_Languages_Textbook_Sem2.pdf', 8), 'hin2': ('Class8_Languages_Textbook_Sem2.pdf', 8), 'eng2': ('Class8_Languages_Textbook_Sem2.pdf', 8),
+        'phy2': ('Class8_Science_Textbook_Sem2.pdf', 8), 'bio2': ('Class8_Science_Textbook_Sem2.pdf', 8)}
+BIL = {'mat', 'phy', 'bio', 'soc', 'mat2', 'soc2', 'phy2', 'bio2'}  # సరి పేజీ English, తర్వాతి (బేసి) పేజీ తెలుగు → జవాబులు రెండింటికీ
 M = '⁂'  # జవాబుల దాపరికం (యాప్ unz: chr−7) – answers + tg జవాబు వరుసలు (build7 లాగే)
 def Z(x):
     if not isinstance(x, str) or x.startswith(M) or any(ord(c) >= 0xCFF0 for c in x): return x
