@@ -1,0 +1,153 @@
+S = 'eng'
+PAGES = (3, 18)
+L = {
+ "id": "en5", "no": 5, "t": "The Wondrous Women", "m": [11], "ty": "Role play", "th": "Inspirational women • Gender equality",
+ "by": "Reading: Tickets, please! (Durgabai Deshmukh)",
+ "sum": "Ameena goes to her School Day celebration with her parents. Her friends perform a role play on ‘Wondrous Women’. Mother Teresa says service to humans is service to God. Kalpana Chawla, the first Indian woman in space, says nothing is impossible with strong faith. Shakunthala Devi, the ‘Human Computer’, asks children to put in effort. M.S. Subbulakshmi says practice makes a person perfect. Yamini Krishnamurthy, a Bharatanatyam and Kuchipudi dancer, says hard work leads to excellence. Sarojini Naidu, ‘The Nightingale of India’, wrote poetry from age fourteen. Rani Lakshmi Bai of Jhansi fought the British in the 1857 Revolt. Boxer Mary Kom, ‘Magnificent Mary’, says a strong mind is the key to success. After the programme, Ameena’s parents realise that education is essential and promise to send her to school every day.",
+ "te": "అమీనా పాఠశాల వార్షికోత్సవానికి తల్లిదండ్రులతో వెళ్ళింది. స్నేహితులు ‘అద్భుత మహిళలు’ పాత్రాభినయం చేశారు – మదర్ థెరిసా (సేవ), కల్పనా చావ్లా (అంతరిక్షం), శకుంతలా దేవి (మానవ కంప్యూటర్), ఎం.ఎస్. సుబ్బులక్ష్మి (సంగీతం), యామిని కృష్ణమూర్తి (నృత్యం), సరోజినీ నాయుడు (భారత కోకిల), ఝాన్సీ లక్ష్మీబాయి (1857 తిరుగుబాటు), మేరీ కోమ్ (బాక్సింగ్). ఇది చూసి అమీనా తల్లిదండ్రులు చదువు అవసరమని గ్రహించి, ఆమెను రోజూ బడికి పంపుతామని మాట ఇచ్చారు.",
+ "pts": [
+  "Ameena is the narrator; the role play on ‘Wondrous Women’ touched her heart.",
+  "Mother Teresa (Sravani): ‘Service to human is service to God’; ‘Helping hands are better than praying lips’.",
+  "Kalpana Chawla (Revathi): first Indian woman to travel in space; ‘Nothing is impossible if you have a strong faith’.",
+  "Shakunthala Devi (Alekhya): loved Mathematics, called the ‘Human Computer’.",
+  "M.S. Subbulakshmi (Swapna): music enthralls humans and animals; ‘Practice makes a person perfect’.",
+  "Yamini Krishnamurthy (Kalyani): Bharatanatyam and Kuchipudi dancer; continuous effort leads to excellence.",
+  "Sarojini Naidu (Sarala): ‘The Nightingale of India’; wrote poetry from her fourteenth year.",
+  "Rani Lakshmi Bai (Latha): queen of Jhansi; fought the British in the 1857 Revolt.",
+  "Mary Kom (Mounika): Indian boxer, ‘Magnificent Mary’; ‘A strong mind is the key to success’.",
+  "Ameena’s parents realised education is essential and assured to send her to school every day.",
+  "Grammar: can (ability/permission), can’t (inability), could (past ability / polite request), couldn’t (past inability).",
+  "Speaking: expressions of apology; speech on gender equality (Women’s Day).",
+  "Reading: Durgabai (later Durgabai Deshmukh) stopped Nehru at the Kakinada Khadi Exhibition (1923) because he had no ticket."
+ ],
+ "w": [["jubilant", "joyful (ఆనందంతో నిండిన)"], ["logical", "clear and sensible (తార్కికమైన)"], ["commitment", "pledge to dedicate to a cause (నిబద్ధత)"], ["enthrall", "hold someone's attention completely (మంత్రముగ్ధులను చేయు)"], ["concert", "a public musical performance (సంగీత కచేరీ)"], ["passion", "a very strong feeling or desire (అభిరుచి)"], ["enhance", "increase (పెంచు)"], ["urge", "a strong desire to do something (బలమైన కోరిక)"], ["revolt", "fight back for justice (తిరుగుబాటు)"], ["magnificent", "very impressive and brilliant (అద్భుతమైన)"], ["martial arts", "fighting skills for self defence (యుద్ధ కళలు)"], ["occasion", "a particular event (సందర్భం)"], ["apology", "saying sorry (క్షమాపణ)"], ["equality", "equal rights and opportunities (సమానత్వం)"]],
+ "gr": {"t": "Modal auxiliaries – can, can’t, could, couldn’t", "p": [
+  "can – ability: Mukesh can play well. Vaishu can speak English.",
+  "can – permission: Can I take your pen? Yes, you can take my pen.",
+  "can’t – inability: Rupa can’t drive a car.",
+  "could – ability in the past: I could swim when I was a child. Polite request: Could you pass the salt, please?",
+  "couldn’t – inability in the past: I couldn’t find my keys.",
+  "Apology: I am sorry! • I am really sorry! • Please forgive me! • Please accept my apology! • I beg your forgiveness!"]},
+ "qa": [
+  ["Who talks about service to mankind?", "Mother Teresa (role played by Sravani)."],
+  ["Who was the first Indian woman to travel in space?", "Kalpana Chawla."],
+  ["Who was titled the ‘Human Computer’?", "Shakunthala Devi."],
+  ["What was Sarojini Naidu's hobby?", "Writing poetry."],
+  ["Which revolt is mentioned in the text?", "The 1857 Revolt against the British."],
+  ["What do we learn from Mary Kom?", "Don’t compromise; a strong mind is the key to success."],
+  ["What did Ameena's parents realise?", "That education is essential; they promised to send her to school every day."],
+  ["Why did Durgabai stop Nehru?", "He had no ticket, and she was only following the rules."]
+ ],
+ "act": "Role play: choose one ‘Wondrous Woman’ and speak her dialogue. Collect pictures of five inspiring women and write two sentences about each. Pick and Say (JAM): speak for one minute on a topic slip.",
+ "kn": "In November 2025 the Indian Women's Cricket team won its first ICC Women's Cricket World Cup, defeating South Africa in the final at Navi Mumbai.",
+ "qz": [
+  ["Who is the narrator of the story?", "Ameena", "Sravani", "Vijaya", "Durgabai"],
+  ["Who said ‘Service to human is service to God’?", "Mother Teresa", "Mary Kom", "Kalpana Chawla", "Sarojini Naidu"],
+  ["Who was the first Indian woman to travel in space?", "Kalpana Chawla", "Shakunthala Devi", "Mary Kom", "Yamini Krishnamurthy"],
+  ["Who is called the ‘Human Computer’?", "Shakunthala Devi", "M.S. Subbulakshmi", "Sarojini Naidu", "Mother Teresa"],
+  ["Sarojini Naidu is called ___.", "The Nightingale of India", "Magnificent Mary", "Human Computer", "Queen of Jhansi"],
+  ["Who is a famous singer of ‘Bhaja Govindam’?", "M.S. Subbulakshmi", "Mary Kom", "Kalpana Chawla", "Rani Lakshmi Bai"],
+  ["Yamini Krishnamurthy is a ___.", "classical dancer", "boxer", "poet", "scientist"],
+  ["Rani Lakshmi Bai fought in the ___ Revolt.", "1857", "1947", "1923", "1857 and 1947"],
+  ["Mary Kom is an Indian ___.", "boxer", "singer", "poet", "dancer"],
+  ["Music ___ human beings as well as animals.", "enthralls", "invites", "enhances", "commits"],
+  ["Practice makes a person ___.", "perfect", "blunt", "beautiful", "tired"],
+  ["Ameena was touched by the ___.", "role play", "dance", "songs", "speech"],
+  ["Ameena's parents realised that ___ is essential.", "education", "money", "travel", "games"],
+  ["‘Jubilant’ means ___.", "joyful", "sad", "angry", "tired"],
+  ["‘Enhance’ means ___.", "increase", "decrease", "stop", "forget"],
+  ["Opposite of ‘logical’ is ___.", "illogical", "unlogical", "dislogical", "logicless"],
+  ["Rafi can play carroms, but he ___ play chess.", "can't", "can", "could", "couldn't"],
+  ["Last night I was so ill that I ___ sleep.", "couldn't", "can't", "can", "could"],
+  ["‘I am very sorry.’ is an expression of ___.", "apology", "request", "permission", "greeting"],
+  ["Who stopped Nehru at the Khadi Exhibition?", "Durgabai", "Ameena", "Sarojini Naidu", "Vijaya"]
+ ],
+ "wb": {"mis": "‘could’ is the past of ‘can’ – use it for past ability (I could swim when I was a child). ‘can’t’ = cannot (present); ‘couldn’t’ = could not (past). Spelling: essential, commitment, successful."}
+}
+SEC = [
+ (3, "Activity 1 – Let us Interact (picture)", [
+  "1. I see Mahatma Gandhi, a little girl and a crowd of freedom fighters in a procession.",
+  "2. The little girl is offering her gold jewels (ornaments) to Gandhiji.",
+  "3. Yes, she has a kind and generous heart.",
+  "4. She is offering her jewels to Gandhiji to help the freedom movement / to help the poor and needy people of the country.",
+  "5. (Sample) Yes. I gave my old clothes and books to a poor boy in my village."]),
+ (7, "Activity 2 – I. Answer the questions", [
+  "1. Mother Teresa talks about service to mankind.",
+  "2. Kalpana Chawla was the first Indian woman who travelled in space. She enjoyed viewing the beautiful blue earth from space. She believed ‘Nothing is impossible if you have a strong faith.’",
+  "3. Shakunthala Devi was titled the ‘Human Computer’.",
+  "4. Writing poetry was Sarojini Naidu's hobby.",
+  "5. The 1857 Revolt (against the British).",
+  "6. We learn not to compromise; a strong mind is the key to success. We should try to fly the Indian flag high in sports.",
+  "7. They realised that education is essential and assured her that they would send her to school every day."]),
+ (8, "Activity 2 – II. Write the correct answer", [
+  "1. c) The Nightingale of India | 2. c) role play | 3. a) enthralls | 4. c) perfect | 5. b) school"]),
+ (8, "Activity 3 – I. Missing letters", [
+  "1. dialogue | 2. impossible | 3. commitment | 4. successful | 5. Mathematics | 6. classical | 7. courage | 8. exhibit | 9. attitude | 10. essential"]),
+ (9, "Activity 3 – II. Make sentences (sample)", [
+  "1. faith – I have faith in my teacher.",
+  "2. occasion – We wear new clothes on a special occasion.",
+  "3. passion – Ravi has a passion for playing the flute.",
+  "4. exhibit – Students exhibit their models at the science fair.",
+  "5. urge – I have an urge to become a doctor."]),
+ (10, "Activity 4 – Modals", [
+  "1. can | 2. couldn't | 3. could | 4. couldn't | 5. can't | 6. can"]),
+ (11, "Activity 5 – Conversation: apology for being late", [
+  "Teacher: Yes, come in.",
+  "You: I am very sorry, Sir/Madam.",
+  "You: Please forgive me, Sir/Madam. It is true – my brother has been suffering from fever for the past two days.",
+  "You: I am sorry, I will not repeat this mistake!"]),
+ (12, "Activity 6 – Speech on Independence Day (sample)", [
+  "Respected Headmaster, teachers and my dear friends, good morning!",
+  "This is Ravi from Class Five. I came here to talk about our Independence Day.",
+  "I would like to wish you a very Happy Independence Day!",
+  "Today, I’m glad to be a part of this celebration.",
+  "We all know, we have been celebrating our Independence Day on 15th August since 1947. India became free from British rule with the sacrifices of many great leaders like Mahatma Gandhi, Jawaharlal Nehru, Subhas Chandra Bose, Bhagat Singh, Alluri Sitarama Raju and others.",
+  "With this, I would like to end my speech. Let us keep our country clean and work for its progress."]),
+ (13, "Activity 7 – Women’s Cricket World Cup 2025", [
+  "1. (Sample) I like cricket and kabaddi the most.",
+  "2. The Indian Women's Cricket team won the ICC Women's Cricket World Cup 2025.",
+  "3. (Sample) My favourite cricketer is Smriti Mandhana.",
+  "4. South Africa.",
+  "5. Yes. Women are equally capable; with equal chances and support they succeed in games and sports like men."]),
+ (14, "Activity 8 – Group Discussion (sample points)", [
+  "1. Yes, I helped an old woman cross the road. I felt very happy.",
+  "2. I respect the national flag and anthem, follow rules, keep my surroundings clean and study well.",
+  "3. My mother gets up early, cooks, takes care of us, manages money and also helps on the farm. She plans everything well.",
+  "4. My teacher is a successful person – hardworking, kind and helps every student to learn."]),
+ (15, "Activity 9 – Tickets, please!", [
+  "1. Khadi Exhibition at Kakinada (1923).",
+  "2. needs",
+  "3. Durgabai said it to Jawaharlal Nehru.",
+  "4. Because she was told not to let anyone in without a ticket; Nehru had no ticket and she was honestly following the rules.",
+  "5. welfare"]),
+ (15, "Activity 10 – Pick and Say (sample: My School)", [
+  "My school is ZPHS TV Palli. It has big classrooms, a library and a playground. Our teachers are kind. I learn many things and play with my friends. I love my school."]),
+ (16, "Project – Five inspiring women (sample)", [
+  "1. Mother Teresa – She served the poor and sick in Kolkata. She won the Nobel Peace Prize.",
+  "2. Kalpana Chawla – She was the first Indian woman in space. She inspires children to dream big.",
+  "3. Sarojini Naidu – She was a poet called the ‘Nightingale of India’. She became the first woman Governor in India.",
+  "4. Mary Kom – She is a world champion boxer. She won a bronze medal in the Olympics.",
+  "5. P.V. Sindhu – She is a badminton player from Andhra/Telangana. She won Olympic medals for India."]),
+ (17, "Let us Practise 1–8", [
+  "1. A) s,i,a (essential)",
+  "2. D) hold someone's attention",
+  "3. B) illogical",
+  "4. C) can't",
+  "5. (Sample) I have an urge to visit the Taj Mahal.",
+  "6. 1 – d | 2 – c | 3 – a | 4 – b",
+  "7. i. B) Education is essential | ii. C) Go ahead and prove yourself | iii. Ameena's parents understood the value of education and decided to send her to school every day. | iv. I should study regularly, work hard, practise and be confident.",
+  "8. can, can't, couldn't, can"]),
+ (18, "Let us Practise 9–20", [
+  "9. Parents: Good morning, Sir. We are sorry that Ameena did not come to school for a long time. | Headmaster: Why did she miss school? | Parents: We made her look after her brother. Please forgive us. | Headmaster: Education is very important for girls. | Parents: Yes, Sir. From today we will send her to school every day.",
+  "10. I will practise every day, learn from a good teacher, watch experts, take part in competitions and never give up.",
+  "11. The programme made them realise that education is essential. They promised to send Ameena to school every day.",
+  "12. (Sample) Kalpana Chawla's message – ‘Nothing is impossible if you have a strong faith.’ It gives me confidence to dream big.",
+  "13. (Sample) I am very happy and proud. The role play inspired me and my parents. Now I can go to school every day and achieve my dreams.",
+  "14. (Sample) Dear friends, dream big! Work hard every day, believe in yourself and never give up. Success will surely come. Thank you.",
+  "15. Poster: title ‘Wondrous Women – Our Inspiration’, pictures of the eight women with one line each, slogan ‘Educate a girl, empower the nation’.",
+  "16. (Sample) ‘Practice makes a person perfect.’ – Daily practice helps me improve in studies and games.",
+  "17. Teamwork divides the work, saves time, shares ideas and helps the programme run smoothly.",
+  "18. Passion gives a strong desire; hard work turns that desire into success. Both together lead to excellence.",
+  "19. Courage, hard work, commitment, confidence, faith and service to others.",
+  "20. Yes. Education gives knowledge and skills, builds confidence and opens many opportunities. All the wondrous women succeeded through learning and effort."]),
+]
