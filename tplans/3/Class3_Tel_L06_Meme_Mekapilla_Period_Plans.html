@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="te"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3వ తరగతి తెలుగు – 6వ పాఠం మేమే మేకపిల్ల – పీరియడ్ ప్లాన్లు (1–12)</title><style>
+:root{--pink:#c2185b;--ink:#243044;--muted:#667085;--line:#e4e7ec;--bg:#f5f7fb;--blue:#eaf2ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans Telugu","Gautami","Nirmala UI",sans-serif;line-height:1.65}
+header{background:linear-gradient(135deg,#8e1450,#d63384);color:#fff;padding:24px 16px}
+.wrap{max-width:980px;margin:auto;padding:0 14px}
+h1{font-size:clamp(23px,4vw,34px);margin:0 0 6px}
+.sub{opacity:.94;margin:0}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:16px 0}
+button{border:0;border-radius:9px;padding:10px 15px;font:inherit;font-weight:700;cursor:pointer}
+.primary{background:var(--pink);color:white}.light{background:white;color:var(--pink);border:1px solid #f0b5d0}
+main{padding:18px 0 36px}
+.card{background:white;border:1px solid var(--line);border-radius:14px;padding:18px;margin:0 0 15px;box-shadow:0 3px 12px #17255408}
+h2{font-size:20px;color:var(--pink);margin:0 0 12px;border-bottom:1px solid #f3d2e1;padding-bottom:7px}
+h3{font-size:17px;margin:12px 0 6px}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.meta div{background:#fff4f8;border-radius:10px;padding:10px}
+.meta b{display:block;color:var(--pink);font-size:13px}
+ul,ol{padding-left:25px;margin:7px 0}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
+th{background:#fff0f6;color:#8e1450}
+.note{background:var(--blue);border-left:4px solid #477bd1;padding:12px;border-radius:8px}
+.editable{border:1px dashed #d0d5dd;border-radius:6px;padding:3px 6px;min-width:50px}
+.small{color:var(--muted);font-size:13px}
+.qa{padding:10px 0;border-bottom:1px solid var(--line)}
+.qa:last-child{border:0}
+@media(max-width:640px){.meta{grid-template-columns:1fr}.table-scroll{overflow-x:auto}table{min-width:620px}.card{padding:14px}}
+@media print{
+ body{background:#fff;color:#000;font-size:12pt}
+ header{background:#fff!important;color:#000;border-bottom:2px solid #000;padding:8px 0}
+ .toolbar{display:none!important}.wrap{max-width:none;padding:0}
+ main{padding:8px 0}.card{box-shadow:none;border:1px solid #999;break-inside:avoid;margin-bottom:10px}
+ h2{color:#000;border-color:#999}.meta div{background:#fff;border:1px solid #aaa}
+ .note{background:#fff;border:1px solid #999}
+ button{display:none}
+}
+
+.ptitle{background:#8e1450;color:#fff;border-radius:12px;padding:12px 16px;font-weight:700;font-size:18px;margin:4px 0 14px}
+select{font:inherit;padding:9px 10px;border-radius:9px;border:1px solid #f0b5d0;max-width:100%;flex:1 1 260px}
+.status{color:var(--pink);font-weight:700;align-self:center}
+.period{display:none}.period.on{display:block}
+body.all .period{display:block}body.all .period+.period{margin-top:28px}
+a{color:#8e1450}
+@media print{.period{break-before:page}.period:first-of-type{break-before:auto}.ptitle{background:#fff;color:#000;border:2px solid #000}select,.status,#index{display:none!important}}
+</style></head>
+<body>
+<header><div class="wrap">
+ <p class="sub">ఉపాధ్యాయుల ఉపయోగార్థం • బోధనా ప్రణాళిక</p>
+ <h1>3వ తరగతి – తెలుగు</h1>
+ <p class="sub">6వ పాఠం: <strong>మేమే మేకపిల్ల</strong> | పీరియడ్ ప్లాన్లు 1 – 12</p>
+</div></header>
+<main class="wrap">
+ <div class="toolbar">
+  <select id="sel" onchange="show(+this.value)"><option value="1">పీరియడ్ 1 – చిత్ర పరిశీలన – సంభాషణ – పాఠ పరిచయం</option><option value="2">పీరియడ్ 2 – పాఠం చదవడం – మొదటి భాగం (ఏరు, మంట, గాలి) – పదాలు అర్థాలు</option><option value="3">పీరియడ్ 3 – పాఠం చదవడం – రెండో భాగం (వంటవాడు, తప్పించుకోవడం) – పాత్రాభినయం</option><option value="4">పీరియడ్ 4 – వినడం – ఆలోచించి మాట్లాడటం – కవి పరిచయం</option><option value="5">పీరియడ్ 5 – చదవడం – వ్యక్తపరచడం (ఎవరు ఎవరితో అన్నారు, అపరిచిత పేరా)</option><option value="6">పీరియడ్ 6 – పదజాలం – భ్రమక పదాలు, గళ్ళనుడికట్టు – ఉక్తలేఖనం</option><option value="7">పీరియడ్ 7 – స్వీయరచన</option><option value="8">పీరియడ్ 8 – సృజనాత్మకత (సంభాషణ) – ప్రశంస</option><option value="9">పీరియడ్ 9 – భాషాంశాలు – సర్వనామాలు</option><option value="10">పీరియడ్ 10 – ప్రాజెక్ట్ పని – దీనిని కూడా తెలుసుకోండి (వన్యప్రాణి సంరక్షణ)</option><option value="11">పీరియడ్ 11 – పాడుదాం (తెలుగు తోట) – కవి పరిచయం</option><option value="12">పీరియడ్ 12 – చదువుదాం (మేకపోతు గాంభీర్యం) – నేనేమి నేర్చుకున్నాను?</option></select>
+  <button class="light" id="allbtn" onclick="toggleAll()">అన్ని పీరియడ్లు చూపించు</button>
+  <button class="primary" onclick="window.print()">ప్రింట్ / PDF సేవ్</button>
+  <button class="light" onclick="toggleEdit()">ప్లాన్ సవరించండి</button>
+  <span class="status" id="status"></span>
+ </div>
+ <section class="card" id="index"><h2>పీరియడ్ల సూచిక</h2><div class="table-scroll"><table>
+  <thead><tr><th>పీ.</th><th>బోధనా అంశం</th><th>CG</th></tr></thead><tbody><tr><td>1</td><td><a href="#" onclick="show(1);return false">చిత్ర పరిశీలన – సంభాషణ – పాఠ పరిచయం</a></td><td>CG-1</td></tr><tr><td>2</td><td><a href="#" onclick="show(2);return false">పాఠం చదవడం – మొదటి భాగం (ఏరు, మంట, గాలి) – పదాలు అర్థాలు</a></td><td>CG-2, CG-4</td></tr><tr><td>3</td><td><a href="#" onclick="show(3);return false">పాఠం చదవడం – రెండో భాగం (వంటవాడు, తప్పించుకోవడం) – పాత్రాభినయం</a></td><td>CG-1, CG-2</td></tr><tr><td>4</td><td><a href="#" onclick="show(4);return false">వినడం – ఆలోచించి మాట్లాడటం – కవి పరిచయం</a></td><td>CG-1</td></tr><tr><td>5</td><td><a href="#" onclick="show(5);return false">చదవడం – వ్యక్తపరచడం (ఎవరు ఎవరితో అన్నారు, అపరిచిత పేరా)</a></td><td>CG-2</td></tr><tr><td>6</td><td><a href="#" onclick="show(6);return false">పదజాలం – భ్రమక పదాలు, గళ్ళనుడికట్టు – ఉక్తలేఖనం</a></td><td>CG-4</td></tr><tr><td>7</td><td><a href="#" onclick="show(7);return false">స్వీయరచన</a></td><td>CG-3</td></tr><tr><td>8</td><td><a href="#" onclick="show(8);return false">సృజనాత్మకత (సంభాషణ) – ప్రశంస</a></td><td>CG-3, CG-1</td></tr><tr><td>9</td><td><a href="#" onclick="show(9);return false">భాషాంశాలు – సర్వనామాలు</a></td><td>CG-3</td></tr><tr><td>10</td><td><a href="#" onclick="show(10);return false">ప్రాజెక్ట్ పని – దీనిని కూడా తెలుసుకోండి (వన్యప్రాణి సంరక్షణ)</a></td><td>CG-5</td></tr><tr><td>11</td><td><a href="#" onclick="show(11);return false">పాడుదాం (తెలుగు తోట) – కవి పరిచయం</a></td><td>CG-1, CG-2</td></tr><tr><td>12</td><td><a href="#" onclick="show(12);return false">చదువుదాం (మేకపోతు గాంభీర్యం) – నేనేమి నేర్చుకున్నాను?</a></td><td>CG-2, CG-5</td></tr></tbody></table></div>
+  <p class="small">ఏ పీరియడ్ కావాలంటే దానిపై నొక్కండి. ప్రింట్ నొక్కితే తెరపై కనిపిస్తున్న పీరియడ్ మాత్రమే ప్రింట్ అవుతుంది; అన్నీ కావాలంటే ముందు "అన్ని పీరియడ్లు చూపించు" నొక్కండి.</p>
+ </section>
+ <div class="period" id="p1" data-n="1">
+ <div class="ptitle">పీరియడ్ 1 – చిత్ర పరిశీలన – సంభాషణ – పాఠ పరిచయం</div>
+ <section class="card"><h2>1. సాధారణ సమాచారం</h2><div class="meta">
+  <div><b>తరగతి</b>3వ తరగతి</div><div><b>విషయం</b>తెలుగు</div>
+  <div><b>పీరియడ్ సమయం</b><span contenteditable="true" class="editable">40 నిమిషాలు</span></div>
+  <div><b>పాఠం సంఖ్య</b>6 – మేమే మేకపిల్ల</div><div><b>పీరియడ్ సంఖ్య</b>1 / 12</div>
+  <div><b>బోధనా అంశం</b>చిత్ర పరిశీలన – సంభాషణ – పాఠ పరిచయం</div>
+  <div><b>సామర్థ్యం (CG)</b>CG-1</div>
+  <div><b>తేదీ</b><span contenteditable="true" class="editable">__ / __ / ____</span></div>
+  <div><b>తరగతి గది</b><span contenteditable="true" class="editable">3వ తరగతి</span></div>
+ </div></section>
+ <section class="card"><h2>2. అభ్యసన లక్ష్యాలు</h2><p>పీరియడ్ ముగిసే సమయానికి విద్యార్థులు:</p><ol><li>పాఠ్యపుస్తకంలోని చిత్రాలను శ్రద్ధగా పరిశీలిస్తారు.</li><li>చిత్రాలలో కనిపించే వ్యక్తులు, సంఘటనల గురించి మాట్లాడతారు.</li><li>ఇతరులకు సహాయం చేయడం గురించి తమ అభిప్రాయాలను చెబుతారు.</li><li>చిత్రాల ఆధారంగా సరళమైన వాక్యాలు చెబుతారు.</li><li>పాఠం వినడానికి ఆసక్తి చూపుతారు.</li></ol></section>
+ <section class="card"><h2>3. బోధనాభ్యసన సామగ్రి (TLM)</h2><ul><li>పాఠ్యపుస్తకం – 6వ పాఠం మొదటి పేజీలోని చిత్రాలు</li><li>సహాయం చేస్తున్న పిల్లల చిత్ర కార్డులు</li><li>పద కార్డులు: సహాయం, స్నేహితుడు, తాతయ్య, మొక్కలు</li><li>బ్లాక్ బోర్డు, చాక్ పీస్</li></ul></section>
+ <section class="card"><h2>4. పూర్వజ్ఞాన పరిశీలన</h2><p>ఉపాధ్యాయుడు విద్యార్థులతో చిన్న సంభాషణ చేస్తారు.</p><ol><li>మీకు ఇంట్లో ఎవరు సహాయం చేస్తారు?</li><li>మీరు మీ స్నేహితులకు ఎప్పుడైనా సహాయం చేశారా?</li><li>మొక్కలకు మనం ఏమి చేయాలి?</li></ol>
+  <p class="small">విద్యార్థుల సమాధానాలను విని, వారి అనుభవాలతో పాఠ్యాంశాన్ని అనుసంధానించాలి.</p></section>
+ <section class="card"><h2>5. బోధనా – అభ్యసన ప్రక్రియ (40 నిమిషాలు)</h2><div class="table-scroll"><table>
+  <thead><tr><th>దశ</th><th>సమయం</th><th>ఉపాధ్యాయుని కృత్యాలు</th><th>విద్యార్థుల కృత్యాలు</th></tr></thead><tbody><tr><td>సంభాషణ</td><td>5 నిమిషాలు</td><td>విద్యార్థులను పలకరించి, సహాయం గురించి సరళమైన ప్రశ్నలు అడుగుతారు.</td><td>తమ అనుభవాలను పంచుకుంటారు.</td></tr><tr><td>చిత్ర పరిశీలన</td><td>10 నిమిషాలు</td><td>పాఠ్యపుస్తకంలోని మొదటి పేజీ చిత్రాలను చూపించి పరిశీలించమంటారు.</td><td>చిత్రాలను గమనించి వాటిలో కనిపించే విషయాలను చెబుతారు.</td></tr><tr><td>చర్చ</td><td>10 నిమిషాలు</td><td>ప్రతి చిత్రంపై ప్రశ్నలు అడిగి, విద్యార్థుల సమాధానాలను ప్రోత్సహిస్తారు.</td><td>చిత్రాల ఆధారంగా చిన్న వాక్యాల్లో సమాధానాలు చెబుతారు.</td></tr><tr><td>పాఠ పరిచయం</td><td>10 నిమిషాలు</td><td>పాఠం శీర్షికను పరిచయం చేసి, &#x27;మేకపిల్ల ఢిల్లీ వెళ్తే ఏమవుతుంది?&#x27; అని ఊహింపజేస్తారు.</td><td>పాఠం పేరు చదివి, ఊహలు చెబుతారు.</td></tr><tr><td>పునశ్చరణ</td><td>5 నిమిషాలు</td><td>చిన్న ప్రశ్నలు అడిగి నేర్చుకున్న విషయాలను సమీక్షిస్తారు.</td><td>ప్రశ్నలకు సమాధానాలు చెబుతారు.</td></tr></tbody></table></div></section>
+ <section class="card"><h2>6. చిత్ర ఆధారిత ప్రశ్నలు</h2><div class="qa"><strong>చిత్రం 1: బాలుడు ఎవరికి సహాయం చేస్తున్నట్లు కనిపిస్తున్నాడు?</strong><br><span class="small">ఆశించిన సమాధానం: పెద్దవారికి / తాతయ్యకు సహాయం చేస్తున్నాడు.</span></div><div class="qa"><strong>చిత్రం 2: పిల్లలు ఏమి చేస్తున్నారు?</strong><br><span class="small">ఆశించిన సమాధానం: కిందపడిన స్నేహితుడికి సహాయం చేస్తున్నారు.</span></div><div class="qa"><strong>చిత్రం 3: పిల్లలు మొక్కల దగ్గర ఏమి చేస్తున్నారు?</strong><br><span class="small">ఆశించిన సమాధానం: మొక్కలకు నీళ్లు పోస్తున్నారు / మొక్కలను సంరక్షిస్తున్నారు.</span></div></section>
+ <section class="card"><h2>7. బ్లాక్ బోర్డు పని</h2><div class="note">
+  <h3 style="text-align:center">మేమే మేకపిల్ల</h3><strong>కొత్త పదాలు:</strong><br>సహాయం • స్నేహితుడు • తాతయ్య • మొక్కలు<hr><strong>మంచి అలవాట్లు:</strong><ol><li>పెద్దలకు సహాయం చేయాలి.</li><li>స్నేహితులకు సహాయం చేయాలి.</li><li>మొక్కలను సంరక్షించాలి.</li></ol></div></section>
+ <section class="card"><h2>8. మూల్యాంకనం</h2><ol><li>చిత్రంలో బాలుడు ఎవరికి సహాయం చేస్తున్నాడు?</li><li>స్నేహితుడు కిందపడితే మనం ఏమి చేయాలి?</li><li>మొక్కలను ఎలా సంరక్షించాలి?</li><li>మీరు ఇతరులకు చేసిన ఒక సహాయం గురించి చెప్పండి.</li></ol><p><strong>మూల్యాంకన విధానం:</strong> మౌఖిక ప్రశ్నలు, చిత్ర వివరణ, విద్యార్థుల భాగస్వామ్యాన్ని పరిశీలించడం.</p></section>
+ <section class="card"><h2>9. ఇంటి పని</h2><ol><li>మీరు ఇతరులకు చేసిన సహాయం గురించి రెండు వాక్యాలు రాయండి.</li><li>మీ ఇంటి దగ్గర ఉన్న మొక్కల బొమ్మ గీయండి.</li></ol></section>
+ <section class="card"><h2>10. ఉపాధ్యాయుని ప్రతిబింబం (Teacher Reflection)</h2><p>ఈ పీరియడ్‌లో విద్యార్థులు చిత్రాలను గుర్తించి వివరించగలిగారా?</p>
+  <p contenteditable="true" class="editable">ఇక్కడ ఉపాధ్యాయుని పరిశీలనలు, విద్యార్థుల అభ్యసన స్థాయి, తదుపరి చర్యలు రాయండి.</p></section>
+</div><div class="period" id="p2" data-n="2">
+ <div class="ptitle">పీరియడ్ 2 – పాఠం చదవడం – మొదటి భాగం (ఏరు, మంట, గాలి) – పదాలు అర్థాలు</div>
+ <section class="card"><h2>1. సాధారణ సమాచారం</h2><div class="meta">
+  <div><b>తరగతి</b>3వ తరగతి</div><div><b>విషయం</b>తెలుగు</div>
+  <div><b>పీరియడ్ సమయం</b><span contenteditable="true" class="editable">40 నిమిషాలు</span></div>
+  <div><b>పాఠం సంఖ్య</b>6 – మేమే మేకపిల్ల</div><div><b>పీరియడ్ సంఖ్య</b>2 / 12</div>
+  <div><b>బోధనా అంశం</b>పాఠం చదవడం – మొదటి భాగం (ఏరు, మంట, గాలి) – పదాలు అర్థాలు</div>
+  <div><b>సామర్థ్యం (CG)</b>CG-2, CG-4</div>
+  <div><b>తేదీ</b><span contenteditable="true" class="editable">__ / __ / ____</span></div>
+  <div><b>తరగతి గది</b><span contenteditable="true" class="editable">3వ తరగతి</span></div>
+ </div></section>
+ <section class="card"><h2>2. అభ్యసన లక్ష్యాలు</h2><p>పీరియడ్ ముగిసే సమయానికి విద్యార్థులు:</p><ol><li>పాఠం మొదటి భాగాన్ని ఉపాధ్యాయుని అనుసరిస్తూ చదువుతారు.</li><li>బుద్ధి, పొగరు, వాలకం, గందరగోళం పదాల అర్థాలు చెబుతారు.</li><li>మేమే ఏరు, మంట, గాలికి సాయం చేయలేదని గుర్తిస్తారు.</li><li>కథలోని పాత్రల పేర్లు చెబుతారు.</li></ol></section>
+ <section class="card"><h2>3. బోధనాభ్యసన సామగ్రి (TLM)</h2><ul><li>పాఠ్యపుస్తకం – పేజీ 2</li><li>మేక, ఏరు, మంట, గాలి బొమ్మ కార్డులు</li><li>పద–అర్థ కార్డులు</li><li>బ్లాక్ బోర్డు</li></ul></section>
+ <section class="card"><h2>4. పూర్వజ్ఞాన పరిశీలన</h2><p>ఉపాధ్యాయుడు విద్యార్థులతో చిన్న సంభాషణ చేస్తారు.</p><ol><li>మేకలను మీరు చూశారా? అవి ఏమి తింటాయి?</li><li>అమ్మ మాట వినకపోతే ఏమవుతుంది?</li><li>ఢిల్లీ ఎక్కడ ఉంది? ఎవరైనా విన్నారా?</li></ol>
+  <p class="small">విద్యార్థుల సమాధానాలను విని, వారి అనుభవాలతో పాఠ్యాంశాన్ని అనుసంధానించాలి.</p></section>
+ <section class="card"><h2>5. బోధనా – అభ్యసన ప్రక్రియ (40 నిమిషాలు)</h2><div class="table-scroll"><table>
+  <thead><tr><th>దశ</th><th>సమయం</th><th>ఉపాధ్యాయుని కృత్యాలు</th><th>విద్యార్థుల కృత్యాలు</th></tr></thead><tbody><tr><td>ప్రేరణ</td><td>5 నిమిషాలు</td><td>నిన్నటి చిత్రాలు గుర్తుచేసి, మేక బొమ్మ చూపిస్తారు.</td><td>మేక గురించి తమకు తెలిసింది చెబుతారు.</td></tr><tr><td>ఆదర్శ పఠనం</td><td>8 నిమిషాలు</td><td>పేజీ 2 ని భావయుక్తంగా, స్పష్టంగా చదువుతారు.</td><td>పుస్తకంలో వేలు పెట్టి అనుసరిస్తారు.</td></tr><tr><td>అనుకరణ పఠనం</td><td>12 నిమిషాలు</td><td>వాక్యం వాక్యంగా చదివించి, ఉచ్చారణ సరిచేస్తారు.</td><td>ఒక్కొక్కరు/జట్లుగా గట్టిగా చదువుతారు.</td></tr><tr><td>పదాలు – అర్థాలు</td><td>10 నిమిషాలు</td><td>కొత్త పదాలను బోర్డుపై రాసి అర్థాలు చెప్పి, వాక్యాల్లో వాడి చూపిస్తారు.</td><td>అర్థాలు నోట్‌బుక్‌లో రాసుకుంటారు.</td></tr><tr><td>పునశ్చరణ</td><td>5 నిమిషాలు</td><td>మేమేను ఎవరెవరు సాయం అడిగారో అడుగుతారు.</td><td>సమాధానాలు చెబుతారు.</td></tr></tbody></table></div></section>
+ <section class="card"><h2>6. అవగాహన ప్రశ్నలు</h2><div class="qa"><strong>మేక నాలుగో పిల్ల పేరు ఏమిటి?</strong><br><span class="small">ఆశించిన సమాధానం: మేమే.</span></div><div class="qa"><strong>మేమే ఎక్కడికి బయలుదేరింది?</strong><br><span class="small">ఆశించిన సమాధానం: ఢిల్లీ రాజును చూడటానికి ఢిల్లీకి బయలుదేరింది.</span></div><div class="qa"><strong>ఏరు మేమేను ఏమి అడిగింది?</strong><br><span class="small">ఆశించిన సమాధానం: అడ్డంగా పడిన కొమ్మ ఆకులు తినమని అడిగింది.</span></div></section>
+ <section class="card"><h2>7. బ్లాక్ బోర్డు పని</h2><div class="note">
+  <h3 style="text-align:center">మేమే మేకపిల్ల</h3><strong>పదాలు – అర్థాలు:</strong><br>బుద్ధి = ఆలోచన • పొగరు = గర్వం • వాలకం = తీరు • గందరగోళం = తికమక<hr><strong>మేమేను సాయం అడిగినవి:</strong><ol><li>ఏరు – కొమ్మ ఆకులు తినమంది.</li><li>మంట – నాలుగు పుల్లలు వేయమంది.</li><li>గాలి – ముళ్ళ కంచె జరపమంది.</li></ol></div></section>
+ <section class="card"><h2>8. మూల్యాంకనం</h2><ol><li>పొగరు అంటే అర్థం ఏమిటి?</li><li>మంట మేమేను ఏమి అడిగింది?</li><li>మేమే అందరికీ ఏమని జవాబు చెప్పింది?</li></ol><p><strong>మూల్యాంకన విధానం:</strong> పఠన పరిశీలన (ధారాళత, ఉచ్చారణ), మౌఖిక ప్రశ్నలు.</p></section>
+ <section class="card"><h2>9. ఇంటి పని</h2><ol><li>పేజీ 2 ను రెండుసార్లు చదవండి.</li><li>నాలుగు పదాలు – అర్థాలు రాయండి.</li></ol></section>
+ <section class="card"><h2>10. ఉపాధ్యాయుని ప్రతిబింబం (Teacher Reflection)</h2><p>విద్యార్థులు ధారాళంగా చదవగలిగారా? ఏ పదాలు చదవడంలో ఇబ్బంది పడ్డారు?</p>
+  <p contenteditable="true" class="editable">ఇక్కడ ఉపాధ్యాయుని పరిశీలనలు, విద్యార్థుల అభ్యసన స్థాయి, తదుపరి చర్యలు రాయండి.</p></section>
+</div><div class="period" id="p3" data-n="3">
+ <div class="ptitle">పీరియడ్ 3 – పాఠం చదవడం – రెండో భాగం (వంటవాడు, తప్పించుకోవడం) – పాత్రాభినయం</div>
+ <section class="card"><h2>1. సాధారణ సమాచారం</h2><div class="meta">
+  <div><b>తరగతి</b>3వ తరగతి</div><div><b>విషయం</b>తెలుగు</div>
+  <div><b>పీరియడ్ సమయం</b><span contenteditable="true" class="editable">40 నిమిషాలు</span></div>
+  <div><b>పాఠం సంఖ్య</b>6 – మేమే మేకపిల్ల</div><div><b>పీరియడ్ సంఖ్య</b>3 / 12</div>
+  <div><b>బోధనా అంశం</b>పాఠం చదవడం – రెండో భాగం (వంటవాడు, తప్పించుకోవడం) – పాత్రాభినయం</div>
+  <div><b>సామర్థ్యం (CG)</b>CG-1, CG-2</div>
+  <div><b>తేదీ</b><span contenteditable="true" class="editable">__ / __ / ____</span></div>
+  <div><b>తరగతి గది</b><span contenteditable="true" class="editable">3వ తరగతి</span></div>
+ </div></section>
+ <section class="card"><h2>2. అభ్యసన లక్ష్యాలు</h2><p>పీరియడ్ ముగిసే సమయానికి విద్యార్థులు:</p><ol><li>పాఠం రెండో భాగాన్ని ధారాళంగా చదువుతారు.</li><li>కథను సంఘటనల క్రమంలో చెబుతారు.</li><li>పాత్రలను అభినయిస్తారు.</li><li>కథ నీతిని చెబుతారు.</li></ol></section>
+ <section class="card"><h2>3. బోధనాభ్యసన సామగ్రి (TLM)</h2><ul><li>పాఠ్యపుస్తకం – పేజీ 3, 4</li><li>మేమే, వంటవాడు, నీళ్ళు, నిప్పు, గాలి మాస్కులు</li><li>కాగు బొమ్మ</li><li>పద–అర్థ కార్డులు: మరగడం, కాగు, అదృశ్యం, తిన్నగ</li></ul></section>
+ <section class="card"><h2>4. పూర్వజ్ఞాన పరిశీలన</h2><p>ఉపాధ్యాయుడు విద్యార్థులతో చిన్న సంభాషణ చేస్తారు.</p><ol><li>నిన్న మేమేకు దారిలో ఎవరెవరు ఎదురయ్యారు?</li><li>మేమే వాళ్ళకు సాయం చేసిందా?</li><li>తెలియని వాళ్ళు పిలిస్తే వెళ్ళవచ్చా?</li></ol>
+  <p class="small">విద్యార్థుల సమాధానాలను విని, వారి అనుభవాలతో పాఠ్యాంశాన్ని అనుసంధానించాలి.</p></section>
+ <section class="card"><h2>5. బోధనా – అభ్యసన ప్రక్రియ (40 నిమిషాలు)</h2><div class="table-scroll"><table>
+  <thead><tr><th>దశ</th><th>సమయం</th><th>ఉపాధ్యాయుని కృత్యాలు</th><th>విద్యార్థుల కృత్యాలు</th></tr></thead><tbody><tr><td>పునశ్చరణ</td><td>5 నిమిషాలు</td><td>నిన్నటి కథను ఇద్దరు విద్యార్థులతో చెప్పిస్తారు.</td><td>కథ గుర్తుచేసుకుని చెబుతారు.</td></tr><tr><td>ఆదర్శ పఠనం</td><td>7 నిమిషాలు</td><td>పేజీ 3, 4 ని భావయుక్తంగా చదువుతారు.</td><td>శ్రద్ధగా విని అనుసరిస్తారు.</td></tr><tr><td>జట్టు పఠనం</td><td>10 నిమిషాలు</td><td>జట్లుగా విభజించి ఒక్కో పేరా చదివిస్తారు.</td><td>జట్లుగా చదివి, కష్టమైన పదాలు అడుగుతారు.</td></tr><tr><td>పాత్రాభినయం</td><td>13 నిమిషాలు</td><td>మాస్కులు ఇచ్చి సంభాషణలు అభినయింపజేస్తారు.</td><td>పాత్రల మాటలు చెబుతూ నటిస్తారు.</td></tr><tr><td>నీతి చర్చ</td><td>5 నిమిషాలు</td><td>&#x27;మేమే ఏమి నేర్చుకుంది?&#x27; అని చర్చిస్తారు.</td><td>నీతిని సొంతమాటల్లో చెబుతారు.</td></tr></tbody></table></div></section>
+ <section class="card"><h2>6. అవగాహన ప్రశ్నలు</h2><div class="qa"><strong>మేమేను రాజు దగ్గరకు తీసుకెళ్తానన్నది ఎవరు?</strong><br><span class="small">ఆశించిన సమాధానం: రాజుగారి వంటవాడు.</span></div><div class="qa"><strong>నీళ్ళు, నిప్పు మేమేకు ఎందుకు సాయం చేయలేదు?</strong><br><span class="small">ఆశించిన సమాధానం: మేమే ముందు వాటికి సాయం చేయలేదు కాబట్టి.</span></div><div class="qa"><strong>మేమేను ఎవరు కాపాడారు? ఎలా?</strong><br><span class="small">ఆశించిన సమాధానం: గాలి మంటను పక్కకు తోసింది; మూత తీయగానే మేమే దూకి పారిపోయింది.</span></div></section>
+ <section class="card"><h2>7. బ్లాక్ బోర్డు పని</h2><div class="note">
+  <h3 style="text-align:center">మేమే మేకపిల్ల</h3><strong>పదాలు – అర్థాలు:</strong><br>మరగడం = కాగడం • కాగు = పెద్ద బిందె • అదృశ్యం = మాయం • తిన్నగ = నేరుగా<hr><strong>నీతి:</strong><ol><li>పెద్దల మాట వినాలి.</li><li>ఇతరులకు సాయం చేస్తేనే మనకూ సాయం దొరుకుతుంది.</li></ol></div></section>
+ <section class="card"><h2>8. మూల్యాంకనం</h2><ol><li>కథను ఐదు వాక్యాల్లో క్రమంగా చెప్పండి.</li><li>మేమే ఇంటికి వచ్చి అమ్మతో ఏమన్నది?</li><li>ఈ కథ నుండి మీరు ఏమి నేర్చుకున్నారు?</li></ol><p><strong>మూల్యాంకన విధానం:</strong> కథ పునఃకథనం, పాత్రాభినయ పరిశీలన.</p></section>
+ <section class="card"><h2>9. ఇంటి పని</h2><ol><li>కథను ఇంట్లో అమ్మకు చెప్పండి.</li><li>పాఠంలో మీకు నచ్చిన పాత్ర బొమ్మ గీయండి.</li></ol></section>
+ <section class="card"><h2>10. ఉపాధ్యాయుని ప్రతిబింబం (Teacher Reflection)</h2><p>విద్యార్థులు కథను క్రమంగా చెప్పగలిగారా? అభినయంలో ఎవరు పాల్గొనలేదు?</p>
+  <p contenteditable="true" class="editable">ఇక్కడ ఉపాధ్యాయుని పరిశీలనలు, విద్యార్థుల అభ్యసన స్థాయి, తదుపరి చర్యలు రాయండి.</p></section>
+</div><div class="period" id="p4" data-n="4">
+ <div class="ptitle">పీరియడ్ 4 – వినడం – ఆలోచించి మాట్లాడటం – కవి పరిచయం</div>
+ <section class="card"><h2>1. సాధారణ సమాచారం</h2><div class="meta">
+  <div><b>తరగతి</b>3వ తరగతి</div><div><b>విషయం</b>తెలుగు</div>
+  <div><b>పీరియడ్ సమయం</b><span contenteditable="true" class="editable">40 నిమిషాలు</span></div>
+  <div><b>పాఠం సంఖ్య</b>6 – మేమే మేకపిల్ల</div><div><b>పీరియడ్ సంఖ్య</b>4 / 12</div>
+  <div><b>బోధనా అంశం</b>వినడం – ఆలోచించి మాట్లాడటం – కవి పరిచయం</div>
+  <div><b>సామర్థ్యం (CG)</b>CG-1</div>
+  <div><b>తేదీ</b><span contenteditable="true" class="editable">__ / __ / ____</span></div>
+  <div><b>తరగతి గది</b><span contenteditable="true" class="editable">3వ తరగతి</span></div>
+ </div></section>
+ <section class="card"><h2>2. అభ్యసన లక్ష్యాలు</h2><p>పీరియడ్ ముగిసే సమయానికి విద్యార్థులు:</p><ol><li>పాఠం ఆధారంగా అడిగిన ప్రశ్నలకు మాట్లాడతారు.</li><li>ఊహించి సమాధానాలు చెబుతారు.</li><li>తామైతే ఏమి చేసేవారో చెబుతారు.</li><li>రచయిత్రి ఆర్. శకుంతల గురించి తెలుసుకుంటారు.</li></ol></section>
+ <section class="card"><h2>3. బోధనాభ్యసన సామగ్రి (TLM)</h2><ul><li>పాఠ్యపుస్తకం – పేజీ 4</li><li>ప్రశ్న కార్డులు</li><li>రచయిత్రి పరిచయ చార్టు</li></ul></section>
+ <section class="card"><h2>4. పూర్వజ్ఞాన పరిశీలన</h2><p>ఉపాధ్యాయుడు విద్యార్థులతో చిన్న సంభాషణ చేస్తారు.</p><ol><li>మేమేకు ఎవరెవరు ఎదురయ్యారు?</li><li>మేమే తప్పు ఏమిటి?</li><li>కథలు రాసేవారిని ఏమంటారు?</li></ol>
+  <p class="small">విద్యార్థుల సమాధానాలను విని, వారి అనుభవాలతో పాఠ్యాంశాన్ని అనుసంధానించాలి.</p></section>
+ <section class="card"><h2>5. బోధనా – అభ్యసన ప్రక్రియ (40 నిమిషాలు)</h2><div class="table-scroll"><table>
+  <thead><tr><th>దశ</th><th>సమయం</th><th>ఉపాధ్యాయుని కృత్యాలు</th><th>విద్యార్థుల కృత్యాలు</th></tr></thead><tbody><tr><td>ప్రేరణ</td><td>5 నిమిషాలు</td><td>కథలోని ఒక సన్నివేశాన్ని అభినయించి చూపిస్తారు.</td><td>సన్నివేశం గుర్తిస్తారు.</td></tr><tr><td>జట్టు చర్చ</td><td>12 నిమిషాలు</td><td>మూడు ప్రశ్నలు జట్లకు ఇచ్చి చర్చింపజేస్తారు.</td><td>జట్లలో చర్చించి సమాధానాలు సిద్ధం చేస్తారు.</td></tr><tr><td>ప్రదర్శన</td><td>10 నిమిషాలు</td><td>ఒక్కో జట్టు ప్రతినిధిని మాట్లాడమంటారు.</td><td>జట్టు అభిప్రాయం తరగతికి చెబుతారు.</td></tr><tr><td>కవి పరిచయం</td><td>8 నిమిషాలు</td><td>ఆర్. శకుంతల, చందమామ, ఆమె రచనల గురించి చెబుతారు.</td><td>విని ముఖ్యాంశాలు రాసుకుంటారు.</td></tr><tr><td>పునశ్చరణ</td><td>5 నిమిషాలు</td><td>రచయిత్రి పేరు, ఊరు అడుగుతారు.</td><td>సమాధానాలు చెబుతారు.</td></tr></tbody></table></div></section>
+ <section class="card"><h2>6. చర్చా ప్రశ్నలు</h2><div class="qa"><strong>మేకపిల్లకు ఎవరెవరు ఎదురయ్యారు? ఏమి అడిగారు?</strong><br><span class="small">ఆశించిన సమాధానం: ఏరు – ఆకులు తినమంది; మంట – పుల్లలు వేయమంది; గాలి – కంచె జరపమంది; వంటవాడు – రాజును చూపిస్తానన్నాడు.</span></div><div class="qa"><strong>రాజు ఎదురయితే ఏమి జరిగేది?</strong><br><span class="small">ఆశించిన సమాధానం: రాజు ముచ్చటపడి, కోట చూపించి, క్షేమంగా ఇంటికి పంపేవాడు.</span></div><div class="qa"><strong>మేకపిల్ల స్థానంలో మీరుంటే?</strong><br><span class="small">ఆశించిన సమాధానం: అమ్మ మాట వినేవాణ్ణి; అడిగిన వారికి సాయం చేసేవాణ్ణి.</span></div></section>
+ <section class="card"><h2>7. బ్లాక్ బోర్డు పని</h2><div class="note">
+  <h3 style="text-align:center">మేమే మేకపిల్ల</h3><strong>రచయిత్రి:</strong><br>ఆర్. శకుంతల – బాపట్ల<hr><strong>రచనలు:</strong><ol><li>మేమే మేకపిల్ల (చందమామ, 1949)</li><li>కథకదంబం, అవ్వ చెప్పిన కథలు, బొమ్మరిల్లు</li></ol></div></section>
+ <section class="card"><h2>8. మూల్యాంకనం</h2><ol><li>రాజు ఎదురైతే ఏమయ్యేదో ఊహించి చెప్పండి.</li><li>ఈ కథ రాసిన రచయిత్రి ఎవరు?</li><li>ఆమె ఇంకా ఏ పుస్తకాలు రాశారు?</li></ol><p><strong>మూల్యాంకన విధానం:</strong> జట్టు చర్చలో భాగస్వామ్యం, మౌఖిక వ్యక్తీకరణ.</p></section>
+ <section class="card"><h2>9. ఇంటి పని</h2><ol><li>రచయిత్రి పరిచయం నోట్‌బుక్‌లో రాయండి.</li><li>మీరైతే ఏమి చేసేవారో 3 వాక్యాలు రాయండి.</li></ol></section>
+ <section class="card"><h2>10. ఉపాధ్యాయుని ప్రతిబింబం (Teacher Reflection)</h2><p>అందరు విద్యార్థులు మాట్లాడగలిగారా? సంకోచించిన వారిని ఎలా ప్రోత్సహించాలి?</p>
+  <p contenteditable="true" class="editable">ఇక్కడ ఉపాధ్యాయుని పరిశీలనలు, విద్యార్థుల అభ్యసన స్థాయి, తదుపరి చర్యలు రాయండి.</p></section>
+</div><div class="period" id="p5" data-n="5">
+ <div class="ptitle">పీరియడ్ 5 – చదవడం – వ్యక్తపరచడం (ఎవరు ఎవరితో అన్నారు, అపరిచిత పేరా)</div>
+ <section class="card"><h2>1. సాధారణ సమాచారం</h2><div class="meta">
+  <div><b>తరగతి</b>3వ తరగతి</div><div><b>విషయం</b>తెలుగు</div>
+  <div><b>పీరియడ్ సమయం</b><span contenteditable="true" class="editable">40 నిమిషాలు</span></div>
+  <div><b>పాఠం సంఖ్య</b>6 – మేమే మేకపిల్ల</div><div><b>పీరియడ్ సంఖ్య</b>5 / 12</div>
+  <div><b>బోధనా అంశం</b>చదవడం – వ్యక్తపరచడం (ఎవరు ఎవరితో అన్నారు, అపరిచిత పేరా)</div>
+  <div><b>సామర్థ్యం (CG)</b>CG-2</div>
+  <div><b>తేదీ</b><span contenteditable="true" class="editable">__ / __ / ____</span></div>
+  <div><b>తరగతి గది</b><span contenteditable="true" class="editable">3వ తరగతి</span></div>
+ </div></section>
+ <section class="card"><h2>2. అభ్యసన లక్ష్యాలు</h2><p>పీరియడ్ ముగిసే సమయానికి విద్యార్థులు:</p><ol><li>మాటలు ఎవరు ఎవరితో అన్నారో పాఠంలో వెతికి గుర్తిస్తారు.</li><li>అపరిచిత పేరాను మౌనంగా చదివి అర్థం చేసుకుంటారు.</li><li>పేరా ఆధారంగా ప్రశ్నలకు జవాబులు రాస్తారు.</li><li>కథ ముగింపును ఊహించి రాస్తారు.</li></ol></section>
+ <section class="card"><h2>3. బోధనాభ్యసన సామగ్రి (TLM)</h2><ul><li>పాఠ్యపుస్తకం – పేజీ 5</li><li>సంభాషణ కార్డులు</li><li>సింహం–నక్క చిత్రం</li></ul></section>
+ <section class="card"><h2>4. పూర్వజ్ఞాన పరిశీలన</h2><p>ఉపాధ్యాయుడు విద్యార్థులతో చిన్న సంభాషణ చేస్తారు.</p><ol><li>అడవిలో ఉండే జంతువుల పేర్లు చెప్పండి.</li><li>అడవికి రాజు ఎవరు?</li><li>చాడీలు చెప్పడం మంచిదా?</li></ol>
+  <p class="small">విద్యార్థుల సమాధానాలను విని, వారి అనుభవాలతో పాఠ్యాంశాన్ని అనుసంధానించాలి.</p></section>
+ <section class="card"><h2>5. బోధనా – అభ్యసన ప్రక్రియ (40 నిమిషాలు)</h2><div class="table-scroll"><table>
+  <thead><tr><th>దశ</th><th>సమయం</th><th>ఉపాధ్యాయుని కృత్యాలు</th><th>విద్యార్థుల కృత్యాలు</th></tr></thead><tbody><tr><td>ప్రేరణ</td><td>5 నిమిషాలు</td><td>అడవి జంతువుల చిత్రం చూపిస్తారు.</td><td>జంతువుల పేర్లు చెబుతారు.</td></tr><tr><td>ఎవరు ఎవరితో</td><td>10 నిమిషాలు</td><td>సంభాషణ కార్డు చదివి, పాఠంలో వెతకమంటారు.</td><td>పాఠంలో వెతికి, ఎవరు ఎవరితో అన్నారో చెబుతారు.</td></tr><tr><td>మౌన పఠనం</td><td>8 నిమిషాలు</td><td>సింహం–నక్క పేరాను మౌనంగా చదవమంటారు.</td><td>మౌనంగా చదువుతారు.</td></tr><tr><td>జవాబులు రాయడం</td><td>12 నిమిషాలు</td><td>ప్రశ్నలు చదివి, జవాబులు రాయించి, తిరుగుతూ సహాయం చేస్తారు.</td><td>నోట్‌బుక్‌లో జవాబులు రాస్తారు.</td></tr><tr><td>సరిచూడటం</td><td>5 నిమిషాలు</td><td>కొందరి జవాబులు చదివించి సరిచేస్తారు.</td><td>తమ జవాబులు సరిచూసుకుంటారు.</td></tr></tbody></table></div></section>
+ <section class="card"><h2>6. ప్రశ్నలు – ఆశించిన సమాధానాలు</h2><div class="qa"><strong>&#x27;అమ్మో! నాకు తీరిక లేదు…&#x27; ఎవరు ఎవరితో అన్నారు?</strong><br><span class="small">ఆశించిన సమాధానం: మేమే మేకపిల్ల ఏరుతో అన్నది.</span></div><div class="qa"><strong>సింహానికి ఎవరు చాడీలు చెప్పేవారు?</strong><br><span class="small">ఆశించిన సమాధానం: నక్క.</span></div><div class="qa"><strong>జంతువులు ఎందుకు సమావేశం అయ్యాయి?</strong><br><span class="small">ఆశించిన సమాధానం: సింహం బారి నుండి తప్పించుకోవడానికి.</span></div></section>
+ <section class="card"><h2>7. బ్లాక్ బోర్డు పని</h2><div class="note">
+  <h3 style="text-align:center">మేమే మేకపిల్ల</h3><strong>ఎవరు – ఎవరితో:</strong><br>మేమే → ఏరు • మేమే → గాలి • వంటమనిషి → మేమే • గాలి → మేమే<hr><strong>నీతి:</strong><ol><li>ఐకమత్యమే మహాబలం.</li></ol></div></section>
+ <section class="card"><h2>8. మూల్యాంకనం</h2><ol><li>&#x27;చూశావా మరి! నీవు ఎవరికీ సాయం చేయలేదు&#x27; – ఎవరు ఎవరితో అన్నారు?</li><li>మీకు తెలిసిన మూడు అడవి జంతువుల పేర్లు రాయండి.</li><li>జంతువులు సింహాన్ని ఎదిరించాక ఏమయ్యేదో ఊహించి రాయండి.</li></ol><p><strong>మూల్యాంకన విధానం:</strong> లిఖిత జవాబుల పరిశీలన.</p></section>
+ <section class="card"><h2>9. ఇంటి పని</h2><ol><li>4వ ప్రశ్న (ఊహించి రాయడం) పూర్తి చేయండి.</li></ol></section>
+ <section class="card"><h2>10. ఉపాధ్యాయుని ప్రతిబింబం (Teacher Reflection)</h2><p>విద్యార్థులు పేరాను చదివి సొంతంగా జవాబులు రాయగలిగారా?</p>
+  <p contenteditable="true" class="editable">ఇక్కడ ఉపాధ్యాయుని పరిశీలనలు, విద్యార్థుల అభ్యసన స్థాయి, తదుపరి చర్యలు రాయండి.</p></section>
+</div><div class="period" id="p6" data-n="6">
+ <div class="ptitle">పీరియడ్ 6 – పదజాలం – భ్రమక పదాలు, గళ్ళనుడికట్టు – ఉక్తలేఖనం</div>
+ <section class="card"><h2>1. సాధారణ సమాచారం</h2><div class="meta">
+  <div><b>తరగతి</b>3వ తరగతి</div><div><b>విషయం</b>తెలుగు</div>
+  <div><b>పీరియడ్ సమయం</b><span contenteditable="true" class="editable">40 నిమిషాలు</span></div>
+  <div><b>పాఠం సంఖ్య</b>6 – మేమే మేకపిల్ల</div><div><b>పీరియడ్ సంఖ్య</b>6 / 12</div>
+  <div><b>బోధనా అంశం</b>పదజాలం – భ్రమక పదాలు, గళ్ళనుడికట్టు – ఉక్తలేఖనం</div>
+  <div><b>సామర్థ్యం (CG)</b>CG-4</div>
+  <div><b>తేదీ</b><span contenteditable="true" class="editable">__ / __ / ____</span></div>
+  <div><b>తరగతి గది</b><span contenteditable="true" class="editable">3వ తరగతి</span></div>
+ </div></section>
+ <section class="card"><h2>2. అభ్యసన లక్ష్యాలు</h2><p>పీరియడ్ ముగిసే సమయానికి విద్యార్థులు:</p><ol><li>భ్రమక పదాలను గుర్తించి, కొత్తవి రాస్తారు.</li><li>గళ్ళలోని పదాలను వెతికి రాస్తారు.</li><li>ద్విత్వ, సంయుక్తాక్షరాల తేడా గుర్తిస్తారు.</li><li>పాఠంలోని పదాలను తప్పులు లేకుండా రాస్తారు.</li></ol></section>
+ <section class="card"><h2>3. బోధనాభ్యసన సామగ్రి (TLM)</h2><ul><li>పాఠ్యపుస్తకం – పేజీ 6</li><li>గళ్ళనుడికట్టు చార్టు</li><li>ద్విత్వ/సంయుక్త పద కార్డులు</li><li>అద్దం (భ్రమక పదాలు చూపడానికి)</li></ul></section>
+ <section class="card"><h2>4. పూర్వజ్ఞాన పరిశీలన</h2><p>ఉపాధ్యాయుడు విద్యార్థులతో చిన్న సంభాషణ చేస్తారు.</p><ol><li>&#x27;కిటికి&#x27; పదాన్ని వెనక నుండి చదవండి.</li><li>&#x27;అమ్మ&#x27;లో ఏ అక్షరం రెండుసార్లు వచ్చింది?</li><li>&#x27;చూస్తా&#x27;లో ఏ రెండు అక్షరాలు కలిశాయి?</li></ol>
+  <p class="small">విద్యార్థుల సమాధానాలను విని, వారి అనుభవాలతో పాఠ్యాంశాన్ని అనుసంధానించాలి.</p></section>
+ <section class="card"><h2>5. బోధనా – అభ్యసన ప్రక్రియ (40 నిమిషాలు)</h2><div class="table-scroll"><table>
+  <thead><tr><th>దశ</th><th>సమయం</th><th>ఉపాధ్యాయుని కృత్యాలు</th><th>విద్యార్థుల కృత్యాలు</th></tr></thead><tbody><tr><td>భ్రమక పదాలు</td><td>8 నిమిషాలు</td><td>కిటికి, మడమ, జలజ పదాలను రెండు వైపుల నుండి చదివిస్తారు.</td><td>కొత్త భ్రమక పదాలు చెబుతారు.</td></tr><tr><td>గళ్ళనుడికట్టు</td><td>10 నిమిషాలు</td><td>జట్ల మధ్య &#x27;ఎవరు ముందు వెతుకుతారు&#x27; ఆట ఆడిస్తారు.</td><td>గళ్ళలో పదాలు వెతికి రాస్తారు.</td></tr><tr><td>ద్విత్వ/సంయుక్త</td><td>7 నిమిషాలు</td><td>పద కార్డులతో తేడా వివరిస్తారు.</td><td>కార్డులను రెండు గుంపులుగా విభజిస్తారు.</td></tr><tr><td>ఉక్తలేఖనం</td><td>12 నిమిషాలు</td><td>20 పదాలు స్పష్టంగా చెబుతారు.</td><td>నోట్‌బుక్‌లో రాస్తారు.</td></tr><tr><td>సరిచూడటం</td><td>3 నిమిషాలు</td><td>బోర్డుపై పదాలు రాసి సరిచూసుకోమంటారు.</td><td>తప్పులు గుర్తిస్తారు.</td></tr></tbody></table></div></section>
+ <section class="card"><h2>6. ప్రశ్నలు – ఆశించిన సమాధానాలు</h2><div class="qa"><strong>మరికొన్ని భ్రమక పదాలు చెప్పండి.</strong><br><span class="small">ఆశించిన సమాధానం: కనక, కటక, వికటకవి, మహిమ, సరస, నయన.</span></div><div class="qa"><strong>గళ్ళలో దొరికిన పదాలు?</strong><br><span class="small">ఆశించిన సమాధానం: వంటమనిషి, పుల్లలు, అమ్మ, గాలి, కంచె, ముళ్ళ, మేక, ఏరు, రాజు, ఢిల్లీ.</span></div><div class="qa"><strong>&#x27;బుద్ధి&#x27; ద్విత్వమా, సంయుక్తమా?</strong><br><span class="small">ఆశించిన సమాధానం: సంయుక్తం (ద + ధ).</span></div></section>
+ <section class="card"><h2>7. బ్లాక్ బోర్డు పని</h2><div class="note">
+  <h3 style="text-align:center">మేమే మేకపిల్ల</h3><strong>ద్విత్వాక్షర పదాలు:</strong><br>అమ్మ • పిల్లలు • ఢిల్లీ • కొమ్మ • ముళ్ళ • చెట్టు • నిప్పు<hr><strong>సంయుక్తాక్షర పదాలు:</strong><ol><li>బుద్ధి • మధ్యలో • చూస్తా • ప్రవర్తన • అదృశ్యం</li></ol></div></section>
+ <section class="card"><h2>8. మూల్యాంకనం</h2><ol><li>ఉక్తలేఖనం – 20 పదాలు.</li><li>రెండు భ్రమక పదాలు రాయండి.</li><li>ఒక ద్విత్వ, ఒక సంయుక్త పదం రాయండి.</li></ol><p><strong>మూల్యాంకన విధానం:</strong> ఉక్తలేఖనం మార్కులు, గళ్ళనుడికట్టు ఆటలో భాగస్వామ్యం.</p></section>
+ <section class="card"><h2>9. ఇంటి పని</h2><ol><li>తప్పుగా రాసిన పదాలు 5 సార్లు రాయండి.</li><li>పాఠంలో మరో 5 ద్విత్వాక్షర పదాలు వెతికి రాయండి.</li></ol></section>
+ <section class="card"><h2>10. ఉపాధ్యాయుని ప్రతిబింబం (Teacher Reflection)</h2><p>ఉక్తలేఖనంలో ఎక్కువ మంది ఏ పదాలు తప్పు రాశారు? మళ్ళీ ఎలా అభ్యాసం చేయించాలి?</p>
+  <p contenteditable="true" class="editable">ఇక్కడ ఉపాధ్యాయుని పరిశీలనలు, విద్యార్థుల అభ్యసన స్థాయి, తదుపరి చర్యలు రాయండి.</p></section>
+</div><div class="period" id="p7" data-n="7">
+ <div class="ptitle">పీరియడ్ 7 – స్వీయరచన</div>
+ <section class="card"><h2>1. సాధారణ సమాచారం</h2><div class="meta">
+  <div><b>తరగతి</b>3వ తరగతి</div><div><b>విషయం</b>తెలుగు</div>
+  <div><b>పీరియడ్ సమయం</b><span contenteditable="true" class="editable">40 నిమిషాలు</span></div>
+  <div><b>పాఠం సంఖ్య</b>6 – మేమే మేకపిల్ల</div><div><b>పీరియడ్ సంఖ్య</b>7 / 12</div>
+  <div><b>బోధనా అంశం</b>స్వీయరచన</div>
+  <div><b>సామర్థ్యం (CG)</b>CG-3</div>
+  <div><b>తేదీ</b><span contenteditable="true" class="editable">__ / __ / ____</span></div>
+  <div><b>తరగతి గది</b><span contenteditable="true" class="editable">3వ తరగతి</span></div>
+ </div></section>
+ <section class="card"><h2>2. అభ్యసన లక్ష్యాలు</h2><p>పీరియడ్ ముగిసే సమయానికి విద్యార్థులు:</p><ol><li>పాఠంలోని సంఘటనలను సొంతమాటల్లో రాస్తారు.</li><li>సామెత అర్థం చెబుతారు.</li><li>పాత్రల ప్రవర్తనకు కారణాలు రాస్తారు.</li><li>తమ అనుభవాన్ని రాస్తారు.</li></ol></section>
+ <section class="card"><h2>3. బోధనాభ్యసన సామగ్రి (TLM)</h2><ul><li>పాఠ్యపుస్తకం – పేజీ 6</li><li>నమూనా జవాబు చార్టు</li><li>బ్లాక్ బోర్డు</li></ul></section>
+ <section class="card"><h2>4. పూర్వజ్ఞాన పరిశీలన</h2><p>ఉపాధ్యాయుడు విద్యార్థులతో చిన్న సంభాషణ చేస్తారు.</p><ol><li>&#x27;లేడికి లేచిందే పరుగు&#x27; విన్నారా?</li><li>నీరు మేమేకు ఎందుకు సాయం చేయలేదు?</li><li>మీరు ఎవరికైనా సాయం చేశారా?</li></ol>
+  <p class="small">విద్యార్థుల సమాధానాలను విని, వారి అనుభవాలతో పాఠ్యాంశాన్ని అనుసంధానించాలి.</p></section>
+ <section class="card"><h2>5. బోధనా – అభ్యసన ప్రక్రియ (40 నిమిషాలు)</h2><div class="table-scroll"><table>
+  <thead><tr><th>దశ</th><th>సమయం</th><th>ఉపాధ్యాయుని కృత్యాలు</th><th>విద్యార్థుల కృత్యాలు</th></tr></thead><tbody><tr><td>నేను చేస్తా</td><td>8 నిమిషాలు</td><td>1వ ప్రశ్నకు జవాబు ఎలా రాయాలో బోర్డుపై రాసి చూపిస్తారు.</td><td>గమనిస్తారు.</td></tr><tr><td>మనం చేద్దాం</td><td>10 నిమిషాలు</td><td>2వ ప్రశ్నకు అందరితో కలిసి జవాబు తయారు చేస్తారు.</td><td>ఆలోచనలు చెబుతూ జవాబు కూర్చుతారు.</td></tr><tr><td>మీరు చేయండి</td><td>15 నిమిషాలు</td><td>3–6 ప్రశ్నలు సొంతంగా రాయమంటారు; తిరుగుతూ సహాయం చేస్తారు.</td><td>సొంతమాటల్లో రాస్తారు.</td></tr><tr><td>పంచుకోవడం</td><td>7 నిమిషాలు</td><td>కొందరి జవాబులు చదివించి ప్రశంసిస్తారు.</td><td>తమ జవాబులు చదువుతారు.</td></tr></tbody></table></div></section>
+ <section class="card"><h2>6. ప్రశ్నలు – ఆశించిన సమాధానాలు</h2><div class="qa"><strong>&#x27;లేడికి లేచిందే పరుగు&#x27; అంటే?</strong><br><span class="small">ఆశించిన సమాధానం: ఆలోచించకుండా వెంటనే పని మొదలుపెట్టడం.</span></div><div class="qa"><strong>గాలి ఏమని హితబోధ చేసింది?</strong><br><span class="small">ఆశించిన సమాధానం: ఎవరికీ సాయం చేయకపోతే నీకూ ఎవరూ సాయం చేయరు.</span></div><div class="qa"><strong>మేమే అమ్మతో ఏమన్నది?</strong><br><span class="small">ఆశించిన సమాధానం: ఇకపై అందరికీ సాయం చేస్తాను, నీ మాట వింటాను.</span></div></section>
+ <section class="card"><h2>7. బ్లాక్ బోర్డు పని</h2><div class="note">
+  <h3 style="text-align:center">మేమే మేకపిల్ల</h3><strong>జవాబు రాసే విధానం:</strong><br>ప్రశ్నలోని మాటలతో మొదలుపెట్టాలి • పూర్తి వాక్యాలు రాయాలి • పూర్ణ విరామం పెట్టాలి<hr><strong>నమూనా:</strong><ol><li>మేమే మేకపిల్లకు దారిలో ఏరు, మంట, గాలి ఎదురయ్యాయి.</li></ol></div></section>
+ <section class="card"><h2>8. మూల్యాంకనం</h2><ol><li>మేమేకి నీరు మొదట ఎందుకు సాయం చేయలేదు?</li><li>మీరు చేసిన ఒక సహాయం గురించి 3 వాక్యాలు రాయండి.</li></ol><p><strong>మూల్యాంకన విధానం:</strong> నోట్‌బుక్ దిద్దడం – వాక్య నిర్మాణం, విరామ చిహ్నాలు.</p></section>
+ <section class="card"><h2>9. ఇంటి పని</h2><ol><li>6వ ప్రశ్న – నేను చేసిన సహాయం – పూర్తి చేయండి.</li></ol></section>
+ <section class="card"><h2>10. ఉపాధ్యాయుని ప్రతిబింబం (Teacher Reflection)</h2><p>విద్యార్థులు పుస్తకం చూడకుండా సొంతమాటల్లో రాయగలిగారా?</p>
+  <p contenteditable="true" class="editable">ఇక్కడ ఉపాధ్యాయుని పరిశీలనలు, విద్యార్థుల అభ్యసన స్థాయి, తదుపరి చర్యలు రాయండి.</p></section>
+</div><div class="period" id="p8" data-n="8">
+ <div class="ptitle">పీరియడ్ 8 – సృజనాత్మకత (సంభాషణ) – ప్రశంస</div>
+ <section class="card"><h2>1. సాధారణ సమాచారం</h2><div class="meta">
+  <div><b>తరగతి</b>3వ తరగతి</div><div><b>విషయం</b>తెలుగు</div>
+  <div><b>పీరియడ్ సమయం</b><span contenteditable="true" class="editable">40 నిమిషాలు</span></div>
+  <div><b>పాఠం సంఖ్య</b>6 – మేమే మేకపిల్ల</div><div><b>పీరియడ్ సంఖ్య</b>8 / 12</div>
+  <div><b>బోధనా అంశం</b>సృజనాత్మకత (సంభాషణ) – ప్రశంస</div>
+  <div><b>సామర్థ్యం (CG)</b>CG-3, CG-1</div>
+  <div><b>తేదీ</b><span contenteditable="true" class="editable">__ / __ / ____</span></div>
+  <div><b>తరగతి గది</b><span contenteditable="true" class="editable">3వ తరగతి</span></div>
+ </div></section>
+ <section class="card"><h2>2. అభ్యసన లక్ష్యాలు</h2><p>పీరియడ్ ముగిసే సమయానికి విద్యార్థులు:</p><ol><li>రెండు పండ్ల మధ్య సంభాషణను ఊహించి రాస్తారు.</li><li>సంభాషణను జంటగా అభినయిస్తారు.</li><li>స్నేహితుని మంచి గుణాలను ప్రశంసిస్తారు.</li></ol></section>
+ <section class="card"><h2>3. బోధనాభ్యసన సామగ్రి (TLM)</h2><ul><li>జామ, నారింజ పండ్లు (నిజమైనవి లేదా బొమ్మలు)</li><li>పాఠ్యపుస్తకం – పేజీ 7</li><li>సంభాషణ నమూనా చార్టు</li></ul></section>
+ <section class="card"><h2>4. పూర్వజ్ఞాన పరిశీలన</h2><p>ఉపాధ్యాయుడు విద్యార్థులతో చిన్న సంభాషణ చేస్తారు.</p><ol><li>జామ, నారింజ రుచి ఎలా ఉంటుంది?</li><li>పండ్లు తింటే ఏమి లాభం?</li><li>మంచి పని చేసినవారిని ఎలా మెచ్చుకుంటాం?</li></ol>
+  <p class="small">విద్యార్థుల సమాధానాలను విని, వారి అనుభవాలతో పాఠ్యాంశాన్ని అనుసంధానించాలి.</p></section>
+ <section class="card"><h2>5. బోధనా – అభ్యసన ప్రక్రియ (40 నిమిషాలు)</h2><div class="table-scroll"><table>
+  <thead><tr><th>దశ</th><th>సమయం</th><th>ఉపాధ్యాయుని కృత్యాలు</th><th>విద్యార్థుల కృత్యాలు</th></tr></thead><tbody><tr><td>ప్రేరణ</td><td>5 నిమిషాలు</td><td>పండ్లు చూపించి వాటి గురించి అడుగుతారు.</td><td>తమకు తెలిసింది చెబుతారు.</td></tr><tr><td>నమూనా</td><td>7 నిమిషాలు</td><td>సంభాషణలో మొదటి మూడు మాటలు చదివి, ఎలా కొనసాగించాలో చూపిస్తారు.</td><td>విని అర్థం చేసుకుంటారు.</td></tr><tr><td>జంట పని</td><td>13 నిమిషాలు</td><td>జంటలుగా సంభాషణ పూర్తి చేయమంటారు.</td><td>జంటగా ఆలోచించి రాస్తారు.</td></tr><tr><td>అభినయం</td><td>8 నిమిషాలు</td><td>కొన్ని జంటలను ముందుకు పిలుస్తారు.</td><td>సంభాషణను అభినయిస్తారు.</td></tr><tr><td>ప్రశంస</td><td>7 నిమిషాలు</td><td>అమ్మానాన్నల మాట వినే స్నేహితుని ఎలా మెచ్చుకుంటారో అడుగుతారు.</td><td>ప్రశంసా వాక్యాలు చెప్పి రాస్తారు.</td></tr></tbody></table></div></section>
+ <section class="card"><h2>6. ప్రశ్నలు – ఆశించిన సమాధానాలు</h2><div class="qa"><strong>నారింజ హుషారుకు కారణం?</strong><br><span class="small">ఆశించిన సమాధానం: నాలో &#x27;సి&#x27; విటమిన్ ఎక్కువ, అందరూ ఇష్టంగా తింటారు.</span></div><div class="qa"><strong>జామ తన గురించి ఏమి చెప్పవచ్చు?</strong><br><span class="small">ఆశించిన సమాధానం: నాలో &#x27;సి&#x27; విటమిన్, పీచు ఉన్నాయి; తక్కువ ధరకే దొరుకుతాను.</span></div><div class="qa"><strong>స్నేహితుని ఎలా ప్రశంసిస్తారు?</strong><br><span class="small">ఆశించిన సమాధానం: నువ్వు అమ్మానాన్నల మాట వింటావు – నువ్వు మాకు ఆదర్శం, శభాష్!</span></div></section>
+ <section class="card"><h2>7. బ్లాక్ బోర్డు పని</h2><div class="note">
+  <h3 style="text-align:center">మేమే మేకపిల్ల</h3><strong>సంభాషణ రాసే విధానం:</strong><br>పాత్ర పేరు : మాటలు • ఒకరి తర్వాత ఒకరు<hr><strong>ప్రశంసా పదాలు:</strong><ol><li>శభాష్! • చాలా బాగుంది! • నువ్వు మాకు ఆదర్శం!</li></ol></div></section>
+ <section class="card"><h2>8. మూల్యాంకనం</h2><ol><li>జామ, నారింజ సంభాషణలో రెండు మాటలు చెప్పండి.</li><li>మీ స్నేహితుని ఒక మంచి గుణాన్ని ప్రశంసించండి.</li></ol><p><strong>మూల్యాంకన విధానం:</strong> జంట అభినయం, లిఖిత సంభాషణ పరిశీలన.</p></section>
+ <section class="card"><h2>9. ఇంటి పని</h2><ol><li>మామిడి, అరటి పండ్ల మధ్య సంభాషణ రాయండి.</li></ol></section>
+ <section class="card"><h2>10. ఉపాధ్యాయుని ప్రతిబింబం (Teacher Reflection)</h2><p>సంభాషణ ఊహించి రాయడంలో విద్యార్థుల సృజనాత్మకత ఎలా ఉంది?</p>
+  <p contenteditable="true" class="editable">ఇక్కడ ఉపాధ్యాయుని పరిశీలనలు, విద్యార్థుల అభ్యసన స్థాయి, తదుపరి చర్యలు రాయండి.</p></section>
+</div><div class="period" id="p9" data-n="9">
+ <div class="ptitle">పీరియడ్ 9 – భాషాంశాలు – సర్వనామాలు</div>
+ <section class="card"><h2>1. సాధారణ సమాచారం</h2><div class="meta">
+  <div><b>తరగతి</b>3వ తరగతి</div><div><b>విషయం</b>తెలుగు</div>
+  <div><b>పీరియడ్ సమయం</b><span contenteditable="true" class="editable">40 నిమిషాలు</span></div>
+  <div><b>పాఠం సంఖ్య</b>6 – మేమే మేకపిల్ల</div><div><b>పీరియడ్ సంఖ్య</b>9 / 12</div>
+  <div><b>బోధనా అంశం</b>భాషాంశాలు – సర్వనామాలు</div>
+  <div><b>సామర్థ్యం (CG)</b>CG-3</div>
+  <div><b>తేదీ</b><span contenteditable="true" class="editable">__ / __ / ____</span></div>
+  <div><b>తరగతి గది</b><span contenteditable="true" class="editable">3వ తరగతి</span></div>
+ </div></section>
+ <section class="card"><h2>2. అభ్యసన లక్ష్యాలు</h2><p>పీరియడ్ ముగిసే సమయానికి విద్యార్థులు:</p><ol><li>సర్వనామం అంటే ఏమిటో చెబుతారు.</li><li>నామవాచకానికి బదులు సరైన సర్వనామం వాడతారు.</li><li>సర్వనామాలతో సొంత వాక్యాలు రాస్తారు.</li><li>సర్వనామం కాని పదాన్ని గుర్తిస్తారు.</li></ol></section>
+ <section class="card"><h2>3. బోధనాభ్యసన సామగ్రి (TLM)</h2><ul><li>సర్వనామ కార్డులు: నేను, మేము, నువ్వు, మీరు, అతడు, ఆమె, వారు, అది, అవి</li><li>పాఠ్యపుస్తకం – పేజీ 7</li><li>వర్క్‌షీట్</li></ul></section>
+ <section class="card"><h2>4. పూర్వజ్ఞాన పరిశీలన</h2><p>ఉపాధ్యాయుడు విద్యార్థులతో చిన్న సంభాషణ చేస్తారు.</p><ol><li>మీ పేరు చెప్పకుండా మీ గురించి ఎలా చెబుతారు?</li><li>అబ్బాయి గురించి చెప్పేటప్పుడు ఏ పదం వాడతాం?</li><li>కప్పలు – వీటిని ఏమని పిలుస్తాం?</li></ol>
+  <p class="small">విద్యార్థుల సమాధానాలను విని, వారి అనుభవాలతో పాఠ్యాంశాన్ని అనుసంధానించాలి.</p></section>
+ <section class="card"><h2>5. బోధనా – అభ్యసన ప్రక్రియ (40 నిమిషాలు)</h2><div class="table-scroll"><table>
+  <thead><tr><th>దశ</th><th>సమయం</th><th>ఉపాధ్యాయుని కృత్యాలు</th><th>విద్యార్థుల కృత్యాలు</th></tr></thead><tbody><tr><td>ప్రేరణ</td><td>5 నిమిషాలు</td><td>&#x27;రవి బడికి వచ్చాడు. రవి చదివాడు. రవి ఆడాడు.&#x27; అని చెప్పి, ఏమి ఇబ్బంది అని అడుగుతారు.</td><td>&#x27;రవి&#x27; పదం మళ్ళీ మళ్ళీ వచ్చిందని గమనిస్తారు.</td></tr><tr><td>వివరణ</td><td>8 నిమిషాలు</td><td>పేరుకు బదులు వాడే పదాలే సర్వనామాలు అని ఉదాహరణలతో చెబుతారు.</td><td>కార్డులు చదువుతారు.</td></tr><tr><td>ఖాళీలు పూరించడం</td><td>10 నిమిషాలు</td><td>అ) కృత్యం చేయిస్తారు.</td><td>సరైన సర్వనామంతో ఖాళీలు నింపుతారు.</td></tr><tr><td>సొంత వాక్యాలు</td><td>12 నిమిషాలు</td><td>ఆ) కృత్యం – సొంత వాక్యాలు రాయిస్తారు.</td><td>వాక్యాలు రాసి చదువుతారు.</td></tr><tr><td>మూల్యాంకనం</td><td>5 నిమిషాలు</td><td>ఇ) కృత్యం అడుగుతారు.</td><td>సర్వనామం కానిది గుర్తిస్తారు.</td></tr></tbody></table></div></section>
+ <section class="card"><h2>6. ప్రశ్నలు – ఆశించిన సమాధానాలు</h2><div class="qa"><strong>గిరి పోటీలో పాల్గొన్నాడు. ___ బహుమతి పొందాడు.</strong><br><span class="small">ఆశించిన సమాధానం: అతడు</span></div><div class="qa"><strong>చెరువులో కప్పలు ఉన్నాయి. ___ అరుస్తున్నాయి.</strong><br><span class="small">ఆశించిన సమాధానం: అవి</span></div><div class="qa"><strong>మనం, వీరు, నీరు, అది – సర్వనామం కానిది?</strong><br><span class="small">ఆశించిన సమాధానం: నీరు</span></div></section>
+ <section class="card"><h2>7. బ్లాక్ బోర్డు పని</h2><div class="note">
+  <h3 style="text-align:center">మేమే మేకపిల్ల</h3><strong>సర్వనామం:</strong><br>నామవాచకానికి (పేరుకు) బదులు వాడే పదం<hr><strong>ఉదాహరణలు:</strong><ol><li>నేను, మేము, మనం, నువ్వు, మీరు</li><li>అతడు, ఆమె, వారు, అది, అవి</li></ol></div></section>
+ <section class="card"><h2>8. మూల్యాంకనం</h2><ol><li>సర్వనామం అంటే ఏమిటి?</li><li>&#x27;ఆమె&#x27;, &#x27;వారు&#x27; పదాలతో వాక్యాలు రాయండి.</li><li>దీప్తి తోటకి వెళ్ళింది. ___ పూలు కోసింది.</li></ol><p><strong>మూల్యాంకన విధానం:</strong> వర్క్‌షీట్ ద్వారా లిఖిత మూల్యాంకనం.</p></section>
+ <section class="card"><h2>9. ఇంటి పని</h2><ol><li>5 సర్వనామాలతో 5 వాక్యాలు రాయండి.</li></ol></section>
+ <section class="card"><h2>10. ఉపాధ్యాయుని ప్రతిబింబం (Teacher Reflection)</h2><p>విద్యార్థులు నామవాచకం, సర్వనామం తేడా గుర్తించగలిగారా?</p>
+  <p contenteditable="true" class="editable">ఇక్కడ ఉపాధ్యాయుని పరిశీలనలు, విద్యార్థుల అభ్యసన స్థాయి, తదుపరి చర్యలు రాయండి.</p></section>
+</div><div class="period" id="p10" data-n="10">
+ <div class="ptitle">పీరియడ్ 10 – ప్రాజెక్ట్ పని – దీనిని కూడా తెలుసుకోండి (వన్యప్రాణి సంరక్షణ)</div>
+ <section class="card"><h2>1. సాధారణ సమాచారం</h2><div class="meta">
+  <div><b>తరగతి</b>3వ తరగతి</div><div><b>విషయం</b>తెలుగు</div>
+  <div><b>పీరియడ్ సమయం</b><span contenteditable="true" class="editable">40 నిమిషాలు</span></div>
+  <div><b>పాఠం సంఖ్య</b>6 – మేమే మేకపిల్ల</div><div><b>పీరియడ్ సంఖ్య</b>10 / 12</div>
+  <div><b>బోధనా అంశం</b>ప్రాజెక్ట్ పని – దీనిని కూడా తెలుసుకోండి (వన్యప్రాణి సంరక్షణ)</div>
+  <div><b>సామర్థ్యం (CG)</b>CG-5</div>
+  <div><b>తేదీ</b><span contenteditable="true" class="editable">__ / __ / ____</span></div>
+  <div><b>తరగతి గది</b><span contenteditable="true" class="editable">3వ తరగతి</span></div>
+ </div></section>
+ <section class="card"><h2>2. అభ్యసన లక్ష్యాలు</h2><p>పీరియడ్ ముగిసే సమయానికి విద్యార్థులు:</p><ol><li>గ్రంథాలయం నుండి జంతువుల కథల పుస్తకాలు ఎంచుకుంటారు.</li><li>కథ పేరు, పుస్తకం, నీతి పట్టిక తయారు చేస్తారు.</li><li>జంతువులను ఎందుకు రక్షించాలో చెబుతారు.</li><li>వన్యప్రాణి సంరక్షణ చట్టం గురించి తెలుసుకుంటారు.</li></ol></section>
+ <section class="card"><h2>3. బోధనాభ్యసన సామగ్రి (TLM)</h2><ul><li>గ్రంథాలయ పుస్తకాలు (పంచతంత్రం, ఈసప్ కథలు, చందమామ)</li><li>ప్రాజెక్ట్ పట్టిక నమూనా</li><li>పాఠ్యపుస్తకం – పేజీ 8 చిత్రం</li><li>చార్టు పేపర్</li></ul></section>
+ <section class="card"><h2>4. పూర్వజ్ఞాన పరిశీలన</h2><p>ఉపాధ్యాయుడు విద్యార్థులతో చిన్న సంభాషణ చేస్తారు.</p><ol><li>మీకు తెలిసిన జంతువుల కథ చెప్పండి.</li><li>అడవిలో జంతువులను ఎవరైనా వేటాడితే ఏమవుతుంది?</li><li>జూ పార్కులో ఏ జంతువులు చూశారు?</li></ol>
+  <p class="small">విద్యార్థుల సమాధానాలను విని, వారి అనుభవాలతో పాఠ్యాంశాన్ని అనుసంధానించాలి.</p></section>
+ <section class="card"><h2>5. బోధనా – అభ్యసన ప్రక్రియ (40 నిమిషాలు)</h2><div class="table-scroll"><table>
+  <thead><tr><th>దశ</th><th>సమయం</th><th>ఉపాధ్యాయుని కృత్యాలు</th><th>విద్యార్థుల కృత్యాలు</th></tr></thead><tbody><tr><td>ప్రేరణ</td><td>5 నిమిషాలు</td><td>ఒక చిన్న జంతువుల కథ (సింహం–ఎలుక) చెబుతారు.</td><td>కథ విని నీతి చెబుతారు.</td></tr><tr><td>పుస్తక ఎంపిక</td><td>10 నిమిషాలు</td><td>గ్రంథాలయ పుస్తకాలు జట్లకు ఇస్తారు.</td><td>కథ ఎంచుకుని చదువుతారు.</td></tr><tr><td>పట్టిక తయారీ</td><td>10 నిమిషాలు</td><td>కథ పేరు, పుస్తకం, పాత్రలు, నీతి పట్టిక నింపమంటారు.</td><td>పట్టిక నింపుతారు.</td></tr><tr><td>వన్యప్రాణి సంరక్షణ</td><td>10 నిమిషాలు</td><td>పేజీ 8 చిత్రం చూపించి, చట్టం – 1972 గురించి చర్చిస్తారు.</td><td>జంతువులను రక్షించే మార్గాలు చెబుతారు.</td></tr><tr><td>పునశ్చరణ</td><td>5 నిమిషాలు</td><td>జంతువులను ఎందుకు రక్షించాలో అడుగుతారు.</td><td>సమాధానాలు చెబుతారు.</td></tr></tbody></table></div></section>
+ <section class="card"><h2>6. ప్రశ్నలు – ఆశించిన సమాధానాలు</h2><div class="qa"><strong>జంతువులను ఎందుకు రక్షించాలి?</strong><br><span class="small">ఆశించిన సమాధానం: ప్రకృతిలో సమతుల్యత కాపాడడానికి.</span></div><div class="qa"><strong>వన్యప్రాణి సంరక్షణ చట్టం ఎప్పుడు వచ్చింది?</strong><br><span class="small">ఆశించిన సమాధానం: 1972లో.</span></div><div class="qa"><strong>ఈ చట్టం ప్రకారం ఏది నేరం?</strong><br><span class="small">ఆశించిన సమాధానం: అంతరించిపోతున్న జంతువులను వేటాడటం, వాటి శరీర భాగాలు రవాణా చేయడం.</span></div></section>
+ <section class="card"><h2>7. బ్లాక్ బోర్డు పని</h2><div class="note">
+  <h3 style="text-align:center">మేమే మేకపిల్ల</h3><strong>ప్రాజెక్ట్ పట్టిక:</strong><br>కథ పేరు • పుస్తకం • పాత్రలు • నీతి<hr><strong>వన్యప్రాణి సంరక్షణ:</strong><ol><li>జంతువులు ప్రకృతికి అవసరం.</li><li>వేటాడటం నేరం – చట్టం 1972.</li></ol></div></section>
+ <section class="card"><h2>8. మూల్యాంకనం</h2><ol><li>మీ జట్టు ఎంచుకున్న కథ, దాని నీతి చెప్పండి.</li><li>జంతువులను రక్షించడానికి మనం ఏమి చేయగలం?</li></ol><p><strong>మూల్యాంకన విధానం:</strong> ప్రాజెక్ట్ పట్టిక, జట్టు ప్రదర్శన.</p></section>
+ <section class="card"><h2>9. ఇంటి పని</h2><ol><li>ప్రాజెక్ట్ చార్టుపై కథ బొమ్మలు అతికించి తీసుకురండి.</li><li>గ్రంథాలయం నుండి ఒక కథల పుస్తకం ఇంటికి తీసుకెళ్ళి చదవండి.</li></ol></section>
+ <section class="card"><h2>10. ఉపాధ్యాయుని ప్రతిబింబం (Teacher Reflection)</h2><p>విద్యార్థులు గ్రంథాలయ పుస్తకాలు చదవడంలో ఆసక్తి చూపారా?</p>
+  <p contenteditable="true" class="editable">ఇక్కడ ఉపాధ్యాయుని పరిశీలనలు, విద్యార్థుల అభ్యసన స్థాయి, తదుపరి చర్యలు రాయండి.</p></section>
+</div><div class="period" id="p11" data-n="11">
+ <div class="ptitle">పీరియడ్ 11 – పాడుదాం (తెలుగు తోట) – కవి పరిచయం</div>
+ <section class="card"><h2>1. సాధారణ సమాచారం</h2><div class="meta">
+  <div><b>తరగతి</b>3వ తరగతి</div><div><b>విషయం</b>తెలుగు</div>
+  <div><b>పీరియడ్ సమయం</b><span contenteditable="true" class="editable">40 నిమిషాలు</span></div>
+  <div><b>పాఠం సంఖ్య</b>6 – మేమే మేకపిల్ల</div><div><b>పీరియడ్ సంఖ్య</b>11 / 12</div>
+  <div><b>బోధనా అంశం</b>పాడుదాం (తెలుగు తోట) – కవి పరిచయం</div>
+  <div><b>సామర్థ్యం (CG)</b>CG-1, CG-2</div>
+  <div><b>తేదీ</b><span contenteditable="true" class="editable">__ / __ / ____</span></div>
+  <div><b>తరగతి గది</b><span contenteditable="true" class="editable">3వ తరగతి</span></div>
+ </div></section>
+ <section class="card"><h2>2. అభ్యసన లక్ష్యాలు</h2><p>పీరియడ్ ముగిసే సమయానికి విద్యార్థులు:</p><ol><li>గేయాన్ని రాగయుక్తంగా, లయబద్ధంగా పాడతారు.</li><li>గేయ భావాన్ని సొంతమాటల్లో చెబుతారు.</li><li>కవి కందుకూరి రామభద్రరావు గురించి తెలుసుకుంటారు.</li></ol></section>
+ <section class="card"><h2>3. బోధనాభ్యసన సామగ్రి (TLM)</h2><ul><li>పాఠ్యపుస్తకం – పేజీ 9</li><li>గేయ చార్టు (పుస్తకం నుండి రాసినది)</li><li>తోట, పూల చిత్రాలు</li></ul></section>
+ <section class="card"><h2>4. పూర్వజ్ఞాన పరిశీలన</h2><p>ఉపాధ్యాయుడు విద్యార్థులతో చిన్న సంభాషణ చేస్తారు.</p><ol><li>మీకు తెలిసిన తెలుగు పాట పాడండి.</li><li>తోటలో ఏమేమి ఉంటాయి?</li><li>తెలుగు మన మాతృభాష కదా – దానిని ఎలా గౌరవిస్తాం?</li></ol>
+  <p class="small">విద్యార్థుల సమాధానాలను విని, వారి అనుభవాలతో పాఠ్యాంశాన్ని అనుసంధానించాలి.</p></section>
+ <section class="card"><h2>5. బోధనా – అభ్యసన ప్రక్రియ (40 నిమిషాలు)</h2><div class="table-scroll"><table>
+  <thead><tr><th>దశ</th><th>సమయం</th><th>ఉపాధ్యాయుని కృత్యాలు</th><th>విద్యార్థుల కృత్యాలు</th></tr></thead><tbody><tr><td>ప్రేరణ</td><td>5 నిమిషాలు</td><td>తోట చిత్రం చూపించి వర్ణించమంటారు.</td><td>తోటలోని పూలు, మొక్కల గురించి చెబుతారు.</td></tr><tr><td>ఆదర్శ గానం</td><td>7 నిమిషాలు</td><td>గేయాన్ని రాగయుక్తంగా పాడతారు.</td><td>శ్రద్ధగా వింటారు.</td></tr><tr><td>అనుకరణ గానం</td><td>13 నిమిషాలు</td><td>పంక్తి పంక్తిగా పాడిస్తారు; చప్పట్లతో లయ నేర్పుతారు.</td><td>అనుసరిస్తూ పాడతారు.</td></tr><tr><td>భావం</td><td>8 నిమిషాలు</td><td>తెలుగు భాషను తోటతో ఎందుకు పోల్చారో చర్చిస్తారు.</td><td>భావం సొంతమాటల్లో చెబుతారు.</td></tr><tr><td>కవి పరిచయం</td><td>7 నిమిషాలు</td><td>కందుకూరి రామభద్రరావు (1905–1976) గురించి చెబుతారు.</td><td>కవి పేరు, రచనలు రాసుకుంటారు.</td></tr></tbody></table></div></section>
+ <section class="card"><h2>6. ప్రశ్నలు – ఆశించిన సమాధానాలు</h2><div class="qa"><strong>ఈ గేయం రాసినవారు ఎవరు?</strong><br><span class="small">ఆశించిన సమాధానం: కందుకూరి రామభద్రరావు.</span></div><div class="qa"><strong>కవి తెలుగు భాషను దేనితో పోల్చారు?</strong><br><span class="small">ఆశించిన సమాధానం: అందమైన తోటతో.</span></div><div class="qa"><strong>కవి రచనలు రెండు చెప్పండి.</strong><br><span class="small">ఆశించిన సమాధానం: లేమొగ్గ, తరంగిణి (గేయమంజరి).</span></div></section>
+ <section class="card"><h2>7. బ్లాక్ బోర్డు పని</h2><div class="note">
+  <h3 style="text-align:center">మేమే మేకపిల్ల</h3><strong>గేయం:</strong><br>తెలుగు తోట – కందుకూరి రామభద్రరావు<hr><strong>కవి రచనలు:</strong><ol><li>లేమొగ్గ</li><li>తరంగిణి</li><li>గేయమంజరి</li></ol></div></section>
+ <section class="card"><h2>8. మూల్యాంకనం</h2><ol><li>గేయంలోని రెండు పంక్తులు పాడండి.</li><li>గేయ భావం రెండు వాక్యాల్లో చెప్పండి.</li></ol><p><strong>మూల్యాంకన విధానం:</strong> జట్లుగా గానం, మౌఖిక భావ వివరణ.</p></section>
+ <section class="card"><h2>9. ఇంటి పని</h2><ol><li>గేయాన్ని కంఠస్థం చేయండి.</li><li>కవి పరిచయం రాయండి.</li></ol></section>
+ <section class="card"><h2>10. ఉపాధ్యాయుని ప్రతిబింబం (Teacher Reflection)</h2><p>విద్యార్థులు లయ తప్పకుండా పాడగలిగారా?</p>
+  <p contenteditable="true" class="editable">ఇక్కడ ఉపాధ్యాయుని పరిశీలనలు, విద్యార్థుల అభ్యసన స్థాయి, తదుపరి చర్యలు రాయండి.</p></section>
+</div><div class="period" id="p12" data-n="12">
+ <div class="ptitle">పీరియడ్ 12 – చదువుదాం (మేకపోతు గాంభీర్యం) – నేనేమి నేర్చుకున్నాను?</div>
+ <section class="card"><h2>1. సాధారణ సమాచారం</h2><div class="meta">
+  <div><b>తరగతి</b>3వ తరగతి</div><div><b>విషయం</b>తెలుగు</div>
+  <div><b>పీరియడ్ సమయం</b><span contenteditable="true" class="editable">40 నిమిషాలు</span></div>
+  <div><b>పాఠం సంఖ్య</b>6 – మేమే మేకపిల్ల</div><div><b>పీరియడ్ సంఖ్య</b>12 / 12</div>
+  <div><b>బోధనా అంశం</b>చదువుదాం (మేకపోతు గాంభీర్యం) – నేనేమి నేర్చుకున్నాను?</div>
+  <div><b>సామర్థ్యం (CG)</b>CG-2, CG-5</div>
+  <div><b>తేదీ</b><span contenteditable="true" class="editable">__ / __ / ____</span></div>
+  <div><b>తరగతి గది</b><span contenteditable="true" class="editable">3వ తరగతి</span></div>
+ </div></section>
+ <section class="card"><h2>2. అభ్యసన లక్ష్యాలు</h2><p>పీరియడ్ ముగిసే సమయానికి విద్యార్థులు:</p><ol><li>అదనపు పాఠాన్ని స్వతంత్రంగా చదువుతారు.</li><li>&#x27;మేకపోతు గాంభీర్యం&#x27; అర్థం చెబుతారు.</li><li>పాఠం మొత్తంపై స్వీయ మూల్యాంకనం చేసుకుంటారు.</li><li>తమ అభ్యసనలో లోపాలను గుర్తిస్తారు.</li></ol></section>
+ <section class="card"><h2>3. బోధనాభ్యసన సామగ్రి (TLM)</h2><ul><li>పాఠ్యపుస్తకం – పేజీ 10, 11</li><li>గుహ, సింహం, మేక చిత్రం</li><li>స్వీయ మూల్యాంకన పట్టిక</li></ul></section>
+ <section class="card"><h2>4. పూర్వజ్ఞాన పరిశీలన</h2><p>ఉపాధ్యాయుడు విద్యార్థులతో చిన్న సంభాషణ చేస్తారు.</p><ol><li>భయం వేసినప్పుడు మీరు ఏమి చేస్తారు?</li><li>సింహాన్ని మేక ఓడించగలదా?</li><li>ఈ పాఠంలో మీకు నచ్చింది ఏమిటి?</li></ol>
+  <p class="small">విద్యార్థుల సమాధానాలను విని, వారి అనుభవాలతో పాఠ్యాంశాన్ని అనుసంధానించాలి.</p></section>
+ <section class="card"><h2>5. బోధనా – అభ్యసన ప్రక్రియ (40 నిమిషాలు)</h2><div class="table-scroll"><table>
+  <thead><tr><th>దశ</th><th>సమయం</th><th>ఉపాధ్యాయుని కృత్యాలు</th><th>విద్యార్థుల కృత్యాలు</th></tr></thead><tbody><tr><td>ప్రేరణ</td><td>4 నిమిషాలు</td><td>గుహ చిత్రం చూపించి ఊహింపజేస్తారు.</td><td>ఏమి జరుగుతుందో ఊహిస్తారు.</td></tr><tr><td>మౌన పఠనం</td><td>10 నిమిషాలు</td><td>&#x27;మేకపోతు గాంభీర్యం&#x27; మౌనంగా చదవమంటారు.</td><td>స్వతంత్రంగా చదువుతారు.</td></tr><tr><td>చర్చ</td><td>8 నిమిషాలు</td><td>కథ, నీతి, శీర్షిక అర్థం చర్చిస్తారు.</td><td>సమాధానాలు చెబుతారు.</td></tr><tr><td>నేనేమి నేర్చుకున్నాను</td><td>13 నిమిషాలు</td><td>అ–ఉ కృత్యాలు సొంతంగా చేయిస్తారు.</td><td>కృత్యాలు పూర్తి చేస్తారు.</td></tr><tr><td>పునర్బోధన</td><td>5 నిమిషాలు</td><td>కష్టపడిన అంశాలు మళ్ళీ వివరిస్తారు.</td><td>సందేహాలు అడుగుతారు.</td></tr></tbody></table></div></section>
+ <section class="card"><h2>6. ప్రశ్నలు – ఆశించిన సమాధానాలు</h2><div class="qa"><strong>సింహం ఎందుకు పారిపోయింది?</strong><br><span class="small">ఆశించిన సమాధానం: 99 సింహాలను చంపానని మేకపోతు గంభీరంగా చెప్పడంతో భయపడి.</span></div><div class="qa"><strong>&#x27;మేకపోతు గాంభీర్యం&#x27; అంటే?</strong><br><span class="small">ఆశించిన సమాధానం: లోపల భయం ఉన్నా పైకి ధైర్యం నటించడం.</span></div><div class="qa"><strong>&#x27;కాగు&#x27; అంటే అర్థం?</strong><br><span class="small">ఆశించిన సమాధానం: పెద్దబిందె.</span></div></section>
+ <section class="card"><h2>7. బ్లాక్ బోర్డు పని</h2><div class="note">
+  <h3 style="text-align:center">మేమే మేకపిల్ల</h3><strong>మేకపోతు గాంభీర్యం:</strong><br>లోపల భయం – పైకి ధైర్యం<hr><strong>నీతి:</strong><ol><li>ఆపదలో ధైర్యం, ఉపాయం ఉంటే తప్పించుకోవచ్చు.</li></ol></div></section>
+ <section class="card"><h2>8. మూల్యాంకనం</h2><ol><li>నీళ్ళకు ఎవరిపై జాలి వేసింది?</li><li>నిప్పు మేమేతో ఏమన్నది?</li><li>గాలి సాయం చేయకపోతే ఏమయ్యేది?</li><li>తరగతిలో సాయం చేసే స్నేహితుని ప్రశంసించండి.</li></ol><p><strong>మూల్యాంకన విధానం:</strong> &#x27;నేనేమి నేర్చుకున్నాను?&#x27; లిఖిత కృత్యాలు; వెనుకబడిన వారికి పునర్బోధన.</p></section>
+ <section class="card"><h2>9. ఇంటి పని</h2><ol><li>&#x27;మేకపోతు గాంభీర్యం&#x27; కథను ఇంట్లో చెప్పండి.</li><li>పాఠంలో మీకు నచ్చిన సన్నివేశం బొమ్మ గీయండి.</li></ol></section>
+ <section class="card"><h2>10. ఉపాధ్యాయుని ప్రతిబింబం (Teacher Reflection)</h2><p>పాఠం మొత్తంపై ఎంతమంది అభ్యసన ఫలితాలు సాధించారు? ఎవరికి పునర్బోధన అవసరం?</p>
+  <p contenteditable="true" class="editable">ఇక్కడ ఉపాధ్యాయుని పరిశీలనలు, విద్యార్థుల అభ్యసన స్థాయి, తదుపరి చర్యలు రాయండి.</p></section>
+</div>
+</main>
+<script>
+let editing=false;
+function show(n){document.body.classList.remove('all');document.getElementById('allbtn').textContent='అన్ని పీరియడ్లు చూపించు';
+ document.querySelectorAll('.period').forEach(d=>d.classList.toggle('on',+d.dataset.n===n));
+ document.getElementById('sel').value=n;document.getElementById('p'+n).scrollIntoView({behavior:'smooth'});}
+function toggleAll(){const on=document.body.classList.toggle('all');
+ document.getElementById('allbtn').textContent=on?'ఒక్కో పీరియడ్ చూపించు':'అన్ని పీరియడ్లు చూపించు';}
+function toggleEdit(){editing=!editing;
+ document.querySelectorAll('.card p,.card li,.card td,.qa,.note,[contenteditable]').forEach(el=>el.contentEditable=editing?"true":"false");
+ document.getElementById('status').textContent=editing?'సవరణ ఆన్ – మార్చాల్సిన వాక్యంపై నొక్కి సవరించండి':'';}
+document.querySelectorAll('[contenteditable]').forEach(el=>el.contentEditable="false");
+show(1);window.scrollTo(0,0);
+</script>
+</body></html>
