@@ -2,11 +2,11 @@
 # ప్రతి పాఠం ch/<పేరు>.py: S (సబ్జెక్టు), BK (పుస్తకం కీ, లేకపోతే S), PAGES (PDF పరిధి), L (పాఠం dict),
 # SEC = [(PDF పేజీ, శీర్షిక, [జవాబులు])]  – ' | ' తో విడగొట్టిన వరుసలు వేర్వేరు జవాబులుగా.
 # పుస్తకాలు (యూజర్ పంపిన సెమ్-2 PDFలు, 110dpi JPEG): ముద్రిత పుట = PR[key](PDF పేజీ)
-#   tel (తెలుగు లోగిలి): ముద్రిత = PDF − 10 • eng (Blossoms-1): ముద్రిత = PDF + 58 • mat (గణితంతో గమ్మత్తు): PDF 1–5 = 129–133, తర్వాత తెలుగు పేజీలు మాత్రమే, ముద్రిత = 2×PDF + 122
+#   tel (తెలుగు లోగిలి): ముద్రిత = PDF − 10 • eng (Blossoms-1): ముద్రిత = PDF + 58 • mat (గణితంతో గమ్మత్తు): PDF 1–5 = 129–133, తర్వాత తెలుగు (బేసి) పేజీలు మాత్రమే, ముద్రిత = 2×PDF + 123
 import json, glob, importlib.util, os
 H = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.abspath(f'{H}/../..')
 BOOK = {'tel': 'Class1_Telugu_Textbook_Sem2.pdf', 'eng': 'Class1_English_Textbook_Sem2.pdf', 'mat': 'Class1_Maths_Textbook_Sem2_Telugu.pdf'}
-PR = {'tel': lambda p: p - 10, 'eng': lambda p: p + 58, 'mat': lambda p: p + 128 if p <= 5 else 2 * p + 122}
+PR = {'tel': lambda p: p - 10, 'eng': lambda p: p + 58, 'mat': lambda p: p + 128 if p <= 5 else 2 * p + 123}
 M = '⁂'  # జవాబుల దాపరికం (యాప్ unz: chr−7)
 def Z(x):
     if not isinstance(x, str) or x.startswith(M) or any(ord(c) >= 0xCFF0 for c in x): return x
