@@ -1,0 +1,56 @@
+S = 'eng'
+PAGES = (52, 59)
+L = {
+ "id": "en11", "no": 11, "t": "6.1 Days of the Week", "m": [2], "ty": "Rhyme & Activities", "th": "Calendar",
+ "by": "Blossoms-1 English Reader Sem-2 – Unit 6: Calendar (pages 110–117)",
+ "sum": "A Teddy bear eats a different fruit on each of the seven days (mango, banana, orange, apple, pineapple, grapes, mixed fruits). Children recite “Days of the Week” (there are seven days in a week – Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday), say ‘Today is …’, answer which day comes before/after/between, trace capital and small letters with words, complete day names (Sun + day = Sunday), clap syllables (Sun-day, Sa-tur-day), practise ‘sh’ words (ship, shop, shoe, shell, sheep, shirt, fish, dish) and solve fruit/vegetable riddles.",
+ "te": "టెడ్డీ వారంలో ఏడు రోజులు ఏడు రకాల పండ్లు తింటుంది. “Days of the Week” గేయం – వారానికి ఏడు రోజులు: Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday. ‘Today is …’ అని చెప్పడం, ముందు/తర్వాత/మధ్య రోజు, పెద్ద–చిన్న అక్షరాలు, ‘sh’ పదాలు (ship, fish), పొడుపు కథలు (orange, coconut, onion, grapes).",
+ "pts": [
+  "1. There are seven days in a week: Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday.",
+  "2. Teddy's fruits: Day 1 mango, Day 2 banana, Day 3 orange, Day 4 apple, Day 5 pineapple, Day 6 grapes, Day 7 mixed fruits.",
+  "3. Today is Monday. Yesterday was Sunday. Tomorrow is Tuesday.",
+  "4. After Monday – Tuesday. Before Friday – Thursday. Between Wednesday and Friday – Thursday.",
+  "5. Sunday is a holiday for school.",
+  "6. Day names = short name + day: Sun-day, Mon-day, Tues-day, Wednes-day, Thurs-day, Fri-day, Satur-day.",
+  "7. Syllables: Sun-day (2), Sa-tur-day (3), Wed-nes-day (3).",
+  "8. ‘sh’ words: ship, shop, shoe, shell, sheep, shirt (sh at start); fish, dish (sh at end).",
+  "9. Riddles: orange (name = colour), coconut (hard brown outside, soft white inside), onion (makes you cry), grapes (green/purple, in a bunch)."],
+ "w": [["week", "వారం"], ["day", "రోజు"], ["today", "ఈరోజు"], ["yesterday", "నిన్న"], ["tomorrow", "రేపు"], ["before", "ముందు"], ["after", "తర్వాత"],
+       ["holiday", "సెలవు"], ["seven", "ఏడు"], ["Sunday", "ఆదివారం"], ["Monday", "సోమవారం"], ["Tuesday", "మంగళవారం"], ["Wednesday", "బుధవారం"],
+       ["Thursday", "గురువారం"], ["Friday", "శుక్రవారం"], ["Saturday", "శనివారం"]],
+ "gr": {"t": "Today is …; before / after / between; sh words",
+        "p": ["Today is Friday. Yesterday was Thursday.", "Which day comes after Monday? – Tuesday.", "Day names begin with capital letters: Sunday, Monday …", "ship, shop, shoe – fish, dish"]},
+ "qa": [["How many days are there in a week?", "Seven."], ["Which day comes after Monday?", "Tuesday."],
+        ["Which day comes before Friday?", "Thursday."], ["Which day is between Wednesday and Friday?", "Thursday."],
+        ["What does Teddy eat on day 2?", "Banana."], ["On which day does Teddy eat grapes?", "Day 6."]],
+ "act": "Recite the rhyme with clapping. Each day say ‘Today is …’ looking at the day wheel. Draw a train with seven boxes and write the days in order. Make your own riddle about a fruit.",
+ "kn": "In Telugu, the days are named after the Sun (ఆది), Moon (సోమ), Mars (మంగళ), Mercury (బుధ), Jupiter (గురు), Venus (శుక్ర) and Saturn (శని).",
+ "qz": [["How many days are there in a week?", "7", "5", "6", "10"],
+        ["If today is Friday, yesterday was …", "Thursday", "Wednesday", "Saturday", "Sunday"],
+        ["Which two words have ‘sh’ at the END?", "fish and dish", "ship and shop", "ship and fish", "shoe and shell"],
+        ["I am a fruit. My name is my colour. Who am I?", "orange", "apple", "banana", "grapes"],
+        ["Monday, Tuesday, ___, Thursday", "Wednesday", "Friday", "Sunday", "Saturday"],
+        ["Saturday in three parts", "Sa-tur-day", "Satur-d-ay", "S-aturday", "Sat-ur-da-y"],
+        ["Which day comes after Monday?", "Tuesday", "Sunday", "Friday", "Thursday"],
+        ["Which day is between Wednesday and Friday?", "Thursday", "Tuesday", "Saturday", "Monday"],
+        ["Teddy eats grapes on …", "Day 6", "Day 1", "Day 3", "Day 4"],
+        ["Hard and brown outside, soft and white inside", "coconut", "onion", "mango", "grapes"],
+        ["If you cut me, I make you cry.", "onion", "tomato", "potato", "carrot"],
+        ["The school holiday is usually on …", "Sunday", "Monday", "Wednesday", "Friday"]],
+ "wb": {"mis": ["Days begin with capital letters", "Wednesday spelling (W-e-d-n-e-s-d-a-y)"]},
+}
+SEC = [
+ (52, "Let us Interact – Teddy's fruits", [
+  "1. A Teddy bear walking with a bag, and fruits for seven days. | 2. There are seven days. | 3. On day 2 Teddy eats a banana. | 4. Yes, Teddy eats a mango on day 1. | 5. On day 6 (grapes). | 6. On day 4 Teddy eats an apple. | 7. Day 7 is a holiday (Sunday), so Teddy has more time and eats mixed fruits. | 8. I eat rice, dal, vegetables, milk daily. | 9. On holidays I eat special food like biryani/sweets. (own answer) | 10. On Sundays and festivals."]),
+ (53, "Let us Recite – Days of the Week", [
+  "Rhyme: There are seven days in a week – Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday.",
+  "1. Today is ___ (say today's day). | 2. Seven days. | 3. Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday. | 4. Tuesday. | 5. Thursday. | 6. Thursday. | 7. Sunday."]),
+ (54, "Let us Speak; Let us Learn", ["Point to the day wheel: Today is Sunday / Monday / Tuesday / Wednesday / Thursday / Friday / Saturday.", "Read the days aloud and repeat."]),
+ (55, "Let us Write – A to Z tracing", ["Trace Aa to Zz along the dotted lines and read the words (apple, ball, cat, dog, egg, frog, grapes, hat, ice-cream, jug, kite, lamp, mask, nib, orange, parrot, quill, rose, sun, top, umbrella, vase, wheel, X-mas tree, yo-yo, zip)."]),
+ (56, "Complete the table; Let us Draw", ["Sun+day = Sunday | Mon+day = Monday | Tues+day = Tuesday | Wednes+day = Wednesday | Thurs+day = Thursday | Fri+day = Friday | Satur+day = Saturday.", "Draw five more boxes (train coaches) and write the days in order."]),
+ (57, "Let us Practise – syllables; sh words", ["A. Sun-day, Mon-day, Tues-day, Wed-nes-day, Thurs-day, Fri-day, Sa-tur-day.", "B. ship, shop, shoe, shell, sheep, shirt, fish, dish."]),
+ (58, "Let us Do – riddles", ["1. orange | 2. coconut | 3. onion | 4. grapes."]),
+ (59, "Let us Practise – Days of the week", [
+  "1. 7 (seven)", "2. C) Thursday", "3. C) fish and dish", "4. orange", "5. Wednesday", "6. Sa – tur – day",
+  "Mapping of Domains: Physical – rhyme with action, role play, syllabic drill, tracing | Socio-emotional – recite together, syllabic drill | Cognitive – days of the week, riddles | Language – interaction, rhyme, days, role play, tracing, completing the table | Aesthetic – rhyme with rhythm, role play, train picture."]),
+]
