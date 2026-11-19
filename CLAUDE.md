@@ -214,6 +214,8 @@
 
 - 📚 2026.11.19-2 (యూజర్): ఆటలు పేజీలో C గ్రేడ్ కార్డు పైన `bsCard()` (`.bscard`) → `games/Raay_Bala_Siksha_Quiz_500.html` (రాయ్ బాల శిక్ష క్విజ్ – 500 ప్రశ్నలు, 11 విభాగాలు: తెలుగు, English, గణితం, EVS, రోజువారీ పదాలు, రాష్ట్రాలు–రాజధానులు, కొలతలు, రుచులు, హద్దులు–దిక్కులు, సమయం 12/24, చిన్నవి–పెద్దవి; సులభం/మధ్యస్థం; 📖 చదువుకో మోడ్; ఆడనివి ముందు `raayBS_seen`). టూల్‌లో `window.rvBack` (క్విజ్ → మొదటి పేజీ). offFiles లో కూడా. ప్రశ్నలు మార్చాలంటే ఆ ఫైల్‌లోని RAW (100) + EXTRA (F/P/N helpers) మాత్రమే.
 
+- 🖼 2026.11.19-5 (యూజర్: ఫ్లాష్ ఫోటో బ్లర్): కారణం – ఫ్లాష్ ఫోటో రికార్డులోనే ≤17.5KB base64 (`shrinkImage`, 720px→చిన్నది). ఇప్పుడు `addPhoto`: ఆన్‌లైన్ సింక్ టీచర్ (`ansCanUp`) అయితే `phHQ` (1600px, q .85→) → `ansUpload` (Drive, `thumbnail…sz=w1600`) → రికార్డు `url` + చిన్న `img` (evSmall 8500, నెట్ లేనప్పుడు fallback); లేకపోతే పాత పద్ధతి. `slidesHtml` ఇప్పుడు url ముందు (onerror → data-fb చిన్నది); `imgSrc` Drive sz w1600. పాత ఫోటోలు బ్లర్‌గానే – తొలగించి మళ్ళీ జోడించాలి.
+
 ## పరీక్ష
 - `python3 -m http.server` + Playwright (chromium ముందే ఉంది). `node --check` అన్ని `<script>` blocks.
 - pdf.js CDN sandbox లో అందదు → `/opt/npm-tools/node_modules/pdfjs-dist/legacy/build/` ని route చేసి పరీక్షించాలి.

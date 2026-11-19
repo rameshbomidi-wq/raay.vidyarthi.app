@@ -3113,7 +3113,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${view==='home'?`<button class="ib hstar" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐<small>${stars()}</small></button><button class="ib hav" onclick="go('avatar')" aria-label="బొమ్మ మార్చు">${avOf(S.cur.n)}</button>`:''}${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.19-4';
+const APPV='2026.11.19-5';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -6310,11 +6310,11 @@ const WOTD=[['🍎','apple','ఆపిల్ పండు'],['📚','book','ప�
 function dayNo(){const d=new Date();return Math.floor((d-new Date(d.getFullYear(),0,0))/864e5);}
 function greet(){const h=new Date().getHours();return h<5?['🌙','శుభ రాత్రి']:h<12?['🌅','శుభోదయం']:h<16?['☀️','శుభ మధ్యాహ్నం']:h<20?['🌇','శుభ సాయంత్రం']:['🌙','శుభ రాత్రి'];}
 function stars(){const r=myRes().filter(x=>x.s*100/x.t>=80).length;const h=myHw().filter(x=>subOf(x)).length;const g=live('games').filter(x=>x.n===me()&&x.c===S.cur.c&&x.s>=10).length;return r*3+h+g;}
-function imgSrc(u){const id=driveId(u);return id?'https://drive.google.com/thumbnail?id='+id+'&sz=w1000':u;}
+function imgSrc(u){const id=driveId(u);return id?'https://drive.google.com/thumbnail?id='+id+'&sz=w1600':u;}
 const DEF_SLIDES=[['📚','రోజూ కొంచెం చదువు','నేర్చుకో విభాగంలో పాఠాలు','learn','linear-gradient(135deg,#4f46e5,#06b6d4)'],['🎮','ఆడుతూ నేర్చుకో','Mental Maths, English Words','games','linear-gradient(135deg,#f97316,#f43f5e)'],
  ['📝','టెస్ట్ రాసి ⭐ గెలుచుకో','80% పైన వస్తే 3 స్టార్లు','test','linear-gradient(135deg,#16a34a,#84cc16)'],['💬','సందేహమా? టీచర్‌ని అడుగు','జవాబు నీ ఫోన్‌కే వస్తుంది','doubts','linear-gradient(135deg,#9333ea,#ec4899)']];
 function slidesHtml(){const ph=live('notes').filter(n=>n.kind==='photo'&&(!n.c||n.c===S.cur.c)).sort((a,b)=>(b.upd||0)-(a.upd||0)).slice(0,12);
- const sl=ph.map(p=>`<div class="slide" onclick="zoomImg(this.querySelector('img').src)" style="cursor:zoom-in"><img src="${esc(p.img||imgSrc(p.url))}" alt="${esc(p.t||'')}" loading="lazy" onerror="this.parentNode.classList.add('noimg')">${p.t?`<div class="cap">${esc(p.t)}</div>`:''}</div>`)
+ const sl=ph.map(p=>{const hq=p.url?imgSrc(p.url):'',fb=p.img||'';return `<div class="slide" onclick="zoomImg(this.querySelector('img').src)" style="cursor:zoom-in"><img src="${esc(hq||fb)}" alt="${esc(p.t||'')}" loading="lazy" decoding="async"${hq&&fb?` data-fb="${esc(fb)}" onerror="if(this.dataset.fb){this.src=this.dataset.fb;this.removeAttribute('data-fb');}else this.parentNode.classList.add('noimg')"`:` onerror="this.parentNode.classList.add('noimg')"`}>${p.t?`<div class="cap">${esc(p.t)}</div>`:''}</div>`;})
   .concat((launchOn()?[['🎉','బాలల దినోత్సవం – 14 నవంబర్','రాయ్ విద్యార్థి యాప్ ప్రారంభం • హ్యాపీ చిల్డ్రన్స్ డే 🎈','events','linear-gradient(135deg,#f59e0b,#ec4899 60%,#8b5cf6)']]:[]).concat(DEF_SLIDES).map(([i,t,s,v,bg])=>`<div class="slide def" style="background:${bg}" onclick="go('${v}')"><span>${i}</span><b>${t}</b><small>${s}</small></div>`));
  return `<div class="car" id="car"><div class="car-in" id="carIn">${sl.join('')}</div><div class="dots" id="dots">${sl.map((_,i)=>`<i class="${i?'':'on'}" onclick="carTo(${i})"></i>`).join('')}</div><button class="carp" id="carP" onclick="carToggle()" aria-label="ఆపు / నడుపు">⏸</button></div>`;}
 function noBagTxt(){const c=+S.cur.c,d=new Date().getDay();if(!(c>=1&&c<=9)||(d!==5&&d!==6))return '';const day=d===6?todayS():addDays(todayS(),1);if(evAll().some(e=>e.d===day&&e.ty==='hol'&&(e.c===0||e.c===c)))return '';return d===6?'🎒 ఈరోజు శనివారం – నో బ్యాగ్ డే! ఆటలు, కృత్యాల రోజు':'🎒 రేపు శనివారం – నో బ్యాగ్ డే!';}
@@ -6349,13 +6349,14 @@ TP.fl=()=>{const fl=live('notes').filter(n=>n.kind==='flash'&&canSee(n.c)),ph=li
 <div class="g2"><div><label>తరగతి</label>${clsSel('flc',true)}</div><div><label>ఎప్పటి వరకు (ఐచ్ఛికం)</label><input id="flu" type="date"></div></div>
 <button class="btn" onclick="addFlash()">➕ జోడించు</button></div>
 ${fl.map(n=>`<div class="titem"><div><b>📢 ${esc(n.t)}</b><small>${n.c?n.c+'వ తరగతి':'అందరికీ'}${recD(n)?' • 📅 '+recD(n):''}${n.until?' • '+fmtD(n.until)+' వరకు':''}</small></div><button class="del" onclick="delItem('notes','${n.id}')">తొలగించు</button></div>`).join('')}
-<div class="card"><h3>📷 ఫోటో జోడించు (స్లైడర్)</h3><p class="mut">ఫోన్ నుండి ఎంచుకోండి – యాప్ ఆటోగా చిన్నదిగా చేసి సేవ్ చేస్తుంది. లేదా Google Drive / వెబ్ ఫోటో లింక్ ఇవ్వండి. (గరిష్టం 12 ఫోటోలు)</p>
+<div class="card"><h3>📷 ఫోటో జోడించు (స్లైడర్)</h3><p class="mut">ఫోన్ నుండి ఎంచుకోండి – ఆన్‌లైన్ సింక్ ఉంటే పూర్తి క్లారిటీతో సేవ్ అవుతుంది (పాత ఫోటోలు బ్లర్ అయితే తొలగించి మళ్ళీ జోడించండి). లేదా Google Drive / వెబ్ ఫోటో లింక్ ఇవ్వండి. (గరిష్టం 12 ఫోటోలు)</p>
 <label>ఫోటో (ఫోన్ నుండి)</label><input id="php" type="file" accept="image/*">
 <label>లేదా ఫోటో లింక్</label><input id="phu" placeholder="https://drive.google.com/file/d/.../view">
 <div class="g2"><div><label>శీర్షిక (ఐచ్ఛికం)</label><input id="pht" maxlength="60" placeholder="ఉదా: స్వాతంత్ర్య దినోత్సవం"></div><div><label>తరగతి</label>${clsSel('phc',true)}</div></div>
 <button class="btn" id="phbtn" onclick="addPhoto()">➕ ఫోటో జోడించు</button></div>
 <div class="phgrid">${ph.map(n=>`<div class="phi"><img src="${esc(n.img||imgSrc(n.url))}" alt=""><small>${esc(n.t||'')}${n.c?' • '+n.c+'వ':''}${recD(n)?' • '+recD(n):''}</small><button class="del" onclick="delItem('notes','${n.id}')">🗑️</button></div>`).join('')}</div>`;};
 function addFlash(){const t=$('#flt').value.trim();if(!t)return toast('వార్త రాయండి');put('notes',{id:uid(),kind:'flash',c:+$('#flc').value,t,until:$('#flu').value||'',x:''});toast('జోడించబడింది ✓');go('teacher',{t:'fl'});}
+function phHQ(im){const cv=ansScale(im,Math.min(1600,im.width));for(const q of [.85,.78,.7,.6,.5]){const u=cv.toDataURL('image/jpeg',q);if(u.length<1900000)return u;}return ansHQ(im);}
 function shrinkImage(file){return new Promise((res,rej)=>{const fr=new FileReader();fr.onerror=rej;fr.onload=()=>{const im=new Image();im.onerror=rej;im.onload=()=>{
  let w=Math.min(720,im.width),q=0.72,out='';const cv=document.createElement('canvas'),cx=cv.getContext('2d');
  for(let k=0;k<14;k++){const h=Math.round(im.height*w/im.width);cv.width=w;cv.height=h;cx.fillStyle='#fff';cx.fillRect(0,0,w,h);cx.drawImage(im,0,0,w,h);out=cv.toDataURL('image/jpeg',q);
@@ -6364,8 +6365,13 @@ function shrinkImage(file){return new Promise((res,rej)=>{const fr=new FileReade
 async function addPhoto(){const f=$('#php').files&&$('#php').files[0],u=$('#phu').value.trim(),t=$('#pht').value.trim(),c=+$('#phc').value;
  if(live('notes').filter(n=>n.kind==='photo').length>=12)return toast('12 ఫోటోలు ఉన్నాయి – పాతవి తొలగించండి');
  if(f){const b=$('#phbtn');if(b){b.disabled=true;b.textContent='చిన్నదిగా చేస్తోంది...';}
-  try{const img=await shrinkImage(f);put('notes',{id:uid(),kind:'photo',c,t,img,x:''});toast('ఫోటో జోడించబడింది ✓');go('teacher',{t:'fl'});}
-  catch(e){toast('ఫోటో తీసుకోలేకపోయాం – వేరే ఫోటో ప్రయత్నించండి');if(b){b.disabled=false;b.textContent='➕ ఫోటో జోడించు';}}return;}
+  try{let rec;if(ansCanUp()){/* 2026.11.19-5: ఆన్‌లైన్ సింక్ ఉంటే పూర్తి క్లారిటీ ఫోటో (1600px) Drive లో + చిన్న ప్రతి (నెట్ లేనప్పుడు) */
+    const im=await new Promise((ok,no)=>{const r=new FileReader();r.onerror=no;r.onload=()=>{const m=new Image();m.onload=()=>ok(m);m.onerror=no;m.src=r.result;};r.readAsDataURL(f);});
+    if(b)b.textContent='⏳ పూర్తి క్లారిటీతో పంపుతోంది...';const u=await ansUpload(phHQ(im),c||myCls()[0]);if(!u)throw new Error(ANSERR||'ఫోటో పంపలేకపోయాం');
+    rec={id:uid(),kind:'photo',c,t,url:u,img:evSmall(im,8500),x:''};}
+   else rec={id:uid(),kind:'photo',c,t,img:await shrinkImage(f),x:''};
+   put('notes',rec);toast(rec.url?'ఫోటో జోడించబడింది ✓ (పూర్తి క్లారిటీ)':'ఫోటో జోడించబడింది ✓ – ఆన్‌లైన్ సింక్ లేనందున చిన్న ఫోటో');go('teacher',{t:'fl'});}
+  catch(e){toast(e&&e.message&&e.message!=='big'?'❌ '+e.message:'ఫోటో తీసుకోలేకపోయాం – వేరే ఫోటో ప్రయత్నించండి');if(b){b.disabled=false;b.textContent='➕ ఫోటో జోడించు';}}return;}
  if(!/^https:\/\//.test(u))return toast('ఫోటో ఎంచుకోండి లేదా https లింక్ ఇవ్వండి');
  put('notes',{id:uid(),kind:'photo',c,t,url:u,x:''});toast('ఫోటో జోడించబడింది ✓');go('teacher',{t:'fl'});}
 
