@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>రాయ్ బాల శిక్ష క్విజ్ – 500 ప్రశ్నలు</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@500;700;800&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans Telugu','Baloo Tamma 2',sans-serif;background:linear-gradient(135deg,#a8edea,#fed6e3);min-height:100vh;color:#1f2937;-webkit-tap-highlight-color:transparent}
+.app{max-width:640px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;background:rgba(255,255,255,.45);box-shadow:0 10px 40px rgba(0,0,0,.15)}
+header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,.9);border-radius:0 0 24px 24px;position:sticky;top:0;z-index:5}
+header h1{font-family:'Baloo Tamma 2';font-size:1.4rem;color:#7e22ce}
+.hbtns{display:flex;gap:8px}
+.icon-btn{width:46px;height:46px;border-radius:50%;border:2px solid #d8b4fe;background:#f3e8ff;font-size:1.3rem;cursor:pointer}
+.icon-btn.off{background:#e5e7eb;border-color:#d1d5db}
+main{flex:1;padding:14px}
+.card{background:#fff;border-radius:22px;padding:14px;box-shadow:0 4px 14px rgba(0,0,0,.08);margin-bottom:14px}
+.card h3{font-size:1.05rem;margin-bottom:10px;color:#374151;text-align:center}
+.chips{display:grid;gap:8px;grid-template-columns:repeat(3,1fr)}
+.chip{position:relative}
+.chips.c4{grid-template-columns:repeat(4,1fr)}
+.chip input{position:absolute;opacity:0;width:1px;height:1px}
+.chip span{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:52px;padding:6px 4px;border:2px solid #e5e7eb;border-radius:14px;font-weight:700;font-size:.92rem;text-align:center;cursor:pointer;background:#f9fafb;transition:.15s}
+.chip small{font-weight:600;font-size:.72rem;opacity:.7}
+.chip input:checked+span{background:#ec4899;color:#fff;border-color:#be185d;box-shadow:0 3px 0 #be185d}
+.chip input:focus-visible+span{outline:4px solid #f59e0b;outline-offset:2px}
+.big-btn{display:block;width:100%;min-height:56px;border:none;border-radius:999px;font-family:inherit;font-weight:700;font-size:1.25rem;color:#fff;cursor:pointer;margin-top:10px;box-shadow:0 4px 0 rgba(0,0,0,.25);transition:.1s}
+.big-btn:active{transform:translateY(4px);box-shadow:none}
+.big-btn:focus-visible,.opt:focus-visible,.icon-btn:focus-visible{outline:4px solid #f59e0b;outline-offset:2px}
+.pink{background:#ec4899}.blue{background:#3b82f6}.orange{background:#f97316}.green{background:#16a34a}.gray{background:#6b7280}
+.title{text-align:center;font-family:'Baloo Tamma 2';font-size:1.9rem;color:#db2777;margin:4px 0 12px}
+.muted{text-align:center;color:#4b5563;font-size:.9rem;margin-top:8px}
+.hidden{display:none!important}
+.progress{display:flex;align-items:center;gap:10px;background:#fff;padding:8px 14px;border-radius:16px;margin-bottom:12px;font-weight:700;color:#7e22ce}
+.bar{flex:1;height:12px;background:#e5e7eb;border-radius:9px;overflow:hidden}
+.bar div{height:100%;width:0;background:linear-gradient(90deg,#c084fc,#ec4899);transition:width .3s}
+.qbox{background:#fff;border:4px solid #f3e8ff;border-radius:24px;padding:22px 16px;min-height:150px;position:relative;display:flex;flex-direction:column;justify-content:center;margin-bottom:14px}
+.tag{position:absolute;top:8px;left:10px;font-size:.75rem;font-weight:700;padding:2px 10px;border-radius:999px;background:#ede9fe;color:#6d28d9}
+.qbox .icon-btn{position:absolute;top:6px;right:6px;width:42px;height:42px;font-size:1.1rem}
+#qText{font-size:1.6rem;font-weight:700;text-align:center;line-height:1.5;margin-top:14px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt{min-height:64px;border:2px solid #ddd6fe;background:#fff;border-radius:18px;font-family:inherit;font-weight:700;font-size:1.25rem;padding:10px;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 4px 0 #ddd6fe;text-align:left}
+.opt .n{font-size:.8rem;opacity:.5}
+.opt.ok{background:#22c55e;color:#fff;border-color:#15803d;box-shadow:0 4px 0 #15803d}
+.opt.bad{background:#ef4444;color:#fff;border-color:#b91c1c;box-shadow:0 4px 0 #b91c1c}
+.score{font-family:'Baloo Tamma 2';font-size:3.6rem;color:#ec4899;text-align:center;font-weight:800}
+.stars{text-align:center;font-size:2rem}
+.mist{border-bottom:1px solid #eee;padding:8px 2px;font-size:.95rem}
+.mist:last-child{border:0}
+.red{color:#dc2626}.grn{color:#15803d;font-weight:700}
+.study-row{display:flex;gap:8px;align-items:center;border-bottom:1px solid #f1f1f1;padding:8px 2px}
+.study-row .num{min-width:28px;font-weight:700;color:#7e22ce}
+.study-row .q{flex:1}
+.study-row .a{color:#15803d;font-weight:700}
+.study-row button{width:40px;height:40px;border-radius:50%;border:1px solid #ddd;background:#f9fafb;cursor:pointer;font-size:1rem;flex-shrink:0}
+.subj-head{background:#fdf2f8;color:#be185d;font-weight:800;padding:6px 10px;border-radius:10px;margin:12px 0 4px}
+footer{text-align:center;padding:12px;background:rgba(255,255,255,.9);border-radius:24px 24px 0 0;font-weight:700;font-size:.9rem;color:#4b5563}
+footer a{color:#7e22ce;text-decoration:none}
+footer a:hover{text-decoration:underline}
+@media(max-width:420px){.opts{grid-template-columns:1fr}#qText{font-size:1.4rem}.chip span{font-size:.82rem}}
+@media(min-width:900px){#qText{font-size:2rem}.opt{font-size:1.4rem}}
+@media print{header,footer,.no-print,.study-row button{display:none!important}body,.app{background:#fff;box-shadow:none}.card{box-shadow:none;border:1px solid #ccc}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <h1>🌟 రాయ్ బాల శిక్ష <small style="font-size:.8rem;color:#db2777">500</small></h1>
+  <div class="hbtns">
+    <button class="icon-btn" id="homeTop" aria-label="Home" title="మొదటి పేజీ">🏠</button>
+    <button class="icon-btn" id="voiceBtn" aria-label="Voice" title="వాయిస్">🔊</button>
+  </div>
+</header>
+
+<main>
+<!-- HOME -->
+<section id="home">
+  <div class="title">ఆడుకుందాం రా! 🎈</div>
+  <div class="card">
+    <h3>📚 విషయం ఎంచుకోండి</h3>
+    <div class="chips" id="subjChips"></div>
+  </div>
+  <div class="card">
+    <h3>⭐ స్థాయి</h3>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="level" value="easy" checked><span>సులభం</span></label>
+      <label class="chip"><input type="radio" name="level" value="medium"><span>మధ్యస్థం</span></label>
+      <label class="chip"><input type="radio" name="level" value="all"><span>రెండూ</span></label>
+    </div>
+  </div>
+  <div class="card">
+    <h3>🔢 ప్రశ్నల సంఖ్య</h3>
+    <div class="chips c4">
+      <label class="chip"><input type="radio" name="qcount" value="10" checked><span>10</span></label>
+      <label class="chip"><input type="radio" name="qcount" value="20"><span>20</span></label>
+      <label class="chip"><input type="radio" name="qcount" value="50"><span>50</span></label>
+      <label class="chip"><input type="radio" name="qcount" value="999"><span>అన్నీ</span></label>
+    </div>
+    <p class="muted" id="availInfo"></p>
+  </div>
+  <button class="big-btn pink" id="startBtn">క్విజ్ ప్రారంభించు 🚀</button>
+  <button class="big-btn green" id="studyBtn">📖 చదువుకో (ప్రశ్న–జవాబు)</button>
+  <p class="muted" id="lastScore"></p>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="hidden">
+  <div class="progress"><span id="qProg">1 / 10</span><div class="bar"><div id="qBar"></div></div><span id="qScore">⭐ 0</span></div>
+  <div class="qbox">
+    <span class="tag" id="qTag"></span>
+    <button class="icon-btn" id="replayBtn" aria-label="మళ్ళీ విను">🔊</button>
+    <div id="qText"></div>
+  </div>
+  <div class="opts" id="opts"></div>
+</section>
+
+<!-- RESULT -->
+<section id="result" class="hidden">
+  <div class="card" style="border:4px solid #fde68a">
+    <div class="title" id="resTitle">అద్భుతం!</div>
+    <div class="stars" id="resStars"></div>
+    <div class="score" id="resScore">0 / 0</div>
+  </div>
+  <div class="card hidden" id="mistCard">
+    <h3 class="red">తప్పిన ప్రశ్నలు – సరైన జవాబులు</h3>
+    <div id="mistList"></div>
+  </div>
+  <button class="big-btn orange hidden" id="retryBtn">తప్పినవి మళ్ళీ ఆడు 🔄</button>
+  <button class="big-btn pink" id="againBtn">కొత్త క్విజ్ 🎲</button>
+  <button class="big-btn blue" id="homeBtn">మొదటి పేజీ 🏠</button>
+</section>
+
+<!-- STUDY -->
+<section id="study" class="hidden">
+  <div class="card">
+    <h3 id="studyTitle">📖 ప్రశ్న – జవాబు</h3>
+    <div id="studyList"></div>
+  </div>
+  <button class="big-btn gray no-print" id="printBtn">🖨️ ప్రింట్ / PDF</button>
+  <button class="big-btn blue no-print" id="studyHome">మొదటి పేజీ 🏠</button>
+</section>
+</main>
+
+<footer>
+  <a href="https://raayeducation.in" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a> ద్వారా రూపొందించబడింది
+</footer>
+</div>
+
+<script>
+// ===== 500 ప్రశ్నలు — 11 విభాగాలు, 2 స్థాయిలు =====
+const SUBJECTS = {
+  te:{name:'తెలుగు',icon:'🅰️'},
+  en:{name:'English',icon:'🔤'},
+  ma:{name:'గణితం',icon:'➕'},
+  ev:{name:'పరిసరాలు (EVS)',icon:'🌳'},
+  dw:{name:'రోజువారీ పదాలు',icon:'💬'},
+  sc:{name:'రాష్ట్రాలు–రాజధానులు',icon:'🗺️'},
+  me:{name:'కొలతలు',icon:'📏'},
+  ru:{name:'రుచులు',icon:'👅'},
+  ha:{name:'హద్దులు–దిక్కులు',icon:'🧭'},
+  ti:{name:'సమయం 12/24',icon:'⏰'},
+  bs:{name:'చిన్నవి–పెద్దవి',icon:'🐘'}
+};
+const RAW = [
+// ---- తెలుగు సులభం ----
+['te','e',"'అ' తర్వాత వచ్చే అక్షరం ఏది?",['ఆ','ఇ','ఈ','ఉ']],
+['te','e',"'క' తర్వాత వచ్చే అక్షరం ఏది?",['ఖ','గ','చ','ట']],
+['te','e',"'అమ్మ' పదంలో ఎన్ని అక్షరాలు ఉన్నాయి?",['2','3','1','4']],
+['te','e',"'పువ్వు' ఏది?",['🌸','🐶','🍎','🚗']],
+['te','e',"'బడి' పదం ఏ అక్షరంతో మొదలవుతుంది?",['బ','డ','ద','ప']],
+['te','e',"'పెద్ద' కు వ్యతిరేక పదం ఏది?",['చిన్న','పొడవు','లావు','ఎత్తు']],
+['te','e',"'పగలు' కు వ్యతిరేక పదం ఏది?",['రాత్రి','ఉదయం','ఎండ','సూర్యుడు']],
+['te','e',"'ఆ' అక్షరంతో మొదలయ్యే పదం ఏది?",['ఆవు','ఇల్లు','ఉడుత','ఎలుక']],
+['te','e',"'చెట్టు' కు బహువచనం ఏది?",['చెట్లు','చెట్టులు','చెట్టాలు','చెట్టువి']],
+['te','e',"'నీరు' కు మరో పేరు ఏది?",['జలం','అగ్ని','గాలి','భూమి']],
+// ---- తెలుగు మధ్యస్థం ----
+['te','m',"'సూర్యుడు' కు పర్యాయపదం ఏది?",['భానుడు','చంద్రుడు','సముద్రం','మేఘం']],
+['te','m',"'తల్లి' కి వ్యతిరేక లింగ పదం ఏది?",['తండ్రి','అక్క','అవ్వ','చెల్లి']],
+['te','m',"'పుస్తకం' కు బహువచనం ఏది?",['పుస్తకాలు','పుస్తకలు','పుస్తకంలు','పుస్తకాళ్ళు']],
+['te','m',"తెలుగు వారి సంవత్సరాది పండుగ ఏది?",['ఉగాది','దీపావళి','దసరా','సంక్రాంతి']],
+['te','m',"క్ + అ = ?",['క','కా','కి','కు']],
+['te','m',"'క' కు దీర్ఘం ఇస్తే ఏమవుతుంది?",['కా','కి','కు','కె']],
+['te','m',"అమ్మ పెట్టిన ____ తిన్నాను. (ఖాళీ నింపండి)",['అన్నం','బడి','కుర్చీ','గోడ']],
+['te','m',"'మంచి' కి వ్యతిరేక పదం ఏది?",['చెడు','పెద్ద','తీపి','కొత్త']],
+['te','m',"'వేగంగా' కి వ్యతిరేక పదం ఏది?",['నెమ్మదిగా','త్వరగా','గట్టిగా','ఎత్తుగా']],
+['te','m',"'కొత్త' కి వ్యతిరేక పదం ఏది?",['పాత','మంచి','పెద్ద','తెల్ల']],
+// ---- English Easy ----
+['en','e',"Which one is a fruit?",['Apple','Chair','Pen','Dog'],'en'],
+['en','e',"What comes after the letter A?",['B','C','D','Z'],'en'],
+['en','e',"'Cat' starts with which letter?",['C','K','S','T'],'en'],
+['en','e',"Opposite of 'Big' is?",['Small','Tall','Long','Fat'],'en'],
+['en','e',"Which one is a colour?",['Red','Book','Table','Sun'],'en'],
+['en','e',"Which animal says 'Moo'?",['Cow','Dog','Cat','Hen'],'en'],
+['en','e',"How many letters are there in the English alphabet?",['26','24','28','52'],'en'],
+['en','e',"Which one is a vowel?",['E','B','K','T'],'en'],
+['en','e',"One, Two, ____ ?",['Three','Four','Five','Ten'],'en'],
+['en','e',"Plural of 'Boy' is?",['Boys','Boyes','Boies','Boy'],'en'],
+// ---- English Medium ----
+['en','m',"Opposite of 'Hot' is?",['Cold','Warm','Sun','Fire'],'en'],
+['en','m',"Plural of 'Child' is?",['Children','Childs','Childes','Childrens'],'en'],
+['en','m',"I ____ a student.",['am','is','are','be'],'en'],
+['en','m',"She ____ my sister.",['is','am','are','be'],'en'],
+['en','m',"They ____ playing.",['are','is','am','was'],'en'],
+['en','m',"Past tense of 'go' is?",['went','goed','gone','going'],'en'],
+['en','m',"Which spelling is correct?",['School','Scool','Skool','Shcool'],'en'],
+['en','m',"Which one is a naming word (noun)?",['Table','Run','Big','Quickly'],'en'],
+['en','m',"Opposite of 'Up' is?",['Down','Top','Over','In'],'en'],
+['en','m',"Which day comes after Monday?",['Tuesday','Sunday','Friday','Thursday'],'en'],
+// ---- గణితం సులభం ----
+['ma','e',"2 + 3 = ?",['5','6','4','23']],
+['ma','e',"5 − 2 = ?",['3','7','2','4']],
+['ma','e',"4 తర్వాత వచ్చే సంఖ్య ఏది?",['5','3','6','8']],
+['ma','e',"10 కంటే పెద్ద సంఖ్య ఏది?",['12','8','5','9']],
+['ma','e',"3 + 4 = ?",['7','6','8','12']],
+['ma','e',"🍎🍎🍎 ఎన్ని ఆపిల్స్?",['3','2','4','5']],
+['ma','e',"10 + 10 = ?",['20','100','11','1010']],
+['ma','e',"ఒక చేతికి ఎన్ని వేళ్ళు ఉంటాయి?",['5','4','10','6']],
+['ma','e',"7 కంటే ముందు వచ్చే సంఖ్య ఏది?",['6','8','5','9']],
+['ma','e',"9 − 4 = ?",['5','4','13','6']],
+// ---- గణితం మధ్యస్థం ----
+['ma','m',"5 × 2 = ?",['10','7','12','52']],
+['ma','m',"12 ÷ 3 = ?",['4','3','6','9']],
+['ma','m',"25 + 17 = ?",['42','32','41','52']],
+['ma','m',"50 − 23 = ?",['27','33','37','23']],
+['ma','m',"8 × 5 = ?",['40','35','45','13']],
+['ma','m',"ఒక గంటకు ఎన్ని నిమిషాలు?",['60','100','24','30']],
+['ma','m',"ఒక రూపాయికి ఎన్ని పైసలు?",['100','10','50','1000']],
+['ma','m',"త్రిభుజానికి ఎన్ని భుజాలు ఉంటాయి?",['3','4','5','2']],
+['ma','m',"ఒక డజను అంటే ఎన్ని?",['12','10','6','20']],
+['ma','m',"ఒక రోజుకు ఎన్ని గంటలు?",['24','12','60','7']],
+// ---- EVS సులభం ----
+['ev','e',"ఆకాశం రంగు ఏమిటి?",['నీలం','ఎరుపు','ఆకుపచ్చ','పసుపు']],
+['ev','e',"పాలు ఏ రంగులో ఉంటాయి?",['తెలుపు','నలుపు','ఎరుపు','ఆకుపచ్చ']],
+['ev','e',"కుక్క ఎలా అరుస్తుంది?",['భౌ భౌ','మ్యావ్','అంబా','కావ్ కావ్']],
+['ev','e',"మన జాతీయ పక్షి ఏది?",['నెమలి','కాకి','చిలుక','పావురం']],
+['ev','e',"వారానికి ఎన్ని రోజులు?",['7','5','10','12']],
+['ev','e',"మనకు పాలు ఇచ్చే జంతువు ఏది?",['ఆవు','కోడి','పిల్లి','కాకి']],
+['ev','e',"మనం దేనితో చూస్తాం?",['కళ్ళు','చెవులు','ముక్కు','చేతులు']],
+['ev','e',"ఆకాశంలో ఎగిరేది ఏది?",['పక్షి','చేప','ఆవు','పాము']],
+['ev','e',"రాత్రి ఆకాశంలో కనిపించేది ఏది?",['చంద్రుడు','సూర్యుడు','ఇంద్రధనుస్సు','మేఘం లేదు']],
+['ev','e',"చేప ఎక్కడ నివసిస్తుంది?",['నీటిలో','చెట్టుపై','ఇంట్లో','ఇసుకలో']],
+// ---- EVS మధ్యస్థం ----
+['ev','m',"సూర్యుడు ఏ దిక్కున ఉదయిస్తాడు?",['తూర్పు','పడమర','ఉత్తరం','దక్షిణం']],
+['ev','m',"మన జాతీయ జంతువు ఏది?",['పులి','సింహం','ఏనుగు','ఎలుగుబంటి']],
+['ev','m',"ఇంద్రధనుస్సులో ఎన్ని రంగులు ఉంటాయి?",['7','5','9','12']],
+['ev','m',"జాతీయ గీతం 'జనగణమన' రాసింది ఎవరు?",['రవీంద్రనాథ్ ఠాగూర్','బంకించంద్ర చటర్జీ','పింగళి వెంకయ్య','సుభాష్ చంద్రబోస్']],
+['ev','m',"సంవత్సరానికి ఎన్ని నెలలు?",['12','10','30','7']],
+['ev','m',"మన జాతీయ పుష్పం ఏది?",['తామర','గులాబీ','మల్లె','బంతి']],
+['ev','m',"మన జాతీయ పండు ఏది?",['మామిడి','అరటి','ఆపిల్','జామ']],
+['ev','m',"మొక్కలు ఆహారం తయారు చేసుకునేది ఏ భాగంలో?",['ఆకు','వేరు','కాండం','పువ్వు']],
+['ev','m',"మనం శ్వాసలో పీల్చుకునే వాయువు ఏది?",['ఆక్సిజన్','కార్బన్ డయాక్సైడ్','పొగ','నైట్రోజన్']],
+['ev','m',"నీరు బాగా చల్లబడి గడ్డకడితే ఏమవుతుంది?",['మంచు','ఆవిరి','మేఘం','వర్షం']],
+// ---- రోజువారీ పదాలు సులభం ----
+['dw','e',"'I' అంటే తెలుగులో?",['నేను','నువ్వు','వాళ్ళు','మేము']],
+['dw','e',"'You' అంటే తెలుగులో?",['నువ్వు / మీరు','నేను','అతడు','ఆమె']],
+['dw','e',"'We' అంటే తెలుగులో?",['మేము / మనం','నేను','మీరు','వాళ్ళు']],
+['dw','e',"'They' అంటే తెలుగులో?",['వాళ్ళు','మేము','నువ్వు','నేను']],
+['dw','e',"'He' అంటే తెలుగులో?",['అతడు','ఆమె','అది','నేను']],
+['dw','e',"'She' అంటే తెలుగులో?",['ఆమె','అతడు','వాళ్ళు','మేము']],
+['dw','e',"'Water' అంటే తెలుగులో?",['నీళ్ళు','పాలు','అన్నం','గాలి']],
+['dw','e',"'Come' అంటే తెలుగులో?",['రా','వెళ్ళు','కూర్చో','తిను']],
+['dw','e',"'Go' అంటే తెలుగులో?",['వెళ్ళు','రా','ఆడు','నిలబడు']],
+['dw','e',"'Yes' అంటే తెలుగులో?",['అవును','కాదు','ఏమిటి','ఎక్కడ']],
+// ---- రోజువారీ పదాలు మధ్యస్థం ----
+['dw','m',"'What' అంటే తెలుగులో?",['ఏమిటి','ఎక్కడ','ఎవరు','ఎప్పుడు']],
+['dw','m',"'Where' అంటే తెలుగులో?",['ఎక్కడ','ఏమిటి','ఎందుకు','ఎలా']],
+['dw','m',"'When' అంటే తెలుగులో?",['ఎప్పుడు','ఎక్కడ','ఎవరు','ఏది']],
+['dw','m',"'Why' అంటే తెలుగులో?",['ఎందుకు','ఎలా','ఏమిటి','ఎవరు']],
+['dw','m',"'Who' అంటే తెలుగులో?",['ఎవరు','ఏమిటి','ఎక్కడ','ఎన్ని']],
+['dw','m',"'How' అంటే తెలుగులో?",['ఎలా','ఎందుకు','ఎప్పుడు','ఎక్కడ']],
+['dw','m',"'నా పేరు' ను ఇంగ్లీషులో ఏమంటారు?",['My name','Your name','His name','Her name']],
+['dw','m',"'Thank you' అంటే తెలుగులో?",['ధన్యవాదాలు','క్షమించండి','నమస్కారం','వెళ్ళొస్తాను']],
+['dw','m',"'Sit down' అంటే తెలుగులో?",['కూర్చో','నిలబడు','పరిగెత్తు','పడుకో']],
+['dw','m',"'Good morning' ఎప్పుడు చెబుతాము?",['ఉదయం','రాత్రి','మధ్యాహ్నం','సాయంత్రం']]
+];
+// ===== కొత్త ప్రశ్నలు (400) =====
+// F = fixed options (first = answer), P = pair list (distractors from same list), N = numeric
+const EXTRA = [];
+const F=(s,l,q,o,sp)=>EXTRA.push({s,l,q,o,a:o[0],sp:sp||'te'});
+const P=(s,l,tpl,pairs,sp)=>{const pool=[...new Set(pairs.map(p=>p[1]))];pairs.forEach(([x,a])=>EXTRA.push({s,l,q:tpl.replace('#',x),a:String(a),pool,sp:sp||'te'}));};
+const N=(s,l,q,a)=>EXTRA.push({s,l,q,a:String(a),num:true,sp:'te'});
+
+// ---------- తెలుగు ----------
+P('te','e',"'#' తర్వాత వచ్చే అక్షరం ఏది?",[['ఇ','ఈ'],['ఉ','ఊ'],['ఎ','ఏ'],['ఒ','ఓ'],['చ','ఛ'],['ట','ఠ'],['త','థ'],['ప','ఫ'],['మ','య'],['స','హ']]);
+P('te','e',"ఈ బొమ్మ పేరు ఏమిటి? #",[['🐘','ఏనుగు'],['🐒','కోతి'],['🐄','ఆవు'],['🌳','చెట్టు'],['🏠','ఇల్లు'],['🐟','చేప'],['☀️','సూర్యుడు'],['🦚','నెమలి'],['🍌','అరటిపండు'],['🚌','బస్సు']]);
+P('te','m',"'#' కు వ్యతిరేక పదం ఏది?",[['పొడవు','పొట్టి'],['వేడి','చల్లని'],['తీపి','చేదు'],['ఎక్కువ','తక్కువ'],['లోపల','బయట'],['ముందు','వెనుక'],['పైన','కింద'],['సుఖం','దుఃఖం'],['నవ్వు','ఏడుపు'],['తెలుపు','నలుపు'],['గెలుపు','ఓటమి'],['దగ్గర','దూరం'],['ఉదయం','సాయంత్రం'],['లావు','సన్నం'],['బరువు','తేలిక']]);
+P('te','m',"'#' కు బహువచనం ఏది?",[['పువ్వు','పువ్వులు'],['ఆవు','ఆవులు'],['పిల్లి','పిల్లులు'],['కాయ','కాయలు'],['ఇల్లు','ఇళ్ళు'],['కన్ను','కళ్ళు'],['పండు','పండ్లు'],['రాయి','రాళ్ళు']]);
+[['క','ి','ఇ'],['గ','ు','ఉ'],['చ','ా','ఆ'],['ప','ె','ఎ'],['మ','ూ','ఊ'],['ర','ో','ఓ'],['ల','ీ','ఈ'],['వ','ే','ఏ']].forEach(([c,m,v])=>{
+  const all=['ా','ి','ీ','ు','ూ','ె','ే','ో'].filter(x=>x!==m);
+  F('te','m',`'${c}' + '${v}' = ?`,[c+m,c+all[0],c+all[3],c+all[5]]);
+});
+
+// ---------- English ----------
+P('en','e',"Opposite of '#' is?",[['Good','Bad'],['Happy','Sad'],['Day','Night'],['Open','Close'],['Fast','Slow'],['Tall','Short'],['Old','New'],['Come','Go'],['In','Out'],['Full','Empty'],['Right','Wrong'],['Boy','Girl']],'en');
+P('en','e',"Which letter comes after '#'?",[['C','D'],['F','G'],['K','L'],['P','Q'],['M','N'],['S','T'],['W','X'],['H','I']],'en');
+P('en','m',"Which letter comes before '#'?",[['D','C'],['J','I'],['R','Q'],['Z','Y']],'en');
+F('en','e',"Which one is an animal?",['Lion','Mango','Bus','Shirt'],'en');
+F('en','e',"Which one is a bird?",['Parrot','Cow','Rose','Car'],'en');
+F('en','e',"Which one is a vegetable?",['Potato','Lion','Bus','Kite'],'en');
+F('en','e',"Which one is a vehicle?",['Bus','Banana','Goat','Bed'],'en');
+F('en','e',"Which one is a flower?",['Rose','Rice','Rat','Rope'],'en');
+F('en','e',"Which one is a part of the body?",['Hand','Ball','Bat','Cup'],'en');
+F('en','m',"Plural of 'Cat' is?",['Cats','Cat','Cates','Catz'],'en');
+F('en','m',"Plural of 'Box' is?",['Boxes','Boxs','Boxen','Boxies'],'en');
+F('en','m',"Plural of 'Man' is?",['Men','Mans','Manes','Mens'],'en');
+F('en','m',"Plural of 'Baby' is?",['Babies','Babys','Babyes','Babyies'],'en');
+F('en','m',"Plural of 'Tooth' is?",['Teeth','Tooths','Toothes','Teeths'],'en');
+F('en','m',"Plural of 'Book' is?",['Books','Bookes','Bookies','Book'],'en');
+P('en','e',"'#' in numbers is?",[['Three','3'],['Five','5'],['Eight','8'],['Nine','9'],['Ten','10'],['Twenty','20']],'en');
+F('en','m',"First month of the year is?",['January','March','December','June'],'en');
+F('en','m',"Which month comes after March?",['April','May','February','June'],'en');
+F('en','m',"Which month comes after June?",['July','May','August','January'],'en');
+F('en','m',"Last month of the year is?",['December','November','January','October'],'en');
+
+// ---------- గణితం ----------
+[[1,1],[2,2],[3,5],[4,4],[6,3],[5,5],[7,2],[8,1],[6,6],[9,3],[12,5],[14,4]].forEach(([a,b])=>N('ma','e',`${a} + ${b} = ?`,a+b));
+[[8,3],[10,4],[7,7],[9,6],[15,5],[12,2],[18,9],[20,10]].forEach(([a,b])=>N('ma','e',`${a} − ${b} = ?`,a-b));
+P('ma','e',"'#' ను అంకెల్లో రాస్తే?",[['ఒకటి','1'],['మూడు','3'],['ఆరు','6'],['ఎనిమిది','8'],['తొమ్మిది','9'],['పది','10']]);
+[[34,25],[46,38],[57,29],[63,18],[48,52],[66,27]].forEach(([a,b])=>N('ma','m',`${a} + ${b} = ?`,a+b));
+[[72,35],[90,45],[81,27],[64,19],[100,55]].forEach(([a,b])=>N('ma','m',`${a} − ${b} = ?`,a-b));
+[[2,7],[3,6],[4,5],[6,7],[7,8],[9,3],[8,4],[9,9]].forEach(([a,b])=>N('ma','m',`${a} × ${b} = ?`,a*b));
+[[20,4],[18,2],[35,5],[49,7],[56,8]].forEach(([a,b])=>N('ma','m',`${a} ÷ ${b} = ?`,a/b));
+
+// ---------- EVS ----------
+P('ev','m',"# ఎక్కడ నివసిస్తుంది?",[['పక్షి','గూడు'],['సింహం','గుహ'],['తేనెటీగ','తేనెపట్టు'],['సాలీడు','సాలెగూడు'],['చీమ','పుట్ట'],['గుర్రం','గుర్రపుశాల'],['ఆవు','పశువుల పాక']]);
+P('ev','e',"మనం దేనితో #?",[['వింటాం','చెవులు'],['వాసన చూస్తాం','ముక్కు'],['రుచి చూస్తాం','నాలుక'],['తాకి తెలుసుకుంటాం','చర్మం']]);
+F('ev','e',"వర్షాలు ఎక్కువగా ఏ కాలంలో కురుస్తాయి?",['వర్షాకాలం','వేసవికాలం','చలికాలం']);
+F('ev','e',"ఉన్ని దుస్తులు (స్వెటర్) ఏ కాలంలో వేసుకుంటాం?",['చలికాలం','వేసవికాలం','వర్షాకాలం']);
+F('ev','e',"ఎండలు ఎక్కువగా ఉండే కాలం ఏది?",['వేసవికాలం','చలికాలం','వర్షాకాలం']);
+F('ev','e',"ట్రాఫిక్ లైట్‌లో ఎరుపు రంగు అంటే?",['ఆగు','వెళ్ళు','సిద్ధంగా ఉండు']);
+F('ev','e',"ట్రాఫిక్ లైట్‌లో ఆకుపచ్చ రంగు అంటే?",['వెళ్ళు','ఆగు','సిద్ధంగా ఉండు']);
+F('ev','m',"ట్రాఫిక్ లైట్‌లో పసుపు రంగు అంటే?",['సిద్ధంగా ఉండు','వెళ్ళు','ఆగు']);
+F('ev','e',"ఏది అడవి జంతువు?",['పులి','ఆవు','కుక్క','మేక']);
+F('ev','e',"ఏది పెంపుడు జంతువు?",['కుక్క','పులి','సింహం','నక్క']);
+P('ev','m',"# మనకు ఏది ఇస్తుంది?",[['తేనె','తేనెటీగ'],['గుడ్లు','కోడి'],['ఉన్ని','గొర్రె'],['పట్టు','పట్టుపురుగు']]);
+F('ev','m',"మొక్కలో నేల నుండి నీటిని పీల్చే భాగం ఏది?",['వేరు','ఆకు','పువ్వు','కాయ']);
+F('ev','m',"వాన నీరు ఎక్కడి నుండి వస్తుంది?",['మేఘాలు','చెట్లు','కొండలు','సూర్యుడు']);
+F('ev','e',"నీటిపై ప్రయాణించే వాహనం ఏది?",['పడవ','బస్సు','రైలు','సైకిల్']);
+F('ev','e',"ఆకాశంలో ఎగిరే వాహనం ఏది?",['విమానం','లారీ','ఆటో','పడవ']);
+F('ev','e',"భోజనానికి ముందు ఏం చేయాలి?",['చేతులు కడుక్కోవాలి','ఆడుకోవాలి','నిద్రపోవాలి','టీవీ చూడాలి']);
+F('ev','m',"రోజుకు ఎన్నిసార్లు పళ్ళు తోముకోవాలి?",['2','5','1 వారానికి','0']);
+F('ev','e',"ఏది కూరగాయ?",['వంకాయ','మామిడి','అరటి','జామ']);
+F('ev','e',"ఏది పండు?",['జామ','బెండకాయ','ఉల్లిపాయ','బంగాళాదుంప']);
+
+// ---------- రోజువారీ పదాలు ----------
+P('dw','e',"'#' అంటే తెలుగులో?",[['Eat','తిను'],['Drink','తాగు'],['Run','పరిగెత్తు'],['Stand','నిలబడు'],['Sleep','నిద్రపో'],['Read','చదువు'],['Write','రాయి'],['Play','ఆడు'],['No','కాదు / లేదు'],['Mother','అమ్మ'],['Father','నాన్న'],['Brother','అన్న / తమ్ముడు'],['Sister','అక్క / చెల్లి'],['Friend','స్నేహితుడు'],['House','ఇల్లు'],['Rice','అన్నం'],['Milk','పాలు'],['Book','పుస్తకం'],['Hand','చేయి'],['Eye','కన్ను']]);
+P('dw','m',"'#' అంటే తెలుగులో?",[['Please','దయచేసి'],['Sorry','క్షమించండి'],['Food','ఆహారం'],['Teacher','ఉపాధ్యాయుడు'],['Door','తలుపు'],['Head','తల'],['Today','ఈరోజు'],['Tomorrow','రేపు'],['Yesterday','నిన్న'],['This','ఇది'],['That','అది'],['Here','ఇక్కడ'],['There','అక్కడ'],['Which','ఏది'],['Pen','కలం']]);
+
+// ---------- రాష్ట్రాలు – రాజధానులు ----------
+P('sc','e',"# రాజధాని ఏది?",[['ఆంధ్రప్రదేశ్','అమరావతి'],['తెలంగాణ','హైదరాబాద్'],['తమిళనాడు','చెన్నై'],['కర్ణాటక','బెంగళూరు'],['కేరళ','తిరువనంతపురం'],['మహారాష్ట్ర','ముంబై'],['ఒడిశా','భువనేశ్వర్']]);
+P('sc','m',"# రాజధాని ఏది?",[['అరుణాచల్ ప్రదేశ్','ఇటానగర్'],['అస్సాం','దిస్పూర్'],['బీహార్','పాట్నా'],['ఛత్తీస్‌గఢ్','రాయ్‌పూర్'],['గోవా','పణజి'],['గుజరాత్','గాంధీనగర్'],['హర్యానా','చండీగఢ్'],['హిమాచల్ ప్రదేశ్','షిమ్లా'],['జార్ఖండ్','రాంచీ'],['మధ్యప్రదేశ్','భోపాల్'],['మణిపూర్','ఇంఫాల్'],['మేఘాలయ','షిల్లాంగ్'],['మిజోరం','ఐజాల్'],['నాగాలాండ్','కోహిమా'],['పంజాబ్','చండీగఢ్'],['రాజస్థాన్','జైపూర్'],['సిక్కిం','గ్యాంగ్‌టక్'],['త్రిపుర','అగర్తలా'],['ఉత్తర ప్రదేశ్','లక్నో'],['ఉత్తరాఖండ్','డెహ్రాడూన్'],['పశ్చిమ బెంగాల్','కోల్‌కతా'],['లడఖ్ (కేంద్రపాలిత ప్రాంతం)','లేహ్'],['లక్షద్వీప్ (కేంద్రపాలిత ప్రాంతం)','కవరత్తి'],['అండమాన్ నికోబార్ దీవులు','శ్రీ విజయపురం (పోర్ట్ బ్లెయిర్)'],['జమ్మూ కాశ్మీర్ (వేసవి)','శ్రీనగర్'],['పుదుచ్చేరి (కేంద్రపాలిత ప్రాంతం)','పుదుచ్చేరి']]);
+P('sc','e',"# ఏ రాష్ట్ర రాజధాని?",[['హైదరాబాద్','తెలంగాణ'],['చెన్నై','తమిళనాడు'],['బెంగళూరు','కర్ణాటక'],['భువనేశ్వర్','ఒడిశా']]);
+F('sc','e',"భారతదేశ రాజధాని ఏది?",['న్యూఢిల్లీ','ముంబై','కోల్‌కతా','చెన్నై']);
+F('sc','m',"భారతదేశంలో ఎన్ని రాష్ట్రాలు ఉన్నాయి?",['28','29','25','36']);
+F('sc','m',"భారతదేశంలో ఎన్ని కేంద్రపాలిత ప్రాంతాలు ఉన్నాయి?",['8','7','9','6']);
+F('sc','m',"విస్తీర్ణంలో అతి పెద్ద రాష్ట్రం ఏది?",['రాజస్థాన్','గోవా','కేరళ','సిక్కిం']);
+F('sc','m',"విస్తీర్ణంలో అతి చిన్న రాష్ట్రం ఏది?",['గోవా','రాజస్థాన్','మహారాష్ట్ర','బీహార్']);
+
+// ---------- కొలతలు ----------
+F('me','e',"1 మీటరు = ఎన్ని సెంటీమీటర్లు?",['100','10','1000','50']);
+F('me','e',"1 కిలోమీటరు = ఎన్ని మీటర్లు?",['1000','100','10','500']);
+F('me','e',"1 కిలోగ్రాము = ఎన్ని గ్రాములు?",['1000','100','500','10']);
+F('me','e',"1 లీటరు = ఎన్ని మిల్లీలీటర్లు?",['1000','100','10','500']);
+F('me','m',"1 సెంటీమీటరు = ఎన్ని మిల్లీమీటర్లు?",['10','100','1000','5']);
+F('me','e',"అర కిలో = ఎన్ని గ్రాములు?",['500','250','750','100']);
+F('me','m',"పావు కిలో = ఎన్ని గ్రాములు?",['250','500','750','25']);
+F('me','e',"అర లీటరు = ఎన్ని మిల్లీలీటర్లు?",['500','250','100','50']);
+F('me','m',"2 మీటర్లు = ఎన్ని సెంటీమీటర్లు?",['200','20','2000','102']);
+F('me','m',"3 కిలోగ్రాములు = ఎన్ని గ్రాములు?",['3000','300','30','1300']);
+F('me','m',"1 నిమిషం = ఎన్ని సెకన్లు?",['60','100','30','24']);
+F('me','m',"1 సంవత్సరం = ఎన్ని రోజులు?",['365','360','300','12']);
+F('me','m',"1 క్వింటాల్ = ఎన్ని కిలోలు?",['100','1000','10','50']);
+P('me','e',"# కొలవడానికి ఏ కొలమానం వాడతాం?",[['పెన్సిల్ పొడవు','సెంటీమీటరు'],['రెండు ఊర్ల మధ్య దూరం','కిలోమీటరు'],['బియ్యం బరువు','కిలోగ్రాము'],['పాలు','లీటరు'],['గది పొడవు','మీటరు'],['బంగారం బరువు','గ్రాము'],['పెట్రోల్','లీటరు']]);
+P('me','e',"# సాధనం ఏది?",[['పొడవు కొలిచే','స్కేలు'],['బరువు తూచే','త్రాసు'],['సమయం చూపే','గడియారం'],['జ్వరం (ఉష్ణోగ్రత) కొలిచే','థర్మామీటర్'],['తేదీ, నెల చూపే','క్యాలెండర్']]);
+
+// ---------- రుచులు ----------
+P('ru','e',"# రుచి ఏమిటి?",[['చక్కెర','తీపి'],['బెల్లం','తీపి'],['తేనె','తీపి'],['లడ్డు','తీపి'],['నిమ్మకాయ','పులుపు'],['చింతపండు','పులుపు'],['పచ్చి మామిడికాయ','పులుపు'],['కాకరకాయ','చేదు'],['వేపాకు','చేదు'],['మెంతులు','చేదు'],['పచ్చిమిరపకాయ','కారం'],['మిరియాలు','కారం'],['సముద్రపు నీరు','ఉప్పు'],['వక్క','వగరు'],['పచ్చి అరటికాయ','వగరు'],['పచ్చి జామకాయ','వగరు']]);
+F('ru','m',"షడ్రుచులు అంటే ఎన్ని రుచులు?",['6','4','5','7']);
+F('ru','m',"ఉగాది పచ్చడిలో ఎన్ని రుచులు ఉంటాయి?",['6','3','8','2']);
+F('ru','e',"రుచి తెలుసుకునే అవయవం ఏది?",['నాలుక','ముక్కు','చెవి','కన్ను']);
+F('ru','m',"ఉగాది పచ్చడిలో చేదు కోసం వేసేది ఏది?",['వేప పువ్వు','బెల్లం','చింతపండు','ఉప్పు']);
+F('ru','m',"ఉగాది పచ్చడిలో తీపి కోసం వేసేది ఏది?",['బెల్లం','వేప పువ్వు','మిరియాలు','ఉప్పు']);
+F('ru','m',"ఉగాది పచ్చడిలో పులుపు కోసం వేసేది ఏది?",['చింతపండు','బెల్లం','వేప పువ్వు','ఉప్పు']);
+
+// ---------- హద్దులు & దిక్కులు ----------
+F('ha','e',"ప్రధాన దిక్కులు ఎన్ని?",['4','8','2','6']);
+P('ha','e',"#",[['సూర్యుడు అస్తమించే (మునిగే) దిక్కు ఏది?','పడమర'],['తూర్పుకు ఎదురుగా ఉండే దిక్కు ఏది?','పడమర'],['ఉత్తరానికి ఎదురుగా ఉండే దిక్కు ఏది?','దక్షిణం'],['దిక్సూచి ముల్లు ఎప్పుడూ చూపే దిక్కు ఏది?','ఉత్తరం'],['తూర్పు ముఖంగా నిలబడితే కుడివైపు ఏ దిక్కు?','దక్షిణం']]);
+P('ha','m',"# మధ్య ఉండే మూల ఏది?",[['ఉత్తరం – తూర్పు','ఈశాన్యం'],['తూర్పు – దక్షిణం','ఆగ్నేయం'],['దక్షిణం – పడమర','నైరుతి'],['పడమర – ఉత్తరం','వాయవ్యం']]);
+F('ha','e',"ఆంధ్రప్రదేశ్‌కు తూర్పున ఉన్నది ఏది?",['బంగాళాఖాతం','అరేబియా సముద్రం','హిందూ మహాసముద్రం','కర్ణాటక']);
+F('ha','m',"ఆంధ్రప్రదేశ్‌కు దక్షిణాన ఉన్న రాష్ట్రం ఏది?",['తమిళనాడు','ఒడిశా','తెలంగాణ','కేరళ']);
+F('ha','m',"ఆంధ్రప్రదేశ్‌కు పడమర ఉన్న రాష్ట్రం ఏది?",['కర్ణాటక','ఒడిశా','గుజరాత్','కేరళ']);
+F('ha','e',"ఆంధ్రప్రదేశ్‌తో సరిహద్దు ఉన్న రాష్ట్రం ఏది?",['తెలంగాణ','కేరళ','గోవా','గుజరాత్']);
+F('ha','m',"ఆంధ్రప్రదేశ్‌తో సరిహద్దు లేని రాష్ట్రం ఏది?",['కేరళ','తెలంగాణ','కర్ణాటక','తమిళనాడు']);
+P('ha','m',"భారతదేశానికి # ఏది ఉంది?",[['ఉత్తరాన','హిమాలయ పర్వతాలు'],['దక్షిణాన','హిందూ మహాసముద్రం'],['పడమర','అరేబియా సముద్రం'],['తూర్పున','బంగాళాఖాతం']]);
+F('ha','m',"మూడు వైపులా నీరు ఉన్న భూభాగాన్ని ఏమంటారు?",['ద్వీపకల్పం','ద్వీపం','పర్వతం','ఎడారి']);
+F('ha','m',"నాలుగు వైపులా నీరు ఉన్న భూభాగాన్ని ఏమంటారు?",['ద్వీపం','ద్వీపకల్పం','కొండ','లోయ']);
+F('ha','e',"భారతదేశానికి పొరుగు దేశం ఏది?",['నేపాల్','అమెరికా','జపాన్','ఇంగ్లాండ్']);
+F('ha','m',"భారత్‌కు దక్షిణాన సముద్రం అవతల ఉన్న దేశం ఏది?",['శ్రీలంక','చైనా','నేపాల్','భూటాన్']);
+
+// ---------- సమయం (12 / 24 గంటలు) ----------
+P('ti','m',"# ని 24 గంటల పద్ధతిలో ఎలా రాస్తారు?",[['మధ్యాహ్నం 1:00 (1 PM)','13:00'],['మధ్యాహ్నం 2:00 (2 PM)','14:00'],['మధ్యాహ్నం 3:00 (3 PM)','15:00'],['సాయంత్రం 4:00 (4 PM)','16:00'],['సాయంత్రం 5:00 (5 PM)','17:00'],['సాయంత్రం 6:00 (6 PM)','18:00'],['రాత్రి 7:00 (7 PM)','19:00'],['రాత్రి 8:00 (8 PM)','20:00'],['రాత్రి 9:00 (9 PM)','21:00'],['రాత్రి 10:00 (10 PM)','22:00'],['రాత్రి 11:00 (11 PM)','23:00']]);
+P('ti','m',"24 గంటల సమయం # అంటే 12 గంటల పద్ధతిలో?",[['13:00','1 PM'],['15:00','3 PM'],['18:00','6 PM'],['20:00','8 PM'],['22:00','10 PM'],['23:00','11 PM']]);
+F('ti','m',"ఉదయం 9:00 (9 AM) ని 24 గంటల పద్ధతిలో?",['09:00','21:00','19:00','12:09']);
+F('ti','m',"ఉదయం 7:00 (7 AM) ని 24 గంటల పద్ధతిలో?",['07:00','19:00','17:00','12:07']);
+F('ti','e',"AM అంటే ఏ సమయం?",['మధ్యాహ్నం 12 కు ముందు','మధ్యాహ్నం 12 తర్వాత']);
+F('ti','e',"PM అంటే ఏ సమయం?",['మధ్యాహ్నం 12 తర్వాత','మధ్యాహ్నం 12 కు ముందు']);
+F('ti','m',"24 గంటల పద్ధతిలో 00:00 అంటే?",['అర్ధరాత్రి 12','మధ్యాహ్నం 12','ఉదయం 6','సాయంత్రం 6']);
+F('ti','m',"24 గంటల పద్ధతిలో 12:00 అంటే?",['మధ్యాహ్నం 12','అర్ధరాత్రి 12','ఉదయం 10','రాత్రి 10']);
+F('ti','e',"గడియారంలో ఎన్ని అంకెలు ఉంటాయి?",['12','24','10','60']);
+F('ti','e',"గడియారంలో చిన్న ముల్లు ఏమి చూపుతుంది?",['గంటలు','నిమిషాలు','సెకన్లు','రోజులు']);
+F('ti','e',"గడియారంలో పెద్ద ముల్లు ఏమి చూపుతుంది?",['నిమిషాలు','గంటలు','రోజులు','నెలలు']);
+F('ti','m',"గడియారంలో వేగంగా తిరిగే ముల్లు ఏది?",['సెకన్ల ముల్లు','గంటల ముల్లు','నిమిషాల ముల్లు']);
+F('ti','e',"అరగంట = ఎన్ని నిమిషాలు?",['30','15','45','50']);
+F('ti','e',"పావుగంట = ఎన్ని నిమిషాలు?",['15','25','30','45']);
+F('ti','m',"ముప్పావుగంట = ఎన్ని నిమిషాలు?",['45','30','75','40']);
+F('ti','m',"2 గంటలు = ఎన్ని నిమిషాలు?",['120','60','200','100']);
+F('ti','e',"సూర్యుడు ఉదయించే సమయం ఏది?",['ఉదయం','మధ్యాహ్నం','సాయంత్రం','అర్ధరాత్రి']);
+F('ti','e',"చిన్న ముల్లు 3 పై, పెద్ద ముల్లు 12 పై ఉంటే సమయం?",['3:00','12:15','12:03','3:12']);
+F('ti','e',"చిన్న ముల్లు 9 పై, పెద్ద ముల్లు 12 పై ఉంటే సమయం?",['9:00','12:45','12:09','9:12']);
+F('ti','m',"చిన్న ముల్లు 7–8 మధ్య, పెద్ద ముల్లు 6 పై ఉంటే సమయం?",['7:30','6:35','7:06','6:07']);
+F('ti','m',"చిన్న ముల్లు 4 దాటి, పెద్ద ముల్లు 3 పై ఉంటే సమయం?",['4:15','3:20','4:03','3:04']);
+
+// ---------- చిన్నవి – పెద్దవి ----------
+[['9','6','3','1'],['51','15','5','11'],['20','12','2','19'],['8','0','7','5'],['33','30','23','13'],['99','90','89','9']].forEach(o=>F('bs','e',"ఏది పెద్ద సంఖ్య?",o));
+[['453','345','354','435'],['101','100','99','98'],['762','672','627','726'],['850','508','580','805']].forEach(o=>F('bs','m',"ఏది పెద్ద సంఖ్య?",o));
+[['4','7','9','6'],['1','10','11','100'],['0','3','8','5'],['22','25','52','55']].forEach(o=>F('bs','e',"ఏది చిన్న సంఖ్య?",o));
+[['103','301','130','310'],['99','999','909','990']].forEach(o=>F('bs','m',"ఏది చిన్న సంఖ్య?",o));
+[['7 ☐ 4','>'],['3 ☐ 8','<'],['5 ☐ 5','='],['45 ☐ 54','<'],['100 ☐ 99','>'],['2 + 3 ☐ 5','=']].forEach(([q,a])=>F('bs','m',`${q} — ఖాళీలో సరైన గుర్తు ఏది?`,[a,...['>','<','='].filter(x=>x!==a)]));
+F('bs','m',"చిన్న నుండి పెద్దకు (ఆరోహణ క్రమం) ఉన్నది ఏది?",['2, 5, 8','8, 5, 2','5, 2, 8','2, 8, 5']);
+F('bs','m',"పెద్ద నుండి చిన్నకు (అవరోహణ క్రమం) ఉన్నది ఏది?",['9, 6, 1','1, 6, 9','6, 9, 1','9, 1, 6']);
+F('bs','m',"ఆరోహణ క్రమంలో ఉన్నది ఏది?",['12, 21, 30','30, 21, 12','21, 12, 30','12, 30, 21']);
+F('bs','m',"అవరోహణ క్రమంలో ఉన్నది ఏది?",['50, 40, 30','30, 40, 50','40, 50, 30','50, 30, 40']);
+F('bs','e',"ఏది పెద్దది?",['ఏనుగు','ఎలుక','పిల్లి','కోడి']);
+F('bs','e',"ఏది పెద్దది?",['బస్సు','సైకిల్','బంతి','పెన్సిల్']);
+F('bs','e',"ఏది పెద్దది?",['పుచ్చకాయ','నిమ్మకాయ','ద్రాక్ష','ఉసిరికాయ']);
+F('bs','e',"ఏది చిన్నది?",['చీమ','కుక్క','ఆవు','ఏనుగు']);
+F('bs','e',"ఏది చిన్నది?",['ఆవగింజ','కొబ్బరికాయ','మామిడికాయ','గుమ్మడికాయ']);
+F('bs','e',"ఏది పొడవైనది?",['జిరాఫీ','మేక','కుక్క','కుందేలు']);
+F('bs','e',"ఏది ఎత్తైనది?",['కొండ','ఇల్లు','చెట్టు','మనిషి']);
+F('bs','e',"ఏది బరువైనది?",['రాయి','ఈక','ఆకు','కాగితం']);
+F('bs','e',"ఏది తేలికైనది?",['ఈక','ఇటుక','రాయి','ఇనుప కడ్డీ']);
+F('bs','e',"ఏది వేగంగా పరిగెత్తుతుంది?",['చిరుతపులి','తాబేలు','నత్త','ఆవు']);
+F('bs','e',"ఏది నెమ్మదిగా నడుస్తుంది?",['నత్త','గుర్రం','కుందేలు','కుక్క']);
+F('bs','m',"ఏది ఎక్కువ బరువు?",['1 కిలో','500 గ్రాములు','250 గ్రాములు','100 గ్రాములు']);
+F('bs','m',"ఏది ఎక్కువ పొడవు?",['1 మీటరు','50 సెం.మీ','90 సెం.మీ','10 సెం.మీ']);
+const BANK = [
+  ...RAW.map(r=>({s:r[0],l:r[1],q:r[2],o:r[3],a:r[3][0],sp:r[4]||'te'})),
+  ...EXTRA
+].map((b,i)=>(b.id=i,b));
+function numOpts(a){a=+a;const c=[...new Set([a+1,a-1,a+2,a-2,a+10,a-10,a+5])].filter(x=>x>=0&&x!==a);return [String(a),...shuffle(c).slice(0,3)];}
+function getOpts(q){
+  if(q.o) return [...q.o];
+  if(q.num) return numOpts(q.a);
+  return [q.a,...shuffle(q.pool.filter(x=>x!==q.a)).slice(0,3)];
+}
+
+// ===== State =====
+let voiceOn=true, quizQs=[], idx=0, score=0, wrong=[], busy=false, screen='home', lastSettings=null;
+const $=id=>document.getElementById(id);
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+// ===== Subject chips =====
+function buildChips(){
+  let h=`<label class="chip"><input type="radio" name="subj" value="all" checked><span>🌈 అన్నీ<small>${BANK.length}</small></span></label>`;
+  for(const k in SUBJECTS){
+    const n=BANK.filter(b=>b.s===k).length;
+    h+=`<label class="chip"><input type="radio" name="subj" value="${k}"><span>${SUBJECTS[k].icon} ${SUBJECTS[k].name}<small>${n}</small></span></label>`;
+  }
+  $('subjChips').innerHTML=h;
+  document.querySelectorAll('input[type=radio]').forEach(r=>r.addEventListener('change',()=>{saveSel();updateAvail();}));
+}
+const val=n=>document.querySelector(`input[name="${n}"]:checked`).value;
+function filtered(){
+  const s=val('subj'), l=val('level');
+  return BANK.filter(b=>(s==='all'||b.s===s)&&(l==='all'||b.l===(l==='easy'?'e':'m')));
+}
+function updateAvail(){ $('availInfo').textContent=`ఈ ఎంపికలో మొత్తం ${filtered().length} ప్రశ్నలు ఉన్నాయి`; }
+function saveSel(){ store.set('raayBS_sel',JSON.stringify({subj:val('subj'),level:val('level'),qcount:val('qcount')})); }
+function loadSel(){
+  try{const s=JSON.parse(store.get('raayBS_sel')); if(!s)return;
+    ['subj','level','qcount'].forEach(n=>{const el=document.querySelector(`input[name="${n}"][value="${s[n]}"]`); if(el) el.checked=true;});
+  }catch(e){}
+}
+
+// ===== Screens =====
+function show(name){
+  ['home','quiz','result','study'].forEach(s=>$(s).classList.toggle('hidden',s!==name));
+  screen=name; window.scrollTo(0,0);
+}
+function goHome(){
+  stopSpeak(); show('home'); updateAvail();
+  const ls=store.get('raayBS_last'); $('lastScore').textContent=ls?`గత స్కోరు: ${ls}`:'';
+}
+
+// ===== Voice =====
+function stopSpeak(){ try{speechSynthesis.cancel()}catch(e){} }
+function speak(text,lang){
+  if(!voiceOn||!('speechSynthesis' in window)) return;
+  stopSpeak();
+  const u=new SpeechSynthesisUtterance(text.replace(/_+|☐/g,' ఖాళీ '));
+  const code=lang==='en'?'en-IN':'te-IN'; u.lang=code; u.rate=.88;
+  const v=speechSynthesis.getVoices().find(v=>v.lang===code)||speechSynthesis.getVoices().find(v=>v.lang.startsWith(lang==='en'?'en':'te'));
+  if(v) u.voice=v;
+  speechSynthesis.speak(u);
+}
+function updVoice(){ $('voiceBtn').textContent=voiceOn?'🔊':'🔇'; $('voiceBtn').classList.toggle('off',!voiceOn); }
+
+// ===== Quiz =====
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function startQuiz(){
+  let seen={};try{seen=JSON.parse(store.get('raayBS_seen'))||{}}catch(e){}
+  const pool=shuffle([...filtered()]).sort((x,y)=>(seen[x.id]||0)-(seen[y.id]||0)); // కొత్తవి ముందు
+  if(!pool.length){alert('ఈ ఎంపికలో ప్రశ్నలు లేవు');return;}
+  quizQs=pool.slice(0,Math.min(parseInt(val('qcount')),pool.length));
+  run();
+}
+function run(){ try{const seen=JSON.parse(store.get('raayBS_seen'))||{};quizQs.forEach(q=>seen[q.id]=(seen[q.id]||0)+1);store.set('raayBS_seen',JSON.stringify(seen));}catch(e){}
+  idx=0;score=0;wrong=[];show('quiz');loadQ(); }
+function loadQ(){
+  busy=false; const q=quizQs[idx];
+  $('qProg').textContent=`${idx+1} / ${quizQs.length}`;
+  $('qBar').style.width=(idx/quizQs.length*100)+'%';
+  $('qScore').textContent='⭐ '+score;
+  $('qTag').textContent=SUBJECTS[q.s].icon+' '+SUBJECTS[q.s].name+' · '+(q.l==='e'?'సులభం':'మధ్యస్థం');
+  $('qText').textContent=q.q;
+  $('opts').innerHTML='';
+  shuffle(getOpts(q)).forEach((o,i)=>{
+    const b=document.createElement('button'); b.className='opt';
+    b.innerHTML=`<span class="n">${i+1}.</span><span></span>`; b.lastChild.textContent=o;
+    b.dataset.v=o; b.onclick=()=>answer(o,b); $('opts').appendChild(b);
+  });
+  speak(q.q,q.sp);
+}
+function answer(o,btn){
+  if(busy)return; busy=true;
+  const q=quizQs[idx], all=[...document.querySelectorAll('.opt')];
+  all.forEach(b=>b.disabled=true);
+  let wait=1500;
+  if(o===q.a){ btn.classList.add('ok'); score++; speak(q.sp==='en'?'Correct! Very good!':'సరైన జవాబు! శభాష్!',q.sp); }
+  else{
+    btn.classList.add('bad'); all.find(b=>b.dataset.v===q.a).classList.add('ok');
+    wrong.push({q,user:o}); wait=2800;
+    speak(q.sp==='en'?'Wrong. Correct answer is '+q.a:'తప్పు. సరైన జవాబు '+q.a,q.sp);
+  }
+  $('qScore').textContent='⭐ '+score;
+  setTimeout(()=>{ idx++; idx<quizQs.length?loadQ():results(); },wait);
+}
+function results(){
+  const n=quizQs.length, p=score/n;
+  $('resTitle').textContent=p===1?'అద్భుతం! 🏆':p>=.6?'బాగా ఆడావు! 👍':'మళ్ళీ ప్రయత్నించు! 💪';
+  $('resStars').textContent=p===1?'⭐⭐⭐':p>=.6?'⭐⭐':p>0?'⭐':'';
+  $('resScore').textContent=`${score} / ${n}`;
+  const d=new Date(); store.set('raayBS_last',`${score}/${n} (${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()})`);
+  const list=$('mistList'); list.innerHTML='';
+  wrong.forEach(w=>{
+    const div=document.createElement('div'); div.className='mist';
+    div.innerHTML='<b></b><div class="red">నీ జవాబు: <s></s></div><div class="grn">సరైనది: <span></span></div>';
+    div.querySelector('b').textContent=w.q.q; div.querySelector('s').textContent=w.user; div.querySelector('.grn span').textContent=w.q.a;
+    list.appendChild(div);
+  });
+  $('mistCard').classList.toggle('hidden',!wrong.length);
+  $('retryBtn').classList.toggle('hidden',!wrong.length);
+  show('result');
+  speak(`నీ స్కోరు ${n} కి ${score}`,'te');
+}
+
+// ===== Study mode =====
+function study(){
+  const items=filtered(); let h='', cur='';
+  items.forEach((b,i)=>{
+    if(b.s!==cur){cur=b.s;h+=`<div class="subj-head">${SUBJECTS[b.s].icon} ${SUBJECTS[b.s].name}</div>`;}
+    h+=`<div class="study-row"><span class="num">${i+1}.</span><div class="q"><div class="qq"></div><div class="a"></div></div><button data-id="${b.id}" aria-label="విను">🔊</button></div>`;
+  });
+  $('studyList').innerHTML=h||'<p class="muted">ప్రశ్నలు లేవు</p>';
+  const rows=$('studyList').querySelectorAll('.study-row');
+  items.forEach((b,i)=>{rows[i].querySelector('.qq').textContent=b.q; rows[i].querySelector('.a').textContent='✅ '+b.a;});
+  $('studyList').querySelectorAll('button').forEach(bt=>bt.onclick=()=>{const b=BANK[bt.dataset.id]; const was=voiceOn; voiceOn=true; speak(b.q+' . '+b.a,b.sp); voiceOn=was;});
+  $('studyTitle').textContent=`📖 ప్రశ్న – జవాబు (${items.length})`;
+  show('study');
+}
+
+// ===== Events =====
+$('voiceBtn').onclick=()=>{voiceOn=!voiceOn;store.set('raayBS_voice',voiceOn);updVoice(); if(!voiceOn)stopSpeak(); else if(screen==='quiz'&&!busy)speak(quizQs[idx].q,quizQs[idx].sp);};
+$('startBtn').onclick=startQuiz;
+$('studyBtn').onclick=study;
+$('replayBtn').onclick=()=>{const q=quizQs[idx]; if(q){const was=voiceOn;voiceOn=true;speak(q.q,q.sp);voiceOn=was;}};
+$('retryBtn').onclick=()=>{quizQs=shuffle(wrong.map(w=>w.q));run();};
+$('againBtn').onclick=startQuiz;
+$('homeBtn').onclick=goHome; $('homeTop').onclick=goHome; $('studyHome').onclick=goHome;
+$('printBtn').onclick=()=>window.print();
+
+// TV remote / keyboard
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&window.parent===window){e.preventDefault();goHome();return;} // యాప్ లోపల బ్యాక్ = rvBack
+  if(screen==='quiz'&&['1','2','3','4'].includes(e.key)){const b=document.querySelectorAll('.opt')[+e.key-1]; if(b&&!b.disabled){b.focus();b.click();} return;}
+  if(['ArrowDown','ArrowRight','ArrowUp','ArrowLeft'].includes(e.key)){
+    const f=[...document.querySelectorAll('button:not([disabled]),input[type=radio],a')].filter(el=>{
+      const t=el.type==='radio'?el.nextElementSibling:el; return t.offsetParent!==null;});
+    // only one radio per group needs focus stop: keep all for simplicity
+    let i=f.indexOf(document.activeElement);
+    i=(e.key==='ArrowDown'||e.key==='ArrowRight')?(i+1)%f.length:(i-1+f.length)%f.length;
+    e.preventDefault(); f[i].focus(); if(f[i].type==='radio'){f[i].checked=true;f[i].dispatchEvent(new Event('change'));}
+  }
+});
+
+// యాప్ బ్యాక్ బటన్: క్విజ్/ఫలితం/చదువు పేజీలో ఉంటే మొదటి పేజీకి (true), మొదటి పేజీలో ఉంటే false = యాప్ టూల్ మూస్తుంది
+window.rvBack=function(){ if(screen!=='home'){goHome();return true;} return false; };
+// Init
+(function(){
+  const v=store.get('raayBS_voice'); if(v!==null) voiceOn=v==='true';
+  updVoice(); buildChips(); loadSel(); goHome();
+  if('speechSynthesis' in window) speechSynthesis.onvoiceschanged=()=>{};
+})();
+</script>
+</body>
+</html>
