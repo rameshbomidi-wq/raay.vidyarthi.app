@@ -6203,7 +6203,7 @@ function ansCls(){return (view==='teacher'||param.ak)?(TBE.c||3):(S.cur?+S.cur.c
 function ansFile(u){return String(u||'').split('/').pop();}
 function ansRaw(u,pg){const A=window.RAAY_ANS[ansCls()];return A&&A[ansFile(u)]?A[ansFile(u)][pg]||null:null;}
 function ansPage(u,pg){const r=ansRaw(u,pg);if(!r)return null;if(Array.isArray(r))return r.map(unz);if(!r.e)return null;const x=akOpen(ansCls()+'|'+ansFile(u)+'|'+pg,r,()=>{if(view==='book'){akShowBtn();}});return Array.isArray(x)?x:null;}
-function ansLessonOf(u,pg){const c=ansCls();for(const s of learnSubs(c))for(const L of tbLes(c,s)){const R=akRange(L);if(R&&ansFile(R.f)===ansFile(u)&&pg>=R.a&&pg<=R.b)return {s,L};}return null;}
+function ansLessonOf(u,pg){const c=ansCls();for(const s of learnSubs(c))for(const L of tbLes(c,s)){const R=akRange(L);if(R&&ansFile(R.f)===ansFile(u)&&pg>=R.a&&pg<=R.b)return {s,L};const T=L.wb&&L.wb.tb?akRange({wb:L.wb.tb}):null;if(T&&ansFile(T.f)===ansFile(u)&&pg>=T.a&&pg<=T.b)return {s,L};}return null;}
 function wbaOpen(c,ln){const r=S.ak.find(x=>x.id==='akl_'+c+'_'+ln&&!x.del);return !!(r&&r.on);}
 function wbaBook(c,s){const r=S.ak.find(x=>x.id==='akb_'+c+'_'+s&&!x.del);return !!(r&&r.on);}
 async function akBookLock(s,on){const c=TBE.c,ls=tbLes(c,s).filter(L=>akRange(L));if(!ls.length)return;

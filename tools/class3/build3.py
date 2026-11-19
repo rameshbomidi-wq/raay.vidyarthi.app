@@ -27,7 +27,18 @@ for f in sorted(glob.glob(f'{H}/ch/*.py')):
         lines = [p.strip() for it in items for p in it.split(' | ')]
         t = f'{title} (పుట {pr(pg)})'; tg.append([t, lines]); ws.append(t)
         A.setdefault(str(pg), []).extend([f'— {title} —'] + lines)
-    W['ws'] = ws; L['wb'] = W; L['tg'] = tg + list(L.get('tg', []))
+    W['ws'] = ws
+    wf = f'{H}/wb/w{L["id"][-1]}.py' if L['id'].startswith('ma') else None
+    if wf and os.path.exists(wf):  # సెమ్-2 గణితం వర్క్‌బుక్ (PDF = ముద్రిత + 4; ఇంగ్లీష్/తెలుగు పేజీలు జతలు)
+        wm = load(wf); WBK = 'Class3_Maths_Workbook_Sem2.pdf'; WA = ANS.setdefault(WBK, {}); wa, wb_ = wm.WB
+        W = {k: v for k, v in W.items() if k not in ('lb',)}; W.update(pg=f'{wa - 4}–{wb_ - 4}', f=f'books/3/{WBK}', p=wa)
+        wws = []
+        for pgs, title, items in wm.WSEC:
+            lines = [q.strip() for it in items for q in it.split(' | ')]
+            t = f'📒 {title} (వర్క్‌బుక్ పుట {"/".join(str(x - 4) for x in pgs)})'; tg.append([t, lines]); wws.append(t)
+            for pg in pgs: WA.setdefault(str(pg), []).extend([f'— {title} —'] + lines)
+        W['ws'] = wws; W['tb'] = {'f': f'books/3/{bk}', 'p': a, 'pg': f'{pr(a)}–{pr(b)}', 'ws': ws}
+    L['wb'] = W; L['tg'] = tg + list(L.get('tg', []))
     assert len(L['qz']) >= 10, L['id']
     for z in L['qz'] + W.get('qz', []): assert len(z) == 5 and len(set(z[1:])) == 4, (L['id'], z)
     out.setdefault(s, []).append(L)
