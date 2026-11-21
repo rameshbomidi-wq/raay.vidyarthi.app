@@ -3113,7 +3113,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${view==='home'?`<button class="ib hstar" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐<small>${stars()}</small></button><button class="ib hav" onclick="go('avatar')" aria-label="బొమ్మ మార్చు">${avOf(S.cur.n)}</button>`:''}${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.21-1';
+const APPV='2026.11.22-1';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -5253,21 +5253,22 @@ function qpSrc(f){const c=+f.c,s=f.s,mi=f.med==='en'?1:0,lang=QP_LANG.includes(s
   if(s==='mat')out.push({k:'gm',auto:1,d:2,b:'A',t:'gen',st:'',fr:true,nw:3,mk:()=>{const g=genMath(c);return {q:g.q,a:String(g.a),w:(g.o||[]).map(String).filter(x=>x!==String(g.a)),fr:true};}});}
  if(!f.t||f.t==='tball'||String(f.t).startsWith('tb:')){tbFull(c,s);
   qpTbLes(c,s).filter(L=>!f.t||f.t==='tball'||'tb:'+L.id===f.t).forEach(L=>{
-   const mc=(arr,tag,b)=>(arr||[]).forEach((x,i)=>{if(!Array.isArray(x)||!x[0]||x[1]==null||/⟦/.test(x.join(' ')))return;const w=x.slice(2).map(String).filter(v=>v.trim());
-    out.push({k:'x'+L.id+tag+i,d:2,b,t:f.t,st:'',fr:false,nw:w.length,mk:()=>({q:String(x[0]),a:String(x[1]),w,fr:false})});});
-   mc(L.qz,'z','R');mc(L.wb&&L.wb.qz,'w','U');
-   (L.qa||[]).forEach((x,i)=>{if(!Array.isArray(x)||!x[0]||!x[1])return;const q=String(x[0]),a=String(x[1]).trim();if(/⟦/.test(q+a)||a.length>40||/\n/.test(a))return;
-    out.push({k:'x'+L.id+'a'+i,d:2,b:'U',t:f.t,st:'',fr:true,nw:0,mk:()=>({q,a,w:[],fr:true})});});});}
+   const st='tb:'+L.id,ln=(L.no!=null&&L.no!==''?L.no+'. ':'')+String(L.t||'');
+   const mc=(arr,tag,b,d0)=>(arr||[]).forEach((x,i)=>{if(!Array.isArray(x)||!x[0]||x[1]==null||/⟦/.test(x.join(' ')))return;const w=x.slice(2).map(String).filter(v=>v.trim());
+    const q=String(x[0]),d=d0?(q.length>90||String(x[1]).length>30?3:d0):(q.length>70?2:1);out.push({k:'x'+L.id+tag+i,tb:1,ln,d,b:d0?(d>2?'A':b):(d>1?'U':'R'),t:f.t,st,fr:false,nw:w.length,mk:()=>({q,a:String(x[1]),w,fr:false})});});
+   mc(L.qz,'z','R');mc(L.wb&&L.wb.qz,'w','U',2);
+   (L.qa||[]).forEach((x,i)=>{if(!Array.isArray(x)||!x[0]||!x[1])return;const q=String(x[0]),a=String(x[1]).trim();if(/⟦/.test(q+a)||a.length>60||/\n/.test(a)||a.startsWith('⁂'))return;
+    const d=a.length>25?3:2;out.push({k:'x'+L.id+'a'+i,tb:1,ln,d,b:d>2?'A':'U',t:f.t,st,fr:true,nw:0,mk:()=>({q,a,w:[],fr:true})});});});}
  live('qb').forEach(x=>{if(+x.c!==c||x.s!==s)return;if(!lang&&x.med&&x.med!==f.med)return;const st=x.t==='own'?'o:'+x.tn:(x.st||'');
   if(f.t&&x.t!==f.t)return;if(f.st&&st!==f.st)return;const w=(x.w||[]).filter(v=>String(v).trim());
   out.push({k:'t'+x.id,own:1,d:+x.d||2,b:x.b||'R',t:x.t,st,fr:x.ty==='FR'||!!x.fr,nw:x.ty==='FR'?0:w.length,mk:()=>({q:x.q,a:x.a,w,fr:x.ty==='FR'||!!x.fr})});});
  return out.filter(x=>qpTyOk(x,f.ty));}
-function qpStats(src){const st={n:0,auto:0,d:{1:0,2:0,3:0},b:{},ad:{},ab:{}};src.forEach(x=>{if(x.auto){st.auto++;st.ad[x.d]=1;st.ab[x.b]=1;}else{st.n++;st.d[x.d]++;st.b[x.b]=(st.b[x.b]||0)+1;}});return st;}
+function qpStats(src){const st={n:0,tb:0,auto:0,d:{1:0,2:0,3:0},b:{},ad:{},ab:{}};src.forEach(x=>{if(x.tb)st.tb++;if(x.auto){st.auto++;st.ad[x.d]=1;st.ab[x.b]=1;}else{st.n++;st.d[x.d]++;st.b[x.b]=(st.b[x.b]||0)+1;}});return st;}
 function qpOne(x,ty){let r;try{r=x.mk();}catch(e){r=null;}if(!r||!r.q)return null;let t=ty;if(ty==='MIX')t=x.nw>=3?'M4':x.nw>=2?'M3':'FR';
- const base={q:String(r.q),a:String(r.a),d:x.d,b:x.b,t:x.t,st:x.st,k:x.k};if(t==='FR')return Object.assign(base,{o:null});
+ const base={q:String(r.q),a:String(r.a),d:x.d,b:x.b,t:x.t,st:x.st,k:x.k};if(x.ln)base.ln=x.ln;if(t==='FR')return Object.assign(base,{o:null});
  const n=t==='M3'?2:3,w=shuffle([...new Set((r.w||[]).map(String))].filter(v=>v!==base.a)).slice(0,n);if(w.length<n)return null;return Object.assign(base,{o:shuffle([base.a].concat(w))});}
 function qpDraw(src,d,bl,used,txt,bySt,ty){const cand=src.filter(x=>(!d||x.d===d)&&(x.auto||!used.has(x.k)));if(!cand.length)return null;
- const sc=x=>(bl[x.b]>0?100:0)-(bySt[x.st]||0)*8+(x.auto?0:5)+Math.random()*12;
+ const sc=x=>(bl[x.b]>0?100:0)+(x.tb?60:0)-(bySt[x.st]||0)*(x.tb?3:8)+(x.auto?0:5)+Math.random()*12;/* 📘 పాఠ్యపుస్తక ప్రశ్నలు ముందు; పాఠాల మధ్య పంచుతాం; మిగిలినవి కొరత తీర్చడానికే */
  for(const x of cand.map(x=>[sc(x),x]).sort((a,b)=>b[0]-a[0]).map(y=>y[1]).slice(0,50))for(let k=0;k<(x.auto?8:1);k++){const q=qpOne(x,ty);if(!q||txt.has(q.q))continue;
   used.add(x.k);txt.add(q.q);bySt[x.st]=(bySt[x.st]||0)+1;if(bl[x.b]>0)bl[x.b]--;return q;}return null;}
 function qpRead(){const f=QP.f,v=id=>{const e=document.getElementById(id);return e?e.value:undefined;},set=(k,id)=>{const x=v(id);if(x!==undefined)f[k]=x;};
@@ -5327,7 +5328,7 @@ function qpMakeV(){const f=QP.f,T=qpTopics(f.c,f.s),tp=T.find(x=>x.k===f.t),src=
 <div><label>మీడియం</label><select id="qpM" onchange="qpCh('med')" ${lang?'disabled':''}>${qpOpt([['te','తెలుగు'],['en','English']],f.med)}</select></div><div><label>ప్రశ్న రకం</label><select id="qpTy" onchange="qpCh('ty')">${qpOpt(QP_TY,f.ty)}</select></div></div>
 <label>టాపిక్</label><select id="qpT" onchange="qpCh('t')"><option value="">అన్ని టాపిక్‌లు</option>${qpOpt(T.map(x=>[x.k,x.n]),f.t)}</select>
 <label>సబ్ టాపిక్</label><select id="qpST" onchange="qpCh('st')" ${tp&&tp.sub.length?'':'disabled'}><option value="">అన్ని సబ్ టాపిక్‌లు</option>${tp?qpOpt(tp.sub.map(x=>[x.k,x.n]),f.st):''}</select></div>`;
- h+=`<div class="card qpav"><div class="qpbig">అందుబాటులో ఉన్న ప్రశ్నలు: <b>${st.n}</b>${st.auto?` <span class="qpauto">+ ♾️ ఆటో (ప్రతిసారీ కొత్తవి)</span>`:''}</div>
+ h+=`<div class="card qpav"><div class="qpbig">అందుబాటులో ఉన్న ప్రశ్నలు: <b>${st.n}</b>${st.auto?` <span class="qpauto">+ ♾️ ఆటో (ప్రతిసారీ కొత్తవి)</span>`:''}</div>${st.tb?`<p class="mut" style="margin:2px 0 6px">📘 పాఠ్యపుస్తకం నుండి: <b>${st.tb}</b> – ఇవే ముందు వస్తాయి; సరిపోకపోతేనే ఇతర ప్రశ్నలు.</p>`:''}
 <div class="qpchips">${QP_D.map(([d,t])=>chip(t,st.d[d],st.ad[d])).join('')}</div><div class="qpchips">${QP_B.map(([k,t,e])=>chip(e,st.b[k]||0,st.ab[k])).join('')}</div>
 ${!st.n&&!st.auto?`<p class="ansErr" style="margin-top:8px">ఈ ఎంపికకు ప్రశ్నలు లేవు. ${+f.c>5?'6–10 తరగతులకు ప్రశ్నల బ్యాంకు త్వరలో – ఇప్పటికి “✍️ నా ప్రశ్నలు” లో మీ ప్రశ్నలు చేర్చండి.':'టాపిక్ / ప్రశ్న రకం మార్చండి.'}</p>`:''}
 <label>కావలసిన మొత్తం ప్రశ్నలు</label>${num('qpN',f.n,'10')}
@@ -5346,7 +5347,7 @@ function qpPrevV(){const qs=QP.qs,L='ABCD',f=QP.f;if(!qs.length)return '<div cla
 ${sh.length?`<p class="warn" style="margin:6px 0">⚠️ సరిపడా ప్రశ్నలు లేవు: ${sh.map(([d,n])=>dn(d)+' '+n).join(', ')} తక్కువ. టాపిక్‌ను “అన్నీ” చేయండి లేదా “✍️ నా ప్రశ్నలు” లో చేర్చండి.</p>`:''}
 ${blm.length?`<p class="mut" style="margin:4px 0">ℹ️ Bloom's: ${blm.map(([b,n])=>bn(b)+' '+n).join(', ')} స్థాయి ప్రశ్నలు ఈ టాపిక్‌లో దొరకలేదు – వేరేవి పెట్టాం.</p>`:''}
 ${qs.map((q,i)=>`<div class="qpq"><div class="qn">${i+1}</div><div class="qb"><div class="qt">${esc(q.q)}</div>${q.o?`<div class="qpo">${q.o.map((o,j)=>`<span class="${o===q.a?'ok':''}">(${L[j]}) ${esc(o)}${o===q.a?' ✓':''}</span>`).join('')}</div>`:`<div class="qpo"><span class="ok">జవాబు: ${esc(q.a)}</span></div>`}
-<div class="qptags"><span>${dn(q.d)}</span><span>${bn(q.b)}</span>${tl(q)?`<span>${esc(tl(q))}</span>`:''}${q.o?'':'<span>FR</span>'}</div></div><div class="qbtn"><button title="మార్చు" onclick="qpSwap(${i})">🔄</button><button title="తీసేయి" onclick="qpDel(${i})">✕</button></div></div>`).join('')}
+<div class="qptags"><span>${dn(q.d)}</span><span>${bn(q.b)}</span>${q.ln?`<span>📘 ${esc(q.ln)}</span>`:tl(q)?`<span>${esc(tl(q))}</span>`:''}${q.o?'':'<span>FR</span>'}</div></div><div class="qbtn"><button title="మార్చు" onclick="qpSwap(${i})">🔄</button><button title="తీసేయి" onclick="qpDel(${i})">✕</button></div></div>`).join('')}
 <button class="btn ghost sm" onclick="qpAdd()">➕ ఇంకో ప్రశ్న</button>
 <label class="ck" style="margin-top:10px"><input type="checkbox" id="qpKey" checked> 🔑 చివర జవాబుల కీ కూడా ప్రింట్ చేయి</label>
 <div class="row2"><button class="btn" onclick="qpPrintCur()">🖨️ ప్రింట్ / PDF</button><button class="btn ghost" onclick="qpStore(null)">💾 సేవ్</button></div>
