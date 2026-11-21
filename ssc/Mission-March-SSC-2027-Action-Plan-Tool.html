@@ -84,7 +84,7 @@ footer a{color:#c62828;font-weight:700;font-family:'Baloo Tamma 2';font-size:18p
 <body>
 <header>
 <button class="hb" id="mb" aria-label="మెనూ">☰</button>
-<div><h1>మిషన్ మార్చ్ SSC-2027</h1><small>A Leap towards 100% Success • Action Plan Phase-I</small></div>
+<div><h1>మిషన్ మార్చ్ SSC-2027</h1><small>A Leap towards 100% Success • Action Plan Phase-I & Phase-II (Revision)</small></div>
 <div class="sp"></div>
 <button class="hb" id="vb" title="వాయిస్ ఆన్/ఆఫ్">🔇</button>
 <button class="hb" onclick="window.print()" title="ప్రింట్">🖨️</button>
@@ -93,6 +93,7 @@ footer a{color:#c62828;font-weight:700;font-family:'Baloo Tamma 2';font-size:18p
 <nav id="menu"><h3>📋 విభాగాలు</h3>
 <button data-p="home">🏠 హోమ్ – ఈ రోజు</button>
 <button data-p="plan">📅 రోజువారీ షెడ్యూల్</button>
+<button data-p="ph2">🔁 ఫేజ్-II రివిజన్ షెడ్యూల్</button>
 <button data-p="subj">📚 సబ్జెక్ట్ వారీగా</button>
 <button data-p="exam">📝 పరీక్షలు & సెలవులు</button>
 <button data-p="tqb">📕 తెలుగు Q-Bank జవాబులు</button>
@@ -119,6 +120,7 @@ footer a{color:#c62828;font-weight:700;font-family:'Baloo Tamma 2';font-size:18p
  </div>
  <div id="list"></div>
 </section>
+<section id="p-ph2" class="sec hide"></section>
 <section id="p-subj" class="sec hide"></section>
 <section id="p-exam" class="sec hide"></section>
 <section id="p-tqb" class="sec hide"></section>
@@ -334,7 +336,7 @@ function home(){
  let tdHTML;
  if(td)tdHTML=rowHTML(td);
  else if(TODAY<pd('13-07-26'))tdHTML='<p>Action Plan 13 జూలై 2026 నుండి మొదలవుతుంది.</p>';
- else if(TODAY>pd('30-11-26'))tdHTML='<p>Phase-I (13 జూలై – 30 నవంబర్ 2026) పూర్తయింది. Phase-II షెడ్యూల్ వచ్చాక జత చేయవచ్చు.</p>';
+ else if(TODAY>pd('30-11-26'))tdHTML='<p class="note">Phase-I (13 జూలై – 30 నవంబర్ 2026) పూర్తయింది. ఇప్పుడు <b>Phase-II రివిజన్</b>:</p>'+ph2Day(TK,1);
  else tdHTML='<p>ఈ రోజు షెడ్యూల్‌లో ఏమీ లేదు.</p>';
  $('#p-home').innerHTML=`
  <div class="card"><div class="stats">
@@ -342,7 +344,7 @@ function home(){
   <div class="st" style="background:#2e7d32"><b>${done}/${study.length}</b>పూర్తయిన స్టడీ రోజులు</div>
   <div class="st" style="background:#ef6c00"><b>${prev}</b>ఇప్పటివరకు పెండింగ్</div>
  </div><div class="prog"><i style="width:${study.length?done/study.length*100:0}%"></i></div></div>
- <div class="card today"><h2>📌 ఈ రోజు – ${TODAY.getDate()} ${MN[TODAY.getMonth()]} ${TODAY.getFullYear()}</h2>${tdHTML}</div>
+ <div class="card today"><h2>📌 ఈ రోజు – ${TODAY.getDate()} ${MN[TODAY.getMonth()]} ${TODAY.getFullYear()}</h2>${tdHTML}${TODAY<=pd('30-11-26')?'<p class="note" style="margin-top:8px">🔔 01-12-2026 నుండి <b>Phase-II రివిజన్</b> (రోజుకు 6 పీరియడ్లు) – మెనూ ☰ → 🔁 ఫేజ్-II రివిజన్ షెడ్యూల్.</p>':''}</div>
  <div class="card"><h2>⏭️ తరువాత స్టడీ రోజులు</h2>${nxt.length?nxt.map(rowHTML).join(''):'<p class="note">లేవు</p>'}</div>
  <div class="card"><h2>📚 సబ్జెక్ట్ ప్రోగ్రెస్</h2>${Object.keys(SUB).filter(x=>x!=='FA'&&x!=='SA').map(c=>{const a=ALL.filter(o=>o.s===c),d=a.filter(o=>DONE[o.key]).length;return `<div style="margin:6px 0"><b style="color:${SUB[c].c}">${SUB[c].n}</b> <span class="note">${d}/${a.length}</span><div class="prog"><i style="width:${a.length?d/a.length*100:0}%;background:${SUB[c].c}"></i></div></div>`}).join('')}</div>`;
  if(VOICE&&td)sayRow(td);
@@ -395,9 +397,9 @@ function exam(){
  <div class="card"><h2>👥 కాంప్లెక్స్ మీట్ (No Study Hour)</h2>${li(cm)}</div>
  <div class="card"><h2>🎓 SSC పబ్లిక్ పరీక్షలు – మార్చి 2027</h2><p>మొదలు: <b>15-03-2027</b> (టెంటేటివ్)</p></div>`}
 // ---------- Nav ----------
-const PAGES=['home','plan','subj','exam','tqb','cqb','hqb','mqb','eqb','pqb','bqb','sqb','about'];let CUR='home';
+const PAGES=['home','plan','ph2','subj','exam','tqb','cqb','hqb','mqb','eqb','pqb','bqb','sqb','about'];let CUR='home';
 function go(p){CUR=p;PAGES.forEach(x=>$('#p-'+x).classList.toggle('hide',x!==p));document.querySelectorAll('#menu button').forEach(b=>b.classList.toggle('on',b.dataset.p===p));closeM();refresh();scrollTo(0,0)}
-function refresh(){if(CUR==='home')home();if(CUR==='plan'){chips();plan()}if(CUR==='subj')subj();if(CUR==='exam')exam();if(CUR==='tqb')tqb();if(CUR==='cqb')cqb();if(CUR==='hqb')hqb();if(CUR==='mqb')mqb();if(CUR==='eqb')eqb();if(CUR==='pqb')pqb();if(CUR==='bqb')bqb();if(CUR==='sqb')sqb()}
+function refresh(){if(CUR==='home')home();if(CUR==='ph2')ph2();if(CUR==='plan'){chips();plan()}if(CUR==='subj')subj();if(CUR==='exam')exam();if(CUR==='tqb')tqb();if(CUR==='cqb')cqb();if(CUR==='hqb')hqb();if(CUR==='mqb')mqb();if(CUR==='eqb')eqb();if(CUR==='pqb')pqb();if(CUR==='bqb')bqb();if(CUR==='sqb')sqb()}
 function openM(){$('#menu').classList.add('open');$('#ov').classList.add('show');($('#menu button.on')||$('#menu button')).focus()}
 function closeM(){$('#menu').classList.remove('open');$('#ov').classList.remove('show')}
 $('#mb').onclick=()=>$('#menu').classList.contains('open')?closeM():openM();$('#ov').onclick=closeM;
@@ -10694,6 +10696,35 @@ function bqb(){
 function openBU(u){BB.u=u;BB.q='';BB.lv=0;BB.mk=0;store.set('bbu',u);go('bqb')}
 function buByKey(k){let st=0;for(const u in BU)if((BU[u].k||'').split(',').includes(k)){if(BU[u].x!=='st')return +u;st=st||+u}return st}
 
+
+// ---------- 🔁 Phase-II రివిజన్ షెడ్యూల్ (01-12-2026 – 14-03-2027) ----------
+// 'YYMMDD|గడులు|గమనిక' – 6 గడులు (రెమెడియల్,S1,S2,S3,S4,అసెస్‌మెంట్); T/H/E/M/P/B/S; '-' లేదు; '!పరీక్ష'; '!!' = S1+S2 కలిపి; '@X' ఆదివారం/2వ శనివారం ఉదయం; '#సెలవు'
+const MM2=["261201|-,P,T,M,E,E|", "261202|T,B,H,S,M,M|", "261203|E,T,M,H,P,P|", "261204|M,P,E,B,S,S|", "261205|P,M,S,P,H,H|", "261206|@M|", "261207|S,E,M,B,T,T|", "261208|H,S,T,P,E,E|", "261209|T,E,P,B,M,M|", "261210|E,M,H,S,B,B|", "261211|M,T,P,H,S,S|", "261212|@S|రెండో శనివారం", "261213|@H|", "261214|S,M,P,B,T,T|", "261215|H,S,M,B,E,E|", "261216|P,B,P,S,M,M|", "261217|E,S,M,T,P,P|", "261218|M,H,P,B,S,S|", "261219|T,E,T,E,H,H|", "261220|@P|", "261221|S,E,P,M,T,T|", "261222|H,B,T,S,E,E|", "261223|T,S,E,H,M,M|", "261224|E,P,M,T,B,B|క్రిస్మస్ ఈవ్", "261225|#క్రిస్మస్ సెలవు|", "261226|B,M,T,S,H,H|బాక్సింగ్ డే", "261227|@E|", "261228|S,P,H,M,T,T|", "261229|H,M,T,S,E,E|", "261230|T,E,P,H,M,M|", "261231|E,M,S,T,P,P|", "270101|M,B,E,P,H,H|ఆంగ్ల నూతన సంవత్సరం", "270102|P,S,M,B,S,S|", "270103|@M|", "270104|T,T,!TELUGU – FA-3 TEST,M,!MATHS – FA-3 TEST,P|FA-3", "270105|H,H,!HINDI – FA-3 TEST,P,!PHYSICS – FA-3 TEST,S|FA-3", "270106|E,E,!ENGLISH – FA-3 TEST,S,!SOCIAL – FA-3 TEST,B|FA-3", "270107|B,B,!BIOLOGY – FA-3 TEST,M,S,M|FA-3", "270108|M,P,T,E,S,S|", "270109|-,S,H,B,T,-|🏠 SELF STUDY @ HOME", "270110|-,E,M,P,H,-|🏠 SELF STUDY @ HOME", "270111|-,B,S,T,M,-|🏠 SELF STUDY @ HOME", "270112|-,E,B,M,T,-|🏠 SELF STUDY @ HOME", "270113|-,H,S,E,P,-|🏠 SELF STUDY @ HOME", "270114|#భోగి|🏠 SELF STUDY @ HOME", "270115|#సంక్రాంతి|🏠 SELF STUDY @ HOME", "270116|#కనుమ|🏠 SELF STUDY @ HOME", "270117|-,B,S,M,H,-|🏠 SELF STUDY @ HOME", "270118|S,P,M,B,T,T|", "270119|B,S,T,P,E,E|", "270120|T,P,S,H,M,M|", "270121|H,M,E,S,B,B|", "270122|M,H,P,M,S,S|", "270123|E,T,E,T,H,H|", "270124|@B|", "270125|S,M,E,P,T,T|షబ్-ఎ-బరాత్", "270126|#గణతంత్ర దినోత్సవం|", "270127|#పాఠశాల వార్షికోత్సవం|", "270128|H,M,T,S,P,P|", "270129|M,T,P,E,H,H|", "270130|P,M,B,P,S,S|", "270131|@H|", "270201|S,E,M,P,T,T|", "270202|H,S,P,M,E,E|", "270203|T,S,P,H,M,M|", "270204|E,M,T,P,B,B|", "270205|M,P,T,B,S,S|", "270206|B,S,E,M,H,H|", "270207|@T|", "270208|T,!!First Language Pre-Final Exam,H,H,H|ప్రీ-ఫైనల్ పరీక్షలు", "270209|H,!!Second Language Pre-Final Exam,E,E,E|ప్రీ-ఫైనల్ పరీక్షలు", "270210|E,!!ENGLISH Pre-Final Exam,M,M,M|ప్రీ-ఫైనల్ పరీక్షలు", "270211|M,!!MATHEMATICS Pre-Final Exam,P,P,P|ప్రీ-ఫైనల్ పరీక్షలు", "270212|P,!!PHYSICAL SCIENCE Pre-Final Exam,B,B,B|ప్రీ-ఫైనల్ పరీక్షలు", "270213|@S|రెండో శనివారం", "270214|@B|", "270215|B,!!BIOLOGICAL SCIENCE Pre-Final Exam,S,S,S|ప్రీ-ఫైనల్ పరీక్షలు", "270216|S,!!SOCIAL SCIENCE Pre-Final Exam,M,E,E|ప్రీ-ఫైనల్ పరీక్షలు", "270217|T,!!04S / OSSC-1 Pre-Final Exam / PHYSICS STUDY,E,M,M|ప్రీ-ఫైనల్ పరీక్షలు", "270218|P,!!OSSC-2 Pre-Final Exam / MATHEMATICS STUDY,S,B,B|ప్రీ-ఫైనల్ పరీక్షలు", "270219|M,H,P,B,S,S|", "270220|E,T,E,T,H,H|", "270221|@E|", "270222|S,P,H,M,T,T|", "270223|H,S,M,T,T,T|", "270224|T,!!First Language Grand Test,H,H,H|గ్రాండ్ టెస్ట్", "270225|H,!!Second Language Grand Test,E,E,E|గ్రాండ్ టెస్ట్", "270226|E,!!ENGLISH Grand Test,M,M,M|గ్రాండ్ టెస్ట్", "270227|M,!!MATHEMATICS Grand Test,E,M,T|గ్రాండ్ టెస్ట్", "270228|@P|", "270301|S,P,E,P,P,P|జమాత్-ఉల్-విదా", "270302|P,!!PHYSICAL SCIENCE Grand Test,S,E,E|గ్రాండ్ టెస్ట్", "270303|T,M,S,B,B,B|షబ్-ఎ-ఖద్ర్", "270304|B,!!BIOLOGICAL SCIENCE Grand Test,S,S,S|గ్రాండ్ టెస్ట్", "270305|S,!!SOCIAL SCIENCE Grand Test,M,S,M|గ్రాండ్ టెస్ట్", "270306|#మహా శివరాత్రి|", "270307|-,!!04S / OSSC-1 Grand Test / TELUGU STUDY,-,-,-|గ్రాండ్ టెస్ట్", "270308|S,!!04S / OSSC-1 Grand Test / BIOLOGY STUDY,M,T,T|గ్రాండ్ టెస్ట్", "270309|H,!!OSSC-2 Grand Test / TELUGU STUDY,S,E,E|గ్రాండ్ టెస్ట్", "270310|#రంజాన్|", "270311|E,B,T,M,P,P|", "270312|M,H,P,M,S,S|", "270313|@M|రెండో శనివారం", "270314|@T|"];
+const P2S={T:'TEL',H:'HIN',E:'ENG',M:'MAT',P:'PS',B:'BS',S:'SOC'},P2Q={TEL:'tqb',HIN:'hqb',ENG:'eqb',MAT:'mqb',PS:'pqb',BS:'bqb',SOC:'sqb'};
+const P2T=[['రెమెడియల్','8:00–9:00',480,540],['సెషన్-1','9:15–10:40',555,640],['సెషన్-2','10:55–12:15',655,735],['సెషన్-3','1:05–2:30',785,870],['సెషన్-4','2:40–4:00',880,960],['అసెస్‌మెంట్','4:00–5:00',960,1020]];
+function p2Parse(r){const[k,c,rm]=r.split('|'),key='20'+k.slice(0,2)+'-'+k.slice(2,4)+'-'+k.slice(4,6),dt=new Date(+('20'+k.slice(0,2)),+k.slice(2,4)-1,+k.slice(4,6));
+ if(c[0]==='#')return{key,dt,hol:c.slice(1),rm,sl:[]};
+ if(c[0]==='@')return{key,dt,rm,sun:1,sl:[{n:'ఉదయం',t:'9:15–12:15',a:555,b:735,v:c.slice(1)}]};
+ const sl=[];let i=0;c.split(',').forEach(v=>{if(v.startsWith('!!')){sl.push({n:'సెషన్-1, 2',t:'9:15–12:15',a:555,b:735,v});i+=2}else{const T=P2T[i];sl.push({n:T[0],t:T[1],a:T[2],b:T[3],v});i++}});
+ return{key,dt,rm,sl:sl.filter(x=>x.v!=='-')}}
+const PH2=MM2.map(p2Parse);
+function p2Cell(v,btn){if(v.startsWith('!'))return `<b style="color:#b45309">📝 ${esc(v.replace(/^!+/,''))}</b>`;const c=P2S[v],s=SUB[c];if(!s)return esc(v);
+ return `<b style="color:${s.c}">${s.n}</b>${btn?` <button class="ib" style="font-size:12px;padding:2px 8px" onclick="go('${P2Q[c]}')" title="Q-Bank">📚</button>`:''}`}
+function ph2Day(key,withNext){let D=PH2.find(o=>o.key===key),pre='';
+ if(!D||D.hol){const n=PH2.find(o=>o.key>key&&!o.hol);if(!n)return '<p class="note">Phase-II షెడ్యూల్ పూర్తయింది (14-03-2027). 15-03-2027 నుండి SSC పరీక్షలు – ఆల్ ది బెస్ట్! 💪</p>';
+  pre=D?`<p>🎉 <b>${esc(D.hol)}</b> – సెలవు. తర్వాతి రోజు: <b>${dlabel(n)}</b></p>`:(key<PH2[0].key?`<p class="note">Phase-II మొదలు: <b>${dlabel(n)}</b></p>`:'');D=n}
+ const now=new Date(),mn=now.getHours()*60+now.getMinutes(),isT=D.key===TK;
+ return pre+`${D.rm?`<p><span class="tag" style="background:#fef3c7">${esc(D.rm)}</span></p>`:''}<table class="vt" style="width:100%;border-collapse:collapse;margin-top:6px">${D.sl.map(x=>{const on=isT&&mn>=x.a-10&&mn<x.b;return `<tr style="${on?'background:#dcfce7':''}"><td style="padding:6px;border-bottom:1px dashed #ccc;white-space:nowrap;width:1%"><small style="color:#64748b">${x.n}</small><br><b>${x.t}</b></td><td style="padding:6px;border-bottom:1px dashed #ccc">${p2Cell(x.v,1)}${on?' <span class="tag" style="background:#bbf7d0">ఇప్పుడు</span>':''}</td></tr>`}).join('')}</table>${D.sun?'<p class="note">ఆదివారం / సెలవు రోజు – ఉదయం స్వయం అధ్యయనం.</p>':''}`}
+function p2Short(o){if(o.hol)return `🎉 ${esc(o.hol)}`;return o.sl.map(x=>x.v.startsWith('!')?`<b style="color:#b45309">📝 ${esc(x.v.replace(/^!+/,''))}</b>`:`<span style="color:${(SUB[P2S[x.v]]||{}).c||'#333'}">${(SUB[P2S[x.v]]||{}).n||x.v}</span>`).join(' • ')}
+let P2M='all';
+function ph2(){const ms=[...new Set(PH2.map(o=>o.dt.getFullYear()*100+o.dt.getMonth()))];
+ const list=PH2.filter(o=>P2M==='all'||o.dt.getFullYear()*100+o.dt.getMonth()==P2M);
+ $('#p-ph2').innerHTML=`<div class="card today"><h2>📌 ఈ రోజు – ${TODAY.getDate()} ${MN[TODAY.getMonth()]} ${TODAY.getFullYear()}</h2>${ph2Day(TK)}</div>
+ <div class="card"><h2>🔁 Phase-II రివిజన్ షెడ్యూల్ (01-12-2026 – 14-03-2027)</h2>
+ <p class="note">పీరియడ్లు: రెమెడియల్ 8–9 • సెషన్-1 9:15–10:40 • సెషన్-2 10:55–12:15 • భోజనం • సెషన్-3 1:05–2:30 • సెషన్-4 2:40–4:00 • అసెస్‌మెంట్ 4–5. 📚 నొక్కితే ఆ సబ్జెక్టు Q-Bank జవాబులు.</p>
+ <div class="chips noprint">${[['all','అన్ని నెలలు']].concat(ms.map(m=>[m,MN[m%100]+' '+Math.floor(m/100)])).map(([m,n])=>`<button class="chip ${P2M==m?'on':''}" style="${P2M==m?'background:#0d47a1':''}" onclick="P2M=${m==='all'?"'all'":m};ph2()">${n}</button>`).join('')}</div></div>
+ ${list.map(o=>`<div class="card" style="padding:10px 12px;${o.key===TK?'outline:3px solid #2e7d32;':''}${o.hol?'background:#fff3e0;':o.sun?'background:#fafafa;':''}"><b>${dlabel(o)}</b>${o.rm&&!o.hol?` <span class="tag" style="background:#fef3c7">${esc(o.rm)}</span>`:''}<div style="margin-top:4px;font-size:14px">${p2Short(o)}</div></div>`).join('')}`;
+ if(P2M==='all'){const e=[...document.querySelectorAll('#p-ph2 .card')].find(x=>x.style.outline);if(e)setTimeout(()=>e.scrollIntoView({block:'center'}),50)}}
 
 go('home');
 </script>
