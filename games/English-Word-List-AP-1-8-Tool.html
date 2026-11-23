@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English Word List 1-8 | ఇంగ్లీష్ పదాలు నేర్చుకుందాం | రాయ్ ఎడ్యుకేషన్</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;800&family=Baloo+Tamma+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eaf7fb;--card:#fff;--ink:#23303a;--mut:#64748b;--pri:#0e9fb5;--pri2:#087789;--yel:#ffd54a;--org:#ff8a3d;--grn:#22a55a;--red:#e5484d;--pur:#7c5cff;--sh:0 6px 18px rgba(14,80,100,.13)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{font-family:'Noto Sans Telugu','Baloo Tamma 2',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column}
+button{font-family:inherit;cursor:pointer;border:0}
+.en{font-family:'Baloo Tamma 2',sans-serif}
+header{position:sticky;top:0;z-index:30;background:linear-gradient(90deg,#0e9fb5,#18b6a0);color:#fff;display:flex;align-items:center;gap:8px;padding:8px 10px;box-shadow:var(--sh)}
+header h1{font-size:1.05rem;margin:0;flex:1;line-height:1.2;font-weight:800}
+header h1 small{display:block;font-size:.72rem;font-weight:600;opacity:.9}
+.hb{background:rgba(255,255,255,.2);color:#fff;min-width:44px;height:44px;border-radius:12px;font-size:1.2rem;display:flex;align-items:center;justify-content:center;padding:0 10px}
+.hb.off{opacity:.55}
+#menu{position:fixed;inset:0 auto 0 0;width:min(320px,86vw);background:#fff;z-index:50;transform:translateX(-105%);transition:.25s;overflow:auto;box-shadow:var(--sh);padding:12px}
+#menu.open{transform:none}
+#shade{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40;display:none}
+#shade.show{display:block}
+#menu h3{margin:6px 4px 10px;color:var(--pri2)}
+.mi{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:#f3fbfd;border-radius:12px;padding:10px;margin-bottom:8px;min-height:48px;font-size:.92rem;color:var(--ink)}
+.mi b{font-size:1.4rem}
+.mi.act{background:var(--yel)}
+main{flex:1;width:100%;max-width:980px;margin:0 auto;padding:12px}
+.search{display:flex;gap:8px;margin-bottom:12px}
+.search input{flex:1;font-size:1rem;padding:12px 14px;border-radius:14px;border:2px solid #bfe7ef;font-family:inherit;min-height:46px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.sc{background:var(--card);border-radius:18px;padding:14px;box-shadow:var(--sh);text-align:left;color:var(--ink);display:flex;flex-direction:column;gap:6px;border-top:6px solid var(--c)}
+.sc .ic{font-size:2rem}
+.sc .t{font-weight:800;font-size:1.02rem}
+.sc .e{font-size:.82rem;color:var(--mut)}
+.bar{height:9px;background:#e6eef2;border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--grn);width:0}
+.small{font-size:.8rem;color:var(--mut)}
+.howto{background:#fff8dc;border-radius:16px;padding:12px 14px;margin-top:14px;font-size:.9rem;line-height:1.7}
+.sechead{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.sechead .ic{font-size:2rem}
+.sechead .t{font-weight:800;font-size:1.1rem}
+.tabs{display:flex;gap:6px;overflow:auto;padding-bottom:4px;margin-bottom:8px}
+.tab{flex:1;min-width:84px;background:#fff;border-radius:14px;padding:9px 6px;font-weight:700;font-size:.88rem;box-shadow:var(--sh);color:var(--ink);min-height:48px}
+.tab.act{background:var(--pri);color:#fff}
+.chips{display:flex;gap:6px;overflow:auto;padding:4px 0 8px}
+.chip{background:#fff;border:2px solid #bfe7ef;border-radius:20px;padding:6px 12px;white-space:nowrap;font-weight:700;min-height:40px;color:var(--ink)}
+.chip.act{background:var(--yel);border-color:var(--org)}
+.chip.done{border-color:var(--grn)}
+/* flash card */
+.card{background:#fff;border-radius:22px;box-shadow:var(--sh);padding:18px 14px;text-align:center;position:relative}
+.card .cnt{position:absolute;top:10px;left:14px;font-size:.85rem;color:var(--mut);font-weight:700}
+.card .star{position:absolute;top:6px;right:8px;font-size:1.6rem;background:none;min-width:44px;min-height:44px}
+.emo{font-size:4.2rem;line-height:1.1;min-height:4.6rem}
+.tiles{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tl{font-family:'Baloo Tamma 2',sans-serif;font-size:clamp(1.9rem,8vw,3rem);font-weight:800;min-width:1.25em;padding:2px 6px;border-radius:12px;background:#f1f5f9;color:#1e293b;line-height:1.25;border-bottom:4px solid #cbd5e1}
+.tl.v{background:#ffe1e1;color:#c62828;border-color:#ef9a9a}
+.tl.p{background:#dff6e8;color:#137a3e;border-color:#86d7a5}
+.tl.p2{background:#e7e1ff;color:#5b3fd6;border-color:#b3a3ff}
+.tl.me{background:#fff1c9;color:#b26a00;border-color:#ffd277}
+.pron{font-size:1.6rem;font-weight:800;color:var(--pri2)}
+.mean{font-size:1.35rem;font-weight:700;margin-top:4px;background:#fff8dc;border-radius:14px;padding:8px;display:inline-block;min-width:60%}
+.mean.hid{filter:blur(8px);cursor:pointer}
+.hint{font-size:.82rem;color:var(--mut);margin-top:6px}
+.ctrls{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:12px}
+.btn{background:var(--pri);color:#fff;border-radius:14px;padding:10px 14px;font-weight:700;font-size:.95rem;min-height:48px;min-width:48px}
+.btn.y{background:var(--yel);color:#3b2f00}
+.btn.o{background:var(--org)}
+.btn.g{background:var(--grn)}
+.btn.w{background:#fff;color:var(--ink);border:2px solid #bfe7ef}
+.btn.big{font-size:1.4rem;min-width:64px}
+.ap{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:10px;flex-wrap:wrap;font-size:.88rem}
+select{font-family:inherit;font-size:.95rem;padding:8px;border-radius:10px;border:2px solid #bfe7ef;min-height:44px;background:#fff}
+.legend{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;font-size:.78rem;margin-top:8px;color:var(--mut)}
+.legend span i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:middle;margin-right:3px}
+/* table */
+table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:16px;overflow:hidden;box-shadow:var(--sh)}
+th{background:var(--yel);padding:10px 6px;font-size:.92rem}
+td{padding:8px 6px;border-top:1px solid #e8f1f4;text-align:center;font-size:1rem}
+td.w{font-family:'Baloo Tamma 2';font-weight:800;font-size:1.15rem;text-align:left}
+tr:nth-child(even) td{background:#f5fcfe}
+td .sp{background:#e0f6fa;border-radius:10px;min-width:40px;min-height:40px;font-size:1.1rem}
+tr.lrn td.w::after{content:' ⭐';font-size:.8rem}
+/* quiz */
+.qopts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.qo{background:#f3fbfd;border:3px solid #bfe7ef;border-radius:16px;padding:12px 8px;font-size:1.1rem;font-weight:700;min-height:62px;color:var(--ink)}
+.qo.en{font-size:1.4rem}
+.qo.ok{background:#d9f7e4;border-color:var(--grn)}
+.qo.no{background:#ffe1e1;border-color:var(--red)}
+.qtype{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.qt{background:#fff;border-radius:18px;padding:14px;box-shadow:var(--sh);text-align:left;font-size:.95rem;color:var(--ink);min-height:70px}
+.qt b{font-size:1.6rem;margin-right:6px}
+.res{text-align:center}
+.res .big{font-size:3rem}
+.wrong{text-align:left;margin-top:10px}
+.wrong div{background:#fff3f3;border-radius:10px;padding:8px;margin:6px 0}
+/* spell */
+.slots{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin:12px 0}
+.slot{width:2.2em;height:2.4em;border-radius:12px;border:3px dashed #9fd8e3;display:flex;align-items:center;justify-content:center;font-family:'Baloo Tamma 2';font-weight:800;font-size:1.6rem;background:#fff}
+.slot.f{border-style:solid;background:#e0f6fa}
+.pool{display:flex;justify-content:center;flex-wrap:wrap;gap:8px}
+.pk{width:2.4em;height:2.4em;border-radius:14px;background:var(--yel);font-family:'Baloo Tamma 2';font-weight:800;font-size:1.6rem;color:#3b2f00;box-shadow:0 4px 0 #e0a800}
+.pk:disabled{opacity:.25}
+.msg{font-size:1.3rem;font-weight:800;min-height:2rem;margin-top:8px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#23303a;color:#fff;padding:10px 16px;border-radius:12px;z-index:60;display:none;font-size:.9rem}
+footer{text-align:center;padding:16px 10px 22px;font-size:.88rem;color:var(--mut)}
+footer a{color:var(--pri2);font-weight:800;text-decoration:none;font-size:1.05rem}
+.hidden{display:none!important}
+@media(max-width:420px){.qopts{grid-template-columns:1fr}.btn{padding:10px 11px;font-size:.88rem}}
+@media print{header,#menu,#shade,.tabs,.chips,.search,.ctrls,.ap,.noprint,td .sp,th.sp{display:none!important}body{background:#fff}main{max-width:none;padding:0}table{box-shadow:none}td,th{border:1px solid #999;padding:5px}.ptitle{display:block!important;text-align:center;font-size:18pt;margin:0 0 8px}@page{size:A4;margin:12mm}}
+.ptitle{display:none}
+</style>
+</head>
+<body>
+<header>
+  <button class="hb" id="mbtn" title="మెనూ (Esc)">☰</button>
+  <h1>ఇంగ్లీష్ పదాలు నేర్చుకుందాం<small class="en">English Word List 1-8 · Reading & Meaning</small></h1>
+  <button class="hb" id="vbtn" title="స్వయంగా చదువు">🔊</button>
+  <button class="hb" id="hbtn" title="హోమ్">🏠</button>
+</header>
+<div id="shade"></div>
+<nav id="menu"></nav>
+<main id="app"></main>
+<div class="toast" id="toast"></div>
+<footer>
+  <a href="https://raayeducation.in" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br>
+  <span class="small">Raay Education · పిల్లల కోసం ఇంగ్లీష్ పదాల సాధన</span>
+</footer>
+<script>
+const DATA=[{"id":1,"te":"మూడు అక్షరాల పదాలు","en":"Three Letter Words","ic":"🔤","w":[["Ink","ఇంక్","సిరా","🖋️"],["Dam","డ్యామ్","ఆనకట్ట","🏞️"],["Lab","ల్యాబ్","ప్రయోగశాల","🧪"],["Jet","జెట్","జెట్ విమానం","✈️"],["Pet","పెట్","పెంపుడు జంతువు","🐕"],["Vet","వెట్","పశువైద్యుడు","🩺"],["Fin","ఫిన్","చేప రెక్క","🐟"],["Zoo","జూ","జంతు ప్రదర్శనశాల","🦁"],["Mop","మాప్","తుడుపుకర్ర","🧹"],["Web","వెబ్","సాలెగూడు","🕸️"],["Fig","ఫిగ్","అంజీర పండు","🍈"],["Nib","నిబ్","పెన్ను పాళీ","🖊️"],["Toy","టాయ్","బొమ్మ","🧸"],["Cub","కబ్","సింహం పిల్ల","🦁"],["Mud","మడ్","బురద","🟤"],["Bee","బీ","తేనెటీగ","🐝"],["Lap","ల్యాప్","ఒడి","🧎"],["Jam","జామ్","పండ్ల తీపి పాకం (జామ్)","🍓"],["Hut","హట్","గుడిసె","🛖"],["Ant","ఆంట్","చీమ","🐜"],["Tap","ట్యాప్","నీటి కుళాయి","🚰"],["Van","వ్యాన్","వ్యాన్ (బండి)","🚐"],["Wax","వ్యాక్స్","మైనం","🕯️"],["Bin","బిన్","చెత్త డబ్బా","🗑️"],["Lid","లిడ్","మూత","🫙"],["Cot","కాట్","మంచం","🛏️"],["Cop","కాప్","పోలీసు","👮"],["Kid","కిడ్","పిల్లవాడు","🧒"],["Net","నెట్","వల","🥅"],["Hen","హెన్","కోడి పెట్ట","🐔"],["Den","డెన్","గుహ (జంతువుల)","🕳️"],["Pan","ప్యాన్","పెనము","🍳"],["Map","మ్యాప్","పటం","🗺️"],["Bug","బగ్","పురుగు","🐛"],["Wet","వెట్","తడి","💧"],["Pot","పాట్","కుండ","🏺"],["Bat","బ్యాట్","గబ్బిలం / బ్యాట్","🦇"],["Sun","సన్","సూర్యుడు","☀️"],["Fan","ఫ్యాన్","ఫ్యాను","🌀"],["Cap","క్యాప్","టోపీ","🧢"],["Bad","బ్యాడ్","చెడ్డ","👎"],["Man","మ్యాన్","మనిషి","👨"],["Cat","క్యాట్","పిల్లి","🐈"],["Rat","ర్యాట్","ఎలుక","🐀"],["Hat","హ్యాట్","టోపీ","🎩"],["Bag","బ్యాగ్","సంచి","🎒"],["Nap","న్యాప్","కునుకు (చిన్న నిద్ర)","😴"],["Dab","డ్యాబ్","మెల్లగా అద్దడం",""],["Fat","ఫ్యాట్","లావు",""],["Sad","స్యాడ్","విచారం","😢"],["Gap","గ్యాప్","ఖాళీ / అంతరం",""],["Max","మ్యాక్స్","గరిష్ఠం",""],["Mad","మ్యాడ్","పిచ్చి",""],["Wag","వ్యాగ్","తోక ఊపడం","🐕"],["Pad","ప్యాడ్","ప్యాడ్ (మెత్తని దిండు)",""],["Pat","ప్యాట్","మెల్లగా తట్టడం",""],["Tag","ట్యాగ్","గుర్తు చీటీ","🏷️"],["Mat","మ్యాట్","చాప",""],["Bed","బెడ్","మంచం","🛏️"],["Red","రెడ్","ఎరుపు","🔴"],["Leg","లెగ్","కాలు","🦵"],["Beg","బెగ్","అడుక్కోవడం",""],["Ten","టెన్","పది","🔟"],["Set","సెట్","అమర్చు",""],["Sip","సిప్","కొద్దిగా తాగడం","🥤"],["Tip","టిప్","చిట్కా / చివర",""],["Win","విన్","గెలుపు","🏆"],["Lip","లిప్","పెదవి","👄"],["Dig","డిగ్","తవ్వడం","⛏️"],["Big","బిగ్","పెద్ద","🐘"],["Six","సిక్స్","ఆరు","6️⃣"],["Hit","హిట్","కొట్టడం",""],["Dim","డిమ్","మసకగా",""],["Fix","ఫిక్స్","సరిచేయడం","🔧"],["Mid","మిడ్","మధ్య",""],["Mix","మిక్స్","కలపడం","🥣"],["Fit","ఫిట్","సరిపోయే / ఆరోగ్యంగా ఉండే",""],["Pig","పిగ్","పంది","🐖"],["Dip","డిప్","ముంచడం",""],["Sit","సిట్","కూర్చోవడం","🪑"],["Rob","రాబ్","దోచుకోవడం",""],["Hot","హాట్","వేడిగా","🔥"],["Boy","బాయ్","అబ్బాయి","👦"],["Joy","జాయ్","ఆనందం","😄"],["Fog","ఫాగ్","పొగమంచు","🌫️"],["Dog","డాగ్","కుక్క","🐕"],["God","గాడ్","దేవుడు","🙏"],["Job","జాబ్","ఉద్యోగం / పని","💼"],["Top","టాప్","పైభాగం","🔝"],["Fox","ఫాక్స్","నక్క","🦊"],["Men","మెన్","పురుషులు","👨‍👨‍👦"],["Tub","టబ్","తొట్టి","🛁"],["Nut","నట్","గింజ","🥜"],["Fun","ఫన్","సరదా / వినోదం","🎉"]]},{"id":2,"te":"నాలుగు అక్షరాల పదాలు","en":"Four Letter Words","ic":"🔡","w":[["Curd","కర్డ్","పెరుగు","🥛"],["Lung","లంగ్","ఊపిరితిత్తి","🫁"],["Pant","ప్యాంట్","ప్యాంటు","👖"],["Lamb","ల్యాంబ్","గొర్రె పిల్ల","🐑"],["King","కింగ్","రాజు","🤴"],["Lamp","ల్యాంప్","దీపం","🪔"],["Ring","రింగ్","ఉంగరం","💍"],["Corn","కార్న్","మొక్కజొన్న","🌽"],["Dung","డంగ్","పేడ",""],["Junk","జంక్","చెత్త",""],["Horn","హార్న్","కొమ్ము","🐂"],["Band","బ్యాండ్","వాద్యబృందం","🥁"],["Hand","హ్యాండ్","చేయి","✋"],["Sand","స్యాండ్","ఇసుక","🏖️"],["Tank","ట్యాంక్","నీటి తొట్టి / యుద్ధ ట్యాంకు","🛢️"],["Belt","బెల్ట్","పట్టీ",""],["Bend","బెండ్","వంగడం",""],["Lend","లెండ్","అప్పు ఇవ్వడం",""],["Melt","మెల్ట్","కరగడం","🧊"],["Tent","టెంట్","డేరా","⛺"],["Gift","గిఫ్ట్","బహుమతి","🎁"],["Lift","లిఫ్ట్","ఎత్తడం","🏋️"],["Limp","లింప్","కుంటడం",""],["Milk","మిల్క్","పాలు","🥛"],["Sing","సింగ్","పాట పాడటం","🎤"],["Wind","విండ్","గాలి","🌬️"],["Wing","వింగ్","రెక్క","🪽"],["Wink","వింక్","కన్ను కొట్టడం","😉"],["Bomb","బాంబ్","బాంబు","💣"],["Born","బార్న్","పుట్టిన","👶"],["Cork","కార్క్","బిరడా","🍾"],["Dorm","డార్మ్","వసతి గృహం","🏠"],["Long","లాంగ్","పొడవైన","📏"],["Pond","పాండ్","చెరువు","🏞️"],["Tong","టాంగ్","పటకారు",""],["Burn","బర్న్","కాలడం","🔥"],["Hump","హంప్","మూపురం / గూని","🐪"],["Hunt","హంట్","వేట","🏹"],["Hurt","హర్ట్","గాయం / నొప్పి","🤕"],["Jump","జంప్","దూకడం","🦘"],["Turn","టర్న్","మలుపు","↪️"],["Bang","బ్యాంగ్","పెద్ద శబ్దం","💥"],["Gang","గ్యాంగ్","గుంపు",""],["Ramp","ర్యాంప్","ఏటవాలు దారి",""],["Tact","ట్యాక్ట్","నేర్పుగా వ్యవహరించడం",""],["Tusk","టస్క్","ఏనుగు దంతం","🐘"],["Disc","డిస్క్","పలక / చక్రం","💿"],["Link","లింక్","అనుసంధానం","🔗"],["Lint","లింట్","నూలు పోగు",""],["Sift","సిఫ్ట్","జల్లించడం",""],["Tilt","టిల్ట్","వంచడం",""],["Wilt","విల్ట్","వాడిపోవడం","🥀"],["Rant","ర్యాంట్","కోపంగా మాట్లాడటం",""],["Land","ల్యాండ్","భూమి","🌍"],["Song","సాంగ్","పాట","🎵"],["Rank","ర్యాంక్","స్థానం / హోదా","🥇"],["Font","ఫాంట్","అక్షర శైలి",""],["Soft","సాఫ్ట్","మెత్తని","🧸"],["Damp","డ్యాంప్","తేమగా",""],["Form","ఫార్మ్","రూపం / ఫారం","📝"],["Honk","హాంక్","హారన్ శబ్దం","📯"],["Cord","కార్డ్","తాడు / త్రాడు",""],["Torn","టార్న్","చిరిగిన",""],["Sort","సార్ట్","రకం",""],["Camp","క్యాంప్","శిబిరం","🏕️"],["Hang","హ్యాంగ్","వేలాడదీయడం",""],["Lent","లెంట్","అప్పుగా ఇచ్చిన",""],["Vent","వెంట్","గాలి బయటకు వెళ్ళే రంధ్రం",""],["Bond","బాండ్","బంధం",""],["Held","హెల్డ్","పట్టుకున్న",""],["Bent","బెంట్","వంగిన",""],["Next","నెక్స్ట్","తరువాతి","⏭️"],["Dump","డంప్","పారవేయడం",""],["Lump","లంప్","ముద్ద",""],["Weld","వెల్డ్","వెల్డింగ్ చేయడం",""],["Bump","బంప్","గుద్దుకోవడం",""],["Burp","బర్ప్","త్రేన్పు",""],["Welt","వెల్ట్","దెబ్బ గుర్తు / వాపు",""],["Gulf","గల్ఫ్","అఖాతం",""],["Rent","రెంట్","అద్దె",""],["Deft","డెఫ్ట్","నేర్పరి / చురుకైన",""],["Dent","డెంట్","సొట్ట",""],["Hung","హంగ్","వేలాడదీసిన",""],["Gulp","గల్ప్","గుటక",""],["Fund","ఫండ్","నిధి","💰"],["Help","హెల్ప్","సహాయం","🤝"],["Pelt","పెల్ట్","జంతు చర్మం",""],["Film","ఫిల్మ్","సినిమా / పలుచని పొర","🎬"],["Sent","సెంట్","పంపిన","📤"],["Numb","నమ్","స్పర్శ తెలియని",""],["Pink","పింక్","గులాబీ రంగు","🩷"],["Silk","సిల్క్","పట్టు",""],["Dumb","డమ్","మూగ",""],["Pulp","పల్ప్","గుజ్జు",""],["Hint","హింట్","సూచన","💡"],["Hunk","హంక్","పెద్ద ముక్క",""],["Sung","సంగ్","పాడిన",""],["Bung","బంగ్","మూత / బిరడా",""],["Curl","కర్ల్","మెలిక / వంకర",""],["Turf","టర్ఫ్","గడ్డి మైదానం",""],["Surf","సర్ఫ్","సముద్రపు అలలు","🏄"],["Curb","కర్బ్","అరికట్టడం",""],["Heft","హెఫ్ట్","బరువు",""],["Left","లెఫ్ట్","ఎడమ / వదిలి వెళ్ళిన","⬅️"],["Self","సెల్ఫ్","స్వయం / తాను",""],["Tint","టింట్","లేత రంగు",""],["Mint","మింట్","పుదీనా","🌿"],["Limb","లిమ్","అవయవం",""],["Sink","సింక్","మునగడం",""],["Pert","పర్ట్","చురుకైన",""],["Wept","వెప్ట్","ఏడ్చిన","😭"],["Debt","డెట్","అప్పు",""],["Send","సెండ్","పంపడం","📨"],["Rest","రెస్ట్","విశ్రాంతి","🛌"],["Cost","కాస్ట్","ధర","🏷️"],["Lost","లాస్ట్","పోయిన",""],["Dusk","డస్క్","సంధ్యా సమయం","🌇"],["Musk","మస్క్","కస్తూరి",""],["Rust","రస్ట్","తుప్పు",""],["Gust","గస్ట్","బలమైన గాలి",""],["Dust","డస్ట్","దుమ్ము",""],["West","వెస్ట్","పడమర","🧭"],["Husk","హస్క్","పొట్టు","🌾"],["Must","మస్ట్","తప్పనిసరి",""],["Risk","రిస్క్","ప్రమాదం","⚠️"],["Disk","డిస్క్","పలక ఆకారపు వస్తువు","💿"],["Mist","మిస్ట్","పొగమంచు","🌫️"],["Best","బెస్ట్","ఉత్తమమైన","🥇"],["Test","టెస్ట్","పరీక్ష","📝"],["Zest","జెస్ట్","ఉత్సాహం",""],["Jest","జెస్ట్","పరిహాసం","😜"],["Desk","డెస్క్","బల్ల",""]]},{"id":3,"te":"కలిసే అక్షరాలు & చివర E పదాలు","en":"Words with Conjoint & Words Ending with E","ic":"🔗","w":[["Ship","షిప్","ఓడ","🚢"],["Shop","షాప్","దుకాణం","🏪"],["Bash","బ్యాష్","గట్టిగా కొట్టడం",""],["Cash","క్యాష్","నగదు","💵"],["Dash","డ్యాష్","వేగంగా పరుగెత్తడం / గీత",""],["Dish","డిష్","గిన్నె / వంటకం","🍲"],["Fish","ఫిష్","చేప","🐟"],["Rush","రష్","తొందర / రద్దీ",""],["Shelf","షెల్ఫ్","అర","📚"],["Sheep","షీప్","గొర్రె","🐑"],["Short","షార్ట్","పొట్టి / చిన్నది",""],["Shoot","షూట్","కాల్చడం","🎯"],["Chin","చిన్","గడ్డం",""],["Rich","రిచ్","ధనవంతుడు","💰"],["Inch","ఇంచ్","అంగుళం","📏"],["Chop","చాప్","నరకడం / తరగడం","🔪"],["Bench","బెంచ్","పొడవైన బల్ల","🪑"],["Cheek","చీక్","బుగ్గ","☺️"],["Church","చర్చ్","చర్చి","⛪"],["Lunch","లంచ్","మధ్యాహ్న భోజనం","🍱"],["Punch","పంచ్","పిడికిలితో గుద్దడం","👊"],["Match","మ్యాచ్","పోటీ / అగ్గిపుల్ల","🏏"],["Catch","క్యాచ్","పట్టుకోవడం","🤾"],["Wheel","వీల్","చక్రం","🛞"],["Moth","మాత్","చిమ్మట","🦋"],["Thin","థిన్","సన్నని",""],["Maths","మ్యాథ్స్","గణితం","➗"],["Teeth","టీత్","పళ్ళు","🦷"],["Think","థింక్","ఆలోచించడం","🤔"],["Thorn","థార్న్","ముల్లు","🌵"],["Tooth","టూత్","పన్ను","🦷"],["Crab","క్రాబ్","పీత","🦀"],["Grip","గ్రిప్","పట్టు","✊"],["Drop","డ్రాప్","చుక్క","💧"],["Drug","డ్రగ్","మందు","💊"],["Drum","డ్రమ్","డోలు","🥁"],["Frog","ఫ్రాగ్","కప్ప","🐸"],["Drag","డ్రాగ్","ఈడ్చడం / లాగడం",""],["Pram","ప్రామ్","పసిపిల్లల తోపుడు బండి","🍼"],["Tree","ట్రీ","చెట్టు","🌳"],["Crash","క్రాష్","కుప్పకూలడం","💥"],["Trash","ట్రాష్","చెత్త","🗑️"],["Creek","క్రీక్","చిన్న వాగు","🏞️"],["Green","గ్రీన్","ఆకుపచ్చ","🟢"],["Three","త్రీ","మూడు","3️⃣"],["Drink","డ్రింక్","తాగడం","🥤"],["Crops","క్రాప్స్","పంటలు","🌾"],["Broom","బ్రూమ్","చీపురు","🧹"],["Crush","క్రష్","నలిపివేయడం",""],["Clap","క్లాప్","చప్పట్లు","👏"],["Slip","స్లిప్","జారడం",""],["Slum","స్లమ్","మురికివాడ",""],["Flag","ఫ్లాగ్","జెండా","🇮🇳"],["Slap","స్లాప్","చెంపదెబ్బ",""],["Sleep","స్లీప్","నిద్ర","😴"],["Cloth","క్లాత్","గుడ్డ","🧵"],["Bloom","బ్లూమ్","వికసించడం","🌸"],["Blush","బ్లష్","సిగ్గుపడటం","😊"],["Fist","ఫిస్ట్","పిడికిలి","✊"],["Skin","స్కిన్","చర్మం",""],["Stem","స్టెమ్","కాండం","🌱"],["Pest","పెస్ట్","చీడపురుగు","🐛"],["List","లిస్ట్","జాబితా","📋"],["Spit","స్పిట్","ఉమ్మివేయడం",""],["Nest","నెస్ట్","గూడు","🪺"],["Step","స్టెప్","అడుగు","👣"],["Swim","స్విమ్","ఈత","🏊"],["Twin","ట్విన్","కవల","👯"],["Vest","వెస్ట్","బనియన్","🎽"],["Splash","స్ప్లాష్","నీళ్ళు చిమ్మడం","💦"],["Chest","చెస్ట్","ఛాతీ",""],["Street","స్ట్రీట్","వీధి","🛣️"],["Sweep","స్వీప్","ఊడ్చడం","🧹"],["Sweet","స్వీట్","తీపి","🍬"],["Stink","స్టింక్","దుర్వాసన","🤢"],["Strong","స్ట్రాంగ్","బలమైన","💪"],["Spoon","స్పూన్","చెంచా","🥄"],["Stool","స్టూల్","పీట (స్టూల్)","🪑"],["Burst","బర్స్ట్","పేలడం","💥"],["School","స్కూల్","బడి","🏫"],["Scratch","స్క్రాచ్","గీరడం",""],["Snatch","స్నాచ్","లాక్కోవడం",""],["Sketch","స్కెచ్","రేఖాచిత్రం","✏️"],["Stretch","స్ట్రెచ్","సాగదీయడం","🧘"],["Stitch","స్టిచ్","కుట్టు","🪡"],["Press","ప్రెస్","నొక్కడం",""],["Shell","షెల్","శంఖం / గుల్ల","🐚"],["Smell","స్మెల్","వాసన","👃"],["Spell","స్పెల్","అక్షరాలు చెప్పడం","🔤"],["Cliff","క్లిఫ్","నిటారు కొండ అంచు","🏔️"],["Spill","స్పిల్","ఒలకడం",""],["Cross","క్రాస్","దాటడం","❌"],["Skull","స్కల్","పుర్రె","💀"],["Black","బ్లాక్","నలుపు","⚫"],["Brick","బ్రిక్","ఇటుక","🧱"],["Chick","చిక్","కోడి పిల్ల","🐥"],["Clock","క్లాక్","గడియారం","🕰️"],["Frock","ఫ్రాక్","గౌను","👗"],["Shock","షాక్","ఆశ్చర్యం / దిగ్భ్రాంతి","😲"],["Cake","కేక్","కేకు","🎂"],["Bike","బైక్","బైక్","🏍️"],["Hole","హోల్","రంధ్రం","🕳️"],["Tube","ట్యూబ్","గొట్టం","🧪"],["Bake","బేక్","(రొట్టెలు) కాల్చడం","🍞"],["Cave","కేవ్","గుహ","🕳️"],["Gate","గేట్","గేటు / ద్వారం","🚪"],["Lake","లేక్","సరస్సు","🏞️"],["Male","మేల్","పురుషుడు","♂️"],["Wake","వేక్","నిద్ర లేవడం","⏰"],["Wave","వేవ్","అల","🌊"],["Bite","బైట్","కరవడం",""],["Dive","డైవ్","దూకి మునగడం","🤿"],["Fire","ఫైర్","నిప్పు","🔥"],["Hide","హైడ్","దాక్కోవడం","🙈"],["Hive","హైవ్","తేనెపట్టు","🐝"],["Kite","కైట్","గాలిపటం","🪁"],["Lime","లైమ్","నిమ్మకాయ","🍋"],["Pipe","పైప్","గొట్టం",""],["Ride","రైడ్","స్వారీ","🚴"],["Time","టైమ్","సమయం","⏰"],["Wife","వైఫ్","భార్య","👩"],["Wipe","వైప్","తుడవడం",""],["Bone","బోన్","ఎముక","🦴"],["Rope","రోప్","తాడు","🪢"],["Robe","రోబ్","పొడవాటి అంగీ","🥋"],["Home","హోమ్","ఇల్లు","🏠"],["Vote","వోట్","ఓటు","🗳️"],["Cube","క్యూబ్","ఘనం","🧊"],["Fume","ఫ్యూమ్","పొగ","💨"],["Puke","ప్యూక్","వాంతి","🤮"],["Plate","ప్లేట్","పళ్ళెం","🍽️"],["Grate","గ్రేట్","తురమడం","🧀"],["State","స్టేట్","రాష్ట్రం","🗺️"],["Drive","డ్రైవ్","నడపడం","🚗"],["Thrive","త్రైవ్","అభివృద్ధి చెందడం","📈"],["Strive","స్ట్రైవ్","కష్టపడటం","💪"]]},{"id":4,"te":"ఒకే శబ్దం రెండు అక్షరాలు & Ck పదాలు","en":"Words with Letter of the Same Sound & Words Containing Ck","ic":"🔁","w":[["Odd","ఆడ్","బేసి / విచిత్రమైన",""],["Well","వెల్","బాగా / బావి",""],["Berry","బెర్రీ","బెర్రీ పండు","🫐"],["Pill","పిల్","మాత్ర","💊"],["Yell","యెల్","అరవడం","📢"],["Bell","బెల్","గంట","🔔"],["Cuff","కఫ్","చొక్కా చేతి అంచు",""],["Hobby","హాబీ","అభిరుచి","🎨"],["Boss","బాస్","యజమాని / అధికారి",""],["Lorry","లారీ","లారీ","🚚"],["Mill","మిల్","మిల్లు","🏭"],["Curry","కర్రీ","కూర","🍛"],["Puff","పఫ్","ఊదడం / ఉబ్బడం",""],["Merry","మెర్రీ","సంతోషమైన","😃"],["Add","యాడ్","కలుపు (కూడిక)","➕"],["Doll","డాల్","బొమ్మ","🪆"],["Fill","ఫిల్","నింపు",""],["Hill","హిల్","కొండ","⛰️"],["Sell","సెల్","అమ్ము",""],["Tell","టెల్","చెప్పు","🗣️"],["Toss","టాస్","ఎగరవేయు","🪙"],["Ball","బాల్","బంతి","⚽"],["Till","టిల్","వరకు",""],["Wall","వాల్","గోడ","🧱"],["Call","కాల్","పిలువు","📞"],["Hall","హాల్","హాలు / పెద్ద గది",""],["Mall","మాల్","వాణిజ్య సముదాయం","🏬"],["Mess","మెస్","గందరగోళం",""],["Poll","పోల్","ఓటింగ్","🗳️"],["Toll","టోల్","సుంకం",""],["Dull","డల్","నీరసమైన",""],["Miss","మిస్","తప్పిపోవడం",""],["Bill","బిల్","బిల్లు","🧾"],["Egg","ఎగ్","గుడ్డు","🥚"],["Pack","ప్యాక్","సర్దడం / కట్ట","📦"],["Neck","నెక్","మెడ",""],["Lock","లాక్","తాళం","🔒"],["Rock","రాక్","రాయి","🪨"],["Lick","లిక్","నాకడం","👅"],["Sack","స్యాక్","గోనె సంచి",""],["Kick","కిక్","తన్నడం","🦶"],["Sick","సిక్","అనారోగ్యంగా ఉన్న","🤒"],["Luck","లక్","అదృష్టం","🍀"],["Back","బ్యాక్","వెనుక","🔙"],["Cock","కాక్","కోడిపుంజు","🐓"],["Dock","డాక్","రేవు","⚓"],["Duck","డక్","బాతు","🦆"],["Suck","సక్","పీల్చడం",""],["Wick","విక్","వత్తి","🕯️"],["Peck","పెక్","ముక్కుతో పొడవడం","🐦"],["Pick","పిక్","ఎంచుకో / ఏరు",""],["Rack","ర్యాక్","అర / స్టాండ్",""],["Hick","హిక్","పల్లెటూరి వ్యక్తి",""],["Tick","టిక్","సరి గుర్తు / టిక్ శబ్దం","✔️"],["Hack","హ్యాక్","గొడ్డలితో నరకడం","🪓"],["Deck","డెక్","ఓడ పైభాగం","🚢"],["Lack","ల్యాక్","లోపం / కొరత",""]]},{"id":5,"te":"రెండు అచ్చులు కలిసిన పదాలు & Ce, Ci, Ge, Gy","en":"Words with Two Vowels Together & Words with Ce, Ci, Ge, Gy","ic":"🎶","w":[["Bait","బెయిట్","ఎర","🪱"],["Jail","జెయిల్","చెరసాల",""],["Maid","మెయిడ్","పనిమనిషి",""],["Mail","మెయిల్","ఉత్తరం / తపాలా","✉️"],["Nail","నెయిల్","గోరు / మేకు","💅"],["Pain","పెయిన్","నొప్పి","🤕"],["Rail","రెయిల్","రైలు పట్టా","🛤️"],["Rain","రెయిన్","వర్షం","🌧️"],["Tail","టెయిల్","తోక","🐒"],["Brain","బ్రెయిన్","మెదడు","🧠"],["Chain","చెయిన్","గొలుసు","⛓️"],["Faint","ఫెయింట్","మూర్ఛపోవడం","😵"],["Paint","పెయింట్","రంగు","🎨"],["Saint","సెయింట్","ముని / సాధువు",""],["Snail","స్నెయిల్","నత్త","🐌"],["Beak","బీక్","పక్షి ముక్కు","🐦"],["Eat","ఈట్","తినడం","🍽️"],["Heat","హీట్","వేడి","🔥"],["Leaf","లీఫ్","ఆకు","🍃"],["Leak","లీక్","కారడం (లీక్)","💧"],["Leap","లీప్","దూకడం","🐸"],["Meat","మీట్","మాంసం","🍖"],["Pea","పీ","బఠాణీ","🫛"],["Read","రీడ్","చదవడం","📖"],["Sea","సీ","సముద్రం","🌊"],["Tea","టీ","తేనీరు","🍵"],["Dream","డ్రీమ్","కల","💭"],["Scream","స్క్రీమ్","కేక / అరుపు","😱"],["Speak","స్పీక్","మాట్లాడటం","🗣️"],["Teach","టీచ్","నేర్పడం","👩‍🏫"],["Boar","బోర్","అడవి పంది","🐗"],["Boat","బోట్","పడవ","⛵"],["Coat","కోట్","కోటు","🧥"],["Foam","ఫోమ్","నురుగు","🫧"],["Four","ఫోర్","నాలుగు","4️⃣"],["Goat","గోట్","మేక","🐐"],["Loaf","లోఫ్","రొట్టె","🍞"],["Road","రోడ్","దారి / రోడ్డు","🛣️"],["Soap","సోప్","సబ్బు","🧼"],["Throat","త్రోట్","గొంతు",""],["Dice","డైస్","పాచికలు","🎲"],["Face","ఫేస్","ముఖం","🙂"],["Lace","లేస్","లేసు",""],["Mace","మేస్","గద",""],["Mice","మైస్","ఎలుకలు","🐁"],["Race","రేస్","పందెం","🏃"],["Rice","రైస్","బియ్యం / అన్నం","🍚"],["Cage","కేజ్","పంజరం",""],["Page","పేజ్","పేజీ","📄"],["Force","ఫోర్స్","బలం / బలవంతం",""],["Fence","ఫెన్స్","కంచె",""],["Nice","నైస్","బాగుంది","👍"],["City","సిటీ","నగరం","🏙️"],["Juice","జ్యూస్","రసం","🧃"],["Space","స్పేస్","ఖాళీ / అంతరిక్షం","🚀"],["Stage","స్టేజ్","వేదిక","🎭"],["Trace","ట్రేస్","జాడ",""],["Peace","పీస్","శాంతి","🕊️"],["Strange","స్ట్రేంజ్","విచిత్రమైన",""],["Place","ప్లేస్","స్థలం","📍"],["Thrice","త్రైస్","మూడుసార్లు",""],["Fancy","ఫ్యాన్సీ","ఆడంబరమైన",""],["Twice","ట్వైస్","రెండుసార్లు",""]]},{"id":6,"te":"Tion, Ture & Ed, Ing పదాలు","en":"Words with Tion and Ture & Words With Ed, Ing","ic":"✨","w":[["Mansion","మ్యాన్షన్","పెద్ద భవంతి","🏰"],["Tension","టెన్షన్","ఆందోళన","😟"],["Rushing","రషింగ్","తొందరగా వెళ్ళడం","🏃"],["Action","యాక్షన్","చర్య",""],["Passion","ప్యాషన్","అభిరుచి / తపన",""],["Pension","పెన్షన్","పింఛను",""],["Lecture","లెక్చర్","ఉపన్యాసం","👨‍🏫"],["Picture","పిక్చర్","చిత్రం","🖼️"],["Vulture","వల్చర్","రాబందు","🦅"],["Creature","క్రీచర్","జీవి","🐾"],["Option","ఆప్షన్","ఎంపిక",""],["Fraction","ఫ్రాక్షన్","భిన్నం","½"],["Mention","మెన్షన్","ప్రస్తావించడం",""],["Session","సెషన్","సమావేశం",""],["Sanction","శాంక్షన్","అనుమతి / మంజూరు",""],["Nurture","నర్చర్","పోషించడం","🌱"],["Venture","వెంచర్","వ్యాపార ప్రయత్నం",""],["Gesture","జెస్చర్","సైగ","👋"],["Mixture","మిక్స్చర్","మిశ్రమం","🥣"],["Structure","స్ట్రక్చర్","నిర్మాణం","🏗️"],["Culture","కల్చర్","సంస్కృతి",""],["Fiction","ఫిక్షన్","కల్పిత కథ","📚"],["Vision","విజన్","దృష్టి","👁️"],["Sculpture","స్కల్ప్చర్","శిల్పం","🗿"],["Kicking","కికింగ్","తన్నడం","🦶"],["Teaching","టీచింగ్","బోధించడం","👩‍🏫"],["Checking","చెకింగ్","తనిఖీ చేయడం","✔️"],["Painting","పెయింటింగ్","రంగులు వేయడం","🎨"],["Speaking","స్పీకింగ్","మాట్లాడటం","🗣️"],["Thinking","థింకింగ్","ఆలోచించడం","🤔"],["Cracking","క్రాకింగ్","పగుళ్ళు రావడం",""],["Spending","స్పెండింగ్","ఖర్చు చేయడం","💸"],["Fainting","ఫెయింటింగ్","స్పృహ తప్పడం","😵"],["Packing","ప్యాకింగ్","సర్దడం","📦"],["Picked","పిక్డ్","ఎంచుకున్నాడు",""],["Praised","ప్రెయిజ్డ్","ప్రశంసించబడ్డాడు","👏"],["Locked","లాక్డ్","తాళం వేయబడింది","🔒"],["Grabbed","గ్రాబ్డ్","పట్టుకున్నాడు",""],["Hugged","హగ్డ్","కౌగిలించుకున్నాడు","🤗"],["Shocked","షాక్డ్","ఆశ్చర్యపోయాడు","😲"],["Mugged","మగ్డ్","దోచుకున్నాడు",""],["Tugged","టగ్డ్","గట్టిగా లాగాడు",""],["Leased","లీస్డ్","లీజుకు ఇచ్చాడు",""]]},{"id":7,"te":"అచ్చుల వేర్వేరు శబ్దాలు (A, E, I, O, U)","en":"Multiple Sounds of Vowels (A, E, I, O, U)","ic":"🎵","w":[["Car","కార్","కారు","🚗"],["Jar","జార్","కూజా","🫙"],["Far","ఫార్","దూరంగా",""],["Arm","ఆర్మ్","చేయి / భుజం","💪"],["Farm","ఫార్మ్","పొలం","🚜"],["Harm","హార్మ్","హాని",""],["Scar","స్కార్","మచ్చ",""],["Star","స్టార్","నక్షత్రం","⭐"],["Spar","స్పార్","పోరాడు",""],["Bark","బార్క్","బెరడు / మొరగడం","🐕"],["Dark","డార్క్","చీకటి","🌑"],["Mark","మార్క్","గుర్తు / మార్కు","✅"],["Lark","లార్క్","ఒక చిన్న పక్షి","🐦"],["Park","పార్క్","ఉద్యానవనం","🏞️"],["Calf","కాఫ్","దూడ","🐄"],["Palm","పామ్","అరచేయి","🤚"],["Half","హాఫ్","సగం","🌗"],["Balm","బామ్","ఔషధ తైలం",""],["Calm","కామ్","ప్రశాంతంగా","😌"],["Last","లాస్ట్","చివరి",""],["Past","పాస్ట్","గత కాలం","⏪"],["Vast","వాస్ట్","విశాలమైన",""],["Mart","మార్ట్","బజారు","🛒"],["Art","ఆర్ట్","కళ","🎨"],["Part","పార్ట్","భాగం","🧩"],["Bath","బాత్","స్నానం","🛁"],["Path","పాత్","దారి","🛤️"],["Bass","బేస్","బేస్ శృతి","🎸"],["Pass","పాస్","ఉత్తీర్ణత","✅"],["Hard","హార్డ్","కష్టం / గట్టి",""],["Mask","మాస్క్","ముసుగు","😷"],["Ask","ఆస్క్","అడుగు","🙋"],["Task","టాస్క్","పని","📋"],["Bask","బాస్క్","ఎండ కాచుకోవడం","☀️"],["Cask","కాస్క్","పీపా","🛢️"],["Mars","మార్స్","అంగారకుడు","🔴"],["Army","ఆర్మీ","సైన్యం","🪖"],["Carp","కార్ప్","కార్ప్ చేప","🐟"],["Dart","డార్ట్","చిన్న బాణం","🎯"],["Cart","కార్ట్","బండి","🛒"],["Card","కార్డ్","కార్డు","🃏"],["Bald","బాల్డ్","బట్ట తల","👨‍🦲"],["Halt","హాల్ట్","ఆగు","✋"],["Malt","మాల్ట్","మాల్ట్",""],["Want","వాంట్","కావాలి",""],["Lawn","లాన్","పచ్చిక","🌱"],["Dawn","డాన్","తెల్లవారుజాము","🌅"],["Walk","వాక్","నడవడం","🚶"],["Talk","టాక్","మాట్లాడటం","🗣️"],["Few","ఫ్యూ","కొన్ని",""],["Key","కీ","తాళంచెవి","🔑"],["Crew","క్రూ","బృందం",""],["New","న్యూ","కొత్తది","🆕"],["Chew","చ్యూ","నమలడం",""],["Berg","బర్గ్","మంచు కొండ","🧊"],["Perch","పర్చ్","కొమ్మపై కూర్చోవడం","🐦"],["Clerk","క్లర్క్","గుమాస్తా",""],["Herd","హర్డ్","మంద","🐄"],["Verb","వర్బ్","క్రియ",""],["Term","టర్మ్","కాల వ్యవధి",""],["Germ","జర్మ్","క్రిమి","🦠"],["Herb","హర్బ్","మూలిక","🌿"],["Merch","మర్చ్","వస్తువులు",""],["Therm","థర్మ్","ఉష్ణ ప్రమాణం","🌡️"],["Nerd","నర్డ్","పుస్తకాల పురుగు","🤓"],["Perk","పర్క్","ప్రోత్సాహకం",""],["Fern","ఫర్న్","ఫెర్న్ మొక్క","🌿"],["Mind","మైండ్","మనసు","🧠"],["Whirl","వర్ల్","గిరగిరా తిరగడం","🌀"],["Shirt","షర్ట్","చొక్కా","👕"],["Birth","బర్త్","జననం","👶"],["Stir","స్టర్","కలియబెట్టడం","🥄"],["Wild","వైల్డ్","అడవి / క్రూరమైన","🐅"],["Bird","బర్డ్","పక్షి","🐦"],["Find","ఫైండ్","కనుగొనడం","🔍"],["Dirt","డర్ట్","మురికి",""],["Bind","బైండ్","కట్టడం",""],["Skirt","స్కర్ట్","లంగా","👗"],["Grind","గ్రైండ్","రుబ్బడం",""],["Thirst","థర్స్ట్","దాహం","🥵"],["Blind","బ్లైండ్","గుడ్డి","🦯"],["First","ఫస్ట్","మొదటి / ప్రథమ","🥇"],["Kind","కైండ్","దయగల","💖"],["Third","థర్డ్","మూడవది","🥉"],["Dirk","డర్క్","చిన్న కత్తి","🗡️"],["Firm","ఫర్మ్","దృఢమైన / సంస్థ",""],["Girl","గర్ల్","అమ్మాయి","👧"],["Mild","మైల్డ్","తేలికపాటి",""],["Slow","స్లో","నెమ్మదిగా","🐢"],["Mold","మోల్డ్","అచ్చు",""],["Roll","రోల్","దొర్లడం",""],["Fold","ఫోల్డ్","మడత పెట్టడం",""],["Hold","హోల్డ్","పట్టుకో",""],["Both","బోత్","రెండూ",""],["Grow","గ్రో","పెరగడం","🌱"],["Gold","గోల్డ్","బంగారం","🥇"],["Bold","బోల్డ్","ధైర్యమైన",""],["Host","హోస్ట్","అతిథేయుడు",""],["Told","టోల్డ్","చెప్పాడు",""],["Sold","సోల్డ్","అమ్మబడింది",""],["Volt","వోల్ట్","వోల్ట్ (విద్యుత్ ప్రమాణం)","⚡"],["Bolt","బోల్ట్","బోల్టు / గడియ","🔩"],["Yolk","యోక్","పచ్చసొన","🍳"],["Cold","కోల్డ్","చల్లని","🥶"],["Fork","ఫోర్క్","ముళ్ళ గరిటె","🍴"],["Fort","ఫోర్ట్","కోట","🏰"],["Port","పోర్ట్","నౌకాశ్రయం","⚓"],["Story","స్టోరీ","కథ","📖"],["Down","డౌన్","క్రింద","⬇️"],["Town","టౌన్","పట్టణం","🏘️"],["Son","సన్","కొడుకు","👦"],["Monk","మంక్","సన్యాసి",""],["Front","ఫ్రంట్","ముందు",""],["Worth","వర్త్","విలువ",""],["Work","వర్క్","పని","🛠️"],["Word","వర్డ్","పదం","🔤"],["Worm","వర్మ్","పురుగు","🪱"],["Pull","పుల్","లాగడం",""],["Full","ఫుల్","పూర్తి / నిండు",""],["Bull","బుల్","ఎద్దు","🐂"],["Bush","బుష్","పొద","🌳"],["Push","పుష్","నెట్టడం",""],["Put","పుట్","పెట్టు",""],["Fully","ఫుల్లీ","పూర్తిగా",""],["Truth","ట్రూత్","నిజం",""],["Fury","ఫ్యూరీ","తీవ్రమైన కోపం","😡"]]}];
+const COL=['#ff8a3d','#0e9fb5','#7c5cff','#22a55a','#e5484d','#f5a700','#d6338c'];
+// ---------- storage ----------
+const ST={get(k,d){try{const v=localStorage.getItem('rewl_'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('rewl_'+k,JSON.stringify(v))}catch(e){}}};
+let learnt=new Set(ST.get('learnt',[]));
+let best=ST.get('best',{});
+let S={view:'home',sec:0,tab:'learn',part:0,idx:0,auto:ST.get('auto',true)};
+const saveL=()=>ST.set('learnt',[...learnt]);
+// ---------- voice ----------
+let voices=[];function loadV(){try{voices=speechSynthesis.getVoices()}catch(e){}}
+if('speechSynthesis' in window){loadV();speechSynthesis.onvoiceschanged=loadV}
+function pickV(lang){return voices.find(v=>v.lang==lang)||voices.find(v=>v.lang&&v.lang.replace('_','-').startsWith(lang.split('-')[0]))}
+function say(t,lang='en-IN',rate=.8,cb){
+  if(!('speechSynthesis' in window)){cb&&cb();return}
+  const u=new SpeechSynthesisUtterance(t);u.lang=lang;u.rate=rate;const v=pickV(lang);if(v)u.voice=v;
+  if(cb)u.onend=cb;speechSynthesis.speak(u)}
+function stopV(){try{speechSynthesis.cancel()}catch(e){}}
+function sayWord(w,slow){stopV();say(w.toLowerCase(),'en-IN',slow?.45:.8)}
+function sayFull(e,cb){stopV();say(e[0].toLowerCase(),'en-IN',.8);say(e[2].replace(/\(.*?\)/g,''),'te-IN',.9,cb)}
+function spellOut(w){stopV();w.split('').forEach(c=>say(c.toUpperCase(),'en-IN',.7));say(w.toLowerCase(),'en-IN',.75)}
+// ---------- phonics highlight ----------
+const PAT={
+ 1:[],
+ 2:[[/(nd|nt|nk|ng|mp|mb|lt|lk|lf|lp|lm|ld|ft|pt|ct|st|sk|sc|xt|rd|rn|rk|rm|rt|rb|rf|rl|rp|bt)$/,'p']],
+ 3:[[/^(spl|str|scr|sch)/,'p'],[/(tch|sh|ch|th|wh|ck)/,'p2'],[/^(cr|gr|dr|fr|pr|tr|br|cl|sl|fl|bl|sk|st|sp|sw|tw|sn|sm|thr)/,'p']],
+ 4:[[/(ck|ll|ss|ff|rr|bb|dd|gg)/,'p']],
+ 5:[[/(ai|ea|oa|ou|ui)/,'p'],[/(ce|ci|cy|ge|gy)/,'p2']],
+ 6:[[/(tion|sion|ture|ing|ed)$/,'p']],
+ 7:[[/(ar|er|ir|ur|or|aw|al|ew|ey|ow|ol|ul|us|ut|on|ou)/,'p']]
+};
+function tiles(w,sec){
+  const lw=w.toLowerCase(),cls=Array(lw.length).fill('');
+  (PAT[sec]||[]).forEach(([re,c])=>{const g=new RegExp(re.source,'g');let m;while((m=g.exec(lw))){for(let i=m.index;i<m.index+m[0].length;i++)if(!cls[i])cls[i]=c;if(!g.global||m[0].length==0)break}});
+  // magic e
+  if(sec==3&&/[aeiou][^aeiou]e$/.test(lw)){const n=lw.length;cls[n-3]='me';cls[n-1]='me'}
+  // vowels for simple words
+  lw.split('').forEach((c,i)=>{if(!cls[i]&&'aeiou'.includes(c)&&(sec<=2))cls[i]='v'});
+  return w.split('').map((c,i)=>`<span class="tl ${cls[i]}" data-c="${c}">${c}</span>`).join('');
+}
+const LEG={1:[['v','అచ్చు (a e i o u)']],2:[['v','అచ్చు'],['p','చివరి కలిసే అక్షరాలు']],3:[['p','కలిసే అక్షరాలు'],['p2','sh / ch / th / ck'],['me','Magic E (a_e, i_e, o_e, u_e)']],4:[['p','ఒకే శబ్దం రెండు అక్షరాలు / ck']],5:[['p','రెండు అచ్చులు (ai, ea, oa)'],['p2','ce ci cy ge']],6:[['p','tion / sion / ture / ing / ed']],7:[['p','అచ్చు శబ్దం మారే భాగం']]};
+const LC={v:'#ef9a9a',p:'#86d7a5',p2:'#b3a3ff',me:'#ffd277'};
+function legend(sec){return `<div class="legend">${(LEG[sec]||[]).map(([c,t])=>`<span><i style="background:${LC[c]}"></i>${t}</span>`).join('')}</div>`}
+// ---------- helpers ----------
+const $=s=>document.querySelector(s);const app=$('#app');
+const PS=10;
+function sec(){return DATA[S.sec]}
+function parts(){const w=sec().w,n=Math.ceil(w.length/PS);return n}
+function list(){const w=sec().w;return S.part<0?w:w.slice(S.part*PS,S.part*PS+PS)}
+function toast(t){const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',1600)}
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function key(s,w){return s+':'+w}
+function secDone(i){return DATA[i].w.filter(e=>learnt.has(key(DATA[i].id,e[0]))).length}
+function esc(t){return String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+// ---------- menu ----------
+function menu(){
+  $('#menu').innerHTML=`<h3>📚 పాఠాలు</h3><button class="mi ${S.view=='home'?'act':''}" data-h="1"><b>🏠</b>హోమ్ (అన్ని విభాగాలు)</button>`+
+  DATA.map((s,i)=>`<button class="mi ${S.view=='sec'&&S.sec==i?'act':''}" data-s="${i}"><b>${s.ic}</b><span>${i+1}. ${s.te}<br><span class="small en">${s.en} · ${s.w.length}</span></span></button>`).join('')+
+  `<div class="howto small">⌨️ TV రిమోట్ / కీబోర్డ్: ← → తరువాతి పదం · Enter = చదువు · 1-7 = విభాగం · Esc = మెనూ</div>
+  <button class="mi" id="reset"><b>♻️</b>నా ప్రగతి తుడిచివేయి</button>`;
+}
+function openMenu(o){$('#menu').classList.toggle('open',o);$('#shade').classList.toggle('show',o)}
+$('#mbtn').onclick=()=>{menu();openMenu(!$('#menu').classList.contains('open'))};
+$('#shade').onclick=()=>openMenu(false);
+$('#menu').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.id=='reset'){if(confirm('నేర్చుకున్న ⭐ పదాలు, క్విజ్ స్కోర్లు అన్నీ తొలగించాలా?')){learnt=new Set();best={};saveL();ST.set('best',best);toast('తొలగించబడింది');render()}return}
+  if(b.dataset.h){S.view='home'}else{S.view='sec';S.sec=+b.dataset.s;S.tab='learn';S.part=0;S.idx=0}
+  openMenu(false);render()};
+$('#hbtn').onclick=()=>{S.view='home';render()};
+function vIcon(){$('#vbtn').classList.toggle('off',!S.auto);$('#vbtn').textContent=S.auto?'🔊':'🔇'}
+$('#vbtn').onclick=()=>{S.auto=!S.auto;ST.set('auto',S.auto);vIcon();toast(S.auto?'స్వయంగా చదవడం ఆన్':'స్వయంగా చదవడం ఆఫ్')};
+// ---------- home ----------
+function home(){
+  stopAP();
+  const tot=DATA.reduce((a,s)=>a+s.w.length,0),dn=DATA.reduce((a,s,i)=>a+secDone(i),0);
+  app.innerHTML=`<div class="search"><input id="q" placeholder="🔍 పదం వెతకండి… (ఉదా: cat / పిల్లి)"></div><div id="sr"></div>
+  <div class="small" style="margin:0 0 8px">మొత్తం <b>${tot}</b> పదాలు · నేర్చుకున్నవి ⭐ <b>${dn}</b></div>
+  <div class="grid" id="secs">${DATA.map((s,i)=>{const d=secDone(i),pc=Math.round(d/s.w.length*100);return `<button class="sc" style="--c:${COL[i]}" data-s="${i}"><span class="ic">${s.ic}</span><span class="t">${i+1}. ${s.te}</span><span class="e en">${s.en}</span><span class="small">${s.w.length} పదాలు · ⭐ ${d} ${best[s.id]!=null?'· 🏆 '+best[s.id]+'%':''}</span><span class="bar"><i style="width:${pc}%"></i></span></button>`}).join('')}</div>
+  <div class="howto"><b>ఎలా నేర్చుకోవాలి? 👇</b><br>
+  1️⃣ <b>📖 నేర్చుకో</b> – పదం చూడు, విను, అక్షరాలు చదువు, అర్థం తెలుసుకో.<br>
+  2️⃣ <b>📋 పట్టిక</b> – 10 పదాల భాగాలుగా జాబితా; ప్రింట్ కూడా చేయవచ్చు.<br>
+  3️⃣ <b>🎯 క్విజ్</b> – అర్థం / పదం / వినికిడి ప్రశ్నలు.<br>
+  4️⃣ <b>✍️ స్పెల్లింగ్</b> – అక్షరాలను సరైన క్రమంలో అమర్చు.<br>
+  🎨 రంగు అక్షరాలు = ఆ పాఠంలో నేర్చుకోవలసిన శబ్దం.</div>`;
+  app.querySelectorAll('.sc').forEach(b=>b.onclick=()=>{S.view='sec';S.sec=+b.dataset.s;S.tab='learn';S.part=0;S.idx=0;render()});
+  const q=$('#q');q.oninput=()=>{const t=q.value.trim().toLowerCase();if(!t){$('#sr').innerHTML='';return}
+    const r=[];DATA.forEach((s,i)=>s.w.forEach((e,j)=>{if(e[0].toLowerCase().startsWith(t)||e[2].includes(t)||e[1].includes(t))r.push([i,j,e])}));
+    $('#sr').innerHTML=r.length?`<table style="margin-bottom:12px"><tr><th>పదం</th><th>ఉచ్చారణ</th><th>అర్థం</th><th class="sp">🔊</th></tr>${r.slice(0,30).map(([i,j,e])=>`<tr data-i="${i}" data-j="${j}"><td class="w">${e[3]||''} ${e[0]}</td><td>${e[1]}</td><td>${e[2]}<div class="small">${DATA[i].te}</div></td><td><button class="sp" data-w="${esc(e[0])}">🔊</button></td></tr>`).join('')}</table>`:'<p class="small">దొరకలేదు</p>';
+    $('#sr').querySelectorAll('tr[data-i]').forEach(tr=>tr.onclick=ev=>{const i=+tr.dataset.i,j=+tr.dataset.j;if(ev.target.closest('.sp')){sayFull(DATA[i].w[j]);return}S.view='sec';S.sec=i;S.tab='learn';S.part=Math.floor(j/PS);S.idx=j%PS;render()})};
+}
+// ---------- section ----------
+const TABS=[['learn','📖 నేర్చుకో'],['table','📋 పట్టిక'],['quiz','🎯 క్విజ్'],['spell','✍️ స్పెల్లింగ్']];
+function secView(){
+  const s=sec(),n=parts();
+  app.innerHTML=`<div class="sechead"><span class="ic">${s.ic}</span><div><div class="t">${S.sec+1}. ${s.te}</div><div class="small en">${s.en} · ${s.w.length} పదాలు</div></div></div>
+  <div class="tabs">${TABS.map(([k,t])=>`<button class="tab ${S.tab==k?'act':''}" data-t="${k}">${t}</button>`).join('')}</div>
+  <div class="chips">${Array.from({length:n},(_,i)=>{const sl=s.w.slice(i*PS,i*PS+PS),d=sl.every(e=>learnt.has(key(s.id,e[0])));return `<button class="chip ${S.part==i?'act':''} ${d?'done':''}" data-p="${i}">భాగం ${i+1}${d?' ✅':''}</button>`}).join('')}<button class="chip ${S.part<0?'act':''}" data-p="-1">అన్నీ (${s.w.length})</button></div>
+  <div id="body"></div>`;
+  app.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{S.tab=b.dataset.t;S.idx=0;render()});
+  app.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{S.part=+b.dataset.p;S.idx=0;render()});
+  ({learn,table:tableV,quiz:quizHome,spell:spellV})[S.tab]();
+  const a=app.querySelector('.chip.act');a&&a.scrollIntoView({block:'nearest',inline:'center'});
+}
+// ---------- learn ----------
+let apT=null,apOn=false;
+function learn(){
+  const L=list();if(S.idx>=L.length)S.idx=0;const e=L[S.idx],s=sec(),k=key(s.id,e[0]),gap=ST.get('gap',4);
+  $('#body').innerHTML=`<div class="card">
+   <span class="cnt">${S.idx+1} / ${L.length}</span>
+   <button class="star" id="st" title="నేర్చుకున్నాను">${learnt.has(k)?'⭐':'☆'}</button>
+   <div class="emo">${e[3]||'🔤'}</div>
+   <div class="tiles" id="tiles">${tiles(e[0],s.id)}</div>
+   <div class="pron">${e[1]}</div>
+   <div class="mean ${ST.get('hideM',false)?'hid':''}" id="mean">${e[2]}</div>
+   <div class="hint">అక్షరం మీద నొక్కితే ఆ అక్షరం వినిపిస్తుంది</div>
+   ${legend(s.id)}
+   <div class="ctrls">
+    <button class="btn w big" id="pv" title="ముందుది">⬅️</button>
+    <button class="btn" id="sw">🔊 పదం</button>
+    <button class="btn o" id="sl">🐢 నెమ్మదిగా</button>
+    <button class="btn y" id="sp">🔤 స్పెల్లింగ్</button>
+    <button class="btn g" id="sm">🗣️ అర్థం</button>
+    <button class="btn w big" id="nx" title="తరువాతిది">➡️</button>
+   </div>
+   <div class="ap noprint">
+    <button class="btn ${apOn?'o':''}" id="ap">${apOn?'⏸️ ఆపు':'▶️ ఆటో ప్లే'}</button>
+    విరామం <select id="gap">${[3,4,6,8].map(g=>`<option ${g==gap?'selected':''} value="${g}">${g} సెకన్లు</option>`).join('')}</select>
+    <label><input type="checkbox" id="hm" ${ST.get('hideM',false)?'checked':''}> అర్థం దాచు</label>
+   </div></div>`;
+  const go=d=>{S.idx=(S.idx+d+L.length)%L.length;learn();if(S.auto&&!apOn)sayFull(L[S.idx])};
+  $('#pv').onclick=()=>go(-1);$('#nx').onclick=()=>go(1);
+  $('#sw').onclick=()=>sayWord(e[0]);$('#sl').onclick=()=>sayWord(e[0],1);$('#sp').onclick=()=>spellOut(e[0]);
+  $('#sm').onclick=()=>sayFull(e);
+  $('#mean').onclick=function(){this.classList.remove('hid');stopV();say(e[2],'te-IN',.9)};
+  $('#tiles').onclick=ev=>{const t=ev.target.closest('.tl');if(t){stopV();say(t.dataset.c.toUpperCase(),'en-IN',.7)}};
+  $('#st').onclick=()=>{learnt.has(k)?learnt.delete(k):learnt.add(k);saveL();learn();if(learnt.has(k))toast('⭐ బాగుంది!')};
+  $('#gap').onchange=ev=>{ST.set('gap',+ev.target.value)};
+  $('#hm').onchange=ev=>{ST.set('hideM',ev.target.checked);learn()};
+  $('#ap').onclick=()=>{apOn?stopAP():startAP();learn()};
+  S.go=go;S.cur=e;
+}
+function startAP(){apOn=true;const step=()=>{if(!apOn)return;const L=list(),e=L[S.idx];sayFull(e,()=>{apT=setTimeout(()=>{if(!apOn)return;S.idx=(S.idx+1)%L.length;if(S.view=='sec'&&S.tab=='learn'){learn();step()}},ST.get('gap',4)*1000)})};
+  // fallback if no speech end event
+  if(!('speechSynthesis' in window)){apT=setInterval(()=>{S.idx=(S.idx+1)%list().length;learn()},ST.get('gap',4)*1000);return}
+  step()}
+function stopAP(){apOn=false;clearTimeout(apT);clearInterval(apT);stopV()}
+// ---------- table ----------
+function tableV(){
+  stopAP();const s=sec(),L=list(),off=S.part<0?0:S.part*PS;
+  $('#body').innerHTML=`<h2 class="ptitle">${s.en} – ${s.te}${S.part>=0?' (భాగం '+(S.part+1)+')':''}</h2>
+  <div class="ctrls noprint" style="margin:0 0 10px"><button class="btn" id="pa">🔊 అన్నీ చదువు</button><button class="btn y" id="pr">🖨️ ప్రింట్ / PDF</button></div>
+  <table><tr><th>#</th><th>పదం (Word)</th><th>ఉచ్చారణ</th><th>అర్థం</th><th class="sp">🔊</th></tr>
+  ${L.map((e,i)=>`<tr class="${learnt.has(key(s.id,e[0]))?'lrn':''}"><td>${off+i+1}</td><td class="w">${e[0]}</td><td>${e[1]}</td><td>${e[2]}</td><td><button class="sp" data-i="${i}">🔊</button></td></tr>`).join('')}</table>`;
+  $('#body').querySelectorAll('.sp').forEach(b=>b.onclick=()=>sayFull(L[+b.dataset.i]));
+  $('#pr').onclick=()=>window.print();
+  $('#pa').onclick=()=>{stopV();L.forEach(e=>{say(e[0].toLowerCase(),'en-IN',.8);say(e[2].replace(/\(.*?\)/g,''),'te-IN',.95)})};
+}
+// ---------- quiz ----------
+let Q=null;
+const QT=[['m','🇬🇧→తె','ఇంగ్లీష్ పదం చూసి తెలుగు అర్థం ఎంచుకో'],['w','తె→🇬🇧','తెలుగు అర్థం చూసి ఇంగ్లీష్ పదం ఎంచుకో'],['l','👂','పదం విని సరైన పదం ఎంచుకో']];
+function quizHome(){
+  stopAP();const s=sec(),L=list();
+  $('#body').innerHTML=`<div class="small" style="margin-bottom:8px">ఈ భాగంలో ${L.length} పదాలు ${best[s.id]!=null?'· 🏆 ఉత్తమ స్కోర్ '+best[s.id]+'%':''}</div>
+  <div class="qtype">${QT.map(([k,i,t])=>`<button class="qt" data-k="${k}"><b>${i}</b>${t}</button>`).join('')}</div>
+  <div class="ap">ప్రశ్నలు <select id="qn">${[10,20,30].map(n=>`<option value="${n}">${n}</option>`).join('')}<option value="999">అన్నీ</option></select></div>`;
+  $('#body').querySelectorAll('.qt').forEach(b=>b.onclick=()=>{const n=+$('#qn').value;Q={type:b.dataset.k,items:shuffle(L).slice(0,n),i:0,ok:0,wrong:[]};qShow()});
+}
+function qShow(){
+  const s=sec();if(Q.i>=Q.items.length)return qEnd();
+  const e=Q.items[Q.i],pool=s.w.filter(x=>x[0]!=e[0]&&x[2]!=e[2]),opts=shuffle([e,...shuffle(pool).slice(0,3)]);
+  const t=Q.type,prompt=t=='m'?`<div class="emo" style="font-size:2.6rem;min-height:3rem">❓</div><div class="tiles">${tiles(e[0],s.id)}</div><div class="hint">దీని అర్థం ఏమిటి?</div>`:
+    t=='w'?`<div class="emo">${e[3]||'❓'}</div><div class="mean">${e[2]}</div><div class="hint">ఇంగ్లీష్ పదం ఏది?</div>`:
+    `<button class="btn big" id="rep" style="font-size:2.4rem;padding:16px 26px">🔊</button><div class="hint">విని సరైన పదం నొక్కు</div>`;
+  $('#body').innerHTML=`<div class="card"><span class="cnt">ప్రశ్న ${Q.i+1}/${Q.items.length} · ✅ ${Q.ok}</span><div style="height:18px"></div>${prompt}
+  <div class="qopts">${opts.map((o,i)=>`<button class="qo ${t=='m'?'':'en'}" data-i="${i}">${t=='m'?o[2]:o[0]}</button>`).join('')}</div><div class="msg" id="qm"></div></div>`;
+  if(t=='l'){$('#rep').onclick=()=>sayWord(e[0]);sayWord(e[0])}else if(t=='m'&&S.auto)sayWord(e[0]);
+  let done=false;
+  $('#body').querySelectorAll('.qo').forEach(b=>b.onclick=()=>{if(done)return;done=true;const o=opts[+b.dataset.i],right=o===e;
+    $('#body').querySelectorAll('.qo').forEach((x,i)=>{if(opts[i]===e)x.classList.add('ok')});
+    if(right){Q.ok++;b.classList.add('ok');$('#qm').innerHTML='🎉 సరైనది!';$('#qm').style.color='var(--grn)';learnt.add(key(s.id,e[0]));saveL()}
+    else{b.classList.add('no');Q.wrong.push(e);$('#qm').innerHTML=`😟 కాదు · <span class="en">${e[0]}</span> = ${e[2]}`;$('#qm').style.color='var(--red)'}
+    if(S.auto)sayFull(e);
+    setTimeout(()=>{Q.i++;qShow()},right?1400:2600)});
+}
+function qEnd(){
+  const s=sec(),p=Math.round(Q.ok/Q.items.length*100);if(best[s.id]==null||p>best[s.id]){best[s.id]=p;ST.set('best',best)}
+  const st=p>=90?'🌟🌟🌟':p>=60?'🌟🌟':p>=30?'🌟':'💪';
+  $('#body').innerHTML=`<div class="card res"><div class="big">${st}</div><h2>${Q.ok} / ${Q.items.length} (${p}%)</h2><div>${p>=90?'అద్భుతం!':p>=60?'చాలా బాగుంది!':'మళ్ళీ సాధన చేద్దాం!'}</div>
+  ${Q.wrong.length?`<div class="wrong"><b>తప్పుగా చేసిన పదాలు:</b>${Q.wrong.map(e=>`<div><span class="en" style="font-weight:800;font-size:1.15rem">${e[3]||''} ${e[0]}</span> – ${e[1]} – ${e[2]}</div>`).join('')}</div>`:''}
+  <div class="ctrls"><button class="btn" id="ag">🔁 మళ్ళీ</button>${Q.wrong.length?'<button class="btn o" id="wr">❌ తప్పులు మాత్రమే</button>':''}<button class="btn w" id="bk">⬅️ క్విజ్ రకాలు</button></div></div>`;
+  if(S.auto)say(p>=60?'Very good!':'Try again!','en-IN',.85);
+  $('#ag').onclick=()=>{Q={...Q,items:shuffle(Q.items),i:0,ok:0,wrong:[]};qShow()};
+  $('#bk').onclick=quizHome;
+  const w=$('#wr');if(w)w.onclick=()=>{Q={...Q,items:shuffle(Q.wrong),i:0,ok:0,wrong:[]};qShow()};
+}
+// ---------- spelling ----------
+let SP=null;
+function spellV(){
+  stopAP();const s=sec(),L=list();if(!SP||SP.sec!=S.sec||SP.part!=S.part)SP={sec:S.sec,part:S.part,order:shuffle(L),i:0,ok:0};
+  if(SP.i>=SP.order.length){$('#body').innerHTML=`<div class="card res"><div class="big">🏅</div><h2>${SP.ok} / ${SP.order.length} మొదటి ప్రయత్నంలోనే సరైనవి</h2><div class="ctrls"><button class="btn" id="ag">🔁 మళ్ళీ</button></div></div>`;$('#ag').onclick=()=>{SP=null;spellV()};return}
+  const e=SP.order[SP.i],w=e[0].toLowerCase();let typed=[],miss=0;
+  let pool=shuffle(w.split('').map((c,i)=>({c,i})));if(w.length>2&&pool.map(x=>x.c).join('')==w)pool=pool.reverse();
+  const draw=()=>{$('#body').innerHTML=`<div class="card"><span class="cnt">${SP.i+1}/${SP.order.length} · ✅ ${SP.ok}</span><div style="height:16px"></div>
+   <div class="emo">${e[3]||'🔤'}</div><div class="mean">${e[2]}</div><div class="pron" style="font-size:1.2rem">${e[1]}</div>
+   <div class="slots">${w.split('').map((c,i)=>`<div class="slot ${typed[i]?'f':''}">${typed[i]?typed[i].c:''}</div>`).join('')}</div>
+   <div class="pool">${pool.map((p,j)=>`<button class="pk" data-j="${j}" ${typed.includes(p)?'disabled':''}>${p.c}</button>`).join('')}</div>
+   <div class="msg" id="sm"></div>
+   <div class="ctrls"><button class="btn" id="hear">🔊 విను</button><button class="btn w" id="undo">⌫ తుడువు</button><button class="btn y" id="hint">💡 సహాయం</button><button class="btn w" id="skip">⏭️ దాటవేయి</button></div></div>`;
+   $('#body').querySelectorAll('.pk').forEach(b=>b.onclick=()=>{const p=pool[+b.dataset.j];if(p.c!==w[typed.length]){miss++;b.animate([{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'none'}],{duration:250});$('#sm').textContent='🙂 మళ్ళీ ప్రయత్నించు';$('#sm').style.color='var(--org)';return}
+     typed.push(p);say(p.c.toUpperCase(),'en-IN',.8);if(typed.length==w.length){if(!miss)SP.ok++;learnt.add(key(sec().id,e[0]));saveL();draw();$('#sm').textContent='🎉 '+e[0]+' – సరైనది!';$('#sm').style.color='var(--grn)';setTimeout(()=>sayWord(e[0]),400);setTimeout(()=>{SP.i++;spellV()},1900)}else draw()});
+   $('#hear').onclick=()=>sayWord(e[0],1);
+   $('#undo').onclick=()=>{typed.pop();draw()};
+   $('#hint').onclick=()=>{miss++;const need=w[typed.length];const p=pool.find(p=>!typed.includes(p)&&p.c==need);if(p){typed.push(p);if(typed.length==w.length){SP.i++;spellV()}else draw()}};
+   $('#skip').onclick=()=>{SP.i++;spellV()};
+  };
+  draw();if(S.auto)sayWord(e[0]);
+}
+// ---------- render ----------
+function render(){vIcon();menu();if(S.view!='sec')stopAP();S.view=='home'?home():secView();ST.set('pos',{sec:S.sec,part:S.part,idx:S.idx,tab:S.tab,view:S.view});window.scrollTo(0,0)}
+document.addEventListener('keydown',ev=>{
+  if(ev.target.tagName=='INPUT'||ev.target.tagName=='SELECT')return;
+  if(ev.key=='Escape'||(ev.key=='Backspace')){ev.preventDefault();menu();openMenu(!$('#menu').classList.contains('open'));return}
+  if(/^[1-7]$/.test(ev.key)){S.view='sec';S.sec=+ev.key-1;S.tab='learn';S.part=0;S.idx=0;render();return}
+  if(S.view=='sec'&&S.tab=='learn'&&S.go){if(ev.key=='ArrowRight'||ev.key=='ArrowDown'){ev.preventDefault();S.go(1)}else if(ev.key=='ArrowLeft'||ev.key=='ArrowUp'){ev.preventDefault();S.go(-1)}else if(ev.key=='Enter'){ev.preventDefault();sayFull(S.cur)}}
+});
+// యాప్ బ్యాక్ (రాయ్ విద్యార్థి): మెనూ → మూసు, విభాగం → హోమ్; హోమ్‌లో false = యాప్ టూల్ మూసుతుంది
+window.rvBack=function(){stopAP();if($('#menu').classList.contains('open')){openMenu(false);return true}if(S.view!=='home'){S.view='home';render();return true}return false};
+// resume
+(function(){const p=ST.get('pos',null);if(p&&p.view=='sec'&&DATA[p.sec]){Object.assign(S,p)}render()})();
+</script>
+</body>
+</html>
