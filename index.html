@@ -3113,7 +3113,7 @@ function render0(){const app=$('#app');app.classList.toggle('v4bg',((view==='hom
 function header(){const p=pendingHw().length;return `<header class="top"><button class="ib" onclick="go('menu')" aria-label="మెనూ">☰</button><div class="who"><b>${esc(S.cur.n)}</b><small>${S.cur.c}వ తరగతి<span class="hd"> • ${fmtD(todayS())}</span></small></div>${view==='home'?`<button class="ib hstar" onclick="toast('టెస్ట్‌లో 80% పైన = 3⭐, హోంవర్క్ = 1⭐, ఆటలో 10+ = 1⭐')">⭐<small>${stars()}</small></button><button class="ib hav" onclick="go('avatar')" aria-label="బొమ్మ మార్చు">${avOf(S.cur.n)}</button>`:''}${S.cfg.type?`<button class="ib" id="syncb" onclick="go('sync')" aria-label="సింక్">${syncIcon()}</button>`:''}<button class="ib cal" onclick="go('schedule')" aria-label="షెడ్యూల్">📅</button><button class="ib bell" onclick="go('homework',{tab:'pend'})" aria-label="పెండింగ్">🔔${p?`<i>${p}</i>`:''}</button></header>`;}
 function nav(){const it=[['home','🏠','హోమ్'],['learn','📖','నేర్చుకో'],['test','📝','టెస్ట్'],['games','🎮','ఆటలు'],['homework','📒','హోంవర్క్']];
  const ph=S.cur?pendingHw().length:0;return `<nav class="bn">${it.map(([v,i,t])=>`<button class="${view===v||PARENT[view]===v?'on':''}" onclick="go('${v}')"><span>${i}${v==='homework'&&ph?`<i>${ph}</i>`:''}</span>${t}</button>`).join('')}</nav>`;}
-const APPV='2026.11.25-2';
+const APPV='2026.11.26-1';
 function footer(){return `<footer class="ft">© ${new Date().getFullYear()} <a href="${SITE}" target="_blank" rel="noopener">రాయ్ ఎడ్యుకేషన్</a><br><small style="opacity:.6">వెర్షన్ ${APPV}</small></footer>`;}
 const V={};
 
@@ -4449,7 +4449,7 @@ function mkPlanCard(c){const subs=subjectsFor(c).filter(s=>SUBJ[s]),fa=pgFaMax(c
 /* ---------- ఆటలు ---------- */
 /* 🌟 రాయ్ విద్యార్థి – C గ్రేడ్ పిల్లల కోసం (యూజర్ 14-11-2026): ఆటలు → కాన్సెప్ట్స్ కింద; పసుపు నేపథ్యం, ఎరుపు అంచు, నీలి మందపాటి అక్షరాలు. ఫైళ్లు cgrade/ (TaRL టూల్‌లో పిల్లల డిఫాల్ట్ జాబితా తీసేశాం – గోప్యత) */
 // 🕰 రా / య్ లోలకాలు (2026.11.17-6): హోమ్ “నా సబ్జెక్టులు” పక్కన – రా = పాఠం నోట్స్ (tnotes/<c>/), య్ = పీరియడ్ ప్లాన్లు (tplans/<c>/). కొత్త పాఠం = RYN[c] లో ఒక వరుస [సబ్జెక్టు, పాఠం పేరు, నోట్స్ ఫైల్, ప్లాన్ ఫైల్]
-const RYN={3:[['tel','6. మేమే మేకపిల్ల','tnotes/3/Class3_Tel_L06_Meme_Mekapilla_Notes.html','tplans/3/Class3_Tel_L06_Meme_Mekapilla_Period_Plans.html'],['mat','5. భాగహారం – వర్క్‌బుక్ జవాబులు','tnotes/3/Class3_Maths_Division_Workbook_Answers_Tool.html','']]};
+const RYN={3:[['tel','6. మేమే మేకపిల్ల','tnotes/3/Class3_Tel_L06_Meme_Mekapilla_Notes.html','tplans/3/Class3_Tel_L06_Meme_Mekapilla_Period_Plans.html'],['mat','5. భాగహారం – వర్క్‌బుక్ జవాబులు','tnotes/3/Class3_Maths_Division_Workbook_Answers_Tool.html','']],4:[['mat','సెమ్-2 గణితం + EVS వర్క్‌బుక్ – ప్రశ్నలు & జవాబులు (తెలుగు + English)','tnotes/4/Class4-Sem2-Maths-EVS-Workbook-Questions-Answers-Telugu-English.html','']]};
 function ryPend(c){return `<button class="rypd ryl" onclick="ryTap(${+c},0,this)" aria-label="రా – పాఠం నోట్స్" title="రా – పాఠం నోట్స్"><i></i><b>రా</b></button><button class="rypd ryr" onclick="ryTap(${+c},1,this)" aria-label="య్ – పీరియడ్ ప్లాన్లు" title="య్ – పీరియడ్ ప్లాన్లు"><i></i><b>య్</b></button>`;}
 function ryGo(u,t){const o=document.getElementById('ryOv');if(o)o.remove();go('book',{u,t,k:'tool',back:{v:'home'}});}
 /* 2026.11.19-4 (యూజర్): రా/య్ ఒక్కసారి తాకితే తెరుచుకోదు – 1.5 సె. లోపు రెండోసారి తాకితేనే (పొరపాటు తాకిడి వద్దు) */
